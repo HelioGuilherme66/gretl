@@ -1,0 +1,37 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run lomackinlay.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/lomackinlay.gfn.inp
+? include ./lomackinlay.gfn
+ /home/cottrell/stats/test-gretl/testgfn/lomackinlay.gfn
+lomackinlay 1.1, 2009-08-19 (Allin Cottrell)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? lomackinlay(QNC, 4)
+Lo-MacKinlay test, q = 4, T = 60
+
+Variance estimate from first differences = 94420
+Variance estimate from q-th differences = 23088
+Variance Ratio: R = 23088 / 94420 = 0.244521
+M(q) = R - 1 = -0.75548
+
+Standard error of M under homoskedasticity = 0.24152
+Test statistic: z = -0.75548 / 0.24152 = -3.128
+Two-tailed p-value = 0.0017601
+
+Robust estimate of s.e. of M = 0.23588
+Robust test statistic: z = -0.75548 / 0.23588 = -3.2028
+Two-tailed p-value = 0.0013612
+
+Done

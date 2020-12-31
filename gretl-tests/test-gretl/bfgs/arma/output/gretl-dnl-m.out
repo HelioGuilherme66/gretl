@@ -1,0 +1,58 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run gretl-dnl-m.inp
+ /home/allin/stats/test-gretl/bfgs/arma/gretl-dnl-m.inp
+? open gretl-dnl-m.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/gretl-dnl-m.gdt
+periodicity: 12, maxobs: 70
+observations range: 2002:03 to 2007:12
+
+Listing 3 variables:
+  0) const    1) mdnl     2) days   
+
+? genr y = log(mdnl)
+Generated series y (ID 3)
+? genr ld = log(days)
+Generated series ld (ID 4)
+? genr time
+Generated series time (ID 5)
+? matrix p = { 1,2,6 }
+Generated matrix p
+? arima p 0 ; y const time
+
+Function evaluations: 41
+Evaluations of gradient: 10
+
+Model 1: ARMAX, using observations 2002:03-2007:09 (T = 67)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       6.07140      0.149428     40.63     0.0000   ***
+  phi_1       0.750173     0.112668      6.658    2.77e-11 ***
+  phi_2      -0.381898     0.118327     -3.227    0.0012   ***
+  phi_6       0.0719275    0.100801      0.7136   0.4755  
+  time        0.0397890    0.00382924   10.39     2.73e-25 ***
+
+Mean dependent var   7.428285   S.D. dependent var   0.890326
+Mean of innovations  0.004180   S.D. of innovations  0.344276
+Log-likelihood      -23.99679   Akaike criterion     59.99359
+Schwarz criterion    73.22174   Hannan-Quinn         65.22800
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4687     0.0000     1.4687     0.0000
+    Root  2           0.7501    -1.0296     1.2739    -0.1498
+    Root  3           0.7501     1.0296     1.2739     0.1498
+    Root  4          -1.9460     0.0000     1.9460     0.5000
+    Root  5          -0.5114    -1.6541     1.7313    -0.2977
+    Root  6          -0.5114     1.6541     1.7313     0.2977
+  -----------------------------------------------------------
+
+Done

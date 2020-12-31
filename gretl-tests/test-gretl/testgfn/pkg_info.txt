@@ -1,0 +1,525 @@
+[addlist.gfn]
+name = addlist
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2009-08-19
+version = 1.1
+
+[armax.gfn]
+name = armax
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2014-09-04
+version = 0.92
+
+[bandplot.gfn]
+name = bandplot
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2011-09-29
+version = 0.2
+
+[bartlett.gfn]
+name = bartlett
+author = Marcos Larios Santa Rosa
+email = mlsr.ftp@gmail.com
+date = 2009-08-21
+version = 0.2
+
+[BMA.gfn]
+name = BMA
+author = Marcin Błażejowski, Jacek Kwiatkowski
+email = mblazejowski@wsb.torun.pl
+date = 2013-05-06
+version = 1.03
+
+[BNdecomp.gfn]
+name = BNdecomp
+author = Riccardo "Jack" Lucchetti
+email = r.lucchetti@univpm.it
+date = 2009-08-22
+version = 1.2
+
+[Box_Cox_Value.gfn]
+name = Box_Cox_Value
+author = Pedro Isaac Chávez López
+email = pedro.chavez@alumnos.cide.edu
+date = 2014-05-13
+version = 1.01
+
+[BreitungCandelonTest.gfn]
+name = BreitungCandelonTest
+author = Sven Schreiber
+email = svetosch@gmx.net
+date = 2014-06-30
+version = 1.4
+
+[Brown.gfn]
+name = Brown
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2011-02-14
+version = 1.4
+
+[BSMestim.gfn]
+name = BSMestim
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2009-08-22
+version = 1.1
+
+[buys_ballot.gfn]
+name = buys_ballot
+author = Ignacio Diaz-emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2011-12-07
+version = 1.4
+
+[Canova_Hansen.gfn]
+name = Canova_Hansen
+author = Ignacio Diaz-emparanza, Mª Paz Moral
+email = ignacio.diaz-emparanza@ehu.es
+date = 2013-09-02
+version = 1.1
+
+[carr.gfn]
+name = carr
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2013-06-20
+version = 0.6
+
+[clustered_ols.gfn]
+name = clustered_ols
+author = Claudia Pigini
+email = c.pigini@univpm.it
+date = 2012-03-28
+version = 0.1
+
+[cnumber.gfn]
+name = cnumber
+author = Monsueto, S.E
+email = sandro.monsueto@gmail.com
+date = 2010-08-31
+version = 1.0
+
+[coint2finite.gfn]
+name = coint2finite
+author = Andreas Noack Jensen and Sven Schreiber
+email = svetosch@gmx.net
+date = 2014-06-02
+version = 1.1
+
+[coint2rec.gfn]
+name = coint2rec
+author = Andreas Noack Jensen and Sven Schreiber
+email = svetosch@gmx.net
+date = 2014-07-04
+version = 0.4
+
+[criteria.gfn]
+name = criteria
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2010-07-02
+version = 1.1
+
+[DeWallis_test.gfn]
+name = DeWallis_test
+author = Juan Pablo de Botton Falcón
+email = jpdebotton@hotmail.com
+date = 2012-12-22
+version = 1.1
+
+[DFP.gfn]
+name = DFP
+author = Uriel Rodríguez Ramírez
+email = urieleconometria@hotmail.com
+date = 2013-05-31
+version = 1.0
+
+[DHF_test.gfn]
+name = DHF_test
+author = Marcin Blazejowski (marcin.blazejowski@wsb.torun.pl)
+email = mblazejowski@wsb.torun.pl
+date = 2013-05-07
+version = 1.04
+
+[DST_test.gfn]
+name = DST_test
+author = Marcin Błażejowski (mblazejowski@wsb.torun.pl)
+email = mblazejowski@wsb.torun.pl
+date = 2011-10-01
+version = 1.05
+
+[dynMultipl.gfn]
+name = dynMultipl
+author = Artur Tarassow
+email = artur.tarassow@googlemail.com
+date = 2014-07-08
+version = 0.9
+
+[fcModels.gfn]
+name = fcModels
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2014-04-29
+version = 0.95
+
+[felogit.gfn]
+name = felogit
+author = Riccardo "Jack" Lucchetti
+email = r.lucchetti@univpm.it
+date = 2014-05-02
+version = 1.5
+
+[fe_stats.gfn]
+name = fe_stats
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2011-08-14
+version = 0.1
+
+[fgls.gfn]
+name = fgls
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2011-01-03
+version = 1.0
+
+[genr_dates.gfn]
+name = genr_dates
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2013-06-26
+version = 0.2
+
+[getsymbols.gfn]
+name = getsymbols
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2013-08-24
+version = 0.1
+
+[GHegy.gfn]
+name = GHegy
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2013-03-14
+version = 1.0
+
+[GJR-garchm.gfn]
+name = GJR-garchm
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2010-01-25
+version = 1.1
+
+[gregory_hansen.gfn]
+name = gregory_hansen
+author = Artur Tarassow
+email = artur.tarassow@googlemail.com
+date = 2013-11-21
+version = 0.51
+
+[group_series.gfn]
+name = group_series
+author = Logan Kelly
+email = logan.kelly@uwrf.edu
+date = 2014-02-07
+version = 1.0
+
+[growth.gfn]
+name = growth
+author = Artur Bala
+email = artur.bala.tn@gmail.com
+date = 2011-09-30
+version = 1.2
+
+[HEGY_test.gfn]
+name = HEGY_test
+author = Riccardo "Jack" Luchetti
+email = r.lucchetti@univpm.it
+date = 2009-09-08
+version = 1.3
+
+[hetero.gfn]
+name = hetero
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2012-12-12
+version = 1.0
+
+[HIP.gfn]
+name = HIP
+author = Riccardo "Jack" Lucchetti and Claudia Pigini
+email = r.lucchetti@univpm.it
+date = 2012-02-13
+version = 0.2
+
+[HoltWinters.gfn]
+name = HoltWinters
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2010-02-20
+version = 1.4
+
+[ivintreg.gfn]
+name = ivintreg
+author = Riccardo "Jack" Lucchetti
+email = r.lucchetti@univpm.it
+date = 2012-03-22
+version = 1.0
+
+[JB.gfn]
+name = JB
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2007-10-06
+version = 1.1
+
+[KaoTest.gfn]
+name = KaoTest
+author = Uriel Rodriguez Ramirez
+email = urieleconometria@hotmail.com
+date = 2013-03-06
+version = 2.0
+
+[levene.gfn]
+name = levene
+author = Marcos Larios Santa Rosa
+email = mlsr.ftp@gmail.com
+date = 2009-08-22
+version = 0.2
+
+[LLTestim.gfn]
+name = LLTestim
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2009-08-22
+version = 1.2
+
+[LOGIT_HETERO.gfn]
+name = LOGIT_HETERO
+author = Artur Tarassow
+email = artur.tarassow@googlemail.com
+date = 2013-08-21
+version = 0.11
+
+[lomackinlay.gfn]
+name = lomackinlay
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2009-08-19
+version = 1.1
+
+[lp-mfx.gfn]
+name = lp-mfx
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2013-06-27
+version = 0.2
+
+[matrix_perf.gfn]
+name = matrix_perf
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2014-06-17
+version = 0.4
+
+[MCO_Ridge.gfn]
+name = MCO_Ridge
+author = Uriel Rodríguez
+email = urieleconometria@hotmail.com
+date = 2012-05-22
+version = 1.0
+
+[meansby.gfn]
+name = meansby
+author = Jack Lucchetti
+email = r.lucchetti@univpm.it
+date = 2009-08-28
+version = 1.2
+
+[ModRS_test.gfn]
+name = ModRS_test
+author = Daniel Ventosa-Santaulària
+email = daniel@ventosa-santaularia.com
+date = 2011-02-25
+version = 1.0
+
+[moran.gfn]
+name = moran
+author = Giuseppe Vittucci
+email = giuseppe.vittucci@unimib.it
+date = 2011-09-04
+version = 0.2
+
+[mwu_dummy.gfn]
+name = mwu_dummy
+author = Yi-Nnung Yang
+email = yinung.cycu@gmail.com
+date = 2013-04-25
+version = 0.92
+
+[mwu.gfn]
+name = mwu
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2013-08-24
+version = 0.93
+
+[MWU.gfn]
+name = MWU
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2013-04-25
+version = 1.1
+
+[oprobit_predict.gfn]
+name = oprobit_predict
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2009-09-14
+version = 1.0
+
+[pmbb.gfn]
+name = pmbb
+author = Giuseppe Vittucci
+email = giuseppe.vittucci@unimib.it
+date = 2013-01-18
+version = 1.6
+
+[PPtest.gfn]
+name = PPtest
+author = Riccardo "Jack" Lucchetti
+email = r.lucchetti@univpm.it
+date = 2012-08-23
+version = 0.1
+
+[RLSStein.gfn]
+name = RLSStein
+author = Lee C. Adkins
+email = adkins.lee@gmail.com
+date = 2013-07-09
+version = 0.92
+
+[Robinson.gfn]
+name = Robinson
+author = Uriel Rodriguez Ramires
+email = urieleconometria@hotmail.com
+date = 2013-08-28
+version = 1.0
+
+[seasfSTB.gfn]
+name = seasfSTB
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2014-06-25
+version = 1.0
+
+[SETAR.gfn]
+name = SETAR
+author = Federico Lampis, Ignacio Díaz-Emparanza
+email = flampis@emp.uc3m.es
+date = 2011-06-27
+version = 1.2
+
+[sfa_hetmod.gfn]
+name = sfa_hetmod
+author = Gordon Hughes
+email = g.a.hughes@ed.ac.uk
+date = 2008-07-01
+version = 0.5
+
+[sfa_mod.gfn]
+name = sfa_mod
+author = Gordon Hughes
+email = g.a.hughes@ed.ac.uk
+date = 2009-08-22
+version = 0.91
+
+[sols.gfn]
+name = sols
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2014-01-26
+version = 1.4
+
+[summary_ts.gfn]
+name = summary_ts
+author = yinung Yang
+email = yinung.cycu@gmail.com
+date = 2010-03-24
+version = 1.2
+
+[summary_xy.gfn]
+name = summary_xy
+author = Yi-Nung Yang
+email = yinung.cycu@gmail.com
+date = 2010-04-17
+version = 1.1
+
+[suradf.gfn]
+name = suradf
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2011-01-26
+version = 0.1
+
+[Threshold_Panel.gfn]
+name = Threshold_Panel
+author = Artur Tarassow
+email = artur.tarassow@googlemail.com
+date = 2013-07-11
+version = 0.9
+
+[tobit_y.gfn]
+name = tobit_y
+author = Allin Cottrell
+email = cottrell@wfu.edu
+date = 2011-07-13
+version = 0.1
+
+[tramolin.gfn]
+name = tramolin
+author = Ignacio Diaz-Emparanza
+email = ignacio.diaz-emparanza@ehu.es
+date = 2014-05-02
+version = 1.10
+
+[var_chow.gfn]
+name = var_chow
+author = Artur Tarassow
+email = artur.tarassow@googlemail.com
+date = 2013-06-07
+version = 0.81
+
+[vecmI2.gfn]
+name = vecmI2
+author = Andreas Noack Jensen
+email = andreasnoackjensen@gmail.com
+date = 2012-02-11
+version = 0.1
+
+[VSG_test.gfn]
+name = VSG_test
+author = Daniel Ventosa-Santaulària
+email = daniel@ventosa-santaularia.com
+date = 2011-02-21
+version = 1.11
+
+[wooldridge_test_serial.gfn]
+name = wooldridge_test_serial
+author = Giuseppe Vittucci
+email = giuseppe.vittucci@unimib.it
+date = 2011-09-24
+version = 1.0
+
+[yahoo_get.gfn]
+name = yahoo_get
+author = Riccardo "Jack" Lucchetti
+email = r.lucchetti@univpm.it
+date = 2013-11-27
+version = 1.13
+

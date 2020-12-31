@@ -1,0 +1,34 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run unbal.inp
+ /home/cottrell/stats/test-gretl/arbond/unbal.inp
+? open unbal.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/unbal.gdt
+periodicity: 10, maxobs: 300
+observations range: 1:01 to 30:10
+
+Listing 4 variables:
+  0) const    1) y        2) id       3) year   
+
+? arbond 1 0 ; y
+
+Model 1: 1-step Arellano-Bond, using 68 observations
+Included 28 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  Dy(-1)      0.339428      0.154574    2.196   0.0281  **
+
+Sum squared resid    80.67122   S.E. of regression   1.097291
+
+Number of instruments = 22
+Test for AR(1) errors: z = -2.78792 [0.0053]
+Test for AR(2) errors: z = -1.18554 [0.2358]
+Sargan over-identification test: Chi-square(21) = 28.2534 [0.1331]
+Wald (joint) test: Chi-square(1) = 4.82192 [0.0281]
+
+Done

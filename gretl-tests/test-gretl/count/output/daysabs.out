@@ -1,0 +1,30 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run daysabs.inp
+ /home/cottrell/stats/test-gretl/count/daysabs.inp
+? open poissonreg.dta -q
+Read datafile /home/cottrell/stats/test-gretl/count/poissonreg.dta
+? set optimizer newton
+? negbin daysabs 0 math langarts male
+
+Convergence achieved after 5 iterations
+
+Model 1: Negative Binomial, using observations 1-316
+Dependent variable: daysabs
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       2.71607      0.232576     11.68     1.65e-31 ***
+  math       -0.00160096   0.00484998   -0.3301   0.7413  
+  langarts   -0.0143475    0.00558152   -2.571    0.0102   **
+  male       -0.431184     0.139666     -3.087    0.0020   ***
+  alpha       1.28838      0.123087     10.47     1.22e-25 ***
+
+Mean dependent var   5.810127   S.D. dependent var   7.449003
+Log-likelihood      -880.8731   Akaike criterion     1771.746
+Schwarz criterion    1790.525   Hannan-Quinn         1779.248
+
+Done

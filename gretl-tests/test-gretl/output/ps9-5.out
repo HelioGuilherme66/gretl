@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps9-5.inp
+ /opt/esl/share/gretl/scripts/ps9-5.inp
+# PS9.5, for Example 9.6
+? open data4-7
+
+Read datafile /opt/esl/share/gretl/data/data4-7.gdt
+periodicity: 1, maxobs: 34
+observations range: 1947 to 1980
+
+Listing 10 variables:
+  0) const      1) chd        2) cal        3) unemp      4) cig      
+  5) edfat      6) meat       7) spirits    8) beer       9) wine     
+
+? ar1 chd 0 cig edfat spirits beer
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.17861   1507.57
+                   2      0.31167   1428.97
+                   3      0.40606   1382.28
+                   4      0.47872   1351.85
+                   5      0.53180   1334.68
+                   6      0.56693   1326.91
+                   7      0.58812   1324.02
+                   8      0.60011   1323.08
+                   9      0.60664   1322.80
+                  10      0.61012   1322.72
+                  11      0.61195   1322.70
+                  12      0.61292   1322.69
+                  13      0.61342   1322.69
+                  14      0.61368   1322.69
+                  15      0.61382   1322.69
+                  16      0.61389   1322.69
+                  17      0.61393   1322.69
+
+Model 1: Cochrane-Orcutt, using observations 1948-1980 (T = 33)
+Dependent variable: chd
+rho = 0.61393
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      341.116       81.5559       4.183    0.0003  ***
+  cig          2.90241      4.65307      0.6238   0.5378 
+  edfat        0.371456     0.997158     0.3725   0.7123 
+  spirits     12.0069       6.58965      1.822    0.0791  *
+  beer        -2.20211      0.866136    -2.542    0.0168  **
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   355.8333   S.D. dependent var   13.92782
+Sum squared resid    1322.687   S.E. of regression   6.873050
+R-squared            0.787607   Adjusted R-squared   0.757265
+F(4, 28)             3.892553   P-value(F)           0.012301
+rho                 -0.155492   Durbin-Watson        2.233416
+
+Excluding the constant, p-value was highest for variable 5 (edfat)
+
+Done

@@ -1,0 +1,32 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles1.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles1.inp
+# simple creation and access of bundle
+? matrix m = I(3)
+Generated matrix m
+? string s = "foo"
+Generated string s
+? bundle b
+? b["mat"] = m
+? b["str"] = s
+? matrix goo = 3 * b["mat"]
+Generated matrix goo
+? goo
+goo (3 x 3)
+
+  3   0   0 
+  0   3   0 
+  0   0   3 
+
+? delete goo
+Deleted goo
+? string s2 = b["str"]
+Generated string s2
+? s2
+foo
+? delete b
+Deleted b
+Done

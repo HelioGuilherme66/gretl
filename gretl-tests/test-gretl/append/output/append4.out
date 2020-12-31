@@ -1,0 +1,78 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:40
+? run append4.inp
+ /home/cottrell/stats/test-gretl/append/append4.inp
+? open data3-6.gdt
+
+Read datafile /opt/esl/share/gretl/data/data3-6.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 3 variables:
+  0) const    1) Ct       2) Yt     
+
+? append app_36.txt
+parsing /home/cottrell/stats/test-gretl/append/app_36.txt...
+using delimiter ' '
+   longest line: 11 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 4
+scanning for variable names...
+   line: obs gorgle
+scanning for row labels and data...
+   first row label "1970", last label "1972"
+trying to parse row labels as dates...
+   1970: probably a year... and just a year
+taking date information from row labels
+
+Data appended OK
+Listing 4 variables:
+  0) const     1) Ct        2) Yt        3) gorgle  
+
+? print -o
+
+               Ct           Yt       gorgle
+
+1959         7876         8641             
+1960         7926         8660             
+1961         7954         8794             
+1962         8220         9077             
+1963         8434         9274             
+1964         8817         9805             
+1965         9257        10292             
+1966         9674        10715             
+1967         9854        11061             
+1968        10313        11448             
+1969        10593        11708             
+1970        10717        12022            1
+1971        10975        12345            2
+1972        11508        12770            3
+1973        11950        13539             
+1974        11756        13310             
+1975        11899        13404             
+1976        12446        13793             
+1977        12846        14095             
+1978        13258        14662             
+1979        13417        14899             
+1980        13216        14813             
+1981        13245        15009             
+1982        13270        14999             
+1983        13829        15277             
+1984        14415        16252             
+1985        14954        16597             
+1986        15409        16981             
+1987        15740        17106             
+1988        16211        17621             
+1989        16430        17801             
+1990        16532        17942             
+1991        16249        17755             
+1992        16520        18062             
+1993        16810        18075             
+1994        17152        18320             
+
+Done

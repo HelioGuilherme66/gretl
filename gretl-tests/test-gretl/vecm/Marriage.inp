@@ -1,0 +1,42 @@
+open Marriage.csv -q
+
+setobs 1 1947 --time-series
+genr time
+genr I76 = (t == 30)
+lags 1; I76
+genr Sh76 = (t >= 30)
+lags 2; Sh76
+genr Tr76 = time * Sh76
+lags 2; Tr76
+
+# With restricted broken trend
+coint2 2 Men Women; Sh76_2 I76 I76_1; Tr76_2 --crt --verbose
+
+foreign language=Ox
+#include <oxstd.h>
+#import <pcfiml>
+
+main()
+{
+    decl model = new PcFiml();
+    model.Load("Marriage.csv");
+    model.Deterministic(FALSE);
+    println(rows(model.GetAll()));
+    model.Append(zeros(29, 1) | ones(2010 - 1947 - 29 + 1, 1), "Sh76");
+    model.Append(model.GetVar("Sh76") .* model.GetVar("Trend"), "Tr76");
+    model.Append(zeros(29, 1) | 1 | zeros(2010 - 1947 - 29, 1), "I76");
+    model.Info();
+
+    // Model with restricted broken trend
+    model.Select(Y_VAR, {"Men", 0, 2});
+    model.Select(Y_VAR, {"Women", 0, 2});
+    model.Select(X_VAR, {"Trend", 0, 0, "Tr76", 2, 2});
+    model.Select(U_VAR, {"Constant", 0, 0, "Sh76", 2, 2, "I76", 0, 1});
+    model.SetSelSample(-1, 1, -1, 1);
+    model.Estimate();
+    model.Cointegration();
+    model.DeSelect();
+
+    delete model;
+}
+end foreign

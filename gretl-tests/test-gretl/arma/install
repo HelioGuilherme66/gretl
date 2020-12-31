@@ -1,0 +1,2 @@
+cd ~/src/build/plugin && ./install_plugin arma && \
+ ./install_plugin arma_x12

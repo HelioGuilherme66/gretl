@@ -1,0 +1,32 @@
+nulldata 50
+setobs 1 1 --special
+
+# Replicate the example at 
+# http://www.cs.unc.edu/~welch/kalman/kalmanIntro.html
+
+scalar T = 50
+scalar mu = -0.37727
+series y = mread("y.mat")
+
+matrix V = zeros(T,1)
+matrix St = zeros(T,1)
+matrix L = zeros(T,1)
+
+bundle kb = ksetup({y}, {1}, {1}, {1.0e-5})
+kb.obsvar = {0.01}
+kb.inivar = {1}
+
+err = kfilter(kb)
+printf "LL = %g\n", kb.lnl
+printf "s2 = %g\n", kb.s2
+series e = kb.prederr
+print y e -o
+
+err = ksmooth(kb)
+matrix out2 = kb.state ~ kb.stvar
+out2
+
+delete kb
+
+
+

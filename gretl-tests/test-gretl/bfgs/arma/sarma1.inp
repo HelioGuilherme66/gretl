@@ -1,0 +1,16 @@
+nulldata 640
+setobs 12 1920:01
+set seed 371
+scalar phi_1 = 0.5
+scalar Phi_1 = 0.1
+scalar theta_1 = 0.3
+genr eps = normal()
+genr u = eps + theta_1 * eps(-1)
+series y = 0
+genr y = phi_1*y(-1) + Phi_1*y(-12) \
+  - phi_1*Phi_1*y(-13) + u
+genr y = y + 500 / (1 - phi_1 - Phi_1 + phi_1*Phi_1)
+smpl +20 ;
+arma 1 1 ; 1 0 ; y  
+
+

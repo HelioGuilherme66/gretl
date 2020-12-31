@@ -1,0 +1,74 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:40
+? run append1.inp
+ /home/cottrell/stats/test-gretl/append/append1.inp
+? open data3-6
+
+Read datafile /opt/esl/share/gretl/data/data3-6.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 3 variables:
+  0) const    1) Ct       2) Yt     
+
+? append annual.txt
+parsing /home/cottrell/stats/test-gretl/append/annual.txt...
+using delimiter ' '
+   longest line: 5 characters
+   first field: 'test'
+   number of columns = 1
+   number of variables: 1
+   number of non-blank lines: 37
+scanning for variable names...
+   line: test
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 4 variables:
+  0) const    1) Ct       2) Yt       3) test   
+
+? print -o
+
+               Ct           Yt         test
+
+1959         7876         8641            1
+1960         7926         8660            2
+1961         7954         8794            3
+1962         8220         9077            4
+1963         8434         9274            5
+1964         8817         9805            6
+1965         9257        10292            7
+1966         9674        10715            8
+1967         9854        11061            9
+1968        10313        11448            1
+1969        10593        11708            2
+1970        10717        12022            3
+1971        10975        12345            4
+1972        11508        12770            5
+1973        11950        13539            6
+1974        11756        13310            7
+1975        11899        13404            8
+1976        12446        13793            9
+1977        12846        14095            1
+1978        13258        14662            2
+1979        13417        14899            3
+1980        13216        14813            4
+1981        13245        15009            5
+1982        13270        14999            6
+1983        13829        15277            7
+1984        14415        16252            8
+1985        14954        16597            9
+1986        15409        16981            1
+1987        15740        17106            2
+1988        16211        17621            3
+1989        16430        17801            4
+1990        16532        17942            5
+1991        16249        17755            6
+1992        16520        18062            7
+1993        16810        18075            8
+1994        17152        18320            9
+
+Done

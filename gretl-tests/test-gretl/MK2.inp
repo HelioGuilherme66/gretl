@@ -1,0 +1,29 @@
+# Test of forecasts/fitted values for Prais-Winsten,
+# with error process u(t) = rho(1)*u(t-1) + e
+# and with missing values at start of dataset
+open MK.gdt
+ar1 outz outz_4 outz_5 outz_6 outz_7 --pwe
+# get the fitted values according to gretl
+fcast fit1
+# The "uhats" here are the estimated innovations
+series e = $uhat
+# Work on reconstructing the error process...
+# First get the estimated autocorrelation coeff.
+scalar r1 = $rho(1)
+# Prais-Winsten treatment of first obs...
+genr u = e / sqrt(1.0 - r1^2)
+# Generate the full error process recursively
+genr u = r1 * u(-1) + e
+# Generate the systematic part of the fit
+genr sysfit = $coeff(outz_4)*outz_4 + \
+  $coeff(outz_5)*outz_5 + $coeff(outz_6)*outz_6 + \
+  $coeff(outz_7)*outz_7 
+# Form full one-step ahead forecasts: systematic
+# component plus predictable portion of the error term
+series fit2 = sysfit + r1 * u(-1)
+# Compare the two "fitted" series
+series fitdiff = fit1 - fit2
+summary fitdiff
+smpl 32 50
+print -o outz fit1 fit2 
+

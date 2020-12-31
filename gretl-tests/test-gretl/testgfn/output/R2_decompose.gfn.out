@@ -1,0 +1,59 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run R2_decompose.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/R2_decompose.gfn.inp
+? include ./R2_decompose.gfn
+ /home/cottrell/stats/test-gretl/testgfn/R2_decompose.gfn
+R2_decompose 1.0, 2015-05-09 (Alejandra Enríquez)
+? open np.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/misc/np.gdt
+#y is the explained variable and X are the explaining variables
+? series Y = rgnp
+Generated series Y (ID 15)
+? list X = unemp money rwage
+Generated list X
+#adding 1 as if the constant where selected
+? matrix r = R2_decompose(1,X,Y)
+
+Model 1: OLS, using observations 1909-1970 (T = 62)
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -9.54029     11.1204      -0.8579   0.3945  
+  unemp       -0.965683     0.335721    -2.876    0.0056   ***
+  money        0.868866     0.0690896   12.58     3.27e-18 ***
+  rwage        5.48262      0.448764    12.22     1.12e-17 ***
+
+Mean dependent var   306.0710   S.D. dependent var   180.3244
+Sum squared resid    11757.96   S.E. of regression   14.23810
+R-squared            0.994072   Adjusted R-squared   0.993766
+F(3, 58)             3242.137   P-value(F)           1.59e-64
+Log-likelihood      -250.5739   Akaike criterion     509.1478
+Schwarz criterion    517.6563   Hannan-Quinn         512.4884
+rho                  0.798599   Durbin-Watson        0.402146
+
+
+Number of iterations: 3
+
+
+Number of iterations: 3
+
+Each Ri corresponds to each explanatory variable in order of appeareance
+unemp,money,rwage
+
+             Ri =  0.010166395
+
+             Ri =  0.48930693
+
+             Ri =  0.49418984
+
+Number of iterations: 3
+
+This is the usual R2, check that the sum of Ri equals R2
+
+             R2 =  0.99407220
+Generated matrix r
+Done

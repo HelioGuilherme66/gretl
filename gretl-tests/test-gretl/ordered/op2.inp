@@ -1,0 +1,66 @@
+# Compute the estimated probability for each response at
+# each observation. Append on each row the most probable
+# bin (zero-based), the value of X_i\hat{\beta}, and the
+# (zero-based) bin into which X_i\hat{\beta} falls
+
+function matrix op_predict (matrix cut, series zhat)
+  scalar n = $nobs
+  scalar nc = rows(cut)
+  scalar m = nc+4
+  matrix Pmat = zeros(n, m)
+  loop i=1..n -q
+    Pmat[i,1] = cnorm(cut[1]-zhat[i])
+    loop j=2..nc --quiet
+      Pmat[i,j] = cnorm(cut[j]-zhat[i]) - cnorm(cut[j-1]-zhat[i])
+    endloop
+    Pmat[i,nc+1] = 1 - cnorm(cut[nc]-zhat[i])
+  endloop
+  loop i=1..n -q
+    scalar pmax = 0
+    pmax_bin = 0
+    scalar Xb_bin = 0
+    loop j=1..nc+1 -q
+      if Pmat[i,j] > pmax
+        pmax = Pmat[i,j]
+	pmax_bin = j-1
+      endif
+      if j <= nc && zhat[i] > cut[j]
+	Xb_bin = j
+      endif
+    endloop
+    Pmat[i,nc+2] = pmax_bin
+    Pmat[i,nc+3] = zhat[i]
+    Pmat[i,nc+4] = Xb_bin
+   endloop
+  return Pmat
+end function
+
+open greene22_2
+set seed 1322698006
+
+genr rat = Z8 - 1
+series Z3 = rat + 5*normal()
+
+probit rat 0 Z1 Z2
+series zhat = $yhat
+matrix cut = $coeff[3:]
+matrix P = op_predict(cut, zhat)
+# print P
+printf "number correct: (1) %d, (2) %d\n", 
+ sumc(P[,6] .= rat), sumc(P[,8] .= rat)
+
+probit rat 0 Z1 Z2 Z3
+series zhat = $yhat
+matrix cut = $coeff[4:]
+matrix P = op_predict(cut, zhat)
+# print P
+printf "number correct: (1) %d, (2) %d\n", 
+ sumc(P[,6] .= rat), sumc(P[,8] .= rat)
+
+fcast pred
+series pred1 = P[,6]
+ols pred 0 pred1
+
+
+
+        

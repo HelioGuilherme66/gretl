@@ -1,0 +1,24 @@
+open greene14_1.gdt
+logs C Q PF
+list X = l_Q l_PF LF
+panel l_C 0 X --fixed
+series ai = $ahat
+corr ai X
+matrix b = $coeff[2:]
+series Xb = {X}*b
+corr ai Xb
+
+foreign language=stata --send-data
+  xtset unit year
+  xtreg l_c l_q l_pf lf, fe
+end foreign
+
+foreign language=R --send-data
+  library("plm")
+  H <- pdata.frame(gretldata, index = c("unit", "year"))
+  mfe <- plm(l_C ~ l_Q + l_PF + LF, data=H, model="within")
+  summary(mfe)
+end foreign
+
+panel l_C 0 X --random
+

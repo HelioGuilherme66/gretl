@@ -1,0 +1,15 @@
+open mroz87.gdt
+
+include user_heckit.inp
+
+genr EXP2 = AX^2
+genr WA2 = WA^2
+genr KIDS = (KL6+K618)>0
+
+list X = const AX EXP2 WE CIT
+list Z = const WA WA2 FAMINC KIDS WE 
+
+user_heckit(WW,X,LFP,Z)
+
+smpl LFP --dummy
+ols WW X

@@ -1,0 +1,14 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run gnumeric.inp
+ /home/cottrell/stats/test-gretl/importer/gnumeric.inp
+? open qtest.gnumeric
+   first row label "1975Q1", last label "1990Q4"
+trying to parse row labels as dates...
+   1975: probably a year... quarter 1?
+Listing 5 variables:
+  0) const     1) XNC       2) PRICE     3) INCOME    4) PRIME   
+
+Done

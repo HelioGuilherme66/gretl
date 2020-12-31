@@ -1,0 +1,388 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run hamilton.inp
+ /opt/esl/share/gretl/scripts/misc/hamilton.inp
+# Replicate James Hamilton's analysis of the relationship
+# between the US and Italian price levels and the Dollar
+# to Lira exchange rate ("Time Series Analysis", Princeton
+# 1994, ch. 20)
+? open hamilton.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/hamilton.gdt
+periodicity: 12, maxobs: 202
+observations range: 1973:01 to 1989:10
+
+Listing 4 variables:
+  0) const     1) PC6IT     2) PZUNEW    3) EXRITL  
+
+# log of US price level
+? series p = 100*(log(PZUNEW)-log(PZUNEW[1973:01]))
+Generated series p (ID 4)
+# log of exchange rate
+? series s = -100*(log(EXRITL)-log(EXRITL[1973:01]))
+Generated series s (ID 5)
+# log of Italian price level
+? series pf = 100*(log(PC6IT)-log(PC6IT[1973:01]))
+Generated series pf (ID 6)
+# Set the sample period used by Hamilton
+? smpl 1974:2 ;
+Full data range: 1973:01 - 1989:10 (n = 202)
+Current sample: 1974:02 - 1989:10 (n = 189)
+
+# Determine cointegration rank
+? coint2 12 p s pf
+
+Johansen test:
+Number of equations = 3
+Lag order = 12
+Estimation period: 1974:02 - 1989:10 (T = 189)
+Case 3: Unrestricted constant
+
+Log-likelihood = 67.1932 (including constant term: -469.166)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.11046     38.855 [0.0030]     22.123 [0.0341]
+   1   0.056034     16.732 [0.0307]     10.899 [0.1616]
+   2   0.030393     5.8333 [0.0157]     5.8333 [0.0157]
+
+Corrected for sample size (df = 152)
+Rank Trace test p-value
+   0     38.855 [0.0033]
+   1     16.732 [0.0321]
+   2     5.8333 [0.0165]
+
+eigenvalue     0.11046     0.056034     0.030393 
+
+beta (cointegrating vectors)
+p             -0.75794      0.18575      0.19881 
+s             0.028011     0.061953    -0.083853 
+pf             0.42202    -0.051400     -0.12787 
+
+alpha (adjustment vectors)
+p             0.027936    -0.016103    -0.031097 
+s              0.25007     -0.39338      0.20321 
+pf            -0.10324    -0.060368    -0.023644 
+
+renormalized beta
+p               1.0000       2.9982      -1.5547 
+s            -0.036957       1.0000      0.65575 
+pf            -0.55680     -0.82967       1.0000 
+
+renormalized alpha
+p            -0.021174  -0.00099765    0.0039765 
+s             -0.18954    -0.024371    -0.025985 
+pf            0.078252   -0.0037400    0.0030234 
+
+long-run matrix (alpha * beta')
+                     p            s           pf
+p            -0.030348    0.0023925     0.016594 
+s             -0.22220    -0.034406     0.099768 
+pf            0.062338   -0.0046493    -0.037444 
+
+# Estimate VECM: lag order 12, cointegration rank 1
+? Hamilton <- vecm 12 1 p s pf
+
+VECM system, lag order 12
+Maximum likelihood estimates, observations 1974:02-1989:10 (T = 189)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+p        1.0000 
+        (0.0000) 
+s     -0.036957 
+      (0.031033) 
+pf     -0.55680 
+      (0.016363) 
+
+alpha (adjustment vectors)
+
+p     -0.021174 
+s      -0.18954 
+pf     0.078252 
+
+Log-likelihood = -477.53156
+Determinant of covariance matrix = 0.031417596
+AIC = 6.2278
+BIC = 8.1317
+HQC = 6.9992
+
+Equation 1: d_p
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.109809     0.102935     -1.067    0.2877  
+  d_p_1       0.625643     0.0791024     7.909    4.68e-13 ***
+  d_p_2      -0.117381     0.0902841    -1.300    0.1955  
+  d_p_3       0.0551610    0.0862954     0.6392   0.5236  
+  d_p_4       0.169444     0.0828964     2.044    0.0427   **
+  d_p_5      -0.126173     0.0803175    -1.571    0.1183  
+  d_p_6       0.0178142    0.0735271     0.2423   0.8089  
+  d_p_7       0.148163     0.0720945     2.055    0.0416   **
+  d_p_8      -0.0724932    0.0731337    -0.9912   0.3231  
+  d_p_9       0.282716     0.0729958     3.873    0.0002   ***
+  d_p_10     -0.106913     0.0739483    -1.446    0.1503  
+  d_p_11      0.138809     0.0731879     1.897    0.0598   *
+  d_s_1      -0.00838756   0.00789323   -1.063    0.2896  
+  d_s_2      -0.0143540    0.00829037   -1.731    0.0854   *
+  d_s_3      -0.00221332   0.00838565   -0.2639   0.7922  
+  d_s_4       0.00916004   0.00861307    1.064    0.2892  
+  d_s_5      -0.00115471   0.00845770   -0.1365   0.8916  
+  d_s_6       0.00792861   0.00839981    0.9439   0.3467  
+  d_s_7      -0.00345747   0.00834380   -0.4144   0.6792  
+  d_s_8       0.00248144   0.00832419    0.2981   0.7660  
+  d_s_9       0.0107306    0.00843886    1.272    0.2054  
+  d_s_10     -0.0197906    0.00847408   -2.335    0.0208   **
+  d_s_11      0.0198117    0.00818936    2.419    0.0167   **
+  d_pf_1      0.0212014    0.0397992     0.5327   0.5950  
+  d_pf_2     -0.0341172    0.0415499    -0.8211   0.4129  
+  d_pf_3      0.106585     0.0414936     2.569    0.0112   **
+  d_pf_4     -0.0635220    0.0408074    -1.557    0.1216  
+  d_pf_5      0.125166     0.0405084     3.090    0.0024   ***
+  d_pf_6     -0.0649778    0.0396376    -1.639    0.1032  
+  d_pf_7     -0.0259265    0.0403907    -0.6419   0.5219  
+  d_pf_8      0.0960243    0.0401733     2.390    0.0180   **
+  d_pf_9     -0.134394     0.0409399    -3.283    0.0013   ***
+  d_pf_10     0.0575655    0.0418693     1.375    0.1712  
+  d_pf_11    -0.0243065    0.0372330    -0.6528   0.5148  
+  EC1        -0.0211742    0.0126255    -1.677    0.0956   *
+
+Mean dependent var   0.524604   S.D. dependent var   0.364976
+Sum squared resid    8.076216   S.E. of regression   0.229004
+R-squared            0.677506   Adjusted R-squared   0.606306
+rho                 -0.015940   Durbin-Watson        2.011261
+
+Equation 2: d_s
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -1.04232      1.07077      -0.9734    0.3319 
+  d_p_1      -0.325898     0.822855     -0.3961    0.6926 
+  d_p_2       1.35386      0.939173      1.442     0.1515 
+  d_p_3       0.0502522    0.897681      0.05598   0.9554 
+  d_p_4      -0.230698     0.862323     -0.2675    0.7894 
+  d_p_5      -0.365560     0.835496     -0.4375    0.6623 
+  d_p_6       1.14354      0.764860      1.495     0.1369 
+  d_p_7       1.01303      0.749957      1.351     0.1787 
+  d_p_8      -0.666088     0.760767     -0.8755    0.3826 
+  d_p_9      -0.487276     0.759332     -0.6417    0.5220 
+  d_p_10      0.212328     0.769240      0.2760    0.7829 
+  d_p_11     -0.560326     0.761330     -0.7360    0.4629 
+  d_s_1       0.297605     0.0821087     3.625     0.0004  ***
+  d_s_2      -0.0295712    0.0862398    -0.3429    0.7321 
+  d_s_3      -0.0480220    0.0872310    -0.5505    0.5828 
+  d_s_4      -0.0282470    0.0895967    -0.3153    0.7530 
+  d_s_5       0.0962266    0.0879804     1.094     0.2758 
+  d_s_6      -0.0182314    0.0873783    -0.2086    0.8350 
+  d_s_7       0.0160746    0.0867956     0.1852    0.8533 
+  d_s_8       0.0803414    0.0865916     0.9278    0.3550 
+  d_s_9      -0.0667225    0.0877846    -0.7601    0.4484 
+  d_s_10      0.0352738    0.0881508     0.4002    0.6896 
+  d_s_11     -0.0518962    0.0851891    -0.6092    0.5433 
+  d_pf_1     -0.275698     0.414008     -0.6659    0.5065 
+  d_pf_2     -0.275791     0.432220     -0.6381    0.5244 
+  d_pf_3      0.00819596   0.431634      0.01899   0.9849 
+  d_pf_4      0.580480     0.424495      1.367     0.1735 
+  d_pf_5     -0.120992     0.421385     -0.2871    0.7744 
+  d_pf_6     -0.0606657    0.412327     -0.1471    0.8832 
+  d_pf_7      0.0321009    0.420161      0.07640   0.9392 
+  d_pf_8      0.320065     0.417899      0.7659    0.4449 
+  d_pf_9     -0.0697605    0.425873     -0.1638    0.8701 
+  d_pf_10    -0.471857     0.435542     -1.083     0.2803 
+  d_pf_11     0.210777     0.387313      0.5442    0.5871 
+  EC1        -0.189536     0.131336     -1.443     0.1510 
+
+Mean dependent var  -0.395864   S.D. dependent var   2.476503
+Sum squared resid    873.9289   S.E. of regression   2.382197
+R-squared            0.242050   Adjusted R-squared   0.074711
+rho                 -0.000106   Durbin-Watson        1.987734
+
+Equation 3: d_pf
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       0.721318     0.204870      3.521     0.0006   ***
+  d_p_1       0.202529     0.157436      1.286     0.2002  
+  d_p_2      -0.171849     0.179691     -0.9564    0.3404  
+  d_p_3      -0.0263779    0.171752     -0.1536    0.8781  
+  d_p_4       0.264522     0.164987      1.603     0.1109  
+  d_p_5       0.00573456   0.159855      0.03587   0.9714  
+  d_p_6      -0.218672     0.146340     -1.494     0.1371  
+  d_p_7       0.0452301    0.143489      0.3152    0.7530  
+  d_p_8       0.147559     0.145557      1.014     0.3123  
+  d_p_9       0.149770     0.145282      1.031     0.3042  
+  d_p_10     -0.461173     0.147178     -3.133     0.0021   ***
+  d_p_11      0.0164600    0.145665      0.1130    0.9102  
+  d_s_1      -0.0244183    0.0157098    -1.554     0.1222  
+  d_s_2      -0.00172499   0.0165002    -0.1045    0.9169  
+  d_s_3       0.0307894    0.0166898     1.845     0.0670   *
+  d_s_4       0.0152477    0.0171424     0.8895    0.3751  
+  d_s_5       0.00512984   0.0168332     0.3047    0.7610  
+  d_s_6       0.00740949   0.0167180     0.4432    0.6582  
+  d_s_7      -0.0114561    0.0166065    -0.6899    0.4913  
+  d_s_8      -0.0352070    0.0165675    -2.125     0.0352   **
+  d_s_9       0.00871218   0.0167957     0.5187    0.6047  
+  d_s_10     -0.00824474   0.0168658    -0.4888    0.6256  
+  d_s_11      0.0144679    0.0162991     0.8876    0.3761  
+  d_pf_1      0.352736     0.0792116     4.453     1.62e-05 ***
+  d_pf_2      0.0540375    0.0826962     0.6534    0.5144  
+  d_pf_3      0.0286185    0.0825841     0.3465    0.7294  
+  d_pf_4      0.0219350    0.0812183     0.2701    0.7875  
+  d_pf_5      0.00154543   0.0806232     0.01917   0.9847  
+  d_pf_6      0.150170     0.0788900     1.904     0.0588   *
+  d_pf_7     -0.159726     0.0803890    -1.987     0.0487   **
+  d_pf_8     -0.00694701   0.0799563    -0.08689   0.9309  
+  d_pf_9     -0.0899387    0.0814819    -1.104     0.2714  
+  d_pf_10     0.00845851   0.0833318     0.1015    0.9193  
+  d_pf_11     0.0815583    0.0741043     1.101     0.2728  
+  EC1         0.0782520    0.0251283     3.114     0.0022   ***
+
+Mean dependent var   1.026481   S.D. dependent var   0.645087
+Sum squared resid    31.99173   S.E. of regression   0.455783
+R-squared            0.591076   Adjusted R-squared   0.500794
+rho                  0.004466   Durbin-Watson        1.985531
+
+Cross-equation covariance matrix:
+
+               p            s           pf
+p       0.042731    -0.038613     0.018314 
+s      -0.038613       4.6240     0.057806 
+pf      0.018314     0.057806      0.16927 
+
+determinant = 0.0314176
+
+# First test: Is the middle coefficient zero?  (That is,
+# the cointegrating vector, "beta", involves only the two
+# price levels.)
+? restrict Hamilton
+? b[2] = 0
+? end restrict --verbose
+Restriction:
+ b[2] = 0
+
+R (1 x 3)
+
+  0   1   0 
+
+q (1 x 1)
+
+  0 
+
+
+Test of restrictions on cointegrating relations
+
+Restriction matrix, H (3 x 2)
+
+  -1    0 
+   0    0 
+   0    1 
+
+H'*S11*H (2 x 2)
+
+      427.37      -805.81 
+     -805.81       1525.4 
+
+S01*H (3 x 2)
+
+     0.48486     -0.83771 
+      1.8140      -2.4690 
+      1.8084      -3.5899 
+
+M (2 x 1)
+
+     0.73251 
+     0.39457 
+
+eigenvalue 1 = 0.105851
+
+Unrestricted loglikelihood (lu) = -477.53156
+Restricted loglikelihood (lr) = -478.01997
+2 * (lu - lr) = 0.97682
+P(Chi-square(1) > 0.97682) = 0.322985
+
+beta (cointegrating vectors)
+p               1.0000 
+s               0.0000 
+pf            -0.53865 
+
+alpha (adjustment vectors)
+p            -0.018045 
+s             -0.25976 
+pf            0.067258 
+
+long-run matrix (alpha * beta')
+                     p            s           pf
+p            -0.018045       0.0000    0.0097200 
+s             -0.25976       0.0000      0.13992 
+pf            0.067258       0.0000    -0.036228 
+
+# Second test: The real exchange rate is stationary, or beta
+# is proportional to (1, -1, -1)'
+? restrict Hamilton
+? b[1] + b[2] = 0
+? b[1] + b[3] = 0
+? end restrict --verbose
+Restriction set
+ 1: b[1] + b[2] = 0
+ 2: b[1] + b[3] = 0
+
+R (2 x 3)
+
+  1   1   0 
+  1   0   1 
+
+q (2 x 1)
+
+  0 
+  0 
+
+
+Test of restrictions on cointegrating relations
+
+Restriction matrix, H (3 x 1)
+
+   1 
+  -1 
+  -1 
+
+H'*S11*H (1 x 1)
+
+      88.598 
+
+S01*H (3 x 1)
+
+    -0.14591 
+      3.6142 
+     0.31258 
+
+M (1 x 1)
+
+     0.10624 
+
+eigenvalue 1 = 0.0424498
+
+Unrestricted loglikelihood (lu) = -477.53156
+Restricted loglikelihood (lr) = -484.49372
+2 * (lu - lr) = 13.9243
+P(Chi-square(2) > 13.9243) = 0.000947048
+
+beta (cointegrating vectors)
+p               1.0000 
+s              -1.0000 
+pf             -1.0000 
+
+alpha (adjustment vectors)
+p           -0.0016469 
+s             0.040794 
+pf           0.0035281 
+
+long-run matrix (alpha * beta')
+                     p            s           pf
+p           -0.0016469    0.0016469    0.0016469 
+s             0.040794    -0.040794    -0.040794 
+pf           0.0035281   -0.0035281   -0.0035281 
+
+Done

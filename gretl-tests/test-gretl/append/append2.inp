@@ -1,0 +1,4 @@
+open greene14_1.gdt
+append panel_time.txt
+append panel_unit.txt
+print unit year foo bar -o

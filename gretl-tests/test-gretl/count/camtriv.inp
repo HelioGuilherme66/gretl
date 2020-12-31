@@ -1,0 +1,40 @@
+# cameron-trivedi negbin TSP benchmark
+# compare with http://www.stanford.edu/~clint/bench/
+
+set echo off
+set messages off
+set optimizer newton
+
+open rac3d.gdt
+list X = 0 SEX AGE AGESQ INCOME LEVYPLUS FREEPOOR FREEREPA \
+  ILLNESS ACTDAYS HSCORE CHCOND1 CHCOND2
+
+# ---------- negbin 2 -------------------------
+
+negbin DVISITS X
+cf = $coeff
+sehss = $stderr
+negbin DVISITS X --opg
+seopg = $stderr
+
+compare = cf' | sehss' | seopg'
+TSP = mshape(mread("TSP_negbin2.mat"), 3, 14)
+compare = maxr(abs(compare - TSP))
+compare
+
+# ---------- negbin 1 -------------------------
+
+negbin DVISITS X --model1
+cf = $coeff
+sehss = $stderr
+negbin DVISITS X --opg --model1
+seopg = $stderr
+
+compare = cf' | sehss' | seopg'
+TSP = mshape(mread("TSP_negbin1.mat"), 3, 14)
+compare = maxr(abs(compare - TSP))
+compare
+
+
+
+

@@ -1,0 +1,42 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run meansby_ex.inp
+ /home/cottrell/stats/test-gretl/ufunc/meansby_ex.inp
+? open rac3d
+
+Read datafile /opt/esl/share/gretl/data/misc/rac3d.gdt
+periodicity: 1, maxobs: 5190
+observations range: 1 to 5190
+
+Listing 20 variables:
+  0) const       1) SEX         2) AGE         3) AGESQ       4) INCOME    
+  5) LEVYPLUS    6) FREEPOOR    7) FREEREPA    8) ILLNESS     9) ACTDAYS   
+ 10) HSCORE     11) CHCOND1    12) CHCOND2    13) DVISITS    14) NONDOCCO  
+ 15) HOSPADMI   16) HOSPDAYS   17) MEDICINE   18) PRESCRIB   19) NONPRESC  
+
+? include meansby.inp
+ /home/cottrell/stats/test-gretl/ufunc/meansby.inp
+? age = int(100*AGE)
+Generated series age (ID 20)
+? discrete age
+? list X = INCOME FREEREPA HSCORE
+Generated list X
+? meansby(X, age)
+
+                INCOME   FREEREPA     HSCORE
+
+         19    0.41834    0.00931    1.18617
+         22    0.65093    0.01154    1.09810
+         27    0.84706    0.02677    1.19120
+         32    0.93312    0.02326    1.48837
+         37    0.88747    0.04795    1.40411
+         42    0.84198    0.08730    1.15873
+         47    0.74801    0.10497    1.13260
+         52    0.66977    0.27027    1.34685
+         56    0.52319    0.34066    1.42125
+         62    0.45994    0.44937    1.21203
+         67    0.34937    0.62222    1.16190
+         72    0.34135    0.63382    1.25547
+Done

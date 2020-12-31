@@ -1,0 +1,46 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run collin.inp
+ /home/cottrell/stats/test-gretl/collin.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? set seed 332211
+Pseudo-random number generator seeded with 332211
+? series z = 0
+Generated series z (ID 5)
+? genr foo = sqft * 3
+Generated series foo (ID 6)
+? genr baz = sqft * 6
+Generated series baz (ID 7)
+? genr egg = sqft + normal()/5
+Generated series egg (ID 8)
+? ols 1 0 2 foo baz z egg
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+Omitted because all values were zero: z
+Omitted due to exact collinearity: foo baz
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        42.2331      39.4400      1.071    0.3072 
+  sqft         52.5221      60.3849      0.8698   0.4030 
+  egg         -52.3808      60.3819     -0.8675   0.4042 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    17103.47   S.E. of regression   39.43173
+R-squared            0.832014   Adjusted R-squared   0.801471
+F(2, 11)             27.24087   P-value(F)           0.000055
+Log-likelihood      -69.62099   Akaike criterion     145.2420
+Schwarz criterion    147.1592   Hannan-Quinn         145.0645
+
+Done

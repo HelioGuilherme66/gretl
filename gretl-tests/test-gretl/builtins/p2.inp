@@ -1,0 +1,22 @@
+set echo off
+set messages off
+set warnings off
+
+open pizza4.gdt
+series ages = age<=20 ? 0 : (age>20 && age <=40) ? 1 : 2
+list BY = female college ages
+list X = pizza income
+m = aggregate(X, BY, mean)
+print m
+# two ways of trimming the result
+m1 = selifr(m, !isnan(m[,cols(m)]))
+print m1
+scalar c = nelem(BY)
+m2 = selifr(m, m[,c+1])
+print m2
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run armagen3.inp
+ /home/allin/stats/test-gretl/bfgs/arma/armagen3.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 5
+Pseudo-random number generator seeded with 5
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + 0.4*eps(-1)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-1) -0.3*y(-2) + u
+Replaced series y (ID 4)
+? smpl 1950:2 ;
+Full data range: 1950:01 - 2001:12 (n = 624)
+Current sample: 1950:02 - 2001:12 (n = 623)
+
+? arma 2 1 ; y
+
+Function evaluations: 37
+Evaluations of gradient: 13
+
+Model 1: ARMA, using observations 1950:02-2001:12 (T = 623)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.135986    0.0957265     1.421   0.1554  
+  phi_1        0.770803    0.0642214    12.00    3.46e-33 ***
+  phi_2       -0.302808    0.0554399    -5.462   4.71e-08 ***
+  theta_1      0.344923    0.0614227     5.616   1.96e-08 ***
+
+Mean dependent var   0.135622   S.D. dependent var   1.521825
+Mean of innovations -0.001493   S.D. of innovations  0.945456
+Log-likelihood      -849.6945   Akaike criterion     1709.389
+Schwarz criterion    1731.562   Hannan-Quinn         1718.006
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2728    -1.2971     1.8173    -0.1265
+    Root  2           1.2728     1.2971     1.8173     0.1265
+  MA
+    Root  1          -2.8992     0.0000     2.8992     0.5000
+  -----------------------------------------------------------
+
+Done

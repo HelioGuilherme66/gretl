@@ -1,0 +1,50 @@
+/*
+  filter() function showcase
+*/
+set seed 23497823
+nulldata 900
+setobs 12 1:1 --special
+
+u = normal()
+
+# symmetric two-sided moving average (note that
+# the '0' coefficient for c subtracts 0.8 from 1)
+# a = {}
+# c = {-2, 0.2; -1, 0.2; 0, -0.8; 1, 0.2; 2, 0.2}
+# mau = filter(u,a,c) 
+
+# generate an ARMA(1,2)
+matrix a = {-0.7}
+c = {0, 0.5}
+y = 3 + filter(u,a,c)
+
+# just for fun: apply inverse filter
+# and check it returns original series
+e = filter(y-3,c,a)
+ols e const u
+
+# use the filter() function in hand-made ARMA estimation
+# (approximate CML)
+
+scalar mu = 2.5
+scalar phi = 0.675
+scalar theta = 0.475
+scalar s2 = 1
+
+# check
+arma 1 {2} ; y --conditional
+
+scalar mu = $coeff[1]
+scalar phi = $coeff[2]
+scalar theta = $coeff[3]
+
+mle ll = -0.5 * (ln(s2) + e^2/s2)
+    a[1] = -phi
+    c[2] = theta
+    scalar m = mu/(1-phi)
+    e = filter(y-m, c, a)
+    s2 = mean(e^2)
+    params mu phi theta s2
+end mle -v -h
+
+

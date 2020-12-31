@@ -1,0 +1,1398 @@
+=== /home/allin/stats/test-gretl/bfgs/arma ===
+diff -rbB output/arimadD.out newout/arimadD.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+31,32c31,32
+< Function evaluations: 31
+< Evaluations of gradient: 10
+---
+> Function evaluations: 28
+> Evaluations of gradient: 11
+41,42c41,42
+<   const       0.0825214    0.0673206     1.226   0.2203  
+<   theta_1     0.468224     0.0391498    11.96    5.77e-33 ***
+---
+>   const       0.0825215    0.0673245     1.226   0.2203  
+>   theta_1     0.468224     0.0391490    11.96    5.75e-33 ***
+57,58c57,58
+< Function evaluations: 32
+< Evaluations of gradient: 10
+---
+> Function evaluations: 31
+> Evaluations of gradient: 11
+67,68c67,68
+<   const       0.0825214    0.0673009     1.226   0.2201  
+<   theta_1     0.468224     0.0391493    11.96    5.76e-33 ***
+---
+>   const       0.0825213    0.0672595     1.227   0.2199  
+>   theta_1     0.468224     0.0391486    11.96    5.74e-33 ***
+diff -rbB output/arimax.out newout/arimax.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+63,129c63,153
+< Iteration 6: loglikelihood = -507.596408370 (steplength = 0.2)
+< Parameters:       7.5527    -0.87361   0.0051772
+< Gradients:       0.30454      1.9402      55.983 (norm 1.20e+00)
+< 
+< Iteration 7: loglikelihood = -507.495329442 (steplength = 1)
+< Parameters:       7.5159    -0.86377    0.010566
+< Gradients:      -0.11717     -2.0592     -12.612 (norm 9.65e-01)
+< 
+< Iteration 8: loglikelihood = -507.480040522 (steplength = 1)
+< Parameters:       7.4805    -0.87188    0.010033
+< Gradients:     -0.071060     0.29775     -4.7743 (norm 5.29e-01)
+< 
+< Iteration 9: loglikelihood = -507.479210011 (steplength = 6.4e-05)
+< Parameters:       7.4805    -0.87186   0.0097273
+< Gradients:     -0.045134     0.24335    -0.62683 (norm 4.30e-01)
+< 
+< Iteration 10: loglikelihood = -507.479140923 (steplength = 0.0016)
+< Parameters:       7.4804    -0.87148   0.0097326
+< Gradients:     -0.045037     0.12512    -0.64446 (norm 3.88e-01)
+< 
+< Iteration 11: loglikelihood = -507.477422262 (steplength = 1)
+< Parameters:       7.4383    -0.87116   0.0099498
+< Gradients:     -0.038895  -0.0067189    0.014268 (norm 3.14e-01)
+< 
+< Iteration 12: loglikelihood = -507.461941120 (steplength = 1)
+< Parameters:       6.7683    -0.87026    0.013888
+< Gradients:      0.011826    -0.57702      3.3970 (norm 4.58e-01)
+< 
+< Iteration 13: loglikelihood = -507.460100621 (steplength = 1)
+< Parameters:       6.5649    -0.87138    0.015290
+< Gradients:     0.0090154    -0.27088      1.5675 (norm 3.26e-01)
+< 
+< Iteration 14: loglikelihood = -507.459895532 (steplength = 1)
+< Parameters:       6.5342    -0.87210    0.015580
+< Gradients:     0.0014268   -0.043693     0.15935 (norm 1.29e-01)
+< 
+< Iteration 15: loglikelihood = -507.459889899 (steplength = 1)
+< Parameters:       6.5418    -0.87223    0.015544
+< Gradients:    6.2528e-05  -0.0027796  -0.0010459 (norm 3.08e-02)
+< 
+< Iteration 16: loglikelihood = -507.459889897 (steplength = 0.00032)
+< Parameters:       6.5418    -0.87223    0.015543
+< Gradients:    9.0949e-05  -0.0025409   0.0034134 (norm 3.09e-02)
+< 
+< Iteration 17: loglikelihood = -507.459889888 (steplength = 0.00032)
+< Parameters:       6.5418    -0.87223    0.015544
+< Gradients:    6.2528e-05 -0.00084697  -0.0011369 (norm 1.97e-02)
+< 
+< Iteration 18: loglikelihood = -507.459889882 (steplength = 1)
+< Parameters:       6.5418    -0.87224    0.015543
+< Gradients:    6.8212e-05  3.4106e-05  9.9476e-05 (norm 1.26e-02)
+< 
+< Iteration 19: loglikelihood = -507.459889867 (steplength = 1)
+< Parameters:       6.5421    -0.87224    0.015541
+< Gradients:    6.8212e-05   0.0013955   0.0020918 (norm 2.38e-02)
+< 
+< Iteration 20: loglikelihood = -507.459889848 (steplength = 1)
+< Parameters:       6.5427    -0.87224    0.015538
+< Gradients:    5.4001e-05   0.0021828   0.0031548 (norm 2.77e-02)
+< 
+< Iteration 21: loglikelihood = -507.459889832 (steplength = 1)
+< Parameters:       6.5434    -0.87224    0.015533
+< Gradients:    1.4211e-05   0.0017508   0.0024983 (norm 2.35e-02)
+< 
+< Iteration 22: loglikelihood = -507.459889828 (steplength = 1)
+< Parameters:       6.5434    -0.87224    0.015533
+< Gradients:    8.5265e-06  0.00066223  0.00094644 (norm 1.47e-02)
+---
+> Iteration 6: loglikelihood = -507.724295366 (steplength = 0.0320622)
+> Parameters:       7.5585    -0.85022    0.015246
+> Gradients:      -0.40596     -3.6549     -59.715 (norm 1.54e+00)
+> 
+> Iteration 7: loglikelihood = -507.677141388 (steplength = 1)
+> Parameters:       7.5008    -0.89684   0.0062456
+> Gradients:       0.31627      8.9403      60.057 (norm 1.89e+00)
+> 
+> Iteration 8: loglikelihood = -507.498259920 (steplength = 1)
+> Parameters:       7.4904    -0.86311    0.010907
+> Gradients:      -0.12841     -2.2262     -14.634 (norm 1.01e+00)
+> 
+> MA root 0 = 0.10478
+> MA estimate(s) out of bounds
+> MA root 0 = 0.584185
+> MA estimate(s) out of bounds
+> Iteration 9: loglikelihood = -507.489389924 (steplength = 0.000105205)
+> Parameters:       7.4904    -0.86335   0.0093677
+> Gradients:     -0.013151     -2.3984      3.8472 (norm 8.57e-01)
+> 
+> MA root 0 = 0.0925336
+> MA estimate(s) out of bounds
+> MA root 0 = 0.5502
+> MA estimate(s) out of bounds
+> Iteration 10: loglikelihood = -507.480983567 (steplength = 0.00407885)
+> Parameters:       7.4903    -0.87323   0.0092777
+> Gradients:     -0.013895     0.64475      4.5664 (norm 4.86e-01)
+> 
+> Iteration 11: loglikelihood = -507.477852805 (steplength = 1)
+> Parameters:       7.4491    -0.87117   0.0099201
+> Gradients:     -0.042522   0.0072930    -0.49020 (norm 3.31e-01)
+> 
+> Iteration 12: loglikelihood = -507.475288900 (steplength = 1)
+> Parameters:       7.3729    -0.87024    0.010522
+> Gradients:     -0.048456    -0.30511     -2.0491 (norm 4.63e-01)
+> 
+> Iteration 13: loglikelihood = -507.466858721 (steplength = 1)
+> Parameters:       7.0070    -0.86895    0.013053
+> Gradients:     -0.050926    -0.82701     -5.0629 (norm 6.17e-01)
+> 
+> Iteration 14: loglikelihood = -507.461852558 (steplength = 1)
+> Parameters:       6.6778    -0.86975    0.015037
+> Gradients:     -0.031898    -0.69089     -4.2513 (norm 5.41e-01)
+> 
+> Iteration 15: loglikelihood = -507.460085007 (steplength = 1)
+> Parameters:       6.5199    -0.87139    0.015789
+> Gradients:    -0.0073868    -0.25128     -1.3737 (norm 3.10e-01)
+> 
+> MA root 0 = 0.793407
+> MA estimate(s) out of bounds
+> Iteration 16: loglikelihood = -507.460010397 (steplength = 8.21251e-05)
+> Parameters:       6.5199    -0.87141    0.015676
+> Gradients:     0.0020918    -0.25832     0.14452 (norm 2.83e-01)
+> 
+> MA root 0 = 0.771985
+> MA estimate(s) out of bounds
+> Iteration 17: loglikelihood = -507.459903428 (steplength = 0.00344914)
+> Parameters:       6.5199    -0.87233    0.015672
+> Gradients:     0.0016485    0.024806     0.10052 (norm 1.06e-01)
+> 
+> Iteration 18: loglikelihood = -507.459900940 (steplength = 1)
+> Parameters:       6.5210    -0.87225    0.015674
+> Gradients:    0.00097771  2.8422e-06  -0.0011994 (norm 4.62e-02)
+> 
+> Iteration 19: loglikelihood = -507.459899509 (steplength = 1)
+> Parameters:       6.5226    -0.87222    0.015666
+> Gradients:    0.00071907  -0.0080377   -0.032600 (norm 6.38e-02)
+> 
+> Iteration 20: loglikelihood = -507.459894436 (steplength = 1)
+> Parameters:       6.5315    -0.87216    0.015616
+> Gradients:   -6.8212e-05   -0.025065   -0.099052 (norm 8.92e-02)
+> 
+> Iteration 21: loglikelihood = -507.459891327 (steplength = 1)
+> Parameters:       6.5393    -0.87216    0.015566
+> Gradients:   -0.00034390   -0.022030   -0.086942 (norm 8.72e-02)
+> 
+> Iteration 22: loglikelihood = -507.459889961 (steplength = 1)
+> Parameters:       6.5437    -0.87221    0.015534
+> Gradients:   -0.00019895  -0.0075715   -0.029834 (norm 5.28e-02)
+> 
+> Iteration 23: loglikelihood = -507.459889924 (steplength = 7.54695e-05)
+> Parameters:       6.5437    -0.87221    0.015532
+> Gradients:        0.0000  -0.0076511  0.00080149 (norm 4.72e-02)
+> 
+> Iteration 24: loglikelihood = -507.459889829 (steplength = 0.00301767)
+> Parameters:       6.5437    -0.87224    0.015532
+> Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+> 
+> Iteration 24: loglikelihood = -507.459889829 (steplength = 1)
+> Parameters:       6.5437    -0.87224    0.015532
+> Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+133,135c157,159
+< loglikelihood = -507.459889828 (steplength = 6.4e-05)
+< Parameters:       6.5434    -0.87224    0.015533
+< Gradients:    8.5265e-06  0.00066223  0.00094644 (norm 1.47e-02)
+---
+> loglikelihood = -507.459889829 (steplength = 4.59719e-06)
+> Parameters:       6.5437    -0.87224    0.015532
+> Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+138,139c162,163
+< Function evaluations: 61
+< Evaluations of gradient: 22
+---
+> Function evaluations: 69
+> Evaluations of gradient: 24
+148,150c172,174
+<   const       6.54338      4.76004        1.375    0.1692  
+<   theta_1    -0.872238     0.0570712    -15.28     9.87e-53 ***
+<   incm        0.0155335    0.0309318      0.5022   0.6155  
+---
+>   const       6.54370      4.77237        1.371    0.1703  
+>   theta_1    -0.872236     0.0570718    -15.28     9.91e-53 ***
+>   incm        0.0155315    0.0310130      0.5008   0.6165  
+153c177
+< Mean of innovations  2.925013   S.D. of innovations  87.65786
+---
+> Mean of innovations  2.924736   S.D. of innovations  87.65787
+169,170c193,194
+< Function evaluations: 59
+< Evaluations of gradient: 19
+---
+> Function evaluations: 53
+> Evaluations of gradient: 24
+179,181c203,205
+<   const       3.99948      4.89902        0.8164   0.4143  
+<   theta_1    -0.880599     0.0605338    -14.55     6.08e-48 ***
+<   incm        0.0304368    0.0314612      0.9674   0.3333  
+---
+>   const       4.00036      4.90226        0.8160   0.4145  
+>   theta_1    -0.880598     0.0605331    -14.55     6.07e-48 ***
+>   incm        0.0304313    0.0314830      0.9666   0.3337  
+184c208
+< Mean of innovations  0.215746   S.D. of innovations  87.57788
+---
+> Mean of innovations  0.215083   S.D. of innovations  87.57788
+196,197c220,221
+< Function evaluations: 74
+< Evaluations of gradient: 18
+---
+> Function evaluations: 71
+> Evaluations of gradient: 15
+206,208c230,232
+<   const       6.54894       3.01919         2.169    0.0301   **
+<   theta_1    -0.886602      0.0719323     -12.33     6.60e-35 ***
+<   incm        0.000282538   0.000385993     0.7320   0.4642  
+---
+>   const       6.54876       3.01959         2.169    0.0301   **
+>   theta_1    -0.886617      0.0719406     -12.32     6.70e-35 ***
+>   incm        0.000282563   0.000386035     0.7320   0.4642  
+211c235
+< Mean of innovations -0.187983   S.D. of innovations  87.77236
+---
+> Mean of innovations -0.187717   S.D. of innovations  87.77230
+diff -rbB output/armagen10.out newout/armagen10.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+29c29
+< Function evaluations: 36
+---
+> Function evaluations: 30
+39,42c39,42
+<   const      -0.0279559     0.146114    -0.1913   0.8483  
+<   phi_1       0.693903      0.105220     6.595    4.26e-11 ***
+<   theta_1     0.291687      0.127188     2.293    0.0218   **
+<   theta_2    -0.296230      0.118165    -2.507    0.0122   **
+---
+>   const      -0.0279557     0.146465    -0.1909   0.8486  
+>   phi_1       0.693903      0.105221     6.595    4.26e-11 ***
+>   theta_1     0.291687      0.127186     2.293    0.0218   **
+>   theta_2    -0.296230      0.118159    -2.507    0.0122   **
+diff -rbB output/armagen1.out newout/armagen1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25,26c25,26
+< Function evaluations: 44
+< Evaluations of gradient: 13
+---
+> Function evaluations: 32
+> Evaluations of gradient: 12
+35c35
+<   const       -0.130975    0.189627     -0.6907   0.4898  
+---
+>   const       -0.130975    0.190047     -0.6892   0.4907  
+37c37
+<   theta_1      0.466052    0.0424318    10.98     4.59e-28 ***
+---
+>   theta_1      0.466052    0.0424313    10.98     4.58e-28 ***
+diff -rbB output/armagen2.out newout/armagen2.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+30c30
+< Evaluations of gradient: 9
+---
+> Evaluations of gradient: 8
+39,42c39,42
+<   const        0.110728    0.211211      0.5243   0.6001  
+<   phi_1        0.748765    0.0532972    14.05     7.83e-45 ***
+<   theta_1      0.394391    0.0770635     5.118    3.09e-07 ***
+<   theta_2     -0.106486    0.0717952    -1.483    0.1380  
+---
+>   const        0.110727    0.213132      0.5195   0.6034  
+>   phi_1        0.748765    0.0533653    14.03     1.01e-44 ***
+>   theta_1      0.394391    0.0771804     5.110    3.22e-07 ***
+>   theta_2     -0.106487    0.0719273    -1.480    0.1387  
+61,64c61,64
+<        0.04461  -1.98759e-04   1.81516e-04   1.56906e-04  const
+<                   0.00284059   -0.00331689   -0.00298763  phi_1
+<                                 0.00593879    0.00454923  theta_1
+<                                               0.00515455  theta_2
+---
+>      0.0454253  -2.15712e-04   2.02145e-04   1.85795e-04  const
+>                   0.00284785   -0.00332832   -0.00299937  phi_1
+>                                 0.00595682    0.00456771  theta_1
+>                                               0.00517353  theta_2
+diff -rbB output/armagen3.out newout/armagen3.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+29,30c29,30
+< Function evaluations: 30
+< Evaluations of gradient: 10
+---
+> Function evaluations: 37
+> Evaluations of gradient: 13
+39,42c39,42
+<   const        0.135988    0.0957153     1.421   0.1554  
+<   phi_1        0.770805    0.0642312    12.00    3.53e-33 ***
+<   phi_2       -0.302809    0.0554501    -5.461   4.74e-08 ***
+<   theta_1      0.344922    0.0614342     5.614   1.97e-08 ***
+---
+>   const        0.135986    0.0957265     1.421   0.1554  
+>   phi_1        0.770803    0.0642214    12.00    3.46e-33 ***
+>   phi_2       -0.302808    0.0554399    -5.462   4.71e-08 ***
+>   theta_1      0.344923    0.0614227     5.616   1.96e-08 ***
+45c45
+< Mean of innovations -0.001494   S.D. of innovations  0.945456
+---
+> Mean of innovations -0.001493   S.D. of innovations  0.945456
+diff -rbB output/armagen4.out newout/armagen4.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+29,30c29,30
+< Function evaluations: 36
+< Evaluations of gradient: 12
+---
+> Function evaluations: 44
+> Evaluations of gradient: 13
+39,43c39,43
+<   const        0.117175    0.0909018     1.289    0.1974 
+<   phi_1        0.386667    0.239306      1.616    0.1061 
+<   phi_2       -0.176762    0.108845     -1.624    0.1044 
+<   theta_1      0.741673    0.241627      3.069    0.0021  ***
+<   theta_2      0.164789    0.168745      0.9766   0.3288 
+---
+>   const        0.117175    0.0909720     1.288    0.1977 
+>   phi_1        0.386671    0.241048      1.604    0.1087 
+>   phi_2       -0.176763    0.109511     -1.614    0.1065 
+>   theta_1      0.741669    0.243381      3.047    0.0023  ***
+>   theta_2      0.164786    0.169968      0.9695   0.3323 
+diff -rbB output/armagen5.out newout/armagen5.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+21,22c21,22
+< Function evaluations: 34
+< Evaluations of gradient: 9
+---
+> Function evaluations: 23
+> Evaluations of gradient: 10
+31,32c31,32
+<   const       0.0232282    0.0578110     0.4018   0.6878  
+<   theta_1     0.428749     0.0383525    11.18     5.16e-29 ***
+---
+>   const       0.0232281    0.0583025     0.3984   0.6903  
+>   theta_1     0.428749     0.0383517    11.18     5.14e-29 ***
+diff -rbB output/armagen6.out newout/armagen6.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+23c23
+< Function evaluations: 21
+---
+> Function evaluations: 43
+33,34c33,34
+<   const       0.0573548    0.129894      0.4416   0.6588   
+<   phi_1       0.686771     0.0290696    23.63     2.13e-123 ***
+---
+>   const       0.0573546    0.132016      0.4345   0.6640   
+>   phi_1       0.686771     0.0290697    23.63     2.13e-123 ***
+diff -rbB output/armagen7.out newout/armagen7.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+27c27
+< Function evaluations: 62
+---
+> Function evaluations: 55
+38,39c38,39
+<   phi_1         0.666616   0.0351119      18.99   2.25e-80 ***
+<   theta_1       0.449457   0.0435450      10.32   5.62e-25 ***
+---
+>   phi_1         0.666616   0.0351112      18.99   2.23e-80 ***
+>   theta_1       0.449457   0.0435440      10.32   5.61e-25 ***
+diff -rbB output/armagen8.out newout/armagen8.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25c25
+< Function evaluations: 31
+---
+> Function evaluations: 22
+36c36
+<   phi_1         0.686771   0.0290698    23.62        2.14e-123 ***
+---
+>   phi_1         0.686771   0.0290699    23.62        2.14e-123 ***
+diff -rbB output/armagen9.out newout/armagen9.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+28c28
+< Function evaluations: 62
+---
+> Function evaluations: 55
+39,40c39,40
+<   phi_1         0.666616   0.0351119      18.99   2.25e-80 ***
+<   theta_1       0.449457   0.0435450      10.32   5.62e-25 ***
+---
+>   phi_1         0.666616   0.0351112      18.99   2.23e-80 ***
+>   theta_1       0.449457   0.0435440      10.32   5.61e-25 ***
+diff -rbB output/arma_na1.out newout/arma_na1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+19,20c19,20
+< Function evaluations: 38
+< Evaluations of gradient: 15
+---
+> Function evaluations: 33
+> Evaluations of gradient: 14
+29,32c29,32
+<   const       4.20170       0.998720    4.207   2.59e-05 ***
+<   phi_1       0.517854      0.209202    2.475   0.0133   **
+<   theta_1     0.482398      0.232561    2.074   0.0381   **
+<   theta_2     0.503760      0.190899    2.639   0.0083   ***
+---
+>   const       4.20170       0.998728    4.207   2.59e-05 ***
+>   phi_1       0.517854      0.209207    2.475   0.0133   **
+>   theta_1     0.482398      0.232565    2.074   0.0381   **
+>   theta_2     0.503760      0.190901    2.639   0.0083   ***
+35c35
+< Mean of innovations -0.029981   S.D. of innovations  1.655161
+---
+> Mean of innovations -0.029982   S.D. of innovations  1.655161
+52,53c52,53
+< Function evaluations: 38
+< Evaluations of gradient: 15
+---
+> Function evaluations: 30
+> Evaluations of gradient: 13
+63,66c63,66
+<   const       4.22650       0.987995    4.278   1.89e-05 ***
+<   phi_1       0.497998      0.208537    2.388   0.0169   **
+<   theta_1     0.495513      0.220080    2.252   0.0244   **
+<   theta_2     0.542605      0.205194    2.644   0.0082   ***
+---
+>   const       4.22650       0.987991    4.278   1.89e-05 ***
+>   phi_1       0.497998      0.208529    2.388   0.0169   **
+>   theta_1     0.495513      0.220070    2.252   0.0243   **
+>   theta_2     0.542605      0.205190    2.644   0.0082   ***
+89c89
+<      4.226498     0.497998     0.495513     0.542605
+---
+>      4.226497     0.497998     0.495513     0.542605
+93c93
+< Gradients:        0.0000 -7.1054e-07 -7.1054e-07 -7.1054e-07 (norm 5.22e-04)
+---
+> Gradients:        0.0000 -7.1054e-07 -2.8422e-06  7.1054e-07 (norm 7.33e-04)
+97c97
+< loglikelihood = -82.1686911683 (steplength = 0.008)
+---
+> loglikelihood = -82.1686911683 (steplength = 0.0100756)
+99c99
+< Gradients:        0.0000 -7.1054e-07 -7.1054e-07 -7.1054e-07 (norm 5.22e-04)
+---
+> Gradients:        0.0000 -7.1054e-07 -2.8422e-06  7.1054e-07 (norm 7.33e-04)
+102c102
+< Function evaluations: 5
+---
+> Function evaluations: 3
+113,116c113,116
+<   const       4.22650       0.987992    4.278   1.89e-05 ***
+<   phi_1       0.497998      0.208542    2.388   0.0169   **
+<   theta_1     0.495513      0.220084    2.251   0.0244   **
+<   theta_2     0.542605      0.205198    2.644   0.0082   ***
+---
+>   const       4.22650       0.987991    4.278   1.89e-05 ***
+>   phi_1       0.497998      0.208531    2.388   0.0169   **
+>   theta_1     0.495513      0.220071    2.252   0.0243   **
+>   theta_2     0.542605      0.205191    2.644   0.0082   ***
+diff -rbB output/arma_scalars.out newout/arma_scalars.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+26,27c26,27
+< Function evaluations: 36
+< Evaluations of gradient: 14
+---
+> Function evaluations: 21
+> Evaluations of gradient: 10
+36,39c36,39
+<   const      2390.09       187.360       12.76    2.86e-37 ***
+<   phi_1         0.806879     0.125983     6.405   1.51e-10 ***
+<   Phi_1         0.585771     0.0984987    5.947   2.73e-09 ***
+<   theta_1      -0.373859     0.197155    -1.896   0.0579   *
+---
+>   const      2390.09       187.361       12.76    2.86e-37 ***
+>   phi_1         0.806879     0.125994     6.404   1.51e-10 ***
+>   Phi_1         0.585771     0.0985002    5.947   2.73e-09 ***
+>   theta_1      -0.373859     0.197183    -1.896   0.0580   *
+42c42
+< Mean of innovations  11.93756   S.D. of innovations  210.7183
+---
+> Mean of innovations  11.93749   S.D. of innovations  210.7183
+diff -rbB output/armaxgen2.out newout/armaxgen2.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25c25
+< Function evaluations: 53
+---
+> Function evaluations: 42
+35c35
+<   theta_1     0.390582     0.0421720       9.262   2.01e-20 ***
+---
+>   theta_1     0.390582     0.0421710       9.262   2.01e-20 ***
+diff -rbB output/armaxgen3.out newout/armaxgen3.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+33,34c33,34
+< Function evaluations: 57
+< Evaluations of gradient: 19
+---
+> Function evaluations: 43
+> Evaluations of gradient: 17
+43,45c43,45
+<   const       20.3997      0.174607     116.8     0.0000   ***
+<   phi_1        0.199892    0.0573467      3.486   0.0005   ***
+<   theta_1      0.627480    0.0501943     12.50    7.37e-36 ***
+---
+>   const       20.3997      0.174606     116.8     0.0000   ***
+>   phi_1        0.199892    0.0573443      3.486   0.0005   ***
+>   theta_1      0.627480    0.0501910     12.50    7.29e-36 ***
+65,69c65,69
+<      0.0304875   3.08295e-05    0.00223608    -0.0133211    -0.0156905  const
+<                   0.00328864    -0.0018488  -7.22726e-05   4.68290e-05  phi_1
+<                                 0.00251946    -0.0020721   -0.00238582  theta_1
+<                                                0.0221424    0.00472642  x1
+<                                                               0.026101  x2
+---
+>      0.0304874   3.10714e-05    0.00223588     -0.013321    -0.0156904  const
+>                   0.00328837   -0.00184848  -7.24291e-05   4.64223e-05  phi_1
+>                                 0.00251914   -0.00207195    -0.0023855  theta_1
+>                                                0.0221423    0.00472631  x1
+>                                                              0.0261008  x2
+diff -rbB output/armaxgen.out newout/armaxgen.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25,26c25,26
+< Function evaluations: 40
+< Evaluations of gradient: 13
+---
+> Function evaluations: 31
+> Evaluations of gradient: 11
+35,37c35,37
+<   const       10.1358      0.101120     100.2    0.0000   ***
+<   theta_1      0.426119    0.0421323     10.11   4.80e-24 ***
+<   x            2.84830     0.146858      19.39   8.52e-84 ***
+---
+>   const       10.1358      0.101121     100.2    0.0000   ***
+>   theta_1      0.426119    0.0421336     10.11   4.81e-24 ***
+>   x            2.84830     0.146859      19.39   8.55e-84 ***
+53,55c53,55
+<      0.0102253  -2.47627e-05    -0.0111875  const
+<                   0.00177513   3.38899e-05  theta_1
+<                                  0.0215673  x
+---
+>      0.0102254  -2.47230e-05    -0.0111877  const
+>                   0.00177524   3.38010e-05  theta_1
+>                                  0.0215676  x
+diff -rbB output/bierens.out newout/bierens.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+27c27
+< Function evaluations: 28
+---
+> Function evaluations: 33
+37,40c37,40
+<   const      -0.0911351    0.336924     -0.2705   0.7868  
+<   phi_1       0.739212     0.0618472    11.95     6.32e-33 ***
+<   theta_1     0.485453     0.0931362     5.212    1.87e-07 ***
+<   Theta_1    -0.191194     0.0876616    -2.181    0.0292   **
+---
+>   const      -0.0911347    0.337016     -0.2704   0.7868  
+>   phi_1       0.739212     0.0618453    11.95     6.29e-33 ***
+>   theta_1     0.485453     0.0931349     5.212    1.86e-07 ***
+>   Theta_1    -0.191194     0.0876606    -2.181    0.0292   **
+59c59
+< Function evaluations: 28
+---
+> Function evaluations: 33
+69,72c69,72
+<   const      -0.0911351    0.336924     -0.2705   0.7868  
+<   phi_1       0.739212     0.0618472    11.95     6.32e-33 ***
+<   theta_1     0.485453     0.0931362     5.212    1.87e-07 ***
+<   Theta_1    -0.191194     0.0876616    -2.181    0.0292   **
+---
+>   const      -0.0911347    0.337016     -0.2704   0.7868  
+>   phi_1       0.739212     0.0618453    11.95     6.29e-33 ***
+>   theta_1     0.485453     0.0931349     5.212    1.86e-07 ***
+>   Theta_1    -0.191194     0.0876606    -2.181    0.0292   **
+diff -rbB output/bja.out newout/bja.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+29,30c29,30
+< Function evaluations: 46
+< Evaluations of gradient: 14
+---
+> Function evaluations: 35
+> Evaluations of gradient: 15
+40,41c40,41
+<   phi_1        0.908685    0.0532095     17.08    2.18e-65 ***
+<   theta_1     -0.575841    0.115605      -4.981   6.32e-07 ***
+---
+>   phi_1        0.908685    0.0532109     17.08    2.20e-65 ***
+>   theta_1     -0.575841    0.115609      -4.981   6.33e-07 ***
+75,76c75,76
+< Function evaluations: 25
+< Evaluations of gradient: 9
+---
+> Function evaluations: 24
+> Evaluations of gradient: 8
+diff -rbB output/bje.out newout/bje.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+29,30c29,30
+< Function evaluations: 48
+< Evaluations of gradient: 22
+---
+> Function evaluations: 24
+> Evaluations of gradient: 14
+39,41c39,41
+<   const       48.1914      4.95856        9.719   2.51e-22 ***
+<   phi_1        1.40757     0.0704361     19.98    7.65e-89 ***
+<   phi_2       -0.712805    0.0700772    -10.17    2.65e-24 ***
+---
+>   const       48.1913      4.95853        9.719   2.51e-22 ***
+>   phi_1        1.40757     0.0704355     19.98    7.63e-89 ***
+>   phi_2       -0.712806    0.0700764    -10.17    2.65e-24 ***
+44c44
+< Mean of innovations  0.183390   S.D. of innovations  15.09730
+---
+> Mean of innovations  0.183417   S.D. of innovations  15.09730
+70,71c70,71
+< Function evaluations: 66
+< Evaluations of gradient: 24
+---
+> Function evaluations: 27
+> Evaluations of gradient: 9
+80,83c80,83
+<   const       48.4436      6.07046       7.980   1.46e-15 ***
+<   phi_1        1.55312     0.0981381    15.83    2.06e-56 ***
+<   phi_2       -1.00175     0.154392     -6.488   8.68e-11 ***
+<   phi_3        0.206338    0.0989284     2.086   0.0370   **
+---
+>   const       48.4435      6.07043       7.980   1.46e-15 ***
+>   phi_1        1.55312     0.0981365    15.83    2.06e-56 ***
+>   phi_2       -1.00175     0.154388     -6.488   8.67e-11 ***
+>   phi_3        0.206338    0.0989250     2.086   0.0370   **
+86c86
+< Mean of innovations  0.113624   S.D. of innovations  14.77117
+---
+> Mean of innovations  0.113655   S.D. of innovations  14.77117
+diff -rbB output/bjgmiss.out newout/bjgmiss.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+21c21
+< Function evaluations: 28
+---
+> Function evaluations: 23
+31,32c31,32
+<   theta_1     -0.401824    0.0896445    -4.482   7.38e-06 ***
+<   Theta_1     -0.556936    0.0731049    -7.618   2.57e-14 ***
+---
+>   theta_1     -0.401823    0.0896447    -4.482   7.38e-06 ***
+>   Theta_1     -0.556936    0.0731050    -7.618   2.57e-14 ***
+60,61c60,61
+< Function evaluations: 38
+< Evaluations of gradient: 15
+---
+> Function evaluations: 67
+> Evaluations of gradient: 13
+71,72c71,72
+<   theta_1     -0.456948     0.120867    -3.781   0.0002  ***
+<   Theta_1     -0.758348     0.236051    -3.213   0.0013  ***
+---
+>   theta_1     -0.456947     0.120859    -3.781   0.0002  ***
+>   Theta_1     -0.758347     0.236090    -3.212   0.0013  ***
+diff -rbB output/bjg.out newout/bjg.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+30c30
+< Function evaluations: 29
+---
+> Function evaluations: 22
+40,41c40,41
+<   theta_1     -0.401824    0.0896432    -4.482   7.38e-06 ***
+<   Theta_1     -0.556936    0.0731047    -7.618   2.57e-14 ***
+---
+>   theta_1     -0.401823    0.0896424    -4.483   7.38e-06 ***
+>   Theta_1     -0.556936    0.0731041    -7.618   2.57e-14 ***
+72c72
+< loglikelihood = 244.696486833 (steplength = 0.008)
+---
+> loglikelihood = 244.696486833 (steplength = 0.00537251)
+77c77
+< Function evaluations: 5
+---
+> Function evaluations: 3
+87,88c87,88
+<   theta_1     -0.401823    0.0896442    -4.482   7.38e-06 ***
+<   Theta_1     -0.556936    0.0731049    -7.618   2.57e-14 ***
+---
+>   theta_1     -0.401823    0.0896455    -4.482   7.38e-06 ***
+>   Theta_1     -0.556937    0.0731054    -7.618   2.57e-14 ***
+diff -rbB output/cars100.out newout/cars100.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25,27c25,27
+< Iteration 2: loglikelihood = -8.85900738238 (steplength = 0.2)
+< Parameters:    -0.075561    -0.14643
+< Gradients:        2.8331     0.85526 (norm 4.12e-01)
+---
+> Iteration 2: loglikelihood = -8.85580756558 (steplength = 0.0522373)
+> Parameters:    -0.089183   -0.038173
+> Gradients:       0.81887    -0.31997 (norm 2.06e-01)
+29c29
+< MA root 0 = 0.0634446
+---
+> MA root 0 = 0.0575441
+31,33c31,37
+< Iteration 3: loglikelihood = -8.73382755675 (steplength = 0.04)
+< Parameters:     0.014114    -0.29938
+< Gradients:        3.5812      1.3692 (norm 4.80e-01)
+---
+> Iteration 3: loglikelihood = -8.63966553668 (steplength = 0.0552273)
+> Parameters:     0.039139    -0.26629
+> Gradients:        1.9890     0.12374 (norm 2.35e-01)
+> 
+> Iteration 4: loglikelihood = -8.58458321774 (steplength = 0.0335418)
+> Parameters:      0.10585    -0.26214
+> Gradients:      -0.25177     -1.5532 (norm 4.66e-01)
+35c39
+< MA root 0 = 0.0493443
+---
+> MA root 0 = 0.436468
+37c41,45
+< MA root 0 = 0.769662
+---
+> Iteration 5: loglikelihood = -8.26561258044 (steplength = 0.2)
+> Parameters:      0.29110    -0.51244
+> Gradients:       0.42062    -0.56585 (norm 4.54e-01)
+> 
+> MA root 0 = 0.941971
+39,65c47,69
+< Iteration 4: loglikelihood = -8.63648918347 (steplength = 0.04)
+< Parameters:      0.12361    -0.46748
+< Gradients:        4.6452      3.0881 (norm 1.00e+00)
+< 
+< Iteration 5: loglikelihood = -8.42436667587 (steplength = 1)
+< Parameters:      0.20721    -0.51314
+< Gradients:        3.3369      2.2296 (norm 9.58e-01)
+< 
+< Iteration 6: loglikelihood = -8.19332806476 (steplength = 1)
+< Parameters:      0.41392    -0.62180
+< Gradients:     -0.082867    -0.35152 (norm 3.56e-01)
+< 
+< Iteration 7: loglikelihood = -8.19256951515 (steplength = 0.008)
+< Parameters:      0.41325    -0.62462
+< Gradients:      0.055896    -0.18104 (norm 2.61e-01)
+< 
+< Iteration 8: loglikelihood = -8.18910970828 (steplength = 0.2)
+< Parameters:      0.44335    -0.64967
+< Gradients:     -0.052153   -0.089603 (norm 2.02e-01)
+< 
+< Iteration 9: loglikelihood = -8.18901781021 (steplength = 1)
+< Parameters:      0.44623    -0.65364
+< Gradients:     0.0073732    0.011165 (norm 7.28e-02)
+< 
+< Iteration 10: loglikelihood = -8.18901661985 (steplength = 1)
+< Parameters:      0.44604    -0.65330
+< Gradients:   -6.1995e-05 -0.00012541 (norm 7.40e-03)
+---
+> Iteration 6: loglikelihood = -8.20928554892 (steplength = 0.2)
+> Parameters:      0.37790    -0.61602
+> Gradients:        1.0396     0.80409 (norm 6.66e-01)
+> 
+> Iteration 7: loglikelihood = -8.18957582962 (steplength = 1)
+> Parameters:      0.43425    -0.64655
+> Gradients:       0.16687     0.12560 (norm 2.77e-01)
+> 
+> Iteration 8: loglikelihood = -8.18901715753 (steplength = 1)
+> Parameters:      0.44563    -0.65298
+> Gradients:     0.0021246 -0.00054170 (norm 2.55e-02)
+> 
+> Iteration 9: loglikelihood = -8.18901703309 (steplength = 0.0517641)
+> Parameters:      0.44574    -0.65300
+> Gradients:   -0.00094653  -0.0037132 (norm 3.77e-02)
+> 
+> Iteration 10: loglikelihood = -8.18901661965 (steplength = 0.0558356)
+> Parameters:      0.44605    -0.65330
+> Gradients:   -3.1974e-06 -2.6112e-05 (norm 3.04e-03)
+> 
+> Iteration 11: loglikelihood = -8.18901661962 (steplength = 1)
+> Parameters:      0.44605    -0.65331
+> Gradients:   -2.6645e-07  3.5527e-07 (norm 4.19e-04)
+69c73
+< Gradients:    7.1054e-07 -3.5527e-07 (norm 5.24e-04)
+---
+> Gradients:   -2.6645e-07  3.5527e-07 (norm 4.19e-04)
+73c77
+< loglikelihood = -8.18901661962 (steplength = 0.04)
+---
+> loglikelihood = -8.18901661962 (steplength = 0.000308078)
+75c79
+< Gradients:    7.1054e-07 -3.5527e-07 (norm 5.24e-04)
+---
+> Gradients:   -2.6645e-07  3.5527e-07 (norm 4.19e-04)
+78c82
+< Function evaluations: 23
+---
+> Function evaluations: 32
+88,89c92,93
+<   phi_1        0.446049     0.408011     1.093   0.2743 
+<   theta_1     -0.653307     0.336996    -1.939   0.0525  *
+---
+>   phi_1        0.446049     0.407996     1.093   0.2743 
+>   theta_1     -0.653307     0.336985    -1.939   0.0525  *
+diff -rbB output/chd.out newout/chd.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+19,20c19,20
+< Function evaluations: 35
+< Evaluations of gradient: 14
+---
+> Function evaluations: 28
+> Evaluations of gradient: 12
+29,31c29,31
+<   const      345.629       12.1570      28.43     8.48e-178 ***
+<   phi_1        0.902020     0.0865293   10.42     1.92e-25  ***
+<   theta_1     -0.0383137    0.174385    -0.2197   0.8261   
+---
+>   const      345.629       12.1552      28.43     7.56e-178 ***
+>   phi_1        0.902020     0.0864731   10.43     1.79e-25  ***
+>   theta_1     -0.0383137    0.173912    -0.2203   0.8256   
+48,49c48,49
+< Function evaluations: 27
+< Evaluations of gradient: 10
+---
+> Function evaluations: 21
+> Evaluations of gradient: 11
+59c59
+<   phi_1        0.892129     0.0803050   11.11   1.13e-28  ***
+---
+>   phi_1        0.892129     0.0803051   11.11   1.13e-28  ***
+diff -rbB output/gretl-dnl-m.out newout/gretl-dnl-m.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+26,27c26,27
+< Function evaluations: 41
+< Evaluations of gradient: 10
+---
+> Function evaluations: 33
+> Evaluations of gradient: 9
+36,40c36,40
+<   const       6.07140      0.149428     40.63     0.0000   ***
+<   phi_1       0.750173     0.112668      6.658    2.77e-11 ***
+<   phi_2      -0.381898     0.118327     -3.227    0.0012   ***
+<   phi_6       0.0719275    0.100801      0.7136   0.4755  
+<   time        0.0397890    0.00382924   10.39     2.73e-25 ***
+---
+>   const       6.07140      0.149427     40.63     0.0000   ***
+>   phi_1       0.750173     0.112665      6.658    2.77e-11 ***
+>   phi_2      -0.381898     0.118321     -3.228    0.0012   ***
+>   phi_6       0.0719275    0.100752      0.7139   0.4753  
+>   time        0.0397890    0.00382916   10.39     2.72e-25 ***
+diff -rbB output/hsl24.out newout/hsl24.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+diff -rbB output/hst23a.out newout/hst23a.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+22c22
+< Function evaluations: 24
+---
+> Function evaluations: 9
+32c32
+<   theta_1     0.328888     0.0815134    4.035   5.47e-05 ***
+---
+>   theta_1     0.328888     0.0815148    4.035   5.47e-05 ***
+100c100
+< 1968:12       53.847      57.3826     -3.53565
+---
+> 1968:12       53.847      57.3826     -3.53564
+126c126
+< 1971:02       58.287      49.5409      8.74615
+---
+> 1971:02       58.287      49.5408      8.74615
+133c133
+< 1971:09      102.149     114.0529    -11.90390
+---
+> 1971:09      102.149     114.0529    -11.90391
+152c152
+< 1973:04      120.453     116.2496      4.20342
+---
+> 1973:04      120.453     116.2496      4.20341
+156c156
+< 1973:08      106.806     116.8894    -10.08339
+---
+> 1973:08      106.806     116.8894    -10.08340
+178,179c178,179
+< Function evaluations: 24
+< Evaluations of gradient: 6
+---
+> Function evaluations: 15
+> Evaluations of gradient: 5
+189c189
+<   theta_1     0.320830     0.0825232    3.888   0.0001  ***
+---
+>   theta_1     0.320830     0.0825248    3.888   0.0001  ***
+224c224
+< 1966:02       50.361      42.4999      7.86115
+---
+> 1966:02       50.361      42.4998      7.86115
+235c235
+< 1967:01       40.157      34.3102      5.84676
+---
+> 1967:01       40.157      34.3102      5.84677
+263c263
+< 1969:05       91.301      86.5946      4.70639
+---
+> 1969:05       91.301      86.5946      4.70640
+270c270
+< 1969:12       42.827      51.3545     -8.52748
+---
+> 1969:12       42.827      51.3545     -8.52747
+274c274
+< 1970:04       73.835      68.0108      5.82419
+---
+> 1970:04       73.835      68.0108      5.82418
+306c306
+< 1972:12       73.195      90.9906    -17.79559
+---
+> 1972:12       73.195      90.9906    -17.79558
+310c310
+< 1973:04      120.453     115.9491      4.50393
+---
+> 1973:04      120.453     115.9491      4.50392
+313,314c313,314
+< 1973:07      114.746     108.4223      6.32374
+< 1973:08      106.806     116.7748     -9.96884
+---
+> 1973:07      114.746     108.4223      6.32375
+> 1973:08      106.806     116.7748     -9.96885
+319c319
+< 1974:01       43.292      41.0056      2.28637
+---
+> 1974:01       43.292      41.0056      2.28638
+diff -rbB output/hst23.out newout/hst23.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+30,31c30,31
+< Function evaluations: 26
+< Evaluations of gradient: 11
+---
+> Function evaluations: 37
+> Evaluations of gradient: 14
+40,41c40,41
+<   theta_1     -0.271454    0.0832345    -3.261   0.0011  ***
+<   Theta_1     -0.999998    0.372080     -2.688   0.0072  ***
+---
+>   theta_1     -0.271454    0.0832383    -3.261   0.0011  ***
+>   Theta_1     -1.00000     0.372132     -2.687   0.0072  ***
+44c44
+< Mean of innovations -0.028396   S.D. of innovations  6.193975
+---
+> Mean of innovations -0.028396   S.D. of innovations  6.193970
+diff -rbB output/imodel.out newout/imodel.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+diff -rbB output/jackgap1.out newout/jackgap1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+24c24
+< Function evaluations: 27
+---
+> Function evaluations: 28
+34,37c34,37
+<   const      -0.465919     0.499336     -0.9331   0.3508  
+<   phi_2       0.806005     0.0602559    13.38     8.31e-41 ***
+<   theta_1     0.0501088    0.0894531     0.5602   0.5754  
+<   theta_2     0.0970722    0.102662      0.9455   0.3444  
+---
+>   const      -0.465919     0.499415     -0.9329   0.3509  
+>   phi_2       0.806005     0.0602603    13.38     8.42e-41 ***
+>   theta_1     0.0501088    0.0894489     0.5602   0.5753  
+>   theta_2     0.0970722    0.102679      0.9454   0.3445  
+40c40
+< Mean of innovations -0.003548   S.D. of innovations  1.014328
+---
+> Mean of innovations -0.003549   S.D. of innovations  1.014328
+56c56
+< Function evaluations: 29
+---
+> Function evaluations: 27
+66,69c66,69
+<   const      -0.476310     0.541694     -0.8793   0.3792  
+<   phi_1       0.0266765    0.0511005     0.5220   0.6016  
+<   phi_2       0.802418     0.0604483    13.27     3.26e-40 ***
+<   theta_2     0.102550     0.100619      1.019    0.3081  
+---
+>   const      -0.476309     0.541590     -0.8795   0.3791  
+>   phi_1       0.0266765    0.0510971     0.5221   0.6016  
+>   phi_2       0.802418     0.0604437    13.28     3.21e-40 ***
+>   theta_2     0.102550     0.100604      1.019    0.3080  
+diff -rbB output/kwh.out newout/kwh.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+32,33c32,33
+< Function evaluations: 28
+< Evaluations of gradient: 11
+---
+> Function evaluations: 23
+> Evaluations of gradient: 10
+42,43c42,43
+<   theta_1     -0.695933    0.0686098    -10.14    3.55e-24 ***
+<   Theta_1     -0.803243    0.0919932     -8.732   2.51e-18 ***
+---
+>   theta_1     -0.695934    0.0686098    -10.14    3.55e-24 ***
+>   Theta_1     -0.803243    0.0919943     -8.731   2.51e-18 ***
+diff -rbB output/pgap1.out newout/pgap1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+27,28c27,28
+< Function evaluations: 31
+< Evaluations of gradient: 10
+---
+> Function evaluations: 43
+> Evaluations of gradient: 15
+37,40c37,40
+<   const       0.0830701    0.179762      0.4621   0.6440  
+<   phi_1       0.660565     0.0397185    16.63     4.14e-62 ***
+<   phi_3       0.0108246    0.0334810     0.3233   0.7465  
+<   theta_1     0.452143     0.0437097    10.34     4.44e-25 ***
+---
+>   const       0.0830636    0.184332      0.4506   0.6523  
+>   phi_1       0.660565     0.0399405    16.54     1.93e-61 ***
+>   phi_3       0.0108243    0.0342956     0.3156   0.7523  
+>   theta_1     0.452143     0.0437485    10.34     4.89e-25 ***
+43c43
+< Mean of innovations -0.000553   S.D. of innovations  1.039918
+---
+> Mean of innovations -0.000552   S.D. of innovations  1.039918
+51,52c51,52
+<     Root  2          -0.7313    -7.9138     7.9476    -0.2647
+<     Root  3          -0.7313     7.9138     7.9476     0.2647
+---
+>     Root  2          -0.7313    -7.9139     7.9476    -0.2647
+>     Root  3          -0.7313     7.9139     7.9476     0.2647
+diff -rbB output/pqgap1.out newout/pqgap1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25c25
+< Function evaluations: 70
+---
+> Function evaluations: 53
+35,39c35,39
+<   const       0.0604191    0.123924      0.4876   0.6259  
+<   phi_2       0.669516     0.0440076    15.21     2.87e-52 ***
+<   phi_3      -0.104297     0.0373496    -2.792    0.0052   ***
+<   theta_1     0.582911     0.0380811    15.31     6.86e-53 ***
+<   theta_4    -0.286742     0.0392166    -7.312    2.64e-13 ***
+---
+>   const       0.0604196    0.122353      0.4938   0.6214  
+>   phi_2       0.669515     0.0440064    15.21     2.85e-52 ***
+>   phi_3      -0.104297     0.0373484    -2.793    0.0052   ***
+>   theta_1     0.582911     0.0380798    15.31     6.80e-53 ***
+>   theta_4    -0.286742     0.0392170    -7.312    2.64e-13 ***
+42c42
+< Mean of innovations  0.000058   S.D. of innovations  1.043098
+---
+> Mean of innovations  0.000057   S.D. of innovations  1.043098
+51c51
+<     Root  3           6.1672     0.0000     6.1672     0.0000
+---
+>     Root  3           6.1673     0.0000     6.1673     0.0000
+diff -rbB output/pqmat.out newout/pqmat.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+20c20
+< Function evaluations: 42
+---
+> Function evaluations: 38
+30,33c30,33
+<   const      -0.257894     0.0753048    -3.425    0.0006  ***
+<   phi_1      -0.0808490    0.180795     -0.4472   0.6547 
+<   theta_2    -0.315487     0.214826     -1.469    0.1419 
+<   theta_3    -0.161488     0.224422     -0.7196   0.4718 
+---
+>   const      -0.257894     0.0753035    -3.425    0.0006  ***
+>   phi_1      -0.0808490    0.180786     -0.4472   0.6547 
+>   theta_2    -0.315487     0.214821     -1.469    0.1419 
+>   theta_3    -0.161488     0.224411     -0.7196   0.4718 
+52c52
+< Function evaluations: 42
+---
+> Function evaluations: 38
+62,65c62,65
+<   const      -0.257894     0.0753048    -3.425    0.0006  ***
+<   phi_1      -0.0808490    0.180795     -0.4472   0.6547 
+<   theta_2    -0.315487     0.214826     -1.469    0.1419 
+<   theta_3    -0.161488     0.224422     -0.7196   0.4718 
+---
+>   const      -0.257894     0.0753035    -3.425    0.0006  ***
+>   phi_1      -0.0808490    0.180786     -0.4472   0.6547 
+>   theta_2    -0.315487     0.214821     -1.469    0.1419 
+>   theta_3    -0.161488     0.224411     -0.7196   0.4718 
+diff -rbB output/sarma1a.out newout/sarma1a.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+diff -rbB output/sarma1.out newout/sarma1.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+37,38c37,38
+< Function evaluations: 40
+< Evaluations of gradient: 10
+---
+> Function evaluations: 60
+> Evaluations of gradient: 15
+47,50c47,50
+<   const      1111.14        0.113439     9795       0.0000   ***
+<   phi_1         0.443456    0.0521499       8.503   1.84e-17 ***
+<   Phi_1         0.0941859   0.0403495       2.334   0.0196   **
+<   theta_1       0.375992    0.0548876       6.850   7.37e-12 ***
+---
+>   const      1111.14        0.113438     9795       0.0000   ***
+>   phi_1         0.443454    0.0521523       8.503   1.85e-17 ***
+>   Phi_1         0.0941855   0.0403453       2.334   0.0196   **
+>   theta_1       0.375993    0.0548895       6.850   7.39e-12 ***
+diff -rbB output/sarma2a.out newout/sarma2a.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+diff -rbB output/sarma2.out newout/sarma2.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+43c43
+< Function evaluations: 44
+---
+> Function evaluations: 42
+54,57c54,57
+<   phi_1         0.464536    0.0552480       8.408    4.16e-17 ***
+<   Phi_1         0.208839    0.164082        1.273    0.2031  
+<   theta_1       0.209670    0.0585031       3.584    0.0003   ***
+<   Theta_1       0.0986753   0.169546        0.5820   0.5606  
+---
+>   phi_1         0.464536    0.0552302       8.411    4.07e-17 ***
+>   Phi_1         0.208841    0.162720        1.283    0.1993  
+>   theta_1       0.209670    0.0584697       3.586    0.0003   ***
+>   Theta_1       0.0986737   0.168092        0.5870   0.5572  
+69c69
+<     Root  1           4.7884     0.0000     4.7884     0.0000
+---
+>     Root  1           4.7883     0.0000     4.7883     0.0000
+73c73
+<     Root  1         -10.1342     0.0000    10.1342     0.5000
+---
+>     Root  1         -10.1344     0.0000    10.1344     0.5000
+diff -rbB output/sarma3a.out newout/sarma3a.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+diff -rbB output/sarma3.out newout/sarma3.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+55c55
+< Function evaluations: 58
+---
+> Function evaluations: 55
+66,72c66,72
+<   phi_1         0.834980     0.362177       2.305    0.0211  **
+<   phi_2        -0.418182     0.271916      -1.538    0.1241 
+<   phi_3         0.444259     0.140656       3.158    0.0016  ***
+<   phi_4        -0.145521     0.109625      -1.327    0.1844 
+<   Phi_1         0.131862     0.169848       0.7764   0.4375 
+<   theta_1      -0.0812536    0.362501      -0.2241   0.8226 
+<   Theta_1       0.0669538    0.153323       0.4367   0.6623 
+---
+>   phi_1         0.834983     0.387978       2.152    0.0314  **
+>   phi_2        -0.418184     0.290942      -1.437    0.1506 
+>   phi_3         0.444260     0.149457       2.972    0.0030  ***
+>   phi_4        -0.145521     0.115435      -1.261    0.2074 
+>   Phi_1         0.131862     0.177110       0.7445   0.4566 
+>   theta_1      -0.0812565    0.388914      -0.2089   0.8345 
+>   Theta_1       0.0669534    0.160900       0.4161   0.6773 
+89c89
+<     Root  1          12.3071     0.0000    12.3071     0.0000
+---
+>     Root  1          12.3067     0.0000    12.3067     0.0000
+91c91
+<     Root  1         -14.9357     0.0000    14.9357     0.5000
+---
+>     Root  1         -14.9358     0.0000    14.9358     0.5000
+diff -rbB output/sun-activity.out newout/sun-activity.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+18,19c18,19
+< Function evaluations: 63
+< Evaluations of gradient: 18
+---
+> Function evaluations: 52
+> Evaluations of gradient: 16
+28,37c28,37
+<   const      48.3249       6.87335       7.031    2.05e-12 ***
+<   phi_1       1.16071      0.0550891    21.07     1.51e-98 ***
+<   phi_2      -0.395382     0.0859555    -4.600    4.23e-06 ***
+<   phi_3      -0.166341     0.0887695    -1.874    0.0610   *
+<   phi_4       0.150446     0.0891518     1.688    0.0915   *
+<   phi_5      -0.0943925    0.0895577    -1.054    0.2919  
+<   phi_6       0.00906257   0.0899222     0.1008   0.9197  
+<   phi_7       0.0520532    0.0902034     0.5771   0.5639  
+<   phi_8      -0.0858438    0.0872213    -0.9842   0.3250  
+<   phi_9       0.252392     0.0557649     4.526    6.01e-06 ***
+---
+>   const      48.3244       6.87359       7.030    2.06e-12 ***
+>   phi_1       1.16071      0.0550806    21.07     1.41e-98 ***
+>   phi_2      -0.395382     0.0859027    -4.603    4.17e-06 ***
+>   phi_3      -0.166341     0.0887672    -1.874    0.0609   *
+>   phi_4       0.150446     0.0893520     1.684    0.0922   *
+>   phi_5      -0.0943925    0.0896445    -1.053    0.2924  
+>   phi_6       0.00906269   0.0899140     0.1008   0.9197  
+>   phi_7       0.0520531    0.0900793     0.5779   0.5634  
+>   phi_8      -0.0858436    0.0870531    -0.9861   0.3241  
+>   phi_9       0.252392     0.0557441     4.528    5.96e-06 ***
+40c40
+< Mean of innovations  0.159780   S.D. of innovations  14.85883
+---
+> Mean of innovations  0.159840   S.D. of innovations  14.85883
+68,78c68,78
+< 1709            8     11.23055
+< 1710            3     13.23749
+< 1711            0     19.66433
+< 1712            0     27.00403
+< 1713            2     33.57889
+< 1714           11     44.90813
+< 1715           27     47.95894
+< 1716           47     45.09373
+< 1717           63     36.50681
+< 1718           60     28.78843
+< 1719           39     23.48740
+---
+> 1709            8     11.23049
+> 1710            3     13.23735
+> 1711            0     19.66413
+> 1712            0     27.00379
+> 1713            2     33.57864
+> 1714           11     44.90790
+> 1715           27     47.95872
+> 1716           47     45.09352
+> 1717           63     36.50661
+> 1718           60     28.78823
+> 1719           39     23.48718
+diff -rbB output/xma.out newout/xma.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+25,26c25,26
+< Function evaluations: 40
+< Evaluations of gradient: 12
+---
+> Function evaluations: 25
+> Evaluations of gradient: 11
+36c36
+<   theta_1     0.392389     0.0406257      9.659   4.52e-22  ***
+---
+>   theta_1     0.392389     0.0406259      9.659   4.52e-22  ***
+53,55c53,55
+<     0.00879889  -1.01755e-04   -0.00967084  const
+<                   0.00165044   2.12245e-04  theta_1
+<                                  0.0186936  x
+---
+>     0.00879888  -1.01725e-04   -0.00967083  const
+>                   0.00165046   2.12172e-04  theta_1
+>                                  0.0186935  x
+diff -rbB output/yalta5.out newout/yalta5.out
+4c4
+< Current session: 2014-01-04 22:30
+---
+> Current session: 2014-01-07 08:10
+38,39c38,39
+< Function evaluations: 36
+< Evaluations of gradient: 19
+---
+> Function evaluations: 23
+> Evaluations of gradient: 9
+48,50c48,50
+<   const      -2284.65       1053.77       -2.168   0.0302  **
+<   phi_1          0.489334      0.157209    3.113   0.0019  ***
+<   Phi_1         -0.378011      0.159804   -2.365   0.0180  **
+---
+>   const      -2284.79       1053.80       -2.168   0.0301  **
+>   phi_1          0.489332      0.157208    3.113   0.0019  ***
+>   Phi_1         -0.378013      0.159803   -2.365   0.0180  **
+53c53
+< Mean of innovations  46.29354   S.D. of innovations  4054.239
+---
+> Mean of innovations  46.39183   S.D. of innovations  4054.239

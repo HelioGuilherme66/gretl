@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run fdnull.inp
+ /home/cottrell/stats/test-gretl/ufunc/fdnull.inp
+? function matrix getGGcoeffvec (const matrix coeffvec, const matrix \
+  beta_star, int nendo, int order, int detcase, int nuexo, int nrexo)
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? order = 2
+Generated scalar order = 2
+? cirank = 1
+Generated scalar cirank = 1
+? detcase = 3
+Generated scalar detcase = 3
+? nendo = 4
+Generated scalar nendo = 4
+? nrexo = 0
+Generated scalar nrexo = 0
+? nuexo = 0
+Generated scalar nuexo = 0
+? matrix beta_star = ones(4,1)
+Generated matrix beta_star
+? matrix coeffvec = vec(I(3))
+Generated matrix coeffvec
+? matrix GGcoeffvec = getGGcoeffvec(coeffvec, beta_star, nendo, order, detcase, \
+  nuexo, nrexo)
+Generated matrix GGcoeffvec
+? matrix GGvecjacmat = fdjac(coeffvec, getGGcoeffvec(coeffvec, beta_star, \
+  nendo, order, detcase, nuexo, nrexo))
+Generated matrix GGvecjacmat
+? GGvecjacmat
+GGvecjacmat (4 x 9)
+
+  0   0   0   0   0   0   0   0   0 
+  0   0   0   0   0   0   0   0   0 
+  0   0   0   0   0   0   0   0   0 
+  0   0   0   0   0   0   0   0   0 
+
+Done

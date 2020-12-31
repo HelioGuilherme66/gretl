@@ -1,0 +1,4 @@
+open china.gdt
+smpl Yr > 1960 --restrict
+logistic indpc 0 Yr --ymax=100.0 --vcv
+

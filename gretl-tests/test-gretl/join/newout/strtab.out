@@ -1,0 +1,76 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-25 13:10
+? run strtab.inp
+ /home/cottrell/stats/test-gretl/join/strtab.inp
+? open strcode1.csv
+parsing /home/cottrell/stats/test-gretl/join/strcode1.csv...
+using delimiter ','
+   longest line: 6 characters
+   first field: 'pid'
+   number of columns = 2
+   number of variables: 2
+   number of non-blank lines: 6
+scanning for variable names...
+   line: pid,s
+scanning for row labels and data...
+variable 2 (s): non-numeric values = 5 (100.00 percent)
+allocating string table
+treating these as undated data
+
+String code table written to
+ /home/cottrell/stats/test-gretl/join/string_table.txt
+Listing 3 variables:
+  0) const    1) pid      2) s      
+
+? print -o
+
+           pid            s
+
+1            1           AA
+2            2           BB
+3            3           CC
+4            4           DD
+5            5           EE
+
+? print s -o
+
+             s
+
+1           AA
+2           BB
+3           CC
+4           DD
+5           EE
+
+? smpl pid < 3 --restrict
+Full data range: 1 - 5 (n = 5)
+Current sample: 1 - 2 (n = 2)
+
+? join strcode2.csv s --ikey=pid
+Data modified OK
+? smpl full
+Full data range: 1 - 5 (n = 5)
+
+? print -o
+
+           pid            s
+
+1            1           BB
+2            2           XX
+3            3           CC
+4            4           DD
+5            5           EE
+
+? print s -o
+
+             s
+
+1           BB
+2           XX
+3           CC
+4           DD
+5           EE
+
+Done

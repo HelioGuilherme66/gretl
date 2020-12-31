@@ -1,0 +1,39 @@
+# version 1, runs ok (on Windows) with 
+#  ct_test 0.9.3
+#  vecdecomp 0.9.4
+#  vecm 0.9.5
+#  vecmrestrict 0.9.4
+
+open denmark
+
+# test input py4gretl_vecm:
+include py4gretl_vecm.gfn
+
+list endo = LRM LRY IBO
+list rexo = null
+list uexo = IDE
+
+matrix test3 = py4gretl_vecm(1, endo, 2, 2, 2, 0, rexo, uexo)
+matrix test4 = py4gretl_vecm(2, endo, 2, 1, 3, 1, rexo, uexo)
+matrix test5 = py4gretl_vecm(3, endo, 2, 2, 4, 0, rexo, uexo)
+matrix test6 = py4gretl_vecm(4, endo, 3, 1, 5, 0, rexo, uexo)
+
+# test input py4gretl_vecdecomp and py4gretl_ct_test:
+include py4gretl_vecdecomp
+include py4gretl_ct_test
+list endo = LRM LRY
+list rexo = null
+list uexo = null
+
+list test1 = py4gretl_vecdecomp(endo, 2, 1, 5, 0, rexo, uexo)
+matrix test2 = py4gretl_ct_test(endo, 2, 5, 0.4)
+
+# test input py4gretl_vecmrestrict
+include py4gretl_vecmrestrict
+scalar n_y = nelem(endo)
+scalar n1 = n_y + nelem(rexo) # not if determ_case = 2 or 4
+scalar cirank = 1
+matrix a_pat = ones(nelem(endo), cirank) * 99
+matrix b_pat = 99*ones(n1-cirank, cirank) | I(cirank)
+
+matrix test7 = py4gretl_vecmrestrict(endo, 2, cirank, 3, 1, rexo, uexo, a_pat, b_pat, 2000, 6)

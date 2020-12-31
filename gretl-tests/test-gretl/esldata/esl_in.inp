@@ -1,0 +1,6 @@
+open survey
+print -o
+open sunspots
+print -o
+open nastynux.dat
+print -o

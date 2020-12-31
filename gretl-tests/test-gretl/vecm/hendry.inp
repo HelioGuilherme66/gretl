@@ -1,0 +1,14 @@
+open hendry.gdt
+series m_p = m - p
+coint2 5 m_p Dp y R --crt
+vecm 5 1 m_p Dp y R --crt
+restrict
+ a[2] = 0
+ a[3] = 0
+ a[4] = 0
+end restrict --full
+restrict
+ b[5] = 0
+end restrict
+# vecm 5 1 m_p Dp y R 
+

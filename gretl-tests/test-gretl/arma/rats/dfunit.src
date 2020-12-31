@@ -1,0 +1,104 @@
+*
+*  DFUNIT  series  start  end
+*     Computes one of the Dickey-Fuller unit root tests.  References:
+*       Fuller, Introduction to Statistical Time Series, New York, Wiley, 1976.
+*       Dickey and Fuller, "Distribution of the Estimators for Time Series
+*         Regressions with a Unit Root", J.A.S.A., 1979, pp 427-431.
+*
+*     The (approximate) critical values for t-test form are from
+*       MacKinnon, "Critical Values for Cointegration Tests", Long-Run
+*         Economic Relationships, R.F. Engle and C.W.J. Granger, eds,
+*         London, Oxford, 1991, pp 267-276
+*
+*  Options:
+*     [TTEST]/NOTTEST  Computes the regression t test, as opposed to the
+*       T(rho-1) test.
+*     [INTERCEPT]/NOINTERCEPT
+*     TREND/[NOTREND]
+*       These determine whether an intercept or intercept and trend is included.
+*       With TREND, estimated model includes 1 and t. By default, only the 1 is included
+*     LAGS=number of additional lags [0]
+*       LAGS indicates the degree of AR polynomial on the differences
+*       to include in the regressions.
+*
+*   Defines:
+*    %NOBS   = number of regression observations + 1 (tables are based upon this)
+*    %RHO    = the lag coefficient
+*    %CDSTAT = test statistic
+*
+*   Various other statistics (such as %DURBIN and %RSS) will be set to the values
+*   from the regression run.
+*
+*   Revision Schedule:
+*    Written November, 1989
+*    Updated January, 1992 to Version 4.0
+*    Updated June, 2000 for Version 5.0
+*    Updated January 2003 to include INTERCEPT option and improve output.
+*
+procedure dfunit series start end
+type series series
+type integer start end
+*
+option integer lags  0
+option switch  intercept 1
+option switch  trend 0
+option switch  ttest 1
+*
+local integer startl endl nobs
+local series sdiff strend
+local real teststat fiddle
+local string descript
+local vect critvalues
+*
+inquire(series=series) startl>>start endl>>end
+*
+set sdiff  startl+1 endl = series-series{1}
+set strend startl+1 endl = t
+if trend {
+   linreg(noprint,entries=6+6*(lags>0)) series startl+lags+1 endl
+   # series{1} constant strend sdiff{1 to lags}
+   compute descript='With intercept and trend'
+   compute nobs=%nobs+1
+   compute critvalues=||-3.9638-8.353/nobs-47.44/(nobs**2),-3.4126-4.039/nobs-17.83/(nobs**2),-3.1279-2.418/nobs-7.58/(nobs**2)||
+}
+else if intercept {
+   linreg(noprint,entries=5+6*(lags>0)) series startl+lags+1 endl
+   # series{1} constant sdiff{1 to lags}
+   compute descript='With intercept'
+   compute nobs=%nobs+1
+   compute critvalues=||-3.4335-5.999/nobs-29.25/(nobs**2),-2.8621-2.738/nobs-8.36/(nobs**2),-2.5671-1.438/nobs-4.48/(nobs**2)||
+}
+else {
+   linreg(noprint,entries=4+6*(lags>0)) series startl+lags+1 endl
+    # series{1} sdiff{1 to lags}
+   compute descript='Without intercept or trend'
+   compute nobs=%nobs+1
+   compute critvalues=||-2.5658-1.960/nobs-10.04/(nobs**2),-1.9393-0.398/nobs,-1.6156-0.181/nobs||
+}
+if lags {
+  summarize(noprint)
+  # sdiff{1 to lags}
+  compute fiddle=1.0/(1.0-%sumlc)
+}
+else
+  compute fiddle=1.0
+
+display
+display 'Dickey-Fuller Unit Root Test, Series' %l(series)
+display 'Regression Run From' %datelabel(startl+lags+1) 'to' %datelabel(endl)
+display 'Observations' nobs
+display descript 'with' lags 'lags'
+
+if ttest {
+   compute teststat=(%beta(1)-1)/sqrt(%seesq*%xx(1,1))
+   display 'T-test statistic' teststat
+   display 'Critical values: 1%=' *.### critvalues(1) '5%=' critvalues(2) '10%=' critvalues(3)
+}
+else {
+   compute teststat=%nobs*fiddle*(%beta(1)-1)
+   display 'T(p-1) statistic' teststat
+}
+display
+compute %nobs=nobs,%cdstat=teststat,%rho=%beta(1)
+end
+

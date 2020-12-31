@@ -1,0 +1,729 @@
+/*
+version 1: probably only adequate for determcase=3
+version 2: new approach without complicated adj for mu
+version 3: revamped function consolidation, much other stuff
+version 4: slight rename, incorporate main backend driver function
+version 5: properly handle restricted constants or trends,
+(and fix bug with diffs in artificial data creation!?)
+version 6: remove \mu-hat-related stuff from the covar matrix that is
+handed over to the Jacobian calc.,
+   and include the uexo in the bootstrap!
+
+*/
+
+
+function matrix getGLmat(matrix coeffmat2, int numendo, int lagorder, int determcase)
+ /* GL = \Gamma(L) = I - \Gamma_1 L - ... - \Gamma_{K-1} L^{K-1}
+ We _used to_ return a big matrix where the individual matrices of the 
+ polynomial 
+ are in a block-row, so the numofrows of the return matrix is numendo, 
+ and the numofcols numendo*lagorder
+ 
+ now we do a much more useful thing
+ */ 
+  print "entering getGLmat"  
+  matrix GL = I(numendo) 
+  if determcase >= 3	# position in matrix depends on unrestr constant
+    offset = 1
+  else
+    offset = 0
+  endif
+  # (nothing else to be done for lagorder=1 since no lagged diffs)
+  loop for i=2..lagorder --quiet
+    matrix currentG = \
+    transp(coeffmat2[1+offset+(i-2)*numendo:offset+(i-1)*numendo,])
+    matrix GL = GL ~ -currentG
+  endloop
+  
+  ## new part
+  # prepare the special matrix for the lagged diffs
+  matrix GLmat = {}
+  loop for (k=1; k<lagorder; k+=1) --quiet
+    GLmat = transp(-GL[, k*numendo+1:(k+1)*numendo]) | GLmat
+    # (minus GL because GL holds I-G_1-...etc.!!)
+  endloop
+  return GLmat
+end function 
+#############################################################
+function matrix getcoeffmat2(const matrix coeffmat, int numendo, int cirank, \
+  int lagorder, int determcase, int numuexo) 
+  /* This takes gretl's coeffmat and 
+ reorder the coefficients to get a more natural system coeff
+  matrix in (T,n) data matrix convention (as opposed to the numpy-vecm 
+  class I think).
+
+  gretl's coeffmat has (one col per equation):
+  1) 
+  mu
+  2) 
+  1st var 1st diff-lag
+  1st var 2nd diff-lag
+  ...
+  2nd var 1st diff-lag
+  2nd var 2nd diff-lag
+  ...
+  3)
+  first uexo
+  second uexo
+  ...
+  4)
+  first ect/adj
+  second ect/adj
+  ...
+
+  In contrast, coeffmat2 reorders the diff-lag coeffs:
+  1) 
+  mu
+  2) 
+  1st var 1st diff-lag
+  2nd var 1st diff-lag
+  ...  
+  1st var 2nd diff-lag
+  2nd var 2nd diff-lag
+  ...
+  3)
+  first uexo
+  second uexo
+  ...
+  4)
+  first ect/adj
+  second ect/adj
+  ...
+  
+  */ 
+  #print "entering getcoeffmat2" 
+  # constant term
+  if determcase >= 3
+    matrix mumat = transp(coeffmat[1,])
+    offset = 1
+    matrix tempmat = mumat'
+  else
+    offset = 0
+    matrix tempmat = {}
+  endif
+  # coeffs of lagged differences, \Gamma_i, in one big block-row matrix
+  matrix Gammas = {}
+  loop for (index2=2; index2<=lagorder; index2+=1) --quiet
+    # (starting at 2 because no lagged diffs if only one lag)
+    startindex = offset+index2-1
+    matrix currentGamma = coeffmat[startindex,] 
+    loop for i=2..numendo --quiet
+      matrix currentGamma = currentGamma | \
+      coeffmat[startindex+(i-1)*(lagorder-1),]  
+    endloop
+    matrix Gammas = Gammas ~ currentGamma'
+  endloop
+
+  # coeffs of unrestricted exogenous vars
+  temp = 1+offset+numendo*(lagorder-1)
+  if numuexo > 0
+    matrix Dmat = transp(coeffmat[temp:temp+numuexo-1,])
+  else
+    matrix Dmat = {}
+  endif
+
+  # adjustment coeffs
+  matrix amat = transp(coeffmat[temp+numuexo:temp+numuexo+cirank-1,])
+
+  # Now we will construct a system coeff matrix in 
+  # (T,n) = (T,?)*(?,n) + (T,n) convention,
+  loop for i=2..lagorder --quiet
+    matrix tempmat = tempmat | \
+    transp(Gammas[,1+(i-2)*numendo:(i-1)*numendo])
+  endloop
+  matrix tempmat = tempmat | Dmat'
+  matrix coeffmat2 = tempmat | amat'
+  
+  return coeffmat2
+end function
+#############################################################
+function matrix getcoeffmat3(matrix coeffmat2, \
+  int cirank, int determcase, int numuexo)
+  # removes unrestricted constant and uexo coeffs from coeffmat2
+  #print "entering getcoeffmat3"
+  c2rows = rows(coeffmat2) 
+  if determcase >= 3
+    offset = 1
+  else
+    offset = 0
+  endif
+  # cut out the constant and the numuexos
+  matrix tempmat1 = coeffmat2[1+offset:c2rows-cirank-numuexo,]
+  matrix tempmat2 = coeffmat2[c2rows-cirank+1:c2rows,]
+  matrix coeffmat3 = tempmat1 | tempmat2
+  return coeffmat3
+end function
+#############################################################
+function matrix getXXi(const matrix endomat, const matrix rexomat, \
+  const matrix uexomat, const matrix beta_starmat, int lagorder, \
+  int determcase)
+  # XXi = (X'X)^{-1}, where X refers to stacked system with fixed EC-Term
+  print "entering getXXi"  
+  Teff = rows(endomat) - lagorder
+  # EC-Term (T+lagorder, r):
+  if determcase = 2		# restr constant, gretl puts it before the rexos!
+    matrix ectmat = (endomat~ones(Teff+lagorder,1)~rexomat)*beta_starmat
+  elif determcase = 3
+    matrix ectmat = (endomat~rexomat) * beta_starmat
+  elif determcase = 4  # restricted trend
+    matrix ectmat = (endomat~transp(seq(1,Teff+lagorder))~rexomat) \
+    * beta_starmat
+  endif
+  # concatenate everything together, including constant (if specified)
+  if determcase <= 2
+    matrix Xmat = {}
+  else										# so we have an unrestricted constant
+    matrix Xmat = ones(Teff,1)
+  endif
+  loop for i=2..lagorder --quiet
+    endodlmat = mlag(endomat,(i-1))-mlag(endomat,i)
+    # removing pre-sample values
+    matrix Xmat = Xmat ~ endodlmat[lagorder+1:Teff+lagorder,]
+  endloop
+  numuexo = cols(uexomat)
+  if numuexo > 0
+    matrix Xmat = Xmat ~ uexomat[lagorder+1:Teff+lagorder,]
+  endif
+  matrix Xmat = Xmat ~ ectmat[lagorder+1:Teff+lagorder,]
+  matrix XXi = inv(Xmat'Xmat)
+  return XXi
+end function 
+#############################################################
+function matrix getGS(matrix coeffvec3, matrix beta_starmat, \
+  int numendo, int numuexo, int lagorder, int determcase)
+  # consolidated to save function call overhead
+  # includes old getG, getS, getrexopart
+  # first (numendo+1(if...)+numrexo) cols are G, the rest is S
+  #print "entering getGS"
+  cirank = cols(beta_starmat)   
+  coeffmat3 = mshape(coeffvec3,numendo*(lagorder-1)+cirank,numendo)
+  c3rows = rows(coeffmat3)  
+
+  ## rexopart part, including restr. const or trend 
+  matrix b = beta_starmat[1:numendo,]
+  matrix bo = nullspace(b') 
+  matrix a = transp(coeffmat3[c3rows-(cirank-1):c3rows,])
+  
+  temp = rows(beta_starmat)
+  if (determcase=3 && temp=numendo) # i.e. numrexo = 0
+    matrix rexopart = {}
+  else # ((determcase=2 || determcase=4) || numrexo>0)
+    # the rexo are at the end, after the possible restr. determs
+    matrix b1 = beta_starmat[numendo+1:temp,]
+    matrix rexopart = -a*(b1'/(b'a))
+  endif
+
+  ## the G part
+  matrix ao = nullspace(a')
+  # the first part for mult w/ the vars themselves, (classic GG comp.)
+  matrix GGpart = bo*(ao'/(ao'bo))
+  # the second part for the restr. exo  
+  matrix G = GGpart ~ rexopart
+
+  ## now the S part 
+  matrix Pi = a*b'
+  ## embedded former getGsL function:
+  /* GsL = \Gamma1*(L), s to denote Proietti's alternative Gamma def
+  we return a big matrix where the individual matrices of the polynomial
+  are in a block-row  so the numofrows of the return matrix is numendo, 
+  and the numofcols numendo*lagorder
+  */
+  #if determcase >= 3
+  #  offset = 1
+  #else
+  #  offset = 0
+  #endif
+  matrix GsL = I(numendo) 
+  # (nothing else to be done for lagorder=1 since no lagged diffs)
+  loop for i=2..lagorder --quiet
+    matrix currentG = \
+    transp(coeffmat3[1+(i-2)*numendo:(i-1)*numendo,])
+    matrix currentGs = currentG + Pi
+    matrix GsL = GsL ~ -currentGs
+  endloop
+  ## embedded former getGsabi function:
+  # Gsabi = (\Gamma^*(1)+\alpha\beta')^{-1} from Proietti
+  matrix Gs1 = GsL[,1:numendo]	# should actually be just I(numendo)
+  loop for i=2..lagorder --quiet
+    matrix Gs1 = Gs1 + GsL[,(i-1)*numendo+1:i*numendo] 
+    # (negative sign is already in GsL!)
+  endloop
+  matrix Gsabi = inv(Gs1 + Pi)
+  ## embedded former getImP function:
+  /* ImP = I-P from Proietti (1997)
+  In contrast to earlier implementations this returns the (n,n) matrix, 
+  not the vec version! The reason is that I-P alone w/o exogenous or 
+  deterministic terms is not really useful, so it has to be combined 
+  with other coeffs, and only take the vec afterwards.
+  */
+  matrix P = Gsabi * a * ((b'Gsabi*a)\b')
+  matrix ImP = I(numendo)-P
+  matrix SWPpart = ImP*Gsabi*GsL
+  # the second part for the restr. exo
+  matrix S = SWPpart ~ rexopart
+
+  matrix GS = G ~ S
+  return GS
+end function
+#############################################################
+function matrix getGvec(matrix coeffvec3, matrix beta_starmat, \
+  int numendo, int numuexo, int lagorder, int determcase)
+  # kind of trivial function to satisfy vec requirement for Jacobian
+  print "entering getGvec"  
+  matrix GS = getGS(coeffvec3,beta_starmat,\
+    numendo,numuexo,lagorder,determcase)
+  temp = rows(beta_starmat)
+  matrix Gvec = vec(GS[,1:temp])
+  return Gvec
+end function
+#############################################################
+function matrix getSvec(matrix coeffvec3, matrix beta_starmat, \
+  int numendo, int numuexo, int lagorder, int determcase)
+  # kind of trivial function to satisfy vec requirement for Jacobian
+  print "entering getSvec"  
+  matrix GS = getGS(coeffvec3,beta_starmat,\
+    numendo,numuexo,lagorder,determcase)
+  temp1 = rows(beta_starmat)
+  temp2 = cols(GS)
+  matrix Svec = vec(GS[,temp1+1:temp2])
+  return Svec
+end function
+#############################################################
+function matrix getcovsubset(matrix covmat, int varselector, \
+  int numendo, int numrexo, int lagorder, int determcase, bool G0S1)
+  /* build a new cov matrix which only relates to the 
+  row of the coeff matrix describing
+  the perma component of the chosen (=varselector) variable.
+  */
+  print "entering getcovsubset"
+  if G0S1 = 0		# do it for Cov(G)
+    stop = numendo + numrexo
+  else					# do it for Cov(S)
+    stop = numendo*lagorder + numrexo
+  endif
+  if (determcase=2 || determcase=4)
+    stop = stop + 1
+  endif 
+  # pick the relevant rows of the covmat
+  matrix tempmat = {}  
+  loop for i=1..stop --quiet 
+    matrix tempmat = tempmat | covmat[varselector+(i-1)*numendo,]
+  endloop
+  # and now pick the relevant cols
+  matrix outcovmat = {}
+  loop for i=1..stop --quiet
+    matrix outcovmat = outcovmat ~ tempmat[, varselector+(i-1)*numendo]
+  endloop
+  return outcovmat  
+end function
+#############################################################
+function void getVecmcoeffs(const list endo, const list uexo, const list rexo,\
+  int lagorder[1::], int determcase[2:4:3], int cirank[1::], \
+  matrix *res, matrix *beta_starmat, matrix *omegamat, matrix *coeffmat2, \
+  matrix *GS)
+  ##
+  # print "entering getVecmcoeffs"
+  numendo = nelem(endo)
+  numuexo = nelem(uexo)
+  numrexo = nelem(rexo)
+  if cirank >= numendo
+    funcerr
+  endif
+  
+  outfile null --write
+  if determcase = 2
+    vecm lagorder cirank endo; uexo; rexo --rc 
+  elif determcase = 3
+    vecm lagorder cirank endo; uexo; rexo
+    # ad-hoc hack for the KPSW pre-specified vector:
+#     print "ATTENTION: ad-hoc KPSW pre-spec beta hack is enabled!" 
+#     restrict --full
+#       b[1,1] = 1
+#       b[1,2] = 0
+#       b[1,3] = -1
+#       b[2,1] = 0
+#       b[2,2] = 1
+#       b[2,3] = -1
+#     end restrict 
+  elif determcase = 4
+    vecm lagorder cirank endo; uexo; rexo --crt 
+  endif
+  outfile --close
+  
+  matrix res = $uhat
+  matrix beta_starmat = $jbeta
+  matrix betamat = beta_starmat[1:numendo,] 
+  matrix omegamat = $sigma
+  matrix coeffmat = $coeff	# the cov mat below refers to reordered version
+  /* 
+  the coeff vector of the stacked system, corresponding to the cov matrix 
+  below, so the first 
+  1(if_unrestr_const) + numendo*(lagorder-1) + numuexo + cirank 
+  rows belong to equ 1 (=endo-var #1), and so on
+  */
+
+  matrix coeffmat2 = \
+    getcoeffmat2(coeffmat,numendo,cirank,lagorder,determcase,numuexo)
+  
+  # introduce a 3rd coeffmat w/o unrestricted const and exo
+  # (because those aren't needed for G or S)
+  matrix coeffmat3 = getcoeffmat3(coeffmat2,cirank,determcase,numuexo) 
+  matrix coeffvec3 = vec(coeffmat3)
+  # retrieve the y*-related G (including coeffs for exo vars)
+  # and the y*L-related S
+  matrix GS = getGS(coeffvec3,beta_starmat,\
+    numendo,numuexo,lagorder,determcase)
+end function 
+#############################################################  
+function void getdeltacovmats(matrix endomat, matrix rexomat, matrix uexomat, \
+  matrix coeffmat3, matrix beta_starmat, matrix omegamat, \
+  int lagorder, int determcase, \
+  matrix *Gveccovmat, matrix *Sveccovmat)
+  ##
+  print "entering getdeltacovmats"
+  cirank = cols(beta_starmat)
+  numendo = cols(endomat)
+  numuexo = cols(uexomat)
+  matrix XXi = getXXi(endomat,rexomat,uexomat,beta_starmat,\
+    lagorder,determcase)
+  ## need to cut out the unrestricted stuff!
+  xxidim = rows(XXi)
+  # cut out the row/col relating to the const
+  if determcase >= 3
+    offset = 1  
+  else
+    offset = 0
+  endif
+  # the cols first
+  # first part is for the difflags
+  matrix tempmat1 = XXi[,1+offset:xxidim-cirank-numuexo]
+  # second part for the ECTs
+  matrix tempmat2 = XXi[,xxidim-cirank+1:xxidim]
+  matrix tempmat = tempmat1 ~ tempmat2
+  # now the rows
+  tempmat1 = tempmat[1+offset:xxidim-cirank-numuexo,]
+  tempmat2 = tempmat[xxidim-cirank+1:xxidim,]
+  matrix Zmat = tempmat1 | tempmat2  
+
+  matrix coeff3covmat = omegamat ** Zmat
+  coeffvec3 = vec(coeffmat3)
+  # now we have all ingredients for the Jacobian (coeffvec and coeffcovmat)
+  matrix Gvecjacmat = fdjac(coeffvec3,\
+  "getGvec(coeffvec3,beta_starmat,numendo,numuexo,lagorder,determcase)")
+  matrix Gveccovmat = qform(Gvecjacmat,coeff3covmat)
+  # the same for SWP
+  matrix Svecjacmat = fdjac(coeffvec3,\
+  "getSvec(coeffvec3,beta_starmat,numendo,numuexo,lagorder,determcase)")
+  matrix Sveccovmat = qform(Svecjacmat,coeff3covmat)
+end function
+#############################################################
+function void getendostars(matrix *endostarmat, matrix *endostarLmat, \
+  matrix endomat, matrix rexomat, int determcase, int lagorder, int numrexo)
+  # we return a big matrix with 
+  # endostarmat first and endostarLmat second
+  # endostarmat: (numendo + 1(if restr. const or trend) + numrexo) cols
+  # endostarLmat: (numendo*lagorder + 1() + numrexo) cols
+  
+  #print "entering getendostars"
+  Tnom = rows(endomat) 
+  
+  matrix endostarmat = endomat
+  matrix endostarLmat = endomat
+  loop for i=2..lagorder --quiet
+    matrix endostarLmat = endostarLmat ~ mlag(endomat,i-1)
+  endloop  
+  if determcase = 2
+    endostarmat = endostarmat ~ ones(Tnom,1)
+    endostarLmat = endostarLmat ~ ones(Tnom,1) 
+  elif determcase = 4
+    endostarmat = endostarmat ~ transp(seq(1,Tnom))
+    endostarLmat = endostarLmat ~ transp(seq(1,Tnom))
+  endif
+  if numrexo > 0
+    endostarmat = endomat ~ rexomat
+    endostarLmat = endostarLmat ~ rexomat
+  endif    
+end function
+#############################################################
+function matrix getGGSWP(matrix endomat, matrix rexomat, matrix GS, \
+  int lagorder, int determcase, int varselector)
+  /*  the point estimates
+For the GG-comp. of the n-th variable we need only the n-th row of the 
+pre-multiplied coeff matrix, or the n-th col of its transpose 
+(which will be postmultiplied to the data row vectors);
+
+new: only work with effective sample!
+*/
+  #print "entering getGGSWP"
+  Tnom = rows(endomat)
+  numendo = cols(endomat)
+  numrexo = cols(rexomat)
+  if (determcase=2 || determcase=4)
+    b1rows = numendo + 1 + numrexo
+  else # only determcase 3 allowed
+    b1rows = numendo + numrexo
+  endif
+  temp = cols(GS)
+  matrix Grow = GS[varselector,1:b1rows]
+  matrix Srow = GS[varselector,b1rows+1:temp]
+  
+  # (the getendostars call cannot be moved up one func,
+  # because for the bootstrap the data is always changing)
+  matrix endostarmat = {}
+  matrix endostarLmat = {} 
+  getendostars(&endostarmat,&endostarLmat,\
+    endomat,rexomat,determcase,lagorder,numrexo)
+  # only effective sample:
+  matrix dm_endostarmat = cdemean(endostarmat[1+lagorder:Tnom,])
+  matrix dm_endostarLmat = cdemean(endostarLmat[1+lagorder:Tnom,])
+
+  # the GG component itself (using actual initial values):
+  matrix GGvec = endomat[1:lagorder,varselector] | \
+  (dm_endostarmat*Grow' + meanc(endomat[1+lagorder:Tnom, varselector]))
+  # the SWP component itself:
+  matrix SWPvec = endomat[1:lagorder,varselector] | \
+  (dm_endostarLmat*Srow' + meanc(endomat[1+lagorder:Tnom, varselector]))  
+
+  matrix GGSWP = GGvec ~ SWPvec
+  return GGSWP
+end function
+#############################################################
+function matrix getdeltabands(matrix endomat, matrix rexomat, matrix uexomat, \
+  matrix coeffmat3, matrix beta_starmat, matrix omegamat, matrix GGSWP, \
+  int lagorder, int determcase, int varselector, scalar semulti)
+  ##
+  print "entering getdeltabands"
+  numendo = cols(endomat)
+  numrexo = cols(rexomat)
+  Tnom = rows(endomat)  
+  matrix Gveccovmat={}
+  matrix Sveccovmat={}
+  
+  getdeltacovmats(endomat,rexomat,uexomat,coeffmat3,beta_starmat,omegamat,\
+  lagorder,determcase, &Gveccovmat,&Sveccovmat)
+  
+  matrix Growcovmat = \
+  getcovsubset(Gveccovmat,varselector,numendo,numrexo,lagorder,determcase,0)
+  matrix Srowcovmat = \
+  getcovsubset(Sveccovmat,varselector,numendo,numrexo,lagorder,determcase,1)
+  
+  # and the standard errors series for the GG component
+  # construct endostar (^= y^*) and endostarL (^= y^{*L})
+  # (the getendostars call cannot be moved up one func,
+  # because for the bootstrap the data is always changing) 
+  matrix endostarmat = {}
+  matrix endostarLmat = {} 
+  getendostars(&endostarmat,&endostarLmat,\
+    endomat,rexomat,determcase,lagorder,numrexo) 
+  matrix dm_endostarmat = cdemean(endostarmat[1+lagorder:Tnom,])
+  matrix dm_endostarLmat = cdemean(endostarLmat[1+lagorder:Tnom,])  
+
+  matrix GGsevec = {}
+  matrix SWPsevec = {}
+  stop = Tnom - lagorder
+  loop for i=1..stop --quiet
+    matrix tempmat = dm_endostarmat[i,]
+    GGsevec = GGsevec | sqrt(qform(tempmat, Growcovmat))
+    tempmat = dm_endostarLmat[i,]
+    SWPsevec = SWPsevec | sqrt(qform(tempmat, Srowcovmat))
+  endloop
+
+  # construct the bands series (using actual initial values)
+  matrix GGlower = GGSWP[1:lagorder,1] | \
+  (GGSWP[lagorder+1:Tnom,1] - semulti*GGsevec[,1])
+  matrix GGupper = GGSWP[1:lagorder,1] | \
+  (GGSWP[lagorder+1:Tnom,1] + semulti*GGsevec[,1])
+  matrix SWPlower = GGSWP[1:lagorder,2] | \
+  (GGSWP[lagorder+1:Tnom,2] - semulti*SWPsevec[,1])
+  matrix SWPupper = GGSWP[1:lagorder,2] | \
+  (GGSWP[lagorder+1:Tnom,2] + semulti*SWPsevec[,1])
+
+  matrix bands = GGlower ~ GGupper ~ SWPlower ~ SWPupper
+  return bands
+end function
+#############################################################
+function list pconfbackend(const list endo, const list rexo, const list uexo,\
+  int cirank[1::], int lagorder[1::], int determcase[2:4:3],  \
+  int varselector[1::], scalar coverage[0:1:], bool dodelta[1], \
+  bool doboot[0], int numofW)
+  print "entering pconfbackend"
+  set echo off
+  set messages off
+
+  ## some input checks
+  numendo = nelem(endo)
+  numuexo = nelem(uexo)
+  numrexo = nelem(rexo)
+  if cirank >= numendo
+    funcerr "cirank too high"
+  elif numendo < 2
+    funcerr "at least two endogenous variables required"
+  elif varselector > numendo
+    funcerr "varselector out of range"
+  endif
+  
+  matrix endomat = { endo }
+  if numrexo = 0
+    matrix rexomat = {}
+  else 
+    matrix rexomat = { rexo }
+  endif
+  if numuexo = 0
+    matrix uexomat = {}
+  else
+    matrix uexomat = { uexo }
+  endif
+  semulti = critical(z, (1-coverage)/2)
+  
+  ## estimate vecm 
+  # (only the unrestricted case -- e.g. no weak exogeneity)
+  matrix res={}
+  matrix beta_starmat={}
+  matrix omegamat={}
+  matrix coeffmat2={}
+  matrix GS={}
+  
+  getVecmcoeffs(endo,uexo,rexo,lagorder,determcase,cirank, \
+    &res, &beta_starmat, &omegamat, &coeffmat2, &GS)
+  matrix coeffmat3 = getcoeffmat3(coeffmat2,cirank,determcase,numuexo)
+  #####
+  #  the point estimates
+  matrix GGSWP = getGGSWP(endomat,rexomat,GS,lagorder,determcase,varselector)
+  series GG = GGSWP[, 1]
+  series SWP = GGSWP[, 2]
+
+  #####
+  # this stuff only necessary for the delta method
+  if dodelta = 1 
+    #print GGSWP
+    matrix deltabands = getdeltabands(endomat,rexomat,uexomat, \
+      coeffmat3,beta_starmat,omegamat,GGSWP, \
+      lagorder,determcase,varselector,semulti)
+    # (the bands include GGlower GGupper SWPlower SWPupper, in cols)
+    series GGlowdelta = deltabands[,1]
+    series GGupdelta = deltabands[,2]
+    series SWPlowdelta = deltabands[,3]
+    series SWPupdelta = deltabands[,4]
+  endif
+  ##############################################################
+  # the simulation part
+  if doboot = 1
+  
+    if determcase >= 3
+      c2rows = 1 + numendo*(lagorder-1) + numuexo + cirank
+      matrix mu = transp(coeffmat2[1,])
+    else
+      c2rows = numendo*(lagorder-1) + numuexo + cirank
+      mu = zeros(numendo,1)
+    endif 
+    matrix alpha = transp(coeffmat2[c2rows-(cirank-1):c2rows,])
+    matrix PiT = beta_starmat*alpha'
+    matrix GGtildes = {} # will hold the entire bootstrap distribution
+    matrix SWPtildes = {}
+    # the special matrix for the lagged diffs
+    matrix GLmat = getGLmat(coeffmat2,numendo,lagorder,determcase)
+  
+    loop for (w=1; w<=numofW; w+=1) --quiet
+      # 1) simulate random innovations (resample for simplicity)
+      newres = resample(res)
+      # 2) construct artificial data
+      matrix endotildemat = endomat[1:lagorder,]	# use actual initial values
+      loop for (tix=lagorder+1; tix<=$nobs; tix+=1) --quiet
+        # first the trivial own lag and the EC-Terms
+        tempmat = endotildemat[tix-1,]
+        if determcase = 2 	# restricted constant before rexo vars in gretl
+          tempmat = tempmat ~ {1}
+        elif determcase = 4 # same for restricted trend
+          tempmat = tempmat ~ {tix-1}
+          # (do we need to watch out for the mean of the trend here?)
+        endif
+        if numrexo > 0
+          tempmat = tempmat ~ rexomat[tix-1,]
+        endif 
+        currendo =  endotildemat[tix-1,] + tempmat*PiT
+        # now the lagged differences:
+        endotildediff = endotildemat - mlag(endotildemat,1) 
+        /* endotildemat (and thus endotildediff) has tix-1 rows
+        the last K-1 (so tix-1, tix-2, ..., tix-(K-1)) rows hold the diffs, 
+        like so (for K-1=2):
+         ...
+         \Delta y'_{t-2}
+         \Delta y'_{t-1}.
+         So if we transpose this block: (\Delta y_{t-2}; \Delta y_{t-1})
+         Then take vec and transpose: (\Delta y'_{t-2}; \Delta y'_{t-1})
+         This needs to be multiplied from the left to 
+         \Gamma'_2
+         \Gamma'_1,
+        which we can prepare before...
+        */ 
+        currendo = currendo + \
+          transp(vec(transp(endotildediff[tix-lagorder+1:tix-1,])))*GLmat
+        # (tix-1)-(lagorder-1)+1 = tix-lagorder+1
+        # the unrestricted constant:
+        currendo = currendo + mu'
+        # the unrestricted exogenous variables:
+        if numuexo > 0
+          currendo = currendo + uexomat[tix,]*\
+            coeffmat2[c2rows-cirank-numuexo+1:c2rows-cirank,]
+        endif
+        # finally the bootstrap residuals:
+        currendo = currendo + newres[tix-lagorder,]
+        endotildemat = endotildemat | currendo 
+      endloop		# end artificial data creation
+    
+      # 3) estimate the system and get G and S
+      list endotilde = null
+      loop for i=1..numendo --quiet
+        series endotilde$i = endotildemat[, i] 
+        endotilde += endotilde$i
+      endloop
+      matrix restilde={}
+      matrix beta_smattilde={}
+      matrix omegamattilde={}
+      matrix coeffmat2tilde={}
+      matrix GStilde={}
+      getVecmcoeffs(endotilde,uexo,rexo,lagorder,determcase,cirank, \
+      &restilde, &beta_smattilde, &omegamattilde, &coeffmat2tilde, \
+      &GStilde)
+      # 4) get the estimated perma components
+      # (Gtilde,Stilde from artificial data, but apply to actual data!)
+    
+      GGSWPtilde = \
+        getGGSWP(endomat,rexomat,GStilde,lagorder,determcase,varselector)
+    
+      # 5) store the results for later evaluation
+      GGtildes = GGtildes ~ GGSWPtilde[, 1]
+      SWPtildes = SWPtildes ~ GGSWPtilde[, 2]
+      #printf "%d,", w
+    endloop		# end simulation run
+
+    # 6) evaluate the results period-per-period
+    # the naive "other-percentile" error band:
+    series GGlownaive = (quantile(GGtildes',(1-coverage)/2))'
+    series GGupnaive = (quantile(GGtildes',1-(1-coverage)/2))'
+    series SWPlownaive = (quantile(SWPtildes',(1-coverage)/2))'
+    series SWPupnaive = (quantile(SWPtildes',1-(1-coverage)/2))'
+    # and Hall's band:
+    matrix GGtildesHall = GGtildes - (GGSWP[, 1] ** ones(1,numofW))
+    matrix SWPtildesHall = SWPtildes - (GGSWP[, 2] ** ones(1,numofW))
+    matrix GGlowHtempm = (quantile(GGtildesHall',(1-coverage)/2))'
+    matrix GGupHtempm = (quantile(GGtildesHall',1-(1-coverage)/2))'
+    matrix SWPlowHtempm = (quantile(SWPtildesHall',(1-coverage)/2))'
+    matrix SWPupHtempm = (quantile(SWPtildesHall',1-(1-coverage)/2))'
+    series GGlowHall = GGSWP[, 1] - GGupHtempm
+    series GGupHall = GGSWP[, 1] - GGlowHtempm
+    series SWPlowHall =  GGSWP[, 2] - SWPupHtempm 
+    series SWPupHall =  GGSWP[, 2] - SWPlowHtempm
+  endif # end simulation part
+
+  # 7) return the results as series
+  list results = null
+  if dodelta = 1
+    list results = results GG SWP GGlowdelta GGupdelta SWPlowdelta SWPupdelta
+  endif     
+  if doboot = 1
+    list results = results GGlownaive GGupnaive SWPlownaive SWPupnaive
+    list results = results GGlowHall GGupHall SWPlowHall SWPupHall
+  endif
+  return results
+end function

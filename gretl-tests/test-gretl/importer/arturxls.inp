@@ -1,0 +1,4 @@
+clear
+string path="/home/cottrell/ownCloud/Recession_Detection_gretl"
+open "@path/data/BBK_RealEconIndicators122012_AT.xls" --rowoffset=0
+

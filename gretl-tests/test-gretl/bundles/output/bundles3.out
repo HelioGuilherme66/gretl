@@ -1,0 +1,28 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles3.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles3.inp
+# modification of bundle (pointer) by user function
+? function void fill_out_bundle (bundle *b)
+? bundle my_bundle
+? fill_out_bundle(&my_bundle)
+? matrix foo = my_bundle["mat"]
+Generated matrix foo
+? foo
+foo (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+? string s = my_bundle["str"]
+Generated string s
+? s
+foo
+? x = my_bundle["x"]
+Generated scalar x = 32
+? delete my_bundle
+Deleted my_bundle
+Done

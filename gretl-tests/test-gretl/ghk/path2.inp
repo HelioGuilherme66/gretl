@@ -1,0 +1,7 @@
+matrix A = {0.563, -0.47, -$huge }
+matrix B = {$huge, $huge, 0.67393 }
+matrix C = { 1, 0, 0; -0.91263, 0.16711, 0 ; 0.16580, 0.37015, 0.83550 }
+
+m = rows(C)
+matrix U = halton(m,16)
+printf "P = %g\n", ghk(C, A, B, U)

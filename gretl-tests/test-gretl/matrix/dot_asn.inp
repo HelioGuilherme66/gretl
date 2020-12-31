@@ -1,0 +1,5 @@
+matrix m = I(3)
+print m
+m .= 4
+print m
+

@@ -1,0 +1,131 @@
+gretl version 1.10.90cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-07-07 14:56
+? run klein_ols.inp
+ /home/cottrell/stats/test-gretl/system/klein_ols.inp
+? open klein.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/klein.gdt
+periodicity: 1, maxobs: 23
+observations range: 1919 to 1941
+
+Listing 10 variables:
+  0) const    1) C        2) P        3) Wp       4) I      
+  5) K        6) X        7) Wg       8) G        9) T      
+
+? series W = Wp + Wg
+Generated series W (ID 10)
+? ols C 0 P P(-1) W --no-df-corr
+
+Model 1: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      16.2366       1.17208      13.85     1.09e-10 ***
+  P           0.192934     0.0820650     2.351    0.0310   **
+  P_1         0.0898849    0.0815592     1.102    0.2858  
+  W           0.796219     0.0359390    22.15     5.59e-14 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    17.87945   S.E. of regression   0.922715
+R-squared            0.981008   Adjusted R-squared   0.977657
+F(3, 17)             361.5800   P-value(F)           1.36e-15
+Log-likelihood      -28.10857   Akaike criterion     64.21714
+Schwarz criterion    68.39523   Hannan-Quinn         65.12389
+rho                  0.246300   Durbin-Watson        1.367474
+
+Excluding the constant, p-value was highest for variable 11 (P_1)
+
+? Klein_mod <- system
+? equation C 0 P P(-1) W
+? equation I 0 P P(-1) K(-1)
+? end system
+? estimate Klein_mod method=ols
+
+Equation system, Klein_mod
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      16.2366       1.30270      12.46     5.62e-10 ***
+  P           0.192934     0.0912102     2.115    0.0495   **
+  P_1         0.0898849    0.0906479     0.9916   0.3353  
+  W           0.796219     0.0399439    19.93     3.16e-13 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    17.87945   S.E. of regression   1.025540
+R-squared            0.981008   Adjusted R-squared   0.977657
+
+Equation 2: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: I
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       10.1258      5.46555       1.853    0.0814  *
+  P            0.479636    0.0971146     4.939    0.0001  ***
+  P_1          0.333039    0.100859      3.302    0.0042  ***
+  K_1         -0.111795    0.0267276    -4.183    0.0006  ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    17.32270   S.E. of regression   1.009447
+R-squared            0.931348   Adjusted R-squared   0.919233
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.85140      (0.059)
+     0.049497      0.82489
+
+log determinant = -0.35687
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.0732562 [0.7867]
+
+? estimate Klein_mod method=ols --no-df-corr
+
+Equation system, Klein_mod
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      16.2366       1.17208      13.85     1.09e-10 ***
+  P           0.192934     0.0820650     2.351    0.0310   **
+  P_1         0.0898849    0.0815592     1.102    0.2858  
+  W           0.796219     0.0359390    22.15     5.59e-14 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    17.87945   S.E. of regression   0.922715
+R-squared            0.981008   Adjusted R-squared   0.977657
+
+Equation 2: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: I
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       10.1258      4.91755       2.059    0.0551   *
+  P            0.479636    0.0873774     5.489    3.99e-05 ***
+  P_1          0.333039    0.0907466     3.670    0.0019   ***
+  K_1         -0.111795    0.0240477    -4.649    0.0002   ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    17.32270   S.E. of regression   0.908235
+R-squared            0.931348   Adjusted R-squared   0.919233
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.85140      (0.059)
+     0.049497      0.82489
+
+log determinant = -0.35687
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.0732562 [0.7867]
+
+Done

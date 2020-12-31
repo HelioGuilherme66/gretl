@@ -1,0 +1,125 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run dayappend.inp
+ /home/cottrell/stats/test-gretl/importer/dayappend.inp
+? nulldata 21
+periodicity: 1, maxobs: 21
+observations range: 1 to 21
+? setobs 5 2015-11-02
+Full data range: 2015-11-02 - 2015-11-30 (n = 21)
+
+? append dayfoo.txt
+parsing /home/cottrell/stats/test-gretl/importer/dayfoo.txt...
+using delimiter ','
+   longest line: 14 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 10
+scanning for variable names...
+   line: obs,x
+scanning for row labels and data...
+   first row label "2015-11-06", last label "2015-11-20"
+trying to parse row labels as dates...
+Trying date order YYYYMMDD
+Could be 2015-11-06 - 2015-11-20
+Observations: 9; days in sample: 11
+Missing daily rows: 2
+taking date information from row labels
+
+Data appended OK
+Listing 3 variables:
+  0) const    1) index    2) x      
+
+? print -o
+
+                  index            x
+
+2015-11-02            1             
+2015-11-03            2             
+2015-11-04            3             
+2015-11-05            4             
+2015-11-06            5            5
+2015-11-09            6            6
+2015-11-10            7            7
+2015-11-11            8            8
+2015-11-12            9             
+2015-11-13           10             
+2015-11-16           11           11
+2015-11-17           12           12
+2015-11-18           13           13
+2015-11-19           14           14
+2015-11-20           15           15
+2015-11-23           16             
+2015-11-24           17             
+2015-11-25           18             
+2015-11-26           19             
+2015-11-27           20             
+2015-11-30           21             
+
+# now try the other way
+? open dayfoo.txt
+parsing /home/cottrell/stats/test-gretl/importer/dayfoo.txt...
+using delimiter ','
+   longest line: 14 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 10
+scanning for variable names...
+   line: obs,x
+scanning for row labels and data...
+   first row label "2015-11-06", last label "2015-11-20"
+trying to parse row labels as dates...
+Trying date order YYYYMMDD
+Could be 2015-11-06 - 2015-11-20
+Observations: 9; days in sample: 11
+Missing daily rows: 2
+taking date information from row labels
+
+Listing 2 variables:
+  0) const    1) x      
+
+? append daybaz.txt
+parsing /home/cottrell/stats/test-gretl/importer/daybaz.txt...
+using delimiter ','
+   longest line: 14 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 12
+scanning for variable names...
+   line: obs,y
+scanning for row labels and data...
+   first row label "2015-11-06", last label "2015-11-20"
+trying to parse row labels as dates...
+Trying date order YYYYMMDD
+Could be 2015-11-06 - 2015-11-20
+Observations: 11; days in sample: 11
+Missing daily rows: 0
+taking date information from row labels
+
+Data appended OK
+Listing 3 variables:
+  0) const    1) x        2) y      
+
+? print -o
+
+                      x            y
+
+2015-11-06            5            5
+2015-11-09            6            6
+2015-11-10            7            7
+2015-11-11            8            8
+2015-11-16           11           11
+2015-11-17           12           12
+2015-11-18           13           13
+2015-11-19           14           14
+2015-11-20           15           15
+
+Done

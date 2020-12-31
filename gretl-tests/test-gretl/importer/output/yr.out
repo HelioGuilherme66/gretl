@@ -1,0 +1,22 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run yr.inp
+ /home/cottrell/stats/test-gretl/importer/yr.inp
+? open yr.xls
+Excel 97 +
+rows=4, total cols=2, data cols=2
+check for label strings in first imported column: not found
+Listing 3 variables:
+  0) const    1) yr       2) x      
+
+? print -o
+
+            yr            x
+
+1         1856            1
+2         1860            2
+3         1864            3
+
+Done

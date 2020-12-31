@@ -1,0 +1,58 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run dwpval.inp
+ /home/cottrell/stats/test-gretl/dwpval.inp
+# cf. http://shazam.econ.ubc.ca/intro/testauto.htm
+? open theil.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/theil.gdt
+periodicity: 1, maxobs: 17
+observations range: 1923 to 1939
+
+Listing 4 variables:
+  0) const       1) consume     2) income      3) relprice  
+
+? ols consume 0 relprice
+
+Model 1: OLS, using observations 1923-1939 (T = 17)
+Dependent variable: consume
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       235.490       9.07910      25.94    7.09e-14 ***
+  relprice     -1.32331     0.116330    -11.38    8.94e-09 ***
+
+Mean dependent var   134.5059   S.D. dependent var   23.57733
+Sum squared resid    923.9089   S.E. of regression   7.848180
+R-squared            0.896123   Adjusted R-squared   0.889198
+F(1, 15)             129.4014   P-value(F)           8.94e-09
+Log-likelihood      -58.08286   Akaike criterion     120.1657
+Schwarz criterion    121.8321   Hannan-Quinn         120.3314
+rho                  0.385541   Durbin-Watson        1.190710
+
+? scalar pv = $dwpval
+Generated scalar pv = 0.0183442
+? ols consume 0 income relprice
+
+Model 2: OLS, using observations 1923-1939 (T = 17)
+Dependent variable: consume
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       130.707      27.0943        4.824   0.0003   ***
+  income        1.06171     0.266674      3.981   0.0014   ***
+  relprice     -1.38299     0.0838143   -16.50    1.43e-10 ***
+
+Mean dependent var   134.5059   S.D. dependent var   23.57733
+Sum squared resid    433.3130   S.E. of regression   5.563356
+R-squared            0.951282   Adjusted R-squared   0.944322
+F(2, 14)             136.6831   P-value(F)           6.51e-10
+Log-likelihood      -51.64705   Akaike criterion     109.2941
+Schwarz criterion    111.7937   Hannan-Quinn         109.5426
+rho                 -0.182393   Durbin-Watson        2.018549
+
+? scalar pv = $dwpval
+Replaced scalar pv = 0.301273
+Done

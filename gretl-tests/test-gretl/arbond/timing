@@ -1,0 +1,25 @@
+abest1.inp
+time gretlcli -b abest1.inp >out 2>errs
+
+real    0m0.076s
+user    0m0.072s
+sys     0m0.004s
+
+real    0m0.076s
+user    0m0.072s
+sys     0m0.004s
+
+real    0m0.076s
+user    0m0.076s
+sys     0m0.000s
+
+real    0m0.077s
+user    0m0.072s
+sys     0m0.008s
+
+"make"
+real    0m1.156s
+user    0m1.036s
+sys     0m0.072s
+
+

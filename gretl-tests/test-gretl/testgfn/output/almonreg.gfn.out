@@ -1,0 +1,73 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:36
+? run almonreg.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/almonreg.gfn.inp
+? include ./almonreg/almonreg.gfn
+ /home/cottrell/stats/test-gretl/testgfn/almonreg/almonreg.gfn
+almonreg 0.4, 2015-02-09 (Allin Cottrell)
+? open almon.gdt --frompkg=almonreg
+
+Read datafile /home/cottrell/stats/test-gretl/testgfn//almonreg/almon.gdt
+periodicity: 4, maxobs: 60
+observations range: 1952:1 to 1966:4
+
+Listing 3 variables:
+  0) const    1) ce       2) ca     
+
+? genr dummy
+Periodic dummy variables generated.
+? list X = dq1 dq2 dq3
+Generated list X
+? scalar p = 5
+Generated scalar p = 5
+? scalar q = 2
+Generated scalar q = 2
+? bundle B = almonreg(ce, ca, p, q, 1, X)
+
+Model 1: OLS, using observations 1953:2-1966:4 (T = 55)
+Dependent variable: y
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      210.011        73.2524        2.867    0.0061  ***
+  dq1        -10.5515       61.0634       -0.1728   0.8635 
+  dq2        -20.9887       59.9386       -0.3502   0.7277 
+  dq3        -30.4337       59.9004       -0.5081   0.6137 
+  z_0          0.0894672     0.0359914     2.486    0.0165  **
+  z_1          0.0108136     0.0487294     0.2219   0.8253 
+  z_2          0.00403575    0.00970653    0.4158   0.6794 
+
+Mean dependent var   3185.691   S.D. dependent var   1159.091
+Sum squared resid     1205186   S.E. of regression   158.4552
+R-squared            0.983388   Adjusted R-squared   0.981311
+F(6, 48)             473.5757   P-value(F)           6.14e-41
+Log-likelihood      -352.8989   Akaike criterion     719.7979
+Schwarz criterion    733.8492   Hannan-Quinn         725.2316
+rho                  0.680651   Durbin-Watson        0.615720
+
+Excluding the constant, p-value was highest for variable 3 (dq1)
+
+Almon lag, polynomial order 2
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  ca          0.0894672    0.0359914     2.486   0.0129   **
+  ca(-1)      0.104317     0.0109080     9.563   1.14e-21 ***
+  ca(-2)      0.127237     0.0254693     4.996   5.86e-07 ***
+  ca(-3)      0.158230     0.0253707     6.237   4.47e-10 ***
+  ca(-4)      0.197294     0.0111510    17.69    4.75e-70 ***
+  ca(-5)      0.244429     0.0370444     6.598   4.16e-11 ***
+
+? print B
+bundle B, created by almonreg:
+ k = 4
+ beta (matrix: 10 x 1)
+ se (matrix: 10 x 1)
+ xname = ca
+ gamma (matrix: 7 x 1)
+ q = 2
+ p = 5
+
+Done

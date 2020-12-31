@@ -1,0 +1,382 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps8-8.inp
+ /opt/esl/share/gretl/scripts/ps8-8.inp
+# PS8.8, for Application in Section 8.4
+? open data8-3
+
+Read datafile /opt/esl/share/gretl/data/data8-3.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 5 variables:
+  0) const      1) exphlth    2) income     3) pop        4) seniors  
+
+? genr y=exphlth/pop
+Generated series y (ID 5)
+? genr x=income/pop
+Generated series x (ID 6)
+# estimate model by OLS and save absolute residuals, squared residuals,
+# and their logs
+? ols y const x seniors
+
+Model 1: OLS, using observations 1-51
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -1.41952      0.676188     -2.099    0.0411   **
+  x           0.160130     0.0236272     6.777    1.61e-08 ***
+  seniors     0.0907347    0.0351455     2.582    0.0129   **
+
+Mean dependent var   2.955266   S.D. dependent var   0.740555
+Sum squared resid    13.34738   S.E. of regression   0.527324
+R-squared            0.513244   Adjusted R-squared   0.492962
+F(2, 48)             25.30597   P-value(F)           3.13e-08
+Log-likelihood      -38.18298   Akaike criterion     82.36596
+Schwarz criterion    88.16144   Hannan-Quinn         84.58058
+
+? genr absuhat=abs($uhat)
+Generated series absuhat (ID 7)
+? genr usq=$uhat*$uhat
+Generated series usq (ID 8)
+? genr lnusq=ln(usq)
+Generated series lnusq (ID 9)
+# generate square and cross product variables; the flag -o generates cross
+# product
+? square x seniors -o
+Listing 13 variables:
+  0) const         1) exphlth       2) income        3) pop         
+  4) seniors       5) y             6) x             7) absuhat     
+  8) usq           9) lnusq        10) sq_x         11) x_seniors   
+ 12) sq_seniors  
+
+# Testing and estimation for the Glesjer approach
+? ols absuhat const x seniors sq_x sq_seniors
+
+Model 2: OLS, using observations 1-51
+Dependent variable: absuhat
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const         7.03120      1.55324       4.527    4.22e-05 ***
+  x            -0.732487     0.126788     -5.777    6.24e-07 ***
+  seniors       0.0633837    0.0972249     0.6519   0.5177  
+  sq_x          0.0184783    0.00293341    6.299    1.03e-07 ***
+  sq_seniors   -0.00280714   0.00400494   -0.7009   0.4869  
+
+Mean dependent var   0.294832   S.D. dependent var   0.422236
+Sum squared resid    3.705384   S.E. of regression   0.283817
+R-squared            0.584326   Adjusted R-squared   0.548180
+F(4, 46)             16.16588   P-value(F)           2.46e-08
+Log-likelihood      -5.503877   Akaike criterion     21.00775
+Schwarz criterion    30.66688   Hannan-Quinn         24.69879
+
+Excluding the constant, p-value was highest for variable 4 (seniors)
+
+# estimate residual s.d. from the auxiliary regression
+? genr sigmahat=absuhat-$uhat
+Generated series sigmahat (ID 13)
+# compute LM test statistic and its p-value
+? genr LM1=$nrsq
+Generated scalar LM1 = 29.8006
+? pvalue X 4 LM1
+Chi-square(4): area to the right of 29.8006 = 5.37387e-06
+(to the left: 0.999995)
+# print sigmahat and note that only one estimate is negative
+? print sigmahat
+
+Full data range: 1 - 51 (n = 51)
+
+ 0.129562   0.131161   1.86207   0.192699   0.230961   0.207961   0.167090  
+ 0.229285   0.115386   0.224854   0.245405   0.379588   0.133260   0.301219  
+ 0.106710   0.353974   0.330812   0.365702   0.361930   0.110850   0.603724  
+ 0.123398   0.114952   0.260701   1.39220   0.176986   0.291473   0.282492  
+ 0.173844   0.255979   0.319206   0.149875   0.437545   0.117471   0.159101  
+ 0.107437   0.200103   0.131314   0.498629   0.192222   0.131892   0.150265  
+ 1.03429   0.137213   0.118891   0.263540   0.112247  -0.00741666   0.135102  
+ 0.583116   0.208185  
+
+# replace negative value with original sigmahat and get weights
+? genr d1=(sigmahat>0.0)
+Generated series d1 (ID 14)
+? genr sigma2=(d1*sigmahat)+((1-d1)*absuhat)
+Generated series sigma2 (ID 15)
+? genr wt1=1/(sigma2^2)
+Generated series wt1 (ID 16)
+# Estimate model by FGLS which is the same as WLS
+? wls wt1 y const x seniors
+
+Model 3: WLS, using observations 1-51
+Dependent variable: y
+Variable used as weight: wt1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.335734     0.540694     -0.6209   0.5376  
+  x           0.110625     0.0227322     4.866    1.27e-05 ***
+  seniors     0.0772552    0.0175567     4.400    6.00e-05 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    95.40835   S.E. of regression   1.409849
+R-squared            0.430335   Adjusted R-squared   0.406599
+F(2, 48)             18.13006   P-value(F)           1.36e-06
+Log-likelihood      -88.33755   Akaike criterion     182.6751
+Schwarz criterion    188.4706   Hannan-Quinn         184.8897
+
+Statistics based on the original data:
+
+Mean dependent var   2.955266   S.D. dependent var   0.740555
+Sum squared resid    14.94280   S.E. of regression   0.557950
+
+# Testing and estimation for the Breusch-Pagan approach
+? ols usq const x seniors sq_x sq_seniors
+
+Model 4: OLS, using observations 1-51
+Dependent variable: usq
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const        18.3424       4.46370       4.109    0.0002   ***
+  x            -1.92303      0.364362     -5.278    3.44e-06 ***
+  seniors       0.0727874    0.279404      0.2605   0.7956  
+  sq_x          0.0486566    0.00843001    5.772    6.36e-07 ***
+  sq_seniors   -0.00294388   0.0115094    -0.2558   0.7993  
+
+Mean dependent var   0.261713   S.D. dependent var   1.160360
+Sum squared resid    30.60161   S.E. of regression   0.815630
+R-squared            0.545442   Adjusted R-squared   0.505916
+F(4, 46)             13.79933   P-value(F)           1.80e-07
+Log-likelihood      -59.34115   Akaike criterion     128.6823
+Schwarz criterion    138.3414   Hannan-Quinn         132.3733
+
+Excluding the constant, p-value was highest for variable 12 (sq_seniors)
+
+# estimate residual s.d. from the auxiliary regression
+? genr usqhat1=usq-$uhat
+Generated series usqhat1 (ID 17)
+# compute LM test statistic and its p-value
+? genr LM2=$nrsq
+Generated scalar LM2 = 27.8176
+? pvalue X 4 LM2
+Chi-square(4): area to the right of 27.8176 = 1.35811e-05
+(to the left: 0.999986)
+# print usqhat and note that several estimates are negative
+? print usqhat1
+
+Full data range: 1 - 51 (n = 51)
+
+-0.214657  -0.203897   4.43575   0.139878   0.115751   0.0183049  -0.0517467  
+ 0.0689239  -0.136653   0.0295659   0.112278   0.470139  -0.167792  
+ 0.255762  -0.217761   0.356785   0.393165   0.398238   0.461887  -0.215034  
+ 1.02084  -0.132251  -0.209451   0.154845   3.21280  -0.0789540   0.200008  
+ 0.190976  -0.0729666   0.128540   0.268384  -0.136641   0.620676  -0.211466  
+-0.123174  -0.216375  -0.0133405  -0.193828   0.835274  -0.0385859  
+-0.211007  -0.150602   2.24846  -0.175669  -0.210797   0.171727  -0.130928  
+-0.284760  -0.203578   1.03633   0.00401621  
+
+# replace negative values with original usqhat and get weights
+? genr d2=(usqhat1>0.0)
+Generated series d2 (ID 18)
+? genr usqhat2=(d2*usqhat1)+((1-d2)*usq)
+Generated series usqhat2 (ID 19)
+? genr wt2=1/usqhat2
+Generated series wt2 (ID 20)
+# Estimate model by FGLS which is the same as WLS
+? wls wt2 y const x seniors
+
+Model 5: WLS, using observations 1-51
+Dependent variable: y
+Variable used as weight: wt2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1.53853     0.126963     -12.12    3.27e-16 ***
+  x            0.159767    0.00589680    27.09    9.64e-31 ***
+  seniors      0.100444    0.00788897    12.73    5.30e-17 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    39.95146   S.E. of regression   0.912317
+R-squared            0.961860   Adjusted R-squared   0.960271
+F(2, 48)             605.2609   P-value(F)           8.98e-35
+Log-likelihood      -66.13977   Akaike criterion     138.2795
+Schwarz criterion    144.0750   Hannan-Quinn         140.4942
+
+Statistics based on the original data:
+
+Mean dependent var   2.955266   S.D. dependent var   0.740555
+Sum squared resid    13.36937   S.E. of regression   0.527758
+
+# Testing and estimation for White's procedure
+? ols usq const x seniors sq_x sq_seniors x_seniors
+
+Model 6: OLS, using observations 1-51
+Dependent variable: usq
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const        14.2747       7.69965       1.854    0.0703   *
+  x            -1.78376      0.424604     -4.201    0.0001   ***
+  seniors       0.489527     0.699660      0.6997   0.4877  
+  sq_x          0.0502516    0.00883066    5.691    8.97e-07 ***
+  sq_seniors   -0.00654498   0.0128373    -0.5098   0.6127  
+  x_seniors    -0.0160382    0.0246563    -0.6505   0.5187  
+
+Mean dependent var   0.261713   S.D. dependent var   1.160360
+Sum squared resid    30.31656   S.E. of regression   0.820793
+R-squared            0.549677   Adjusted R-squared   0.499641
+F(5, 45)             10.98563   P-value(F)           5.98e-07
+Log-likelihood      -59.10251   Akaike criterion     130.2050
+Schwarz criterion    141.7960   Hannan-Quinn         134.6343
+
+Excluding the constant, p-value was highest for variable 12 (sq_seniors)
+
+? genr usqhat3=usq-$uhat
+Generated series usqhat3 (ID 21)
+# compute LM test statistic and its p-value
+? genr LM3=$nrsq
+Generated scalar LM3 = 28.0335
+? pvalue X 5 LM3
+Chi-square(5): area to the right of 28.0335 = 3.58539e-05
+(to the left: 0.999964)
+# print usqhat and note that several estimates are negative
+? print usqhat3
+
+Full data range: 1 - 51 (n = 51)
+
+-0.246604  -0.220447   4.47833   0.270964   0.215475   0.0243437   0.0132229  
+ 0.106456  -0.210814  -0.00795085   0.137289   0.529312  -0.150634  
+ 0.317977  -0.216570   0.256256   0.559679   0.113236   0.622832  -0.217861  
+ 1.04412  -0.0716553  -0.204350   0.208958   3.12381  -0.0563238   0.152960  
+ 0.202028  -0.0490733   0.152119   0.193189  -0.140861   0.720000  -0.213940  
+-0.121598  -0.212794   0.00630807  -0.198567   0.765196  -0.0142686  
+-0.283010  -0.158505   2.21531  -0.180590  -0.212398   0.177979  -0.219600  
+-0.450688  -0.276236   1.03454   0.0408398  
+
+# replace negative values with original usqhat and get weights
+? genr d3=(usqhat3>0.0)
+Generated series d3 (ID 22)
+? genr usqhat4=(d3*usqhat3)+((1-d3)*usq)
+Generated series usqhat4 (ID 23)
+? genr wt3=1/usqhat4
+Generated series wt3 (ID 24)
+# Estimate model by FGLS which is the same as WLS
+? wls wt3 y const x seniors
+
+Model 7: WLS, using observations 1-51
+Dependent variable: y
+Variable used as weight: wt3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1.51470     0.127962     -11.84    7.65e-16 ***
+  x            0.151915    0.00648246    23.43    6.30e-28 ***
+  seniors      0.109356    0.00909052    12.03    4.27e-16 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    40.31224   S.E. of regression   0.916427
+R-squared            0.960403   Adjusted R-squared   0.958753
+F(2, 48)             582.0998   P-value(F)           2.21e-34
+Log-likelihood      -66.36902   Akaike criterion     138.7380
+Schwarz criterion    144.5335   Hannan-Quinn         140.9527
+
+Statistics based on the original data:
+
+Mean dependent var   2.955266   S.D. dependent var   0.740555
+Sum squared resid    13.49530   S.E. of regression   0.530238
+
+# Test using the Harvey-Godfrey approach
+? ols lnusq const x seniors sq_x sq_seniors
+
+Model 8: OLS, using observations 1-51
+Dependent variable: lnusq
+
+               coefficient   std. error   t-ratio   p-value
+  ---------------------------------------------------------
+  const        17.9134       12.0371       1.488    0.1435 
+  x            -2.47537       0.982562    -2.519    0.0153  **
+  seniors       0.576875      0.753459     0.7656   0.4478 
+  sq_x          0.0616426     0.0227329    2.712    0.0094  ***
+  sq_seniors   -0.0280418     0.0310369   -0.9035   0.3710 
+
+Mean dependent var  -3.653519   S.D. dependent var   2.366526
+Sum squared resid    222.5346   S.E. of regression   2.199479
+R-squared            0.205297   Adjusted R-squared   0.136192
+F(4, 46)             2.970808   P-value(F)           0.028990
+Log-likelihood      -109.9339   Akaike criterion     229.8678
+Schwarz criterion    239.5270   Hannan-Quinn         233.5589
+
+Excluding the constant, p-value was highest for variable 4 (seniors)
+
+# compute LM test statistic and its p-value
+? genr LM4=$nrsq
+Generated scalar LM4 = 10.4701
+# since the p-value is high, we do not reject homoscedasticity
+? pvalue X 4 LM4
+Chi-square(4): area to the right of 10.4701 = 0.033211
+(to the left: 0.966789)
+# Because the coefficients for x and x-squared are significant, another LM
+# test is done with just these
+? ols lnusq const x sq_x
+
+Model 9: OLS, using observations 1-51
+Dependent variable: lnusq
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      20.9372       10.2185       2.049    0.0460  **
+  x          -2.50683       0.962661    -2.604    0.0122  **
+  sq_x        0.0623381     0.0222992    2.796    0.0074  ***
+
+Mean dependent var  -3.653519   S.D. dependent var   2.366526
+Sum squared resid    228.3168   S.E. of regression   2.180963
+R-squared            0.184648   Adjusted R-squared   0.150675
+F(2, 48)             5.435123   P-value(F)           0.007452
+Log-likelihood      -110.5880   Akaike criterion     227.1761
+Schwarz criterion    232.9715   Hannan-Quinn         229.3907
+
+? genr lnusqhat=lnusq-$uhat
+Generated series lnusqhat (ID 25)
+# compute LM test statistic and its p-value
+? genr LM5=$nrsq
+Generated scalar LM5 = 9.41702
+? pvalue X 2 LM5
+Chi-square(2): area to the right of 9.41702 = 0.00901819
+(to the left: 0.990982)
+# since the p-value is acceptable, we reject homoscedasticity and
+# procede with WLS estimation
+? genr usqhat5=exp(lnusqhat)
+Generated series usqhat5 (ID 26)
+? genr wt4=1/usqhat5
+Generated series wt4 (ID 27)
+? wls wt4 y const x seniors
+
+Model 10: WLS, using observations 1-51
+Dependent variable: y
+Variable used as weight: wt4
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0237519    0.437873     0.05424   0.9570  
+  x           0.0947065    0.0174083    5.440     1.77e-06 ***
+  seniors     0.0743781    0.0166254    4.474     4.71e-05 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    144.8257   S.E. of regression   1.737010
+R-squared            0.466974   Adjusted R-squared   0.444764
+F(2, 48)             21.02592   P-value(F)           2.77e-07
+Log-likelihood      -98.98036   Akaike criterion     203.9607
+Schwarz criterion    209.7562   Hannan-Quinn         206.1753
+
+Statistics based on the original data:
+
+Mean dependent var   2.955266   S.D. dependent var   0.740555
+Sum squared resid    15.83833   S.E. of regression   0.574426
+
+Done

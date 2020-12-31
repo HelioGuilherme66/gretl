@@ -1,0 +1,6 @@
+open data3-6
+arma 1 1 ; Ct 
+arma 1 1 ; Ct -x
+arma 1 1 ; Yt 
+arma 1 1 ; Yt -x
+

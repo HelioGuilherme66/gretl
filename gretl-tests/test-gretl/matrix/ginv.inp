@@ -1,0 +1,23 @@
+matrix A = {1,2,3;4,7,2;1,6,3;2,0,4}
+print A
+matrix B = ginv(A)
+print B
+matrix C = A - ginv(B)
+print C
+
+matrix A = {1,2,3;4,7,2;1,6,3;2,0,4}'
+print A
+matrix B = ginv(A)
+print B
+matrix C = A - ginv(B)
+print C
+
+matrix A = {1,2,3;1,2,3;1,2,3;1,2,3}
+print A
+matrix B = ginv(A)
+print B
+matrix C = A - ginv(B)
+print C
+
+
+

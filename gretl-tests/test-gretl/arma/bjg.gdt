@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="bjg" frequency="12" startobs="1949:01" endobs="1960:12" type="time-series">
+<description>Box and Jenkins series G (p. 531)
+international airline passengers
+monthly data, 1949:01 to 1960:12
+</description>
+<variables count="2">
+<variable name="g"
+ label="passengers"
+/>
+<variable name="time"
+ label="time trend variable"
+/>
+</variables>
+<observations count="144" labels="false">
+<obs>112 1 </obs>
+<obs>118 2 </obs>
+<obs>132 3 </obs>
+<obs>129 4 </obs>
+<obs>121 5 </obs>
+<obs>135 6 </obs>
+<obs>148 7 </obs>
+<obs>148 8 </obs>
+<obs>136 9 </obs>
+<obs>119 10 </obs>
+<obs>104 11 </obs>
+<obs>118 12 </obs>
+<obs>115 13 </obs>
+<obs>126 14 </obs>
+<obs>141 15 </obs>
+<obs>135 16 </obs>
+<obs>125 17 </obs>
+<obs>149 18 </obs>
+<obs>170 19 </obs>
+<obs>170 20 </obs>
+<obs>158 21 </obs>
+<obs>133 22 </obs>
+<obs>114 23 </obs>
+<obs>140 24 </obs>
+<obs>145 25 </obs>
+<obs>150 26 </obs>
+<obs>178 27 </obs>
+<obs>163 28 </obs>
+<obs>172 29 </obs>
+<obs>178 30 </obs>
+<obs>199 31 </obs>
+<obs>199 32 </obs>
+<obs>184 33 </obs>
+<obs>162 34 </obs>
+<obs>146 35 </obs>
+<obs>166 36 </obs>
+<obs>171 37 </obs>
+<obs>180 38 </obs>
+<obs>193 39 </obs>
+<obs>181 40 </obs>
+<obs>183 41 </obs>
+<obs>218 42 </obs>
+<obs>230 43 </obs>
+<obs>242 44 </obs>
+<obs>209 45 </obs>
+<obs>191 46 </obs>
+<obs>172 47 </obs>
+<obs>194 48 </obs>
+<obs>196 49 </obs>
+<obs>196 50 </obs>
+<obs>236 51 </obs>
+<obs>235 52 </obs>
+<obs>229 53 </obs>
+<obs>243 54 </obs>
+<obs>264 55 </obs>
+<obs>272 56 </obs>
+<obs>237 57 </obs>
+<obs>211 58 </obs>
+<obs>180 59 </obs>
+<obs>201 60 </obs>
+<obs>204 61 </obs>
+<obs>188 62 </obs>
+<obs>235 63 </obs>
+<obs>227 64 </obs>
+<obs>234 65 </obs>
+<obs>264 66 </obs>
+<obs>302 67 </obs>
+<obs>293 68 </obs>
+<obs>259 69 </obs>
+<obs>229 70 </obs>
+<obs>203 71 </obs>
+<obs>229 72 </obs>
+<obs>242 73 </obs>
+<obs>233 74 </obs>
+<obs>267 75 </obs>
+<obs>269 76 </obs>
+<obs>270 77 </obs>
+<obs>315 78 </obs>
+<obs>364 79 </obs>
+<obs>347 80 </obs>
+<obs>312 81 </obs>
+<obs>274 82 </obs>
+<obs>237 83 </obs>
+<obs>278 84 </obs>
+<obs>284 85 </obs>
+<obs>277 86 </obs>
+<obs>317 87 </obs>
+<obs>313 88 </obs>
+<obs>318 89 </obs>
+<obs>374 90 </obs>
+<obs>413 91 </obs>
+<obs>405 92 </obs>
+<obs>355 93 </obs>
+<obs>306 94 </obs>
+<obs>271 95 </obs>
+<obs>306 96 </obs>
+<obs>315 97 </obs>
+<obs>301 98 </obs>
+<obs>356 99 </obs>
+<obs>348 100 </obs>
+<obs>355 101 </obs>
+<obs>422 102 </obs>
+<obs>465 103 </obs>
+<obs>467 104 </obs>
+<obs>404 105 </obs>
+<obs>347 106 </obs>
+<obs>305 107 </obs>
+<obs>336 108 </obs>
+<obs>340 109 </obs>
+<obs>318 110 </obs>
+<obs>362 111 </obs>
+<obs>348 112 </obs>
+<obs>363 113 </obs>
+<obs>435 114 </obs>
+<obs>491 115 </obs>
+<obs>505 116 </obs>
+<obs>404 117 </obs>
+<obs>359 118 </obs>
+<obs>310 119 </obs>
+<obs>337 120 </obs>
+<obs>360 121 </obs>
+<obs>342 122 </obs>
+<obs>406 123 </obs>
+<obs>396 124 </obs>
+<obs>420 125 </obs>
+<obs>472 126 </obs>
+<obs>548 127 </obs>
+<obs>559 128 </obs>
+<obs>463 129 </obs>
+<obs>407 130 </obs>
+<obs>362 131 </obs>
+<obs>405 132 </obs>
+<obs>417 133 </obs>
+<obs>391 134 </obs>
+<obs>419 135 </obs>
+<obs>461 136 </obs>
+<obs>472 137 </obs>
+<obs>535 138 </obs>
+<obs>622 139 </obs>
+<obs>606 140 </obs>
+<obs>508 141 </obs>
+<obs>461 142 </obs>
+<obs>390 143 </obs>
+<obs>432 144 </obs>
+</observations>
+</gretldata>

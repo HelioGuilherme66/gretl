@@ -1,0 +1,2 @@
+open franck.xls --sheet="regression_ready"
+print 1 30 -o

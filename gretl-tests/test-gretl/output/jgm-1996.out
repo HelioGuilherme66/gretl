@@ -1,0 +1,207 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run jgm-1996.inp
+ /opt/esl/share/gretl/scripts/misc/jgm-1996.inp
+# Replicate part of Table 1 in James G. MacKinnon,
+# "Numerical Distribution Functions for Unit
+# Root and Cointegration Tests", Journal of Applied
+# Econometrics, 11 (1996), pp. 601-618.
+? open jgm-data.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/jgm-data.gdt
+periodicity: 1, maxobs: 43
+observations range: 1952 to 1994
+
+Listing 6 variables:
+  0) const    1) pi_c     2) pi_y     3) r_s      4) r_m    
+  5) r_l    
+
+? smpl 1955 ;
+Full data range: 1952 - 1994 (n = 43)
+Current sample: 1955 - 1994 (n = 40)
+
+# unit root tests for short-term interest rate
+? adf 0 r_s --c
+
+Dickey-Fuller test for r_s
+sample size 40
+unit-root null hypothesis: a = 1
+
+  test with constant 
+  model: (1-L)y = b0 + (a-1)*y(-1) + e
+  estimated value of (a - 1): -0.16495
+  test statistic: tau_c(1) = -2.02554
+  p-value 0.2752
+  1st-order autocorrelation coeff. for e: 0.096
+
+? adf 0 r_s --ctt
+
+Dickey-Fuller test for r_s
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + e
+  estimated value of (a - 1): -0.303978
+  test statistic: tau_ctt(1) = -2.41568
+  p-value 0.5941
+  1st-order autocorrelation coeff. for e: 0.134
+
+? adf 1 r_s --ctt
+
+Augmented Dickey-Fuller test for r_s
+including one lag of (1-L)r_s
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.38872
+  test statistic: tau_ctt(1) = -2.73361
+  asymptotic p-value 0.4356
+  1st-order autocorrelation coeff. for e: -0.001
+
+# unit root tests for medium-term interest rate
+? adf 0 r_m --c
+
+Dickey-Fuller test for r_m
+sample size 40
+unit-root null hypothesis: a = 1
+
+  test with constant 
+  model: (1-L)y = b0 + (a-1)*y(-1) + e
+  estimated value of (a - 1): -0.114558
+  test statistic: tau_c(1) = -1.81297
+  p-value 0.3691
+  1st-order autocorrelation coeff. for e: 0.129
+
+? adf 0 r_m --ctt --verbose
+
+Dickey-Fuller test for r_m
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + e
+  estimated value of (a - 1): -0.247971
+  test statistic: tau_ctt(1) = -2.22898
+  p-value 0.6901
+  1st-order autocorrelation coeff. for e: 0.160
+
+Dickey-Fuller regression
+OLS, using observations 1955-1994 (T = 40)
+Dependent variable: d_r_m
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.106881     0.796024     -0.1343   0.8939 
+  r_m_1      -0.247971     0.111248     -2.229    0.6901 
+  time        0.180339     0.0980904     1.838    0.0743  *
+  timesq     -0.00312190   0.00178893   -1.745    0.0895  *
+
+  AIC: 131.931   BIC: 138.687   HQC: 134.374
+
+? adf 1 r_m --ctt --verbose
+
+Augmented Dickey-Fuller test for r_m
+including one lag of (1-L)r_m
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.313857
+  test statistic: tau_ctt(1) = -2.60171
+  asymptotic p-value 0.5105
+  1st-order autocorrelation coeff. for e: 0.022
+
+Augmented Dickey-Fuller regression
+OLS, using observations 1955-1994 (T = 40)
+Dependent variable: d_r_m
+
+             coefficient   std. error    t-ratio    p-value
+  ---------------------------------------------------------
+  const       0.00466371   0.791966      0.005889   0.9953 
+  r_m_1      -0.313857     0.120635     -2.602      0.5105 
+  d_r_m_1     0.234042     0.175430      1.334      0.1908 
+  time        0.191852     0.0974278     1.969      0.0569  *
+  timesq     -0.00298287   0.00177293   -1.682      0.1014 
+
+  AIC: 131.947   BIC: 140.391   HQC: 135
+
+# tests for long rate
+? adf 0 r_l --ctt
+
+Dickey-Fuller test for r_l
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + e
+  estimated value of (a - 1): -0.204435
+  test statistic: tau_ctt(1) = -2.03135
+  p-value 0.7803
+  1st-order autocorrelation coeff. for e: 0.202
+
+? adf 1 r_l --ctt
+
+Augmented Dickey-Fuller test for r_l
+including one lag of (1-L)r_l
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.262419
+  test statistic: tau_ctt(1) = -2.4938
+  asymptotic p-value 0.5722
+  1st-order autocorrelation coeff. for e: 0.020
+
+# CPI inflation rate
+? adf 1 pi_c --ctt
+
+Augmented Dickey-Fuller test for pi_c
+including one lag of (1-L)pi_c
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.326426
+  test statistic: tau_ctt(1) = -2.92989
+  asymptotic p-value 0.3306
+  1st-order autocorrelation coeff. for e: 0.018
+
+# inflation measured by GDP deflator
+? adf 1 pi_y --ctt
+
+Augmented Dickey-Fuller test for pi_y
+including one lag of (1-L)pi_y
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.420621
+  test statistic: tau_ctt(1) = -3.40571
+  asymptotic p-value 0.1386
+  1st-order autocorrelation coeff. for e: -0.065
+
+? adf 2 pi_y --ctt
+
+Augmented Dickey-Fuller test for pi_y
+including 2 lags of (1-L)pi_y
+sample size 40
+unit-root null hypothesis: a = 1
+
+  with constant and quadratic trend 
+  model: (1-L)y = b0 + b1*t + b2*t^2 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.476859
+  test statistic: tau_ctt(1) = -3.602
+  asymptotic p-value 0.08914
+  1st-order autocorrelation coeff. for e: 0.027
+  lagged differences: F(2, 34) = 2.596 [0.0893]
+
+Done

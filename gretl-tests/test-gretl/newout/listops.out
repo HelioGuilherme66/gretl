@@ -1,0 +1,45 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run listops.inp
+ /home/cottrell/stats/test-gretl/listops.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? list L1 = 1 2 3 4 5 6
+Generated list L1
+? list L2
+? loop i=1..12 -q
+> L2 += i%4
+> endloop
+? list L3 = L1 - L2
+Generated list L3
+? list L4 = L1 || L2
+Generated list L4
+? list L5 = L1 L2
+Generated list L5
+? list L6 = L1 && L2
+Generated list L6
+? L1
+ENROLL CATHOL PUPIL WHITE ADMEXP REV 
+? L2
+ENROLL CATHOL PUPIL const ENROLL CATHOL PUPIL const ENROLL CATHOL \
+ PUPIL const 
+? L3
+WHITE ADMEXP REV 
+? L4
+ENROLL CATHOL PUPIL WHITE ADMEXP REV const 
+? L5
+ENROLL CATHOL PUPIL WHITE ADMEXP REV ENROLL CATHOL PUPIL const \
+ ENROLL CATHOL PUPIL const ENROLL CATHOL PUPIL const 
+? L6
+ENROLL CATHOL PUPIL 
+Done

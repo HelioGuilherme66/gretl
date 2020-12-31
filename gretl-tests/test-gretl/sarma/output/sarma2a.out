@@ -1,0 +1,111 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:09
+? run sarma2a.inp
+ /home/cottrell/stats/test-gretl/sarma/sarma2a.inp
+# Seasonal ARMA test script
+? nulldata 620
+periodicity: 1, maxobs: 620
+observations range: 1 to 620
+? setobs 12 1920:01
+Full data range: 1920:01 - 1971:08 (n = 620)
+
+? set seed 37111
+Pseudo-random number generator seeded with 37111
+? scalar phi_1 = 0.5
+Generated scalar phi_1 = 0.5
+? scalar Phi_1 = 0.1
+Generated scalar Phi_1 = 0.1
+? scalar theta_1 = 0.2
+Generated scalar theta_1 = 0.2
+? scalar Theta_1 = 0.2
+Generated scalar Theta_1 = 0.2
+? genr eps = normal()
+Generated series eps (ID 2)
+# Artificial error process
+? genr u = eps + theta_1*eps(-1) + Theta_1*eps(-12) + theta_1*Theta_1*eps(-13)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+# Artificial seasonal series
+? genr y = phi_1*y(-1) + Phi_1*y(-12) - phi_1*Phi_1*y(-13) + u
+Replaced series y (ID 4)
+? genr y = y + 500 / (1 - phi_1 - Phi_1 + phi_1*Phi_1)
+Replaced series y (ID 4)
+? smpl +20 ;
+Full data range: 1920:01 - 1971:08 (n = 620)
+Current sample: 1921:09 - 1971:08 (n = 600)
+
+# X-12-ARIMA
+? arma 1 1 ; 1 1 ; y --conditional --x-12-arima
+
+Model 1: ARMA, using observations 1921:09-1971:08 (T = 600)
+Estimated using X-13-ARIMA (conditional ML)
+Dependent variable: y
+
+             coefficient    std. error       z       p-value 
+  -----------------------------------------------------------
+  const      1111.03        0.126475     8785        0.0000   ***
+  phi_1         0.466149    0.0587321       7.937    2.07e-15 ***
+  Phi_1         0.216969    0.124171        1.747    0.0806   *
+  theta_1       0.210158    0.0651468       3.226    0.0013   ***
+  Theta_1       0.0887241   0.127396        0.6964   0.4862  
+
+Mean dependent var   1111.034   S.D. dependent var   1.290624
+Mean of innovations  0.000142   S.D. of innovations  0.984954
+Log-likelihood      -842.2669   Akaike criterion     1696.534
+Schwarz criterion    1722.915   Hannan-Quinn         1706.804
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.1452     0.0000     2.1452     0.0000
+  AR (seasonal)
+    Root  1           4.6090     0.0000     4.6090     0.0000
+  MA
+    Root  1          -4.7583     0.0000     4.7583     0.5000
+  MA (seasonal)
+    Root  1         -11.2709     0.0000    11.2709     0.5000
+  -----------------------------------------------------------
+
+# BHHH
+? smpl 1922:10 ;
+Full data range: 1920:01 - 1971:08 (n = 620)
+Current sample: 1922:10 - 1971:08 (n = 587)
+
+? arma 1 1 ; 1 1 ; y --conditional
+
+Function evaluations: 79
+Evaluations of gradient: 29
+
+Model 2: ARMA, using observations 1922:10-1971:08 (T = 587)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const      450.265       88.5275      5.086    3.65e-07 ***
+  phi_1        0.465770     0.0616009   7.561    4.00e-14 ***
+  Phi_1        0.241382     0.124405    1.940    0.0523   *
+  theta_1      0.205597     0.0655907   3.135    0.0017   ***
+  Theta_1      0.0692025    0.127954    0.5408   0.5886  
+
+Mean dependent var   1111.022   S.D. dependent var   1.288436
+Mean of innovations  0.000282   S.D. of innovations  0.981407
+Log-likelihood      -821.8998   Akaike criterion     1655.800
+Schwarz criterion    1682.050   Hannan-Quinn         1666.028
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.1470     0.0000     2.1470     0.0000
+  AR (seasonal)
+    Root  1           4.1428     0.0000     4.1428     0.0000
+  MA
+    Root  1          -4.8639     0.0000     4.8639     0.5000
+  MA (seasonal)
+    Root  1         -14.4503     0.0000    14.4503     0.5000
+  -----------------------------------------------------------
+
+Done

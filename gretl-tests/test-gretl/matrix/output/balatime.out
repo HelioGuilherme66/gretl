@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run balatime.inp
+ /home/cottrell/stats/test-gretl/matrix/balatime.inp
+? nulldata 20000
+periodicity: 1, maxobs: 20000
+observations range: 1 to 20000
+? series x = normal()
+Generated series x (ID 2)
+? series example = 0
+Generated series example (ID 3)
+? set stopwatch
+? loop i=1..$nobs -q
+> example[i] = x[i]
+> endloop
+assignment in series mode: 0.0272666 secs
+? matrix example2 = zeros($nobs,1)
+Generated matrix example2
+? set stopwatch
+? loop i=1..$nobs -q
+> example2[i] = x[i]
+> endloop
+assignment in matrix mode: 0.0125501 secs
+Done

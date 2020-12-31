@@ -1,0 +1,13 @@
+open data7-12
+pca 2 3 4 5 6 7 8 9 10 11 -a
+ols 1 0 6 7 -q
+ess1 = $ess
+ols 1 0 PC1 PC2 -q
+ess2 = $ess
+ols 1 0 PC1 PC2 PC3 PC4 -q
+ess3 = $ess
+printf "Using two variables out of 10, SSR = %g\n", ess1
+printf "Using first two PCs, SSR = %g\n", ess2
+printf "Using first four PCs, SSR = %g\n", ess3
+
+

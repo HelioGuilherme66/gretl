@@ -1,0 +1,65 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run solstest.inp
+ /home/cottrell/stats/test-gretl/ufunc/solstest.inp
+? function matrix solstest (series y, const list xlist)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? list X = 0 2 3 4
+Generated list X
+? solstest(price, X)
+
+OLS, using observations 1-14
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+SSR = 16700.1, R-squared = 0.835976
+
+
+Standard deviation of dependent var. = 88.4982
+
+Independent variables:
+
+                    std. dev.    standardized coeff.
+
+           const            0           1.4584
+            sqft       577.76           1.0106
+          bedrms      0.49725         -0.12129
+           baths      0.44629        -0.061487
+? ols 1 X
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+Done

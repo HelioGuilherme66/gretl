@@ -1,0 +1,27 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run Wilcoxon.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Wilcoxon.gfn.inp
+? include ./Wilcoxon/Wilcoxon.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Wilcoxon/Wilcoxon.gfn
+Wilcoxon 1.0, 2015-07-15 (Giulio Palomba)
+# Data taken from http://vassarstats.net/textbook/ch12a.html
+? open WSRT_example.gdt --quiet --frompkg=Wilcoxon
+Read datafile /home/cottrell/stats/test-gretl/testgfn//Wilcoxon/WSRT_example.gdt
+? scalar wt = Wilcoxon(x,y)
+
+==========================================================
+ Wilcoxon Signed-Rank Test Statistic: 2.0873 (14 pairs)
+ One-tailed p-value:
+    Pr(Z > 2.0873) = 0.0184
+ Two-tailed p-value:
+    2*Pr(|Z| > 2.0873) = 0.0369
+==========================================================
+
+Generated scalar wt = 2.08732
+? print wt
+
+             wt =  2.0873180
+Done

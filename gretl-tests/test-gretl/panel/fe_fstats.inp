@@ -1,0 +1,3 @@
+open abdata.gdt
+panel WAGE 0 EMP CAP
+panel WAGE 0 EMP CAP --robust

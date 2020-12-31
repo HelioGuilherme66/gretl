@@ -1,0 +1,306 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch11.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch11.inp
+# Stock and Watson, ch 11
+# Analysis of Project STAR official data set
+#
+? open star_sw.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/star_sw.gdt
+periodicity: 1, maxobs: 11598
+observations range: 1 to 11598
+
+Listing 41 variables:
+  0) const       1) stark       2) star1       3) star2       4) star3     
+  5) totexpk     6) treadssk    7) tmathssk    8) totexp1     9) treadss1  
+ 10) tmathss1   11) totexp2    12) treadss2   13) tmathss2   14) treadss3  
+ 15) tmathss3   16) totexp3    17) schidkn    18) schid1n    19) schid2n   
+ 20) schid3n    21) tscorek    22) tscore1    23) tscore2    24) tscore3   
+ 25) sck        26) sc1        27) sc2        28) sc3        29) rak       
+ 30) ra1        31) ra2        32) ra3        33) white      34) black     
+ 35) other      36) boy        37) freelunk   38) freelun1   39) freelun2  
+ 40) freelun3  
+
+? set hc_version 1
+#
+# *************************************************************
+# The following command are not executed.  They are included to
+# document how the variables in STAR_SW were computed from
+# WEBSTAR
+# *************************************************************
+# genr tscorek = tmathssk+treadssk
+# genr tscore1 = tmathss1+treadss1
+# genr tscore2 = tmathss2+treadss2
+# genr tscore3 = tmathss3+treadss3
+# genr sck = cltypek=1
+# genr sc1 = cltype1=1
+# genr sc2 = cltype2=1
+# genr sc3 = cltype3=1
+# genr rak = cltypek=3
+# genr ra1 = cltype1=3
+# genr ra2 = cltype2=3
+# genr ra3 = cltype3=3
+# genr white = (srace=1)
+# genr black = (srace=2)
+# genr other = (srace>2 & srace<=6)
+# genr boy = (ssex=1)
+# genr freelunk = (sesk=1)
+# genr freelun1 = (ses1=1)
+# genr freelun2 = (ses2=1)
+# genr freelun3 = (ses3=1)
+# *********************************************
+# Table 11.1: differences estimators
+# ----- summary for K -----
+#
+# ----- kindergarten -----
+? smpl --restrict stark=1 && ok(tscorek) && ok(sck) && ok(rak)
+Full data set: 11598 observations
+Current sample: 5786 observations
+? summary tscorek sck rak
+
+                     Mean         Median        Minimum        Maximum
+tscorek            922.33         915.00         635.00         1253.0
+sck               0.30038         0.0000         0.0000         1.0000
+rak               0.35309         0.0000         0.0000         1.0000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+tscorek            73.747       0.079957        0.63015        0.74513
+sck               0.45846         1.5263        0.87090        -1.2415
+rak               0.47797         1.3537        0.61476        -1.6221
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+tscorek            816.00         1058.0         94.000              0
+sck                0.0000         1.0000         1.0000              0
+rak                0.0000         1.0000         1.0000              0
+
+? ols tscorek 0 sck rak --robust
+
+Model 1: OLS, using observations 1-5786
+Dependent variable: tscorek
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      918.043        1.63339     562.0      0.0000   ***
+  sck         13.8990       2.45409       5.664    1.55e-08 ***
+  rak          0.313935     2.27098       0.1382   0.8901  
+
+Mean dependent var   922.3287   S.D. dependent var   73.74660
+Sum squared resid    31232400   S.E. of regression   73.48963
+R-squared            0.007300   Adjusted R-squared   0.006957
+F(2, 5783)           20.33246   P-value(F)           1.59e-09
+Log-likelihood      -33071.76   Akaike criterion     66149.51
+Schwarz criterion    66169.50   Hannan-Quinn         66156.47
+
+# ----- grade 1 -----
+? smpl --restrict --replace star1=1 && ok(tscore1) && ok(sc1) && \
+  ok(ra1)
+Full data set: 11598 observations
+Current sample: 6379 observations
+? summary tscore1 sc1 ra1
+
+                     Mean         Median        Minimum        Maximum
+tscore1            1051.9         1045.0         827.00         1327.0
+sc1               0.28484         0.0000         0.0000         1.0000
+ra1               0.33422         0.0000         0.0000         1.0000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+tscore1            91.283       0.086781        0.30827       -0.40287
+sc1               0.45137         1.5847        0.95343        -1.0910
+ra1               0.47175         1.4115        0.70287        -1.5060
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+tscore1            912.00         1217.0         129.00              0
+sc1                0.0000         1.0000         1.0000              0
+ra1                0.0000         1.0000         1.0000              0
+
+? ols tscore1 0 sc1 ra1 --robust
+
+Model 2: OLS, using observations 1-6379
+Dependent variable: tscore1
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1039.39       1.78457     582.4     0.0000   ***
+  sc1           29.7808     2.83114      10.52    1.14e-25 ***
+  ra1           11.9587     2.65201       4.509   6.62e-06 ***
+
+Mean dependent var   1051.872   S.D. dependent var   91.28273
+Sum squared resid    52222014   S.E. of regression   90.50085
+R-squared            0.017366   Adjusted R-squared   0.017058
+F(2, 6376)           55.32604   P-value(F)           1.51e-24
+Log-likelihood      -37789.60   Akaike criterion     75585.19
+Schwarz criterion    75605.47   Hannan-Quinn         75592.21
+
+# ----- grade 2 -----
+? smpl --restrict --replace star2=1 && ok(tscore2) && ok(sc2) && \
+  ok(ra2)
+Full data set: 11598 observations
+Current sample: 6049 observations
+? summary tscore2 sc2 ra2
+
+                     Mean         Median        Minimum        Maximum
+tscore2            1164.8         1161.0         930.00         1453.0
+sc2               0.29526         0.0000         0.0000         1.0000
+ra2               0.36618         0.0000         0.0000         1.0000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+tscore2            84.077       0.072181        0.24370       -0.14706
+sc2               0.45620         1.5451        0.89769        -1.1941
+ra2               0.48180         1.3158        0.55556        -1.6913
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+tscore2            1034.0         1309.0         115.00              0
+sc2                0.0000         1.0000         1.0000              0
+ra2                0.0000         1.0000         1.0000              0
+
+? ols tscore2 0 sc2 ra2 --robust
+
+Model 3: OLS, using observations 1-6049
+Dependent variable: tscore2
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      1157.81        1.81508     637.9     0.0000   ***
+  sc2          19.3944      2.71167       7.152   9.55e-13 ***
+  ra2           3.47914     2.54473       1.367   0.1716  
+
+Mean dependent var   1164.807   S.D. dependent var   84.07682
+Sum squared resid    42350602   S.E. of regression   83.69427
+R-squared            0.009407   Adjusted R-squared   0.009079
+F(2, 6046)           28.29198   P-value(F)           5.89e-13
+Log-likelihood      -35361.61   Akaike criterion     70729.23
+Schwarz criterion    70749.35   Hannan-Quinn         70736.21
+
+# ----- grade 3 -----
+? smpl --restrict --replace star3=1 && ok(tscore3) && ok(sc3) && \
+  ok(ra3)
+Full data set: 11598 observations
+Current sample: 5967 observations
+? summary tscore3 sc3 ra3
+
+                     Mean         Median        Minimum        Maximum
+tscore3            1233.4         1231.0         1009.0         1527.0
+sc3               0.31909         0.0000         0.0000         1.0000
+ra3               0.37808         0.0000         0.0000         1.0000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+tscore3            73.267       0.059404        0.22067      -0.050603
+sc3               0.46616         1.4609        0.77624        -1.3975
+ra3               0.48495         1.2827        0.50286        -1.7471
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+tscore3            1117.0         1358.0         102.00              0
+sc3                0.0000         1.0000         1.0000              0
+ra3                0.0000         1.0000         1.0000              0
+
+? ols tscore3 0 sc3 ra3 --robust
+
+Model 4: OLS, using observations 1-5967
+Dependent variable: tscore3
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      1228.51        1.68001     731.2      0.0000   ***
+  sc3          15.5866      2.39604       6.505    8.39e-11 ***
+  ra3          -0.290939    2.27271      -0.1280   0.8981  
+
+Mean dependent var   1233.370   S.D. dependent var   73.26685
+Sum squared resid    31704064   S.E. of regression   72.91026
+R-squared            0.010042   Adjusted R-squared   0.009710
+F(2, 5964)           29.53172   P-value(F)           1.73e-13
+Log-likelihood      -34059.14   Akaike criterion     68124.28
+Schwarz criterion    68144.36   Hannan-Quinn         68131.25
+
+#
+# Table 11.2: differences estimators with X's for K
+? smpl full
+Full data range: 1 - 11598 (n = 11598)
+
+? smpl --restrict stark=1 && ok(tscorek) && ok(sck) && ok(rak)
+Full data set: 11598 observations
+Current sample: 5786 observations
+? ols tscorek 0 sck rak --robust
+
+Model 5: OLS, using observations 1-5786
+Dependent variable: tscorek
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      918.043        1.63339     562.0      0.0000   ***
+  sck         13.8990       2.45409       5.664    1.55e-08 ***
+  rak          0.313935     2.27098       0.1382   0.8901  
+
+Mean dependent var   922.3287   S.D. dependent var   73.74660
+Sum squared resid    31232400   S.E. of regression   73.48963
+R-squared            0.007300   Adjusted R-squared   0.006957
+F(2, 5783)           20.33246   P-value(F)           1.59e-09
+Log-likelihood      -33071.76   Akaike criterion     66149.51
+Schwarz criterion    66169.50   Hannan-Quinn         66156.47
+
+? smpl --restrict ok(totexpk)
+Full data set: 11598 observations
+Current sample: 5766 observations
+? ols tscorek 0 sck rak totexpk --robust
+
+Model 6: OLS, using observations 1-5766
+Dependent variable: tscorek
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      904.721        2.22235     407.1      0.0000   ***
+  sck         14.0061       2.44704       5.724    1.09e-08 ***
+  rak         -0.600583     2.25430      -0.2664   0.7899  
+  totexpk      1.46903      0.169287      8.678    5.18e-18 ***
+
+Mean dependent var   922.4037   S.D. dependent var   73.82010
+Sum squared resid    30777099   S.E. of regression   73.08483
+R-squared            0.020332   Adjusted R-squared   0.019822
+F(3, 5762)           39.67284   P-value(F)           2.28e-25
+Log-likelihood      -32925.08   Akaike criterion     65858.17
+Schwarz criterion    65884.81   Hannan-Quinn         65867.44
+
+Excluding the constant, p-value was highest for variable 29 (rak)
+
+# Note: below we are missing the "school indicator variables"
+? list xlist = boy freelunk black other
+Generated list xlist
+? smpl ok(xlist) --restrict
+Full data set: 11598 observations
+Current sample: 5748 observations
+? ols tscorek 0 sck rak totexpk xlist --robust
+
+Model 7: OLS, using observations 1-5748
+Dependent variable: tscorek
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      935.160        2.65719     351.9      0.0000   ***
+  sck         14.1002       2.35388       5.990    2.22e-09 ***
+  rak          0.770677     2.15692       0.3573   0.7209  
+  totexpk      1.10804      0.168928      6.559    5.88e-11 ***
+  boy        -14.0063       1.84901      -7.575    4.16e-14 ***
+  freelunk   -34.4049       2.02574     -16.98     3.70e-63 ***
+  black      -11.5443       2.18721      -5.278    1.35e-07 ***
+  other      -16.3555      14.9352       -1.095    0.2735  
+
+Mean dependent var   922.3904   S.D. dependent var   73.87650
+Sum squared resid    28153085   S.E. of regression   70.03370
+R-squared            0.102422   Adjusted R-squared   0.101327
+F(7, 5740)           95.68121   P-value(F)           1.3e-132
+Log-likelihood      -32575.17   Akaike criterion     65166.35
+Schwarz criterion    65219.60   Hannan-Quinn         65184.88
+
+Excluding the constant, p-value was highest for variable 29 (rak)
+
+# end
+Done

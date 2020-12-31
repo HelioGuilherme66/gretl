@@ -1,0 +1,5 @@
+open armagen10.gdt
+smpl 1950:04 ;
+arma 1 2 ; y -x
+arma 1 2 ; y
+

@@ -1,0 +1,27 @@
+open data13-1
+genr TAXt=100*GOVREC/Pt  
+genr DISPINCM=GDP-TAXt
+genr M=100*MONYSUP/Pt  
+genr Yt=GDP/POP  
+genr Ct=CONS/POP  
+genr It=INV/POP  
+genr Gt=GOVEXP/POP  
+genr Tt=TAXt/POP
+genr Xt=EXPORTS/POP  
+genr IMPt=IMPORTS/POP
+genr DYt=DISPINCM/POP   
+genr Mt=M/POP  
+lags Yt Ct It Gt Xt DYt Mt rt
+smpl 1960 1993 
+tsls Ct 0 Ct_1 DYt DYt_1 ; 0 Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+genr yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+genr yh1 = NA
+smpl 1960 1987
+tsls Ct 0 Ct_1 DYt DYt_1 ; 0 Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+genr yh1 = $yhat
+smpl full
+fcast yh2
+print yh1 yh2 --byobs
+

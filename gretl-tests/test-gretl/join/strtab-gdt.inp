@@ -1,0 +1,9 @@
+open strcode1.csv
+print -o
+print s -o
+smpl pid < 3 --restrict
+join strcode2.gdt s --ikey=pid
+smpl full
+print -o
+print s -o
+

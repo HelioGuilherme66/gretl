@@ -1,0 +1,135 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run denmark-sys.inp
+ /home/cottrell/stats/test-gretl/system/denmark-sys.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? list LHS = LRM LRY
+Generated list LHS
+? list RHS1 = const LRM(-1) IBO(-1) IDE(-1)
+Generated list RHS1
+? list RHS2 = const LRY(-1) IBO(-1)
+Generated list RHS2
+? list RHS = RHS1 ; RHS2
+Generated list RHS
+? system method=ols
+? equations LHS RHS
+? end system
+
+Equation system, Ordinary Least Squares
+
+Equation 1: OLS, using observations 1974:2-1987:3 (T = 54)
+Dependent variable: LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        1.86717     0.559874      3.335    0.0016   ***
+  LRM_1        0.852516    0.0451995    18.86     2.22e-24 ***
+  IBO_1       -1.03010     0.277979     -3.706    0.0005   ***
+  IDE_1        0.381084    0.475646      0.8012   0.4268  
+
+Mean dependent var   11.75666   S.D. dependent var   0.152858
+Sum squared resid    0.043357   S.E. of regression   0.029447
+R-squared            0.964988   Adjusted R-squared   0.962887
+
+Equation 2: OLS, using observations 1974:2-1987:3 (T = 54)
+Dependent variable: LRY
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        0.767909    0.326849      2.349    0.0227   **
+  LRY_1        0.880138    0.0531721    16.55     3.73e-22 ***
+  IBO_1       -0.330715    0.125172     -2.642    0.0109   **
+
+Mean dependent var   5.953290   S.D. dependent var   0.073128
+Sum squared resid    0.029517   S.E. of regression   0.024057
+R-squared            0.895858   Adjusted R-squared   0.891774
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00080292      (0.465)
+   0.00030819   0.00054661
+
+log determinant = -14.8829
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 11.6867 [0.0006]
+
+? matrix A = $sysA
+Generated matrix A
+? matrix B = $sysB
+Generated matrix B
+? matrix G = $sysGamma
+Generated matrix G
+? print A B G
+A (2 x 2)
+
+     0.85252       0.0000 
+      0.0000      0.88014 
+
+B (2 x 3)
+
+      1.8672      -1.0301      0.38108 
+     0.76791     -0.33071       0.0000 
+
+G (2 x 2)
+
+  1   0 
+  0   1 
+
+? system method=ols
+? equation LRM 0 LRM(-1) IBO(-1) IDE(-1)
+? end system
+
+Equation system, Ordinary Least Squares
+
+Equation 1: OLS, using observations 1974:2-1987:3 (T = 54)
+Dependent variable: LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        1.86717     0.559874      3.335    0.0016   ***
+  LRM_1        0.852516    0.0451995    18.86     2.22e-24 ***
+  IBO_1       -1.03010     0.277979     -3.706    0.0005   ***
+  IDE_1        0.381084    0.475646      0.8012   0.4268  
+
+Mean dependent var   11.75666   S.D. dependent var   0.152858
+Sum squared resid    0.043357   S.E. of regression   0.029447
+R-squared            0.964988   Adjusted R-squared   0.962887
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00080292
+
+log determinant = -7.12726
+
+? matrix A = $sysA
+Replaced matrix A = {0.852516}
+? matrix B = $sysB
+Replaced matrix B
+? matrix G = $sysGamma
+Replaced matrix G = {1}
+? print A B G
+A (1 x 1)
+
+     0.85252 
+
+B (1 x 3)
+
+      1.8672      -1.0301      0.38108 
+
+G (1 x 1)
+
+  1 
+
+Done

@@ -1,0 +1,60 @@
+gretl version 1.9.14cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-10-31 09:57
+? run grabroots_fn.inp
+ /home/cottrell/stats/test-gretl/strings/grabroots_fn.inp
+? function read_x12a_roots (series y, int type[1:2:1])
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? arma 2 1 ; QNC --x-12-arima
+
+Model 1: ARMA, using observations 1975:1-1990:4 (T = 64)
+Estimated using X-12-ARIMA (exact ML)
+Dependent variable: QNC
+
+             coefficient    std. error      z      p-value 
+  ---------------------------------------------------------
+  const      2440.42        118.178      20.65     9.68e-95 ***
+  phi_1         0.980635      0.340963    2.876    0.0040   ***
+  phi_2        -0.0991779     0.253417   -0.3914   0.6955  
+  theta_1      -0.537678      0.319357   -1.684    0.0923   *
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Mean of innovations  17.51561   S.D. of innovations  262.1974
+Log-likelihood      -447.5196   Akaike criterion     905.0392
+Schwarz criterion    915.8336   Hannan-Quinn         909.2917
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1546     0.0000     1.1546     0.0000
+    Root  2           8.7331     0.0000     8.7331     0.0000
+  MA
+    Root  1           1.8598     0.0000     1.8598     0.0000
+  -----------------------------------------------------------
+
+? AR_roots = read_x12a_roots(QNC, 1)
+Generated matrix AR_roots
+? MA_roots = read_x12a_roots(QNC, 2)
+Generated matrix MA_roots
+? print AR_roots MA_roots
+AR_roots (2 x 4)
+
+      1.1546       0.0000       1.1546       0.0000 
+      8.7331       0.0000       8.7331       0.0000 
+
+MA_roots (1 x 4)
+
+      1.8598       0.0000       1.8598       0.0000 
+
+Done

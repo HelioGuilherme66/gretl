@@ -1,0 +1,23 @@
+# creation and return of bundle by user function
+
+function bundle make_bundle (scalar x)
+  matrix m = I(3)
+  string s = "foo"
+  bundle ret
+  ret["mat"] = m
+  ret["str"] = s
+  ret["x"] = 2*x
+  return ret
+end function
+
+b = make_bundle(34)
+matrix goo = 3 * b["mat"]
+goo
+string s2 = b["str"]
+s2
+printf "scalar from bundle: %g\n",  b["x"]
+delete b
+
+
+
+

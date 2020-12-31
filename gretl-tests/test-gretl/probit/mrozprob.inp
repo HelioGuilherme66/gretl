@@ -1,0 +1,31 @@
+open mroz87.gdt -q
+
+# list of independent variables
+list Xlist = KL6 WA WE MTR
+
+# set variables other than KL6 to their sample means
+matrix Xrow = { 1, 0, mean(WA), mean(WE), mean(MTR) }
+matrix X = Xrow | Xrow | Xrow | Xrow
+# set KL6 values from 0 to 3
+matrix Kcol = { 0, 1, 2, 3 }'
+X[,2] = Kcol
+# check X
+print X
+
+# run probit
+probit LFP 0 Xlist
+# compute Phi(X\beta)
+matrix P = Kcol ~ cnorm(X*$coeff)
+# give names to the columns of P (optional)
+colnames(P, "KL6 P(LFP=1)")
+print P
+# make a graph
+# gnuplot 2 1 --matrix=P --suppress --with-lines --output=display
+
+# run LPM
+ols LFP 0 Xlist
+# compute Phi(X\beta)
+matrix P = Kcol ~ X*$coeff
+# give names to the columns of P (optional)
+colnames(P, "KL6 P(LFP=1)")
+print P

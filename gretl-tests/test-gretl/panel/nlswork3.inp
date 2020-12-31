@@ -1,0 +1,4 @@
+open nlswork.dta
+setobs idcode year --panel-vars
+panel ln_wage 0 grade age --random-effects --time-dummies
+

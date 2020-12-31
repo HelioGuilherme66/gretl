@@ -1,0 +1,34 @@
+(*
+File Name:     Michelso.dat
+
+File Format:   ASCII
+               Header          : lines  1 to  60     (=  60)
+               Certified Values: lines 41 to  43     (=   3)
+               Data            : lines 61 to 160     (= 100)
+
+Dataset Name:  Michelso (Speed of Light Data, in millions of meters per second)
+
+Description:   This is an observed/"real world" data set
+               consisting of 100 measurements of the
+               speed of light in air.  This classic experiment
+               was carried out by Michelson is 1879.
+               We here use this data to test accuracy
+               in summary statistics calculations.
+
+Stat Category: Univariate: Summary Statistics
+
+Reference:     Dorsey, Ernest N. (1944). The Velocity of Light.
+               Transactions of the American Philiosophical
+               Society, Volume 34, Part 1, Pages 1-110, Table 22.
+
+               y    = mu + e
+
+Sample Mean                                ybar:  299.852400000000
+Sample Standard Deviation (denom. = n-1)      s:  0.0790105478190518
+Sample Autocorrelation Coefficient (lag 1) r(1):  0.535199668621283
+
+Number of Observations:                             100
+*)
+Y ;
+1 1 100
+BYOBS

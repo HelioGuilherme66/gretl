@@ -1,0 +1,78 @@
+
+Ox version 4.1a (Linux) (C) J.A. Doornik, 1994-2007
+DPD package version 1.24, object created on 15-04-2008
+
+
+---- Database information ----
+Sample:    1 - 40 (40 observations)
+Frequency: 1
+Variables: 3
+
+Variable        #obs  #miss    type          min         mean          max      std.dev
+id                40      0  double            1          4.5            8       2.2913
+year              40      0  double         1990         1992         1994       1.4142
+y                 31      9  double      -2.8815     -0.01719       2.9637        1.346
+
+DPD( 1) Modelling y by 1-step (using jack4.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dy(-1)               0.442388     0.1916     2.31   0.040
+
+sigma               0.9974062  sigma^2             0.9948192
+sigma levels        0.7052727
+RSS              11.937830357  TSS              10.630485352
+no. of observations        13  no. of parameters           1
+Using robust standard errors
+
+Transformation used:      first differences
+Level instruments:        Gmm("y",2,99)
+
+constant:                  no  time dummies:               0
+number of individuals       7
+longest time series         3 [1992 - 1994]
+shortest time series        1 (unbalanced panel)
+
+Wald (joint):    Chi^2(1) =     5.330 [0.021] *
+Sargan test:     Chi^2(5) =     1.390 [0.925]
+resids
+         .NaN
+         .NaN
+         .NaN
+      0.32436
+    -0.064356
+         .NaN
+         .NaN
+         .NaN
+     -0.19119
+      0.80086
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+      0.26372
+         .NaN
+         .NaN
+     -0.27711
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+      -2.7174
+       1.3304
+         .NaN
+         .NaN
+         .NaN
+     -0.46598
+      0.12684
+      0.38350
+         .NaN
+         .NaN
+         .NaN
+      -1.2118
+     0.033992

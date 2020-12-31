@@ -1,0 +1,34 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps5-4.inp
+ /opt/esl/share/gretl/scripts/ps5-4.inp
+# PS5.4, for the first application in Section 5.4
+? open data3-7
+
+Read datafile /opt/esl/share/gretl/data/data3-7.gdt
+periodicity: 1, maxobs: 57
+observations range: 1 to 57
+
+Listing 4 variables:
+  0) const    1) cost     2) age      3) miles  
+
+? ols miles const age
+
+Model 1: OLS, using observations 1-57
+Dependent variable: miles
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       4.21719      0.480284      8.781    4.75e-12 ***
+  age         0.133688     0.00151985   87.96     7.42e-61 ***
+
+Mean dependent var   41.58421   S.D. dependent var   19.95538
+Sum squared resid    157.4021   S.E. of regression   1.691702
+R-squared            0.992942   Adjusted R-squared   0.992813
+F(1, 55)             7737.202   P-value(F)           7.42e-61
+Log-likelihood      -109.8284   Akaike criterion     223.6569
+Schwarz criterion    227.7430   Hannan-Quinn         225.2449
+
+Done

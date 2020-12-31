@@ -1,0 +1,34 @@
+function void nameit (scalar x, series y, int start)
+   string xname = argname("x")
+   string yname = argname("y")
+
+   if strlen(xname)
+       printf "x has a name: %s\n", xname
+   else
+       print "The argument x is anonymous."
+   endif
+
+   if strlen(yname)
+       printf "y has a name: %s\n", yname
+   else
+       print "The argument y is anonymous."
+   endif
+
+   # printf/sprintf should work too...
+   printf "The variable y is named \"%s\" by the caller.\n", argname(y)
+
+   # try out date string while we're at it
+   if start == 1
+     string obsname = obslabel(firstobs(y))
+     printf "The first valid observation for %s is %s\n", argname(y), obsname
+   else
+     string obsname = obslabel(lastobs(y))
+     printf "The last valid observation for %s is %s\n", argname(y), obsname
+   endif
+
+end function
+
+open data9-7
+nameit(4.5,INCOME,1)
+scalar foo = 3.6
+nameit(foo,PRIME,0)

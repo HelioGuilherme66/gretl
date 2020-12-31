@@ -1,0 +1,30 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DeWallis_test.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DeWallis_test.gfn.inp
+? include ./DeWallis_test.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DeWallis_test.gfn
+DeWallis_test 1.2, 2015-01-19 (Juan Pablo de Botton Falcón)
+? open sw_ch12 --quiet
+Read datafile /opt/esl/share/gretl/data/misc/sw_ch12.gdt
+? series y = EXRUK
+Generated series y (ID 7)
+? list xlist = const 4
+Generated list xlist
+? bundle results = DeWallis_test(y,xlist,0)
+--------------------------------------------------------------
+The input data includes more observations that those supported
+by the De Wallis statistical table included in this function
+For that reason, the test has been realized with the value
+for 100 observations
+--------------------------------------------------------------
+The De Wallis test statistic is 0.209355
+The result of the test is: We reject H0, there is evidence of negative autocorrelation
+? print results
+bundle results, created by DeWallis_test:
+ De Wallis statisitic = 0.209355
+ Test result = We reject H0, there is evidence of negative autocorrelation
+
+Done

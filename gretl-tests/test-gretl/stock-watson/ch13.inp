@@ -1,0 +1,16 @@
+# Stock and Watson, chapter 13
+open oj.gdt
+# Generate real price of OJ
+genr realojp = PPIOJ/PWFSA
+# Generate monthly percentage change in real price
+genr DelP = 100 * ldiff(realojp)
+# Set the sample period used by Stock and Watson
+smpl 1950:01 2000:12
+# Newey-West HAC estimation
+set hac_lag nw1
+# Simple model: equation 13.1
+ols DelP 0 FDD --robust
+# Distributed lag model, 13.2
+ols DelP 0 FDD FDD(-1 to -6) --robust
+
+

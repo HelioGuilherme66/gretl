@@ -1,0 +1,33 @@
+open recid.gdt -q
+
+set echo off
+set messages off
+
+list X = workprg priors tserved felon alcohol drugs \
+ black married educ age
+
+duration durat 0 X ; cens --quiet
+series wpred = $yhat
+
+duration durat 0 X ; cens --expon --quiet
+series expred = $yhat
+
+duration durat 0 X ; cens --loglog --quiet
+series llpred = $yhat
+
+duration durat 0 X ; cens --lognorm --quiet
+series lnpred = $yhat
+
+# The following mean predictions agree with Stata 10
+# streg, except that Stata prints invalid (negative) 
+# values for the log-logistic case
+
+smpl 1 10
+print wpred expred llpred lnpred -o
+
+
+
+
+
+
+

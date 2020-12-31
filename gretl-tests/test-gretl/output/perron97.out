@@ -1,0 +1,75 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run perron97.inp
+ /opt/esl/share/gretl/scripts/misc/perron97.inp
+? function scalar perron_test (series y, int maxlag, scalar testsig, \
+  int verbose)
+# -------------------------------------------------------------------
+/*
+ Replicate the analysis of Perron, "Further evidence on
+ breaking trend functions in macroeconomic variables" (Journal
+ of Econometrics, 1997, pp. 355-385), Table 3.
+*/
+# Open Nelson-Plosser data (supplied with gretl)
+? open np.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/np.gdt
+periodicity: 1, maxobs: 111
+observations range: 1860 to 1970
+
+Listing 15 variables:
+  0) const       1) rgnp        2) ngnp        3) rpcgnp      4) iprod     
+  5) emply       6) unemp       7) gnpdefl     8) pcons       9) nwage     
+ 10) rwage      11) money      12) veloc      13) interest   14) pstock    
+
+# Select the variable to test (here, the natural log of real GNP)
+? series y = log(rgnp)
+Generated series y (ID 15)
+# Maximum lag to try for the first difference of y
+? scalar maxlag = 10
+Generated scalar maxlag = 10
+# Max significance level for retaining the last lag
+? scalar testsig = 0.10
+Generated scalar testsig = 0.1
+# Verbosity level (1 = not much)
+? scalar verbosity = 1
+Generated scalar verbosity = 1
+? perron_test(y, maxlag, testsig, verbosity)
+
+*** min(t_alpha) = -5.49957 in 1928 (k=8) ***
+
+Model 416: OLS, using observations 1918-1970 (T = 53)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.92694      0.357497      5.390    3.39e-06 ***
+  DU         -0.194698     0.0406307    -4.792    2.29e-05 ***
+  time        0.0273364    0.00485778    5.627    1.58e-06 ***
+  DT          0.196533     0.0676570     2.905    0.0060   ***
+  y_1         0.267146     0.133257      2.005    0.0518   *
+  dyt_1       0.579019     0.126319      4.584    4.41e-05 ***
+  dyt_2       0.420496     0.142798      2.945    0.0054   ***
+  dyt_3       0.249109     0.144581      1.723    0.0926   *
+  dyt_4       0.199067     0.136229      1.461    0.1518  
+  dyt_5       0.171592     0.135068      1.270    0.2113  
+  dyt_6       0.213757     0.123617      1.729    0.0915   *
+  dyt_7       0.253851     0.134797      1.883    0.0670   *
+  dyt_8       0.259400     0.144472      1.796    0.0801   *
+
+Mean dependent var   5.681438   S.D. dependent var   0.531597
+Sum squared resid    0.103716   S.E. of regression   0.050920
+R-squared            0.992942   Adjusted R-squared   0.990825
+F(12, 40)            468.9503   P-value(F)           4.83e-39
+Log-likelihood       90.06069   Akaike criterion    -154.1214
+Schwarz criterion   -128.5076   Hannan-Quinn        -144.2716
+rho                 -0.012732   Durbin's h          -0.382051
+
+Log-likelihood for rgnp = -211.056
+
+Excluding the constant, p-value was highest for variable 26 (dyt_5)
+
+check: t_alpha = -5.49957
+Done

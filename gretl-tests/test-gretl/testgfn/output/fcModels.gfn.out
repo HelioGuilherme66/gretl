@@ -1,0 +1,65 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run fcModels.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/fcModels.gfn.inp
+? include ./fcModels.gfn
+ /home/cottrell/stats/test-gretl/testgfn/fcModels.gfn
+fcModels 0.96, 2014-04-29 (Yi-Nung Yang)
+? open djclose
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? L = autoMA(djclose, 10, 1, null, 30)
+====================================================
+Full data range: 1980-01-02 - 1989-12-29 (n = 2528)
+Current sample: 1980-01-16 - 1989-11-15 (n = 2488)
+
+Forecasts by Simple Moving Average
+----------------------------------------------------
+   Searching lags from 1 to 10
+   The parameter based on min. MSE is: 
+       Lag: 1
+原 變 數 (Original series): djclose
+預 測 值 (Forecast series): djclose_ma1_out
+----------------------------------------------------
+   ++++++++++++++++++++++++++++++++++++++++++
+   樣本內預測比較 (In-sample forecasting Errors)
+   ++++++++++++++++++++++++++++++++++++++++++
+Full data range: 1980-01-02 - 1989-12-29 (n = 2528)
+Current sample: 1980-01-03 - 1989-11-15 (n = 2497)
+
+
+                      Naive  djclose_ma1_out 
+RMSE                20.3182          20.3182 
+MAE                 11.3642          11.3642 
+MAPE                 0.7522           0.7522 
+Theil's U            1.0000           1.0000 
+   ++++++++++++++++++++++++++++++++++++++++++++++
+   樣本外預測比較 (Out-of-sample forecasting Errors)
+   ++++++++++++++++++++++++++++++++++++++++++++++
+Full data range: 1980-01-02 - 1989-12-29 (n = 2528)
+Current sample: 1989-11-16 - 1989-12-29 (n = 30)
+
+
+                      Naive  djclose_ma1_out 
+RMSE                16.8558          84.4884 
+MAE                 13.7000          75.9010 
+MAPE                 0.5057           2.7840 
+Theil's U            1.0000           4.9764 
+====================================================
+
+Generated list L
+? smpl 1989-08-01 ;
+Full data range: 1980-01-02 - 1989-12-29 (n = 2528)
+Current sample: 1989-08-01 - 1989-12-29 (n = 106)
+
+? gnuplot djclose djclose_ma1_out --with-lines --time-series \
+  --output=display
+Done

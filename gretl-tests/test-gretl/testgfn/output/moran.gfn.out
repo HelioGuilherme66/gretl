@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run moran.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/moran.gfn.inp
+? include ./moran.gfn
+ /home/cottrell/stats/test-gretl/testgfn/moran.gfn
+moran 0.2, 2011-09-04 (Giuseppe Vittucci)
+? open http://www.ecn.wfu.edu/pub/gretldata/columbusswm.gdt
+
+Read datafile /home/cottrell/.gretl/columbusswm.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 50 variables:
+  0) const    1) a1       2) a2       3) a3       4) a4     
+  5) a5       6) a6       7) a7       8) a8       9) a9     
+ 10) a10     11) a11     12) a12     13) a13     14) a14    
+ 15) a15     16) a16     17) a17     18) a18     19) a19    
+ 20) a20     21) a21     22) a22     23) a23     24) a24    
+ 25) a25     26) a26     27) a27     28) a28     29) a29    
+ 30) a30     31) a31     32) a32     33) a33     34) a34    
+ 35) a35     36) a36     37) a37     38) a38     39) a39    
+ 40) a40     41) a41     42) a42     43) a43     44) a44    
+ 45) a45     46) a46     47) a47     48) a48     49) a49    
+
+? matrix W = { dataset }
+Generated matrix W
+? matrix WS = W ./ sumr(W)
+Generated matrix WS
+? open http://www.ecn.wfu.edu/pub/gretldata/columbusdata.gdt \
+  --preserve
+
+Read datafile /home/cottrell/.gretl/columbusdata.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 7 variables:
+  0) const     1) id        2) hoval     3) income    4) crime   
+  5) x         6) y       
+
+? moran(crime,WS)
+Moran's I: 0.510951, E(I) = -0.0208333, sd(I) = 0.0943862, z = 5.63413, p-value = 8.79707e-09 (1-tail test)
+Done

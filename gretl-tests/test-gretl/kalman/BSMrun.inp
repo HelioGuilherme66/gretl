@@ -1,0 +1,84 @@
+include bsm.inp
+
+nulldata 200
+setobs 4 1950:1
+
+set R_lib off
+
+series eps, u_lev, u_slp, u_sea
+series n, m, s, y
+
+scalar iters = 50
+scalar Rsuccess = 0
+matrix gAvg = zeros(4,1)
+matrix RAvg = zeros(4,1)
+
+# calibrate as you wish here
+v_eps = 780
+v_level = 320
+v_slope = 9
+v_seas = 40
+
+matrix true_vars = {v_eps, v_level, v_slope, v_seas}'
+
+loop iters --quiet
+
+# construct artificial series, y
+
+eps = sqrt(v_eps) * normal()
+u_lev = sqrt(v_level) * normal()
+u_slp = sqrt(v_slope) * normal()
+u_sea = sqrt(v_seas) * normal()
+
+n = 5
+m = 500
+s = 0
+
+n = n(-1) + u_slp(-1)
+m = m(-1) + n(-1) + u_lev(-1)
+s = -s(-1) - s(-2) - s(-3) + u_sea(-1)
+
+y = m + s + eps
+# end construct data
+
+sds = bsm(y)
+V = (sds.^2)'
+print V
+gAvg += V
+
+/*
+# ensure we don't get a stale matrix on R error
+! rm -f @dotdir/vars.mat
+
+foreign language=R --send-data
+    y <- gretldata[, "y"]
+    bsm <- StructTS(y)
+    vars <- as.matrix(bsm$coef)
+    gretl.export(vars)
+end foreign
+
+# Rll = mread("@dotdir/Rll.mat")
+
+matrix M = mread("@dotdir/vars.mat")
+M
+if (rows(M) > 0) 
+  Rvars = M[4] | M[1] | M[2] | M[3]
+  Rvars
+  RAvg += Rvars
+  Rsuccess++
+endif
+*/
+
+endloop
+
+printf "iters = %d, R successes = %d\n", iters, Rsuccess
+gAvg /= iters
+if Rsuccess > 0
+  RAvg /= Rsuccess
+endif
+print true_vars gAvg RAvg
+
+
+
+
+

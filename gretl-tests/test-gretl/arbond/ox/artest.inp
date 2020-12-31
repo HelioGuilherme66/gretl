@@ -1,0 +1,3 @@
+open ardatamiss.csv
+setobs unit year --panel
+arbond 1 ; y

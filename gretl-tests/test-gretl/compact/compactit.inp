@@ -1,0 +1,22 @@
+open right.csv -q
+print -o
+dataset compact 12 last
+print -o
+
+open right.csv -q
+print -o
+dataset compact 12 first
+print -o
+
+open wrong.csv -q
+print -o
+dataset compact 12 last
+print -o
+
+open wrong.csv -q
+print -o
+dataset compact 12 first
+print -o
+
+
+

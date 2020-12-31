@@ -1,0 +1,71 @@
+function matrix stock_watson_varb (matrix X, matrix u, bool dfc)
+  scalar n = rows(X)
+  scalar k = cols(X)
+  matrix XXi = inv(X'X)
+  matrix S = zeros(k, k)
+  loop i=1..n -q
+     xi = X[i,]
+     S += xi'xi*u[i]*u[i]
+  endloop
+  matrix V = qform(XXi, S)
+  return dfc ? (n/(n-k)) * V : V
+end function
+
+open us_macro_quarterly.gdt
+
+series GDPGR = 400*ldiff(GDPC96)
+series TSpread = GS10 - TB3MS
+
+smpl 1962:1 2012:4
+
+set force_hc on
+set hc_version 1
+setopt ols persist --robust
+
+# eq. 14.7
+# ols GDPGR const GDPGR(-1)
+
+# eq. 14.12
+# ols GDPGR const GDPGR(-1 to -2)
+
+# eq 14.15
+# ols GDPGR const GDPGR(-1 to -2) TSpread(-1)
+
+# eq 14.16
+ols GDPGR const GDPGR(-1 to -2) TSpread(-1 to -2)
+list L = TSpread(-1 to -2)
+chow 1981:1 --limit-to=L
+qlrtest --limit-to=L --plot=display
+
+quit
+
+matrix V = $vcv
+print V
+list Full = const GDPGR(-1 to -2) TSpread(-1 to -2)
+series uh = $uhat
+matrix V = stock_watson_varb({Full}, {uh}, 1)
+print V
+
+# quit
+
+# chow test (const and TSpread terms only)
+t1 = obsnum(1970:1)
+t2 = obsnum(2005:1)
+series dcons
+series dsp1
+series dsp2
+list dL = dcons dsp1 dsp2
+series Fstat
+loop b=t1..t2 -q
+  dcons = t >= b
+  dsp1 = dcons * TSpread_1
+  dsp2 = dcons * TSpread_2
+  ols GDPGR const GDPGR(-1 to -2) TSpread(-1 to -2) dL -q
+  omit dL --test-only --silent
+  Fstat[b] = $test
+endloop
+printf "sup-F = %g\n", max(Fstat)
+
+
+
+

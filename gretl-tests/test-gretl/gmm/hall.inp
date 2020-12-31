@@ -1,0 +1,150 @@
+open hall.gdt
+
+scalar g = 0.5
+scalar d = 0.5
+series e = 0
+
+set hac_lag 7
+set bfgs_maxgrad 2.0
+set bfgs_richardson on
+
+# Tables 3.1 (p. 62) & 3.5 (p. 87)
+
+list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+# Tables 3.2 (p. 63) & 3.6 (p. 88)
+
+list inst = const consrat(-1) consrat(-2) vwr(-1) vwr(-2)
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+# Tables 3.7 (p. 92)
+
+set force_hc on
+list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --two-step
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --two-step
+
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --iterate
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*ewr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --iterate
+
+list inst = const consrat(-1) consrat(-2) vwr(-1) vwr(-2)
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm
+
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --two-step
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --two-step
+
+
+matrix V = 100000*I(nelem(inst))
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --iterate
+
+matrix Z = { inst }
+matrix V = $nobs*inv(Z'Z)
+gmm e = d*vwr*consrat^(g-1) - 1
+  orthog e ; inst
+  weights V
+  params g d
+end gmm --iterate
+
+

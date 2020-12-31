@@ -1,0 +1,12 @@
+nulldata 624
+setobs 12 1950:01
+set seed 371
+genr eps = normal()
+series y = 0 
+genr y = 0.7 * y(-1) + eps
+arma 1 0 ; y -x
+arma 1 0 ; y
+arma 1 0 ; y --conditional
+
+
+

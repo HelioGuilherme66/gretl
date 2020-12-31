@@ -1,0 +1,13 @@
+gretl version 1.9.14cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-10-31 09:57
+? run quotes_fn.inp
+ /home/cottrell/stats/test-gretl/strings/quotes_fn.inp
+? printf("'%10s''%10s'\n", " ", "foo")
+'          ''       foo'
+? string s
+? sprintf(s, "\"quote %d", 1)
+? printf("s = '%s'\n", s)
+s = '"quote 1'
+Done

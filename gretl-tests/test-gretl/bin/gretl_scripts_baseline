@@ -1,0 +1,20 @@
+#!/bin/sh
+
+. `dirname $0`/sitevars
+
+cat /dev/null > fails
+
+rm -rf ./output
+mkdir ./output
+
+for f in $(cat ps.list | awk '{ print $1 }') ; do
+   echo $f
+   if ! ${CLI} -b $f > ./output/${f%.inp}.out ; then
+      echo "$f failed" >> fails
+   fi
+done 
+
+cat fails
+
+
+  

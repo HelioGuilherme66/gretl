@@ -1,0 +1,14 @@
+open data4-1
+matrix y = price
+matrix X = { const, sqft }
+matrix Z = { const, bedrms, baths }
+matrix b = { 40, .1 }'
+matrix e = y - X*b
+matrix W = inv(Z'Z)
+gmm e = y - X*b
+  orthog e ; Z
+  params b
+  weights W
+end gmm --vcv
+
+tsls price sqft 0 ; 0 bedrms baths --vcv --robust

@@ -1,0 +1,45 @@
+function scalar ocdf (scalar x, scalar normal)
+  scalar ret
+  if normal
+    ret = cdf(N, x)
+  else
+    ret = 1.0 / (1.0 + exp(-x))
+  endif
+  return ret
+end function
+
+# compute the estimated probability for each response at
+# each observation
+
+function matrix Pmat (matrix cut, series zhat, scalar N)
+  scalar n = $nobs
+  scalar ncut = rows(cut)
+  scalar m = ncut+1
+  matrix Pmat = zeros(n, m)
+  loop i=1..n --quiet
+    Pmat[i,1] = ocdf(cut[1]-zhat[i], N)
+    loop j=2..ncut --quiet
+      Pmat[i,j] = ocdf(cut[j]-zhat[i], N) - ocdf(cut[j-1]-zhat[i], N)
+    endloop
+    Pmat[i,ncut+1] = 1 - ocdf(cut[ncut]-zhat[i], N)
+  endloop
+  return Pmat
+end function
+
+open greene22_2
+genr rat = Z8 - 1
+discrete rat
+
+probit rat 0 Z1 Z2
+
+fcast pred
+print rat pred -o
+scalar ncorrect = sum(rat == pred)
+
+series zhat = $yhat
+matrix cut = $coeff[3:]
+matrix P = Pmat(cut, zhat, 1)
+print P
+
+
+        

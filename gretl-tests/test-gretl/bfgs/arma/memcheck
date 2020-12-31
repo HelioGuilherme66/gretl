@@ -1,0 +1,3 @@
+G_SLICE=always-malloc valgrind --tool=memcheck --leak-check=full --show-reachable=yes --log-fd=9 \
+ /opt/esl/bin/gretlcli "$@" 9>valgrind.log
+

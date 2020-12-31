@@ -1,0 +1,27 @@
+open data9-7
+series Y = INCOME
+series X = PRIME
+series Z = UNEMP
+
+ols Y const Y(-1) X(-1) Z(-1)
+restrict
+ b[3] = 0
+end restrict
+pv1 = $pvalue
+
+sys <- system
+  equation Y const Y(-1) X(-1) Z(-1)
+  equation X const Y(-1) X(-1) Z(-1)
+  equation Z const Y(-1) X(-1) Z(-1)
+end system
+restrict sys
+  b[1,3] = 0
+end restrict
+estimate sys method=ols
+pv2 = $pvalue
+
+printf "pv1 - pv2 = %g\n", pv1 - pv2
+
+
+
+

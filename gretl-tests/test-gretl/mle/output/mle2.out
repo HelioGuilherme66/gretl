@@ -1,0 +1,118 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run mle2.inp
+ /home/cottrell/stats/test-gretl/mle/mle2.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? scalar a = 20
+Generated scalar a = 20
+? scalar b = 1
+Generated scalar b = 1
+? scalar s = 30
+Generated scalar s = 30
+? scalar l2pi = log(2 * pi)
+Generated scalar l2pi = 1.83788
+? set bfgs_toler 1e-12
+? mle lt = -.5 * (l2pi + log(s^2) + (1/(s^2)) * (price - a - b * sqft)^2)
+? deriv a = (1/s^2) * (price - a - b*sqft)
+? deriv b = (1/s^2) * sqft * (price - a - b*sqft)
+? deriv s = -(1/s) + (1/s^3) * (price - a - b*sqft)^2
+? end mle
+Using analytical derivatives
+Tolerance = 1e-12
+
+Function evaluations: 680
+Evaluations of gradient: 337
+
+Model 1: ML, using observations 1-14
+lt = -.5 * (l2pi + log(s^2) + (1/(s^2)) * (price - a - b * sqft)^2)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error     z      p-value 
+  -----------------------------------------------------
+  a          52.2840     52.7457      0.9912   0.3216  
+  b           0.138783    0.0218444   6.353    2.11e-10 ***
+  s          36.1311      7.32404     4.933    8.09e-07 ***
+
+Log-likelihood      -70.08422   Akaike criterion     146.1684
+Schwarz criterion    148.0856   Hannan-Quinn         145.9910
+
+? ols price 0 sqft
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# ignore sigma
+? genr a = 20
+Replaced scalar a = 20
+? genr b = 1
+Replaced scalar b = 1
+? mle lt = -.5 * (price - a - b * sqft)^2
+? deriv a = price - a - b*sqft
+? deriv b = sqft * (price - a - b*sqft)
+? end mle
+Using analytical derivatives
+Tolerance = 1e-12
+
+Function evaluations: 29
+Evaluations of gradient: 5
+
+Model 3: ML, using observations 1-14
+lt = -.5 * (price - a - b * sqft)^2
+Standard errors based on Outer Products matrix
+
+             estimate    std. error     z     p-value
+  ---------------------------------------------------
+  a          52.3509     0.0403960     1296   0.0000  ***
+  b           0.138750   1.66153e-05   8351   0.0000  ***
+
+Log-likelihood      -9136.784   Akaike criterion     18277.57
+Schwarz criterion    18278.85   Hannan-Quinn         18277.45
+
+? genr a = 20
+Replaced scalar a = 20
+? genr b = 1
+Replaced scalar b = 1
+? mle lt = -.5 * (price - a - b * sqft)^2
+? params a b
+? end mle
+Using numerical derivatives
+Tolerance = 1e-12
+
+Function evaluations: 29
+Evaluations of gradient: 5
+
+Model 4: ML, using observations 1-14
+lt = -.5 * (price - a - b * sqft)^2
+Standard errors based on Outer Products matrix
+
+             estimate    std. error     z     p-value
+  ---------------------------------------------------
+  a          52.3511     0.0403961     1296   0.0000  ***
+  b           0.138750   1.66153e-05   8351   0.0000  ***
+
+Log-likelihood      -9136.784   Akaike criterion     18277.57
+Schwarz criterion    18278.85   Hannan-Quinn         18277.45
+
+Done

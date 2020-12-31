@@ -1,0 +1,44 @@
+open data13-1
+
+series TAXt=100*GOVREC/Pt 
+series DISPINCM=GDP-TAXt
+series M=100*MONYSUP/Pt  
+series Yt=GDP/POP  
+series Ct=CONS/POP  
+series It=INV/POP  
+series Gt=GOVEXP/POP  
+series Xt=EXPORTS/POP  
+series DYt=DISPINCM/POP   
+series Mt=M/POP  
+lags Yt Ct It Gt Xt DYt Mt rt
+
+smpl 1960 1993 
+
+list X = 0 Ct_1 DYt DYt_1
+list Z = 0 Ct_1 DYt_1 Gt
+
+ols Ct X --quiet
+matrix b = $coeff
+series e = 0
+
+matrix V = I(nelem(Z))
+
+gmm e = Ct-(b[1]+b[2]*Ct_1+b[3]*DYt+b[4]*DYt_1)
+ orthog e ; Z
+ weights V
+ params b
+end gmm -t
+
+series y1 = b[1]+b[2]*Ct_1+b[3]*DYt+b[4]*DYt_1
+series u1 = Ct-y1
+
+tsls Ct X ; Z
+tsls Ct X ; Z --liml
+tsls Ct X ; Z --gmm --two-step
+
+series u2 = $uhat
+series y2 = $yhat
+print u1 u2 y1 y2 -o
+
+
+

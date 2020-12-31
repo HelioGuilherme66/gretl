@@ -1,0 +1,21 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run gnuplot_piechart.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/gnuplot_piechart.gfn.inp
+? include ./gnuplot_piechart.gfn
+ /home/cottrell/stats/test-gretl/testgfn/gnuplot_piechart.gfn
+gnuplot_piechart 1.0, 2014-10-23 (Ignacio Diaz-Emparanza)
+? nulldata 8
+periodicity: 1, maxobs: 8
+observations range: 1 to 8
+#Results of election for European Parliament 2014
+? matrix A = {221; 191; 70; 67; 52; 50; 48; 52}
+Generated matrix A
+? string S = "EPP PASD ECR ALDE EUL-NGL Greens-EFA EFDD NI"
+Generated string S
+? string pie1 = gnuplot_piechart(A, S, 0.3, 1.15)
+Generated string pie1
+/home/cottrell/.gretl/8208.plt
+Done

@@ -1,0 +1,9 @@
+open abdata.gdt
+genr Ow = orthdev(w)
+genr Ow1 = orthdev(w(-1))
+genr Ok = orthdev(k)
+genr Oys = orthdev(ys)
+genr Oys1 = orthdev(ys(-1))
+list pred = Ow Ow(-1) Ok
+list exog = Oys Oys(-1) 0
+arbond 2 0 ; n pred exog ; exog GMM(k,2,3) GMM(w,2,3) --orth

@@ -1,0 +1,97 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_poisson.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_poisson.inp
+? open mccullagh.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/mccullagh.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 15 variables:
+  0) const     1) Type      2) TA        3) TB        4) TC      
+  5) TD        6) TE        7) T6064     8) T6569     9) T7074   
+ 10) T7579    11) O6074    12) O7579    13) Months   14) Acc     
+
+? poisson Acc const TB TC TD TE T6569 T7074 T7579 O7579 ; Months
+
+Convergence achieved after 6 iterations
+
+Model 1: Poisson, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const      -6.40288       0.217523    -29.44     1.93e-190 ***
+  TB         -0.544711      0.177613     -3.067    0.0022    ***
+  TC         -0.688764      0.329036     -2.093    0.0363    **
+  TD         -0.0743091     0.290558     -0.2557   0.7981   
+  TE          0.320529      0.235752      1.360    0.1740   
+  T6569       0.695845      0.149656      4.650    3.33e-06  ***
+  T7074       0.817455      0.169838      4.813    1.49e-06  ***
+  T7579       0.444971      0.233239      1.908    0.0564    *
+  O7579       0.383859      0.118260      3.246    0.0012    ***
+
+  log(Months) 1.0        
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Sum squared resid    221.8344   S.E. of regression   2.978821
+McFadden R-squared   0.439672   Adjusted R-squared   0.365961
+Log-likelihood      -68.41456   Akaike criterion     154.8291
+Schwarz criterion    168.5664   Hannan-Quinn         159.5139
+
+Overdispersion test: Chi-square(1) = 3.04372 [0.0811]
+
+? genr yh1 = $yhat
+Generated series yh1 (ID 15)
+? fcast yh2
+Generated series yh2 (ID 16)
+? print Acc yh1 yh2 --byobs
+
+            Acc          yh1          yh2
+
+ 1            0      0.21041      0.21041
+ 2            0      0.15322      0.15322
+ 3            3      3.63816      3.63816
+ 4            4      5.34060      5.34060
+ 5            6      5.67328      5.67328
+ 6           18     18.46816     18.46816
+ 7                                       
+ 8           11      8.51618      8.51618
+ 9           39     43.12934     43.12934
+10           29     24.22872     24.22872
+11           58     55.13217     55.13217
+12           53     57.62373     57.62373
+13           12     15.37332     15.37332
+14           44     41.84687     41.84687
+15                                       
+16           18     15.66584     15.66584
+17            1      0.98096      0.98096
+18            1      0.67420      0.67420
+19            0      1.30314      1.30314
+20            1      1.65575      1.65575
+21            6      1.47543      1.47543
+22            2      5.38831      5.38831
+23                                       
+24            1      0.52221      0.52221
+25            0      0.38607      0.38607
+26            0      0.23708      0.23708
+27            0      0.88836      0.88836
+28            0      0.86937      0.86937
+29            2      1.21573      1.21573
+30           11      6.17710      6.17710
+31                                       
+32            4      7.22629      7.22629
+33            0      0.23531      0.23531
+34                                       
+35            7      3.61201      3.61201
+36            7      2.93671      2.93671
+37            5      5.98163      5.98163
+38           12     16.40018     16.40018
+39                                       
+40            1      2.83417      2.83417
+
+Done

@@ -1,0 +1,44 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run dols_call.inp
+ /home/cottrell/stats/test-gretl/dols_call.inp
+? include dols.inp
+ /home/cottrell/stats/test-gretl/dols.inp
+? open EUR-YC.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/EUR-YC.gdt
+periodicity: 4, maxobs: 56
+observations range: 1991:1 to 2004:4
+
+Listing 4 variables:
+  0) const    1) Y        2) C        3) P      
+
+? series y = log(Y/P)
+Generated series y (ID 4)
+? series c = log(C/P)
+Generated series c (ID 5)
+? scalar se4
+? scalar se6
+? b4 = dols(4,c,y,&se4)
+
+*** function dols, order = 4
+
+Number of iterations: 9
+
+b = 1.01931, se = 0.0177182 
+Generated scalar b4 = 1.01931
+? b6 = dols(6,c,y,&se6)
+
+*** function dols, order = 6
+
+Number of iterations: 13
+
+b = 1.02185, se = 0.0185702 
+Generated scalar b6 = 1.02185
+? scalar z4 = b4/se4
+Generated scalar z4 = 57.5288
+? scalar z6 = b6/se6
+Generated scalar z6 = 55.0263
+Done

@@ -1,0 +1,627 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run vecm.inp
+ /home/cottrell/stats/test-gretl/vecm.inp
+? open xtab.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/xtab.gdt
+periodicity: 1, maxobs: 25
+observations range: 1 to 25
+
+Listing 6 variables:
+  0) const    1) t1       2) X1       3) X2       4) X3     
+  5) X4     
+
+? setobs 4 1960:1
+Full data range: 1960:1 - 1966:1 (n = 25)
+
+? list xlist = X1 X2 X3 X4
+Generated list xlist
+? vecm 3 1 xlist --nc
+
+VECM system, lag order 3
+Maximum likelihood estimates, observations 1960:4-1966:1 (T = 22)
+Cointegration rank = 1
+Case 1: No constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+X1       1.0000 
+        (0.0000) 
+X2      -5.5927 
+        (1.2108) 
+X3       1.2202 
+        (1.1144) 
+X4       1.7847 
+       (0.92400) 
+
+alpha (adjustment vectors)
+
+X1     -0.13012 
+X2      0.29480 
+X3     -0.16245 
+X4    -0.055809 
+
+Log-likelihood = -101.46894
+Determinant of covariance matrix = 0.11918731
+AIC = 13.5881
+BIC = 15.9685
+HQC = 14.1488
+
+Equation 1: d_X1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1     -0.567380      0.241338    -2.351    0.0352  **
+  d_X1_2     -0.499713      0.262196    -1.906    0.0790  *
+  d_X2_1     -0.454002      0.532255    -0.8530   0.4091 
+  d_X2_2     -0.156117      0.392681    -0.3976   0.6974 
+  d_X3_1      0.0684146     0.428642     0.1596   0.8756 
+  d_X3_2      0.320009      0.423936     0.7549   0.4638 
+  d_X4_1      0.552921      0.315856     1.751    0.1036 
+  d_X4_2      0.491713      0.278371     1.766    0.1008 
+  EC1        -0.130124      0.109542    -1.188    0.2561 
+
+Mean dependent var  -0.180198   S.D. dependent var   1.556380
+Sum squared resid    26.63604   S.E. of regression   1.431407
+R-squared            0.483628   Adjusted R-squared   0.165861
+rho                 -0.071452   Durbin-Watson        2.075812
+
+Equation 2: d_X2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1     -0.133190     0.145144     -0.9176   0.3755 
+  d_X1_2     -0.251939     0.157688     -1.598    0.1341 
+  d_X2_1      0.594737     0.320104      1.858    0.0860  *
+  d_X2_2      0.478603     0.236163      2.027    0.0637  *
+  d_X3_1     -0.0401807    0.257790     -0.1559   0.8785 
+  d_X3_2      0.488886     0.254960      1.917    0.0774  *
+  d_X4_1     -0.241496     0.189960     -1.271    0.2259 
+  d_X4_2     -0.0358892    0.167416     -0.2144   0.8336 
+  EC1         0.294802     0.0658798     4.475    0.0006  ***
+
+Mean dependent var   0.027719   S.D. dependent var   1.412592
+Sum squared resid    9.634154   S.E. of regression   0.860865
+R-squared            0.770181   Adjusted R-squared   0.628754
+rho                 -0.016521   Durbin-Watson        1.839920
+
+Equation 3: d_X3
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1     -0.136666     0.134204     -1.018    0.3271 
+  d_X1_2      0.0729960    0.145803      0.5006   0.6250 
+  d_X2_1     -0.615950     0.295978     -2.081    0.0578  *
+  d_X2_2     -0.431114     0.218363     -1.974    0.0700  *
+  d_X3_1     -0.399986     0.238361     -1.678    0.1172 
+  d_X3_2     -0.321676     0.235744     -1.365    0.1956 
+  d_X4_1      0.350238     0.175642      1.994    0.0676  *
+  d_X4_2      0.161266     0.154797      1.042    0.3165 
+  EC1        -0.162446     0.0609144    -2.667    0.0194  **
+
+Mean dependent var   0.101078   S.D. dependent var   1.080746
+Sum squared resid    8.236618   S.E. of regression   0.795981
+R-squared            0.667248   Adjusted R-squared   0.462477
+rho                 -0.023744   Durbin-Watson        2.036808
+
+Equation 4: d_X4
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1      0.311423     0.216838      1.436    0.1746 
+  d_X1_2     -0.158943     0.235579     -0.6747   0.5117 
+  d_X2_1     -0.184013     0.478222     -0.3848   0.7066 
+  d_X2_2     -0.0965370    0.352817     -0.2736   0.7887 
+  d_X3_1     -0.271859     0.385127     -0.7059   0.4927 
+  d_X3_2      0.209377     0.380899      0.5497   0.5918 
+  d_X4_1     -0.560148     0.283791     -1.974    0.0700  *
+  d_X4_2     -0.0791886    0.250112     -0.3166   0.7566 
+  EC1        -0.0558087    0.0984215    -0.5670   0.5803 
+
+Mean dependent var   0.022596   S.D. dependent var   1.586138
+Sum squared resid    21.50250   S.E. of regression   1.286094
+R-squared            0.593093   Adjusted R-squared   0.342688
+rho                 -0.230711   Durbin-Watson        2.439603
+
+Cross-equation covariance matrix:
+
+              X1           X2           X3           X4
+X1        1.2107     -0.11715     -0.20106      0.34553 
+X2      -0.11715      0.43792     0.052682     -0.18090 
+X3      -0.20106     0.052682      0.37439     -0.29106 
+X4       0.34553     -0.18090     -0.29106      0.97739 
+
+determinant = 0.119187
+
+? vecm 3 1 xlist --rc
+
+VECM system, lag order 3
+Maximum likelihood estimates, observations 1960:4-1966:1 (T = 22)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+X1          1.0000 
+           (0.0000) 
+X2         -2.1967 
+          (0.47412) 
+X3         0.62309 
+          (0.44225) 
+X4         0.23187 
+          (0.36247) 
+const      0.47056 
+          (0.19704) 
+
+alpha (adjustment vectors)
+
+X1        -0.42123 
+X2         0.70143 
+X3        -0.40561 
+X4       -0.088895 
+
+Log-likelihood = -99.851021
+Determinant of covariance matrix = 0.10288507
+AIC = 13.4410
+BIC = 15.8215
+HQC = 14.0018
+
+Equation 1: d_X1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1     -0.376188      0.288050    -1.306    0.2160 
+  d_X1_2     -0.402944      0.273637    -1.473    0.1666 
+  d_X2_1     -0.632335      0.531232    -1.190    0.2569 
+  d_X2_2     -0.262633      0.396565    -0.6623   0.5203 
+  d_X3_1      0.0772588     0.426516     0.1811   0.8593 
+  d_X3_2      0.267489      0.424859     0.6296   0.5408 
+  d_X4_1      0.420532      0.286520     1.468    0.1679 
+  d_X4_2      0.427805      0.270810     1.580    0.1402 
+  EC1        -0.421228      0.264050    -1.595    0.1366 
+
+Mean dependent var  -0.180198   S.D. dependent var   1.556380
+Sum squared resid    24.36100   S.E. of regression   1.424810
+R-squared            0.527733   Adjusted R-squared   0.173532
+rho                 -0.065722   Durbin-Watson        2.047620
+
+Equation 2: d_X2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1     -0.398279      0.185919    -2.142    0.0534  *
+  d_X1_2     -0.382343      0.176616    -2.165    0.0513  *
+  d_X2_1      0.578686      0.342877     1.688    0.1173 
+  d_X2_2      0.493621      0.255959     1.929    0.0778  *
+  d_X3_1     -0.0329648     0.275290    -0.1197   0.9067 
+  d_X3_2      0.541700      0.274221     1.975    0.0717  *
+  d_X4_1      0.0722677     0.184931     0.3908   0.7028 
+  d_X4_2      0.112645      0.174791     0.6445   0.5314 
+  EC1         0.701426      0.170428     4.116    0.0014  ***
+
+Mean dependent var   0.027719   S.D. dependent var   1.412592
+Sum squared resid    10.14858   S.E. of regression   0.919628
+R-squared            0.757910   Adjusted R-squared   0.576342
+rho                 -0.122937   Durbin-Watson        2.106096
+
+Equation 3: d_X3
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1      0.0221030     0.164575     0.1343   0.8954 
+  d_X1_2      0.151563      0.156341     0.9694   0.3515 
+  d_X2_1     -0.638838      0.303515    -2.105    0.0571  *
+  d_X2_2     -0.456484      0.226575    -2.015    0.0669  *
+  d_X3_1     -0.401904      0.243687    -1.649    0.1250 
+  d_X3_2     -0.355777      0.242740    -1.466    0.1684 
+  d_X4_1      0.178389      0.163701     1.090    0.2972 
+  d_X4_2      0.0797019     0.154725     0.5151   0.6158 
+  EC1        -0.405612      0.150863    -2.689    0.0197  **
+
+Mean dependent var   0.101078   S.D. dependent var   1.080746
+Sum squared resid    7.952222   S.E. of regression   0.814055
+R-squared            0.678737   Adjusted R-squared   0.437790
+rho                 -0.063573   Durbin-Watson        2.106382
+
+Equation 4: d_X4
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_X1_1      0.332437      0.272515     1.220    0.2459 
+  d_X1_2     -0.149674      0.258880    -0.5782   0.5738 
+  d_X2_1     -0.108066      0.502582    -0.2150   0.8334 
+  d_X2_2     -0.0601036     0.375178    -0.1602   0.8754 
+  d_X3_1     -0.277955      0.403514    -0.6888   0.5040 
+  d_X3_2      0.210864      0.401946     0.5246   0.6094 
+  d_X4_1     -0.621947      0.271068    -2.294    0.0406  **
+  d_X4_2     -0.107958      0.256205    -0.4214   0.6809 
+  EC1        -0.0888952     0.249810    -0.3559   0.7281 
+
+Mean dependent var   0.022596   S.D. dependent var   1.586138
+Sum squared resid    21.80424   S.E. of regression   1.347969
+R-squared            0.587383   Adjusted R-squared   0.277920
+rho                 -0.232123   Durbin-Watson        2.443427
+
+Cross-equation covariance matrix:
+
+              X1           X2           X3           X4
+X1        1.1073    -0.023849     -0.26312      0.35234 
+X2     -0.023849      0.46130     0.057531     -0.22607 
+X3      -0.26312     0.057531      0.36146     -0.26841 
+X4       0.35234     -0.22607     -0.26841      0.99110 
+
+determinant = 0.102885
+
+? vecm 3 1 xlist
+
+VECM system, lag order 3
+Maximum likelihood estimates, observations 1960:4-1966:1 (T = 22)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+X1       1.0000 
+        (0.0000) 
+X2      -2.1880 
+       (0.47241) 
+X3      0.60586 
+       (0.44064) 
+X4      0.22825 
+       (0.36116) 
+
+alpha (adjustment vectors)
+
+X1     -0.43547 
+X2      0.70583 
+X3     -0.40006 
+X4    -0.093200 
+
+Log-likelihood = -99.13043
+Determinant of covariance matrix = 0.096361259
+AIC = 13.7391
+BIC = 16.3180
+HQC = 14.3466
+
+Equation 1: d_X1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.422419      0.329412    -1.282    0.2239 
+  d_X1_1     -0.373787      0.281629    -1.327    0.2091 
+  d_X1_2     -0.392995      0.267725    -1.468    0.1678 
+  d_X2_1     -0.664499      0.520549    -1.277    0.2259 
+  d_X2_2     -0.279815      0.388216    -0.7208   0.4849 
+  d_X3_1      0.0825861     0.416843     0.1981   0.8463 
+  d_X3_2      0.271548      0.415697     0.6532   0.5259 
+  d_X4_1      0.405939      0.280482     1.447    0.1734 
+  d_X4_2      0.419700      0.264796     1.585    0.1390 
+  EC1        -0.435475      0.259318    -1.679    0.1189 
+
+Mean dependent var  -0.180198   S.D. dependent var   1.556380
+Sum squared resid    23.26443   S.E. of regression   1.392373
+R-squared            0.542657   Adjusted R-squared   0.199650
+rho                 -0.094310   Durbin-Watson        2.108065
+
+Equation 2: d_X2
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.358952      0.217113     1.653     0.1242 
+  d_X1_1     -0.399324      0.185620    -2.151     0.0525  *
+  d_X1_2     -0.384069      0.176456    -2.177     0.0502  *
+  d_X2_1      0.583401      0.343091     1.700     0.1148 
+  d_X2_2      0.496874      0.255871     1.942     0.0760  *
+  d_X3_1     -0.0258641     0.274739    -0.09414   0.9266 
+  d_X3_2      0.546612      0.273983     1.995     0.0693  *
+  d_X4_1      0.0772424     0.184864     0.4178    0.6834 
+  d_X4_2      0.115821      0.174525     0.6636    0.5195 
+  EC1         0.705827      0.170915     4.130     0.0014  ***
+
+Mean dependent var   0.027719   S.D. dependent var   1.412592
+Sum squared resid    10.10620   S.E. of regression   0.917705
+R-squared            0.758824   Adjusted R-squared   0.577941
+rho                 -0.124964   Durbin-Watson        2.118448
+
+Equation 3: d_X3
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0711055     0.189511    -0.3752   0.7141 
+  d_X1_1      0.0212378     0.162022     0.1311   0.8979 
+  d_X1_2      0.146532      0.154023     0.9514   0.3602 
+  d_X2_1     -0.621491      0.299473    -2.075    0.0601  *
+  d_X2_2     -0.447929      0.223341    -2.006    0.0680  *
+  d_X3_1     -0.412371      0.239811    -1.720    0.1112 
+  d_X3_2     -0.363112      0.239151    -1.518    0.1548 
+  d_X4_1      0.183134      0.161362     1.135    0.2786 
+  d_X4_2      0.0819422     0.152338     0.5379   0.6005 
+  EC1        -0.400060      0.149186    -2.682    0.0200  **
+
+Mean dependent var   0.101078   S.D. dependent var   1.080746
+Sum squared resid    7.699891   S.E. of regression   0.801035
+R-squared            0.686081   Adjusted R-squared   0.450641
+rho                 -0.084371   Durbin-Watson        2.156826
+
+Equation 4: d_X4
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0865431     0.318539    -0.2717   0.7905 
+  d_X1_1      0.333899      0.272334     1.226    0.2437 
+  d_X1_2     -0.147196      0.258888    -0.5686   0.5801 
+  d_X2_1     -0.116841      0.503367    -0.2321   0.8204 
+  d_X2_2     -0.0648109     0.375402    -0.1726   0.8658 
+  d_X3_1     -0.276843      0.403084    -0.6868   0.5053 
+  d_X3_2      0.211210      0.401976     0.5254   0.6089 
+  d_X4_1     -0.624767      0.271224    -2.304    0.0399  **
+  d_X4_2     -0.109553      0.256056    -0.4278   0.6763 
+  EC1        -0.0931997     0.250759    -0.3717   0.7166 
+
+Mean dependent var   0.022596   S.D. dependent var   1.586138
+Sum squared resid    21.75400   S.E. of regression   1.346415
+R-squared            0.588246   Adjusted R-squared   0.279430
+rho                 -0.231248   Durbin-Watson        2.443622
+
+Cross-equation covariance matrix:
+
+              X1           X2           X3           X4
+X1        1.0575    -0.014887     -0.23876      0.34170 
+X2     -0.014887      0.45937     0.053083     -0.22293 
+X3      -0.23876     0.053083      0.35000     -0.26441 
+X4       0.34170     -0.22293     -0.26441      0.98882 
+
+determinant = 0.0963613
+
+? vecm 3 1 xlist --crt
+
+VECM system, lag order 3
+Maximum likelihood estimates, observations 1960:4-1966:1 (T = 22)
+Cointegration rank = 1
+Case 4: Restricted trend, unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+X1          1.0000 
+           (0.0000) 
+X2         -1.7531 
+          (0.42518) 
+X3         0.50157 
+          (0.39257) 
+X4         0.16953 
+          (0.32823) 
+trend     0.012405 
+         (0.028194) 
+
+alpha (adjustment vectors)
+
+X1        -0.54606 
+X2         0.81676 
+X3        -0.46860 
+X4        -0.13113 
+
+Log-likelihood = -99.063558
+Determinant of covariance matrix = 0.095777233
+AIC = 13.7331
+BIC = 16.3119
+HQC = 14.3405
+
+Equation 1: d_X1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.376985      0.325536    -1.158    0.2714 
+  d_X1_1     -0.299842      0.309629    -0.9684   0.3537 
+  d_X1_2     -0.349362      0.282260    -1.238    0.2416 
+  d_X2_1     -0.686309      0.522745    -1.313    0.2159 
+  d_X2_2     -0.295712      0.395604    -0.7475   0.4704 
+  d_X3_1      0.0594840     0.427704     0.1391   0.8919 
+  d_X3_2      0.230741      0.430743     0.5357   0.6028 
+  d_X4_1      0.375819      0.288023     1.305    0.2186 
+  d_X4_2      0.400578      0.272231     1.471    0.1692 
+  EC1        -0.546056      0.313475    -1.742    0.1094 
+
+Mean dependent var  -0.180198   S.D. dependent var   1.556380
+Sum squared resid    22.51964   S.E. of regression   1.430818
+R-squared            0.557299   Adjusted R-squared   0.154843
+rho                 -0.076757   Durbin-Watson        2.075749
+
+Equation 2: d_X2
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.262149      0.223038     1.175     0.2647 
+  d_X1_1     -0.473906      0.212140    -2.234     0.0472  **
+  d_X1_2     -0.430159      0.193388    -2.224     0.0480  **
+  d_X2_1      0.525687      0.358155     1.468     0.1702 
+  d_X2_2      0.471935      0.271045     1.741     0.1095 
+  d_X3_1      0.0140244     0.293038     0.04786   0.9627 
+  d_X3_2      0.593163      0.295120     2.010     0.0696  *
+  d_X4_1      0.124802      0.197337     0.6324    0.5400 
+  d_X4_2      0.144943      0.186517     0.7771    0.4535 
+  EC1         0.816759      0.214775     3.803     0.0029  ***
+
+Mean dependent var   0.027719   S.D. dependent var   1.412592
+Sum squared resid    10.57117   S.E. of regression   0.980314
+R-squared            0.747727   Adjusted R-squared   0.518388
+rho                 -0.134953   Durbin-Watson        2.145433
+
+Equation 3: d_X3
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -0.0181589     0.190840    -0.09515   0.9259 
+  d_X1_1      0.0672648     0.181515     0.3706    0.7180 
+  d_X1_2      0.174698      0.165470     1.056     0.3137 
+  d_X2_1     -0.596498      0.306451    -1.946     0.0776  *
+  d_X2_2     -0.437999      0.231917    -1.889     0.0856  *
+  d_X3_1     -0.434777      0.250735    -1.734     0.1108 
+  d_X3_2     -0.391122      0.252516    -1.549     0.1497 
+  d_X4_1      0.156073      0.168849     0.9243    0.3751 
+  d_X4_2      0.0652809     0.159591     0.4091    0.6904 
+  EC1        -0.468600      0.183770    -2.550     0.0270  **
+
+Mean dependent var   0.101078   S.D. dependent var   1.080746
+Sum squared resid    7.739332   S.E. of regression   0.838794
+R-squared            0.684473   Adjusted R-squared   0.397630
+rho                 -0.109014   Durbin-Watson        2.208067
+
+Equation 4: d_X4
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0816561     0.319160    -0.2558   0.8028 
+  d_X1_1      0.359178      0.303565     1.183    0.2617 
+  d_X1_2     -0.132714      0.276732    -0.4796   0.6409 
+  d_X2_1     -0.140942      0.512507    -0.2750   0.7884 
+  d_X2_2     -0.0788014     0.387857    -0.2032   0.8427 
+  d_X3_1     -0.281277      0.419328    -0.6708   0.5162 
+  d_X3_2      0.198386      0.422307     0.4698   0.6477 
+  d_X4_1     -0.631477      0.282382    -2.236    0.0470  **
+  d_X4_2     -0.114036      0.266899    -0.4273   0.6774 
+  EC1        -0.131129      0.307336    -0.4267   0.6779 
+
+Mean dependent var   0.022596   S.D. dependent var   1.586138
+Sum squared resid    21.64620   S.E. of regression   1.402796
+R-squared            0.590286   Adjusted R-squared   0.217819
+rho                 -0.228513   Durbin-Watson        2.438219
+
+Cross-equation covariance matrix:
+
+              X1           X2           X3           X4
+X1        1.0236    0.0046665     -0.25277      0.32708 
+X2     0.0046665      0.48051     0.045485     -0.20771 
+X3      -0.25277     0.045485      0.35179     -0.27374 
+X4       0.32708     -0.20771     -0.27374      0.98392 
+
+determinant = 0.0957772
+
+? vecm 3 1 xlist --ct
+
+VECM system, lag order 3
+Maximum likelihood estimates, observations 1960:4-1966:1 (T = 22)
+Cointegration rank = 1
+Case 5: Unrestricted trend and constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+X1       1.0000 
+        (0.0000) 
+X2      -1.7544 
+       (0.42551) 
+X3      0.51767 
+       (0.39287) 
+X4      0.16943 
+       (0.32848) 
+
+alpha (adjustment vectors)
+
+X1     -0.53238 
+X2      0.81084 
+X3     -0.47862 
+X4     -0.12303 
+
+Log-likelihood = -98.917992
+Determinant of covariance matrix = 0.094518136
+AIC = 14.0835
+BIC = 16.8607
+HQC = 14.7377
+
+Equation 1: d_X1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.540742     0.779421     -0.6938   0.5022 
+  d_X1_1     -0.310699     0.311869     -0.9962   0.3405 
+  d_X1_2     -0.355360     0.282786     -1.257    0.2349 
+  d_X2_1     -0.668643     0.524791     -1.274    0.2289 
+  d_X2_2     -0.291143     0.395081     -0.7369   0.4766 
+  d_X3_1      0.0559758    0.429453      0.1303   0.8986 
+  d_X3_2      0.224065     0.432757      0.5178   0.6149 
+  d_X4_1      0.365405     0.291898      1.252    0.2366 
+  d_X4_2      0.392939     0.274495      1.431    0.1801 
+  time        0.00536569   0.0503035     0.1067   0.9170 
+  EC1        -0.532378     0.315607     -1.687    0.1198 
+
+Mean dependent var  -0.180198   S.D. dependent var   1.556380
+Sum squared resid    22.48132   S.E. of regression   1.429600
+R-squared            0.558052   Adjusted R-squared   0.156281
+rho                 -0.096583   Durbin-Watson        2.095661
+
+Equation 2: d_X2
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.326905     0.534883      0.6112    0.5535 
+  d_X1_1     -0.470079     0.214022     -2.196     0.0504  *
+  d_X1_2     -0.427884     0.194064     -2.205     0.0497  **
+  d_X2_1      0.518318     0.360142      1.439     0.1779 
+  d_X2_2      0.469552     0.271127      1.732     0.1112 
+  d_X3_1      0.00847910   0.294715      0.02877   0.9776 
+  d_X3_2      0.591501     0.296983      1.992     0.0718  *
+  d_X4_1      0.127907     0.200317      0.6385    0.5362 
+  d_X4_2      0.146975     0.188374      0.7802    0.4517 
+  time        0.00487192   0.0345211     0.1411    0.8903 
+  EC1         0.810841     0.216588      3.744     0.0032  ***
+
+Mean dependent var   0.027719   S.D. dependent var   1.412592
+Sum squared resid    10.58756   S.E. of regression   0.981073
+R-squared            0.747336   Adjusted R-squared   0.517642
+rho                 -0.132386   Durbin-Watson        2.142918
+
+Equation 3: d_X3
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.122031     0.453591      0.2690   0.7929 
+  d_X1_1      0.0766850    0.181495      0.4225   0.6808 
+  d_X1_2      0.179658     0.164570      1.092    0.2983 
+  d_X2_1     -0.609802     0.305407     -1.997    0.0712  *
+  d_X2_2     -0.440357     0.229921     -1.915    0.0818  *
+  d_X3_1     -0.421032     0.249924     -1.685    0.1202 
+  d_X3_2     -0.378479     0.251847     -1.503    0.1610 
+  d_X4_1      0.166561     0.169873      0.9805   0.3479 
+  d_X4_2      0.0733691    0.159745      0.4593   0.6550 
+  time       -0.0154581    0.0292746    -0.5280   0.6080 
+  EC1        -0.478619     0.183670     -2.606    0.0244  **
+
+Mean dependent var   0.101078   S.D. dependent var   1.080746
+Sum squared resid    7.613885   S.E. of regression   0.831968
+R-squared            0.689587   Adjusted R-squared   0.407393
+rho                 -0.117716   Durbin-Watson        2.229395
+
+Equation 4: d_X4
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -0.160014     0.764660     -0.2093    0.8381 
+  d_X1_1      0.352768     0.305962      1.153     0.2734 
+  d_X1_2     -0.136211     0.277430     -0.4910    0.6331 
+  d_X2_1     -0.130306     0.514852     -0.2531    0.8049 
+  d_X2_2     -0.0755244    0.387599     -0.1949    0.8491 
+  d_X3_1     -0.284567     0.421319     -0.6754    0.5134 
+  d_X3_2      0.194677     0.424561      0.4585    0.6555 
+  d_X4_1     -0.636691     0.286370     -2.223     0.0481  **
+  d_X4_2     -0.117892     0.269296     -0.4378    0.6700 
+  time        0.00414077   0.0493508     0.08390   0.9346 
+  EC1        -0.123030     0.309630     -0.3973    0.6987 
+
+Mean dependent var   0.022596   S.D. dependent var   1.586138
+Sum squared resid    21.63786   S.E. of regression   1.402526
+R-squared            0.590444   Adjusted R-squared   0.218121
+rho                 -0.224776   Durbin-Watson        2.433881
+
+Cross-equation covariance matrix:
+
+              X1           X2           X3           X4
+X1        1.0219    0.0036775     -0.24822      0.32670 
+X2     0.0036775      0.48125     0.045103     -0.20936 
+X3      -0.24822     0.045103      0.34609     -0.27051 
+X4       0.32670     -0.20936     -0.27051      0.98354 
+
+determinant = 0.0945181
+
+Done

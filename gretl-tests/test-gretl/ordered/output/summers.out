@@ -1,0 +1,98 @@
+gretl version 2015e-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-12-07 11:53
+? run summers.inp
+ /home/cottrell/stats/test-gretl/ordered/summers.inp
+# Script to check handling of non-integer dep. var.
+? open summers.gdt -q
+Read datafile /home/cottrell/stats/test-gretl/ordered/summers.gdt
+? probit RRscore const ld_credit2(-1 to -5)
+
+Function evaluations: 39
+Evaluations of gradient: 27
+
+Model 1: Ordered Probit, using 259 observations
+Dependent variable: RRscore
+Standard errors based on Hessian
+
+                 coefficient   std. error      z      p-value 
+  ------------------------------------------------------------
+  ld_credit2_1    -7.70235      2.16361     -3.560    0.0004   ***
+  ld_credit2_2    -3.11492      2.18778     -1.424    0.1545  
+  ld_credit2_3    -2.40195      2.20564     -1.089    0.2762  
+  ld_credit2_4    -0.261684     2.09290     -0.1250   0.9005  
+  ld_credit2_5     0.445930     1.72745      0.2581   0.7963  
+
+  cut1             0.710172     0.142322     4.990    6.04e-07 ***
+  cut2             0.818759     0.145215     5.638    1.72e-08 ***
+  cut3             0.915489     0.148379     6.170    6.83e-10 ***
+  cut4             0.996138     0.151496     6.575    4.85e-11 ***
+  cut5             1.02503      0.152666     6.714    1.89e-11 ***
+  cut6             1.11781      0.156579     7.139    9.41e-13 ***
+  cut7             1.26007      0.163821     7.692    1.45e-14 ***
+  cut8             1.29971      0.166074     7.826    5.03e-15 ***
+  cut9             1.48606      0.178068     8.345    7.09e-17 ***
+  cut10            1.60374      0.187792     8.540    1.34e-17 ***
+  cut11            1.74806      0.202999     8.611    7.23e-18 ***
+  cut12            2.06596      0.251185     8.225    1.95e-16 ***
+  cut13            2.49543      0.366092     6.816    9.34e-12 ***
+
+Mean dependent var   0.490347   S.D. dependent var   1.567877
+Log-likelihood      -173.0579   Akaike criterion     382.1158
+Schwarz criterion    446.1387   Hannan-Quinn         407.8568
+
+Number of cases 'correctly predicted' = 224 (86.5%)
+Likelihood ratio test: Chi-square(5) = 30.4455 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 8.61548
+  with p-value = 0.0134639
+
+? RRscore *= 2
+Replaced series RRscore (ID 3)
+? probit RRscore const ld_credit2(-1 to -5)
+
+Function evaluations: 39
+Evaluations of gradient: 27
+
+Model 2: Ordered Probit, using 259 observations
+Dependent variable: RRscore
+Standard errors based on Hessian
+
+                 coefficient   std. error      z      p-value 
+  ------------------------------------------------------------
+  ld_credit2_1    -7.70235      2.16361     -3.560    0.0004   ***
+  ld_credit2_2    -3.11492      2.18778     -1.424    0.1545  
+  ld_credit2_3    -2.40195      2.20564     -1.089    0.2762  
+  ld_credit2_4    -0.261684     2.09290     -0.1250   0.9005  
+  ld_credit2_5     0.445930     1.72745      0.2581   0.7963  
+
+  cut1             0.710172     0.142322     4.990    6.04e-07 ***
+  cut2             0.818759     0.145215     5.638    1.72e-08 ***
+  cut3             0.915489     0.148379     6.170    6.83e-10 ***
+  cut4             0.996138     0.151496     6.575    4.85e-11 ***
+  cut5             1.02503      0.152666     6.714    1.89e-11 ***
+  cut6             1.11781      0.156579     7.139    9.41e-13 ***
+  cut7             1.26007      0.163821     7.692    1.45e-14 ***
+  cut8             1.29971      0.166074     7.826    5.03e-15 ***
+  cut9             1.48606      0.178068     8.345    7.09e-17 ***
+  cut10            1.60374      0.187792     8.540    1.34e-17 ***
+  cut11            1.74806      0.202999     8.611    7.23e-18 ***
+  cut12            2.06596      0.251185     8.225    1.95e-16 ***
+  cut13            2.49543      0.366092     6.816    9.34e-12 ***
+
+Mean dependent var   0.980695   S.D. dependent var   3.135755
+Log-likelihood      -173.0579   Akaike criterion     382.1158
+Schwarz criterion    446.1387   Hannan-Quinn         407.8568
+
+Number of cases 'correctly predicted' = 224 (86.5%)
+Likelihood ratio test: Chi-square(5) = 30.4455 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 8.61548
+  with p-value = 0.0134639
+
+Done

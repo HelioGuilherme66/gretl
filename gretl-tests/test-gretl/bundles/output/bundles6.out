@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles6.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles6.inp
+# series in bundles
+? open data4-1 -q
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+? bundle b
+? b["y"] = price
+? b["y2"] = 2*price
+? series y = b["y"]
+Generated series y (ID 5)
+? series y2 = b["y2"]
+Generated series y2 (ID 6)
+? print price y y2 --byobs
+
+          price            y           y2
+
+ 1        199.9        199.9        399.8
+ 2        228.0        228.0        456.0
+ 3        235.0        235.0        470.0
+ 4        285.0        285.0        570.0
+ 5        239.0        239.0        478.0
+ 6        293.0        293.0        586.0
+ 7        285.0        285.0        570.0
+ 8        365.0        365.0        730.0
+ 9        295.0        295.0        590.0
+10        290.0        290.0        580.0
+11        385.0        385.0        770.0
+12        505.0        505.0       1010.0
+13        425.0        425.0        850.0
+14        415.0        415.0        830.0
+
+? catch scalar x = b["x"]
+"x": no such item
+Couldn't get x
+Done

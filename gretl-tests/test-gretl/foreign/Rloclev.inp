@@ -1,0 +1,34 @@
+nulldata 200
+set seed 202020
+setobs 1 1 --special
+u = normal()
+e = normal() * 0.5
+U = 2 + cum(u)
+y = U + e
+
+set stopwatch
+
+foreign language=R --send-data
+  y <- gretldata[,"y"]
+  a <- StructTS(y, type="level")
+  a
+  StateFromR1 <- as.ts(tsSmooth(a))
+  gretl.export(StateFromR1)
+end foreign
+
+y *= 2
+
+foreign language=R --send-data
+  y <- gretldata[,"y"]
+  a <- StructTS(y, type="level")
+  a
+  StateFromR2 <- as.ts(tsSmooth(a))
+  gretl.export(StateFromR2)
+end foreign
+
+printf "\n*** Rlib time = %g\n\n", $stopwatch
+
+append @dotdir/StateFromR1.csv
+append @dotdir/StateFromR2.csv
+
+summary StateFromR1 StateFromR2 

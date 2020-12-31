@@ -1,0 +1,18 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m3.inp
+ /home/cottrell/stats/test-gretl/matrix/m3.inp
+? function matrix mtest (matrix M)
+? matrix A = {1,2; 2,1}
+Generated matrix A
+? B = mtest(A)
+Generated matrix B
+? B
+B (2 x 2)
+
+      1.0000       1.4142 
+      1.4142       1.0000 
+
+Done

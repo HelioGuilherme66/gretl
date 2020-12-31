@@ -1,0 +1,138 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run lag1.inp
+ /home/cottrell/stats/test-gretl/vecm/lag1.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? coint2 1 1 2 --rc --verbose
+
+Johansen test:
+Number of equations = 2
+Lag order = 1
+Estimation period: 1974:2 - 1987:3 (T = 54)
+
+No initial VAR estimation is required
+
+Sample variance-covariance matrices for residuals
+
+ VAR system in first differences (S00)
+
+   0.0011281  0.00042428
+  0.00042428  0.00064086
+
+ System with levels as dependent variable (S11)
+
+      138.07      69.926      11.750
+      69.926      35.414      5.9506
+      11.750      5.9506      1.0000
+
+ Cross-products (S01)
+
+    0.083242    0.041917   0.0070878
+    0.032250    0.015970   0.0027254
+
+Case 2: Restricted constant
+
+Log-likelihood = 395.076 (including constant term: 241.831)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.16045     11.135 [0.5371]     9.4438 [0.3999]
+   1   0.030827     1.6909 [0.8299]     1.6909 [0.8289]
+
+Corrected for sample size (df = 51)
+Rank Trace test p-value
+   0     11.135 [0.5572]
+   1     1.6909 [0.8298]
+
+eigenvalue     0.16045     0.030827 
+
+beta (cointegrating vectors)
+LRM             11.618      -5.4851 
+LRY            -25.777       8.1911 
+const           17.226       16.611 
+
+alpha (adjustment vectors)
+LRM          0.0087240    0.0044893 
+LRY          0.0099707  -0.00080931 
+
+renormalized beta
+LRM             1.0000     -0.66964 
+LRY            -2.2187       1.0000 
+const           1.4827       2.0279 
+
+renormalized alpha
+LRM            0.10136     0.036772 
+LRY            0.11584   -0.0066291 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY        const
+LRM           0.076732     -0.18810      0.22485 
+LRY            0.12028     -0.26364      0.15831 
+
+? vecm 1 2 1 2 --rc
+
+VECM system, lag order 1
+Maximum likelihood estimates, observations 1974:2-1987:3 (T = 54)
+Cointegration rank = 2
+Case 2: Restricted constant
+
+beta (cointegrating vectors)
+
+LRM         1.0000       0.0000 
+LRY         0.0000       1.0000 
+const      -12.316      -6.2192 
+
+alpha (adjustment vectors)
+
+LRM       0.076732     -0.18810 
+LRY        0.12028     -0.26364 
+
+Log-likelihood = 241.83086
+Determinant of covariance matrix = 4.4178054e-07
+AIC = -8.8086
+BIC = -8.6612
+HQC = -8.7517
+Portmanteau test: LB(13) = 95.8804, df = 48 [0.0000]
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  EC1         0.0767316    0.0577898     1.328    0.1902 
+  EC2        -0.188104     0.121658     -1.546    0.1282 
+
+Mean dependent var   0.007088   S.D. dependent var   0.033139
+Sum squared resid    0.055720   S.E. of regression   0.033054
+R-squared            0.085330   Adjusted R-squared   0.049461
+rho                 -0.017190   Durbin-Watson        1.992294
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  EC1          0.120279    0.0418365     2.875    0.0059  ***
+  EC2         -0.263640    0.0880733    -2.993    0.0042  ***
+
+Mean dependent var   0.002725   S.D. dependent var   0.025404
+Sum squared resid    0.029203   S.E. of regression   0.023929
+R-squared            0.156149   Adjusted R-squared   0.123057
+rho                  0.235415   Durbin-Watson        1.488807
+
+Cross-equation covariance matrix:
+
+              LRM          LRY
+LRM     0.0010319   0.00034093 
+LRY    0.00034093   0.00054079 
+
+determinant = 4.41781e-07
+
+Done

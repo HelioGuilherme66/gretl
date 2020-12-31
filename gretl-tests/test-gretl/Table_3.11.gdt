@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="Table_3.11" frequency="1" startobs="1929" endobs="1967" type="time-series">
+<description>
+Table 3.11 from Maddala's Introduction to Econometrics (Prentice Hall)
+
+Original source: L. R. Christensen and D. W. Jorgensen, "U.S Real
+Product and Real Factor Input, 1929-67", Review of Income and
+Wealth, March 1970.</description>
+<variables count="5">
+<variable name="X"
+ label="Index of GNP in constant dollars"
+/>
+<variable name="L1"
+ label="Labor input index (adjusted for education)"
+/>
+<variable name="L2"
+ label="Persons engaged"
+/>
+<variable name="K1"
+ label="Capital input index (adjusted for utilization rate)"
+/>
+<variable name="K2"
+ label="Capital stock in constant dollars"
+/>
+</variables>
+<observations count="39" labels="false">
+<obs>189.8 173.3 44.151 87.8 888.9 </obs>
+<obs>172.1 165.4 41.898 87.8 904.0 </obs>
+<obs>159.1 158.2 36.948 84.0 900.2 </obs>
+<obs>135.6 141.7 35.686 78.3 883.6 </obs>
+<obs>132.0 141.6 35.533 76.6 851.4 </obs>
+<obs>141.8 148.0 37.854 76.0 823.7 </obs>
+<obs>153.9 154.4 39.014 77.7 805.3 </obs>
+<obs>171.5 163.5 40.765 79.1 800.4 </obs>
+<obs>183.0 172.0 42.484 80.0 805.5 </obs>
+<obs>173.2 161.5 40.039 77.6 817.6 </obs>
+<obs>188.5 168.6 41.443 81.4 809.8 </obs>
+<obs>205.5 176.5 43.149 87.0 814.1 </obs>
+<obs>236.0 192.4 46.576 96.2 830.3 </obs>
+<obs>257.8 205.1 49.010 104.4 857.9 </obs>
+<obs>277.5 210.1 49.695 110.0 851.4 </obs>
+<obs>291.1 208.8 48.668 107.8 834.6 </obs>
+<obs>284.5 202.1 47.136 102.1 819.3 </obs>
+<obs>274.0 213.4 49.950 97.2 812.3 </obs>
+<obs>279.9 223.6 52.350 105.9 851.3 </obs>
+<obs>297.6 228.2 53.336 113.0 888.3 </obs>
+<obs>297.7 221.3 51.469 114.9 934.6 </obs>
+<obs>328.9 228.8 52.972 124.1 964.6 </obs>
+<obs>351.4 239.0 55.101 134.5 1021.4 </obs>
+<obs>360.4 241.7 55.385 139.7 1068.5 </obs>
+<obs>378.9 245.2 56.226 147.4 1100.3 </obs>
+<obs>375.8 237.4 54.387 148.9 1134.6 </obs>
+<obs>406.7 245.9 55.718 158.6 1163.2 </obs>
+<obs>416.3 251.6 56.770 167.1 1213.9 </obs>
+<obs>422.8 251.5 56.809 171.9 1255.5 </obs>
+<obs>418.4 245.1 55.023 173.1 1287.9 </obs>
+<obs>445.7 254.9 56.215 182.5 1305.8 </obs>
+<obs>457.3 259.6 56.743 189.0 1341.4 </obs>
+<obs>466.3 258.1 56.211 194.1 1373.9 </obs>
+<obs>495.3 264.6 57.078 202.3 1399.1 </obs>
+<obs>515.5 268.5 57.540 205.4 1436.7 </obs>
+<obs>544.1 275.4 58.508 215.9 1477.8 </obs>
+<obs>579.2 285.3 60.055 225.0 1524.4 </obs>
+<obs>615.6 297.4 62.130 236.2 1582.2 </obs>
+<obs>631.1 305.0 63.162 247.9 1645.3 </obs>
+</observations>
+</gretldata>

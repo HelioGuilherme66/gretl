@@ -1,0 +1,140 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run intregex.inp
+ /home/cottrell/stats/test-gretl/intreg/intregex.inp
+# cf. http://www.ats.ucla.edu/stat/stata/dae/intreg.htm
+? open intregex.dta
+Stata file version 7
+endianness: big
+number of variables = 6
+number of observations = 30
+length of varnames = 32
+Max length of labels = 81
+dataset label: ''
+timestamp: '17 Jan 2006 11:03'
+variable 1: float type
+variable 2: float type
+variable 3: float type
+variable 4: float type
+variable 5: float type
+variable 6: float type
+variable 1: name = 'id'
+variable 2: name = 'lgpa'
+variable 3: name = 'ugpa'
+variable 4: name = 'write'
+variable 5: name = 'rating'
+variable 6: name = 'read'
+Listing 7 variables:
+  0) const     1) id        2) lgpa      3) ugpa      4) write   
+  5) rating    6) read    
+
+? intreg lgpa ugpa 0
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 4 iterations
+
+Model 1: Interval estimates, using observations 1-30
+Lower limit: lgpa, Upper limit: ugpa
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        2.87826      0.110459    26.06   1.12e-149 ***
+
+Log-likelihood      -51.74729   Akaike criterion     107.4946
+Schwarz criterion    110.2970   Hannan-Quinn         108.3911
+
+sigma = 0.589288 (0.0809804)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 30
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 11.1025
+  with p-value = 0.00388263
+
+? scalar ll0 = $lnl
+Generated scalar ll0 = -51.7473
+? intreg lgpa ugpa 0 write rating read
+Successive criterion values within tolerance (1e-07)
+
+Convergence achieved after 4 iterations
+
+Model 2: Interval estimates, using observations 1-30
+Lower limit: lgpa, Upper limit: ugpa
+Standard errors based on Hessian
+
+             coefficient   std. error      z     p-value
+  ------------------------------------------------------
+  const      0.913371      0.479401      1.905   0.0567  *
+  write      0.00528289    0.00153628    3.439   0.0006  ***
+  rating     0.0167890     0.00975098    1.722   0.0851  *
+  read       0.00232898    0.000804615   2.895   0.0038  ***
+
+Chi-square(3)        52.85048   p-value              1.97e-11
+Log-likelihood      -36.66218   Akaike criterion     83.32437
+Schwarz criterion    90.33036   Hannan-Quinn         85.56565
+
+sigma = 0.33592 (0.0509506)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 30
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 24.2257
+  with p-value = 5.4885e-06
+
+? scalar ll1 = $lnl
+Generated scalar ll1 = -36.6622
+? scalar LR = 2*(ll1-ll0)
+Generated scalar LR = 30.1702
+? intreg lgpa ugpa 0 write rating read --robust
+Successive criterion values within tolerance (1e-07)
+
+Convergence achieved after 4 iterations
+
+Model 3: Interval estimates, using observations 1-30
+Lower limit: lgpa, Upper limit: ugpa
+QML standard errors
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  const      0.913371      0.480136     1.902   0.0571  *
+  write      0.00528289    0.00145693   3.626   0.0003  ***
+  rating     0.0167890     0.0104645    1.604   0.1086 
+  read       0.00232898    0.00105849   2.200   0.0278  **
+
+Chi-square(3)        56.73736   p-value              2.92e-12
+Log-likelihood      -36.66218   Akaike criterion     83.32437
+Schwarz criterion    90.33036   Hannan-Quinn         85.56565
+
+sigma = 0.33592 (0.0418733)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 30
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 24.2257
+  with p-value = 5.4885e-06
+
+? genr p = $yhat
+Generated series p (ID 7)
+? corr lgpa ugpa p
+
+Correlation Coefficients, using the observations 1 - 30
+5% critical value (two-tailed) = 0.3610 for n = 30
+
+          lgpa          ugpa             p
+        1.0000        0.9488        0.7494  lgpa
+                      1.0000        0.7963  ugpa
+                                    1.0000  p
+
+Done

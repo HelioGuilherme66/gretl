@@ -1,0 +1,76 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-04-02 10:12
+? run setobs.inp
+ /home/cottrell/stats/test-gretl/fnsample/setobs.inp
+? function void myfun (series y)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? myfun(price)
+in function, cross section
+
+              y
+
+ 1        199.9
+ 2        228.0
+ 3        235.0
+ 4        285.0
+ 5        239.0
+ 6        293.0
+ 7        285.0
+ 8        365.0
+ 9        295.0
+10        290.0
+11        385.0
+12        505.0
+13        425.0
+14        415.0
+
+in function, should be time series
+
+                  y
+
+1946:1        199.9
+1946:2        228.0
+1946:3        235.0
+1946:4        285.0
+1947:1        239.0
+1947:2        293.0
+1947:3        285.0
+1947:4        365.0
+1948:1        295.0
+1948:2        290.0
+1948:3        385.0
+1948:4        505.0
+1949:1        425.0
+1949:2        415.0
+
+in main, should be cross section
+? print price -o
+
+          price
+
+ 1        199.9
+ 2        228.0
+ 3        235.0
+ 4        285.0
+ 5        239.0
+ 6        293.0
+ 7        285.0
+ 8        365.0
+ 9        295.0
+10        290.0
+11        385.0
+12        505.0
+13        425.0
+14        415.0
+
+Done

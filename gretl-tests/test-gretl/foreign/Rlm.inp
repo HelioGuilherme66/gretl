@@ -1,0 +1,19 @@
+open data4-1
+set R_functions on
+foreign language=R
+  ols <- function(y,x) {
+    m <- lm(y~x + 1)
+    summary(m)
+    b <- as.matrix(coefficients(m))
+    invisible(b)
+  }
+end foreign
+set messages off
+matrix rb = R.ols(price, sqft)
+rb
+matrix rb = R.ols(2*price, sqft)
+rb
+
+
+
+

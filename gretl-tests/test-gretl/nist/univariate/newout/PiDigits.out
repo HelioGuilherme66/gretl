@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run PiDigits.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/PiDigits.inp
+? open PiDigits.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/PiDigits.hdr
+periodicity: 1, maxobs: 5000,
+observations range: 1-5000
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/PiDigits.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+             Summary Statistics, using the observations 1 - 5000
+                for the variable 'Y' (5000 valid observations)
+
+  Mean                     4.5348    
+  Median                   5.0000    
+  Minimum                  0.0000    
+  Maximum                  9.0000    
+  Standard deviation       2.8673    
+  C.V.                     0.63230   
+  Skewness                -0.0079903 
+  Ex. kurtosis            -1.2200    
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = -0.00355139
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = 4.5348
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 2.86734
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 41099.9
+? smpl 2
+Full data range: 1 - 5000 (n = 5000)
+Current sample:  2 - 5000 (n = 4999)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = -145.946
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = -0.00355099
+ybar  = 4.5348
+ysd   = 2.86733906029
+r1    = -0.00355139125742
+rnist = -0.00355099287238
+Done

@@ -1,0 +1,14 @@
+open sun-activity.gdt
+arima 9 0 0 ; sunactivity
+fcast 1709 1720 gretl_fc --dynamic
+smpl 1709 1719
+print sunactivity gretl_fc --byobs
+
+
+
+
+
+
+
+
+

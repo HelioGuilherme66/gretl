@@ -1,0 +1,41 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run BNdecomp.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/BNdecomp.gfn.inp
+? include ./BNdecomp.gfn
+ /home/cottrell/stats/test-gretl/testgfn/BNdecomp.gfn
+BNdecomp 2.0, 2015-03-03 (Riccardo "Jack" Lucchetti)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? scalar auto = 1
+Generated scalar auto = 1
+? scalar maxp = 2
+Generated scalar maxp = 2
+? scalar maxq = 2
+Generated scalar maxq = 2
+? scalar verbose = 1
+Generated scalar verbose = 1
+# choose p and q automatically
+? series BN_QNC_auto = BNdecomp(QNC, 1, maxp, maxq, verbose)
+Beveridge-Nelson decomposition of QNC
+using an ARMA(2, 2) model (auto, BIC = 877.959)
+Generated series BN_QNC_auto (ID 12)
+# choose p and q by hand
+? series BN_QNC_bh = BNdecomp(QNC, 0, 1, 1, verbose)
+Beveridge-Nelson decomposition of QNC
+using an ARMA(1, 1) model (user chosen)
+Generated series BN_QNC_bh (ID 13)
+? gnuplot QNC BN_QNC_auto BN_QNC_bh --with-lines --output=display \
+  --time-series
+Done

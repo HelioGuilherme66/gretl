@@ -1,0 +1,95 @@
+function matrix bsm (series y, matrix inivar, int verbose)
+    smpl ok(y) --restrict
+
+    # use the same ordering as R
+    scalar seta = sqrt(inivar[1])
+    scalar szeta = sqrt(inivar[2])
+    scalar seps = sqrt(inivar[4])
+    
+    matrix F = {1,1;0,1} 
+    matrix Sigma1 = { 10 }
+    matrix A = { 1 ; 0 }    
+
+    p = $pd   
+    if p > 1
+        scalar somega = sqrt(inivar[3])
+        matrix F2 = -ones(1,p-1) | (I(p-2) ~ zeros(p-2,1))
+        F = ( F ~ zeros(2,p-1) ) | (zeros(p-1,2) ~ F2)
+        matrix Sigma2 = zeros(p+1,p+1)
+        Sigma2[1:3,1:3] = 10*I(3)
+        A = A | {1} | zeros(p-2,1)
+    else
+        matrix Sigma2 = I(2)
+    endif
+    
+    /* Kalman filter set-up */
+    kalman
+       obsy y
+       obsymat A
+       obsvar Sigma1
+       statemat F
+       statevar Sigma2
+   end kalman --diffuse
+
+   string vstr = (verbose)? "--verbose" : ""
+   
+    /* ML estimation */
+    mle ll = ERR ? NA : $kalman_llt
+        Sigma1[1] = seps^2
+        Sigma2[1,1] = seta^2
+        Sigma2[2,2] = szeta^2
+        Sigma2[3,3] = somega^2
+        ERR = kfilter()
+        params seps seta szeta somega
+    end mle @vstr
+    matrix ret = abs({seta, szeta, somega, seps})
+    return ret
+end function
+
+
+function list bsm_smooth (series y, matrix vars)
+    /* return the smoothed estimate of \mu_t */
+    smpl ok(y) --restrict
+
+    scalar seta = vars[1]
+    scalar szeta = vars[2]
+    scalar seps = vars[4]
+
+    matrix F = {1,1;0,1} 
+    matrix Sigma1 = { seps^2 }
+    matrix A = { 1 ; 0 }    
+
+    p = $pd   
+    if p > 1
+        scalar somega = vars[3]
+        matrix F2 = -ones(1,p-1) | (I(p-2) ~ zeros(p-2,1))
+        F = ( F ~ zeros(2,p-1) ) | (zeros(p-1,2) ~ F2)
+        matrix Sigma2 = zeros(p+1,p+1)
+        Sigma2[1,1] = seta^2
+        Sigma2[2,2] = szeta^2
+        Sigma2[3,3] = somega^2
+        A = A | {1} | zeros(p-2,1)
+    else
+        matrix Sigma2 = { seta, 0 ; 0, szeta }
+    endif
+      
+    /* Kalman filter set-up */
+    kalman
+       obsy y
+       obsymat A
+       obsvar Sigma1
+       statemat F
+       statevar Sigma2
+   end kalman --diffuse
+
+   matrix smst = ksmooth()
+   series level = smst[,1]
+   setinfo level -d "level component"
+   series slope = smst[,2]
+   setinfo slope -d "slope"
+   series seasonal = smst[,3]
+   setinfo seasonal -d "seasonal component"
+   
+   list ret = level slope seasonal
+   return ret
+end function

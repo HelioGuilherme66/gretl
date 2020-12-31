@@ -1,0 +1,30 @@
+set echo off
+set messages off
+
+open brand_cassola.gdt
+
+m_p = m_p*100
+y = y*100
+infl = infl/4
+rs = rs/4
+rl = rl/4
+
+vecm 2 3 m_p infl rl rs y -q
+
+# Apply arbitrary common restriction to the columns of beta
+
+matrix vR = zeros(3,5)
+vR[1,1] = 1
+vR[2,2] = 1
+vR[3,3] = 1
+
+matrix vq = {1,1,1}'
+
+restrict --full
+ R = vR
+ q = vq
+end restrict
+
+
+
+

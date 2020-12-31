@@ -1,0 +1,70 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run yalta5.inp
+ /home/allin/stats/test-gretl/bfgs/arma/yalta5.inp
+? open yalta5.csv
+parsing /home/allin/stats/test-gretl/bfgs/arma/yalta5.csv...
+using delimiter ','
+   longest line: 13 characters
+   first field: 'Period'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 37
+scanning for variable names...
+   line: Period,Data
+scanning for row labels and data...
+   first row label "1", last label "36"
+treating these as undated data
+
+Listing 2 variables:
+  0) const    1) Data   
+
+? setobs 5 1 --time-series
+Full data range: 1 - 36 (n = 36)
+
+? genr y = Data
+Generated series y (ID 2)
+? dataset addobs 5
+Dataset extended by 5 observations
+Full data range: 1 - 41 (n = 41)
+
+Warning: *** "addobs": obsolete command; please use "dataset addobs"
+# exact ML
+? arma 1 0 0 ; 1 1 0 ; y
+
+Function evaluations: 36
+Evaluations of gradient: 19
+
+Model 1: ARIMA, using observations 6-36 (T = 31)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-Ls) y
+Standard errors based on Hessian
+
+             coefficient    std. error      z      p-value
+  --------------------------------------------------------
+  const      -2284.65       1053.77       -2.168   0.0302  **
+  phi_1          0.489334      0.157209    3.113   0.0019  ***
+  Phi_1         -0.378011      0.159804   -2.365   0.0180  **
+
+Mean dependent var  -2229.968   S.D. dependent var   5060.294
+Mean of innovations  46.29354   S.D. of innovations  4054.239
+Log-likelihood      -302.0319   Akaike criterion     612.0639
+Schwarz criterion    617.7998   Hannan-Quinn         613.9337
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.0436     0.0000     2.0436     0.0000
+  AR (seasonal)
+    Root  1          -2.6454     0.0000     2.6454     0.5000
+  -----------------------------------------------------------
+
+? scalar l1 = $lnl
+Generated scalar l1 = -302.032
+-3.020319457E+02
+? fcast 37 41 f
+Generated series f (ID 3)
+Done

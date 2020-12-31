@@ -1,0 +1,5 @@
+set seed 345678
+matrix M = mnormal(5,5)
+print M
+evals = eigengen(M, null)
+print evals

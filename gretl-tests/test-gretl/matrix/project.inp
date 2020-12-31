@@ -1,0 +1,16 @@
+open data4-1
+matrix X = { sqft, const }
+matrix y = price
+matrix b = inv(X'*X) * X'*y
+matrix F = X*b
+# create projection matrix
+matrix P = X*inv(X'*X)*X'
+matrix F1 = P*y
+# this matrix is idempotent...
+matrix F2 = P*F1
+series s0 = F
+series s1 = F1
+series s2 = F2
+print s0 s1 s2 --byobs
+
+

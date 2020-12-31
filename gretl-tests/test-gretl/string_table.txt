@@ -1,0 +1,16 @@
+summby.txt
+
+One or more non-numeric variables were found.
+These variables have been given numeric codes as follows.
+
+String code table for variable 3 (svar):
+  1 = 'one'
+  2 = 'two'
+  3 = 'third'
+  4 = 'fourthly'
+  5 = 'five'
+  6 = 'sixth'
+  7 = 'seeven'
+  8 = 'ocho'
+  9 = 'neun'
+ 10 = 'dix'

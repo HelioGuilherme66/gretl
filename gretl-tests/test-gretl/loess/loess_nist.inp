@@ -1,0 +1,7 @@
+open loess_nist.txt -q
+
+series yh0 = loess(y, x, 1, 0.33, 0)
+series yh1 = loess(y, x, 1, 0.33, 1)
+print x y yh0 yh1 -o
+
+gnuplot y yh0 yh1 x --output=display --with-lines=yh0,yh1

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="pca" frequency="1" startobs="1" endobs="30" type="cross-section">
+<description>
+Sample (artificial) data for PCA, from:
+
+http://www.doe-mbi.ucla.edu/~parag/multivar/pc_eg1.htm
+
+</description>
+<variables count="5">
+<variable name="V1"
+/>
+<variable name="V2"
+/>
+<variable name="V3"
+/>
+<variable name="V4"
+/>
+<variable name="V5"
+/>
+</variables>
+<observations count="30" labels="false">
+<obs>1.53 114.01 0.75 12.65 1.96 </obs>
+<obs>0.18 79.53 0.67 13.30 5.28 </obs>
+<obs>1.9 105.63 0.85 12.62 1.71 </obs>
+<obs>0.91 45.62 0.11 13.14 6.24 </obs>
+<obs>1.27 79.48 0.5 12.95 3.61 </obs>
+<obs>1.52 52.08 0.36 12.57 4.1 </obs>
+<obs>1.32 83.87 0.58 12.77 2.53 </obs>
+<obs>1.04 33.94 0.29 12.85 0.04 </obs>
+<obs>0.7 72.94 0.59 12.61 4.94 </obs>
+<obs>1.54 34.22 0.3 12.99 3.66 </obs>
+<obs>0.75 50.39 0.46 12.68 6.45 </obs>
+<obs>1.22 35.04 0.21 12.88 2.42 </obs>
+<obs>1.31 65.25 0.7 12.76 3.98 </obs>
+<obs>0.64 0 0.16 12.77 3.96 </obs>
+<obs>0 39.65 0.3 12.75 4.12 </obs>
+<obs>1.93 74.27 0.71 12.65 0 </obs>
+<obs>2.7 96.93 0.77 12.87 1.32 </obs>
+<obs>1.78 65.29 0.39 12.40 1.25 </obs>
+<obs>1.71 70.57 0.52 12.46 1.36 </obs>
+<obs>0.44 75.09 0.62 12.91 4.63 </obs>
+<obs>2.49 124 0.78 13.14 3.71 </obs>
+<obs>1.61 101.89 0.66 12.92 3.57 </obs>
+<obs>0.75 15.26 0.25 12.46 0.31 </obs>
+<obs>0.17 5.05 0 12.47 1.74 </obs>
+<obs>1.13 33.39 0.36 12.75 0.46 </obs>
+<obs>1.38 81.35 0.55 13.10 4.49 </obs>
+<obs>0.44 34.97 0.23 12.80 4.52 </obs>
+<obs>0.47 17.89 0.11 12.71 3.53 </obs>
+<obs>1.4 60.57 0.48 12.30 0.92 </obs>
+<obs>0.71 56.68 0.68 12.89 3.79 </obs>
+</observations>
+</gretldata>

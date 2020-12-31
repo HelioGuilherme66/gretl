@@ -1,0 +1,10 @@
+# Replicate final portion of output from DPD's abest3.ox
+open abdata.gdt
+genr Dw = diff(w)
+genr Dk = diff(k)
+genr Dys = diff(ys)
+list pred = Dw Dw(-1) Dk
+list exog = Dys Dys(-1) 0
+arbond 2 0 ; n pred exog ; exog GMM(k,2,3) GMM(w,2,3) --time-dummies
+arbond 2 0 ; n pred exog ; exog GMM(k,2,3) GMM(w,2,3) \
+  --time-dummies --two-step

@@ -1,0 +1,46 @@
+*
+* RegCrits is a post-processor for a linear regression which computes and
+* (optionally) displays various information criteria. It has no parameters,
+* as it just picks the information off from the accessible variables.
+*
+* It computes the Akaike Information Criterion, Schwarz Bayesian Criterion,
+* Hannan-Quinn, and FPE. These are all done in log form, so their values
+* will look fairly similar. Of course, the key to their use is the
+* comparison across models of a particular criterion.
+*
+* This defines %AIC (Akaike), %SBC (Schwarz), %HQCRIT (Hannan-Quinn) and
+* %LOGFPE (log of the FPE).
+*
+* Formulas are
+*   AIC  log(rss/T)+2*k/T
+*   SBC  log(rss/T)+log(T)*k/T
+*   HQ   log(rss/T)+2*log(log(T))*k/T
+*   FPE  log(rss/T)+log(T+k/T-k) (log of the standard formula)
+*
+*   where rss is the sum of squared residuals, k is the number of
+*   regressors and T is the number of observations.
+*
+* Syntax: @regCrits
+*
+* This should be used immediately after LINREG, NLLS or BOXJENK.
+*
+* Revision Schedule:
+*   02/03 Written by Tom Doan. Estima.
+*
+procedure RegCrits
+option switch print 1
+*
+declare real %aic %sbc %hqcrit %logfpe
+compute %aic    = log(%rss/%nobs)+2.0*%nreg/%nobs
+compute %sbc    = log(%rss/%nobs)+log(%nobs)*%nreg/%nobs
+compute %hqcrit = log(%rss/%nobs)+2.0*log(log(%nobs))*%nreg/%nobs
+compute %logfpe = log(%rss/%nobs)+log(float(%nobs+%nreg)/(%nobs-%nreg))
+if .not.print
+   return
+disp 'AIC' @20 %aic
+disp 'SBC' @20 %sbc
+disp 'Hannan-Quinn' @20 %hqcrit
+disp '(log) FPE' @20 %logfpe
+end
+
+

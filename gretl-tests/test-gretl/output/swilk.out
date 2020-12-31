@@ -1,0 +1,59 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run swilk.inp
+ /home/cottrell/stats/test-gretl/swilk.inp
+? set seed 564532853
+Pseudo-random number generator seeded with 564532853
+? nulldata 75
+periodicity: 1, maxobs: 75
+observations range: 1 to 75
+? scalar B = 1000
+Generated scalar B = 1000
+? scalar alpha = .05
+Generated scalar alpha = 0.05
+? matrix T1 = zeros(4,1)
+Generated matrix T1
+? matrix T2 = zeros(4,1)
+Generated matrix T2
+? scalar pv
+? string opt1 = "-qw"
+Generated string opt1
+? string opt2 = "-qd"
+Generated string opt2
+? string opt3 = "-qj"
+Generated string opt3
+? string opt4 = "-ql"
+Generated string opt4
+? loop B --quiet
+> xn = normal()
+> xu = uniform()
+> loop i=1..4 --quiet
+> string opt = (i=1)? opt1 : (i=2)? opt2 : (i=3)? opt3 : opt4
+> normtest xn @opt
+> pv = $pvalue
+> if pv < alpha
+> T1[i] += 1
+> endif
+> normtest xu @opt
+> pv = $pvalue
+> if pv > alpha
+> T2[i] += 1
+> endif
+> endloop
+> endloop
+B = 1000, alpha = 0.05, n = 75
+Shapiro-Wilk:
+ Rejections for normal        40 (4.0%)
+ Non-rejections for uniform   41 (4.1%)
+Doornik-Hansen:
+ Rejections for normal        47 (4.7%)
+ Non-rejections for uniform  219 (21.9%)
+Jarque-Bera:
+ Rejections for normal        43 (4.3%)
+ Non-rejections for uniform  913 (91.3%)
+Lilliefors:
+ Rejections for normal        30 (3.0%)
+ Non-rejections for uniform  555 (55.5%)
+Done

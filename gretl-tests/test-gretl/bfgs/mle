@@ -1,0 +1,12 @@
+mle
+
+                     output newout newer
+BFGS gradient evals:    579    308  312
+BFGS function evals:   1584   1036  918
+
+tp old: real 2.34, 2.34
+tp new: real 2.35, 2.36
+
+dell old: real 1.94, 1.92, 1.91, 1.91
+dell new: real 1.94, 1.88, 1.87, 2.10
+newer: 1.84, 1.87, 1.85, 1.88

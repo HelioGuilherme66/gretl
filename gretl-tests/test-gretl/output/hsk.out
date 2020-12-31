@@ -1,0 +1,366 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run hsk.inp
+ /home/cottrell/stats/test-gretl/hsk.inp
+? include criteria.gfn
+ /opt/esl/share/gretl/functions/criteria.gfn
+criteria 1.0, 2010-02-21 (Allin Cottrell)
+? open data4-5.gdt
+
+Read datafile /opt/esl/share/gretl/data/data4-5.gdt
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+
+Listing 10 variables:
+  0) const    1) wlfp     2) yf       3) ym       4) educ   
+  5) ue       6) mr       7) dr       8) urb      9) wh     
+
+? ols wlfp 0 yf educ ue urb wh
+
+Model 1: OLS, using observations 1-50
+Dependent variable: wlfp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      41.5811       5.64035       7.372    3.27e-09 ***
+  yf          0.796960     0.160553      4.964    1.09e-05 ***
+  educ        0.284961     0.0685838     4.155    0.0001   ***
+  ue         -1.45164      0.258489     -5.616    1.23e-06 ***
+  urb        -0.0744791    0.0283303    -2.629    0.0118   **
+  wh         -0.0978928    0.0362625    -2.700    0.0098   ***
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    214.0289   S.E. of regression   2.205514
+R-squared            0.758038   Adjusted R-squared   0.730542
+F(5, 44)             27.56936   P-value(F)           1.57e-12
+Log-likelihood      -107.2991   Akaike criterion     226.5983
+Schwarz criterion    238.0704   Hannan-Quinn         230.9669
+
+? genr usq=$uhat*$uhat
+Generated series usq (ID 10)
+? square yf educ ue urb wh
+Listing 16 variables:
+  0) const      1) wlfp       2) yf         3) ym         4) educ     
+  5) ue         6) mr         7) dr         8) urb        9) wh       
+ 10) usq       11) sq_yf     12) sq_educ   13) sq_ue     14) sq_urb   
+ 15) sq_wh    
+
+? ols usq 0 yf educ ue urb wh sq_yf sq_educ sq_ue sq_urb sq_wh
+
+Model 2: OLS, using observations 1-50
+Dependent variable: usq
+
+             coefficient     std. error    t-ratio   p-value
+  ----------------------------------------------------------
+  const      216.441        188.248         1.150    0.2572 
+  yf           5.34294        5.32654       1.003    0.3220 
+  educ        -5.33508        5.15861      -1.034    0.3074 
+  ue          -6.60248        5.57202      -1.185    0.2432 
+  urb         -1.18041        0.527017     -2.240    0.0309  **
+  wh          -0.571622       0.729154     -0.7840   0.4378 
+  sq_yf       -0.127653       0.134358     -0.9501   0.3479 
+  sq_educ      0.0334132      0.0340473     0.9814   0.3325 
+  sq_ue        0.593156       0.423566      1.400    0.1693 
+  sq_urb       0.00969297     0.00407400    2.379    0.0223  **
+  sq_wh        0.00749620     0.00619329    1.210    0.2334 
+
+Mean dependent var   4.280578   S.D. dependent var   7.300917
+Sum squared resid    1713.921   S.E. of regression   6.629230
+R-squared            0.343795   Adjusted R-squared   0.175537
+F(10, 39)            2.043260   P-value(F)           0.054681
+Log-likelihood      -159.3098   Akaike criterion     340.6196
+Schwarz criterion    361.6519   Hannan-Quinn         348.6288
+
+Excluding the constant, p-value was highest for variable 9 (wh)
+
+? genr usqhat1=usq-$uhat
+Generated series usqhat1 (ID 16)
+? print usqhat1
+
+Full data range: 1 - 50 (n = 50)
+
+ 1.27665   1.23890   7.38352   2.63302   6.76676   6.28928   4.43279  
+ 2.41506   6.82658  -1.12897   5.69664  -0.834618   5.23202   1.37443  
+ 3.01330   1.47890   10.1113   6.99826   7.56444   1.60650   9.31519  
+ 4.96757   4.62816   4.31745   2.16331   0.391628   2.52744   7.58481  
+ 6.86781   7.28113   0.932690   5.12203   0.0708081  -1.10064   3.76642  
+ 0.293577   3.93043   4.52584   13.7008  -1.49052  -1.40342   3.67109  
+ 3.91129   4.94807   7.64483   5.94565   4.39516   23.3572   1.77615  
+-0.387711  
+
+? genr lnusq=log(usq)
+Generated series lnusq (ID 17)
+? ols lnusq 0 yf educ ue urb wh sq_yf sq_educ sq_ue sq_urb sq_wh
+
+Model 3: OLS, using observations 1-50
+Dependent variable: lnusq
+
+              coefficient    std. error    t-ratio    p-value
+  -----------------------------------------------------------
+  const      -52.5261        78.1524       -0.6721    0.5055 
+  yf           3.60270        2.21135       1.629     0.1113 
+  educ         0.516046       2.14163       0.2410    0.8108 
+  ue          -0.665711       2.31326      -0.2878    0.7750 
+  urb          0.0141606      0.218795      0.06472   0.9487 
+  wh          -0.112627       0.302713     -0.3721    0.7119 
+  sq_yf       -0.0829792      0.0557796    -1.488     0.1449 
+  sq_educ     -0.00347193     0.0141349    -0.2456    0.8073 
+  sq_ue        0.0678239      0.175846      0.3857    0.7018 
+  sq_urb      -6.94669e-05    0.00169135   -0.04107   0.9674 
+  sq_wh        0.000866691    0.00257118    0.3371    0.7379 
+
+Mean dependent var  -0.222013   S.D. dependent var   2.808975
+Sum squared resid    295.4024   S.E. of regression   2.752166
+R-squared            0.235950   Adjusted R-squared   0.040039
+F(10, 39)            1.204375   P-value(F)           0.318247
+Log-likelihood      -115.3548   Akaike criterion     252.7096
+Schwarz criterion    273.7419   Hannan-Quinn         260.7188
+
+Log-likelihood for usq = -104.254
+
+Excluding the constant, p-value was highest for variable 14 (sq_urb)
+
+? genr usqhat2 = exp(lnusq-$uhat)
+Generated series usqhat2 (ID 18)
+? print usqhat2
+
+Full data range: 1 - 50 (n = 50)
+
+0.160213  1.61237  2.34781  0.0495310  3.60587  1.93467  1.95492  2.64581  
+1.00723  1.17702  11.3885  0.213180  3.30831  0.548196  0.289474  0.548742  
+0.229253  0.918730  0.714851  3.15486  3.30366  5.23301  1.84450  0.0689361  
+0.743962  0.101730  0.188698  2.13064  2.44146  2.74750  0.820001  4.06658  
+0.267635  0.0490792  1.76373  0.541577  1.22399  1.75034  2.88862  0.208645  
+0.0273445  0.259227  2.01625  0.416277  2.70132  0.923222  2.23835  0.315948  
+0.657799  0.211438  
+
+? genr wt=1/(usqhat2^0.5)
+Generated series wt (ID 19)
+? print wt
+
+Full data range: 1 - 50 (n = 50)
+
+2.49834  0.787530  0.652632  4.49326  0.526617  0.718947  0.715214  0.614781  
+0.996402  0.921740  0.296324  2.16584  0.549790  1.35062  1.85864  1.34994  
+2.08854  1.04329  1.18275  0.563002  0.550177  0.437144  0.736310  3.80870  
+1.15938  3.13527  2.30206  0.685085  0.639992  0.603297  1.10431  0.495890  
+1.93299  4.51389  0.752980  1.35884  0.903882  0.755856  0.588376  2.18925  
+6.04735  1.96408  0.704251  1.54992  0.608431  1.04075  0.668399  1.77907  
+1.23297  2.17475  
+
+? genr y=wt*wlfp
+Generated series y (ID 20)
+? genr x0=wt
+Generated series x0 (ID 21)
+? genr x1=wt*yf
+Generated series x1 (ID 22)
+? genr x2=wt*educ
+Generated series x2 (ID 23)
+? genr x3=wt*ue
+Generated series x3 (ID 24)
+? genr x4=wt*urb
+Generated series x4 (ID 25)
+? genr x5=wt*wh
+Generated series x5 (ID 26)
+? genr zero = 0*const
+Generated series zero (ID 27)
+? ols -o y x1 x2 x3 x4 x5 x0
+
+Model 4: OLS, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  x1          0.817620     0.148880       5.492   1.87e-06 ***
+  x2          0.279675     0.0397661      7.033   1.02e-08 ***
+  x3         -1.77531      0.162009     -10.96    3.69e-14 ***
+  x4         -0.0680404    0.0252852     -2.691   0.0100   **
+  x5         -0.197106     0.0304170     -6.480   6.64e-08 ***
+  x0         49.9443       3.34532       14.93    7.79e-19 ***
+
+Mean dependent var   81.08817   S.D. dependent var   66.29711
+Sum squared resid    215.1481   S.E. of regression   2.211273
+R-squared            0.999605   Adjusted R-squared   0.999560
+F(6, 44)             18539.52   P-value(F)           3.76e-73
+Log-likelihood      -107.4295   Akaike criterion     226.8590
+Schwarz criterion    238.3312   Hannan-Quinn         231.2277
+
+Covariance matrix of regression coefficients:
+
+            x1            x2            x3            x4            x5
+     0.0221651    -0.0010208   -0.00741744   -0.00257289  -3.52763e-05  x1
+                  0.00158134    0.00325145  -1.02375e-04  -5.66328e-04  x2
+                                  0.026247   7.10158e-04   8.00111e-04  x3
+                                             6.39342e-04   1.02626e-04  x4
+                                                           9.25194e-04  x5
+
+            x0
+    -0.0794453  x1
+    -0.0774779  x2
+      -0.37516  x3
+   9.62306e-04  x4
+    -0.0296926  x5
+       11.1912  x0
+
+? genr olsess = $ess
+Generated scalar olsess = 215.148
+? hsk -o wlfp 0 yf educ zero ue urb wh
+
+Model 5: Heteroskedasticity-corrected, using observations 1-50
+Dependent variable: wlfp
+Omitted because all values were zero: zero
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      49.9443       3.34532       14.93    7.79e-19 ***
+  yf          0.817620     0.148880       5.492   1.87e-06 ***
+  educ        0.279675     0.0397661      7.033   1.02e-08 ***
+  ue         -1.77531      0.162009     -10.96    3.69e-14 ***
+  urb        -0.0680404    0.0252852     -2.691   0.0100   **
+  wh         -0.197106     0.0304170     -6.480   6.64e-08 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    215.1481   S.E. of regression   2.211273
+R-squared            0.903291   Adjusted R-squared   0.892301
+F(5, 44)             82.19447   P-value(F)           3.49e-21
+Log-likelihood      -107.4295   Akaike criterion     226.8590
+Schwarz criterion    238.3312   Hannan-Quinn         231.2277
+
+Statistics based on the original data:
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    270.7753   S.E. of regression   2.480722
+
+Covariance matrix of regression coefficients:
+
+         const            yf          educ            ue           urb
+       11.1912    -0.0794453    -0.0774779      -0.37516   9.62306e-04  const
+                   0.0221651    -0.0010208   -0.00741744   -0.00257289  yf
+                                0.00158134    0.00325145  -1.02375e-04  educ
+                                                0.026247   7.10158e-04  ue
+                                                           6.39342e-04  urb
+
+            wh
+    -0.0296926  const
+  -3.52763e-05  yf
+  -5.66328e-04  educ
+   8.00111e-04  ue
+   1.02626e-04  urb
+   9.25194e-04  wh
+
+? genr wt = 1/usqhat2
+Replaced series wt (ID 19)
+? wls -o wt wlfp 0 yf educ ue urb wh
+
+Model 6: WLS, using observations 1-50
+Dependent variable: wlfp
+Variable used as weight: wt
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      49.9443       3.34532       14.93    7.79e-19 ***
+  yf          0.817620     0.148880       5.492   1.87e-06 ***
+  educ        0.279675     0.0397661      7.033   1.02e-08 ***
+  ue         -1.77531      0.162009     -10.96    3.69e-14 ***
+  urb        -0.0680404    0.0252852     -2.691   0.0100   **
+  wh         -0.197106     0.0304170     -6.480   6.64e-08 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    215.1481   S.E. of regression   2.211273
+R-squared            0.903291   Adjusted R-squared   0.892301
+F(5, 44)             82.19447   P-value(F)           3.49e-21
+Log-likelihood      -107.4295   Akaike criterion     226.8590
+Schwarz criterion    238.3312   Hannan-Quinn         231.2277
+
+Statistics based on the original data:
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    270.7753   S.E. of regression   2.480722
+
+Covariance matrix of regression coefficients:
+
+         const            yf          educ            ue           urb
+       11.1912    -0.0794453    -0.0774779      -0.37516   9.62306e-04  const
+                   0.0221651    -0.0010208   -0.00741744   -0.00257289  yf
+                                0.00158134    0.00325145  -1.02375e-04  educ
+                                                0.026247   7.10158e-04  ue
+                                                           6.39342e-04  urb
+
+            wh
+    -0.0296926  const
+  -3.52763e-05  yf
+  -5.66328e-04  educ
+   8.00111e-04  ue
+   1.02626e-04  urb
+   9.25194e-04  wh
+
+? genr essa=$ess
+Generated scalar essa = 215.148
+? genr df=$df
+Generated scalar df = 44
+? genr n=$nobs
+Generated scalar n = 50
+? smpl 1 1
+Full data range: 1 - 50 (n = 50)
+Current sample: 1 - 1 (n = 1)
+
+? print n df essa -o
+
+              n =  50.000000
+
+             df =  44.000000
+
+           essa =  215.14810
+? smpl 1 50
+Full data range: 1 - 50 (n = 50)
+
+? genr ut=$uhat
+Generated series ut (ID 28)
+? genr usq=ut*ut*$nobs
+Replaced series usq (ID 10)
+? genr ess=mean(usq)
+Generated scalar ess = 270.775
+? genr sgmahat=(ess/$df)^0.5
+Generated scalar sgmahat = 2.48072
+? genr yht=wlfp-ut
+Generated series yht (ID 29)
+? genr yh=yht*sqrt(wt)
+Generated series yh (ID 30)
+? genr yhsq = mean($nobs*yh*yh)
+Generated scalar yhsq = 543919
+? genr fstt = yhsq*$df/(6*olsess)
+Generated scalar fstt = 18539.5
+? corr wlfp yht
+
+corr(wlfp, yht) = 0.84894941
+Under the null hypothesis of no correlation:
+ t(48) = 11.1296, with two-tailed p-value 0.0000
+
+# genr rsq=.842*.842
+? genr rsq=corr(wlfp, yht)*corr(wlfp, yht)
+Generated scalar rsq = 0.720715
+? smpl 1 1
+Full data range: 1 - 50 (n = 50)
+Current sample: 1 - 1 (n = 1)
+
+? print rsq ess sgmahat fstt -o
+
+            rsq =  0.72071511
+
+            ess =  270.77529
+
+        sgmahat =  2.4807224
+
+           fstt =  18539.520
+? criteria(ess, 50, 6)
+Using ess = 270.775, 50 observations, 6 coefficients
+
+AIC = 238.357
+BIC = 249.829
+HQC = 242.726
+
+Done

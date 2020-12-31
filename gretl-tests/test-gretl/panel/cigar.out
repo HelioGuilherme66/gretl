@@ -1,0 +1,140 @@
+gretl version 1.9.12cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-06-30 17:39
+? run cigar.inp
+ /home/allin/stats/test-gretl/panel/cigar.inp
+? open cigar.txt
+parsing /home/allin/stats/test-gretl/panel/cigar.txt...
+using delimiter ' '
+   longest line: 54 characters
+   first field: 'state'
+   number of columns = 9
+   number of variables: 9
+   number of non-blank lines: 1381
+scanning for variable names...
+   line: state year price pop pop16 cpi ndi sales pimin
+scanning for row labels and data...
+treating these as undated data
+
+Listing 10 variables:
+  0) const    1) state    2) year     3) price    4) pop    
+  5) pop16    6) cpi      7) ndi      8) sales    9) pimin  
+
+? setobs state year --panel-vars
+Full data range: 1:01 - 46:30 (n = 1380)
+
+? lnC = log(sales)
+Generated series lnC (ID 10)
+? lnP = log(price/cpi)
+Generated series lnP (ID 11)
+? lnPn = log(pimin/cpi)
+Generated series lnPn (ID 12)
+? lnY = log(ndi/cpi)
+Generated series lnY (ID 13)
+# store cigar.csv state year lnC lnP lnPn lnY
+# ols lnC 0 lnC(-1) lnP lnPn lnY
+# panel lnC 0 lnC(-1) lnP lnPn lnY --time-dummies=noprint
+? dpanel 1 ; lnC lnP lnPn lnY const --time-dummies --dpdstyle
+
+Model 1: 1-step dynamic panel, using 1288 observations
+Included 46 cross-sectional units
+H-matrix as per Ox/DPD
+Dependent variable: lnC
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  lnC(-1)     0.832530     0.0284530    29.26     3.37e-188 ***
+  lnP        -0.370128     0.0426622    -8.676    4.11e-18  ***
+  lnPn       -0.0277978    0.0585046    -0.4751   0.6347   
+  lnY         0.134329     0.0611793     2.196    0.0281    **
+  const       0.0297216    0.00802363    3.704    0.0002    ***
+  T4         -0.0430944    0.0130655    -3.298    0.0010    ***
+  T5         -0.0254638    0.0128235    -1.986    0.0471    **
+  T6         -0.0395640    0.0112478    -3.517    0.0004    ***
+  T7         -0.0398598    0.0100462    -3.968    7.26e-05  ***
+  T8         -0.0357697    0.0106429    -3.361    0.0008    ***
+  T9          0.0139956    0.0124687     1.122    0.2617   
+  T10        -0.0231967    0.0111456    -2.081    0.0374    **
+  T11        -0.0694678    0.0117528    -5.911    3.41e-09  ***
+  T12        -0.0416563    0.0117471    -3.546    0.0004    ***
+  T13        -0.0460541    0.0103768    -4.438    9.07e-06  ***
+  T14        -0.0144921    0.00828230   -1.750    0.0802    *
+  T15        -0.0651832    0.0102423    -6.364    1.96e-10  ***
+  T16        -0.0199806    0.00924742   -2.161    0.0307    **
+  T17        -0.0696869    0.0105035    -6.635    3.25e-11  ***
+  T18        -0.0369054    0.0132053    -2.795    0.0052    ***
+  T19        -0.0494595    0.00891328   -5.549    2.87e-08  ***
+  T20        -0.0281848    0.0112298    -2.510    0.0121    **
+  T21        -0.0110183    0.00975400   -1.130    0.2586   
+  T22        -0.0141929    0.0105226    -1.349    0.1774   
+  T23         0.00219855   0.0106454     0.2065   0.8364   
+  T24        -0.0255236    0.00888361   -2.873    0.0041    ***
+  T25        -0.0318324    0.00956397   -3.328    0.0009    ***
+  T26        -0.0319857    0.0138447    -2.310    0.0209    **
+  T27        -0.0267709    0.00889551   -3.009    0.0026    ***
+  T28        -0.0259666    0.0114494    -2.268    0.0233    **
+  T29        -0.0105266    0.0141148    -0.7458   0.4558   
+  T30         0.0141455    0.0116828     1.211    0.2260   
+
+Sum squared resid    3.088148   S.E. of regression   0.049585
+
+Number of instruments = 437
+Test for AR(1) errors: z = -5.08077 [0.0000]
+Test for AR(2) errors: z = 2.1423 [0.0322]
+Sargan over-identification test: Chi-square(405) = 547.872 [0.0000]
+Wald (joint) test: Chi-square(4) = 1360.78 [0.0000]
+Wald (time dummies): Chi-square(27) = 1038.3 [0.0000]
+
+? dpanel 1 ; lnC lnP lnPn lnY const --time-dummies --two-step --dpdstyle
+
+Model 2: 2-step dynamic panel, using 1288 observations
+Included 46 cross-sectional units
+H-matrix as per Ox/DPD
+Dependent variable: lnC
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  lnC(-1)     0.598118     0.265428      2.253    0.0242   **
+  lnP        -0.349057     0.0707018    -4.937    7.93e-07 ***
+  lnPn        0.0487309    0.148649      0.3278   0.7430  
+  lnY         0.516573     0.278302      1.856    0.0634   *
+  const       0.00308920   0.0218703     0.1413   0.8877  
+  T4         -0.0377982    0.0217067    -1.741    0.0816   *
+  T5          0.00333323   0.0159943     0.2084   0.8349  
+  T6         -0.0273533    0.0198624    -1.377    0.1685  
+  T7         -0.0177597    0.0195046    -0.9105   0.3625  
+  T8         -0.0253539    0.0189734    -1.336    0.1815  
+  T9          0.0228803    0.0163913     1.396    0.1628  
+  T10        -0.00297755   0.0224416    -0.1327   0.8944  
+  T11        -0.0562649    0.0197090    -2.855    0.0043   ***
+  T12         0.0131719    0.0347552     0.3790   0.7047  
+  T13        -0.0130826    0.0313994    -0.4167   0.6769  
+  T14         0.00276083   0.0196067     0.1408   0.8880  
+  T15        -0.0348236    0.0213615    -1.630    0.1031  
+  T16        -0.0125338    0.0169134    -0.7411   0.4587  
+  T17        -0.0348562    0.0276116    -1.262    0.2068  
+  T18         0.00789528   0.0326433     0.2419   0.8089  
+  T19        -0.0178341    0.0262269    -0.6800   0.4965  
+  T20        -0.00511990   0.0244104    -0.2097   0.8339  
+  T21        -0.00524788   0.0200249    -0.2621   0.7933  
+  T22        -0.0213079    0.0150164    -1.419    0.1559  
+  T23         0.0116913    0.0154928     0.7546   0.4505  
+  T24        -0.0175416    0.0147415    -1.190    0.2341  
+  T25        -0.0219319    0.0165534    -1.325    0.1852  
+  T26        -0.0181218    0.0165241    -1.097    0.2728  
+  T27        -0.0215646    0.0167208    -1.290    0.1972  
+  T28        -0.0166098    0.0157963    -1.051    0.2930  
+  T29         0.00761910   0.0217253     0.3507   0.7258  
+  T30         0.0137183    0.0198955     0.6895   0.4905  
+
+Sum squared resid    2.503594   S.E. of regression   0.044646
+
+Number of instruments = 437
+Test for AR(1) errors: z = -2.63184 [0.0085]
+Test for AR(2) errors: z = 1.36234 [0.1731]
+Sargan over-identification test: Chi-square(405) = 16.5044 [1.0000]
+Wald (joint) test: Chi-square(4) = 45.3379 [0.0000]
+Wald (time dummies): Chi-square(27) = 441.545 [0.0000]
+
+Done

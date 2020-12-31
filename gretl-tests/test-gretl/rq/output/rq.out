@@ -1,0 +1,140 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run rq.inp
+ /home/cottrell/stats/test-gretl/rq/rq.inp
+? open engel.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/engel.gdt
+periodicity: 1, maxobs: 235
+observations range: 1 to 235
+
+Listing 3 variables:
+  0) const      1) foodexp    2) income   
+
+# Basic version: estimation via Frisch-Newton
+? quantreg 0.5 1 0 2
+
+Model 1: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.5
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       81.4822      13.2391       6.155    3.26e-09  ***
+  income       0.560181     0.0119193   47.00     7.39e-121 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   17559.93   Sum squared resid     3402600
+Log-likelihood      -1411.630   Akaike criterion     2827.260
+Schwarz criterion    2834.179   Hannan-Quinn         2830.050
+
+? quantreg 0.25 1 0 2
+
+Model 2: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       95.4835      15.8619       6.020    6.74e-09 ***
+  income       0.474103     0.0142807   33.20     2.70e-90 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+? quantreg 0.5 1 0 2 --robust
+
+Model 3: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.5
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       81.4822      19.2507       4.233    3.32e-05 ***
+  income       0.560181     0.0282772   19.81     7.22e-52 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   17559.93   Sum squared resid     3402600
+Log-likelihood      -1411.630   Akaike criterion     2827.260
+Schwarz criterion    2834.179   Hannan-Quinn         2830.050
+
+? quantreg 0.25 1 0 2 --robust
+
+Model 4: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       95.4835      21.3924       4.463    1.26e-05 ***
+  income       0.474103     0.0290553   16.32     1.97e-40 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+# Showing 95% confidence intervals, using Barrodale-Roberts
+# assuming iid errors, using Student t
+? quantreg 0.25 1 0 2 --intervals
+
+Model 5: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+With 90 percent confidence intervals
+
+             coefficient     lower       upper   
+  -----------------------------------------------
+  const       95.4835      73.7861     120.098   
+  income       0.474103     0.420330     0.494329
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+# iid errors, using Normal
+? quantreg 0.25 1 0 2 --intervals --no-df-corr
+
+Model 6: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+With 90 percent confidence intervals
+
+             coefficient     lower       upper   
+  -----------------------------------------------
+  const       95.4835      73.8052     120.031   
+  income       0.474103     0.420446     0.493951
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+# non-iid errors
+? quantreg 0.25 1 0 2 --intervals --robust
+
+Model 7: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+With robust 90 percent confidence intervals
+
+             coefficient     lower       upper   
+  -----------------------------------------------
+  const       95.4835      68.7748     134.077   
+  income       0.474103     0.418438     0.509021
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+Done

@@ -1,0 +1,82 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run cusum.inp
+ /home/cottrell/stats/test-gretl/cusum.inp
+? open data4-2.gdt
+
+Read datafile /opt/esl/share/gretl/data/data4-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 6 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL  
+
+? ols Ct 0 Yt
+
+Model 1: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -221.425      19.2949       -11.48    3.07e-13 ***
+  Yt            0.710290    0.00431991   164.4     6.55e-51 ***
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    39304.51   S.E. of regression   34.00022
+R-squared            0.998744   Adjusted R-squared   0.998707
+F(1, 34)             27034.71   P-value(F)           6.55e-51
+Log-likelihood      -177.0022   Akaike criterion     358.0043
+Schwarz criterion    361.1713   Hannan-Quinn         359.1097
+rho                  0.506688   Durbin-Watson        0.938149
+
+? cusum
+
+CUSUM test for stability of parameters
+
+mean of scaled residuals = 17.2513
+sigmahat                 = 29.7392
+
+Cumulated sum of scaled residuals
+('*' indicates a value outside of 95% confidence band)
+
+ 1961    -0.119 
+ 1962    -0.429 
+ 1963    -0.447 
+ 1964    -0.248 
+ 1965    -0.056 
+ 1966    -0.167 
+ 1967     0.004 
+ 1968     0.710 
+ 1969     1.633 
+ 1970     3.769 
+ 1971     5.683 
+ 1972     7.449 
+ 1973     8.001 
+ 1974     8.172 
+ 1975    10.490 *
+ 1976    12.253 *
+ 1977    12.986 *
+ 1978    12.715 *
+ 1979    11.818 *
+ 1980    11.020 
+ 1981     9.062 
+ 1982    10.680 
+ 1983    13.035 *
+ 1984    13.138 *
+ 1985    13.978 *
+ 1986    15.644 *
+ 1987    17.121 *
+ 1988    18.340 *
+ 1989    17.885 *
+ 1990    17.875 *
+ 1991    18.367 *
+ 1992    18.702 *
+ 1993    19.665 *
+ 1994    19.723 *
+
+Harvey-Collier t(33) = 3.38245 with p-value 0.001864
+
+Done

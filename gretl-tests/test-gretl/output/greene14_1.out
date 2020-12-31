@@ -1,0 +1,100 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run greene14_1.inp
+ /opt/esl/share/gretl/scripts/greene14_1.inp
+# Replicate panel example in William Greene, 4e, Chapter 14
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? logs C Q PF
+Listing 10 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+
+? ols l_C 0 l_Q l_PF LF
+
+Model 1: Pooled OLS, using 90 observations
+Included 6 cross-sectional units
+Time-series length = 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.51692     0.229245     41.51     1.13e-58 ***
+  l_Q          0.882739    0.0132545    66.60     8.79e-76 ***
+  l_PF         0.453977    0.0203042    22.36     1.36e-37 ***
+  LF          -1.62751     0.345302     -4.713    9.31e-06 ***
+
+Mean dependent var   13.36561   S.D. dependent var   1.131971
+Sum squared resid    1.335442   S.E. of regression   0.124613
+R-squared            0.988290   Adjusted R-squared   0.987881
+F(3, 86)             2419.341   P-value(F)           6.59e-83
+Log-likelihood       61.77016   Akaike criterion    -115.5403
+Schwarz criterion   -105.5411   Hannan-Quinn        -111.5080
+rho                  0.900014   Durbin-Watson        0.194491
+
+# test for fixed and variable effects
+? hausman
+      Diagnostics: assuming a balanced panel with 6 cross-sectional units
+                         observed over 15 periods
+
+Fixed effects estimator
+allows for differing intercepts by cross-sectional unit
+slope standard errors in parentheses, p-values in brackets
+
+       const:         9.7135       (0.22964)       [0.00000]
+         l_Q:        0.91928       (0.02989)       [0.00000]
+        l_PF:        0.41749      (0.015199)       [0.00000]
+          LF:        -1.0704       (0.20169)       [0.00000]
+
+6 group means were subtracted from the data
+
+Residual variance: 0.292622/(90 - 9) = 0.00361262
+Joint significance of differing group means:
+ F(5, 81) = 57.7321 with p-value 2.80693e-25
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the fixed effects alternative.)
+
+
+Means of pooled OLS residuals for cross-sectional units:
+
+ unit  1:      0.068869
+ unit  2:     -0.013878
+ unit  3:      -0.19422
+ unit  4:       0.15273
+ unit  5:     -0.021583
+ unit  6:     0.0080906
+
+Breusch-Pagan test statistic:
+ LM = 334.85 with p-value = prob(chi-square(1) > 334.85) = 8.44102e-75
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the random effects alternative.)
+
+Variance estimators:
+ between = 0.0155972
+ within = 0.00361262
+theta used for quasi-demeaning = 0.876685
+
+                         Random effects estimator
+           allows for a unit-specific component to the error term
+           (standard errors in parentheses, p-values in brackets)
+
+          const:         9.6279       (0.21016)       [0.00000]
+            l_Q:        0.90668      (0.025625)       [0.00000]
+           l_PF:        0.42278      (0.014025)       [0.00000]
+             LF:        -1.0645       (0.20007)       [0.00000]
+
+Hausman test statistic:
+ H = 3.52343 with p-value = prob(chi-square(3) > 3.52343) = 0.317735
+(A low p-value counts against the null hypothesis that the random effects
+model is consistent, in favor of the fixed effects model.)
+Done

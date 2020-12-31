@@ -1,0 +1,22 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run longley-python.inp
+ /home/cottrell/stats/test-gretl/foreign/longley-python.inp
+Read datafile /opt/esl/share/gretl/data/misc/longley.gdt
+
+Log-relative errors, Longley coefficients:
+
+       gretl      python
+      12.228      12.241
+      10.920      11.028
+      11.797      11.796
+      12.528      12.512
+      13.169      12.869
+      11.770      11.735
+      12.235      12.247
+
+Column means
+      12.092      12.061
+

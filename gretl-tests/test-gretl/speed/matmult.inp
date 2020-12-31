@@ -1,0 +1,48 @@
+set echo off
+set messages off
+# The following line is activated only for ATLAS
+set blas_nmk_min 0
+n0 = 512
+pwr = 3
+
+printf "Case 1 ------------------------------------\n"
+
+n = n0
+loop pwr
+  fpms = n0*n*n0
+  a = mnormal(n0,n)
+  b = mnormal(n,n0)
+  set stopwatch
+  c = a*b
+  f0 = $stopwatch
+  printf "n = %4d, time = %6.2f (speed = %8.0f)\n", n, f0, fpms/(10000*f0)
+  n *= 2
+endloop
+
+printf "Case 2 ------------------------------------\n"
+
+n = n0
+loop pwr
+  fpms = n*n0*n
+  a = mnormal(n,n0)
+  b = mnormal(n0,n)
+  set stopwatch
+  c = a*b
+  f0 = $stopwatch
+  printf "n = %4d, time = %6.2f (speed = %8.0f)\n", n, f0, fpms/(10000*f0)
+  n *= 2
+endloop
+
+printf "Case 3 ------------------------------------\n"
+
+n = n0
+loop pwr  
+  fpms = n*n*n
+  a = mnormal(n,n)
+  b = mnormal(n,n)
+  set stopwatch
+  c = a*b
+  f0 = $stopwatch
+  printf "n = %4d, time = %6.2f (speed = %8.0f)\n", n, f0, fpms/(10000*f0)
+  n *= 2
+endloop

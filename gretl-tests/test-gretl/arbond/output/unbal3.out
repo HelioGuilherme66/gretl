@@ -1,0 +1,69 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run unbal3.inp
+ /home/cottrell/stats/test-gretl/arbond/unbal3.inp
+? nulldata 320
+periodicity: 1, maxobs: 320
+observations range: 1 to 320
+? set seed 12345
+Pseudo-random number generator seeded with 12345
+? genr time
+Generated series time (ID 2)
+? series y=0
+Generated series y (ID 3)
+? series y=1.8*y(-1)-.8*y(-2)+normal()
+Replaced series y (ID 3)
+? genr year = 1990+(time-1)%5
+Generated series year (ID 4)
+? genr id = 1+int((time-1)/5)
+Generated series id (ID 5)
+? genr tmp = (year!=1991)
+Generated series tmp (ID 6)
+? series y = zeromiss(y*tmp)
+Replaced series y (ID 3)
+? setobs id year --panel
+Full data range: 1:1 - 64:5 (n = 320)
+
+# print year id y -o
+# store ./unbal3.csv id year y
+# compare with ox/unbal3.ox.out
+? arbond 1 0 ; y 0
+
+Model 1: 1-step Arellano-Bond, using 64 observations
+Included 64 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Dy(-1)      0.717575      0.116510     6.159    7.32e-10 ***
+  const      -0.0534391     0.112210    -0.4762   0.6339  
+
+Sum squared resid    50.84218   S.E. of regression   0.905558
+
+Number of instruments = 3
+Test for AR(1) errors: z = NA
+Test for AR(2) errors: z = NA
+Sargan over-identification test: Chi-square(1) = 1.13831 [0.2860]
+Wald (joint) test: Chi-square(1) = 37.9324 [0.0000]
+
+? arbond 1 0 ; y
+
+Model 2: 1-step Arellano-Bond, using 64 observations
+Included 64 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  Dy(-1)      0.700335      0.118148    5.928   3.07e-09 ***
+
+Sum squared resid    51.11876   S.E. of regression   0.900782
+
+Number of instruments = 2
+Test for AR(1) errors: z = NA
+Test for AR(2) errors: z = NA
+Sargan over-identification test: Chi-square(1) = 0.678277 [0.4102]
+Wald (joint) test: Chi-square(1) = 35.1365 [0.0000]
+
+Done

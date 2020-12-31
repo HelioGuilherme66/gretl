@@ -1,0 +1,91 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run weibull.inp
+ /home/cottrell/stats/test-gretl/mle/weibull.inp
+# Estimate Weibull duration model on Kennan strike data
+# Compare W. Greene, "Econometric Analysis", 5e, Chapter 22
+? open kennan
+
+Read datafile /opt/esl/share/gretl/data/misc/kennan.gdt
+periodicity: 1, maxobs: 62
+observations range: 1 to 62
+
+Listing 3 variables:
+  0) const    1) Ti       2) Prod   
+
+# Initial OLS to get starting values for the coefficients
+? ols log(Ti) 0 Prod
+
+Model 1: OLS, using observations 1-62
+Dependent variable: l_Ti
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        3.20566      0.160988    19.91     4.00e-28 ***
+  Prod        -9.18077      3.40429     -2.697    0.0091   ***
+
+Mean dependent var   3.104456   S.D. dependent var   1.294536
+Sum squared resid    91.17363   S.E. of regression   1.232705
+R-squared            0.108110   Adjusted R-squared   0.093245
+F(1, 60)             7.272850   P-value(F)           0.009073
+Log-likelihood      -99.92876   Akaike criterion     203.8575
+Schwarz criterion    208.1118   Hannan-Quinn         205.5279
+
+Log-likelihood for Ti = -292.405
+
+? scalar b0 = $coeff(0)
+Generated scalar b0 = 3.20566
+? scalar b1 = $coeff(Prod)
+Generated scalar b1 = -9.18077
+? scalar s = 1
+Generated scalar s = 1
+# useful auxiliary variables
+? series Xb = b0 + b1*Prod
+Generated series Xb (ID 4)
+? series Z = (l_Ti - Xb) / s
+Generated series Z (ID 5)
+? series W = 0
+Generated series W (ID 6)
+? mle loglik = Z - log(s) - exp(Z)
+? series Xb = b0 + b1*Prod
+? series Z = (l_Ti - Xb) / s
+? series W = -(1 - exp(Z)) / s
+? deriv s = -Z/s - 1/s + exp(Z)*Z/s
+? deriv b0 = W
+? deriv b1 = Prod * W
+? end mle
+Using analytical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 39
+Evaluations of gradient: 13
+
+Model 2: ML, using observations 1-62
+loglik = Z - log(s) - exp(Z)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error     z       p-value 
+  ------------------------------------------------------
+  s           0.992204    0.120639     8.225   1.96e-16  ***
+  b0          3.77977     0.138333    27.32    2.21e-164 ***
+  b1         -9.33220     2.95428     -3.159   0.0016    ***
+
+Log-likelihood      -97.28542   Akaike criterion     200.5708
+Schwarz criterion    206.9522   Hannan-Quinn         203.0763
+
+lambda = 1.00786
+# matrices of t-stats, p-values
+? matrix stats = $coeff ./ $stderr
+Generated matrix stats
+? stats ~= 2 * pvalue(z, abs(stats))
+Replaced matrix stats
+? colnames(stats, "t-ratio p-value")
+
+     t-ratio     p-value
+     8.22458     0.00000
+    27.32383     0.00000
+    -3.15887     0.00158
+
+Done

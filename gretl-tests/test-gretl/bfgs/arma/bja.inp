@@ -1,0 +1,35 @@
+# Box and Jenkins, series A
+open bja.gdt
+
+# title 'ARMA(1,1)  with constant';
+#        Box-Jenkins      TSP         Gauss3.2.35
+#         p.239          BJEST           ARIMA
+#   phi1    .92      .908431139718     .90865841
+#  (s.e.)  (.04)    (.052728072366)   (.04453284)
+#  theta1   .58      .575377620976     .57577387
+#          (.08)    (.114871723925)   (.08675614)
+#  const.  1.45     1.56264378438     1.55876992 
+#                   (.899650952956)
+#   LogL            -50.7451081747    -50.745092
+arma 1 1 ; a
+scalar mu = $coeff[1] * (1 - $coeff[2])
+
+# title 'MA(1)  --  actually  ARIMA(0,1,1)';
+#       Box-Jenkins     Sun TSP           Sun TSP     Sun Gauss3.2.35
+#        p.239          BJEST          ML handcoded       ARIMA
+# theta1   .70      .699384288280     .699384288268     .69936608
+# (s.e.)  (.05)    (.064510270332)   (.064510601821)   (.05180149)
+# 1/sigma                            3.15077477970
+#                                    (.159144490869)
+#  LogL            -53.5086974317    -53.50869743172  -53.508690
+#                                         PC TSP
+#                                      ML handcoded
+# theta1                              .699384265781
+# (s.e.)                             (.064510580156)
+# 1/sigma                            3.15077489354
+#                                    (.159144496613)
+#  LogL                              -53.50869031940
+arima 0 1 1 ; a --nc
+
+
+

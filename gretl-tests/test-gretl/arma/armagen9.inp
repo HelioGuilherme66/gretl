@@ -1,0 +1,16 @@
+nulldata 624
+setobs 12 1950:01
+set seed 371
+genr eps = normal()
+genr u = eps + .4 * eps(-1)
+series y = 0
+genr y = 0.7 * y(-1) + u
+genr y = y + 500 / (1 - 0.7)
+# smpl 1980:01 ;
+arma 1 1 ; y -x
+arma 1 1 ; y
+arma 1 1 ; y --conditional
+genr y_1 = y(-1)
+ols y 0 y_1
+
+

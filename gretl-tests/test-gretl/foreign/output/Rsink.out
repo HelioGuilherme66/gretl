@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run Rsink.inp
+ /home/cottrell/stats/test-gretl/foreign/Rsink.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? foreign language=R --send-data
+?   y <- gretldata[,"price"]
+?   x <- gretldata[,"sqft"]
+?   m <- lm(y~x + 1)
+?   summary(m)
+?   Rcoeff <- as.matrix(coefficients(m))
+?   gretl.export(Rcoeff)
+? end foreign
+
+Call:
+lm(formula = y ~ x + 1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-53.602 -23.650  -1.192  10.948  91.898 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 52.35091   37.28549   1.404    0.186    
+x            0.13875    0.01873   7.407  8.2e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 39.02 on 12 degrees of freedom
+Multiple R-squared:  0.8205,	Adjusted R-squared:  0.8056 
+F-statistic: 54.86 on 1 and 12 DF,  p-value: 8.199e-06
+
+wrote /home/cottrell/.gretl/Rcoeff.mat 
+? matrix b = mread("/home/cottrell/.gretl/Rcoeff.mat")
+Generated matrix b
+? b
+b (2 x 1)
+
+      52.351 
+     0.13875 
+
+Done

@@ -1,0 +1,31 @@
+open fin_dev_v1.csv -q
+setobs 26 1.1 --stacked-time-series 
+
+# to keep track of panel structure
+genr unit
+genr time
+
+list sysvars = pf gdpr ko pcr gdpc efw xto fdi
+smpl sysvars --no-missing
+
+pansys <- system
+ equation pf 0 gdpr ko pcr
+ equation pcr 0 gdpc efw xto pf fdi
+ endog pf pcr
+end system
+
+estimate pansys method=ols
+estimate pansys method=tsls
+estimate pansys method=3sls
+
+function matrix rsys (const matrix b)
+   matrix v = b[2]/b[3] + b[6]/b[7]
+   return v
+end function
+
+restrict
+  rfunc = rsys
+end restrict
+  
+
+

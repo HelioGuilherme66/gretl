@@ -1,0 +1,100 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/04/15 16:07
+? run jack4.inp
+? open jack4.csv
+parsing /home/cottrell/stats/test-esl/arbond/ox/jack4.csv...
+using delimiter ','
+   longest line: 22 characters
+   first field: 'id'
+   number of columns = 3
+   number of variables: 3
+   number of non-blank lines: 41
+scanning for variable names...
+   line: id,year,y
+scanning for row labels and data...
+   warning: missing value for variable 3, obs 1
+   warning: missing value for variable 3, obs 6
+   warning: missing value for variable 3, obs 11
+   warning: missing value for variable 3, obs 12
+   warning: missing value for variable 3, obs 13
+   warning: missing value for variable 3, obs 18
+   warning: missing value for variable 3, obs 24
+   warning: missing value for variable 3, obs 30
+   warning: missing value for variable 3, obs 36
+treating these as undated data
+
+Listing 4 variables:
+  0) const    1) id       2) year     3) y      
+
+? setobs id year --panel-vars
+Full data range: 1:1 - 8:5 (n = 40)
+
+? arbond 1 0 ; y
+
+Model 1: 1-step Arellano-Bond estimates using 12 observations
+Included 6 cross-sectional units
+Dependent variable: y
+
+      VARIABLE       COEFFICIENT        STDERROR      T STAT   P-VALUE
+
+  Dy(-1)                0.426827         0.199474      2.140   0.03237 **
+
+  Sum of squared residuals = 11.7114
+  Standard error of residuals = 1.03183
+  Test for AR(1) errors: z = -0.73776 (p-value 0.4607)
+  Test for AR(2) errors: z = -0.99527 (p-value 0.3196)
+  Sargan over-identification test:
+   Chi-square(5) = 1.70519 (p-value 0.8882)
+  Wald (joint) test:
+   Chi-square(1) = 4.5786 (p-value 0.0324)
+
+? series u = $uhat
+Generated series u (ID 4)
+? print y u --byobs
+
+     Obs             y            u
+
+     1:1                           
+     1:2      1.173348             
+     1:3      2.019974             
+     1:4      2.718867     0.337530
+     1:5      2.963692    -0.053481
+     2:1                           
+     2:2      1.010234             
+     2:3      0.351634             
+     2:4     -0.130916    -0.201441
+     2:5      0.456472     0.793353
+     3:1                           
+     3:2                           
+     3:3                           
+     3:4      0.843681             
+     3:5      0.009205             
+     4:1     -0.208110             
+     4:2      0.339008             
+     4:3                           
+     4:4      0.501312             
+     4:5      0.916568             
+     5:1     -0.497973             
+     5:2     -1.240489             
+     5:3     -1.846080    -0.288665
+     5:4                           
+     5:5     -1.005146             
+     6:1      0.616320             
+     6:2      0.075236             
+     6:3     -2.881517    -2.725804
+     6:4     -2.859109     1.284431
+     6:5                           
+     7:1     -1.837507             
+     7:2     -0.845649             
+     7:3     -0.872845    -0.450547
+     7:4     -0.758034     0.126419
+     7:5     -0.323746     0.385283
+     8:1                           
+     8:2     -1.136228             
+     8:3      0.885427             
+     8:4      0.567963    -1.180362
+     8:5      0.461513     0.029052
+
+Done

@@ -1,0 +1,25 @@
+function matrix getGGcoeffvec (const matrix coeffvec, const matrix beta_star, \
+                        int nendo, int order, int detcase, \
+                        int nuexo, int nrexo)
+  matrix result = vec(I(2))
+  return result
+end function
+
+open denmark
+
+order = 2
+cirank = 1
+detcase = 3  
+nendo = 4
+nrexo = 0
+nuexo = 0
+
+matrix beta_star = ones(4,1)
+matrix coeffvec = vec(I(3))     # just a dummy for illustration
+
+matrix GGcoeffvec = getGGcoeffvec(coeffvec, beta_star, \
+    nendo, order, detcase, nuexo, nrexo)
+
+matrix GGvecjacmat = fdjac(coeffvec, getGGcoeffvec(coeffvec, beta_star, \
+    nendo, order, detcase, nuexo, nrexo)) # hello!
+GGvecjacmat

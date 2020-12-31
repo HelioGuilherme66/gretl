@@ -1,0 +1,165 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch9.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch9.inp
+# Stock and Watson, ch 9
+#
+? open boston_hmda.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/boston_hmda.gdt
+periodicity: 1, maxobs: 2380
+observations range: 1 to 2380
+
+Listing 16 variables:
+  0) const     1) s7        2) s6        3) s50       4) s46     
+  5) s45       6) s43       7) s42       8) s44       9) s53     
+ 10) s27a     11) s23a     12) school   13) uria     14) s51     
+ 15) s13     
+
+? set hc_version 1
+# generate the variables needed
+? genr loan_val = s6/s50
+Generated series loan_val (ID 16)
+? genr deny = (s7 = 3)
+Generated series deny (ID 17)
+? genr black = (s13 = 3)
+Generated series black (ID 18)
+? genr medln = (loan_val>= .8 && loan_val <= .95)
+Generated series medln (ID 19)
+? genr hiln = (loan_val > .95)
+Generated series hiln (ID 20)
+? genr pi_rat = s46 / 100
+Generated series pi_rat (ID 21)
+? genr hse_inc = s45 / 100
+Generated series hse_inc (ID 22)
+? genr ccred = s43
+Generated series ccred (ID 23)
+? genr mcred = s42
+Generated series mcred (ID 24)
+? genr pubrec = s44 > 0
+Generated series pubrec (ID 25)
+? genr denpmi = (s53 = 1)
+Generated series denpmi (ID 26)
+? genr hischl = (school >= 12)
+Generated series hischl (ID 27)
+? genr condo = (s51 = 1)
+Generated series condo (ID 28)
+? genr ltv_med = (loan_val>=0.80 && loan_val<=0.95)
+Generated series ltv_med (ID 29)
+? genr ltv_high = (loan_val>0.95)
+Generated series ltv_high (ID 30)
+? genr selfemp = (s27a = 1)
+Generated series selfemp (ID 31)
+# First three columns in Table 9.2
+? ols deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred pubrec \
+  denpmi selfemp --robust
+
+Model 1: OLS, using observations 1-2380
+Dependent variable: deny
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.182993     0.0276729    -6.613    4.65e-11 ***
+  black       0.0836967    0.0225623     3.710    0.0002   ***
+  pi_rat      0.448796     0.113596      3.951    8.02e-05 ***
+  hse_inc    -0.0480226    0.109559     -0.4383   0.6612  
+  ltv_med     0.0314498    0.0127391     2.469    0.0136   **
+  ltv_high    0.189051     0.0501681     3.768    0.0002   ***
+  ccred       0.0307716    0.00458430    6.712    2.39e-11 ***
+  mcred       0.0209104    0.0112898     1.852    0.0641   *
+  pubrec      0.197088     0.0348812     5.650    1.79e-08 ***
+  denpmi      0.701884     0.0451051    15.56     4.62e-52 ***
+  selfemp     0.0598438    0.0205233     2.916    0.0036   ***
+
+Mean dependent var   0.119748   S.D. dependent var   0.324735
+Sum squared resid    184.0702   S.E. of regression   0.278746
+R-squared            0.266278   Adjusted R-squared   0.263181
+F(10, 2369)          67.21760   P-value(F)           6.5e-121
+Log-likelihood      -331.2226   Akaike criterion     684.4452
+Schwarz criterion    747.9686   Hannan-Quinn         707.5649
+
+Excluding the constant, p-value was highest for variable 22 (hse_inc)
+
+? logit deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred \
+  pubrec denpmi selfemp
+
+Model 2: Logit, using observations 1-2380
+Dependent variable: deny
+Standard errors based on Hessian
+
+             coefficient   std. error       z          slope   
+  -------------------------------------------------------------
+  const       -5.70738     0.409791     -13.93                 
+  black        0.688423    0.177392       3.881      0.0604745 
+  pi_rat       4.76442     1.04259        4.570      0.338242  
+  hse_inc     -0.108811    1.23940       -0.08779   -0.00772488
+  ltv_med      0.463525    0.159096       2.913      0.0347313 
+  ltv_high     1.49476     0.311221       4.803      0.187854  
+  ccred        0.290302    0.0398178      7.291      0.0206095 
+  mcred        0.279018    0.139919       1.994      0.0198084 
+  pubrec       1.22580     0.205433       5.967      0.135211  
+  denpmi       4.54817     0.552486       8.232      0.807109  
+  selfemp      0.666129    0.211532       3.149      0.0589217 
+
+Mean dependent var   0.119748   S.D. dependent var   0.324735
+McFadden R-squared   0.271130   Adjusted R-squared   0.258517
+Log-likelihood      -635.6367   Akaike criterion     1293.273
+Schwarz criterion    1356.797   Hannan-Quinn         1316.393
+
+Number of cases 'correctly predicted' = 2155 (90.5%)
+f(beta'x) at mean of independent vars = 0.071
+Likelihood ratio test: Chi-square(10) = 472.897 [0.0000]
+
+           Predicted
+               0      1
+  Actual 0  2067     28
+         1   197     88
+
+Excluding the constant, p-value was highest for variable 22 (hse_inc)
+
+? probit deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred \
+  pubrec denpmi selfemp
+
+Model 3: Probit, using observations 1-2380
+Dependent variable: deny
+Standard errors based on Hessian
+
+             coefficient   std. error      z         slope   
+  -----------------------------------------------------------
+  const       -3.04057     0.201429     -15.09               
+  black        0.389126    0.0966749      4.025     0.0710011
+  pi_rat       2.44179     0.527973       4.625     0.369302 
+  hse_inc     -0.184676    0.651937      -0.2833   -0.0279309
+  ltv_med      0.213968    0.0819881      2.610     0.0336387
+  ltv_high     0.791083    0.174475       4.534     0.187192 
+  ccred        0.154622    0.0214869      7.196     0.0233855
+  mcred        0.147708    0.0735792      2.007     0.0223398
+  pubrec       0.697450    0.119014       5.860     0.153286 
+  denpmi       2.55680     0.281495       9.083     0.792706 
+  selfemp      0.358625    0.111690       3.211     0.0652745
+
+Mean dependent var   0.119748   S.D. dependent var   0.324735
+McFadden R-squared   0.269742   Adjusted R-squared   0.257129
+Log-likelihood      -636.8471   Akaike criterion     1295.694
+Schwarz criterion    1359.218   Hannan-Quinn         1318.814
+
+Number of cases 'correctly predicted' = 2150 (90.3%)
+f(beta'x) at mean of independent vars = 0.151
+Likelihood ratio test: Chi-square(10) = 470.476 [0.0000]
+
+           Predicted
+               0      1
+  Actual 0  2068     27
+         1   203     82
+
+Excluding the constant, p-value was highest for variable 22 (hse_inc)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 5.78411
+  with p-value = 0.0554622
+
+Done

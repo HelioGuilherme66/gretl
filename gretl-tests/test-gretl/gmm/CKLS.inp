@@ -1,0 +1,124 @@
+/* 
+
+  Replicate results from:
+
+  Chan, Karolyi, Longstaff and Sanders (1992), "An Empirical Comparison 
+  of Alternative Models of Short-Term Interest Rates", Journal of Finance,
+  XLVII, 3
+
+  We replicate the results reported in Table III (page 1218) for the models
+  labelled "Vasicek", "CIR SR", "Brennan-Schwartz" and "Unrestricted". 
+
+  Note that our estimates for Vasicek and CIR are rather different from 
+  those reported in the article: since the reported J tests are higher, the 
+  original values should be local minima. A further clue in this direction
+  comes from the fact that setting the BFGS tolerance to 1.0e-3 yields much
+  estimates much closer to the ones in the article.
+
+*/ 
+
+
+open CKLS.gdt
+
+function series Full(matrix theta, scalar gam, series dr, series r_lag, series *oc2)
+  scalar a = theta[1]/12
+  scalar b = theta[2]/12
+  scalar s2 = theta[3]/12
+
+  series oc1 = dr - (a + b*r_lag)
+  series v = 1
+  if (gam > 0) 
+    series v = exp(2*gam*log(r_lag))
+  endif
+  series oc2 = oc1^2 - s2 * v  
+
+  return oc1
+end function
+
+function series Vasicek(matrix theta, series dr, series r_lag, series *oc2)
+  series ret = Full(theta, 0, dr, r_lag, &oc2)
+  return ret
+end function
+
+function series CIR(matrix theta, series dr, series r_lag, series *oc2)
+  series ret = Full(theta, 0.5, dr, r_lag, &oc2)
+  return ret
+end function
+
+function series BrenSchwa(matrix theta, series dr, series r_lag, series *oc2)
+  series ret = Full(theta, 1, dr, r_lag, &oc2)
+  return ret
+end function
+
+dy = 12*diff(rat)
+y_1 = 12*rat(-1)
+
+#set bfgs_toler 1.0e-03
+#set bfgs_richardson on
+/*
+  uncomment previous line to match Vasicek and CIR better 
+*/
+
+set force_hc on
+
+/* 
+  this is probably inappropriate, but indispensable to 
+  replicate the t statistics reported in the article 
+*/
+
+ols dy 0 y_1 --quiet 
+set echo off
+
+scalar a = $coeff(const)*12
+scalar b = $coeff(y_1)*12
+scalar s2 = ($sigma^2)*12
+matrix theta = { a ; b ; s2 }
+scalar gam = 2
+
+series e = 0
+series e2 = 0
+
+list Z = const y_1
+matrix V = 10*I(4)
+
+smpl 2 ;
+
+printf "\n\n----------------- Unrestricted Model --------------------- \n"
+
+gmm
+  e = Full(theta, gam, dy, y_1, &e2)  
+  orthog e ; Z
+  orthog e2 ; Z
+  weights V
+  params theta gam
+end gmm --iterate
+
+printf "\n\n---------------------- Vasicek --------------------------- \n"
+
+gmm
+  e = Vasicek(theta, dy, y_1, &e2)  
+  orthog e ; Z
+  orthog e2 ; Z
+  weights V
+  params theta
+end gmm --iterate
+
+printf "\n\n---------------------- CIR SR ---------------------------- \n"
+
+gmm
+  e = CIR(theta, dy, y_1, &e2)  
+  orthog e ; Z
+  orthog e2 ; Z
+  weights V
+  params theta
+end gmm --iterate
+
+printf "\n\n----------------- Brennan - Schwartz --------------------- \n"
+
+gmm
+  e = BrenSchwa(theta, dy, y_1, &e2)  
+  orthog e ; Z
+  orthog e2 ; Z
+  weights V
+  params theta
+end gmm --iterate

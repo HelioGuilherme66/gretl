@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata version="1.2" name="pizza4" frequency="1" startobs="1" endobs="40" type="cross-section">
+<description>pizza4.def
+
+pizza female hs college grad income age
+
+	Obs:   40 individuals
+
+	pizza		annual pizza expenditure, $
+	female		=1 if female
+	hs		=1 if highest degree received is high school diploma
+	college		=1 if highest degree received is a college diploma
+	grad		=1 if highest degree received is a post graduate degree
+	income		annual income in thousands of dollars
+	age		age in years
+			
+
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+       pizza |        40      191.55    155.8806          0        590
+      female |        40        .525    .5057363          0          1
+          hs |        40        .375    .4902903          0          1
+     college |        40        .375    .4902903          0          1
+        grad |        40        .075    .2667468          0          1
+-------------+--------------------------------------------------------
+      income |        40     55.8025    51.16614        7.8      288.6
+         age |        40      33.475    10.25317         18         55
+
+</description>
+<variables count="7">
+<variable name="pizza"
+ label="annual pizza expenditure, $"
+/>
+<variable name="female"
+ label="=1 if female"
+/>
+<variable name="hs"
+ label="=1 if highest degree received is high school diploma"
+/>
+<variable name="college"
+ label="=1 if highest degree received is a college diploma"
+/>
+<variable name="grad"
+ label="=1 if highest degree received is a post graduate degree"
+/>
+<variable name="income"
+ label="annual income in thousands of dollars"
+/>
+<variable name="age"
+ label="age in years"
+/>
+</variables>
+<observations count="40" labels="false">
+<obs>109 1 0 0 0 19.5000000000000000 25 </obs>
+<obs>0 1 0 0 0 39.0000000000000000 45 </obs>
+<obs>0 1 0 0 0 15.6000000000000000 20 </obs>
+<obs>108 1 0 0 0 26.0000000000000000 28 </obs>
+<obs>220 1 1 0 0 19.5000000000000000 25 </obs>
+<obs>189 1 1 0 0 39.0000000000000000 35 </obs>
+<obs>64 1 1 0 0 15.6000000000000000 40 </obs>
+<obs>262 1 1 0 0 15.6000000000000000 22 </obs>
+<obs>64 1 1 0 0 36.3999999999999990 30 </obs>
+<obs>35 1 1 0 0 28.6000000000000010 21 </obs>
+<obs>94 1 1 0 0 57.2000000000000030 40 </obs>
+<obs>71 1 0 1 0 13.0000000000000000 21 </obs>
+<obs>403 1 0 1 0 288.6000000000000200 45 </obs>
+<obs>41 1 0 1 0 41.6000000000000010 36 </obs>
+<obs>10 1 0 1 0 58.5000000000000000 36 </obs>
+<obs>110 1 0 1 0 71.5000000000000000 40 </obs>
+<obs>239 1 0 1 0 37.7000000000000030 23 </obs>
+<obs>63 1 0 1 0 50.7000000000000030 32 </obs>
+<obs>0 1 0 1 0 91.0000000000000000 52 </obs>
+<obs>106 1 0 0 1 71.5000000000000000 30 </obs>
+<obs>0 1 0 0 1 117.0000000000000000 45 </obs>
+<obs>141 0 0 0 0 7.7999999999999998 32 </obs>
+<obs>299 0 0 0 0 23.3999999999999990 20 </obs>
+<obs>148 0 0 0 0 71.5000000000000000 55 </obs>
+<obs>424 0 1 0 0 13.0000000000000000 18 </obs>
+<obs>242 0 1 0 0 29.8999999999999990 30 </obs>
+<obs>119 0 1 0 0 45.5000000000000000 45 </obs>
+<obs>338 0 1 0 0 49.3999999999999990 40 </obs>
+<obs>135 0 1 0 0 58.5000000000000000 50 </obs>
+<obs>590 0 1 0 0 110.5000000000000000 32 </obs>
+<obs>324 0 1 0 0 28.6000000000000010 30 </obs>
+<obs>87 0 1 0 0 32.5000000000000000 51 </obs>
+<obs>395 0 0 1 0 37.7000000000000030 22 </obs>
+<obs>513 0 0 1 0 171.5999999999999900 40 </obs>
+<obs>56 0 0 1 0 45.5000000000000000 30 </obs>
+<obs>400 0 0 1 0 104.0000000000000000 36 </obs>
+<obs>384 0 0 1 0 71.5000000000000000 27 </obs>
+<obs>262 0 0 1 0 39.0000000000000000 24 </obs>
+<obs>336 0 0 1 0 35.1000000000000010 21 </obs>
+<obs>281 0 0 0 1 104.0000000000000000 45 </obs>
+</observations>
+</gretldata>

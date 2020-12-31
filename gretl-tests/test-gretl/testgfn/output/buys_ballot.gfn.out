@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run buys_ballot.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/buys_ballot.gfn.inp
+? include ./buys_ballot.gfn
+ /home/cottrell/stats/test-gretl/testgfn/buys_ballot.gfn
+buys_ballot 1.6, 2014-12-03 (Ignacio Diaz-emparanza, Riccardo (Jack) Lucchetti)
+? open data9-3.gdt
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+#Plot the serie reskwh across quarters
+? matrix mr=buys_ballot(reskwh,1)
+Generated matrix mr
+#Plot a series for each quarter in Y with the years in X
+? matrix mr2=buys_ballot(reskwh,0)
+Generated matrix mr2
+Done

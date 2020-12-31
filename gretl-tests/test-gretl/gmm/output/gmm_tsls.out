@@ -1,0 +1,92 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run gmm_tsls.inp
+ /home/cottrell/stats/test-gretl/gmm/gmm_tsls.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix y = price
+Generated matrix y
+? matrix X = { const, sqft }
+Generated matrix X
+? matrix Z = { const, bedrms, baths }
+Generated matrix Z
+? matrix b = { 40, .1 }'
+Generated matrix b
+? matrix e = y - X*b
+Generated matrix e
+? matrix W = inv(Z'Z)
+Generated matrix W
+? gmm e = y - X*b
+? orthog e ; Z
+? params b
+? weights W
+? end gmm --vcv
+Tolerance = 1.81899e-12
+
+Function evaluations: 31
+Evaluations of gradient: 6
+
+Model 1: 1-step GMM, using observations 1-14
+e = y - X*b
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  b[1]       70.9282     30.6570      2.314   0.0207   **
+  b[2]        0.129029    0.0159803   8.074   6.79e-16 ***
+
+  GMM criterion: Q = 4.57362 (TQ = 64.0307)
+
+Covariance matrix of regression coefficients:
+
+          b[1]          b[2]
+       939.853     -0.464971  b[1]
+                 2.55371e-04  b[2]
+
+? tsls price sqft 0 ; 0 bedrms baths --vcv --robust
+
+Model 2: TSLS, using observations 1-14
+Dependent variable: price
+Instrumented: sqft 
+Instruments: const bedrms baths 
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       70.9281      33.1134      2.142   0.0322   **
+  sqft         0.129029     0.0172607   7.475   7.70e-14 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18683.68   S.E. of regression   39.45850
+R-squared            0.820522   Adjusted R-squared   0.805565
+Chi-square(1)        55.87979   p-value              7.70e-14
+
+Covariance matrix of regression coefficients:
+
+         const          sqft
+        1096.5     -0.542466  const
+                 2.97933e-04  sqft
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 0.538685
+  with p-value = 0.462978
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 0.67171
+  with p-value = P(Chi-square(1) > 0.67171) = 0.412456
+
+Weak instrument test - 
+  First-stage F-statistic (2, 11) = 11.0885
+  A value < 10 may indicate weak instruments
+
+Done

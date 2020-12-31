@@ -1,0 +1,51 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run gappy_ylags.inp
+ /home/cottrell/stats/test-gretl/arbond/gappy_ylags.inp
+? open nomissdata.csv -q
+Read datafile /home/cottrell/stats/test-gretl/arbond/nomissdata.csv
+? setobs ind year --panel
+Full data range: 1:1 - 10:6 (n = 60)
+
+? dpanel {2} ; y --dpdstyle
+
+Model 1: 1-step dynamic panel, using 30 observations
+Included 10 cross-sectional units
+H-matrix as per Ox/DPD
+Dependent variable: y
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  y(-2)      -0.0479185     0.192045    -0.2495   0.8030 
+
+Sum squared resid    29.22418   S.E. of regression   1.003858
+
+Number of instruments = 9
+Test for AR(1) errors: z = -0.544062 [0.5864]
+Test for AR(2) errors: z = -0.227127 [0.8203]
+Sargan over-identification test: Chi-square(8) = 15.8544 [0.0445]
+Wald (joint) test: Chi-square(1) = 0.0622591 [0.8030]
+
+? dpanel {1, 3} ; y --dpdstyle
+
+Model 2: 1-step dynamic panel, using 20 observations
+Included 10 cross-sectional units
+H-matrix as per Ox/DPD
+Dependent variable: y
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  y(-1)       0.295458      0.264657    1.116    0.2643 
+  y(-3)       0.0509221     0.226589    0.2247   0.8222 
+
+Sum squared resid    25.09215   S.E. of regression   1.180681
+
+Number of instruments = 7
+Test for AR(1) errors: z = -1.0055 [0.3147]
+Test for AR(2) errors: z = NA
+Sargan over-identification test: Chi-square(5) = 4.01052 [0.5479]
+Wald (joint) test: Chi-square(2) = 4.24332 [0.1198]
+
+Done

@@ -1,0 +1,38 @@
+open denmark
+series y = LRM
+list x = const LRY
+matrix X = { x }
+
+scalar t1 = cols(X) + 10
+scalar t2 = rows(X)
+
+smpl 1 t1
+ols y x --quiet
+matrix bt = $coeff
+matrix XX = { x }
+
+smpl full
+
+XX = inv(XX'XX)
+
+scalar tt = t1+1
+series e = 0
+series gain = 0
+scalar u = 0
+
+set echo off
+set messages off
+
+loop for i=tt..t2
+   matrix xt = X[$i,]
+   matrix fore = xt*bt
+   scalar u = y[$i] - fore
+   printf "Fcast err.[%d] = %g (y[%d] = %g)\n", $i, u, $i, y[$i]
+   matrix foo = XX * xt'
+   matrix tmp = xt*foo + 1
+   genr gain[$i] = tmp
+   matrix XX = XX - foo * foo' * (1/tmp)
+   matrix bt = bt + u * foo
+   genr e[$i] = u
+   bt
+endloop

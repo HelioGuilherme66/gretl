@@ -1,0 +1,14 @@
+# Stock and Watson, ch 2, "Bad Day on Wall Street"
+open djclose.gdt
+genr Returns = 100 * ldiff(djclose)
+# Uncomment next two lines for time-series plot of the returns
+# splot <- gnuplot Returns time -o
+# splot.show
+# Get basic stats on the returns
+summary Returns
+genr zscore = (min(Returns) - mean(Returns)) / sd(Returns)
+pvalue z zscore
+# For comparison, use SW approximation to z-score
+pvalue z 22.0
+
+

@@ -1,0 +1,104 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_armax.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_armax.inp
+? open USMacro
+
+Read datafile /home/cottrell/stats/test-gretl/fcast/USMacro.gdt
+periodicity: 4, maxobs: 220
+observations range: 1947:1 to 2001:4
+
+Listing 7 variables:
+  0) const    1) y        2) c        3) i        4) l_y    
+  5) l_c      6) l_i    
+
+? set arma_vcv hessian
+? smpl ; 2000:4
+Full data range: 1947:1 - 2001:4 (n = 220)
+Current sample: 1947:1 - 2000:4 (n = 216)
+
+? arma 1 1 ; l_i const time --conditional
+
+Function evaluations: 32
+Evaluations of gradient: 16
+
+Model 1: ARMAX, using observations 1947:2-2000:4 (T = 215)
+Estimated using BHHH method (conditional ML)
+Dependent variable: l_i
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      0.826294      0.222609       3.712   0.0002   ***
+  phi_1      0.841160      0.0433849     19.39    9.69e-84 ***
+  theta_1    0.200643      0.0665882      3.013   0.0026   ***
+  time       0.00160972    0.000442294    3.639   0.0003   ***
+
+Mean dependent var   6.248332   S.D. dependent var   0.635549
+Mean of innovations  0.000035   S.D. of innovations  0.052685
+Log-likelihood       327.7648   Akaike criterion    -645.5295
+Schwarz criterion   -628.6763   Hannan-Quinn        -638.7201
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1888     0.0000     1.1888     0.0000
+  MA
+    Root  1          -4.9840     0.0000     4.9840     0.5000
+  -----------------------------------------------------------
+
+? smpl full
+Full data range: 1947:1 - 2001:4 (n = 220)
+
+? fcast autofit
+Generated series autofit (ID 8)
+? smpl 1999:4 ;
+Full data range: 1947:1 - 2001:4 (n = 220)
+Current sample: 1999:4 - 2001:4 (n = 9)
+
+? print l_i autofit -o
+
+                l_i      autofit
+
+1999:4     7.453214     7.408822
+2000:1     7.451764     7.447416
+2000:2     7.496430     7.439772
+2000:3     7.489300     7.489449
+2000:4     7.483413     7.473663
+2001:1     7.450661     7.472307
+2001:2     7.418301     7.462618
+2001:3     7.390490     7.456078
+2001:4     7.322973     7.452186
+
+? fcasterr 1999:4 2001:4
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+                  l_i    prediction    std. error        95% interval
+
+  1999:4      7.453214     7.408822
+  2000:1      7.451764     7.447416
+  2000:2      7.496430     7.439772
+  2000:3      7.489300     7.489449
+  2000:4      7.483413     7.473663
+  2001:1      7.450661     7.472307     0.052685     7.369046 - 7.575567
+  2001:2      7.418301     7.462618     0.076081     7.313502 - 7.611734
+  2001:3      7.390490     7.456078     0.088994     7.281653 - 7.630502
+  2001:4      7.322973     7.452186     0.097098     7.261877 - 7.642495
+
+  Forecast evaluation statistics
+
+  Mean Error                       -0.016196
+  Mean Squared Error                0.0031917
+  Root Mean Squared Error           0.056495
+  Mean Absolute Error               0.041785
+  Mean Percentage Error            -0.22242
+  Mean Absolute Percentage Error    0.56466
+  Theil's U                         1.6785
+  Bias proportion, UM               0.082184
+  Regression proportion, UR         0.075982
+  Disturbance proportion, UD        0.84183
+
+Warning: "fcasterr": obsolete command; please use "fcast"
+Done

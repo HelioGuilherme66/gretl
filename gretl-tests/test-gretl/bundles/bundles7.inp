@@ -1,0 +1,12 @@
+bundle b
+b["mat"] = I(3)
+b["x"] = 32
+setnote(b, "mat", "identity matrix")
+setnote(b, "x", "just a number")
+b
+delete b["x"]
+b
+delete b["mat"]
+b
+
+

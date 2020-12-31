@@ -1,0 +1,55 @@
+gretl version 1.6.0
+Copyright Ramu Ramanathan and Allin Cottrell
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2006/11/12 14:13
+? run abest3a.inp
+? open abdata.gdt
+
+Read datafile /home/cottrell/stats/work/arellano/regression/abdata.gdt
+periodicity: 9, maxobs: 1260,
+observations range: 1:1-140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? genr Dw = diff(w)
+Generated series Dw (ID 12)
+? genr Dk = diff(k)
+Generated series Dk (ID 13)
+? genr Dys = diff(ys)
+Generated series Dys (ID 14)
+
+? arbond 2 0 ; n Dw Dw(-1) Dk Dys Dys(-1) const ; --time-dummies --two-step
+
+Model 1: 2-step Arellano-Bond estimates using 611 observations
+Included 140 cross-sectional units
+Dependent variable: n
+
+      VARIABLE       COEFFICIENT        STDERROR      T STAT   P-VALUE
+
+  Dn(-1)                0.807430         0.128189      6.299  <0.00001 ***
+  Dn(-2)               -0.113494         0.0629006    -1.804   0.07168 *
+  Dw                   -0.568624         0.173075     -3.285   0.00108 ***
+  Dw_1                  0.640706         0.190893      3.356   0.00084 ***
+  Dk                    0.183399         0.172748      1.062   0.28882
+  Dys                   0.859991         0.184699      4.656  <0.00001 ***
+  Dys_1                -0.863255         0.301354     -2.865   0.00432 ***
+  const                 0.0162528        0.0110693     1.468   0.14255
+  T2                    0.00952686       0.0181432     0.525   0.59971
+  T3                   -0.0557186        0.0209060    -2.665   0.00790 ***
+  T4                   -0.0558584        0.0235457    -2.372   0.01799 **
+  T5                   -0.0304112        0.0245882    -1.237   0.21664
+  T6                   -0.0238494        0.0240340    -0.992   0.32144
+
+  Sum of squared residuals = 10.636
+  Standard error of residuals = 0.133364
+  Test for AR(1) errors: z = -3.05953 (p-value 0.002217)
+  Test for AR(2) errors: z = -0.571829 (p-value 0.5674)
+  Sargan over-identification test:
+    Chi-square(46) = 58.7147 with p-value 0.0988505
+  Wald (joint) test:
+    Chi-square(7) = 170.679 with p-value 1.80539e-33
+
+Done

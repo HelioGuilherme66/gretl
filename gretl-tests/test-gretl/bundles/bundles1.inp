@@ -1,0 +1,16 @@
+# simple creation and access of bundle
+
+matrix m = I(3)
+string s = "foo"
+bundle b
+b["mat"] = m
+b["str"] = s
+matrix goo = 3 * b["mat"]
+goo
+delete goo
+string s2 = b["str"]
+s2
+delete b
+
+
+

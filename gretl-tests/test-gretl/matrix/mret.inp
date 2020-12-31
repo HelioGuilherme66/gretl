@@ -1,0 +1,7 @@
+function matrix foomat (scalar m)
+  matrix A = ones(m,m) 
+  return A
+end function
+
+matrix B = foomat(4)
+B

@@ -1,0 +1,214 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run armaloop.inp
+ /opt/esl/share/gretl/scripts/misc/armaloop.inp
+# Estimation of an ARMA(1,1) model "manually", using a
+# loop construct.
+? open arma.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/arma.gdt
+periodicity: 12, maxobs: 624
+observations range: 1950:01 to 2001:12
+
+Listing 4 variables:
+  0) const    1) u        2) eps      3) y      
+
+? scalar c = 0
+Generated scalar c = 0
+? scalar a = 0.1
+Generated scalar a = 0.1
+? scalar m = 0.1
+Generated scalar m = 0.1
+? series e = 0
+Generated series e (ID 4)
+? series de_c = e
+Generated series de_c (ID 5)
+? series de_a = e
+Generated series de_a (ID 6)
+? series de_m = e
+Generated series de_m (ID 7)
+? scalar crit = 1
+Generated scalar crit = 1
+? loop while crit > 1.0e-9 --quiet
+>    # one-step forecast errors
+> e = y - c - a*y(-1) - m*e(-1)
+>    # log-likelihood
+> scalar loglik = -0.5 * sum(e^2)
+> print loglik
+>    # partials of e with respect to c, a, and m
+> de_c = -1 - m * de_c(-1)
+> de_a = -y(-1) -m * de_a(-1)
+> de_m = -e(-1) -m * de_m(-1)
+>    # partials of l with respect to c, a and m
+> series sc_c = -de_c * e
+> series sc_a = -de_a * e
+> series sc_m = -de_m * e
+>    # OPG regression
+> ols const sc_c sc_a sc_m --print-final --no-df-corr --vcv
+>    # Update the parameters
+> dc = $coeff[1]
+> da = $coeff[2]
+> dm = $coeff[3]
+> c += dc
+> a += da
+> m += dm
+>    # show progress
+> printf "  constant        = %.8g (gradient = %#.6g)\n", c, dc
+> printf "  ar1 coefficient = %.8g (gradient = %#.6g)\n", a, da
+> printf "  ma1 coefficient = %.8g (gradient = %#.6g)\n", m, dm
+> crit = $T - $ess
+> print crit
+> endloop
+
+         loglik = -760.80644
+  constant        = 0.0080836215 (gradient = 0.00808362)
+  ar1 coefficient = 0.11277597 (gradient = 0.0127760)
+  ma1 coefficient = 0.22928744 (gradient = 0.129287)
+
+           crit =  155.03922
+
+         loglik = -628.34994
+  constant        = 0.021863667 (gradient = 0.0137800)
+  ar1 coefficient = 0.20381539 (gradient = 0.0910394)
+  ma1 coefficient = 0.30271199 (gradient = 0.0734246)
+
+           crit =  144.03074
+
+         loglik = -505.02049
+  constant        = 0.043479375 (gradient = 0.0216157)
+  ar1 coefficient = 0.32692915 (gradient = 0.123114)
+  ma1 coefficient = 0.37067791 (gradient = 0.0679659)
+
+           crit =  124.57014
+
+         loglik = -403.31424
+  constant        = 0.074692496 (gradient = 0.0312131)
+  ar1 coefficient = 0.46780621 (gradient = 0.140877)
+  ma1 coefficient = 0.44188776 (gradient = 0.0712098)
+
+           crit =  90.204015
+
+         loglik = -336.72240
+  constant        = 0.10798528 (gradient = 0.0332928)
+  ar1 coefficient = 0.59244672 (gradient = 0.124641)
+  ma1 coefficient = 0.49335228 (gradient = 0.0514645)
+
+           crit =  37.769973
+
+         loglik = -313.44619
+  constant        = 0.12126773 (gradient = 0.0132824)
+  ar1 coefficient = 0.63841777 (gradient = 0.0459710)
+  ma1 coefficient = 0.50050735 (gradient = 0.00715507)
+
+           crit =  3.0927563
+
+         loglik = -311.78087
+  constant        = 0.12256329 (gradient = 0.00129556)
+  ar1 coefficient = 0.64329586 (gradient = 0.00487810)
+  ma1 coefficient = 0.49863322 (gradient = -0.00187413)
+
+           crit =  0.023986062
+
+         loglik = -311.76765
+  constant        = 0.12256183 (gradient = -1.45605e-06)
+  ar1 coefficient = 0.64384821 (gradient = 0.000552344)
+  ma1 coefficient = 0.49819521 (gradient = -0.000438013)
+
+           crit =  0.00028844634
+
+         loglik = -311.76749
+  constant        = 0.12255167 (gradient = -1.01663e-05)
+  ar1 coefficient = 0.64391927 (gradient = 7.10572e-05)
+  ma1 coefficient = 0.49812602 (gradient = -6.91973e-05)
+
+           crit =  5.1201988e-06
+
+         loglik = -311.76749
+  constant        = 0.12254979 (gradient = -1.87984e-06)
+  ar1 coefficient = 0.64392882 (gradient = 9.55884e-06)
+  ma1 coefficient = 0.49811603 (gradient = -9.98322e-06)
+
+           crit =  9.6708504e-08
+
+         loglik = -311.76749
+  constant        = 0.1225495 (gradient = -2.83075e-07)
+  ar1 coefficient = 0.64393013 (gradient = 1.30732e-06)
+  ma1 coefficient = 0.49811463 (gradient = -1.39953e-06)
+
+           crit =  1.8417268e-09
+
+         loglik = -311.76749
+  constant        = 0.12254946 (gradient = -4.02440e-08)
+  ar1 coefficient = 0.64393031 (gradient = 1.79874e-07)
+  ma1 coefficient = 0.49811444 (gradient = -1.94278e-07)
+
+           crit =  3.4219738e-11
+
+Model 1: OLS, using observations 1950:01-2001:12 (T = 624)
+Dependent variable: const
+
+             coefficient    std. error    t-ratio     p-value
+  -----------------------------------------------------------
+  sc_c       -4.02440e-08   0.0612822    -6.567e-07   1.0000 
+  sc_a        1.79874e-07   0.0338642     5.312e-06   1.0000 
+  sc_m       -1.94278e-07   0.0401222    -4.842e-06   1.0000 
+
+Mean dependent var   1.000000   S.D. dependent var   0.000000
+Sum squared resid    624.0000   S.E. of regression   1.000000
+Uncentered R-squared 0.000000   Centered R-squared         NA
+F(3, 621)            1.14e-11   P-value(F)           1.000000
+Log-likelihood      -885.4176   Akaike criterion     1776.835
+Schwarz criterion    1790.144   Hannan-Quinn         1782.007
+rho                 -0.036027   Durbin-Watson        1.17e-13
+
+P-value was highest for variable 8 (sc_c)
+
+Covariance matrix of regression coefficients:
+
+          sc_c          sc_a          sc_m
+    0.00375551  -4.19470e-04   1.92503e-04  sc_c
+                  0.00114679  -6.57277e-04  sc_a
+                                0.00160979  sc_m
+
+? scalar se_c = $stderr[1]
+Generated scalar se_c = 0.0612822
+? scalar se_a = $stderr[2]
+Generated scalar se_a = 0.0338642
+? scalar se_m = $stderr[3]
+Generated scalar se_m = 0.0401222
+
+constant        = 0.12254946 (se = 0.0612822, t = 1.9998)
+ar1 coefficient = 0.64393031 (se = 0.0338642, t = 19.0151)
+ma1 coefficient = 0.49811444 (se = 0.0401222, t = 12.4149)
+# compare with the built-in arma command (conditional ML)
+? arima 1 0 1 ; y --conditional
+
+Function evaluations: 14
+Evaluations of gradient: 7
+
+Model 2: ARMA, using observations 1950:02-2001:12 (T = 623)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.122549     0.0613338     1.998   0.0457   **
+  phi_1       0.643933     0.0338928    19.00    1.74e-80 ***
+  theta_1     0.498111     0.0401577    12.40    2.49e-35 ***
+
+Mean dependent var   0.335786   S.D. dependent var   1.796806
+Mean of innovations  0.000158   S.D. of innovations  1.000429
+Log-likelihood      -884.2661   Akaike criterion     1776.532
+Schwarz criterion    1794.270   Hannan-Quinn         1783.426
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.5530     0.0000     1.5530     0.0000
+  MA
+    Root  1          -2.0076     0.0000     2.0076     0.5000
+  -----------------------------------------------------------
+
+Done

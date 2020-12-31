@@ -1,0 +1,54 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run mwu_dummy.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/mwu_dummy.gfn.inp
+? include ./mwu_dummy.gfn
+ /home/cottrell/stats/test-gretl/testgfn/mwu_dummy.gfn
+mwu_dummy 0.92, 2013-04-25 (Yi-Nnung Yang)
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? genr index
+Replaced series index (ID 1)
+? smpl (index % 2 = 0) --restrict --replace
+Full data set: 10 observations
+Current sample: 5 observations
+? series x = index
+Generated series x (ID 2)
+? series group=1
+Generated series group (ID 3)
+? smpl (index % 2 = 1) --restrict --replace
+Full data set: 10 observations
+Current sample: 5 observations
+? series x = index
+Replaced series x (ID 2)
+? series group=2
+Replaced series group (ID 3)
+? smpl full
+Full data range: 1 - 10 (n = 10)
+
+? mwu_dummy(x,group)
+==============================================================
+      Mann-Whitney U statistic for  x (grouped by group):     
+         sample 1: group = 1
+            n1=5,   w1=30.00,   U1=10.00
+         sample 2: group = 2
+            n2=5,   w2=25.00,   U2=15.00
+ --------------------------------------------------------------
+	 N1= 5 (=max(n1,n2)) 	  U = 15.00 = (=max(U1,U2))     
+==============================================================
+Critical values of M-W U test:      
+--------------------------------------------------------------
+	size1 size2	Percentile	
+	n1	n2	0.2	0.1	0.05	0.02	0.01	
+--------------------------------------------------------------
+	5	2	9	10	 	 	 	
+	5	3	13	14	15	 	 	
+	5	4	16	18	19	20	 	
+	5	5	20	21	23	24	25	
+==============================================================
+*The above critical-value table is from http://elegans.som.vcu.edu/
+/~leon/core_2002/stats/formulas.htm#utest
+Done

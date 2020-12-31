@@ -1,0 +1,115 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run wool14_4.inp
+ /home/cottrell/stats/test-gretl/panel/wool14_4.inp
+? open wagepan.gdt
+
+Read datafile /opt/esl/share/gretl/data/wooldridge/wagepan.gdt
+periodicity: 1, maxobs: 4360
+observations range: 1 to 4360
+
+Listing 28 variables:
+  0) const      1) nr         2) year       3) black      4) exper    
+  5) hisp       6) hours      7) married    8) occ1       9) occ2     
+ 10) occ3      11) occ4      12) occ5      13) occ6      14) occ7     
+ 15) occ8      16) occ9      17) educ      18) union     19) lwage    
+ 20) d81       21) d82       22) d83       23) d84       24) d85      
+ 25) d86       26) d87       27) expersq  
+
+? setobs 8 1.1 --stacked-time-series
+Full data range: 1:1 - 545:8 (n = 4360)
+
+? list varying = expersq married union
+Generated list varying
+? list tdum = d8*
+Generated list tdum
+? panel lwage 0 varying tdum
+
+Model 1: Fixed-effects, using 4360 observations
+Included 545 cross-sectional units
+Time-series length = 8
+Dependent variable: lwage
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const       1.42602      0.0183415     77.75     0.0000   ***
+  expersq    -0.00518550   0.000704437   -7.361    2.22e-13 ***
+  married     0.0466804    0.0183104      2.549    0.0108   **
+  union       0.0800019    0.0193103      4.143    3.50e-05 ***
+  d81         0.151191     0.0219489      6.888    6.58e-12 ***
+  d82         0.252971     0.0244185     10.36     8.05e-25 ***
+  d83         0.354444     0.0292419     12.12     3.32e-33 ***
+  d84         0.490115     0.0362266     13.53     9.09e-41 ***
+  d85         0.617482     0.0452435     13.65     1.93e-41 ***
+  d86         0.765497     0.0561277     13.64     2.19e-41 ***
+  d87         0.925025     0.0687731     13.45     2.52e-40 ***
+
+Mean dependent var   1.649147   S.D. dependent var   0.532609
+Sum squared resid    468.7531   S.E. of regression   0.350990
+LSDV R-squared       0.620912   Within R-squared     0.180578
+LSDV F(554, 3805)    11.24956   P-value(F)           0.000000
+Log-likelihood      -1324.843   Akaike criterion     3759.685
+Schwarz criterion    7300.712   Hannan-Quinn         5009.407
+rho                  0.044881   Durbin-Watson        1.593954
+
+Joint test on named regressors -
+  Test statistic: F(10, 3805) = 83.8515
+  with p-value = P(F(10, 3805) > 83.8515) = 1.65527e-156
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(544, 3805) = 9.15677
+  with p-value = P(F(544, 3805) > 9.15677) = 0
+
+? panel lwage 0 educ black hisp exper varying tdum --random
+
+Model 2: Random-effects (GLS), using 4360 observations
+Included 545 cross-sectional units
+Time-series length = 8
+Dependent variable: lwage
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const       0.0235902    0.150651       0.1566   0.8756  
+  educ        0.0918762    0.0106585      8.620    9.24e-18 ***
+  black      -0.139377     0.0477174     -2.921    0.0035   ***
+  hisp        0.0217314    0.0426014      0.5101   0.6100  
+  exper       0.105752     0.0153660      6.882    6.73e-12 ***
+  expersq    -0.00472383   0.000689504   -6.851    8.36e-12 ***
+  married     0.0639898    0.0167742      3.815    0.0001   ***
+  union       0.106140     0.0178538      5.945    2.98e-09 ***
+  d81         0.0404628    0.0246944      1.639    0.1014  
+  d82         0.0309227    0.0323401      0.9562   0.3390  
+  d83         0.0202827    0.0415792      0.4878   0.6257  
+  d84         0.0431210    0.0513121      0.8404   0.4007  
+  d85         0.0578180    0.0612267      0.9443   0.3451  
+  d86         0.0919502    0.0712223      1.291    0.1968  
+  d87         0.134931     0.0813051      1.660    0.0971   *
+
+Mean dependent var   1.649147   S.D. dependent var   0.532609
+Sum squared resid    1010.432   S.E. of regression   0.482179
+Log-likelihood      -2999.207   Akaike criterion     6028.415
+Schwarz criterion    6124.118   Hannan-Quinn         6062.191
+
+'Between' variance = 0.105363
+'Within' variance = 0.123226
+theta used for quasi-demeaning = 0.642864
+corr(y,yhat)^2 = 0.182985
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(14) = 957.775
+  with p-value = 1.78378e-195
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 3203.64
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(11) = 26.4758
+  with p-value = 0.00551036
+
+Done

@@ -1,0 +1,87 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run bjgmiss.inp
+ /home/allin/stats/test-gretl/bfgs/arma/bjgmiss.inp
+? open bjg.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/bjg.gdt
+periodicity: 12, maxobs: 144
+observations range: 1949:01 to 1960:12
+
+Listing 3 variables:
+  0) const    1) g        2) time   
+
+? genr lg = log(g)
+Generated series lg (ID 3)
+# full data
+? arima 0 1 1 ; 0 1 1 ; lg --nc
+
+Function evaluations: 23
+Evaluations of gradient: 7
+
+Model 1: ARIMA, using observations 1950:02-1960:12 (T = 131)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) lg
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  theta_1     -0.401823    0.0896447    -4.482   7.38e-06 ***
+  Theta_1     -0.556936    0.0731050    -7.618   2.57e-14 ***
+
+Mean dependent var   0.000291   S.D. dependent var   0.045848
+Mean of innovations  0.001008   S.D. of innovations  0.036716
+Log-likelihood       244.6965   Akaike criterion    -483.3930
+Schwarz criterion   -474.7674   Hannan-Quinn        -479.8880
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           2.4887     0.0000     2.4887     0.0000
+  MA (seasonal)
+    Root  1           1.7955     0.0000     1.7955     0.0000
+  -----------------------------------------------------------
+
+# missing data
+? genr idx = t - 1
+Generated series idx (ID 4)
+? genr month = idx % 12 + 1
+Generated series month (ID 5)
+? genr year = int(1949 + idx / 12)
+Generated series year (ID 6)
+# print idx year month -o
+? lg = (year > 1954 && month < 12)? NA : lg
+Replaced series lg (ID 3)
+# print lg -o
+? arima 0 1 1 ; 0 1 1 ; lg --nc
+
+Function evaluations: 67
+Evaluations of gradient: 13
+
+Model 2: ARIMA, using observations 1950:02-1960:12 (T = 65)
+Missing or incomplete observations dropped: 66
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) lg
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  theta_1     -0.456947     0.120859    -3.781   0.0002  ***
+  Theta_1     -0.758347     0.236090    -3.212   0.0013  ***
+
+Mean dependent var   0.001762   S.D. dependent var   0.056534
+Mean of innovations  0.002341   S.D. of innovations  0.041001
+Log-likelihood       105.9219   Akaike criterion    -205.8438
+Schwarz criterion   -199.3206   Hannan-Quinn        -203.2700
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           2.1884     0.0000     2.1884     0.0000
+  MA (seasonal)
+    Root  1           1.3187     0.0000     1.3187     0.0000
+  -----------------------------------------------------------
+
+Done

@@ -1,0 +1,200 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run mrw.inp
+ /opt/esl/share/gretl/scripts/misc/mrw.inp
+# Replicate Table 1, "Estimation of the Textbook
+# Solow model," in Mankiw, Romer and Weil, QJE 1992
+? open mrw.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/mrw.gdt
+periodicity: 1, maxobs: 121
+observations range: 1 to 121
+
+Listing 10 variables:
+  0) const       1) nonoil      2) intermed    3) OECD        4) gdp60     
+  5) gdp85       6) gdpgrow     7) popgrow     8) inv         9) school    
+
+? series lny = log(gdp85)
+Generated series lny (ID 10)
+? series ngd = 0.05 + (popgrow/100.0)
+Generated series ngd (ID 11)
+? series lngd = log(ngd)
+Generated series lngd (ID 12)
+? series linv = log(inv/100.0)
+Generated series linv (ID 13)
+# generate variable for testing Solow restriction
+? series x3 = linv - lngd
+Generated series x3 (ID 14)
+# set sample to non-oil producing countries
+? smpl nonoil --dummy
+Full data set: 121 observations
+Current sample: 98 observations
+? model1 <- ols lny const linv lngd
+
+model1: OLS, using observations 1-98
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        5.42988      1.58389      3.428    0.0009   ***
+  linv         1.42401      0.143106     9.951    2.10e-16 ***
+  lngd        -1.98977      0.563362    -3.532    0.0006   ***
+
+Mean dependent var   8.047911   S.D. dependent var   1.079392
+Sum squared resid    45.10763   S.E. of regression   0.689070
+R-squared            0.600865   Adjusted R-squared   0.592462
+F(2, 95)             71.50729   P-value(F)           1.13e-19
+Log-likelihood      -101.0361   Akaike criterion     208.0722
+Schwarz criterion    215.8271   Hannan-Quinn         211.2089
+
+Log-likelihood for gdp85 = -889.731
+
+model1 saved
+? scalar essu = $ess
+Generated scalar essu = 45.1076
+? scalar dfu1 = $df
+Generated scalar dfu1 = 95
+# restricted regression
+? ols lny const x3
+
+Model 2: OLS, using observations 1-98
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        6.87237      0.120579     56.99    7.90e-76 ***
+  x3           1.48799      0.124683     11.93    1.13e-20 ***
+
+Mean dependent var   8.047911   S.D. dependent var   1.079392
+Sum squared resid    45.50375   S.E. of regression   0.688475
+R-squared            0.597360   Adjusted R-squared   0.593166
+F(1, 96)             142.4262   P-value(F)           1.13e-20
+Log-likelihood      -101.4645   Akaike criterion     206.9290
+Schwarz criterion    212.0990   Hannan-Quinn         209.0202
+
+Log-likelihood for gdp85 = -890.16
+
+? scalar F1 = ($ess - essu)/(essu/dfu1)
+Generated scalar F1 = 0.834262
+# set sample to the "better data" countries
+? smpl intermed --dummy --replace
+Full data set: 121 observations
+Current sample: 75 observations
+? model2 <- ols lny const linv lngd
+
+model2: OLS, using observations 1-75
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        5.34587      1.54308      3.464    0.0009   ***
+  linv         1.31755      0.170943     7.708    5.38e-11 ***
+  lngd        -2.01720      0.533866    -3.778    0.0003   ***
+
+Mean dependent var   8.402521   S.D. dependent var   0.951074
+Sum squared resid    26.84751   S.E. of regression   0.610641
+R-squared            0.598908   Adjusted R-squared   0.587767
+F(2, 72)             53.75507   P-value(F)           5.21e-15
+Log-likelihood      -67.89608   Akaike criterion     141.7922
+Schwarz criterion    148.7446   Hannan-Quinn         144.5682
+
+Log-likelihood for gdp85 = -698.085
+
+model2 saved
+? scalar essu = $ess
+Replaced scalar essu = 26.8475
+? scalar dfu2 = $df
+Generated scalar dfu2 = 72
+# restricted regression
+? ols lny const x3
+
+Model 4: OLS, using observations 1-75
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        7.09292      0.145614     48.71    2.04e-57 ***
+  x3           1.43096      0.139123     10.29    7.58e-16 ***
+
+Mean dependent var   8.402521   S.D. dependent var   0.951074
+Sum squared resid    27.32977   S.E. of regression   0.611866
+R-squared            0.591704   Adjusted R-squared   0.586111
+F(1, 73)             105.7917   P-value(F)           7.58e-16
+Log-likelihood      -68.56371   Akaike criterion     141.1274
+Schwarz criterion    145.7624   Hannan-Quinn         142.9781
+
+Log-likelihood for gdp85 = -698.753
+
+? scalar F2 = ($ess - essu)/(essu/dfu2)
+Generated scalar F2 = 1.29333
+# set sample to the OECD countries
+? smpl OECD --dummy --replace
+Full data set: 121 observations
+Current sample: 22 observations
+? model3 <- ols lny const linv lngd
+
+model3: OLS, using observations 1-22
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        8.02061      2.51789      3.185    0.0049  ***
+  linv         0.499890     0.433896     1.152    0.2636 
+  lngd        -0.741921     0.852195    -0.8706   0.3948 
+
+Mean dependent var   9.424104   S.D. dependent var   0.379645
+Sum squared resid    2.706122   S.E. of regression   0.377396
+R-squared            0.105926   Adjusted R-squared   0.011813
+F(2, 19)             1.125522   P-value(F)           0.345181
+Log-likelihood      -8.165863   Akaike criterion     22.33173
+Schwarz criterion    25.60485   Hannan-Quinn         23.10278
+
+Log-likelihood for gdp85 = -215.496
+
+model3 saved
+? scalar essu = $ess
+Replaced scalar essu = 2.70612
+? scalar dfu3 = $df
+Generated scalar dfu3 = 19
+# restricted regression
+? ols lny const x3
+
+Model 6: OLS, using observations 1-22
+Dependent variable: lny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       8.62438       0.533288    16.17     5.96e-13 ***
+  x3          0.553845      0.365297     1.516    0.1451  
+
+Mean dependent var   9.424104   S.D. dependent var   0.379645
+Sum squared resid    2.714716   S.E. of regression   0.368423
+R-squared            0.103087   Adjusted R-squared   0.058241
+F(1, 20)             2.298702   P-value(F)           0.145129
+Log-likelihood      -8.200742   Akaike criterion     20.40148
+Schwarz criterion    22.58357   Hannan-Quinn         20.91552
+
+Log-likelihood for gdp85 = -215.531
+
+? scalar F3 = ($ess - essu)/(essu/dfu3)
+Generated scalar F3 = 0.0603412
+? print F1 F2 F3
+
+             F1 =  0.83426230
+
+             F2 =  1.2933272
+
+             F3 =  0.060341244
+# pvalues for test of Solow restriction in each sample
+? pvalue F 1 dfu1 F1
+F(1, 95): area to the right of 0.834262 = 0.363355
+(to the left: 0.636645)
+? pvalue F 1 dfu2 F2
+F(1, 72): area to the right of 1.29333 = 0.259206
+(to the left: 0.740794)
+? pvalue F 1 dfu3 F3
+F(1, 19): area to the right of 0.0603412 = 0.808591
+(to the left: 0.191409)
+Done

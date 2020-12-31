@@ -1,0 +1,111 @@
+*
+*  BJIDENT
+*  Box-Jenkins model identification step
+*
+*  Syntax:
+*  @BJIDENT  series   start   end
+*
+*  Options
+*     DIFF=maximum regular differencings[0]
+*     SDIFFS=maximum seasonal differencings[0]
+*     TRANS=[NONE]/LOG/ROOT
+*        Transformation to apply to data
+*     [GRAPH]/NOGRAPH
+*        Do High-resolution graphs?
+*     SPAN=seasonal span
+*     METHOD=YULE/[BURG]
+*     NUMBER=number of autocorrelations to compute [depends upon data]
+*
+*  Written by Tom Doan, Estima.
+*  Revision schedule:
+*    05/99 Adjustments to improve appearance of graphs, adjust numbers
+*          of correlations to match input.
+*    01/03 Add METHOD option to allow either Burg (default) or Yule-Walker
+*          correlation calculations, NUMBER option to control the number
+*          of autocorrelations and PRINT to allow both graphing and printint.
+*
+PROC BJIDENT SERIES START END
+TYPE SERIES SERIES
+TYPE INTEGER START END
+*
+OPTION INTEGER DIFF   0
+OPTION INTEGER SDIFF  0
+OPTION CHOICE  TRANS  1  NONE  LOG  ROOT
+OPTION SWITCH  GRAPH  1
+OPTION SWITCH  PRINT  0
+OPTION INTEGER SPAN
+OPTION CHOICE  METHOD 2  YULE BURG
+OPTION INTEGER NUMBER
+*
+LOCAL INTEGER NBEG NEND SPANL I J
+LOCAL SERIES  CORRS     PARTIALS
+LOCAL SERIES  TRANSFRM  DIFFED     UPPER LOWER
+LOCAL INTEGER NUMC
+
+*
+*  Get the series range and seasonal, to be overridden by the
+*  start and end parameters and span option if the user specifies them.
+*
+
+inquire(series=series) nbeg>>start nend>>end
+inquire(seasonal) spanl>>span
+
+*
+*  Transform the series
+*
+
+if TRANS == 1
+   set transfrm nbeg nend = series
+else if TRANS == 2
+   set transfrm nbeg nend = log(series)
+else
+   set transfrm nbeg nend = sqrt(series)
+
+*
+*  If doing seasonal differences, make sure we do two years worth of
+*  lags.
+*
+
+if %defined(number)
+   compute numc   = number
+else if sdiff>0
+   compute numc   = %imax(3*spanl,25)
+else
+   compute numc   = 25
+
+*
+*  If we have a short data set, don't compute quite so many lags
+*
+
+if numc>(nend-nbeg+1)/2
+   compute numc = (nend-nbeg+1)/2
+
+*
+*  Loop over differences and seasonal differences. Difference data
+*  and compute correlations and partial autocorrelations. Graph them
+*  if requested, otherwise print.
+*
+
+do i=0,diff
+   do j=0,sdiff
+      diff(diff=i,sdiff=j) transfrm nbeg+i+spanl*j nend diffed
+      if sdiff==0
+         disp(store=dispstr) i 'Differences'
+      else
+         disp(store=dispstr) i 'Regular' j 'Seasonal'
+      corr(print=.not.graph.or.print,number=numc,partial=partials,stderrs=upper,method=method) $
+           diffed nbeg+i+spanl*j nend corrs
+      set upper 2 number+1 = 2*upper
+      set lower 2 number+1 = -upper
+      if (graph) {
+         graph(max=1.0,min=-1.0,header=dispstr,style=bargraph,$
+            number=0,nodates,window=dispstr,overlay=step,ovcount=2,key=loright,noovkey,ovsame) 4
+         # corrs    1 numc+1
+         # partials 1 numc+1
+         # upper    2 numc+1 1
+         # lower    2 numc+1 1
+      }
+   enddo j
+enddo i
+end
+

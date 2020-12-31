@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="journals" frequency="1" startobs="1" endobs="180" type="cross-section">
+<description>Stock and Watson: Economic Journals Data Set
+
+This dataset contains data on 180 economics journals for the year
+2000.  These data are provided by Professor Theodore Bergstrom of the
+Department of Economics at the University of California, San Diego.
+If you are interested in learning more about the economics of
+economics journals, see Bergstrom's article in the Fall 2001 Journal
+of Economic Perspectives.
+
+     Title
+
+  1  Asian-Pacific Econnomic Literature
+  2  South African Journal of Economic History
+  3  Computational Economics
+  4  Economic Policy in Transitional Economics
+  5  Journal of Socio-Economics
+  6  Labour Economics
+  7  Environment and Development economics
+  8  Review of Radical Political Economics
+  9  Economics of Planning
+ 10  Metroeconomica
+ 11  Journal of Consumer Policy
+ 12  Real Estate Economics
+ 13  Development Policy Review 
+ 14  Managerial and Decision Econ
+ 15  Journal of Empirical Finance
+ 16  International Journal of Finance and Economics
+ 17  Journal of Economics and Management Strategy
+ 18  Atlantic Economic Journal
+ 19  Economic Development Quarterly	
+ 20  China Economic Review
+ 21  Information Economics and Policy
+ 22  Australian Economic Papers 
+ 23  Japan and the World Economy
+ 24  Journal of Economic Surveys
+ 25  Insurance  Mathematics and Economics
+ 26  De Economist
+ 27  Review of Social Economy
+ 28  Brookings Papers
+ 29  Papers in Regional Science 
+ 30  Journal of Population Economics
+ 31  Finance and Stochastics
+ 32  International Organization
+ 33  Canadian Public Policy
+ 34  Developing Economies
+ 35  Journal of Housing Economics
+ 36  Journal of Economics and Business
+ 37  Journal of Evolutionary
+ 38  Empirical Economics
+ 39  Econometric Reviews
+ 40  Agricultural Economics
+ 41  Quarterly Review of Econ &amp; Finance
+ 42  Applied Economics Letters 
+ 43  Economic Modelling 
+ 44  Growth and Change 
+ 45  Environmental and Resource Economics 
+ 46  Journal of Regulatory Economics
+ 47  Bulletin of Indonesian Economic Studies
+ 48  Annals of Regional Science
+ 49  Contemporary Economic Policy
+ 50  Journal of Economic Education
+ 51  Journal of the Japanese and International Economies 
+ 52  Economics and Philosophy
+ 53  Journal of Financial Intermediation
+ 54  Resource and Energy Economics
+ 55  Oxford Review of Economic Policy
+ 56  Review of Industrial Organization 
+ 57  International Review of Law and Economics
+ 58  Journal of World Trade	
+ 59  Journal of Macroeconomics 
+ 60  American Journal of Economics and Sociology 
+ 61  Public Finance Review
+ 62  Manchester School 
+ 63  Energy Economics	
+ 64  European Review of Agricultural Economics
+ 65  Labor History
+ 66  Weltwirtschaftliches Archiv
+ 67  Scottish Journal of Political Economy
+ 68  Development and Change	
+ 69  Journal of Real Estate Finance &amp; Economics
+ 70  Journal of Policy Modeling
+ 71  Journal of PostKeynesian Econonomics
+ 72  Economic Policy
+ 73  Mathematical Social Sciences
+ 74  Omega
+ 75  History of Political Economy
+ 76  Economic Record
+ 77  Journal of Productivity Analysis
+ 78  Review of Income and Wealth
+ 79  Journal of Risk and Insurance
+ 80  World Development
+ 81  Journal of Agricultural Economics
+ 82  Economics of Education Review	
+ 83  Journal of Labor Research
+ 84  Theory and Decision
+ 85  Social Choice and Welfare
+ 86  Journal of Comparative Economics
+ 87  Journal of Economic Psychology	
+ 88  International Journal of Forecasting 
+ 89  Kyklos
+ 90  Explorations in Economic History
+ 91  Economic Theory
+ 92  Journal of Transport Economics and Policy
+ 93  British Journal of Industrial Relations
+ 94  Journal of Common Market Studies
+ 95  Journal of Futures Markets
+ 96  Journal of Institutional and Theoretical Economics
+ 97  International Journal of Industrial Organization
+ 98  Journal of Forecasting	
+ 99  Operations Research Letters
+100  Scandinavian Journal of Economics
+101  Cambridge Journal of Economics
+102  Journal of Economic Issues
+103  Regional Science and Urban Economics
+104  International Journal of Game Theory
+105  Journal of Risk and Uncertainty
+106  Journal of Financial and Quantitative Analysis
+107  Journal of Development Studies	
+108  Econometric Theory 
+109  Journal of Regional Science
+110  Journal of Accounting and Economics
+111  Games and Economic Behavior
+112  Journal of Applied Econometrics
+113  Journal of Mathematical Economics 
+114  Journal of International Money and Finance 
+115  Regional Studies
+116  Population and Development Review
+117  Economy and Society
+118  Decision Sciences
+119  Journal of Industrial Economics
+120  Ecological Economics
+121  National Tax Journal
+122  Urban Studies
+123  Health Economics
+124  Economic History Review
+125  Review of Financial Studies
+126  Canadian Journal of Economics
+127  Risk Analysis
+128  Applied Economics 
+129  Oxford Economic Papers	
+130  Economic Development and Cultural Change 
+131  Journal of Banking and Finance	
+132  Oxford Bulletin Of Economics and Statistics 
+133  Journal of Economic Dynamics and Control
+134  Southern Economic Journal
+135  Journal of Management Studies
+136  Journal of Business Ethics
+137  Demography 
+138  Economic Inquiry
+139  Journal of Economic Behavior and Organization
+140  Journal of Legal Studies
+141  Journal of Development Economics
+142  Land Economics
+143  Journal of Labor Economics
+144  Journal of Economic History
+145  Journal of Urban Economics
+146  Economica 
+147  Journal of Money, Credit and Banking 
+148  Journal of International Economics
+149  Public Choice
+150  Research Policy
+151  Economics Letters 
+152  Journal of Health Economics
+153  Journal of Business and Economic Statistics 
+154  Rand Journal of Economics
+155  Journal of Business
+156  Journal of Human Resources
+157  International Economic Review
+158  Journal of Environmental Economics and Management
+159  European Economic Review
+160  World Development 
+161  Journal of Public Economics
+162  Journal of Economic Literature
+163  Journal of Law and Economics
+164  Journal of Economic Perspectives
+165  American Journal of Agricultural Economics
+166  Journal of Monetary Economics
+167  Management Science
+168  Review of Economics and Statistics
+169  Review of Economic Studies
+170  Journal of Econometrics
+171  Journal of Economic Theory
+172  Economic Journal
+173  Journal of Financial Economics
+174  Journal of Consumer Research
+175  Journal of the American Statistical Association
+176  Journal of Finance
+177  Quarterly Journal of Economics
+178  Journal of Political Economy
+179  Econometrica
+180  American Economic Review
+</description>
+<variables count="7">
+<variable name="society"
+ label="binary variable; 1 if scholarly society"
+/>
+<variable name="libprice"
+ label="library subscription price"
+/>
+<variable name="pages"
+ label="number of pages"
+/>
+<variable name="charpp"
+ label="characters per page"
+/>
+<variable name="citestot"
+ label="total number of citations"
+/>
+<variable name="date1"
+ label="year journal was founded"
+/>
+<variable name="oclc"
+ label="number of library subscriptions"
+/>
+</variables>
+<observations count="180" labels="false">
+<obs>0 123 440 3822 21 1986 14 </obs>
+<obs>0 20 309 1782 22 1986 59 </obs>
+<obs>0 443 567 2924 22 1987 17 </obs>
+<obs>0 276 520 3234 22 1991 2 </obs>
+<obs>0 295 791 3024 24 1972 96 </obs>
+<obs>0 344 609 2967 24 1994 15 </obs>
+<obs>0 90 602 3185 24 1995 14 </obs>
+<obs>0 242 665 2688 27 1968 202 </obs>
+<obs>0 226 243 3010 28 1987 46 </obs>
+<obs>0 262 386 2501 30 1949 46 </obs>
+<obs>0 279 578 2200 32 1978 57 </obs>
+<obs>0 165 749 2496 35 1973 125 </obs>
+<obs>0 242 427 2731 36 1982 30 </obs>
+<obs>0 905 292 4472 37 1980 62 </obs>
+<obs>0 355 607 3053 37 1994 16 </obs>
+<obs>0 375 351 4025 40 1996 17 </obs>
+<obs>0 135 602 2394 42 1992 37 </obs>
+<obs>0 171 447 3139 44 1972 148 </obs>
+<obs>0 284 385 3318 47 1987 110 </obs>
+<obs>0 242 167 3619 47 1989 16 </obs>
+<obs>0 371 442 2924 50 1984 30 </obs>
+<obs>0 115 495 3792 51 1961 61 </obs>
+<obs>0 355 577 3443 56 1988 27 </obs>
+<obs>0 355 674 2835 61 1987 45 </obs>
+<obs>0 835 745 4263 61 1982 15 </obs>
+<obs>0 223 579 2594 62 1852 25 </obs>
+<obs>0 172 578 2720 66 1943 203 </obs>
+<obs>0 62 394 2368 67 1970 646 </obs>
+<obs>0 191 442 2925 68 1922 59 </obs>
+<obs>0 411 640 3264 69 1987 27 </obs>
+<obs>0 274 492 3060 69 1996 31 </obs>
+<obs>0 130 814 3024 69 1947 532 </obs>
+<obs>0 100 714 2248 75 1975 52 </obs>
+<obs>0 80 539 3345 76 1963 87 </obs>
+<obs>0 235 330 2623 78 1982 27 </obs>
+<obs>0 392 563 3456 80 1948 291 </obs>
+<obs>0 410 526 2989 81 1991 9 </obs>
+<obs>0 464 719 3366 82 1976 24 </obs>
+<obs>0 650 448 2418 85 1981 49 </obs>
+<obs>0 558 610 4032 87 1986 24 </obs>
+<obs>0 317 931 3036 87 1961 323 </obs>
+<obs>0 495 774 5610 89 1994 69 </obs>
+<obs>0 535 632 2880 89 1983 21 </obs>
+<obs>0 123 302 2772 97 1969 212 </obs>
+<obs>0 717 1061 2924 97 1992 14 </obs>
+<obs>0 481 628 3666 98 1991 38 </obs>
+<obs>0 54 518 2858 98 1964 22 </obs>
+<obs>0 379 580 2914 100 1967 77 </obs>
+<obs>0 168 566 4104 109 1982 290 </obs>
+<obs>0 82 426 2990 112 1970 386 </obs>
+<obs>0 355 451 2541 119 1986 50 </obs>
+<obs>0 95 373 2574 121 1984 144 </obs>
+<obs>0 240 420 2773 121 1991 48 </obs>
+<obs>0 448 416 3010 122 1978 33 </obs>
+<obs>0 255 600 4284 124 1985 29 </obs>
+<obs>0 448 792 1820 126 1990 58 </obs>
+<obs>0 392 585 3479 126 1980 71 </obs>
+<obs>0 475 1138 3088 134 1967 135 </obs>
+<obs>0 85 856 2562 137 1979 183 </obs>
+<obs>0 108 578 2331 138 1941 573 </obs>
+<obs>0 394 636 2204 138 1973 268 </obs>
+<obs>0 336 618 2772 140 1930 57 </obs>
+<obs>0 565 495 3038 143 1978 52 </obs>
+<obs>0 255 573 3228 144 1974 21 </obs>
+<obs>0 165 515 3430 147 1960 479 </obs>
+<obs>0 99 758 2499 150 1865 77 </obs>
+<obs>0 203 596 3036 151 1953 89 </obs>
+<obs>0 318 888 2623 154 1970 83 </obs>
+<obs>0 476 630 3432 162 1990 59 </obs>
+<obs>0 473 907 2160 164 1979 67 </obs>
+<obs>0 186 550 2360 170 1978 225 </obs>
+<obs>0 170 440 2856 179 1985 56 </obs>
+<obs>0 824 697 3420 180 1981 36 </obs>
+<obs>0 805 780 4028 183 1973 101 </obs>
+<obs>0 132 767 2280 183 1969 288 </obs>
+<obs>1 50 421 4320 188 1925 183 </obs>
+<obs>0 424 567 3432 188 1992 25 </obs>
+<obs>1 130 585 3312 189 1945 120 </obs>
+<obs>1 90 720 2924 193 1964 263 </obs>
+<obs>0 805 1270 2842 214 1977 101 </obs>
+<obs>1 96 277 4218 220 1948 43 </obs>
+<obs>0 448 471 5040 224 1982 73 </obs>
+<obs>0 130 725 3010 227 1980 221 </obs>
+<obs>0 595 607 2072 237 1970 83 </obs>
+<obs>0 474 674 2990 239 1984 37 </obs>
+<obs>0 410 803 2442 245 1977 185 </obs>
+<obs>0 395 802 2535 245 1981 61 </obs>
+<obs>0 437 464 4324 249 1985 57 </obs>
+<obs>0 270 618 2760 254 1948 186 </obs>
+<obs>0 265 447 2904 261 1963 199 </obs>
+<obs>0 899 1493 2806 264 1992 165 </obs>
+<obs>0 133 406 3182 292 1967 95 </obs>
+<obs>0 262 663 3450 294 1963 82 </obs>
+<obs>0 506 710 2747 299 1962 214 </obs>
+<obs>0 1140 990 2460 302 1981 152 </obs>
+<obs>0 211 792 3402 313 1844 33 </obs>
+<obs>0 799 1230 3124 313 1983 81 </obs>
+<obs>0 760 516 4032 317 1982 137 </obs>
+<obs>0 442 460 4056 338 1982 59 </obs>
+<obs>0 296 688 2666 339 1898 98 </obs>
+<obs>0 272 814 3545 351 1976 163 </obs>
+<obs>1 45 1003 2870 355 1967 462 </obs>
+<obs>0 614 802 2967 370 1971 99 </obs>
+<obs>0 436 582 3366 382 1971 52 </obs>
+<obs>0 481 595 3476 383 1990 47 </obs>
+<obs>0 95 500 3314 388 1966 394 </obs>
+<obs>0 357 500 2604 388 1964 227 </obs>
+<obs>0 280 899 2948 390 1985 65 </obs>
+<obs>0 142 764 2992 397 1961 242 </obs>
+<obs>0 710 1112 2945 406 1979 154 </obs>
+<obs>0 490 1197 2460 412 1988 45 </obs>
+<obs>0 870 689 3680 412 1986 81 </obs>
+<obs>0 1147 1340 2940 418 1974 79 </obs>
+<obs>0 743 940 2660 427 1981 120 </obs>
+<obs>0 759 911 4988 440 1967 91 </obs>
+<obs>0 36 910 2904 445 1975 218 </obs>
+<obs>0 224 640 2970 488 1971 97 </obs>
+<obs>0 82 1067 3124 495 1970 322 </obs>
+<obs>0 160 476 2684 497 1953 283 </obs>
+<obs>0 1170 1990 4128 499 1989 40 </obs>
+<obs>0 90 785 2940 502 1948 552 </obs>
+<obs>0 742 1711 3747 508 1964 222 </obs>
+<obs>0 575 736 4264 544 1992 29 </obs>
+<obs>0 163 846 3570 545 1947 390 </obs>
+<obs>0 175 1235 2604 547 1988 95 </obs>
+<obs>1 120 1247 2992 556 1967 305 </obs>
+<obs>0 590 1260 4628 574 1981 98 </obs>
+<obs>0 2120 1683 5445 578 1958 146 </obs>
+<obs>0 205 767 2924 582 1949 271 </obs>
+<obs>0 128 889 2700 597 1952 515 </obs>
+<obs>0 1539 1911 2516 602 1977 172 </obs>
+<obs>0 346 545 2655 617 1939 127 </obs>
+<obs>1 1046 1636 2945 636 1979 58 </obs>
+<obs>1 97 1032 3680 646 1932 524 </obs>
+<obs>0 686 850 3456 654 1964 222 </obs>
+<obs>0 914 1270 3650 662 1981 385 </obs>
+<obs>0 85 568 6859 670 1964 413 </obs>
+<obs>0 206 684 4134 684 1962 366 </obs>
+<obs>0 1154 1380 3330 698 1980 75 </obs>
+<obs>0 45 530 2625 700 1972 238 </obs>
+<obs>0 1146 1110 2816 707 1974 142 </obs>
+<obs>0 95 580 3672 730 1925 437 </obs>
+<obs>0 138 600 2728 733 1983 269 </obs>
+<obs>0 115 1200 4029 737 1941 643 </obs>
+<obs>0 640 1058 2666 787 1974 230 </obs>
+<obs>0 122 565 3120 825 1933 313 </obs>
+<obs>0 110 860 3168 834 1969 512 </obs>
+<obs>0 923 1299 2898 838 1971 211 </obs>
+<obs>0 1000 1600 2583 871 1966 171 </obs>
+<obs>0 1234 781 4320 922 1972 34 </obs>
+<obs>0 1492 1540 3315 930 1978 81 </obs>
+<obs>0 810 828 2924 957 1982 144 </obs>
+<obs>1 90 510 6360 988 1983 190 </obs>
+<obs>0 177 757 3450 1039 1970 339 </obs>
+<obs>0 74 583 2655 1083 1928 771 </obs>
+<obs>0 113 837 3312 1113 1966 522 </obs>
+<obs>0 145 969 3082 1113 1960 284 </obs>
+<obs>0 590 636 3096 1152 1974 202 </obs>
+<obs>1 1154 1823 2178 1243 1969 118 </obs>
+<obs>0 1450 1145 5480 1408 1973 160 </obs>
+<obs>0 1431 1880 2924 1437 1972 141 </obs>
+<obs>1 47 2632 3848 1530 1963 972 </obs>
+<obs>0 45 850 2604 1580 1968 542 </obs>
+<obs>1 47 940 3036 1583 1987 866 </obs>
+<obs>0 81 1253 4368 1812 1918 267 </obs>
+<obs>0 1010 1346 3174 1860 1975 186 </obs>
+<obs>0 334 1175 4232 2022 1954 558 </obs>
+<obs>0 190 733 5600 2331 1919 523 </obs>
+<obs>0 180 761 3626 2411 1933 325 </obs>
+<obs>0 1893 1527 2178 2479 1973 129 </obs>
+<obs>0 1400 2000 2684 2514 1969 165 </obs>
+<obs>0 301 1983 3036 2540 1890 531 </obs>
+<obs>0 1339 1947 2838 2676 1974 231 </obs>
+<obs>0 90 439 5336 2762 1974 536 </obs>
+<obs>1 310 1260 5664 2800 1971 487 </obs>
+<obs>1 226 2272 3036 3791 1945 799 </obs>
+<obs>0 148 1467 2184 4138 1886 660 </obs>
+<obs>0 159 1669 2640 6697 1892 737 </obs>
+<obs>1 178 1482 2992 7943 1932 346 </obs>
+<obs>1 47 1867 3900 8999 1911 1098 </obs>
+</observations>
+</gretldata>

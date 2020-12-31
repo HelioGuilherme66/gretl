@@ -1,0 +1,18 @@
+open sin_noise_outlier.csv -q
+series yh = loess(y, x, 2, 0.75, 1)
+
+foreign language=R --send-data
+  y <- gretldata[,"y"]
+  x <- gretldata[,"x"]
+  ymod <- loess(y ~ x, span=0.75)
+  yhatR <- as.matrix(predict(ymod, x))
+  gretl.export(yhatR)
+end foreign 
+
+matrix Rmat = mread("@dotdir/yhatR.mat")
+series yhR = Rmat
+print y yh yhR -o
+# gnuplot y yh yhR x --output=display --with-lines=yh,yhR
+
+
+

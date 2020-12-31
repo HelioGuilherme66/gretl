@@ -1,0 +1,43 @@
+
+Ox version 4.00 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.21, object created on 25-10-2006
+
+
+---- Database information ----
+Sample:    1(1) - 108(13) (1404 observations)
+Frequency: 13
+Variables: 6
+
+Variable        #obs  #miss    type          min         mean          max      std.dev
+codlav          1404      0  double          811       905.51          993       52.688
+year            1404      0  double         1985         1991         1997       3.7417
+lnwreal          801    603  double       2.3867       3.5194       5.2011      0.35346
+eta              803    601  double           27       45.076           65       7.8182
+eta2             803    601  double          729         2093         4225       709.66
+area             803    601  double            1       2.0511            3      0.35798
+
+DPD( 1) Modelling lnwreal by 1-step (using test4.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dlnwreal(-1)        0.0767359     0.1573    0.488   0.626
+Deta              -0.00206952    0.03826  -0.0541   0.957
+Deta2             0.000181093  0.0004256    0.425   0.671
+
+sigma               0.2106006  sigma^2             0.0443526
+sigma levels        0.1489171
+RSS              25.502742304  TSS              24.377161408
+no. of observations       578  no. of parameters           3
+Using robust standard errors
+
+Transformation used:     first differences
+Transformed instruments:  eta  eta2
+Level instruments:        Gmm(lnwreal,2,99)
+
+constant:                  no  time dummies:               0
+number of individuals      85
+longest time series        11 [1987 - 1997]
+shortest time series        1 (unbalanced panel)
+
+Wald (joint):    Chi^2(3) =     17.60 [0.001] **
+Sargan test:    Chi^2(65) =     84.56 [0.052]

@@ -1,0 +1,39 @@
+=== /home/cottrell/stats/test-gretl/nls ===
+output/delta_method.out vs newout/delta_method.out:
+5,8c5
+< ? function MPC(matrix *param, matrix *Y)
+< Warning: missing function return type!
+< This will be an error in gretl 1.10
+< 
+---
+> ? function matrix MPC(matrix *param, matrix *Y)
+49d45
+< Done
+output/ects_nls.out vs newout/ects_nls.out:
+42c42
+< ? genr alpha = $coeff(0)
+---
+> ? scalar alpha = $coeff[1]
+44c44
+< ? genr beta = $coeff(x1)
+---
+> ? scalar beta = $coeff[2]
+46c46
+< ? genr a0 = alpha
+---
+> ? scalar a0 = alpha
+48c48
+< ? genr b0 = beta
+---
+> ? scalar b0 = beta
+81c81
+< ? genr alpha = a0
+---
+> ? alpha = a0
+83c83
+< ? genr beta = b0
+---
+> ? beta = b0
+output/nlswitch2.out vs newout/nlswitch2.out:
+32d31
+< Done

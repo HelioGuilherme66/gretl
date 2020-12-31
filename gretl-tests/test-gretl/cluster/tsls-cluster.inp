@@ -1,0 +1,47 @@
+function matrix stata_reorder (matrix se)
+  scalar n = rows(se)
+  return se[n] | se[1:n-1]
+end function
+
+nulldata 256
+set seed 897561321
+
+series y = normal()
+
+series cx = uniform()
+cx = (cx > 0.75)? 3 : (cx > 0.5)? 2 : (cx > 0.25)? 1 : 0
+
+nendo = 2
+nexo = 2
+ninst = 3
+
+list lY = null # endogenous variables
+loop i=1..nendo -q
+   series Y$i = normal()
+   lY += Y$i
+endloop
+
+list lX = const # exogenous variables
+loop i=1..nexo -q
+   series X$i = normal()
+   lX += X$i
+endloop
+
+list lZ = null # instruments
+loop i=1..ninst -q
+   series Z$i = normal()
+   lZ += Z$i
+endloop
+
+tsls y lY lX ; lX lZ --cluster=cx
+matrix se = $stderr
+foreign language=stata --send-data
+  ivreg y x1 x2 (y1 y2 = z1 z2 z3), cluster(cx)
+  matrix vcv = e(V)
+  gretl_export vcv "vcv.mat"
+end foreign
+
+matrix stata_vcv = mread("@dotdir/vcv.mat")
+stata_se = stata_reorder(sqrt(diag(stata_vcv)))
+matrix check = se - stata_se
+print check

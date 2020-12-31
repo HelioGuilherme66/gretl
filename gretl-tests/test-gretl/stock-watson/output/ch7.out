@@ -1,0 +1,208 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch7.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch7.inp
+# Stock and Watson, ch 7
+# Massachussetts schools data
+#
+? open maschool.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/maschool.gdt
+periodicity: 1, maxobs: 220
+observations range: 1 to 220
+
+Listing 16 variables:
+  0) const       1) code        2) regday      3) specneed    4) bilingua  
+  5) occupday    6) totday      7) spc         8) speced      9) lnchpct   
+ 10) tchratio   11) percap     12) totsc4     13) totsc8     14) avgsalry  
+ 15) pctel     
+
+? set hc_version 1
+# rename variables -- as in CA dataset
+? genr str = tchratio
+Generated series str (ID 16)
+? genr testscr = totsc4
+Generated series testscr (ID 17)
+? genr el_pct = pctel
+Generated series el_pct (ID 18)
+? genr avginc = percap
+Generated series avginc (ID 19)
+? genr meal_pct = lnchpct
+Generated series meal_pct (ID 20)
+# Summary statistics
+? summary testscr str el_pct meal_pct avginc
+
+                     Mean         Median        Minimum        Maximum
+testscr            709.83         711.00         658.00         740.00
+str                17.344         17.100         11.400         27.000
+el_pct             1.1177         0.0000         0.0000         24.494
+meal_pct           15.316         10.550        0.40000         76.200
+avginc             18.747         17.128         9.6860         46.855
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+testscr            15.126       0.021310       -0.53149        0.48031
+str                2.2767        0.13126        0.32788        0.95765
+el_pct             2.9009         2.5955         4.5579         25.350
+meal_pct           15.060        0.98330         1.9519         3.9475
+avginc             5.8076        0.30979         1.7492         3.9191
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+testscr            680.10         734.00         19.000              0
+str                13.510         21.285         3.2750              0
+el_pct             0.0000         6.2835        0.88791              0
+meal_pct           1.7050         50.075         15.175              0
+avginc             12.358         30.714         5.1770              0
+
+? summary el_pct
+
+Summary statistics, using the observations 1 - 220
+for the variable 'el_pct' (220 valid observations)
+
+  Mean                         1.1177
+  Median                       0.0000
+  Minimum                      0.0000
+  Maximum                      24.494
+  Standard deviation           2.9009
+  C.V.                         2.5955
+  Skewness                     4.5579
+  Ex. kurtosis                 25.350
+  5% percentile                0.0000
+  95% percentile               6.2835
+  Interquartile range         0.88791
+  Missing obs.                      0
+
+#
+# Table 7.2
+#
+# Transformed Variables
+? genr avginc2 = avginc * avginc
+Generated series avginc2 (ID 21)
+? genr avginc3 = avginc2 * avginc
+Generated series avginc3 (ID 22)
+? genr loginc = ln(avginc)
+Generated series loginc (ID 23)
+? genr hiel = (el_pct > 0)
+Generated series hiel (ID 24)
+? genr strxhiel = str*hiel
+Generated series strxhiel (ID 25)
+? genr sttr2 = str*str
+Generated series sttr2 (ID 26)
+? genr sttr3 = sttr2*str
+Generated series sttr3 (ID 27)
+#
+# Col(1)
+? ols testscr 0 str --robust
+
+Model 1: OLS, using observations 1-220
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       739.621       8.60727     85.93     4.07e-170 ***
+  str          -1.71781     0.499064    -3.442    0.0007    ***
+
+Mean dependent var   709.8273   S.D. dependent var   15.12647
+Sum squared resid    46759.84   S.E. of regression   14.64564
+R-squared            0.066846   Adjusted R-squared   0.062565
+F(1, 218)            11.84780   P-value(F)           0.000692
+Log-likelihood      -901.6732   Akaike criterion     1807.346
+Schwarz criterion    1814.134   Hannan-Quinn         1810.087
+
+# Col(2)
+? ols testscr 0 str el_pct meal_pct loginc --robust
+
+Model 2: OLS, using observations 1-220
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      682.432       11.4972      59.36     2.66e-135 ***
+  str         -0.689179     0.269973    -2.553    0.0114    **
+  el_pct      -0.410745     0.306377    -1.341    0.1814   
+  meal_pct    -0.521465     0.0776589   -6.715    1.65e-10  ***
+  loginc      16.5294       3.14572      5.255    3.57e-07  ***
+
+Mean dependent var   709.8273   S.D. dependent var   15.12647
+Sum squared resid    16221.92   S.E. of regression   8.686241
+R-squared            0.676270   Adjusted R-squared   0.670247
+F(4, 215)            144.3637   P-value(F)           9.93e-60
+Log-likelihood      -785.2205   Akaike criterion     1580.441
+Schwarz criterion    1597.409   Hannan-Quinn         1587.293
+
+Excluding the constant, p-value was highest for variable 18 (el_pct)
+
+# Col(3)
+? ols testscr 0 str el_pct meal_pct avginc avginc2 avginc3 --robust
+
+Model 3: OLS, using observations 1-220
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient     std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const      744.025        21.3178        34.90     4.62e-90 ***
+  str         -0.640909      0.268481      -2.387    0.0179   **
+  el_pct      -0.437118      0.303324      -1.441    0.1510  
+  meal_pct    -0.581819      0.0973534     -5.976    9.49e-09 ***
+  avginc      -3.06669       2.35253       -1.304    0.1938  
+  avginc2      0.163689      0.0853300      1.918    0.0564   *
+  avginc3     -0.00217926    0.000970331   -2.246    0.0257   **
+
+Mean dependent var   709.8273   S.D. dependent var   15.12647
+Sum squared resid    15779.79   S.E. of regression   8.607179
+R-squared            0.685093   Adjusted R-squared   0.676223
+F(6, 213)            110.2209   P-value(F)           1.62e-62
+Log-likelihood      -782.1809   Akaike criterion     1578.362
+Schwarz criterion    1602.117   Hannan-Quinn         1587.955
+
+Excluding the constant, p-value was highest for variable 19 (avginc)
+
+? omit avginc2 avginc3 --quiet
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    avginc2, avginc3
+  Test statistic: Robust F(2, 213) = 7.7448, p-value 0.000566438
+
+# Col(4)
+? ols testscr 0 str sttr2 sttr3 el_pct meal_pct avginc avginc2 \
+  avginc3 --robust
+
+Model 5: OLS, using observations 1-220
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      665.496        81.3318        8.182    2.60e-14 ***
+  str         12.4260       14.0102        0.8869   0.3761  
+  sttr2       -0.680303      0.736519     -0.9237   0.3567  
+  sttr3        0.0114737     0.0126663     0.9058   0.3661  
+  el_pct      -0.434166      0.299788     -1.448    0.1490  
+  meal_pct    -0.587217      0.104021     -5.645    5.28e-08 ***
+  avginc      -3.38154       2.49068      -1.358    0.1760  
+  avginc2      0.174102      0.0892596     1.951    0.0524   *
+  avginc3     -0.00228835    0.00100780   -2.271    0.0242   **
+
+Mean dependent var   709.8273   S.D. dependent var   15.12647
+Sum squared resid    15700.57   S.E. of regression   8.626139
+R-squared            0.686674   Adjusted R-squared   0.674795
+F(8, 211)            105.7255   P-value(F)           1.62e-69
+Log-likelihood      -781.6272   Akaike criterion     1581.254
+Schwarz criterion    1611.797   Hannan-Quinn         1593.588
+
+Excluding the constant, p-value was highest for variable 16 (str)
+
+# Test mentioned in text (p. 257)
+? omit sttr2 sttr3 --quiet
+Test on Model 5:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    sttr2, sttr3
+  Test statistic: Robust F(2, 211) = 0.446278, p-value 0.640608
+
+Done

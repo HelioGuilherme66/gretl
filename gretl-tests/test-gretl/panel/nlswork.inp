@@ -1,0 +1,25 @@
+open nlswork.dta
+setobs idcode year --panel-vars
+# setmiss 101
+genr age2 = age^2
+genr ttl_exp2 = ttl_exp^2
+genr tenure2 = tenure^2
+genr black = (race == 2)
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south --between
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south --random
+
+# for Hausman comparison with stata: do the test manually
+panel ln_wage 0 age* ttl_exp* tenure* not_smsa south
+matrix b = $coeff[2:]
+matrix V_b = $vcv[2:,2:]
+panel ln_wage 0 age* ttl_exp* tenure* not_smsa south --random
+matrix B = $coeff[2:]
+matrix V_B = $vcv[2:,2:]
+matrix Bdiff = b - B
+print Bdiff
+matrix SE = sqrt(diag(V_b-V_B))
+print SE
+H = (b-B)'*inv(V_b-V_B)*(b-B)
+print H
+

@@ -1,0 +1,255 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run cam710.inp
+ /home/cottrell/stats/test-gretl/panel/cam710.inp
+# Partial replication of Table 21.2. p. 710, in Cameron
+# and Trivedi, Microeconometrics (Cambridge, 2005)
+? open ziliak.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/panel/ziliak.gdt
+periodicity: 10, maxobs: 5320
+observations range: 1:01 to 532:10
+
+Listing 9 variables:
+  0) const    1) lnhr     2) lnwg     3) kids     4) ageh   
+  5) agesq    6) disab    7) id       8) year   
+
+# individual summaries include a statement of the
+# within and between standard deviations
+? summary lnhr
+
+Summary statistics, using the observations 1:01 - 532:10
+for the variable 'lnhr' (5320 valid observations)
+
+  Mean                         7.6574
+  Median                       7.6500
+  Minimum                      2.7700
+  Maximum                      8.5600
+  Standard deviation          0.28559
+  C.V.                       0.037296
+  Skewness                    -4.9843
+  Ex. kurtosis                 61.325
+  5% percentile                7.3700
+  95% percentile               8.0100
+  Interquartile range         0.20000
+  Missing obs.                      0
+
+  Within s.d.                 0.23467
+  Between s.d.                0.17901
+? summary lnwg
+
+Summary statistics, using the observations 1:01 - 532:10
+for the variable 'lnwg' (5320 valid observations)
+
+  Mean                         2.6094
+  Median                       2.6400
+  Minimum                    -0.26000
+  Maximum                      4.6900
+  Standard deviation          0.42589
+  C.V.                        0.16321
+  Skewness                   -0.18358
+  Ex. kurtosis                 2.1533
+  5% percentile                1.8800
+  95% percentile               3.2900
+  Interquartile range         0.49000
+  Missing obs.                      0
+
+  Within s.d.                 0.17828
+  Between s.d.                0.39119
+# plain pooled OLS
+? ols 1 0 2
+
+Model 1: Pooled OLS, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.44152      0.0241265    308.4     0.0000   ***
+  lnwg        0.0827435    0.00912514     9.068   1.68e-19 ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    427.2252   S.E. of regression   0.283436
+R-squared            0.015226   Adjusted R-squared   0.015041
+F(1, 5318)           82.22228   P-value(F)           1.68e-19
+Log-likelihood      -840.4529   Akaike criterion     1684.906
+Schwarz criterion    1698.064   Hannan-Quinn         1689.503
+rho                  0.468737   Durbin-Watson        0.978594
+
+# pooled OLS with Arellano-type standard errors
+? ols 1 0 2 --robust
+
+Model 2: Pooled OLS, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       7.44152      0.0795047    93.60     0.0000  ***
+  lnwg        0.0827435    0.0292409     2.830    0.0048  ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    427.2252   S.E. of regression   0.283436
+R-squared            0.015226   Adjusted R-squared   0.015041
+F(1, 531)            8.007327   P-value(F)           0.004835
+Log-likelihood      -840.4529   Akaike criterion     1684.906
+Schwarz criterion    1698.064   Hannan-Quinn         1689.503
+rho                  0.468737   Durbin-Watson        0.978594
+
+# the "between" model
+? panel 1 0 2 --between
+
+Model 3: Between-groups, using 532 observations
+Dependent variable: lnhr
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       7.48302      0.0518829    144.2     0.0000  ***
+  lnwg        0.0668378    0.0196635      3.399   0.0007  ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.179008
+Sum squared resid    16.65234   S.E. of regression   0.177255
+R-squared            0.021334   Adjusted R-squared   0.019488
+F(1, 530)            11.55377   P-value(F)           0.000727
+Log-likelihood       166.5734   Akaike criterion    -329.1467
+Schwarz criterion   -320.5934   Hannan-Quinn        -325.7994
+
+# fixed effects, plain
+? panel 1 0 2
+
+Model 4: Fixed-effects, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.21989      0.0493434    146.3     0.0000   ***
+  lnwg        0.167675     0.0188700      8.886   8.83e-19 ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    259.3985   S.E. of regression   0.232783
+LSDV R-squared       0.402074   Within R-squared     0.016227
+LSDV F(532, 4787)    6.050773   P-value(F)           3.6e-267
+Log-likelihood       486.7433   Akaike criterion     92.51344
+Schwarz criterion    3599.242   Hannan-Quinn         1317.714
+rho                  0.107065   Durbin-Watson        1.613760
+
+Joint test on named regressors -
+  Test statistic: F(1, 4787) = 78.9578
+  with p-value = P(F(1, 4787) > 78.9578) = 8.82741e-19
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(531, 4787) = 5.83261
+  with p-value = P(F(531, 4787) > 5.83261) = 3.4148e-254
+
+# fixed effects, robust
+? panel 1 0 2 --robust
+
+Model 5: Fixed-effects, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       7.21989      0.221496     32.60     8.22e-129 ***
+  lnwg        0.167675     0.0848827     1.975    0.0487    **
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    259.3985   S.E. of regression   0.232783
+LSDV R-squared       0.402074   Within R-squared     0.016227
+Log-likelihood       486.7433   Akaike criterion     92.51344
+Schwarz criterion    3599.242   Hannan-Quinn         1317.714
+rho                  0.107065   Durbin-Watson        1.613760
+
+Joint test on named regressors -
+  Test statistic: F(1, 531) = 3.90212
+  with p-value = P(F(1, 531) > 3.90212) = 0.0487426
+
+Robust test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: Welch F(531, 1601.9) = 33.1221
+  with p-value = P(F(531, 1601.9) > 33.1221) = 0
+
+# RE-GLS
+? panel 1 0 2 --random --matrix-diff
+
+Model 6: Random-effects (GLS), using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.34604      0.0363925    201.9     0.0000   ***
+  lnwg        0.119332     0.0136312      8.754   2.72e-18 ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    428.5168   S.E. of regression   0.283837
+Log-likelihood      -848.4825   Akaike criterion     1700.965
+Schwarz criterion    1714.123   Hannan-Quinn         1705.562
+
+'Between' variance = 0.0260007
+'Within' variance = 0.0541881
+theta used for quasi-demeaning = 0.584709
+corr(y,yhat)^2 = 0.0152257
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(1) = 76.6383
+  with p-value = 2.05314e-18
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 2490.08
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 13.7259
+  with p-value = 0.000211516
+
+? panel 1 0 2 --random
+
+Model 7: Random-effects (GLS), using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.34604      0.0363925    201.9     0.0000   ***
+  lnwg        0.119332     0.0136312      8.754   2.72e-18 ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    428.5168   S.E. of regression   0.283837
+Log-likelihood      -848.4825   Akaike criterion     1700.965
+Schwarz criterion    1714.123   Hannan-Quinn         1705.562
+
+'Between' variance = 0.0260007
+'Within' variance = 0.0541881
+theta used for quasi-demeaning = 0.584709
+corr(y,yhat)^2 = 0.0152257
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(1) = 76.6383
+  with p-value = 2.05314e-18
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 2490.08
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 13.6981
+  with p-value = 0.000214675
+
+Done

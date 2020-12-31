@@ -1,0 +1,9 @@
+open school.dta -q
+biprobit private vote 0 logptax loginc years --cluster=pub12
+
+foreign language=stata --send-data
+  biprobit private vote logptax loginc years, vce(cluster pub12)
+end foreign
+
+
+ 

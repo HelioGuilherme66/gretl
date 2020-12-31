@@ -1,0 +1,104 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run ivintreg.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/ivintreg.gfn.inp
+? include ./ivintreg.gfn
+ /home/cottrell/stats/test-gretl/testgfn/ivintreg.gfn
+ivintreg 1.0, 2012-03-22 (Riccardo "Jack" Lucchetti)
+/*
+Example file for ivintreg: we use the Mroz(1987) dataset
+to estimate a wage equation for women on the exactly observed
+log wage; then, we pretend we only observe the log wage in classes
+and re-estimate the wage equation by IV interval regression.
+*/
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+Warning: log: Numerical result out of range
+
+Model 1: TSLS, using observations 1-428
+Dependent variable: lwage
+Instrumented: WE 
+Instruments: const WA AX WFED WMED CIT 
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       0.135915     0.448894      0.3028   0.7621 
+  WA         -0.00203326   0.00486133   -0.4183   0.6758 
+  AX          0.0164590    0.00463275    3.553    0.0004  ***
+  WE          0.0730725    0.0306867     2.381    0.0173  **
+
+Mean dependent var   1.190173   S.D. dependent var   0.723198
+Sum squared resid    193.0712   S.E. of regression   0.674801
+R-squared            0.143861   Adjusted R-squared   0.137803
+F(3, 424)            6.732971   P-value(F)           0.000191
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 1.8307
+  with p-value = 0.176044
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 2.2663
+  with p-value = P(Chi-square(2) > 2.2663) = 0.322017
+
+Weak instrument test - 
+  First-stage F-statistic (3, 422) = 39.0864
+  Critical values for TSLS bias relative to OLS:
+
+     bias       5%      10%      20%      30%
+    value    13.91     9.08     6.46     5.39
+
+  Relative bias is probably less than 5%
+
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    22.30    12.83     9.54     7.80
+
+  Maximal size is probably less than 10%
+
+
+------------------------------------------------------------------
+IV interval estimation (two-step)
+------------------------------------------------------------------
+Instrumented: WE
+Instruments:  WFED,WMED,CIT
+------------------------------------------------------------------
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       0.242653     0.505077      0.4804   0.6309 
+  WA         -0.00166029   0.00574494   -0.2890   0.7726 
+  AX          0.0154341    0.00551526    2.798    0.0051  ***
+  WE          0.0640650    0.0357524     1.792    0.0731  *
+
+  Sample size = 428
+  sigma = 0.672393
+
+  Wald test for exogeneity:   2.0768 (chi^2(1), pvalue = 0.149550)
+
+
+------------------------------------------------------------------
+IV interval estimation (LIML), robust standard errors
+------------------------------------------------------------------
+Instrumented: WE
+Instruments:  WFED,WMED,CIT
+------------------------------------------------------------------
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       0.247587     0.507096      0.4882   0.6254 
+  WA         -0.00166670   0.00574464   -0.2901   0.7717 
+  AX          0.0154355    0.00551541    2.799    0.0051  ***
+  WE          0.0636950    0.0359361     1.772    0.0763  *
+
+  Sample size = 428
+  sigma = 0.672357
+  Log-likelihood = -469.215
+
+  Wald test for exogeneity:   2.0880 (chi^2(1), pvalue = 0.148459)
+  Test for over-identifying restrictions:   0.7277 (chi^2(2), pvalue = 0.694996)
+

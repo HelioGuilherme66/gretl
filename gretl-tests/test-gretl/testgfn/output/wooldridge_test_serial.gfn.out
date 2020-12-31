@@ -1,0 +1,44 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run wooldridge_test_serial.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/wooldridge_test_serial.gfn.inp
+? include ./wooldridge_test_serial.gfn
+ /home/cottrell/stats/test-gretl/testgfn/wooldridge_test_serial.gfn
+wooldridge_test_serial 1.0, 2011-09-24 (Giuseppe Vittucci)
+? open abdata.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? list X = n k
+Generated list X
+? wooldridge_test_serial(ys,X)
+
+First-Differenced equation (dependent d_y):
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  d_n         0.104329     0.0262603    3.973   7.10e-05 ***
+  d_k         0.0392218    0.0160681    2.441   0.0146   **
+
+
+Regression of residuals of the FD equation on lagged residuals
+uhat = rho*uhat(-1) + e
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  uhat(-1)    0.339914     0.0246961    13.76   4.20e-43 ***
+
+
+Wooldridge test for autocorrelation in panel data
+H0: no first-order autocorrelation (rho = -0.5)
+F(1,750) = 1156.68
+Prob > F = 4.13074e-154Done

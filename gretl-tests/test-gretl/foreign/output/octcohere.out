@@ -1,0 +1,104 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run octcohere.inp
+ /home/cottrell/stats/test-gretl/foreign/octcohere.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? matrix xy = { PRIME, UNEMP }
+Generated matrix xy
+? mwrite(xy, "/home/cottrell/.gretl/xy.mat")
+? foreign language=octave
+?  pkg load signal
+?  xy = gretl_loadmat("xy.mat");
+?  x = xy(:,1);
+?  y = xy(:,2);
+?  # the last param is the Bartlett window size
+?  h = coher(x, y, 8);
+?  gretl_export(h, "h.mat");
+? end foreign
+
+? h = mread("/home/cottrell/.gretl/h.mat")
+Generated matrix h
+? colnames(h, "coherence")
+? print h
+h (65 x 1)
+
+   coherence 
+     0.31056 
+     0.30882 
+     0.30356 
+     0.29460 
+     0.28163 
+     0.26419 
+     0.24166 
+     0.21318 
+     0.17765 
+     0.13367 
+    0.079587 
+    0.013573 
+   -0.065888 
+    -0.15889 
+    -0.26168 
+    -0.36274 
+    -0.43922 
+    -0.46125 
+    -0.41091 
+    -0.30147 
+    -0.16977 
+   -0.049852 
+    0.040832 
+    0.098521 
+     0.12577 
+     0.12658 
+     0.10447 
+    0.062248 
+   0.0028016 
+   -0.069333 
+    -0.14567 
+    -0.21170 
+    -0.24791 
+    -0.23748 
+    -0.17811 
+   -0.085844 
+    0.014719 
+     0.10337 
+     0.16935 
+     0.20938 
+     0.22403 
+     0.21512 
+     0.18470 
+     0.13510 
+    0.069906 
+  -0.0043344 
+   -0.076340 
+    -0.12995 
+    -0.14825 
+    -0.12202 
+   -0.056334 
+    0.031819 
+     0.12293 
+     0.20250 
+     0.26275 
+     0.30066 
+     0.31551 
+     0.30716 
+     0.27536 
+     0.22002 
+     0.14259 
+    0.048934 
+   -0.046986 
+    -0.12189 
+    -0.15065 
+
+Done

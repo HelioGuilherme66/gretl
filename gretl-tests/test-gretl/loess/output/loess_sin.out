@@ -1,0 +1,22 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-03-11 14:21
+? run loess_sin.inp
+ /home/cottrell/stats/test-gretl/loess/loess_sin.inp
+? nulldata 120
+periodicity: 1, maxobs: 120
+observations range: 1 to 120
+? series x = index
+Generated series x (ID 2)
+? scalar n = $nobs
+Generated scalar n = 120
+? series y = sin(2*pi*x/n) + uniform(-1, 1)
+Generated series y (ID 3)
+# store sin_noise.csv x y
+# quit
+? series yh = loess(y, x, 2, 0.75, 0)
+Generated series yh (ID 4)
+? g1 <- gnuplot y yh x --with-lines=yh
+wrote /home/cottrell/stats/test-gretl/loess/gpttmp01.plt
+Done

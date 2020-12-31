@@ -1,0 +1,41 @@
+function matrix mlogit_probs (matrix b, matrix X, matrix y)
+  scalar m = rows(y)
+  scalar nb = rows(b) / (m-1)
+  scalar T = rows(X)
+  matrix probs = zeros(T, m)
+  matrix num = ones(1, m)
+  loop t=1..T -q
+    scalar den = 1
+    k = 1
+    loop j=2..m -q
+      matrix bj = b[k:k+nb-1]
+      num[j] = exp(X[t,]*bj)
+      den += num[j]
+      k += nb   
+    endloop
+    probs[t,] = num / den
+  endloop
+  return probs
+end function
+
+open keane.gdt
+smpl year==87 --restrict
+list Xlist = const educ exper expersq black
+matrix yvals = values(status)
+# estimate, reserving the last 20 observations
+smpl ; -20
+logit status Xlist --multinomial
+matrix theta = $coeff
+# now forecast for the last 20 obs
+smpl ; +20
+sstart = $nobs - 19
+smpl sstart ;
+matrix X = {Xlist}
+matrix probs = mlogit_probs(theta, X, yvals)
+# show the probabilities per outcome
+print probs
+# show the most probable outcomes
+matrix fc = imaxr(probs)
+print fc
+
+

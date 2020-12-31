@@ -1,0 +1,213 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run armagen4.inp
+ /home/cottrell/stats/test-gretl/arma/armagen4.inp
+? nulldata 624
+periodicity: 1, maxobs: 624,
+observations range: 1-624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 5
+Pseudo-random number generator seeded with 5
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + 0.4*eps(-1) - 0.15*eps(-2)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7*y(-1) -0.3*y(-2) + u
+Replaced series y (ID 4)
+? smpl 1950:03
+Full data range: 1950:01 - 2001:12 (n = 624)
+Current sample: 1950:03 - 2001:12 (n = 622)
+
+? arma 2 2 ; y --x-12-arima
+
+Model 1: ARMA, using observations 1950:03-2001:12 (T = 622)
+Estimated using X-12-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0704604    0.0665496     1.059    0.2897  
+  phi_1       0.898870     0.114372      7.859    3.87e-15 ***
+  phi_2      -0.382427     0.0468887    -8.156    3.46e-16 ***
+  theta_1     0.144835     0.118951      1.218    0.2234  
+  theta_2    -0.310738     0.0983362    -3.160    0.0016   ***
+
+Mean dependent var   0.068615   S.D. dependent var   1.453511
+Mean of innovations  0.002792   S.D. of innovations  0.961758
+Log-likelihood      -858.9997   Akaike criterion     1729.999
+Schwarz criterion    1756.597   Hannan-Quinn         1740.337
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1752     1.1107     1.6171     0.1205
+    Root  2           1.1752    -1.1107     1.6171    -0.1205
+  MA
+    Root  1          -1.5759     0.0000     1.5759     0.5000
+    Root  2           2.0420     0.0000     2.0420     0.0000
+  -----------------------------------------------------------
+
+? arma 2 2 ; y
+Function evaluations: 35
+Evaluations of gradient: 9
+
+Model 2: ARMA, using observations 1950:03-2001:12 (T = 622)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0704603    0.0664509     1.060    0.2890  
+  phi_1       0.898843     0.121422      7.403    1.34e-13 ***
+  phi_2      -0.382433     0.0479864    -7.970    1.59e-15 ***
+  theta_1     0.144860     0.126323      1.147    0.2515  
+  theta_2    -0.310693     0.110745     -2.805    0.0050   ***
+
+Mean dependent var   0.068615   S.D. dependent var   1.453511
+Mean of innovations -0.000955   S.D. of innovations  0.961758
+Log-likelihood      -858.9997   Akaike criterion     1729.999
+Schwarz criterion    1756.597   Hannan-Quinn         1740.337
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1752    -1.1108     1.6170    -0.1205
+    Root  2           1.1752     1.1108     1.6170     0.1205
+  MA
+    Root  1          -1.5760     0.0000     1.5760     0.5000
+    Root  2           2.0423     0.0000     2.0423     0.0000
+  -----------------------------------------------------------
+
+? arma 2 2 ; y --conditional
+Convergence achieved after 7 iterations
+
+Model 3: ARMA, using observations 1950:03-2001:12 (T = 622)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0342582    0.0334571     1.024    0.3059  
+  phi_1       0.898646     0.125674      7.151    8.64e-13 ***
+  phi_2      -0.384086     0.0479285    -8.014    1.11e-15 ***
+  theta_1     0.144894     0.127283      1.138    0.2550  
+  theta_2    -0.307801     0.102236     -3.011    0.0026   ***
+
+Mean dependent var   0.068615   S.D. dependent var   1.453511
+Mean of innovations -0.000390   S.D. of innovations  0.962405
+Log-likelihood      -858.7445   Akaike criterion     1729.489
+Schwarz criterion    1756.087   Hannan-Quinn         1739.826
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1698    -1.1113     1.6136    -0.1209
+    Root  2           1.1698     1.1113     1.6136     0.1209
+  MA
+    Root  1          -1.5824     0.0000     1.5824     0.5000
+    Root  2           2.0531     0.0000     2.0531     0.0000
+  -----------------------------------------------------------
+
+? smpl 1950:05
+Full data range: 1950:01 - 2001:12 (n = 624)
+Current sample: 1950:05 - 2001:12 (n = 620)
+
+? arma 2 2 ; y --x-12-arima
+
+Model 4: ARMA, using observations 1950:05-2001:12 (T = 620)
+Estimated using X-12-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0734118    0.0664721     1.104    0.2694  
+  phi_1       0.897334     0.115965      7.738    1.01e-14 ***
+  phi_2      -0.385421     0.0471491    -8.175    2.97e-16 ***
+  theta_1     0.146574     0.121369      1.208    0.2272  
+  theta_2    -0.307499     0.0997775    -3.082    0.0021   ***
+
+Mean dependent var   0.071741   S.D. dependent var   1.454785
+Mean of innovations  0.004606   S.D. of innovations  0.962324
+Log-likelihood      -856.6066   Akaike criterion     1725.213
+Schwarz criterion    1751.791   Hannan-Quinn         1735.544
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1641     1.1133     1.6108     0.1215
+    Root  2           1.1641    -1.1133     1.6108    -0.1215
+  MA
+    Root  1          -1.5807     0.0000     1.5807     0.5000
+    Root  2           2.0574     0.0000     2.0574     0.0000
+  -----------------------------------------------------------
+
+? arma 2 2 ; y
+Function evaluations: 36
+Evaluations of gradient: 10
+
+Model 5: ARMA, using observations 1950:05-2001:12 (T = 620)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0734118    0.0664483     1.105    0.2692  
+  phi_1       0.897357     0.119491      7.510    5.92e-14 ***
+  phi_2      -0.385413     0.0478807    -8.049    8.32e-16 ***
+  theta_1     0.146555     0.124260      1.179    0.2382  
+  theta_2    -0.307540     0.109012     -2.821    0.0048   ***
+
+Mean dependent var   0.071741   S.D. dependent var   1.454785
+Mean of innovations -0.001757   S.D. of innovations  0.962324
+Log-likelihood      -856.6066   Akaike criterion     1725.213
+Schwarz criterion    1751.791   Hannan-Quinn         1735.544
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1641    -1.1133     1.6108    -0.1214
+    Root  2           1.1641     1.1133     1.6108     0.1214
+  MA
+    Root  1          -1.5806     0.0000     1.5806     0.5000
+    Root  2           2.0572     0.0000     2.0572     0.0000
+  -----------------------------------------------------------
+
+? arma 2 2 ; y --conditional
+Convergence achieved after 8 iterations
+
+Model 6: ARMA, using observations 1950:05-2001:12 (T = 620)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0349309    0.0316100     1.105    0.2691  
+  phi_1       0.921687     0.118145      7.801    6.13e-15 ***
+  phi_2      -0.386210     0.0468386    -8.246    1.64e-16 ***
+  theta_1     0.119952     0.119933      1.000    0.3172  
+  theta_2    -0.331624     0.0968532    -3.424    0.0006   ***
+
+Mean dependent var   0.071741   S.D. dependent var   1.454785
+Mean of innovations -0.000681   S.D. of innovations  0.962618
+Log-likelihood      -856.1205   Akaike criterion     1724.241
+Schwarz criterion    1750.819   Hannan-Quinn         1734.572
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1932    -1.0796     1.6091    -0.1170
+    Root  2           1.1932     1.0796     1.6091     0.1170
+  MA
+    Root  1          -1.5650     0.0000     1.5650     0.5000
+    Root  2           1.9268     0.0000     1.9268     0.0000
+  -----------------------------------------------------------
+
+Done

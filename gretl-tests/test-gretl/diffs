@@ -1,0 +1,1509 @@
+=== /home/helio/github/gretl/gretl-tests/test-gretl ===
+output/armaloop.out vs newout/armaloop.out:
+150c150
+<              coefficient    std. error    t-ratio     p-value
+---
+>              coefficient    std. error       z        p-value
+159c159
+< F(3, 621)            1.14e-11   P-value(F)           1.000000
+---
+> Chi-square(3)        3.42e-11   p-value              1.000000
+output/biptest.out vs newout/biptest.out:
+237c237
+< Gradients:   -2.7285e-10 -1.8209e-09 -2.6271e-09 -8.9096e-09 (norm 2.52e-05)
+---
+> Gradients:   -2.7282e-10 -1.8207e-09 -2.6268e-09 -8.9093e-09 (norm 2.52e-05)
+283c283
+< Gradients:    2.3840e-11  1.5465e-10  1.7370e-10 (norm 8.94e-06)
+---
+> Gradients:    2.3836e-11  1.5463e-10  1.7369e-10 (norm 8.94e-06)
+311,312c311,312
+< Gradients:    4.4662e-10  2.9441e-09  4.3614e-09 -4.8302e-09 -8.1274e-11 -5.4030e-10
+<              -3.9312e-10     -5.0933 (norm 4.15e-01)
+---
+> Gradients:    4.4664e-10  2.9442e-09  4.3616e-09 -4.8300e-09 -8.1274e-11 -5.4031e-10
+>              -3.9314e-10     -5.0933 (norm 4.15e-01)
+337,338c337,338
+< Gradients:   -6.4115e-14 -4.4764e-13 -6.1950e-13 -1.3709e-12 -6.5947e-14 -4.7073e-13
+<              -4.8272e-13 -3.0781e-14 (norm 4.28e-07)
+---
+> Gradients:   -1.0092e-13 -6.8523e-13 -9.7344e-13 -1.6167e-12 -3.4417e-14 -2.4780e-13
+>              -1.9762e-13 -3.3695e-14 (norm 4.37e-07)
+output/collin.out vs newout/collin.out:
+33,35c33,35
+<   const        53.3242      37.0685      1.439    0.1781 
+<   sqft         60.8312      56.6404      1.074    0.3058 
+<   egg         -60.6925      56.6404     -1.072    0.3069 
+---
+>   const        42.2331      39.4400      1.071    0.3072 
+>   sqft         52.5221      60.3849      0.8698   0.4030 
+>   egg         -52.3808      60.3819     -0.8675   0.4042 
+38,42c38,42
+< Sum squared resid    16546.42   S.E. of regression   38.78428
+< R-squared            0.837485   Adjusted R-squared   0.807937
+< F(2, 11)             28.34312   P-value(F)           0.000046
+< Log-likelihood      -69.38922   Akaike criterion     144.7784
+< Schwarz criterion    146.6956   Hannan-Quinn         144.6010
+---
+> Sum squared resid    17103.47   S.E. of regression   39.43173
+> R-squared            0.832014   Adjusted R-squared   0.801471
+> F(2, 11)             27.24087   P-value(F)           0.000055
+> Log-likelihood      -69.62099   Akaike criterion     145.2420
+> Schwarz criterion    147.1592   Hannan-Quinn         145.0645
+output/converge.out vs newout/converge.out:
+6,92c6
+< 
+< Read datafile /home/cottrell/gretl/pwt56/pwt56_60_89.gdt
+< periodicity: 30, maxobs: 3600
+< observations range: 1:01 to 120:30
+< 
+< Listing 22 variables:
+<   0) const     1) CCODE     2) POP       3) RGDPCH    4) RGDPL   
+<   5) C         6) I         7) G         8) RGDPTT    9) Y       
+<  10) CGDP     11) CC       12) CI       13) CG       14) P       
+<  15) PC       16) PI       17) PG       18) XR       19) RGDPW   
+<  20) OPEN     21) YEAR    
+< 
+< # for 1989 (last obs), lag 29 gives 1960, the first obs
+< ? genr gdp60 = RGDPL(-29)
+< Generated series gdp60 (ID 22)
+< # find total growth of real GDP over 30 years
+< ? genr gdpgro = (RGDPL - gdp60)/gdp60
+< Generated series gdpgro (ID 23)
+< # restrict the sample to a 1989 cross-section
+< ? smpl (YEAR=1989) --restrict
+< Full data set: 3600 observations
+< Current sample: 120 observations
+< # Convergence?  Have countries with a lower base grown faster?
+< ? ols gdpgro const gdp60
+< 
+< Model 1: OLS, using observations 1-120
+< Dependent variable: gdpgro
+< 
+<              coefficient   std. error    t-ratio   p-value 
+<   ---------------------------------------------------------
+<   const      1.03800       0.160999      6.447     2.60e-09 ***
+<   gdp60      1.56336e-05   5.08485e-05   0.3075    0.7590  
+< 
+< Mean dependent var   1.073812   S.D. dependent var   1.212993
+< Sum squared resid    174.9506   S.E. of regression   1.217634
+< R-squared            0.000800   Adjusted R-squared  -0.007667
+< F(1, 118)            0.094528   P-value(F)           0.759040
+< Log-likelihood      -192.8933   Akaike criterion     389.7867
+< Schwarz criterion    395.3617   Hannan-Quinn         392.0507
+< 
+< # result: No! Try inverse relationship
+< ? genr gdp60inv = 1/gdp60
+< Generated series gdp60inv (ID 24)
+< ? ols gdpgro const gdp60inv
+< 
+< Model 2: OLS, using observations 1-120
+< Dependent variable: gdpgro
+< 
+<              coefficient   std. error   t-ratio   p-value 
+<   --------------------------------------------------------
+<   const         1.22956      0.181602    6.771    5.28e-10 ***
+<   gdp60inv   -176.625      163.297      -1.082    0.2816  
+< 
+< Mean dependent var   1.073812   S.D. dependent var   1.212993
+< Sum squared resid    173.3719   S.E. of regression   1.212128
+< R-squared            0.009817   Adjusted R-squared   0.001426
+< F(1, 118)            1.169895   P-value(F)           0.281628
+< Log-likelihood      -192.3495   Akaike criterion     388.6989
+< Schwarz criterion    394.2739   Hannan-Quinn         390.9629
+< 
+< # No again.  Try "dummying out" Africa?
+< ? genr afdum = (CCODE = 1)
+< Generated series afdum (ID 25)
+< ? genr afslope = afdum * gdp60
+< Generated series afslope (ID 26)
+< ? ols gdpgro const afdum gdp60 afslope
+< 
+< Model 3: OLS, using observations 1-120
+< Dependent variable: gdpgro
+< 
+<              coefficient    std. error    t-ratio   p-value 
+<   ----------------------------------------------------------
+<   const       1.68910       0.214393       7.879    1.97e-12 ***
+<   afdum      -1.25910       0.415601      -3.030    0.0030   ***
+<   gdp60      -9.99756e-05   5.49962e-05   -1.818    0.0717   *
+<   afslope     0.000224705   0.000345116    0.6511   0.5163  
+< 
+< Mean dependent var   1.073812   S.D. dependent var   1.212993
+< Sum squared resid    151.1181   S.E. of regression   1.141377
+< R-squared            0.136915   Adjusted R-squared   0.114594
+< F(3, 116)            6.133887   P-value(F)           0.000657
+< Log-likelihood      -184.1068   Akaike criterion     376.2137
+< Schwarz criterion    387.3636   Hannan-Quinn         380.7417
+< 
+< Excluding the constant, p-value was highest for variable 26 (afslope)
+< 
+< Done
+---
+> Error attempting to open file
+output/corrtest.out vs newout/corrtest.out:
+44c44
+< corr(x, y) = 0.00165838
+---
+> corr(x, y) = -0.08452936
+46c46
+<  t(198) = 0.0233355, with two-tailed p-value 0.9814
+---
+>  t(198) = -1.19371, with two-tailed p-value 0.2340
+51c51
+< Spearman's rank correlation coefficient (rho) = -0.00576164
+---
+> Spearman's rank correlation coefficient (rho) = -0.04457361
+53c53
+<  z-score = -0.081278, with two-tailed p-value 0.9352
+---
+>  z-score = -0.628788, with two-tailed p-value 0.5295
+58c58
+< Kendall's tau = -0.00432161
+---
+> Kendall's tau = -0.03567839
+60c60
+<  z-score = -0.0919362, with two-tailed p-value 0.9267
+---
+>  z-score = -0.751341, with two-tailed p-value 0.4524
+output/delta_method.out vs newout/delta_method.out:
+26c25
+< Model 2: NLS, using observations 1950:1-2000:4 (T = 204)
+---
+> Model 1: NLS, using observations 1950:1-2000:4 (T = 204)
+40a40,49
+> 
+> GNR: R-squared = 8.88178e-16, max |t| = 4.54166e-07
+> Convergence seems to be reasonably complete
+> 
+> In regard to function MPC:
+> Warning: "silly=1"
+>  obsolete use of "=" as Boolean test: please use "=="
+> 
+> Warning: "silly=1"
+>  obsolete use of "=" as Boolean test: please use "=="
+output/dynfc.out vs newout/dynfc.out:
+16,17d15
+< Full data range: 1947:1 - 2009:3 (n = 251)
+< 
+output/ects_nls.out vs newout/ects_nls.out:
+73a73,75
+> GNR: R-squared = 0, max |t| = 4.7423e-09
+> Convergence seems to be reasonably complete
+> 
+105a107,109
+> 
+> GNR: R-squared = 0, max |t| = 1.60494e-08
+> Convergence seems to be reasonably complete
+output/fcasterr.out vs newout/fcasterr.out:
+83d82
+<   Mean Squared Error                1388.9
+output/fcstats.out vs newout/fcstats.out:
+36c36
+<       8.8571       2.5714 
+---
+>       2.9761       1.6036 
+62c62
+<       144.86       7.4286 
+---
+>       12.036       2.7255 
+output/gappy_arima.out vs newout/gappy_arima.out:
+26,30c26,30
+<   const       0.0686058    0.0505457     1.357    0.1747  
+<   phi_1       0.678322     0.0995367     6.815    9.44e-12 ***
+<   phi_4       0.773950     0.0619050    12.50     7.26e-36 ***
+<   phi_5      -0.738433     0.0989985    -7.459    8.72e-14 ***
+<   theta_1     0.151626     0.205537      0.7377   0.4607  
+---
+>   const       0.0686058    0.0505530     1.357    0.1747  
+>   phi_1       0.678322     0.0995432     6.814    9.47e-12 ***
+>   phi_4       0.773950     0.0619051    12.50     7.26e-36 ***
+>   phi_5      -0.738433     0.0990038    -7.459    8.74e-14 ***
+>   theta_1     0.151626     0.205566      0.7376   0.4608  
+output/greene11_3.out vs newout/greene11_3.out:
+60c60
+<              coefficient   std. error   t-ratio   p-value 
+---
+>              coefficient   std. error     z       p-value 
+62,64c62,64
+<   const      187.549       38.9848       4.811    3.22e-05 ***
+<   x1           0.247091     0.0798271    3.095    0.0040   ***
+<   x2           1.15583      0.0392699   29.43     2.90e-25 ***
+---
+>   const      187.549       38.9848       4.811   1.50e-06  ***
+>   x1           0.247091     0.0798271    3.095   0.0020    ***
+>   x2           1.15583      0.0392699   29.43    2.08e-190 ***
+69c69
+< F(2, 33)              1973639   P-value(F)           1.65e-84
+---
+> Chi-square(2)         3947277   p-value              0.000000
+output/greene14_1.out vs newout/greene14_1.out:
+45,46c45,46
+<       Diagnostics: assuming a balanced panel with 6 cross-sectional units
+<                          observed over 15 periods
+---
+> 
+> Diagnostics: using n = 6 cross-sectional units
+50,55d49
+< slope standard errors in parentheses, p-values in brackets
+< 
+<        const:         9.7135       (0.22964)       [0.00000]
+<          l_Q:        0.91928       (0.02989)       [0.00000]
+<         l_PF:        0.41749      (0.015199)       [0.00000]
+<           LF:        -1.0704       (0.20169)       [0.00000]
+57c51,56
+< 6 group means were subtracted from the data
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const        9.71353     0.229641     42.30     5.47e-57 ***
+>   l_Q          0.919285    0.0298901    30.76     1.95e-46 ***
+>   l_PF         0.417492    0.0151991    27.47     8.37e-43 ***
+>   LF          -1.07040     0.201690     -5.307    9.50e-07 ***
+64a65,78
+> Variance estimators:
+>  between = 0.0155972
+>  within = 0.00361262
+> theta used for quasi-demeaning = 0.876685
+> 
+> Random effects estimator
+> allows for a unit-specific component to the error term
+> 
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const        9.62791     0.210164     45.81     3.40e-62 ***
+>   l_Q          0.906681    0.0256249    35.38     4.95e-53 ***
+>   l_PF         0.422778    0.0140248    30.15     1.72e-47 ***
+>   LF          -1.06450     0.200070     -5.321    8.10e-07 ***
+79,92d92
+< 
+< Variance estimators:
+<  between = 0.0155972
+<  within = 0.00361262
+< theta used for quasi-demeaning = 0.876685
+< 
+<                          Random effects estimator
+<            allows for a unit-specific component to the error term
+<            (standard errors in parentheses, p-values in brackets)
+< 
+<           const:         9.6279       (0.21016)       [0.00000]
+<             l_Q:        0.90668      (0.025625)       [0.00000]
+<            l_PF:        0.42278      (0.014025)       [0.00000]
+<              LF:        -1.0645       (0.20007)       [0.00000]
+output/greene7_8.out vs newout/greene7_8.out:
+75a76,77
+> Warning: data matrix close to singularity!
+> 
+output/griliches.out vs newout/griliches.out:
+43a44,46
+> Warning: "(YEAR=71)"
+>  obsolete use of "=" as Boolean test: please use "=="
+> 
+112c115
+<              coefficient    std. error      z       p-value 
+---
+>              coefficient    std. error   t-ratio    p-value 
+114,115c117,118
+<   const       4.72544       0.282660     16.72      9.73e-63 ***
+<   S           0.0691759     0.0130490     5.301     1.15e-07 ***
+---
+>   const       4.72544       0.282660     16.72      1.63e-53 ***
+>   S           0.0691759     0.0130490     5.301     1.52e-07 ***
+117,118c120,121
+<   EXPR        0.0298660     0.00669696    4.460     8.21e-06 ***
+<   TENURE      0.0432738     0.00769338    5.625     1.86e-08 ***
+---
+>   EXPR        0.0298660     0.00669696    4.460     9.48e-06 ***
+>   TENURE      0.0432738     0.00769338    5.625     2.63e-08 ***
+120,126c123,129
+<   SMSA        0.135115      0.0268889     5.025     5.04e-07 ***
+<   dum66      -0.325894      0.0410718    -7.935     2.11e-15 ***
+<   dum67      -0.378492      0.0533090    -7.100     1.25e-12 ***
+<   dum68      -0.246426      0.0502123    -4.908     9.22e-07 ***
+<   dum69      -0.114998      0.0473621    -2.428     0.0152   **
+<   dum70      -0.0872606     0.0521748    -1.672     0.0944   *
+<   dum71      -0.0974335     0.0443144    -2.199     0.0279   **
+---
+>   SMSA        0.135115      0.0268889     5.025     6.31e-07 ***
+>   dum66      -0.325894      0.0410718    -7.935     7.74e-15 ***
+>   dum67      -0.378492      0.0533090    -7.100     2.92e-12 ***
+>   dum68      -0.246426      0.0502123    -4.908     1.13e-06 ***
+>   dum69      -0.114998      0.0473621    -2.428     0.0154   **
+>   dum70      -0.0872606     0.0521748    -1.672     0.0949   *
+>   dum71      -0.0974335     0.0443144    -2.199     0.0282   **
+169c172
+<              coefficient   std. error      z       p-value 
+---
+>              coefficient   std. error   t-ratio    p-value 
+171,182c174,185
+<   const       4.12675      0.338212     12.20      3.04e-34 ***
+<   S           0.172425     0.0209182     8.243     1.68e-16 ***
+<   IQ         -0.00909883   0.00474527   -1.917     0.0552   *
+<   EXPR        0.0492895    0.00822543    5.992     2.07e-09 ***
+<   TENURE      0.0422171    0.00891969    4.733     2.21e-06 ***
+<   RNS        -0.101793     0.0344734    -2.953     0.0031   ***
+<   SMSA        0.126111     0.0311961     4.043     5.29e-05 ***
+<   dum66      -0.0932398    0.0576787    -1.617     0.1060  
+<   dum67      -0.152857     0.0693967    -2.203     0.0276   **
+<   dum68      -0.0445602    0.0647002    -0.6887    0.4910  
+<   dum69       0.0595779    0.0600936     0.9914    0.3215  
+<   dum70       0.0811963    0.0649144     1.251     0.2110  
+---
+>   const       4.12675      0.338212     12.20      2.39e-31 ***
+>   S           0.172425     0.0209182     8.243     7.57e-16 ***
+>   IQ         -0.00909883   0.00474527   -1.917     0.0556   *
+>   EXPR        0.0492895    0.00822543    5.992     3.22e-09 ***
+>   TENURE      0.0422171    0.00891969    4.733     2.65e-06 ***
+>   RNS        -0.101793     0.0344734    -2.953     0.0032   ***
+>   SMSA        0.126111     0.0311961     4.043     5.84e-05 ***
+>   dum66      -0.0932398    0.0576787    -1.617     0.1064  
+>   dum67      -0.152857     0.0693967    -2.203     0.0279   **
+>   dum68      -0.0445602    0.0647002    -0.6887    0.4912  
+>   dum69       0.0595779    0.0600936     0.9914    0.3218  
+>   dum70       0.0811963    0.0649144     1.251     0.2114  
+285c288
+<              coefficient    std. error      z       p-value 
+---
+>              coefficient    std. error   t-ratio    p-value 
+287,288c290,291
+<   const       4.72544       0.282660     16.72      9.73e-63 ***
+<   S           0.0691759     0.0130490     5.301     1.15e-07 ***
+---
+>   const       4.72544       0.282660     16.72      1.63e-53 ***
+>   S           0.0691759     0.0130490     5.301     1.52e-07 ***
+290,291c293,294
+<   EXPR        0.0298660     0.00669696    4.460     8.21e-06 ***
+<   TENURE      0.0432738     0.00769338    5.625     1.86e-08 ***
+---
+>   EXPR        0.0298660     0.00669696    4.460     9.48e-06 ***
+>   TENURE      0.0432738     0.00769338    5.625     2.63e-08 ***
+293,299c296,302
+<   SMSA        0.135115      0.0268889     5.025     5.04e-07 ***
+<   dum66      -0.325894      0.0410718    -7.935     2.11e-15 ***
+<   dum67      -0.378492      0.0533090    -7.100     1.25e-12 ***
+<   dum68      -0.246426      0.0502123    -4.908     9.22e-07 ***
+<   dum69      -0.114998      0.0473621    -2.428     0.0152   **
+<   dum70      -0.0872606     0.0521748    -1.672     0.0944   *
+<   dum71      -0.0974335     0.0443144    -2.199     0.0279   **
+---
+>   SMSA        0.135115      0.0268889     5.025     6.31e-07 ***
+>   dum66      -0.325894      0.0410718    -7.935     7.74e-15 ***
+>   dum67      -0.378492      0.0533090    -7.100     2.92e-12 ***
+>   dum68      -0.246426      0.0502123    -4.908     1.13e-06 ***
+>   dum69      -0.114998      0.0473621    -2.428     0.0154   **
+>   dum70      -0.0872606     0.0521748    -1.672     0.0949   *
+>   dum71      -0.0974335     0.0443144    -2.199     0.0282   **
+344c347
+<              coefficient   std. error      z       p-value 
+---
+>              coefficient   std. error   t-ratio    p-value 
+346,357c349,360
+<   const       4.12675      0.338212     12.20      3.04e-34 ***
+<   S           0.172425     0.0209182     8.243     1.68e-16 ***
+<   IQ         -0.00909883   0.00474527   -1.917     0.0552   *
+<   EXPR        0.0492895    0.00822543    5.992     2.07e-09 ***
+<   TENURE      0.0422171    0.00891969    4.733     2.21e-06 ***
+<   RNS        -0.101793     0.0344734    -2.953     0.0031   ***
+<   SMSA        0.126111     0.0311961     4.043     5.29e-05 ***
+<   dum66      -0.0932398    0.0576787    -1.617     0.1060  
+<   dum67      -0.152857     0.0693967    -2.203     0.0276   **
+<   dum68      -0.0445602    0.0647002    -0.6887    0.4910  
+<   dum69       0.0595779    0.0600936     0.9914    0.3215  
+<   dum70       0.0811963    0.0649144     1.251     0.2110  
+---
+>   const       4.12675      0.338212     12.20      2.39e-31 ***
+>   S           0.172425     0.0209182     8.243     7.57e-16 ***
+>   IQ         -0.00909883   0.00474527   -1.917     0.0556   *
+>   EXPR        0.0492895    0.00822543    5.992     3.22e-09 ***
+>   TENURE      0.0422171    0.00891969    4.733     2.65e-06 ***
+>   RNS        -0.101793     0.0344734    -2.953     0.0032   ***
+>   SMSA        0.126111     0.0311961     4.043     5.84e-05 ***
+>   dum66      -0.0932398    0.0576787    -1.617     0.1064  
+>   dum67      -0.152857     0.0693967    -2.203     0.0279   **
+>   dum68      -0.0445602    0.0647002    -0.6887    0.4912  
+>   dum69       0.0595779    0.0600936     0.9914    0.3218  
+>   dum70       0.0811963    0.0649144     1.251     0.2114  
+output/hsk.out vs newout/hsk.out:
+7c7
+< criteria 1.0, 2010-02-21 (Allin Cottrell)
+---
+> criteria 1.2, 2016-10-29 (Allin Cottrell)
+183c183
+< R-squared            0.999605   Adjusted R-squared   0.999560
+---
+> Uncentered R-squared 0.999605   Centered R-squared   0.999001
+output/ivreg.out vs newout/ivreg.out:
+23a24,26
+> Warning: "(YEAR=71)"
+>  obsolete use of "=" as Boolean test: please use "=="
+> 
+36c39
+<              coefficient    std. error      z       p-value 
+---
+>              coefficient    std. error   t-ratio    p-value 
+38c41
+<   const       4.72544       0.282660     16.72      9.73e-63 ***
+---
+>   const       4.72544       0.282660     16.72      1.63e-53 ***
+40,42c43,45
+<   S           0.0691759     0.0130490     5.301     1.15e-07 ***
+<   EXPR        0.0298660     0.00669696    4.460     8.21e-06 ***
+<   TENURE      0.0432738     0.00769338    5.625     1.86e-08 ***
+---
+>   S           0.0691759     0.0130490     5.301     1.52e-07 ***
+>   EXPR        0.0298660     0.00669696    4.460     9.48e-06 ***
+>   TENURE      0.0432738     0.00769338    5.625     2.63e-08 ***
+44,50c47,53
+<   SMSA        0.135115      0.0268889     5.025     5.04e-07 ***
+<   dum66      -0.325894      0.0410718    -7.935     2.11e-15 ***
+<   dum67      -0.378492      0.0533090    -7.100     1.25e-12 ***
+<   dum68      -0.246426      0.0502123    -4.908     9.22e-07 ***
+<   dum69      -0.114998      0.0473621    -2.428     0.0152   **
+<   dum70      -0.0872606     0.0521748    -1.672     0.0944   *
+<   dum71      -0.0974335     0.0443144    -2.199     0.0279   **
+---
+>   SMSA        0.135115      0.0268889     5.025     6.31e-07 ***
+>   dum66      -0.325894      0.0410718    -7.935     7.74e-15 ***
+>   dum67      -0.378492      0.0533090    -7.100     2.92e-12 ***
+>   dum68      -0.246426      0.0502123    -4.908     1.13e-06 ***
+>   dum69      -0.114998      0.0473621    -2.428     0.0154   **
+>   dum70      -0.0872606     0.0521748    -1.672     0.0949   *
+>   dum71      -0.0974335     0.0443144    -2.199     0.0282   **
+94,106c97,109
+<   const      19.0665       18.3388       1.040    0.2985 
+<   IQ         -0.217451      0.277972    -0.7823   0.4341 
+<   S           0.688497      0.792796     0.8684   0.3852 
+<   EXPR       -0.0536224     0.118307    -0.4532   0.6504 
+<   TENURE      0.138533      0.135170     1.025    0.3054 
+<   RNS        -0.729352      0.827933    -0.8809   0.3784 
+<   SMSA        0.325131      0.320560     1.014    0.3105 
+<   dum66      -0.584882      0.460532    -1.270    0.2041 
+<   dum67      -0.499272      0.445793    -1.120    0.2627 
+<   dum68      -0.600804      0.598175    -1.004    0.3152 
+<   dum69      -0.0905631     0.373195    -0.2427   0.8083 
+<   dum70       0.546574      0.902874     0.6054   0.5449 
+<   dum71       0.138395      0.459017     0.3015   0.7630 
+---
+>   const      19.0665       18.1809       1.049    0.2943 
+>   IQ         -0.217451      0.275578    -0.7891   0.4301 
+>   S           0.688497      0.785968     0.8760   0.3810 
+>   EXPR       -0.0536224     0.117288    -0.4572   0.6475 
+>   TENURE      0.138533      0.134005     1.034    0.3012 
+>   RNS        -0.729352      0.820802    -0.8886   0.3742 
+>   SMSA        0.325131      0.317799     1.023    0.3063 
+>   dum66      -0.584882      0.456566    -1.281    0.2002 
+>   dum67      -0.499272      0.441954    -1.130    0.2586 
+>   dum68      -0.600804      0.593023    -1.013    0.3110 
+>   dum69      -0.0905631     0.369981    -0.2448   0.8066 
+>   dum70       0.546574      0.895098     0.6106   0.5414 
+>   dum71       0.138395      0.455064     0.3041   0.7610 
+109c112,113
+< Sum squared resid    4933.881   S.E. of regression   2.573453
+---
+> Sum squared resid    4933.881   S.E. of regression   2.551289
+> Chi-square(12)       560.5677   p-value              2.8e-112
+output/jac_nls.out vs newout/jac_nls.out:
+57a57,59
+> 
+> GNR: R-squared = 0, max |t| = 1.41968e-10
+> Convergence seems to be reasonably complete
+output/jgm-1996.out vs newout/jgm-1996.out:
+43c43
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+57c57
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+84c84
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+111c111
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+139c139
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+153c153
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+168c168
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+183c183
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+197c197
+<   with constant and quadratic trend 
+---
+>   with constant, linear and quadratic trend 
+output/klein.out vs newout/klein.out:
+103c103
+<              coefficient   std. error      z      p-value 
+---
+>              coefficient   std. error   t-ratio   p-value 
+105,108c105,108
+<   const      16.5548       1.46798      11.28     1.70e-29 ***
+<   P           0.0173022    0.131205      0.1319   0.8951  
+<   P_1         0.216234     0.119222      1.814    0.0697   *
+<   W           0.810183     0.0447351    18.11     2.62e-73 ***
+---
+>   const      16.5548       1.46798      11.28     2.59e-09 ***
+>   P           0.0173022    0.131205      0.1319   0.8966  
+>   P_1         0.216234     0.119222      1.814    0.0874   *
+>   W           0.810183     0.0447351    18.11     1.50e-12 ***
+118,123c118,123
+<              coefficient   std. error      z      p-value 
+<   --------------------------------------------------------
+<   const       20.2782      8.38325       2.419    0.0156   **
+<   P            0.150222    0.192534      0.7802   0.4353  
+<   P_1          0.615944    0.180926      3.404    0.0007   ***
+<   K1          -0.157788    0.0401521    -3.930    8.50e-05 ***
+---
+>              coefficient   std. error   t-ratio   p-value
+>   -------------------------------------------------------
+>   const       20.2782      8.38325       2.419    0.0271  **
+>   P            0.150222    0.192534      0.7802   0.4460 
+>   P_1          0.615944    0.180926      3.404    0.0034  ***
+>   K1          -0.157788    0.0401521    -3.930    0.0011  ***
+133,138c133,138
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const       1.50030      1.27569       1.176   0.2396  
+<   X           0.438859     0.0396027    11.08    1.54e-28 ***
+<   X_1         0.146674     0.0431639     3.398   0.0007   ***
+<   A           0.130396     0.0323884     4.026   5.67e-05 ***
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const       1.50030      1.27569       1.176    0.2558  
+>   X           0.438859     0.0396027    11.08     3.37e-09 ***
+>   X_1         0.146674     0.0431639     3.398    0.0034   ***
+>   A           0.130396     0.0323884     4.026    0.0009   ***
+265c265
+< Tolerance 1e-12, criterion 6.96332e-13
+---
+> Tolerance 1e-12, criterion 6.25278e-13
+269,270c269,270
+<   -5.101899e-07    3.062724e-07   -2.573460e-07   -1.081339e-08 
+<   -1.684905e-05    3.851949e-07   -2.355845e-07    7.082913e-08 
+---
+>   -5.101901e-07    3.062725e-07   -2.573461e-07   -1.081339e-08 
+>   -1.684905e-05    3.851949e-07   -2.355846e-07    7.082914e-08 
+350,354c350,354
+<   --------------------------------------------------------
+<   const       17.1477      2.04537       8.384    5.13e-17 ***
+<   P           -0.222513    0.224230     -0.9923   0.3210  
+<   P_1          0.396027    0.192943      2.053    0.0401   **
+<   W            0.822559    0.0615494    13.36     9.79e-41 ***
+---
+>   -------------------------------------------------------
+>   const       17.1477      1.84030       9.318   1.19e-20 ***
+>   P           -0.222513    0.201748     -1.103   0.2701  
+>   P_1          0.396027    0.173598      2.281   0.0225   **
+>   W            0.822559    0.0553782    14.85    6.61e-50 ***
+357c357
+< Sum squared resid    40.88419   S.E. of regression   1.550791
+---
+> Sum squared resid    40.88419   S.E. of regression   1.395301
+366,370c366,370
+<   -------------------------------------------------------
+<   const      22.5908       9.49815       2.378    0.0174  **
+<   P           0.0751848    0.224712      0.3346   0.7379 
+<   P_1         0.680386     0.209145      3.253    0.0011  ***
+<   K1         -0.168264     0.0453445    -3.711    0.0002  ***
+---
+>   --------------------------------------------------------
+>   const      22.5908       8.54582       2.643    0.0082   ***
+>   P           0.0751848    0.202181      0.3719   0.7100  
+>   P_1         0.680386     0.188175      3.616    0.0003   ***
+>   K1         -0.168264     0.0407981    -4.124    3.72e-05 ***
+373c373
+< Sum squared resid    34.99649   S.E. of regression   1.434788
+---
+> Sum squared resid    34.99649   S.E. of regression   1.290930
+383,386c383,386
+<   const       1.52619      1.32084      1.155   0.2479  
+<   X           0.433941     0.0755074    5.747   9.08e-09 ***
+<   X_1         0.151321     0.0745268    2.030   0.0423   **
+<   A           0.131593     0.0359955    3.656   0.0003   ***
+---
+>   const       1.52619      1.18840      1.284   0.1991  
+>   X           0.433941     0.0679367    6.387   1.69e-10 ***
+>   X_1         0.151321     0.0670544    2.257   0.0240   **
+>   A           0.131593     0.0323864    4.063   4.84e-05 ***
+389c389
+< Sum squared resid    10.02192   S.E. of regression   0.767805
+---
+> Sum squared resid    10.02192   S.E. of regression   0.690821
+output/kmenta.out vs newout/kmenta.out:
+78,82c78,82
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const       94.6333      7.92084      11.95    6.70e-33 ***
+<   P           -0.243557    0.0964843    -2.524   0.0116   **
+<   D            0.313992    0.0469437     6.689   2.25e-11 ***
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const       94.6333      7.92084      11.95     1.08e-09 ***
+>   P           -0.243557    0.0964843    -2.524    0.0218   **
+>   D            0.313992    0.0469437     6.689    3.81e-06 ***
+92,97c92,97
+<              coefficient   std. error     z     p-value 
+<   ------------------------------------------------------
+<   const       49.5324      12.0105      4.124   3.72e-05 ***
+<   P            0.240076     0.0999339   2.402   0.0163   **
+<   F            0.255606     0.0472501   5.410   6.32e-08 ***
+<   A            0.252924     0.0996551   2.538   0.0111   **
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const       49.5324      12.0105       4.124    0.0008   ***
+>   P            0.240076     0.0999339    2.402    0.0288   **
+>   F            0.255606     0.0472501    5.410    5.79e-05 ***
+>   A            0.252924     0.0996551    2.538    0.0219   **
+126,128c126,128
+<   const       93.6192      8.03124      11.66    2.12e-31 ***
+<   P           -0.229538    0.0980024    -2.342   0.0192   **
+<   D            0.310013    0.0474331     6.536   6.33e-11 ***
+---
+>   const       93.6192      7.40444      12.64    1.21e-36 ***
+>   P           -0.229538    0.0903537    -2.540   0.0111   **
+>   D            0.310013    0.0437311     7.089   1.35e-12 ***
+131c131
+< Sum squared resid    66.74216   S.E. of regression   1.981416
+---
+> Sum squared resid    66.74216   S.E. of regression   1.826775
+141,144c141,144
+<   const       49.5324      12.0105      4.124   3.72e-05 ***
+<   P            0.240076     0.0999339   2.402   0.0163   **
+<   F            0.255606     0.0472501   5.410   6.32e-08 ***
+<   A            0.252924     0.0996551   2.538   0.0111   **
+---
+>   const       49.5324      10.7425      4.611   4.01e-06 ***
+>   P            0.240076     0.0893836   2.686   0.0072   ***
+>   F            0.255606     0.0422617   6.048   1.47e-09 ***
+>   A            0.252924     0.0891342   2.838   0.0045   ***
+147c147
+< Sum squared resid    96.63324   S.E. of regression   2.457555
+---
+> Sum squared resid    96.63324   S.E. of regression   2.198104
+283c283
+< Tolerance 1e-12, criterion 5.40012e-13
+---
+> Tolerance 1e-12, criterion 6.96332e-13
+287,288c287,288
+<    4.722609e-06   -6.528420e-08    1.852725e-08    3.301673e-06 
+<   -4.818511e-08    1.024713e-08    5.025021e-08 
+---
+>    4.722609e-06   -6.528421e-08    1.852726e-08    3.301673e-06 
+>   -4.818512e-08    1.024714e-08    5.025021e-08 
+output/levermiss.out vs newout/levermiss.out:
+15,16d14
+< Full data range: 1 - 11 (n = 11)
+< 
+output/longley_vif.out vs newout/longley_vif.out:
+89c89
+<      0.000 43275.044     1.000     0.038     0.655     0.689     0.302     0.160     1.000
+---
+>      0.000 43275.043     1.000     0.038     0.655     0.689     0.302     0.160     1.000
+output/loopmods.out vs newout/loopmods.out:
+61c61
+<              coefficient   std. error   t-ratio   p-value 
+---
+>              coefficient   std. error     z       p-value 
+63,65c63,65
+<   const      187.358       39.6723       4.723    4.17e-05 ***
+<   x1           0.246765     0.0869846    2.837    0.0077   ***
+<   x2           1.15644      0.0427352   27.06     4.18e-24 ***
+---
+>   const      187.358       39.6723       4.723   2.33e-06  ***
+>   x1           0.246765     0.0869846    2.837   0.0046    ***
+>   x2           1.15644      0.0427352   27.06    2.87e-161 ***
+70c70
+< F(2, 33)              1667778   P-value(F)           2.65e-83
+---
+> Chi-square(2)         3335556   p-value              0.000000
+output/looptest.out vs newout/looptest.out:
+52,102c52,102
+< AL     1.646590
+< AK     0.357584
+< AZ    -1.211596
+< AR    -0.813093
+< CA    -0.431067
+< CO    -0.892750
+< CT     0.320558
+< DE     0.807200
+< DC    -1.896797
+< FL     0.445809
+< GA     0.259164
+< HI    -1.706970
+< ID     0.521647
+< IL     1.793997
+< IN    -2.318457
+< IA     0.296982
+< KS     0.640334
+< KY    -1.281044
+< LA    -0.091273
+< ME    -0.527019
+< MD    -2.037730
+< MA     0.384681
+< MI    -1.315272
+< MN    -0.161116
+< MS     0.398127
+< MO    -0.155765
+< MT    -0.905063
+< NE     0.728386
+< NV    -1.668248
+< NH     0.696208
+< NJ    -0.071431
+< NM     0.743970
+< NY    -1.060578
+< NC    -1.146604
+< ND    -0.148187
+< OH     1.571882
+< OK     0.407729
+< OR    -0.672982
+< PA     0.490979
+< RI     0.144395
+< SC     1.287746
+< SD    -1.901057
+< TN    -2.730629
+< TX     0.513436
+< UT     1.795834
+< VT     1.310061
+< VA     0.909049
+< WA     3.018172
+< WV     0.279996
+< WI     1.172529
+< WY     0.548238
+---
+> AL    -1.334868
+> AK    -0.611308
+> AZ    -0.786640
+> AR    -2.601956
+> CA    -0.713815
+> CO     0.543476
+> CT     0.790042
+> DE    -3.375077
+> DC     1.430105
+> FL    -0.449350
+> GA    -0.418351
+> HI    -0.347575
+> ID     0.364894
+> IL     0.714195
+> IN     0.146346
+> IA     0.046326
+> KS    -0.760860
+> KY     0.061758
+> LA     0.768958
+> ME     1.322442
+> MD     1.250127
+> MA     0.131544
+> MI    -0.174715
+> MN     1.313773
+> MS    -0.735856
+> MO    -0.564891
+> MT     1.047083
+> NE    -0.387907
+> NV    -0.147640
+> NH    -1.111444
+> NJ     1.659103
+> NM     3.041325
+> NY     1.915966
+> NC     0.094847
+> ND     0.610615
+> OH    -1.213486
+> OK     1.377631
+> OR    -0.701186
+> PA    -1.414171
+> RI    -0.063212
+> SC    -0.896654
+> SD    -1.757672
+> TN     0.308434
+> TX    -1.067035
+> UT    -0.186430
+> VT     0.804945
+> VA     0.019101
+> WA    -1.588207
+> WV    -0.516973
+> WI     0.303432
+> WY    -1.025020
+output/MK.out vs newout/MK.out:
+46c46
+< R-squared            0.557876   Adjusted R-squared   0.551707
+---
+> Uncentered R-squared 0.557876   Centered R-squared   0.154190
+output/nlstest.out vs newout/nlstest.out:
+28c27
+< Model 2: NLS, using observations 1-50
+---
+> Model 1: NLS, using observations 1-50
+40a40,42
+> 
+> GNR: R-squared = 0, max |t| = 4.7423e-09
+> Convergence seems to be reasonably complete
+output/nlswitch.out vs newout/nlswitch.out:
+13c13
+< Model 461: Fixed-effects, using 324 observations
+---
+> Model 1: Fixed-effects, using 324 observations
+output/obscomp.out vs newout/obscomp.out:
+107a108,110
+> Warning: "(obs="CA")"
+>  obsolete use of "=" as Boolean test: please use "=="
+> 
+output/ols_loop.out vs newout/ols_loop.out:
+37,38c37,38
+<           const     -0.161741        3.47454        2.89185       0.192788
+<               x       10.0017      0.0477587      0.0457048     0.00304696
+---
+>           const      -2.14583        1.45663        3.07178       0.147834
+>               x       10.0266      0.0351376      0.0485485     0.00233648
+43,45c43,45
+<        a     -0.161741        3.47454
+<        b       10.0017      0.0477587
+<       r2      0.998994    0.000132711
+---
+>        a      -2.14583        1.45663
+>        b       10.0266      0.0351376
+>       r2      0.998873    0.000109918
+output/pca2.out vs newout/pca2.out:
+17a18
+> n = 51
+34a36
+> n = 51
+80a83
+> n = 51
+97a101
+> n = 51
+output/pcabig.out vs newout/pcabig.out:
+17a18
+> n = 82
+output/pca_cars.out vs newout/pca_cars.out:
+10a11
+> n = 82
+output/pca.out vs newout/pca.out:
+51a52
+> n = 30
+output/pcatest.out vs newout/pcatest.out:
+21a22
+> n = 51
+95a97
+> n = 51
+173a176
+> n = 32
+228a232
+> n = 32
+output/pergm.out vs newout/pergm.out:
+256,270c256,270
+<      0.20944      0.15279 
+<      0.41888      0.31255 
+<      0.62832      0.19746 
+<      0.83776      0.40577 
+<       1.0472      0.20298 
+<       1.2566      0.25304 
+<       1.4661      0.13430 
+<       1.6755      0.15427 
+<       1.8850      0.22558 
+<       2.0944     0.059168 
+<       2.3038     0.043009 
+<       2.5133      0.70176 
+<       2.7227     0.088723 
+<       2.9322      0.13231 
+<       3.1416      0.44181 
+---
+>      0.20944     0.015524 
+>      0.41888      0.13598 
+>      0.62832      0.15178 
+>      0.83776     0.062017 
+>       1.0472     0.022284 
+>       1.2566     0.017412 
+>       1.4661      0.45804 
+>       1.6755      0.33832 
+>       1.8850     0.084084 
+>       2.0944      0.17119 
+>       2.3038      0.20707 
+>       2.5133    0.0011622 
+>       2.7227      0.19206 
+>       2.9322     0.080639 
+>       3.1416      0.19732 
+output/perron97.out vs newout/perron97.out:
+41c41
+< Model 416: OLS, using observations 1918-1970 (T = 53)
+---
+> OLS, using observations 1918-1970 (T = 53)
+output/prodfunc.out vs newout/prodfunc.out:
+6,55c6
+< 
+< Read datafile /home/cottrell/gretl/pwt56/pwt56_1985.gdt
+< periodicity: 1, maxobs: 152
+< observations range: 1 to 152
+< 
+< Listing 31 variables:
+<   0) const     1) CCODE     2) POP       3) RGDPCH    4) RGDPL   
+<   5) C         6) I         7) G         8) RGDPTT    9) Y       
+<  10) CGDP     11) CC       12) CI       13) CG       14) P       
+<  15) PC       16) PI       17) PG       18) XR       19) RGDPEA  
+<  20) RGDPW    21) KAPW     22) KDUR     23) KNRES    24) KOTHER  
+<  25) KRES     26) KTRANP   27) OPEN     28) RGNP     29) IPRI    
+<  30) STLIV   
+< 
+< # restrict the sample to just obs with valid KAPW values
+< ? smpl --no-missing KAPW
+< Full data set: 152 observations
+< Current sample: 63 observations
+< # take logs of output per worker and capital per worker
+< ? logs RGDPW KAPW
+< Listing 33 variables:
+<   0) const      1) CCODE      2) POP        3) RGDPCH     4) RGDPL    
+<   5) C          6) I          7) G          8) RGDPTT     9) Y        
+<  10) CGDP      11) CC        12) CI        13) CG        14) P        
+<  15) PC        16) PI        17) PG        18) XR        19) RGDPEA   
+<  20) RGDPW     21) KAPW      22) KDUR      23) KNRES     24) KOTHER   
+<  25) KRES      26) KTRANP    27) OPEN      28) RGNP      29) IPRI     
+<  30) STLIV     31) l_RGDPW   32) l_KAPW   
+< 
+< # run log-log regression
+< ? ols l_RGDPW const l_KAPW
+< 
+< Model 1: OLS, using observations 1-63
+< Dependent variable: l_RGDPW
+< 
+<              coefficient   std. error   t-ratio   p-value 
+<   --------------------------------------------------------
+<   const       3.43061      0.313205      10.95    4.88e-16 ***
+<   l_KAPW      0.637718     0.0340292     18.74    5.41e-27 ***
+< 
+< Mean dependent var   9.244025   S.D. dependent var   0.884535
+< Sum squared resid    7.178671   S.E. of regression   0.343050
+< R-squared            0.852013   Adjusted R-squared   0.849587
+< F(1, 61)             351.1997   P-value(F)           5.41e-27
+< Log-likelihood      -20.97448   Akaike criterion     45.94896
+< Schwarz criterion    50.23523   Hannan-Quinn         47.63477
+< 
+< Log-likelihood for RGDPW = -603.348
+< 
+< Done
+---
+> Error attempting to open file
+output/progloop-scalars.out vs newout/progloop-scalars.out:
+19,20c19,20
+<  acbedacipously    -0.0297377      0.0971644
+<     bluggerwork       1.01964      0.0776329
+---
+>  acbedacipously    0.00305877       0.112908
+>     bluggerwork      0.980480      0.0804290
+31,32c31,32
+<        a     0.0181965       0.106402
+<        b       1.01741      0.0803545
+---
+>        a     0.0138806      0.0915592
+>        b      0.939322      0.0571307
+output/ps10-1.out vs newout/ps10-1.out:
+19a20
+> Option:     --bylag (order terms by lag)
+21a23
+>             lags 4 ; x1 x2 x3 --bylag
+34a37,43
+> 
+> The --bylag option is meaningful only if varlist contains more than one
+> series and the maximum lag order is greater than 1. By default the lagged
+> terms are added to the dataset by variable: first all lags of the first
+> series, then all lags of the second series, and so on. But if --bylag is
+> given, the ordering is by lags: first lag 1 of all the listed series, then
+> lag 2 of all the list series, and so on.
+output/ps10-9.out vs newout/ps10-9.out:
+185c185
+< R-squared            0.192606   Adjusted R-squared   0.063423
+---
+> Uncentered R-squared 0.192606   Centered R-squared   0.182276
+output/ps11-1.out vs newout/ps11-1.out:
+7c7
+< criteria 1.0, 2010-02-21 (Allin Cottrell)
+---
+> criteria 1.2, 2016-10-29 (Allin Cottrell)
+output/ps12-1.out vs newout/ps12-1.out:
+7c7
+< criteria 1.0, 2010-02-21 (Allin Cottrell)
+---
+> criteria 1.2, 2016-10-29 (Allin Cottrell)
+output/ps13-1.out vs newout/ps13-1.out:
+66,71c66,71
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const       -0.404480    0.299926     -1.349   0.1775  
+<   Ct_1         0.852123    0.0868648     9.810   1.02e-22 ***
+<   DYt          0.741398    0.0976482     7.593   3.14e-14 ***
+<   DYt_1       -0.562068    0.109763     -5.121   3.04e-07 ***
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const       -0.404480    0.299926     -1.349    0.1876  
+>   Ct_1         0.852123    0.0868648     9.810    7.14e-11 ***
+>   DYt          0.741398    0.0976482     7.593    1.82e-08 ***
+>   DYt_1       -0.562068    0.109763     -5.121    1.66e-05 ***
+114,121c114,121
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const      -0.215632     0.0996037    -2.165   0.0304   **
+<   It_1        0.486063     0.0856948     5.672   1.41e-08 ***
+<   Yt          0.635277     0.0610468    10.41    2.32e-25 ***
+<   Yt_1       -0.556113     0.0633125    -8.784   1.58e-18 ***
+<   rt          0.0698385    0.0247597     2.821   0.0048   ***
+<   rt_1       -0.0532127    0.0236741    -2.248   0.0246   **
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const      -0.215632     0.0996037    -2.165    0.0391   **
+>   It_1        0.486063     0.0856948     5.672    4.44e-06 ***
+>   Yt          0.635277     0.0610468    10.41     3.97e-11 ***
+>   Yt_1       -0.556113     0.0633125    -8.784    1.55e-09 ***
+>   rt          0.0698385    0.0247597     2.821    0.0087   ***
+>   rt_1       -0.0532127    0.0236741    -2.248    0.0327   **
+164c164
+<              coefficient   std. error      z      p-value 
+---
+>              coefficient   std. error   t-ratio   p-value 
+166,171c166,171
+<   const        3.55766     0.993490      3.581    0.0003   ***
+<   rt_1         1.12765     0.0846248    13.33     1.65e-40 ***
+<   Yt          -0.590712    0.834484     -0.7079   0.4790  
+<   Yt_1        -0.176229    0.668447     -0.2636   0.7921  
+<   Mt          -2.66606     0.675066     -3.949    7.84e-05 ***
+<   Mt_1         3.47505     0.761843      4.561    5.08e-06 ***
+---
+>   const        3.55766     0.993490      3.581    0.0013   ***
+>   rt_1         1.12765     0.0846248    13.33     1.21e-13 ***
+>   Yt          -0.590712    0.834484     -0.7079   0.4849  
+>   Yt_1        -0.176229    0.668447     -0.2636   0.7940  
+>   Mt          -2.66606     0.675066     -3.949    0.0005   ***
+>   Mt_1         3.47505     0.761843      4.561    9.19e-05 ***
+214,220c214,220
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const        3.46452     0.927402      3.736   0.0002   ***
+<   rt_1         1.11590     0.0718398    15.53    2.07e-54 ***
+<   Yt          -0.793499    0.323205     -2.455   0.0141   **
+<   Mt          -2.54640     0.499078     -5.102   3.36e-07 ***
+<   Mt_1         3.42104     0.732864      4.668   3.04e-06 ***
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const        3.46452     0.927402      3.736    0.0008   ***
+>   rt_1         1.11590     0.0718398    15.53     1.36e-15 ***
+>   Yt          -0.793499    0.323205     -2.455    0.0203   **
+>   Mt          -2.54640     0.499078     -5.102    1.91e-05 ***
+>   Mt_1         3.42104     0.732864      4.668    6.38e-05 ***
+262,265c262,265
+<              coefficient   std. error     z      p-value 
+<   -------------------------------------------------------
+<   const       -0.965287    0.104460     -9.241   2.45e-20 ***
+<   Yt           0.359104    0.00655537   54.78    0.0000   ***
+---
+>              coefficient   std. error   t-ratio   p-value 
+>   --------------------------------------------------------
+>   const       -0.965287    0.104460     -9.241    1.51e-10 ***
+>   Yt           0.359104    0.00655537   54.78     3.32e-33 ***
+307c307
+<              coefficient   std. error     z       p-value 
+---
+>              coefficient   std. error   t-ratio   p-value 
+309,310c309,310
+<   const       -2.15534     0.158310     -13.61   3.28e-42  ***
+<   Yt           0.221695    0.00993468    22.32   2.62e-110 ***
+---
+>   const       -2.15534     0.158310     -13.61    7.34e-15 ***
+>   Yt           0.221695    0.00993468    22.32    4.50e-21 ***
+output/ps3-1.out vs newout/ps3-1.out:
+95c95
+< clustvar; see chapter 17 of the Gretl User's Guide for details.
+---
+> clustvar; see chapter 18 of the Gretl User's Guide for details.
+output/ps4-1.out vs newout/ps4-1.out:
+111c111
+< R-squared            0.985939   Adjusted R-squared   0.985939
+---
+> Uncentered R-squared 0.985939   Centered R-squared   0.791037
+output/ps6-3.out vs newout/ps6-3.out:
+32c32
+< R-squared            0.973933   Adjusted R-squared   0.973118
+---
+> Uncentered R-squared 0.973933   Centered R-squared   0.669043
+output/ps6-8.out vs newout/ps6-8.out:
+7c7
+< criteria 1.0, 2010-02-21 (Allin Cottrell)
+---
+> criteria 1.2, 2016-10-29 (Allin Cottrell)
+87c87
+< Package: criteria 1.0 (2010-02-21)
+---
+> Package: criteria 1.2 (2016-10-29)
+88a89
+> Email:  cottrell@wfu.edu
+114a116
+> include criteria.gfn
+output/ps8-6.out vs newout/ps8-6.out:
+80c80
+< R-squared            0.632801   Adjusted R-squared   0.625307
+---
+> Uncentered R-squared 0.632801   Centered R-squared   0.176679
+output/randgen.out vs newout/randgen.out:
+11,30c11,30
+<  1            1    0.5075730     5.130278     0.600621      1.19238
+<  2            2    0.8196581    -3.269842    -0.059947     12.37028
+<  3            3    0.5048357     2.908039     0.145328      2.73754
+<  4            4      0.05072     7.331193    -3.293142      5.84107
+<  5            5      0.08254    -2.790626     0.165898      6.12172
+<  6            6      0.05901    -0.196420    -1.350157      4.52845
+<  7            7    0.5362413     4.054446     0.475084      2.02711
+<  8            8    0.9103514    -4.958751    -0.621685      2.38852
+<  9            9    0.5614352     0.015792     0.623985      8.38075
+< 10           10    0.6464589    -3.033291    -0.135156      3.06459
+< 11           11    0.7354122    -3.367728     0.315480      1.90099
+< 12           12    0.5938456     2.244657    -1.619350      3.14282
+< 13           13    0.3997087    -0.760715     0.833328     10.30949
+< 14           14    0.4472841     1.054776     2.427385      3.75924
+< 15           15    0.4953307    -0.769250    -0.190862      7.26765
+< 16           16    0.8835337    -1.361564    -0.780496      3.54583
+< 17           17    0.1765420     0.494983     1.440125      0.58433
+< 18           18    0.1049107    -2.810908    -0.307846     12.91967
+< 19           19    0.8822436     3.392373    -1.448514      4.91739
+< 20           20    0.4049024     4.864028     0.142556      3.82877
+---
+>  1            1    0.5075730     5.140674     1.564561      3.23056
+>  2            2    0.8196581     5.404566     1.414642      2.34828
+>  3            3    0.5048357    -3.976480     1.100432      5.15249
+>  4            4      0.05072    -1.941693    -0.447275     13.39927
+>  5            5      0.08254    -1.123975    -1.141719      8.51512
+>  6            6      0.05901     0.591702     0.377396      1.59611
+>  7            7    0.5362413    -3.498400    -1.490808      3.48823
+>  8            8    0.9103514     3.592388    -0.667845      3.93500
+>  9            9    0.5614352    -0.504356    -0.343110      4.80283
+> 10           10    0.6464589    -3.600859     3.929458     13.16263
+> 11           11    0.7354122     3.907180    -0.334831      3.16867
+> 12           12    0.5938456    -1.720539     0.951852      3.65057
+> 13           13    0.3997087    -3.278420    -0.286277      5.08333
+> 14           14    0.4472841     2.842009    -1.597685      1.42255
+> 15           15    0.4953307     5.491716     0.726142      4.34901
+> 16           16    0.8835337     5.501847     1.937687      5.91080
+> 17           17    0.1765420    -6.657389    -0.680241      9.95077
+> 18           18    0.1049107    -1.920372     1.643702      5.12205
+> 19           19    0.8822436     3.587170    -0.933373      3.92893
+> 20           20    0.4049024     3.708569    -0.528782      1.10395
+34,53c34,53
+<  1     0.268648     0.999817           53            4
+<  2     0.338773     0.487755           51           11
+<  3     0.225913     0.433527           56            7
+<  4     2.728843     7.146525           40           15
+<  5     0.054934     0.158373           54            6
+<  6     0.714376     2.661120           40            8
+<  7     0.800073     0.282040           55           14
+<  8     1.475203     1.260327           49           16
+<  9     1.226191     1.335808           50            7
+< 10     1.192460     1.717934           53           14
+< 11     0.535490     4.989908           47           16
+< 12     0.815054     0.219822           55           14
+< 13     1.012661     0.045600           44           13
+< 14     0.359522     1.321129           47            7
+< 15     0.043803     0.086039           44            8
+< 16     0.083352     5.264254           48            8
+< 17     0.356010     0.787067           50           11
+< 18     0.747708     6.740784           46            9
+< 19     4.149264     5.325683           47           12
+< 20     0.512045     4.081272           45           19
+---
+>  1     0.712921     0.072423           52           17
+>  2     0.715334     0.077282           52           17
+>  3     0.396846     0.070279           43           10
+>  4     0.553141     3.098073           52            7
+>  5     0.331861     3.973952           42            9
+>  6     0.307927     1.596759           55           10
+>  7     0.742619     2.211032           46            4
+>  8     0.536323     0.131411           51            9
+>  9     1.242453     0.297571           56            9
+> 10     1.479468     1.481002           44           13
+> 11     0.189246     8.181241           58           18
+> 12     0.967299     2.398746           40           12
+> 13     0.205740     0.174581           50           21
+> 14     1.604162     4.138604           43           10
+> 15     1.337710     0.895559           48           12
+> 16     0.035415     1.943382           50            8
+> 17     0.128311     0.204858           48            6
+> 18     0.666469     4.449068           43            5
+> 19     0.039431     1.716488           49           11
+> 20     0.248688     2.921419           50           13
+57,76c57,76
+<      0.50757       5.1303      0.60062       1.1924 
+<      0.81966      -3.2698    -0.059947       12.370 
+<      0.50484       2.9080      0.14533       2.7375 
+<     0.050718       7.3312      -3.2931       5.8411 
+<     0.082545      -2.7906      0.16590       6.1217 
+<     0.059009     -0.19642      -1.3502       4.5284 
+<      0.53624       4.0544      0.47508       2.0271 
+<      0.91035      -4.9588     -0.62168       2.3885 
+<      0.56144     0.015792      0.62399       8.3807 
+<      0.64646      -3.0333     -0.13516       3.0646 
+<      0.73541      -3.3677      0.31548       1.9010 
+<      0.59385       2.2447      -1.6193       3.1428 
+<      0.39971     -0.76071      0.83333       10.309 
+<      0.44728       1.0548       2.4274       3.7592 
+<      0.49533     -0.76925     -0.19086       7.2677 
+<      0.88353      -1.3616     -0.78050       3.5458 
+<      0.17654      0.49498       1.4401      0.58433 
+<      0.10491      -2.8109     -0.30785       12.920 
+<      0.88224       3.3924      -1.4485       4.9174 
+<      0.40490       4.8640      0.14256       3.8288 
+---
+>      0.50757       5.1407       1.5646       3.2306 
+>      0.81966       5.4046       1.4146       2.3483 
+>      0.50484      -3.9765       1.1004       5.1525 
+>     0.050718      -1.9417     -0.44727       13.399 
+>     0.082545      -1.1240      -1.1417       8.5151 
+>     0.059009      0.59170      0.37740       1.5961 
+>      0.53624      -3.4984      -1.4908       3.4882 
+>      0.91035       3.5924     -0.66785       3.9350 
+>      0.56144     -0.50436     -0.34311       4.8028 
+>      0.64646      -3.6009       3.9295       13.163 
+>      0.73541       3.9072     -0.33483       3.1687 
+>      0.59385      -1.7205      0.95185       3.6506 
+>      0.39971      -3.2784     -0.28628       5.0833 
+>      0.44728       2.8420      -1.5977       1.4225 
+>      0.49533       5.4917      0.72614       4.3490 
+>      0.88353       5.5018       1.9377       5.9108 
+>      0.17654      -6.6574     -0.68024       9.9508 
+>      0.10491      -1.9204       1.6437       5.1220 
+>      0.88224       3.5872     -0.93337       3.9289 
+>      0.40490       3.7086     -0.52878       1.1040 
+80,99c80,99
+<      0.26865      0.99982       53.000       4.0000 
+<      0.33877      0.48775       51.000       11.000 
+<      0.22591      0.43353       56.000       7.0000 
+<       2.7288       7.1465       40.000       15.000 
+<     0.054934      0.15837       54.000       6.0000 
+<      0.71438       2.6611       40.000       8.0000 
+<      0.80007      0.28204       55.000       14.000 
+<       1.4752       1.2603       49.000       16.000 
+<       1.2262       1.3358       50.000       7.0000 
+<       1.1925       1.7179       53.000       14.000 
+<      0.53549       4.9899       47.000       16.000 
+<      0.81505      0.21982       55.000       14.000 
+<       1.0127     0.045600       44.000       13.000 
+<      0.35952       1.3211       47.000       7.0000 
+<     0.043803     0.086039       44.000       8.0000 
+<     0.083352       5.2643       48.000       8.0000 
+<      0.35601      0.78707       50.000       11.000 
+<      0.74771       6.7408       46.000       9.0000 
+<       4.1493       5.3257       47.000       12.000 
+<      0.51204       4.0813       45.000       19.000 
+---
+>      0.71292     0.072423       52.000       17.000 
+>      0.71533     0.077282       52.000       17.000 
+>      0.39685     0.070279       43.000       10.000 
+>      0.55314       3.0981       52.000       7.0000 
+>      0.33186       3.9740       42.000       9.0000 
+>      0.30793       1.5968       55.000       10.000 
+>      0.74262       2.2110       46.000       4.0000 
+>      0.53632      0.13141       51.000       9.0000 
+>       1.2425      0.29757       56.000       9.0000 
+>       1.4795       1.4810       44.000       13.000 
+>      0.18925       8.1812       58.000       18.000 
+>      0.96730       2.3987       40.000       12.000 
+>      0.20574      0.17458       50.000       21.000 
+>       1.6042       4.1386       43.000       10.000 
+>       1.3377      0.89556       48.000       12.000 
+>     0.035415       1.9434       50.000       8.0000 
+>      0.12831      0.20486       48.000       6.0000 
+>      0.66647       4.4491       43.000       5.0000 
+>     0.039431       1.7165       49.000       11.000 
+>      0.24869       2.9214       50.000       13.000 
+output/restrict_est.out vs newout/restrict_est.out:
+127c127
+< R-squared            0.977906   Adjusted R-squared   0.973889
+---
+> Uncentered R-squared 0.977906   Centered R-squared   0.834200
+output/spearman.out vs newout/spearman.out:
+21c21
+< Spearman's rank correlation coefficient (rho) = 0.00413915
+---
+> Spearman's rank correlation coefficient (rho) = 0.00839127
+23c23
+<  t(1972) = 0.18381, with two-tailed p-value 0.8542
+---
+>  t(1972) = 0.372646, with two-tailed p-value 0.7095
+output/summary-by.out vs newout/summary-by.out:
+401,403c401,403
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar             -0.56465         1.3228        -3.1152         1.4388
+< yvar             0.069606         1.0376        -1.5351         1.5913
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar          -0.5647    -0.6799      1.323     -3.115      1.439
+> yvar          0.06961    -0.3060      1.038     -1.535      1.591
+407,409c407,409
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar            -0.037599        0.98029        -2.4099        0.90848
+< yvar            0.0077710         1.1705        -1.2067         1.6663
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar         -0.03760     0.1649     0.9803     -2.410     0.9085
+> yvar         0.007771    -0.4612      1.170     -1.207      1.666
+413,415c413,415
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar            -0.075945        0.82577        -1.3173         1.1354
+< yvar              0.31680         1.2684        -1.6505         2.1440
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar         -0.07594    -0.2438     0.8258     -1.317      1.135
+> yvar           0.3168     0.1879      1.268     -1.651      2.144
+419,421c419,421
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar              0.21104         1.0523        -1.8421         1.6528
+< yvar             0.054976         1.0836        -1.4075         1.9315
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar           0.2110     0.4846      1.052     -1.842      1.653
+> yvar          0.05498    -0.3486      1.084     -1.407      1.931
+425,427c425,427
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar             -0.36783        0.92028        -1.8140         1.2644
+< yvar             0.054353         1.0125        -2.2523         1.4566
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar          -0.3678    -0.3322     0.9203     -1.814      1.264
+> yvar          0.05435  -0.004481      1.012     -2.252      1.457
+431,433c431,433
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar             -0.13605         1.1047        -2.0922         1.4189
+< yvar             -0.34045         1.2564        -2.2805         1.4017
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar          -0.1361   -0.09617      1.105     -2.092      1.419
+> yvar          -0.3404    -0.3979      1.256     -2.281      1.402
+437,439c437,439
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar           -0.0013096        0.42711       -0.87711        0.41527
+< yvar             -0.13151        0.74039        -1.3541        0.91805
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar        -0.001310     0.1474     0.4271    -0.8771     0.4153
+> yvar          -0.1315    0.02385     0.7404     -1.354     0.9180
+443,445c443,445
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar              0.18316         1.0394        -1.4978         1.4866
+< yvar             -0.12021        0.75966        -1.5323        0.93712
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar           0.1832     0.3977      1.039     -1.498      1.487
+> yvar          -0.1202   -0.03554     0.7597     -1.532     0.9371
+449,451c449,451
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar             -0.16605         1.1940        -2.0018         1.7471
+< yvar              0.38761        0.99232        -1.3735         1.7337
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar          -0.1660    -0.1821      1.194     -2.002      1.747
+> yvar           0.3876     0.4241     0.9923     -1.373      1.734
+455,457c455,457
+<                      Mean      Std. Dev.        Minimum        Maximum
+< xvar              0.63737        0.73190       -0.44552         1.9934
+< yvar              0.17977         1.1622        -1.2887         2.3399
+---
+>                  Mean     Median       S.D.        Min        Max
+> xvar           0.6374     0.3904     0.7319    -0.4455      1.993
+> yvar           0.1798     0.5183      1.162     -1.289      2.340
+output/summarywt.out vs newout/summarywt.out:
+39a40
+> Failed to execute child process "stata" (No such file or directory)
+41,62d41
+< . quietly adopath + "/home/cottrell/.gretl/"
+< 
+< . * load data from gretl
+< . insheet using "stata.csv"
+< (40 vars, 1000 obs)
+< 
+< . summa nord sex parent anasc votoedu annoedu [aw=pesofit]
+< 
+<     Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+< -------------+-----------------------------------------------------------------
+<         nord |    1000  609.538554    1.990448   1.066408          1          7
+<          sex |    1000  609.538554    1.525258   .4996115          1          2
+<       parent |    1000  609.538554    2.968015   2.481107          1         15
+<        anasc |    1000  609.538554    1959.886    21.1693       1915       2011
+<      votoedu |     399  231.107007    67.13315   32.16915          1        110
+< -------------+-----------------------------------------------------------------
+<      annoedu |     400  231.301358     1988.01    18.8839       1938       2012
+< 
+< . 
+< end of do-file
+< 
+< Done
+output/swilk.out vs newout/swilk.out:
+43a44,46
+> Warning: "(i=1)? opt1 : (i=2)? opt2 : (i=3)? opt3 : opt4"
+>  obsolete use of "=" as Boolean test: please use "=="
+> 
+46,47c49,50
+<  Rejections for normal        40 (4.0%)
+<  Non-rejections for uniform   41 (4.1%)
+---
+>  Rejections for normal        45 (4.5%)
+>  Non-rejections for uniform   43 (4.3%)
+49,50c52,53
+<  Rejections for normal        47 (4.7%)
+<  Non-rejections for uniform  219 (21.9%)
+---
+>  Rejections for normal        42 (4.2%)
+>  Non-rejections for uniform  223 (22.3%)
+52,53c55,56
+<  Rejections for normal        43 (4.3%)
+<  Non-rejections for uniform  913 (91.3%)
+---
+>  Rejections for normal        32 (3.2%)
+>  Non-rejections for uniform  919 (91.9%)
+55,56c58,59
+<  Rejections for normal        30 (3.0%)
+<  Non-rejections for uniform  555 (55.5%)
+---
+>  Rejections for normal        43 (4.3%)
+>  Non-rejections for uniform  564 (56.4%)
+output/tobittest.out vs newout/tobittest.out:
+46c46
+< Gradients:   -4.8094e-11 -6.5742e-12 -1.2047e-11 -1.2063e-11  3.8029e-11 (norm 2.07e-06)
+---
+> Gradients:   -4.8084e-11 -6.5853e-12 -1.2053e-11 -1.2063e-11  3.8046e-11 (norm 2.08e-06)
+output/tsls-hausman.out vs newout/tsls-hausman.out:
+18d17
+< Test on Model 2:
+27c26
+< Model 4: TSLS, using observations 1-753
+---
+> Model 1: TSLS, using observations 1-753
+32c31
+<              coefficient   std. error      z      p-value
+---
+>              coefficient   std. error   t-ratio   p-value
+34,36c33,35
+<   const      -1.15846      1.54008      -0.7522   0.4519 
+<   WA         -0.00368090   0.0144203    -0.2553   0.7985 
+<   WE          0.300289     0.103120      2.912    0.0036  ***
+---
+>   const      -1.15846      1.54008      -0.7522   0.4522 
+>   WA         -0.00368090   0.0144203    -0.2553   0.7986 
+>   WE          0.300289     0.103120      2.912    0.0037  ***
+output/vittucci.out vs newout/vittucci.out:
+28,29d27
+< Full data set: 14 observations
+< Current sample: 14 observations
+49a48,50
+> 
+> Number of iterations: 10
+> 

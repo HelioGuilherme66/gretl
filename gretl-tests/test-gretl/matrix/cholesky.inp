@@ -1,0 +1,8 @@
+open data4-1
+matrix X = {const, sqft}
+matrix C = cholesky(X'*X)
+C
+matrix XPX = X'*X
+C = cholesky(XPX)
+C
+

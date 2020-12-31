@@ -1,0 +1,7 @@
+#!/bin/sh
+
+MYFILE=`mktemp`
+#find . -name "ps.list" -exec wc -l '{}' + | grep "total"
+find . -name "ps.list" -exec grep -v "#" '{}' >>$MYFILE ';' 
+grep -c "." $MYFILE
+rm $MYFILE

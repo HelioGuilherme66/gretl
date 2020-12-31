@@ -1,0 +1,23 @@
+# Stock and Watson, ch 8
+#
+open fatality.gdt
+# Set variant HC1 of HCCME
+set hc_version 1
+# generate variables
+genr vfrall = 10000 * mrall
+genr vfrdiff = vfrall - vfrall(-6)
+genr btaxdiff = beertax - beertax(-6)
+smpl --restrict year=1982
+# Equation 8.2
+ols vfrall 0 beertax --robust
+smpl --restrict --replace year=1988
+# Equation 8.3
+ols vfrall 0 beertax --robust
+# Equation 8.8
+ols vfrdiff 0 btaxdiff --robust
+smpl full
+# setobs 7 1:1
+ols vfrall beertax 0 
+hausman
+
+

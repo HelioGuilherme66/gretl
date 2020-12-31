@@ -1,0 +1,10 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run latextab.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/latextab.gfn.inp
+? include ./latextab.gfn
+ /home/cottrell/stats/test-gretl/testgfn/latextab.gfn
+latextab 0.2, 2015-12-14 (Artur Tarassow)
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt

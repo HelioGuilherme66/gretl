@@ -1,0 +1,17 @@
+open data4-10
+set seed 77779
+# full dataset
+lad 1 0 2 3
+series yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+# subsample
+series yh1 = NA
+smpl 10 40
+lad 1 0 2 3
+series yh1 = $yhat
+smpl full
+fcast yh2
+print yh1 yh2 --byobs
+
+

@@ -1,0 +1,10 @@
+open data4-10
+matrix X = { CATHOL, PUPIL, INCOME, MEMNEA }
+matrix P = princomp(X, 4)
+P
+pca CATHOL PUPIL INCOME MEMNEA --save-all
+list plist = PC*
+matrix Test = P - { plist }
+print Test
+
+

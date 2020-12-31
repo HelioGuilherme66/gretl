@@ -1,0 +1,37 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run shape.inp
+ /home/cottrell/stats/test-gretl/matrix/shape.inp
+? set seed 327
+Pseudo-random number generator seeded with 327
+? matrix a = mnormal(2,3)
+Generated matrix a
+? a
+a (2 x 3)
+
+     -1.3457     -0.57712     -0.40529 
+    -0.26174      0.33011      0.30289 
+
+? matrix b = mshape(a,3,1)
+Generated matrix b
+? b
+b (3 x 1)
+
+     -1.3457 
+    -0.26174 
+    -0.57712 
+
+? matrix b = mshape(a,5,2)
+Replaced matrix b
+? b
+b (5 x 2)
+
+     -1.3457      0.30289 
+    -0.26174      -1.3457 
+    -0.57712     -0.26174 
+     0.33011     -0.57712 
+    -0.40529      0.33011 
+
+Done

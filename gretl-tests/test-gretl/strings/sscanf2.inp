@@ -1,0 +1,16 @@
+string s = "foo 123 egg"
+string first third
+scalar second
+
+n = sscanf(s, "%s %d %s", first, second, third)
+first
+second
+third
+
+scalar x
+n = sscanf(s, "%*s %d %*s", x)
+x
+
+matrix m = ones(1,3)
+n = sscanf(s, "%*s %d %*s", m[2])
+m

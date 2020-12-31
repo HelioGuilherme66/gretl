@@ -1,0 +1,34 @@
+open fakedata.gdt
+
+# list socdemo = CHILD LOCATAIRE AUTOMOBILE
+
+list socdemo = CHILD AUTOMOBILE
+list X = lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+list Z = lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR socdemo 
+
+system name=AIDS
+  equation WLOG const X MRLOG ; const Z MRLOG 
+  equation WCAR const X MRCAR ; const Z MRCAR
+end system
+
+estimate AIDS method=3sls
+
+matrix B = $sysB
+matrix G = $sysGamma
+print B G
+
+matrix V = $vcv
+V
+matrix R = zeros(1,14)
+R[3] = 1
+R[9] = -1
+matrix QI = invpd(qform(R, V))
+matrix F = qform(R*$coeff,QI)
+print F
+
+restrict AIDS
+   b[1,3] - b[2,2] = 0
+end restrict
+
+estimate AIDS method=3sls
+

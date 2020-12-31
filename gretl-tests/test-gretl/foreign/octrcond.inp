@@ -1,0 +1,15 @@
+open data4-1
+matrix X = { sqft, price }
+X
+X = cdemean(X)
+X
+matrix XPX = X'*X
+XPX
+scalar rc = rcond(XPX)
+mwrite(XPX, "@dotdir/XPX.mat")
+
+foreign language=octave
+ XPX = gretl_loadmat("XPX.mat");
+ c = rcond(XPX)
+end foreign
+

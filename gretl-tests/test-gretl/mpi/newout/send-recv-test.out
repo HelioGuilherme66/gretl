@@ -1,0 +1,19 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-02-16 11:21
+? run send-recv-test.inp
+ /home/cottrell/stats/test-gretl/mpi/send-recv-test.inp
+hello from 2, my matrix
+m2 (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+hello from 1, my scalar = 32
+gretlmpi 1.10.0cvs
+Current session: 2015-02-16 11:21
+Done
+
+Done

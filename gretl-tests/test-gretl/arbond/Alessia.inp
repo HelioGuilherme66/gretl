@@ -1,0 +1,17 @@
+open provagretl.dta
+
+genr panelid = country*1000 + isic
+setobs panelid year --panel
+
+loop foreach i prod emp va
+#  l$i = log(zeromiss($i))
+  l$i = log($i)
+  diff l$i
+endloop
+
+arbond 1 10 ; lprod 0 d_lemp d_lva 
+dpanel 1 ; lprod 0 lemp lva ; 0 lemp lva GMM(lprod,2,10) --dpd
+arbond 1 10 ; lprod d_lemp d_lva 0 --two-step --asym
+dpanel 1 ; lprod lemp lva 0 ; lemp lva 0 GMM(lprod,2,10) --two-step --asym --dpd
+
+

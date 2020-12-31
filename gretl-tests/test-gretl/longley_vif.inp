@@ -1,0 +1,22 @@
+# Classic test for ill-conditioned data
+open longley.gdt
+list XL = 0 2 3 4 5 6 7
+ols 1 XL --vcv
+vif
+ols 2 0 3 4 5 6 7 -q
+printf "V2 = %g\n", 1/(1-$rsq)
+ols 3 0 2 4 5 6 7 -q
+printf "V3 = %g\n", 1/(1-$rsq)
+ols 4 0 2 3 5 6 7 -q
+printf "V4 = %g\n", 1/(1-$rsq)
+ols 5 0 2 3 4 6 7 -q
+printf "V5 = %g\n", 1/(1-$rsq)
+ols 6 0 2 3 4 5 7 -q
+printf "V6 = %g\n", 1/(1-$rsq)
+ols 7 0 2 3 4 5 6 -q
+printf "V5 = %g\n", 1/(1-$rsq)
+matrix X = { XL }
+matrix XTX = X'X
+printf "det(XTX) = %g\n", det(XTX)
+
+

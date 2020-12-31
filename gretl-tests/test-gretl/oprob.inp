@@ -1,0 +1,8 @@
+open MFontaine.gdt
+probit Rtg 0 2 3 4 5
+logit Rtg 0 2 3 4 5
+Rtg = (Rtg == 12)? 11 : Rtg
+Rtg -= 1
+probit Rtg 0 2 3 4 5
+logit Rtg 0 2 3 4 5
+

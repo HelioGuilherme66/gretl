@@ -1,0 +1,143 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run carr.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/carr.gfn.inp
+? include ./carr.gfn
+ /home/cottrell/stats/test-gretl/testgfn/carr.gfn
+carr 0.7, 2015-07-11 (Yi-Nung Yang)
+# Estimate CARR models developed by Ray Yutien Chou (JMCB, 2005, v37, n3,p.562-582)
+# You might use the following data file to run the sample script belowe.
+? open http://ricardo.ecn.wfu.edu/pub/gretldata/2005-CARR.gdt
+
+Read datafile /home/cottrell/.gretl/2005-CARR.gdt
+periodicity: 52, maxobs: 1121
+observations range: 1982-04-26 to 2003-10-13
+
+Listing 9 variables:
+  0) const        1) Open         2) High         3) Low        
+  4) Close        5) Volume       6) Adj_Close    7) R          
+  8) r          
+
+# --- estimate ECARR(1,1)
+? carr(R,1,1,null,1)
+
+Initial Values for Parameters in MLE: 
+--------------------------------------
+omega=0.141677, alpha1=0.241566, beta1=0.713413, 
+
+=================================================================
+ ECARR models: CARR QML Estimation with Expoenetial Distribution.
+=================================================================
+ML, using observations: 1982-05-03:2003-10-13 (T = 1119)
+ll = -ln(lambda) - R/lambda
+QML standard errors
+
+Dependent variable: R
+
+               coefficient   std. error     z      p-value 
+  ---------------------------------------------------------
+  omega         0.141656     0.0464905     3.047   0.0023   ***
+  R(-1)         0.241592     0.0394455     6.125   9.09e-10 ***
+  lambda(-1)    0.713407     0.0483038    14.77    2.32e-49 ***
+
+  log-likelihood = -2341.44
+  Akaike-criterion = 4688.88
+  Schwarz-criterion = 4703.95
+  Hannan-Quinn = 4694.58
+
+# --- estimate ECARRX(1,1) with exogenous variables, r(-1) and abs(r(-1))
+? series abs_r=abs(r)
+Generated series abs_r (ID 9)
+? list alist = r(-1) abs_r(-1)
+Generated list alist
+? carr(R,1,1,alist,1)
+
+Initial Values for Parameters in MLE: 
+--------------------------------------
+omega=0.141677, alpha1=0.241566, beta1=0.713413, 
+
+=================================================================
+ ECARR models: CARR QML Estimation with Expoenetial Distribution.
+=================================================================
+ML, using observations: 1982-05-03:2003-10-13 (T = 1119)
+ll = -ln(lambda) - R/lambda
+QML standard errors
+
+Dependent variable: R
+
+               coefficient   std. error      z      p-value 
+  ----------------------------------------------------------
+  omega         0.215974     0.0589341     3.665    0.0002   ***
+  R(-1)         0.259154     0.0451372     5.741    9.39e-09 ***
+  lambda(-1)    0.693249     0.0480033    14.44     2.83e-47 ***
+  r_1          -0.0953754    0.0207927    -4.587    4.50e-06 ***
+  abs_r_1      -0.0285486    0.0396100    -0.7207   0.4711  
+
+  log-likelihood = -2337.66
+  Akaike-criterion = 4685.32
+  Schwarz-criterion = 4710.43
+  Hannan-Quinn = 4694.81
+
+# --- estimate ECARRX(1,1) with exogenous variables, r(-1)
+? series abs_r=abs(r)
+Replaced series abs_r (ID 9)
+? list blist = r(-1)
+Generated list blist
+? carr(R,1,1,blist,1)
+
+Initial Values for Parameters in MLE: 
+--------------------------------------
+omega=0.141677, alpha1=0.241566, beta1=0.713413, 
+
+=================================================================
+ ECARR models: CARR QML Estimation with Expoenetial Distribution.
+=================================================================
+ML, using observations: 1982-05-03:2003-10-13 (T = 1119)
+ll = -ln(lambda) - R/lambda
+QML standard errors
+
+Dependent variable: R
+
+               coefficient   std. error     z      p-value 
+  ---------------------------------------------------------
+  omega         0.210685     0.0582964     3.614   0.0003   ***
+  R(-1)         0.237181     0.0347209     6.831   8.43e-12 ***
+  lambda(-1)    0.701617     0.0469594    14.94    1.78e-50 ***
+  r_1          -0.0965446    0.0211316    -4.569   4.91e-06 ***
+
+  log-likelihood = -2337.72
+  Akaike-criterion = 4683.44
+  Schwarz-criterion = 4703.52
+  Hannan-Quinn = 4691.03
+
+# --- estimate WCARR(1,1)
+? carr(R,1,1,null,2)
+
+Initial Values for Parameters in MLE: 
+--------------------------------------
+omega=0.141677, alpha1=0.241566, beta1=0.713413, 
+
+=================================================================
+ WCARR models: CARR ML Estimation with Weibull Distribution.
+=================================================================
+ML, using observations: 1982-05-03:2003-10-13 (T = 1119)
+ll = ln(theta/R) +theta*ln(gammafun(1+1/theta)*R/lambda) - (gammafun(1+1/theta)*R/lambda)^theta
+Standard errors based on Outer Products matrix
+
+Dependent variable: R
+
+               coefficient   std. error     z       p-value 
+  ----------------------------------------------------------
+  omega         0.176607     0.0405999     4.350   1.36e-05  ***
+  R(-1)         0.306500     0.0170221    18.01    1.75e-72  ***
+  lambda(-1)    0.638900     0.0226332    28.23    2.62e-175 ***
+  theta         2.39472      0.0464084    51.60    0.0000    ***
+
+  log-likelihood = -1809.76
+  Akaike-criterion = 3627.51
+  Schwarz-criterion = 3647.6
+  Hannan-Quinn = 3635.1
+
+Done

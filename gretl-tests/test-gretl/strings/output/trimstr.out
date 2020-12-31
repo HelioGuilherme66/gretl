@@ -1,0 +1,14 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run trimstr.inp
+ /home/cottrell/stats/test-gretl/strings/trimstr.inp
+? function string trimstr (string s)
+? string s1 = "     @Gretl is great!"
+Generated string s1
+? s2 = trimstr(s1)
+Generated string s2
+? print s2
+@Gretl is great!
+Done

@@ -1,0 +1,19 @@
+nulldata 50
+setobs 1 1 --special
+
+scalar s1 = 1
+scalar s2 = 1
+series y = normal()
+
+kalman
+  obsy y
+  obsymat 1
+  statemat 1
+  statevar s2
+  obsvar s1
+end kalman --diffuse
+
+matrix E V S MSE G
+
+kfilter(&E, &V, &S, &MSE, &G)
+print E V S

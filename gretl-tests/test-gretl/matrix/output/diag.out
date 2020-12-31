@@ -1,0 +1,61 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run diag.inp
+ /home/cottrell/stats/test-gretl/matrix/diag.inp
+? matrix A = {1,2;3,4}
+Generated matrix A
+? matrix B = inv(A)
+Generated matrix B
+? B
+B (2 x 2)
+
+    -2      1 
+   1.5   -0.5 
+
+? matrix C = inv(A')
+Generated matrix C
+? C
+C (2 x 2)
+
+    -2    1.5 
+     1   -0.5 
+
+? matrix d = C[diag]
+Generated matrix d
+? d
+d (2 x 1)
+
+    -2 
+  -0.5 
+
+? B[1,1] = 9
+Modified matrix B
+? B
+B (2 x 2)
+
+     9      1 
+   1.5   -0.5 
+
+? A = {1,2,3;4,5,6;7,8,9}
+Replaced matrix A
+? A
+A (3 x 3)
+
+  1   2   3 
+  4   5   6 
+  7   8   9 
+
+? d = {12,13,14}
+Replaced matrix d
+? A[diag] = d
+Modified matrix A
+? A
+A (3 x 3)
+
+  12    2    3 
+   4   13    6 
+   7    8   14 
+
+Done

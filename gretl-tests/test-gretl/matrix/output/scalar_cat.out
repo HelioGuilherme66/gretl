@@ -1,0 +1,80 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run scalar_cat.inp
+ /home/cottrell/stats/test-gretl/matrix/scalar_cat.inp
+? set seed 34456
+Pseudo-random number generator seeded with 34456
+? X = mnormal(4,3)
+Generated matrix X
+? Z = muniform(4,2)
+Generated matrix Z
+? a = 100
+Generated scalar a = 100
+? Y = a ~ X
+Generated matrix Y
+? print Y
+Y (4 x 4)
+
+      100.00     -0.80103     -0.47617      -1.1272 
+      100.00       1.3378      0.48595     -0.46328 
+      100.00     -0.45548      0.22007    -0.061560 
+      100.00      0.63080      -1.1061     -0.96959 
+
+? Y = X ~ a
+Replaced matrix Y
+? print Y
+Y (4 x 4)
+
+    -0.80103     -0.47617      -1.1272       100.00 
+      1.3378      0.48595     -0.46328       100.00 
+    -0.45548      0.22007    -0.061560       100.00 
+     0.63080      -1.1061     -0.96959       100.00 
+
+? Y = a | X
+Replaced matrix Y
+? print Y
+Y (5 x 3)
+
+      100.00       100.00       100.00 
+    -0.80103     -0.47617      -1.1272 
+      1.3378      0.48595     -0.46328 
+    -0.45548      0.22007    -0.061560 
+     0.63080      -1.1061     -0.96959 
+
+? Y = X | a
+Replaced matrix Y
+? print Y
+Y (5 x 3)
+
+    -0.80103     -0.47617      -1.1272 
+      1.3378      0.48595     -0.46328 
+    -0.45548      0.22007    -0.061560 
+     0.63080      -1.1061     -0.96959 
+      100.00       100.00       100.00 
+
+? Y = 0 ~ (0 | X | 0) ~ 0
+Replaced matrix Y
+? print Y
+Y (6 x 5)
+
+      0.0000       0.0000       0.0000       0.0000       0.0000 
+      0.0000     -0.80103     -0.47617      -1.1272       0.0000 
+      0.0000       1.3378      0.48595     -0.46328       0.0000 
+      0.0000     -0.45548      0.22007    -0.061560       0.0000 
+      0.0000      0.63080      -1.1061     -0.96959       0.0000 
+      0.0000       0.0000       0.0000       0.0000       0.0000 
+
+? Y = Z ~ X | 0
+Replaced matrix Y
+? print Y
+Y (5 x 5)
+
+     0.88295      0.12543     -0.80103     -0.47617      -1.1272 
+     0.21088      0.83417       1.3378      0.48595     -0.46328 
+     0.15239      0.10965     -0.45548      0.22007    -0.061560 
+     0.70452      0.16636      0.63080      -1.1061     -0.96959 
+      0.0000       0.0000       0.0000       0.0000       0.0000 
+
+Done

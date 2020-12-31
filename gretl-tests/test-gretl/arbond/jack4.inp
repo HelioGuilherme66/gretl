@@ -1,0 +1,3 @@
+open jack4.gdt
+arbond 1 0 ; y
+dpanel 1 ; y

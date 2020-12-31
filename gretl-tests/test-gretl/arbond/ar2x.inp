@@ -1,0 +1,9 @@
+open fakedata2.gdt
+genr Dx = diff(x)
+arbond 1 0 ; y Dx
+dpanel 1 ; y x
+arbond 2 0 ; y Dx
+dpanel 2 ; y x
+arbond 2 0 ; y Dx Dx(-1)
+dpanel 2 ; y x x(-1)
+

@@ -1,0 +1,25 @@
+open data9-7
+ols 1 0 2 -q
+# new LMF calculation
+modtest --autocorr
+genr LMF1 = $test
+# calculate longhand
+genr u = misszero($uhat)
+genr u_1 = misszero(u(-1))
+genr u_2 = misszero(u(-2))
+genr u_3 = misszero(u(-3))
+genr u_4 = misszero(u(-4))
+ols u 0 2 u_* -q
+omit u_* --silent --test-only
+genr LMF2 = $test
+# compare our previous method:
+# ((T - k - n)/n) * R^2 / (1 - R^2)
+ols 1 0 2 -q
+genr u = $uhat
+delete u_*
+ols u 0 2 u(-1 to -4) -q
+genr R2 = $rsq
+genr LMF3 = (($T - $ncoeff)/4) * (R2/(1-R2))
+printf "Built-in LMF:        %.8f\n", LMF1
+printf "Hand-calculated LMF: %.8f\n", LMF2
+printf "Our previous LMF:    %.8f\n", LMF3

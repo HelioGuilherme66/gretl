@@ -1,0 +1,11 @@
+open kmenta.gdt
+
+Kmenta1 <- system
+  equation Q 0 P D
+  equation Q 0 P F A
+  endog Q P
+end system
+estimate Kmenta1 method=tsls
+estimate Kmenta1 method=tsls --no-df-corr
+
+tsls Q 0 P D ; 0 D F A

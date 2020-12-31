@@ -1,0 +1,46 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run Robinson.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Robinson.gfn.inp
+? include ./Robinson.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Robinson.gfn
+Robinson 1.0, 2013-08-28 (Uriel Rodriguez Ramires)
+? open greene5_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene5_1.gdt
+periodicity: 4, maxobs: 204
+observations range: 1950:1 to 2000:4
+
+Listing 13 variables:
+  0) const       1) realgdp     2) realcons    3) realinvs    4) realgovt  
+  5) realdpi     6) cpi_u       7) M1          8) tbilrate    9) unemp     
+ 10) pop        11) infl       12) realint   
+
+? series Y = realgdp
+Generated series Y (ID 13)
+? series c = realcons
+Generated series c (ID 14)
+? series i = realinvs
+Generated series i (ID 15)
+? scalar h=0.654
+Generated scalar h = 0.654
+? Robinson(Y,c,i,h)
+
+Model 1: OLS, using observations 1950:1-2000:4 (T = 204)
+Dependent variable: m1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  m2           1.50723     0.00229018    658.1    0.0000  ***
+
+Mean dependent var   4562.972   S.D. dependent var   2109.672
+Sum squared resid     2413000   S.E. of regression   109.0261
+R-squared            0.999532   Adjusted R-squared   0.999532
+F(1, 203)            433131.8   P-value(F)           0.000000
+Log-likelihood      -1246.046   Akaike criterion     2494.092
+Schwarz criterion    2497.410   Hannan-Quinn         2495.434
+rho                  0.958179   Durbin-Watson        0.105522
+
+Done

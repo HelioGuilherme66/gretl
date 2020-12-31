@@ -1,0 +1,34 @@
+set echo off
+set messages off
+
+function series GDV(series x, scalar m, scalar s)
+     series den = exp(pi*(m-x)/(s*sqrt(3)))
+     return 1/(1+den)
+end function
+
+open gretl_plant.gdt -q
+
+# apply scaling (though not for HHI)
+Price /=100
+Domestic_Sales /= 10000
+Export_Sales /= 10000
+Total_import /= 10000
+
+# regular regressors
+list X = const Cost Domestic_Sales Export_Sales Soda PCFT Total_import
+
+scalar m = 0.470
+scalar s = 0.200
+matrix b = {2.8, 0.01, 0.14, 1.2,  0.05, -3.3, 0.4}'
+
+# logistic term
+series Log = GDV(HHI, m, s)
+
+string pnames = varname(X) ~ ",mu,sigma" 
+nls Price = lincomb(X,b) + Log
+   series Log = GDV(HHI, m, s)
+   params b m s
+   param_names pnames
+end nls 
+
+

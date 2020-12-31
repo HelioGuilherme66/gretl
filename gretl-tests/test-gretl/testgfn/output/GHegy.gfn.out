@@ -1,0 +1,98 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run GHegy.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/GHegy.gfn.inp
+? include ./GHegy/GHegy.gfn
+ /home/cottrell/stats/test-gretl/testgfn/GHegy/GHegy.gfn
+GHegy 1.1, 2015-03-10 (Ignacio Diaz-Emparanza)
+? open data9-3.gdt
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+# Tests with constant + dums + trend and fixed AR order 4,
+# without printing the regression
+? bundle H1 = GHegy_test(reskwh, 0, 4, 3, 0)
+In regard to function GHegy_pvalue (package GHegy):
+Warning: "catch" should not be used on calls to user-defined functions
+In regard to function GHegy_pvalue (package GHegy):
+Warning: "catch" should not be used on calls to user-defined functions
+ 
+HEGY test of seasonal unit roots for series reskwh:
+ 
+AR order = 4 (fixed)
+
+Deterministic component: constant + (s-1) seasonal dummies + trend
+ 
+Dof (T-k) = 66
+
+Statistic       p-value     Ang. Frequency       Period     
+-----------------------------------------------------------
+t1= -1.42    	0.80909          zero           infinity       
+F1= 4.27    	0.15319        +-pi/2     	4          
+t2= -1.41    	0.52046          pi             2    
+-----------------------------------------------------------
+Fs= 3.63    	0.25612    All the seasonal cycles              
+Ft= 3.18    	0.49606    Delta_s (all the seas. + zero freq.)  
+-----------------------------------------------------------
+ 
+# Tests with constant + dums, AR order determined by BIC with
+# a maximum of 10, printing the regression
+? bundle H2 = GHegy_test(reskwh, 2, 10, 2, 1)
+In regard to function GHegy_pvalue (package GHegy):
+Warning: "catch" should not be used on calls to user-defined functions
+In regard to function GHegy_pvalue (package GHegy):
+Warning: "catch" should not be used on calls to user-defined functions
+ 
+HEGY test of seasonal unit roots for series reskwh:
+ 
+AR order = 0 (determined by BIC with max.order=10)
+
+Deterministic component: constant + (s-1) seasonal dummies
+ 
+Dof (T-k) = 75
+
+Statistic       p-value     Ang. Frequency       Period     
+-----------------------------------------------------------
+t1= -0.35    	1.00000          zero           infinity       
+F1= 17.99    	0.20662        +-pi/2     	4          
+t2= -2.72    	1.00000          pi             2    
+-----------------------------------------------------------
+Fs= 15.28    	0.01644    All the seasonal cycles              
+Ft= 11.50    	0.00000    Delta_s (all the seas. + zero freq.)  
+-----------------------------------------------------------
+ 
+
+Model 1: OLS, using observations 1973:2-1993:4 (T = 83)
+Dependent variable: sd_y
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -71.6656       32.6539       -2.195    0.0313   **
+  Du_2        72.3635       31.0472        2.331    0.0225   **
+  Du_3       148.766        32.9081        4.521    2.26e-05 ***
+  Du_4       176.574        30.5297        5.784    1.59e-07 ***
+  y0_1        -0.00206549    0.00598266   -0.3452   0.7309  
+  ya1_1        0.553690      0.0987964     5.604    3.30e-07 ***
+  yb1_1        0.146836      0.0990757     1.482    0.1425  
+  ypi_1       -0.154528      0.0568044    -2.720    0.0081   ***
+
+Mean dependent var   33.94102   S.D. dependent var   55.40551
+Sum squared resid    155761.4   S.E. of regression   45.57212
+R-squared            0.381215   Adjusted R-squared   0.323461
+F(7, 75)             6.600743   P-value(F)           4.41e-06
+Log-likelihood      -430.5674   Akaike criterion     877.1347
+Schwarz criterion    896.4854   Hannan-Quinn         884.9087
+rho                 -0.000454   Durbin-Watson        1.988515
+
+Excluding the constant, p-value was highest for variable 14 (y0_1)
+
+
+Done

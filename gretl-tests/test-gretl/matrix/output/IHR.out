@@ -1,0 +1,290 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run IHR.inp
+ /home/cottrell/stats/test-gretl/matrix/IHR.inp
+? nulldata 700
+periodicity: 1, maxobs: 700
+observations range: 1 to 700
+? set seed 975478687
+Pseudo-random number generator seeded with 975478687
+? setobs 1 1 --time-series
+Full data range: 1 - 700 (n = 700)
+
+? genr eps=normal()
+Generated series eps (ID 2)
+? series y = 0
+Generated series y (ID 3)
+? series y = 0.4*y(-1) - 0.6*y(-2) + eps + 0.8*eps(-1)
+Replaced series y (ID 3)
+? ols y const y(-1 to -24) -q
+? genr e = $uhat
+Generated series e (ID 28)
+? ols y const y(-1 to -2) e(-1)
+
+Model 2: OLS, using observations 26-700 (T = 675)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        0.121192    0.0393633      3.079   0.0022    ***
+  y_1          0.431838    0.0258567     16.70    1.27e-52  ***
+  y_2         -0.635426    0.0223785    -28.39    4.30e-117 ***
+  e_1          0.839670    0.0476460     17.62    2.05e-57  ***
+
+Mean dependent var   0.103970   S.D. dependent var   1.967576
+Sum squared resid    698.7705   S.E. of regression   1.020484
+R-squared            0.732199   Adjusted R-squared   0.731002
+F(3, 671)            611.5317   P-value(F)           1.9e-191
+Log-likelihood      -969.4643   Akaike criterion     1946.929
+Schwarz criterion    1964.987   Hannan-Quinn         1953.921
+rho                  0.038922   Durbin's h           1.365136
+
+? matrix cf0 = $coeff
+Generated matrix cf0
+? genr e = $uhat
+Replaced series e (ID 28)
+? scalar crit = 1.0E10
+Generated scalar crit = 1e+10
+? loop while crit > 0.0001
+> ols y const y(-1 to -2) e(-1)
+> matrix cf1 = $coeff
+> cf0
+> cf1
+> matrix d = cf0 - cf1
+> cf0 = cf1
+> d
+> crit = d' * d
+> genr e = $uhat
+> endloop
+? ols y const y(-1 to -2) e(-1)
+
+Model 3: OLS, using observations 27-700 (T = 674)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        0.120570    0.0390478      3.088   0.0021    ***
+  y_1          0.413248    0.0260427     15.87    2.25e-48  ***
+  y_2         -0.627213    0.0222829    -28.15    1.17e-115 ***
+  e_1          0.839255    0.0463089     18.12    4.91e-60  ***
+
+Mean dependent var   0.100070   S.D. dependent var   1.966424
+Sum squared resid    685.4906   S.E. of regression   1.011494
+R-squared            0.736590   Adjusted R-squared   0.735411
+F(3, 670)            624.5215   P-value(F)           1.4e-193
+Log-likelihood      -962.0615   Akaike criterion     1932.123
+Schwarz criterion    1950.176   Hannan-Quinn         1939.114
+rho                  0.005533   Durbin's h           0.194944
+
+? matrix cf1 = $coeff
+? cf0
+cf0 (4 x 1)
+
+     0.12119 
+     0.43184 
+    -0.63543 
+     0.83967 
+
+? cf1
+cf1 (4 x 1)
+
+     0.12057 
+     0.41325 
+    -0.62721 
+     0.83925 
+
+? matrix d = cf0 - cf1
+? cf0 = cf1
+? d
+d (4 x 1)
+
+  0.00062268 
+    0.018590 
+  -0.0082128 
+  0.00041539 
+
+? crit = d' * d
+? genr e = $uhat
+? ols y const y(-1 to -2) e(-1)
+
+Model 4: OLS, using observations 28-700 (T = 673)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        0.117292    0.0394777      2.971   0.0031    ***
+  y_1          0.420432    0.0262528     16.01    4.19e-49  ***
+  y_2         -0.630229    0.0225005    -28.01    7.87e-115 ***
+  e_1          0.825262    0.0470644     17.53    6.36e-57  ***
+
+Mean dependent var   0.095818   S.D. dependent var   1.964783
+Sum squared resid    698.7466   S.E. of regression   1.021990
+R-squared            0.730647   Adjusted R-squared   0.729440
+F(3, 669)            604.9111   P-value(F)           4.9e-190
+Log-likelihood      -967.5788   Akaike criterion     1943.158
+Schwarz criterion    1961.205   Hannan-Quinn         1950.146
+rho                  0.035166   Durbin's h           1.245901
+
+? matrix cf1 = $coeff
+? cf0
+cf0 (4 x 1)
+
+     0.12057 
+     0.41325 
+    -0.62721 
+     0.83925 
+
+? cf1
+cf1 (4 x 1)
+
+     0.11729 
+     0.42043 
+    -0.63023 
+     0.82526 
+
+? matrix d = cf0 - cf1
+? cf0 = cf1
+? d
+d (4 x 1)
+
+   0.0032772 
+  -0.0071838 
+   0.0030159 
+    0.013993 
+
+? crit = d' * d
+? genr e = $uhat
+? ols y const y(-1 to -2) e(-1)
+
+Model 5: OLS, using observations 29-700 (T = 672)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        0.119418    0.0388244      3.076   0.0022    ***
+  y_1          0.408777    0.0259467     15.75    8.73e-48  ***
+  y_2         -0.624569    0.0221418    -28.21    6.89e-116 ***
+  e_1          0.849239    0.0460399     18.45    1.02e-61  ***
+
+Mean dependent var   0.098170   S.D. dependent var   1.965298
+Sum squared resid    674.0122   S.E. of regression   1.004490
+R-squared            0.739931   Adjusted R-squared   0.738763
+F(3, 668)            633.5169   P-value(F)           7.7e-195
+Log-likelihood      -954.5313   Akaike criterion     1917.063
+Schwarz criterion    1935.104   Hannan-Quinn         1924.050
+rho                  0.009245   Durbin's h           0.323851
+
+? matrix cf1 = $coeff
+? cf0
+cf0 (4 x 1)
+
+     0.11729 
+     0.42043 
+    -0.63023 
+     0.82526 
+
+? cf1
+cf1 (4 x 1)
+
+     0.11942 
+     0.40878 
+    -0.62457 
+     0.84924 
+
+? matrix d = cf0 - cf1
+? cf0 = cf1
+? d
+d (4 x 1)
+
+  -0.0021257 
+    0.011654 
+  -0.0056594 
+   -0.023978 
+
+? crit = d' * d
+? genr e = $uhat
+? ols y const y(-1 to -2) e(-1)
+
+Model 6: OLS, using observations 30-700 (T = 671)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        0.122037    0.0389112      3.136   0.0018    ***
+  y_1          0.414134    0.0258354     16.03    3.70e-49  ***
+  y_2         -0.624357    0.0222116    -28.11    2.76e-115 ***
+  e_1          0.854610    0.0465963     18.34    3.83e-61  ***
+
+Mean dependent var   0.104904   S.D. dependent var   1.958992
+Sum squared resid    675.0323   S.E. of regression   1.006003
+R-squared            0.737467   Adjusted R-squared   0.736286
+F(3, 667)            624.5431   P-value(F)           3.5e-193
+Log-likelihood      -954.1179   Akaike criterion     1916.236
+Schwarz criterion    1934.271   Hannan-Quinn         1923.221
+rho                  0.010829   Durbin's h           0.377504
+
+? matrix cf1 = $coeff
+? cf0
+cf0 (4 x 1)
+
+     0.11942 
+     0.40878 
+    -0.62457 
+     0.84924 
+
+? cf1
+cf1 (4 x 1)
+
+     0.12204 
+     0.41413 
+    -0.62436 
+     0.85461 
+
+? matrix d = cf0 - cf1
+? cf0 = cf1
+? d
+d (4 x 1)
+
+  -0.0026187 
+  -0.0053570 
+ -0.00021277 
+  -0.0053704 
+
+? crit = d' * d
+? genr e = $uhat
+
+Number of iterations: 4
+
+? arma 2 1 ; y -c
+
+Function evaluations: 18
+Evaluations of gradient: 9
+
+Model 7: ARMA, using observations 3-700 (T = 698)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const        0.108813    0.0699743      1.555   0.1199   
+  phi_1        0.422742    0.0300151     14.08    4.74e-45  ***
+  phi_2       -0.636327    0.0309527    -20.56    6.53e-94  ***
+  theta_1      0.828525    0.0232812     35.59    2.16e-277 ***
+
+Mean dependent var   0.097378   S.D. dependent var   1.943788
+Mean of innovations  0.003973   S.D. of innovations  0.996098
+Log-likelihood      -987.6904   Akaike criterion     1985.381
+Schwarz criterion    2008.122   Hannan-Quinn         1994.173
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           0.3322    -1.2088     1.2536    -0.2073
+    Root  2           0.3322     1.2088     1.2536     0.2073
+  MA
+    Root  1          -1.2070     0.0000     1.2070     0.5000
+  -----------------------------------------------------------
+
+Done

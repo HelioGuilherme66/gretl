@@ -1,0 +1,7 @@
+open data4-10
+enroll_mod <- ols 1 0 2 3 4 5 --vcv
+matrix B = transp(enroll_mod.$coeff[2:5])
+B
+matrix S = enroll_mod.$vcv[2:5,2:5]
+S
+

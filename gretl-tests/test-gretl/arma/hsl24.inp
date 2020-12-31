@@ -1,0 +1,13 @@
+# NAM series C - Pankratz series 24, Housing Sales
+# apparently over the sample 65:1,74:12  (skip final 12 months).
+#         NAM ML1   NAM ML2     TSP
+# theta    .200      .216     .201153
+# (s.e.)  (.086)    (.083)   (.092315)
+# THETA    .967     1.000    1.000000
+# (s.e.)  (.724)    (57.3)   (.127450)
+# LogL   -295.760  -295.745  -295.730
+
+open hsl24
+smpl ; 1974:12
+arima 0 1 1 ; 0 1 1 ; hsl24 --nc
+

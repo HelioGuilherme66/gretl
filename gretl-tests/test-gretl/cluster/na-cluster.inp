@@ -1,0 +1,19 @@
+open ../duration/ema1996.dta -q
+
+disrate[32] = NA
+
+rrui = reprate * ui
+drui = disrate * ui
+list X = reprate disrate ui rrui drui logwage
+cens = 1 - censor1
+duration spell 0 X ; cens --exp
+duration spell 0 X ; cens --exp --robust
+duration spell 0 X ; cens --exp --cluster=nonwhite
+
+foreign language=stata --send-data
+  stset spell, failure(censor1)
+  streg reprate disrate ui rrui drui logwage, nohr dist(exp)
+  streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(robust)
+  streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(cluster nonwhite)
+end foreign
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo "*** all_fails ***" > all_fails
+echo "*** all_diffs ***" > all_diffs
+
+for d in . append arbond arma bundles builtins count csv duration \
+	fcast fnsample foreign gmm importer intreg \
+	kalman loess matrix mle ordered panel rq sarma \
+	stock-watson strings sysloop system ufunc vecm \
+	probit cluster ; do
+  if [ -f $d/fails ] ; then
+     for f in `cat $d/fails | awk '{ print $1 }'` ; do
+       echo "$d/$f" >> all_fails
+     done
+  fi  
+  echo "" >> all_diffs
+  cat $d/diffs >> all_diffs
+done
+
+echo "wrote all_fails, all_diffs"

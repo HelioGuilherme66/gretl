@@ -1,0 +1,6 @@
+open fraserf.gdt
+set seed 333777
+lad LCC 0 APICO
+lad LCC APICO
+lad LCC APICO PICOPHA
+

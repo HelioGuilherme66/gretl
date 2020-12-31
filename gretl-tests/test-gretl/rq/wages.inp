@@ -1,0 +1,14 @@
+open Lavorco-minimal.gdt
+
+# OK?
+quantreg 0.5 lnyhour const sesso explav explav2 tenure tenure2
+
+# NOCONV?
+# The same thing in R just produces a nonuniqueness warning. 
+# In a case like this (see point 1) there's no way to get any 
+# output if tau is a vector.
+quantreg 0.5 lnyhour const sesso explav explav2 tenure tenure2 --intervals
+
+# results differ from R?
+quantreg 0.5 lnyhour const explav explav2 tenure tenure2 industria servizi
+quantreg 0.5 lnyhour const explav explav2 tenure tenure2 industria servizi -i

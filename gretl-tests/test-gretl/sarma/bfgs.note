@@ -1,0 +1,8 @@
+sarma
+
+                     output newout
+BFGS gradient evals:    172    173
+BFGS function evals:    525    587
+
+old: real 2.18, 2.17
+new: real 2.31, 2.31

@@ -1,0 +1,245 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run arimax.inp
+ /home/allin/stats/test-gretl/bfgs/arma/arimax.inp
+? open data9-3
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+? arma 0 1 1 ; reskwh 0 incm --verbose
+
+ARMA initialization: using linear AR model
+
+Iteration 1: loglikelihood = -537.117693222
+Parameters:       7.5672  0.00010000    0.054377
+Gradients:     -0.032151     -43.756     -14.531 (norm 5.88e-01)
+
+MA root 0 = 0.000522302
+MA estimate(s) out of bounds
+MA root 0 = 0.0130578
+MA estimate(s) out of bounds
+MA root 0 = 0.326475
+MA estimate(s) out of bounds
+Iteration 2: loglikelihood = -523.587277159 (steplength = 0.008)
+Parameters:       7.5669    -0.34995   -0.061867
+Gradients:       0.18150     -32.761      25.514 (norm 2.19e+00)
+
+MA root 0 = 6.86733e-05
+MA estimate(s) out of bounds
+MA root 0 = 0.00167768
+MA estimate(s) out of bounds
+MA root 0 = 0.0375167
+MA estimate(s) out of bounds
+MA root 0 = 0.580477
+MA estimate(s) out of bounds
+Iteration 3: loglikelihood = -515.914568298 (steplength = 0.0016)
+Parameters:       7.5675    -0.54246  -0.0093501
+Gradients:       0.11350     -34.362      15.105 (norm 2.56e+00)
+
+MA root 0 = 0.00245168
+MA estimate(s) out of bounds
+MA root 0 = 0.0499762
+MA estimate(s) out of bounds
+MA root 0 = 0.566505
+MA estimate(s) out of bounds
+Iteration 4: loglikelihood = -510.788464092 (steplength = 0.008)
+Parameters:       7.5650    -0.69969    0.020536
+Gradients:      -0.17624     -28.414     -29.620 (norm 2.70e+00)
+
+MA root 0 = 0.489041
+MA estimate(s) out of bounds
+Iteration 5: loglikelihood = -507.870216187 (steplength = 0.2)
+Parameters:       7.5596    -0.84575    0.017169
+Gradients:      -0.49635     -3.5001     -74.555 (norm 1.63e+00)
+
+Iteration 6: loglikelihood = -507.724295366 (steplength = 0.0320622)
+Parameters:       7.5585    -0.85022    0.015246
+Gradients:      -0.40596     -3.6549     -59.715 (norm 1.54e+00)
+
+Iteration 7: loglikelihood = -507.677141388 (steplength = 1)
+Parameters:       7.5008    -0.89684   0.0062456
+Gradients:       0.31627      8.9403      60.057 (norm 1.89e+00)
+
+Iteration 8: loglikelihood = -507.498259920 (steplength = 1)
+Parameters:       7.4904    -0.86311    0.010907
+Gradients:      -0.12841     -2.2262     -14.634 (norm 1.01e+00)
+
+MA root 0 = 0.10478
+MA estimate(s) out of bounds
+MA root 0 = 0.584185
+MA estimate(s) out of bounds
+Iteration 9: loglikelihood = -507.489389924 (steplength = 0.000105205)
+Parameters:       7.4904    -0.86335   0.0093677
+Gradients:     -0.013151     -2.3984      3.8472 (norm 8.57e-01)
+
+MA root 0 = 0.0925336
+MA estimate(s) out of bounds
+MA root 0 = 0.5502
+MA estimate(s) out of bounds
+Iteration 10: loglikelihood = -507.480983567 (steplength = 0.00407885)
+Parameters:       7.4903    -0.87323   0.0092777
+Gradients:     -0.013895     0.64475      4.5664 (norm 4.86e-01)
+
+Iteration 11: loglikelihood = -507.477852805 (steplength = 1)
+Parameters:       7.4491    -0.87117   0.0099201
+Gradients:     -0.042522   0.0072930    -0.49020 (norm 3.31e-01)
+
+Iteration 12: loglikelihood = -507.475288900 (steplength = 1)
+Parameters:       7.3729    -0.87024    0.010522
+Gradients:     -0.048456    -0.30511     -2.0491 (norm 4.63e-01)
+
+Iteration 13: loglikelihood = -507.466858721 (steplength = 1)
+Parameters:       7.0070    -0.86895    0.013053
+Gradients:     -0.050926    -0.82701     -5.0629 (norm 6.17e-01)
+
+Iteration 14: loglikelihood = -507.461852558 (steplength = 1)
+Parameters:       6.6778    -0.86975    0.015037
+Gradients:     -0.031898    -0.69089     -4.2513 (norm 5.41e-01)
+
+Iteration 15: loglikelihood = -507.460085007 (steplength = 1)
+Parameters:       6.5199    -0.87139    0.015789
+Gradients:    -0.0073868    -0.25128     -1.3737 (norm 3.10e-01)
+
+MA root 0 = 0.793407
+MA estimate(s) out of bounds
+Iteration 16: loglikelihood = -507.460010397 (steplength = 8.21251e-05)
+Parameters:       6.5199    -0.87141    0.015676
+Gradients:     0.0020918    -0.25832     0.14452 (norm 2.83e-01)
+
+MA root 0 = 0.771985
+MA estimate(s) out of bounds
+Iteration 17: loglikelihood = -507.459903428 (steplength = 0.00344914)
+Parameters:       6.5199    -0.87233    0.015672
+Gradients:     0.0016485    0.024806     0.10052 (norm 1.06e-01)
+
+Iteration 18: loglikelihood = -507.459900940 (steplength = 1)
+Parameters:       6.5210    -0.87225    0.015674
+Gradients:    0.00097771  2.8422e-06  -0.0011994 (norm 4.62e-02)
+
+Iteration 19: loglikelihood = -507.459899509 (steplength = 1)
+Parameters:       6.5226    -0.87222    0.015666
+Gradients:    0.00071907  -0.0080377   -0.032600 (norm 6.38e-02)
+
+Iteration 20: loglikelihood = -507.459894436 (steplength = 1)
+Parameters:       6.5315    -0.87216    0.015616
+Gradients:   -6.8212e-05   -0.025065   -0.099052 (norm 8.92e-02)
+
+Iteration 21: loglikelihood = -507.459891327 (steplength = 1)
+Parameters:       6.5393    -0.87216    0.015566
+Gradients:   -0.00034390   -0.022030   -0.086942 (norm 8.72e-02)
+
+Iteration 22: loglikelihood = -507.459889961 (steplength = 1)
+Parameters:       6.5437    -0.87221    0.015534
+Gradients:   -0.00019895  -0.0075715   -0.029834 (norm 5.28e-02)
+
+Iteration 23: loglikelihood = -507.459889924 (steplength = 7.54695e-05)
+Parameters:       6.5437    -0.87221    0.015532
+Gradients:        0.0000  -0.0076511  0.00080149 (norm 4.72e-02)
+
+Iteration 24: loglikelihood = -507.459889829 (steplength = 0.00301767)
+Parameters:       6.5437    -0.87224    0.015532
+Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+
+Iteration 24: loglikelihood = -507.459889829 (steplength = 1)
+Parameters:       6.5437    -0.87224    0.015532
+Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -507.459889829 (steplength = 4.59719e-06)
+Parameters:       6.5437    -0.87224    0.015532
+Gradients:   -1.4211e-05 -6.5370e-05  -0.0011227 (norm 7.47e-03)
+
+
+Function evaluations: 69
+Evaluations of gradient: 24
+
+Model 1: ARMAX, using observations 1972:3-1993:4 (T = 86)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) reskwh
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const       6.54370      4.77237        1.371    0.1703  
+  theta_1    -0.872236     0.0570718    -15.28     9.91e-53 ***
+  incm        0.0155315    0.0310130      0.5008   0.6165  
+
+Mean dependent var   9.367151   S.D. dependent var   124.6588
+Mean of innovations  2.924736   S.D. of innovations  87.65787
+Log-likelihood      -507.4599   Akaike criterion     1022.920
+Schwarz criterion    1032.737   Hannan-Quinn         1026.871
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.1465     0.0000     1.1465     0.0000
+  -----------------------------------------------------------
+
+? incm[1] = NA
+Modified series incm (ID 6)
+? reskwh[2] = NA
+Modified series reskwh (ID 2)
+? arma 0 1 1 ; reskwh 0 incm
+
+Function evaluations: 53
+Evaluations of gradient: 24
+
+Model 2: ARMAX, using observations 1973:1-1993:4 (T = 84)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) reskwh
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const       4.00036      4.90226        0.8160   0.4145  
+  theta_1    -0.880598     0.0605331    -14.55     6.07e-48 ***
+  incm        0.0304313    0.0314830      0.9666   0.3337  
+
+Mean dependent var   8.190821   S.D. dependent var   125.8762
+Mean of innovations  0.215083   S.D. of innovations  87.57788
+Log-likelihood      -495.6301   Akaike criterion     999.2601
+Schwarz criterion    1008.983   Hannan-Quinn         1003.169
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.1356     0.0000     1.1356     0.0000
+  -----------------------------------------------------------
+
+? arma 0 1 1 ; reskwh 0 incm --y-diff-only
+
+Function evaluations: 71
+Evaluations of gradient: 15
+
+Model 3: ARMAX, using observations 1973:1-1993:4 (T = 84)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) reskwh
+Standard errors based on Hessian
+
+             coefficient    std. error       z       p-value 
+  -----------------------------------------------------------
+  const       6.54876       3.01959         2.169    0.0301   **
+  theta_1    -0.886617      0.0719406     -12.32     6.70e-35 ***
+  incm        0.000282563   0.000386035     0.7320   0.4642  
+
+Mean dependent var   8.190821   S.D. dependent var   125.8762
+Mean of innovations -0.187717   S.D. of innovations  87.77230
+Log-likelihood      -495.8406   Akaike criterion     999.6812
+Schwarz criterion    1009.404   Hannan-Quinn         1003.590
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.1279     0.0000     1.1279     0.0000
+  -----------------------------------------------------------
+
+Done

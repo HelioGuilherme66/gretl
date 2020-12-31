@@ -1,0 +1,27 @@
+open data4-10
+list vars = MEMNEA ADMEXP
+
+# compare pca and princomp() in the full sample
+matrix P1 = princomp({vars}, 1)
+pca vars --save=1
+matrix chk = P1 ~ {PC1} ~ (P1-{PC1})
+printf "\n%19.12f\n", chk
+
+# and using covariance matrix
+P1 = princomp({vars}, 1, 1)
+pca vars --save=1 --covariance
+matrix chk = P1 ~ {PC11} ~ (P1-{PC11})
+printf "\n%19.12f\n", chk
+
+# now compare them in the reduced sample
+smpl 20 ;
+matrix P2 = princomp({vars}, 1)
+pca vars --save=1
+matrix chk = P2 ~ {PC12} ~ (P2-{PC12})
+printf "\n%19.12f\n", chk
+
+# and using covariance matrix
+P2 = princomp({vars}, 1, 1)
+pca vars --save=1 --covariance
+matrix chk = P2 ~ {PC13} ~ (P2-{PC13})
+printf "\n%19.12f\n", chk

@@ -1,0 +1,143 @@
+gretl version 1.9.1cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-09-24 16:48
+? run arimadD.inp
+ /home/cottrell/stats/test-gretl/arma/arimadD.inp
+? nulldata 500
+periodicity: 1, maxobs: 500
+observations range: 1-500
+? setobs 4 1900:1
+Full data range: 1900:1 - 2024:4 (n = 500)
+
+? set seed 456722
+Pseudo-random number generator seeded with 456722
+? genr u = normal()
+Generated series u (ID 2)
+? genr y = u + .5*u(-1)
+Generated series y (ID 3)
+? genr y0 = y
+Generated series y0 (ID 4)
+? genr y = y + y(-4)
+Replaced series y (ID 3)
+? genr y = y + y(-1)
+Replaced series y (ID 3)
+? genr y = y + y(-1)
+Replaced series y (ID 3)
+? genr Dy = sdiff(diff(diff(y)))
+Generated series Dy (ID 5)
+? arma 0 0 1 ; Dy
+Function evaluations: 43
+Evaluations of gradient: 9
+
+Model 1: ARMA, using observations 1901:4-2024:4 (T = 493)
+Estimated using Kalman filter (exact ML)
+Dependent variable: Dy
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0417398    0.0680921     0.6130   0.5399  
+  theta_1     0.492058     0.0400845    12.28     1.23e-34 ***
+
+Mean dependent var   0.041373   S.D. dependent var   1.132448
+Mean of innovations -0.000332   S.D. of innovations  1.015973
+Log-likelihood      -707.4877   Akaike criterion     1420.975
+Schwarz criterion    1433.577   Hannan-Quinn         1425.923
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.0323     0.0000     2.0323     0.5000
+  -----------------------------------------------------------
+
+? arma 0 2 1 ; 0 1 0 ; y --verbose
+
+ARMA initialization: using linear AR model
+
+Iteration 1: loglikelihood = -760.336918742
+Parameters:     0.041373  0.00010000
+Gradients:    0.00012506      194.58 (norm 9.86e-02)
+
+MA root 0 = 2.64127e-05
+arma: MA estimate(s) out of bounds
+MA root 0 = 0.000660316
+arma: MA estimate(s) out of bounds
+MA root 0 = 0.0165076
+arma: MA estimate(s) out of bounds
+MA root 0 = 0.412646
+arma: MA estimate(s) out of bounds
+Iteration 2: loglikelihood = -716.013126367 (steplength = 0.0016)
+Parameters:     0.041373     0.31142
+Gradients:       0.12676      87.590 (norm 3.69e+00)
+
+Iteration 3: loglikelihood = -714.456720442 (steplength = 1)
+Parameters:      0.27180     0.56657
+Gradients:       -43.621     -46.091 (norm 4.36e+00)
+
+MA root 0 = 0.0277213
+arma: MA estimate(s) out of bounds
+MA root 0 = 0.365323
+arma: MA estimate(s) out of bounds
+Iteration 4: loglikelihood = -713.336778428 (steplength = 0.008)
+Parameters:      0.13484     0.61009
+Gradients:       -16.819     -92.122 (norm 5.41e+00)
+
+Iteration 5: loglikelihood = -708.381508132 (steplength = 1)
+Parameters:    -0.040965     0.47069
+Gradients:        18.225      13.832 (norm 1.90e+00)
+
+Iteration 6: loglikelihood = -707.493154212 (steplength = 1)
+Parameters:     0.047708     0.48980
+Gradients:       -1.2853      1.4057 (norm 6.12e-01)
+
+MA root 0 = 0.278322
+arma: MA estimate(s) out of bounds
+Iteration 7: loglikelihood = -707.489376185 (steplength = 0.0016)
+Parameters:     0.045651     0.49205
+Gradients:      -0.84026   0.0091063 (norm 1.46e-01)
+
+Iteration 8: loglikelihood = -707.488441783 (steplength = 0.0016)
+Parameters:     0.044175     0.49158
+Gradients:      -0.52326     0.29947 (norm 2.92e-01)
+
+Iteration 9: loglikelihood = -707.487732852 (steplength = 1)
+Parameters:     0.041740     0.49206
+Gradients:    4.5475e-05  0.00020464 (norm 7.16e-03)
+
+Iteration 9: loglikelihood = -707.487732852 (steplength = 1)
+Parameters:     0.041740     0.49206
+Gradients:    4.5475e-05  0.00020464 (norm 7.16e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -707.487732852 (steplength = 1.31072e-12)
+Parameters:     0.041740     0.49206
+Gradients:    4.5475e-05  0.00020464 (norm 7.16e-03)
+
+
+Function evaluations: 43
+Evaluations of gradient: 9
+
+Model 2: ARIMA, using observations 1901:4-2024:4 (T = 493)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)^2(1-Ls) y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0417398    0.0680921     0.6130   0.5399  
+  theta_1     0.492058     0.0400845    12.28     1.23e-34 ***
+
+Mean dependent var   0.041373   S.D. dependent var   1.132448
+Mean of innovations -0.000332   S.D. of innovations  1.015973
+Log-likelihood      -707.4877   Akaike criterion     1420.975
+Schwarz criterion    1433.577   Hannan-Quinn         1425.923
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.0323     0.0000     2.0323     0.5000
+  -----------------------------------------------------------
+
+Done

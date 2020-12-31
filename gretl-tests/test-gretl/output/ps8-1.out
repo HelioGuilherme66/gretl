@@ -1,0 +1,126 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps8-1.inp
+ /opt/esl/share/gretl/scripts/ps8-1.inp
+# PS8.1, for Examples 8.1 and 8.2
+? open data3-11
+
+Read datafile /opt/esl/share/gretl/data/data3-11.gdt
+periodicity: 1, maxobs: 222
+observations range: 1 to 222
+
+Listing 3 variables:
+  0) const     1) SALARY    2) YEARS   
+
+? genr LNSALARY=ln(SALARY)
+Generated series LNSALARY (ID 3)
+# Figure 8.2 and Example 8.1
+? textplot LNSALARY YEARS
+
+  LNSALARY
+    5.03044  |                                    o                        
+             |                                                             
+             |                   o                                        o
+    4.81218  +                     o   o          o     o                  
+             |                o   o  o    o o   o o  o   o oo  o           
+             |                 o     o        o   o   o        o   o       
+             |                   o o  o      oo o   ooo      o             
+             |               oo   oo o o  o o o o    o         o     o  o  
+     4.4484  +            o  o o o   ooo oo   o  o  ooo  o      o          
+             |            o  oo   oo   o  o o o  o          oo             
+             |        o    o  oo     oo      oo  oo o o    o               
+             |        ooo o   o               o  o  oo     oo              
+             |        ooo o  o o         oo   o o   o                      
+    4.08463  +      o o   o  oo          o    o                            
+             |         o  oo  o  o    o   o o                              
+             |ooo  oo ooo      o                o                          
+             |ooo ooo ooo  o   o                                           
+             |    oo                                                       
+    3.72086  +            o                     o                          
+             |+---------+---------+---------+---------+---------+---------+
+              1                           YEARS                           45
+
+
+? genr YRS2 = YEARS*YEARS
+Generated series YRS2 (ID 4)
+# estimate basic log quadratic model for Example 8.2
+? ols LNSALARY const YEARS YRS2
+
+Model 1: OLS, using observations 1-222
+Dependent variable: LNSALARY
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       3.80937       0.0413383     92.15     3.79e-177 ***
+  YEARS       0.0438528     0.00482873     9.082    6.43e-17  ***
+  YRS2       -0.000627348   0.000120861   -5.191    4.77e-07  ***
+
+Mean dependent var   4.325410   S.D. dependent var   0.302511
+Sum squared resid    9.380504   S.E. of regression   0.206962
+R-squared            0.536179   Adjusted R-squared   0.531943
+F(2, 219)            126.5823   P-value(F)           2.92e-37
+Log-likelihood       36.20452   Akaike criterion    -66.40903
+Schwarz criterion   -56.20100   Hannan-Quinn        -62.28766
+
+# save uhat squared and predicted LNSALARY
+? genr usq=$uhat*$uhat
+Generated series usq (ID 5)
+# genr predicted LNSALARY as actual minus residual stored as uhat
+? genr yhat1=LNSALARY-$uhat
+Generated series yhat1 (ID 6)
+# graph estimated residual variance against YEARS and yhat
+? textplot usq YEARS
+
+  usq
+   0.647365  |                                  o                          
+             |                                                             
+             |                                                             
+   0.539472  +                                                             
+             |                                                             
+             |                                                             
+             |                                                             
+             |                                                             
+   0.359652  +                                                             
+             |                   o                                         
+             |                                  o                          
+             |                o                                            
+             |                     o        o     o                        
+   0.179832  +                    o                                        
+             |            o    o     ooo  o   o                           o
+             |                 o              o     o                      
+             |          o oo ooo o o o   oo o o ooo oo  o  oo              
+             |        oo  o  oo   o  oo  oo   o ooo ooo    ooo o           
+ 1.1917e-05  +ooo ooo ooo oo ooo ooo ooo oo ooo ooo ooo  o ooo oo  o o  o  
+             |+---------+---------+---------+---------+---------+---------+
+              1                           YEARS                           45
+
+
+? textplot usq yhat1
+
+  usq
+   0.647365  |                                                       o     
+             |                                                             
+             |                                                             
+   0.539472  +                                                             
+             |                                                             
+             |                                                             
+             |                                                             
+             |                                                             
+   0.359652  +                                                             
+             |                                       o                     
+             |                                                       o     
+             |                                  o                          
+             |                                           o        o    o   
+   0.179832  +                                         o                   
+             |                           o         o       oo o  o  o      
+             |                                     o                o   o  
+             |                        o  o  o o o  o o   o o   o oo ooooooo
+             |                   o  o    o    o o      o   oo  o o  ooooooo
+ 1.1917e-05  +o  o  o   o  o  o  o  o o  o  o o o  o o o o oo oo oooooooooo
+             |+---------+---------+---------+---------+---------+---------+
+              3.85259                     yhat1                          4.57571
+
+
+Done

@@ -1,0 +1,190 @@
+ps10-1.inp data10-1		OK
+ps10-2.inp data10-2		OK
+ps10-3.inp data10-2		OK
+ps10-4.inp data6-3		OK
+ps10-5a.inp data10-2		OK
+ps10-5b.inp data10-2		some small disagreement (AR)
+ps10-6.inp data10-3		OK
+ps10-7.inp data10-4		OK
+ps10-8.inp data10-5		OK
+ps10-9.inp data10-1		OK
+ps11-1.inp data10-5		OK
+ps11-2.inp data10-5		OK
+ps11-3.inp data11-1		OK		
+ps12-1.inp data4-5		OK
+ps13-1.inp data13-1	 	OK
+ps2-2.inp data2-2		OK
+ps2-3.inp data2-2		OK
+ps3-1.inp data3-1		OK
+ps3-2.inp data3-1		OK
+ps3-3.inp data3-2		OK
+ps3-4.inp data3-1		OK
+ps3-5.inp data3-1		OK
+ps3-6.inp data3-3		OK
+ps4-1.inp data4-1		OK
+ps4-2.inp data4-2		OK
+ps4-3.inp data4-3		OK
+ps4-4.inp data4-4		OK
+ps4-5.inp data4-5		OK
+ps5-1.inp data4-3		OK
+ps5-2.inp data3-7		OK
+ps5-3.inp data4-3		OK
+ps5-4.inp data3-7		OK
+ps5-5.inp data4-6		OK
+ps6-1.inp data4-1		OK
+ps6-10.inp data4-8		OK
+ps6-11.inp data6-4		OK
+ps6-12.inp data6-1		OK
+ps6-2.inp data6-1		OK
+ps6-3.inp data6-2		OK
+ps6-4.inp data4-1		OK
+ps6-5.inp data6-3		OK
+ps6-6.inp data3-3		OK
+ps6-7.inp data6-4		OK
+ps6-8.inp data6-4		OK
+ps6-9.inp data4-4		OK
+ps7-1.inp data7-1		OK
+ps7-2.inp data7-2		OK
+ps7-3.inp data7-3		OK
+ps7-4.inp data7-3		OK
+ps7-5.inp data7-2		OK
+ps7-6.inp data7-4		OK
+ps7-7.inp data7-5		OK
+ps8-1.inp data3-11		OK
+ps8-2.inp data3-11		OK
+ps8-3.inp data8-1		OK
+ps8-4.inp data8-1		OK
+ps8-5.inp data8-1		OK
+ps8-6.inp data8-2		OK
+ps8-7.inp data8-1		OK
+ps8-8.inp data8-3		OK   
+ps9-1.inp data6-6		OK
+ps9-2.inp data4-7		OK
+ps9-3.inp data4-7		OK
+ps9-4.inp data6-6		OK
+ps9-5.inp data4-7		OK
+ps9-6.inp data9-1		OK
+ps9-7.inp data4-2		OK
+ps9-8.inp data9-2		OK
+ps9-9.inp data9-3		OK
+ps9-10.inp data9-3		OK
+greene7_8.inp
+greene8_3.inp
+greene11_3.inp
+greene12_1.inp
+greene14_1.inp
+greene14_2.inp
+greene18_6.inp
+greene19_1.inp
+greene19_3.inp
+greene22_2.inp
+ols_loop.inp      nomem
+prodfunc.inp
+converge.inp      nomem
+leverage.inp
+ects_nls.inp
+cusum.inp
+coeffsum.inp
+fcasterr.inp
+corrgm.inp
+hsk.inp
+reset.inp
+reset2.inp
+sw.inp
+pca.inp
+sw_ch12.inp
+sw_ch14.inp
+armaloop.inp
+maddala_4.25.inp
+china.inp
+tobittest.inp
+garch.inp
+garch-tondi.inp
+robust_errs.inp
+wooldridge_f.inp
+restrict.inp
+klein.inp
+jgm-1996.inp
+mrw.inp
+africa_panel.inp
+McGuire.inp
+jac_nls.inp
+grunsur.inp
+kmenta.inp
+ImpResp.inp
+perron97.inp
+corc_ldepvar.inp
+nlstest.inp
+lags.inp
+pwe_fcast.inp
+dols_call.inp
+MK.inp
+ladtest.inp
+jtest.inp
+vecm.inp
+griliches.inp
+matrix_ols.inp
+scallags.inp
+scalevar.inp
+stata-wls.inp
+shazam-wls.inp
+restrict_est.inp
+noconst.inp
+loopmods.inp
+pvals.inp
+stack.inp
+denmark.inp
+hamilton.inp
+collin.inp
+denmark2.inp
+listdel.inp
+dmsl.inp
+distribs.inp
+spearman.inp
+corrtest.inp
+dataswitch.inp
+uweights.inp
+delta_method.inp
+pcrit.inp
+ar1.inp
+rosenbrock.inp
+lbox.inp
+pca2.inp
+pcabig.inp
+LMF.inp
+smpl.inp
+mrw_qr.inp
+swilk.inp
+obscomp.inp
+oprob.inp
+dynfc.inp
+heckit.inp
+dwpval.inp
+longley_vif.inp
+dt_anova.inp
+pergm.inp
+ivreg.inp
+hamilton_dols.inp
+levermiss.inp
+llc.inp
+levlin2.inp
+biprobit.inp
+biptest.inp
+fcstats.inp
+vittucci.inp
+gappy_arima.inp
+nlswitch.inp
+listarg.inp
+listops.inp
+randgen.inp
+loess_nist.inp
+pca_cars.inp
+mahal.inp
+summary-by.inp
+progloop-scalars.inp
+query.inp
+summarywt.inp
+looptest.inp
+pcatest.inp
+tsls-hausman.inp
+brackets.inp

@@ -1,0 +1,76 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run matrix_ols.inp
+ /home/cottrell/stats/test-gretl/matrix_ols.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = { const, sqft }
+Generated matrix X
+? matrix y = { price }
+Generated matrix y
+? matrix b = inv(X'*X) * X'*y
+Generated matrix b
+estimated coefficient vector
+? b
+b (2 x 1)
+
+      52.351 
+     0.13875 
+
+? matrix uh = y - X*b
+Generated matrix uh
+? scalar SSR = uh'*uh
+Generated scalar SSR = 18273.6
+? scalar s2 = SSR / (rows(X) - rows(b))
+Generated scalar s2 = 1522.8
+? matrix V = s2 * inv(X'*X)
+Generated matrix V
+? V
+V (2 x 2)
+
+      1390.2     -0.67058 
+    -0.67058   0.00035092 
+
+? matrix se = sqrt(diag(V))
+Generated matrix se
+estimated standard errors
+? se
+se (2 x 1)
+
+      37.285 
+    0.018733 
+
+# compare
+? ols 1 0 2 --vcv
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+Covariance matrix of regression coefficients:
+
+         const          sqft
+       1390.21     -0.670583  const
+                 3.50920e-04  sqft
+
+Done

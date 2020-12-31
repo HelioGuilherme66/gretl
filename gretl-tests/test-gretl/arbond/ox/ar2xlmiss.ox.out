@@ -1,0 +1,108 @@
+
+Ox version 4.04 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.24, object created on 24-10-2006
+
+DPD( 1) Modelling y by 1-step (using fakemiss.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dy(-1)               0.465838     0.2760     1.69   0.101
+Dy(-2)              0.0225944     0.1598    0.141   0.888
+Dx                   0.396529    0.05447     7.28   0.000
+Dx(-1)             -0.0282986     0.1472   -0.192   0.849
+
+sigma               0.1319791  sigma^2            0.01741849
+sigma levels       0.09332333
+RSS             0.59222859138  TSS               1.625855885
+no. of observations        38  no. of parameters           4
+Using robust standard errors
+
+Transformation used:      first differences
+Transformed instruments:  x  x(-1)
+Level instruments:        Gmm("y",2,99)
+
+constant:                  no  time dummies:               0
+number of individuals      10 (derived from year)
+longest time series         4 [1983 - 1986]
+shortest time series        3 (unbalanced panel)
+
+Wald (joint):    Chi^2(4) =     467.6 [0.000] **
+Sargan test:    Chi^2(12) =     14.68 [0.259]
+AR(1) test:        N(0,1) =    -1.285 [0.199]
+AR(2) test:        N(0,1) =    -1.114 [0.265]
+
+     0.076170    -0.043919   -0.0073552    -0.037955
+    -0.043919     0.025532    0.0047082     0.022248
+   -0.0073552    0.0047082    0.0029667    0.0051314
+    -0.037955     0.022248    0.0051314     0.021671
+
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+      0.15296
+    -0.066837
+    -0.082368
+         .NaN
+         .NaN
+         .NaN
+     0.070530
+    -0.068402
+      0.17222
+         .NaN
+         .NaN
+         .NaN
+         .NaN
+     0.036002
+    -0.066631
+      0.32219
+     -0.34939
+         .NaN
+         .NaN
+         .NaN
+     0.033369
+     -0.14915
+    -0.023100
+      0.20048
+         .NaN
+         .NaN
+         .NaN
+     0.048977
+     -0.14982
+     0.077927
+      0.12423
+         .NaN
+         .NaN
+         .NaN
+   -0.0044053
+     0.052073
+    -0.066937
+    0.0032644
+         .NaN
+         .NaN
+         .NaN
+     0.072913
+    -0.017272
+     -0.15618
+      0.10786
+         .NaN
+         .NaN
+         .NaN
+     0.085410
+     -0.13176
+     -0.19839
+     0.046239
+         .NaN
+         .NaN
+         .NaN
+      0.15865
+    0.0050838
+    -0.047084
+    -0.082187
+         .NaN
+         .NaN
+         .NaN
+    -0.050292
+     -0.10938
+      0.11075
+    -0.016506

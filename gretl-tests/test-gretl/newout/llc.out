@@ -1,0 +1,73 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run llc.inp
+ /home/cottrell/stats/test-gretl/llc.inp
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? y = log(C)
+Generated series y (ID 7)
+? levinlin 0 y
+
+Levin-Lin-Chu pooled ADF test for y
+test with constant including 0 lags of (1-L)y
+Bartlett truncation at 7 lags
+N,T = (6,15), using 84 observations
+
+coefficient    t-ratio      z-score
+   0.037229      0.941      3.15079 [0.9992]
+
+? levinlin 0 y --nc
+
+Levin-Lin-Chu pooled ADF test for y
+test without constant including 0 lags of (1-L)y
+Bartlett truncation at 7 lags
+N,T = (6,15), using 84 observations
+
+coefficient    t-ratio      z-score
+  -0.016275     -3.215     -3.06788 [0.0011]
+
+? levinlin 2 y
+
+Levin-Lin-Chu pooled ADF test for y
+test with constant including 2 lags of (1-L)y
+Bartlett truncation at 7 lags
+N,T = (6,15), using 72 observations
+
+coefficient    t-ratio      z-score
+   -0.12094     -2.218      2.13343 [0.9836]
+
+? levinlin 0 y --ct
+
+Levin-Lin-Chu pooled ADF test for y
+with constant and trend including 0 lags of (1-L)y
+Bartlett truncation at 7 lags
+N,T = (6,15), using 84 observations
+
+coefficient    t-ratio      z-score
+  -0.087402     -1.823     0.191099 [0.5758]
+
+? levinlin 2 y --ct
+
+Levin-Lin-Chu pooled ADF test for y
+with constant and trend including 2 lags of (1-L)y
+Bartlett truncation at 7 lags
+N,T = (6,15), using 72 observations
+
+coefficient    t-ratio      z-score
+   -0.36462     -5.567     -2.04313 [0.0205]
+
+? scalar test = $test
+Generated scalar test = -2.04313
+? scalar pv = $pvalue
+Generated scalar pv = 0.0205197
+Done

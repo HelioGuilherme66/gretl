@@ -1,0 +1,127 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run summary_ts.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/summary_ts.gfn.inp
+? include ./summary_ts.gfn
+ /home/cottrell/stats/test-gretl/testgfn/summary_ts.gfn
+summary_ts 1.2, 2010-03-24 (yinung Yang)
+? open djclose
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? series r=100*ldiff(djclose)
+Generated series r (ID 2)
+? ols r const r(-1) r(-2) r(-3)
+
+Model 1: OLS, using observations 1980-01-08:1989-12-29 (T = 2524)
+Dependent variable: r
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0497091    0.0230406     2.157    0.0311  **
+  r_1         0.0202156    0.0199203     1.015    0.3103 
+  r_2        -0.0559822    0.0198902    -2.815    0.0049  ***
+  r_3        -0.0125169    0.0199173    -0.6284   0.5298 
+
+Mean dependent var   0.047412   S.D. dependent var   1.156072
+Sum squared resid    3359.482   S.E. of regression   1.154612
+R-squared            0.003711   Adjusted R-squared   0.002525
+F(3, 2520)           3.128639   P-value(F)           0.024752
+Log-likelihood      -3942.260   Akaike criterion     7892.519
+Schwarz criterion    7915.854   Hannan-Quinn         7900.987
+rho                 -0.000844   Durbin-Watson        1.999902
+
+Excluding the constant, p-value was highest for variable 5 (r_3)
+
+? series u1=$uhat
+Generated series u1 (ID 6)
+? ols r const r(-2)
+
+Model 2: OLS, using observations 1980-01-07:1989-12-29 (T = 2525)
+Dependent variable: r
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0501890    0.0229904     2.183    0.0291  **
+  r_2        -0.0558774    0.0198754    -2.811    0.0050  ***
+
+Mean dependent var   0.047544   S.D. dependent var   1.155862
+Sum squared resid    3361.575   S.E. of regression   1.154284
+R-squared            0.003123   Adjusted R-squared   0.002728
+F(1, 2523)           7.903893   P-value(F)           0.004971
+Log-likelihood      -3944.108   Akaike criterion     7892.215
+Schwarz criterion    7903.883   Hannan-Quinn         7896.449
+rho                  0.020215   Durbin-Watson        1.959386
+
+? series u2=$uhat
+Generated series u2 (ID 7)
+? garch 1 1; r const r(-1) r(-2) r(-4) --stdresid
+
+Function evaluations: 151
+Evaluations of gradient: 25
+
+Model 3: GARCH, using observations 1980-01-09:1989-12-29 (T = 2523)
+Dependent variable: r
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.0714699    0.0186685     3.828   0.0001   ***
+  r_1         0.0282533    0.0220523     1.281   0.2001  
+  r_2        -0.0260021    0.0219233    -1.186   0.2356  
+  r_4        -0.0626704    0.0215108    -2.913   0.0036   ***
+
+  alpha(0)    0.0479487    0.0112882     4.248   2.16e-05 ***
+  alpha(1)    0.0910423    0.0108371     8.401   4.43e-17 ***
+  beta(1)     0.870359     0.0177477    49.04    0.0000   ***
+
+Mean dependent var   0.046503   S.D. dependent var   1.155398
+Log-likelihood      -3555.058   Akaike criterion     7126.117
+Schwarz criterion    7172.783   Hannan-Quinn         7143.051
+
+Unconditional error variance = 1.24224
+The residuals are standardized
+Likelihood ratio test for (G)ARCH terms:
+  Chi-square(2) = 761.697 [3.97768e-166]
+
+? series stz_u1=$uhat
+Generated series stz_u1 (ID 9)
+? list xlist = r u1 u2 stz_u1
+Generated list xlist
+? summary_ts(xlist,1,5,20)
+=================================================================================
+Summary Statistics for Time Series Analysis by Yi-Nung Yang
+Full data range: 1980-01-02 - 1989-12-29 (n = 2528)
+
+=================================================================================
+                     r            u1            u2        stz_u1
+    mean        0.0477       -0.0000       -0.0000       -0.0201
+      SD        1.1556        1.1539        1.1541        0.9990
+      SK       -4.3541       -4.5219       -4.5481       -0.8606
+      KT      103.6952      104.9466      105.6478       13.6479
+    Q(1)        0.9845        0.0018        1.0327        1.8635
+               [0.321]       [0.966]       [0.310]       [0.172]
+    Q(5)       22.4455       14.1104       15.2794        3.9768
+               [0.000]       [0.015]       [0.009]       [0.553]
+   Q(20)       33.4095       26.3925       27.5292        8.1271
+               [0.030]       [0.153]       [0.121]       [0.991]
+   Q2(1)       19.3624       20.8437       17.1392        0.3904
+               [0.000]       [0.000]       [0.000]       [0.532]
+   Q2(5)      109.7845       86.5671       83.8480        2.2827
+               [0.000]       [0.000]       [0.000]       [0.809]
+  Q2(20)      118.9593       95.3038       92.8376        8.1987
+               [0.000]       [0.000]       [0.000]       [0.990]
+     JB   1075589.0132  1101609.9516  1117237.8436    12230.1543
+               [0.000]       [0.000]       [0.000]       [0.000]
+
+*SD, SK, KT, and JB denote standard deviation, sknewness, kurtosis, and Jarque-Bera statistic, respectively.
+ Figures in [] are corresponding p-values
+*SD 是標準差, SK 是偏態係數, KT 是峰態係數, 小括號中的數字是標準差, 中括號中的數字是 p值
+Done

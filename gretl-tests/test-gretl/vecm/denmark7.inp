@@ -1,0 +1,37 @@
+# Replicate Johansen's analysis of Danish data in chapter 7
+# of his 1995 book
+
+open denmark
+
+# initial cointegration analysis
+coint2 2 LRM LRY IBO IDE --rc --seas
+
+# unrestricted rank-1 VECM
+vecm 2 1 LRM LRY IBO IDE --rc --seas --quiet
+
+# initial beta restriction
+restrict 
+  b1 + b2 = 0
+end restrict --full --quiet
+scalar LR = $test
+scalar pv = $pvalue
+scalar ll = $rlnl
+
+# test a second beta restriction within the first
+restrict 
+  b3 + b4 = 0
+end restrict --full --quiet
+scalar LR = $test
+scalar pv = $pvalue
+scalar ll = $rlnl
+
+# weak exogeneity restriction, tested within the beta
+# restrictions
+restrict 
+  a3 = 0
+  a4 = 0
+end restrict --quiet
+scalar LR = $test
+scalar pv = $pvalue
+scalar ll = $rlnl
+

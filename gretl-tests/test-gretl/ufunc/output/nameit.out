@@ -1,0 +1,31 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run nameit.inp
+ /home/cottrell/stats/test-gretl/ufunc/nameit.inp
+? function void nameit (scalar x, series y, int start)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? nameit(4.5,INCOME,1)
+The argument x is anonymous.
+y has a name: INCOME
+The variable y is named "INCOME" by the caller.
+The first valid observation for INCOME is 1975:1
+? scalar foo = 3.6
+Generated scalar foo = 3.6
+? nameit(foo,PRIME,0)
+x has a name: foo
+y has a name: PRIME
+The variable y is named "PRIME" by the caller.
+The last valid observation for PRIME is 1990:4
+Done

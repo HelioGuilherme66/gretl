@@ -1,0 +1,27 @@
+open engel
+
+income[20] = NA
+list Vars = income foodexp
+smpl ok(Vars) --restrict
+
+quantreg .25 1 0 2 
+matrix V0 = $vcv
+matrix s0 = $stderr
+
+quantreg .25 1 0 2 --intervals
+matrix V1 = $vcv
+matrix s1 = $stderr
+
+print V0 V1
+print s0 s1
+
+quantreg .25 1 0 2 --robust 
+matrix V2 = $vcv
+matrix s2 = $stderr
+
+quantreg .25 1 0 2 --intervals --robust
+matrix V3 = $vcv
+matrix s3 = $stderr
+
+print V2 V3
+print s2 s3

@@ -1,0 +1,36 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run plot_ts_y2axis.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/plot_ts_y2axis.gfn.inp
+? include ./plot_ts_y2axis.gfn
+ /home/cottrell/stats/test-gretl/testgfn/plot_ts_y2axis.gfn
+plot_ts_y2axis 0.1, 2015-09-21 (Artur Tarassow)
+###########
+# EXAMPLE #
+###########
+? open denmark.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+# Set up the required information
+? matrix mplot = { LRM } ~ { LRY } ~ {IDE}
+Generated matrix mplot
+? mplot = seq(1,rows(mplot))'~mplot
+Replaced matrix mplot
+? matrix sel = {0,1,1}
+Generated matrix sel
+? string cnames = "Obs LRM LRY IDE"
+Generated string cnames
+? string ttitle = "Example Plot"
+Generated string ttitle
+? string ylab = "1st y-axis"
+Generated string ylab
+? string ylab2 = "2nd y-axis"
+Generated string ylab2
+? string xlab = "This is the xlabel"
+Generated string xlab
+? string filename = "TEST.png"
+Generated string filename
+# Compile the temporary gp-file
+? plot_ts_y2axis (mplot, sel, cnames, ttitle, ylab, ylab2, xlab, filename)
+Done

@@ -1,0 +1,23 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-04-02 10:12
+? run panel.inp
+ /home/cottrell/stats/test-gretl/fnsample/panel.inp
+? function void xpanel (series x)
+? open greene14_1
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+caller: datatype = 3 (should be 3)
+? xpanel(C)
+xpanel: datatype = 3 (should be 3)
+xpanel: datatype = 1 (should be 1)
+caller: datatype = 3 (should be 3)
+Done

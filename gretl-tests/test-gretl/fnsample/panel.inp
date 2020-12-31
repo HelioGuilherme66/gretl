@@ -1,0 +1,12 @@
+function void xpanel (series x)
+  printf "xpanel: datatype = %d (should be 3)\n", $datatype
+  genr xunit=$unit
+  genr time
+  setobs 1 1 --cross-section
+  printf "xpanel: datatype = %d (should be 1)\n", $datatype
+end function
+
+open greene14_1
+printf "caller: datatype = %d (should be 3)\n", $datatype  
+xpanel(C)
+printf "caller: datatype = %d (should be 3)\n", $datatype

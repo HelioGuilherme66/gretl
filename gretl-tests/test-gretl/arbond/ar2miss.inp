@@ -1,0 +1,4 @@
+open fakemiss.gdt
+arbond 2 0 ; y
+genr Dx = diff(x)
+arbond 2 0 ; y Dx Dx(-1)

@@ -1,0 +1,4 @@
+open hsb2.dta
+genr honcomp = (write >=60)
+logit honcomp 0 female read science
+

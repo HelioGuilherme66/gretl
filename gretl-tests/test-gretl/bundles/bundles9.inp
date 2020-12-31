@@ -1,0 +1,20 @@
+n = 3
+
+bundle test
+loop i=1..n --quiet
+   sprintf s "x_%d", i
+   printf "key = %s\n", s
+   test[s] = I(i)*i
+   printf "%4g\n", test[s]
+endloop
+print test
+
+bundle test2
+loop i=1..n --quiet
+   printf "key = x_$i\n"
+   test2.x_$i = I(i)*i
+   printf "%4g\n", test2.x_$i
+endloop
+print test2
+
+

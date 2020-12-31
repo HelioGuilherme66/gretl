@@ -1,0 +1,74 @@
+open sjlim.gdt
+
+genr DivisiaQ = sw1*dq1 +  sw2*dq2 +  sw3*dq3 +  sw4*dq4
+genr wdq1 = sw1*dq1
+genr wdq2 = sw2*dq2
+genr wdq3 = sw1*dq3 
+genr wdq4 = sw2*dq4
+
+genr ddp1=dp1-dp4
+genr ddp2=dp2-dp4
+genr ddp3=dp3-dp4
+
+system name="Rotterdam"
+   equation wdq1 DivisiaQ ddp1 ddp2 ddp3
+   equation wdq2 DivisiaQ ddp1 ddp2 ddp3
+   equation wdq3 DivisiaQ ddp1 ddp2 ddp3
+end system
+
+# Unrestricted estimation
+estimate "Rotterdam" method=sur
+
+restrict "Rotterdam"
+   b[1,3] - b[2,2] = 0
+   b[1,4] - b[3,2] = 0
+   b[2,4] - b[3,3] = 0
+end restrict
+
+# Restricted estimation, not iterated
+estimate "Rotterdam" method=sur
+
+# Restricted estimation, iterated
+estimate "Rotterdam" method=sur --iterate
+
+foreign language=R --send-data
+   wdq1 <- gretldata[,"wdq1"]
+   wdq2 <- gretldata[,"wdq2"]
+   wdq3 <- gretldata[,"wdq3"]
+   wdq4 <- gretldata[,"wdq4"]
+   ddp1 <- gretldata[,"ddp1"]
+   ddp2 <- gretldata[,"ddp2"]
+   ddp3 <- gretldata[,"ddp3"]
+   DivisiaQ <- gretldata[,"DivisiaQ"]
+
+   library(systemfit)
+   e1 <- wdq1 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+   e2 <- wdq2 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+   e3 <- wdq3 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+   system <- list(e1, e2, e3)
+
+   # Unrestricted estimation
+   fit1 <- systemfit(system, method="SUR")
+   print(summary(fit1))
+
+   R <- matrix(0,3,12)
+   q <- matrix(0,3,1)
+
+   R[1,3] <-  1
+   R[1,6] <- -1
+   R[2,4] <- 1
+   R[2,10] <- -1
+   R[3,8] <- 1
+   R[3,11] <- -1
+
+   # Restricted estimation, not iterated
+   fit1r <- systemfit(system, method="SUR", restrict.matrix=R,
+      restrict.rhs=q, maxiter=1)
+   print(summary(fit1r))
+
+   # Restricted estimation, iterated
+   fit2 <- systemfit(system, method="SUR", restrict.matrix=R,
+      restrict.rhs=q, maxiter=80)
+   print(summary(fit2))
+   lrtest(fit2, fit1)
+end foreign

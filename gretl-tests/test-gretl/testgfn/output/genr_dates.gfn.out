@@ -1,0 +1,40 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run genr_dates.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/genr_dates.gfn.inp
+? include ./genr_dates.gfn
+ /home/cottrell/stats/test-gretl/testgfn/genr_dates.gfn
+genr_dates 0.2, 2013-06-26 (Yi-Nung Yang)
+# The following gretl data can demonstrate the use of this package.
+#open djclose			# daily data
+? open australia
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+#open arma				# monthly data
+#open http://www.it.cycu.edu.tw/yaya20/files/2013/06/2005-CARR.gdt	# weekly data
+# Default date format 'yyyy-mm-dd'
+# Conversion of obslabel() will be automatically handled without any parameters for most of time sereies frequencies .
+? list mylist = genr_dates()
+*** "sscanf": obsolete command, please use the function of the same name
+====================================================
+The series shown below have been generated.
+(已新增以下資料變數....)
+====================================================
+yyyy qtr 
+Generated list mylist
+# if the date format is 'yyyy/mm/dd'and for user_defined variable names.
+/*
+nFormat = 2
+list mylist = genr_dates(nFormat, 1, 1, 1, 1, 1, "year", "quarter", "month", "day", "weekday")
+*/
+Done

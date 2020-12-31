@@ -1,0 +1,27 @@
+netlib blas in gm:
+real    0m4.562s
+user    0m4.238s
+sys     0m0.321s
+
+real    0m4.589s
+user    0m4.260s
+sys     0m0.318s
+
+real    0m4.597s
+user    0m4.262s
+sys     0m0.320s
+
+no blas in gm:
+real    0m4.117s
+user    0m3.772s
+sys     0m0.334s
+
+real    0m4.089s
+user    0m3.788s
+sys     0m0.295s
+
+real    0m4.114s
+user    0m3.790s
+sys     0m0.326s
+
+

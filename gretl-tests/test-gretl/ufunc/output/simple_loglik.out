@@ -1,0 +1,110 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run simple_loglik.inp
+ /home/cottrell/stats/test-gretl/ufunc/simple_loglik.inp
+? function series f1(matrix c, series x)
+? function series f2(matrix c, series x)
+? function series logl(matrix c, series x)
+? nulldata 100
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+? set seed 238957
+Pseudo-random number generator seeded with 238957
+? x = -ln(uniform())
+Generated series x (ID 2)
+? matrix c = {1, 1}
+Generated matrix c
+? ll = logl(c,x)
+Generated series ll (ID 3)
+? mle ll = logl(c,x)
+? params c
+? end mle -v
+Using numerical derivatives
+Iteration 1: loglikelihood = -97.6374633383
+Parameters:       1.0000      1.0000
+Gradients:        2.3625      8.4990 (norm 2.33e+00)
+
+Iteration 2: loglikelihood = -97.2734516170 (steplength = 0.008)
+Parameters:       1.0189      1.0680
+Gradients:        7.1807    -0.28909 (norm 1.95e+00)
+
+Iteration 3: loglikelihood = -97.1475158880 (steplength = 0.04)
+Parameters:       1.4403      1.2995
+Gradients:       -7.4085      4.2319 (norm 2.84e+00)
+
+Iteration 4: loglikelihood = -96.5759536546 (steplength = 1)
+Parameters:       1.2690      1.2207
+Gradients:       -1.4433     0.91012 (norm 1.21e+00)
+
+Iteration 5: loglikelihood = -96.5588894315 (steplength = 1)
+Parameters:       1.2303      1.2039
+Gradients:       0.22212   -0.093316 (norm 4.39e-01)
+
+Iteration 6: loglikelihood = -96.5583713180 (steplength = 1)
+Parameters:       1.2363      1.2070
+Gradients:     -0.011539    0.014932 (norm 1.27e-01)
+
+Iteration 7: loglikelihood = -96.5583705947 (steplength = 0.008)
+Parameters:       1.2362      1.2071
+Gradients:     0.0054079  -0.0075552 (norm 8.89e-02)
+
+Iteration 8: loglikelihood = -96.5583705201 (steplength = 0.2)
+Parameters:       1.2362      1.2071
+Gradients:     0.0049567  -0.0055678 (norm 8.02e-02)
+
+Iteration 9: loglikelihood = -96.5583703889 (steplength = 0.2)
+Parameters:       1.2363      1.2071
+Gradients:    -0.0012157  2.4158e-05 (norm 2.77e-02)
+
+Iteration 10: loglikelihood = -96.5583703620 (steplength = 1)
+Parameters:       1.2363      1.2071
+Gradients:   -3.5527e-06  1.4211e-05 (norm 3.28e-03)
+
+Iteration 10: loglikelihood = -96.5583703620 (steplength = 1)
+Parameters:       1.2363      1.2071
+Gradients:   -3.5527e-06  1.4211e-05 (norm 3.28e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -96.5583703620 (steplength = 2.56e-06)
+Parameters:       1.2363      1.2071
+Gradients:   -3.5527e-06  1.4211e-05 (norm 3.28e-03)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 30
+Evaluations of gradient: 10
+
+Model 1: ML, using observations 1-100
+ll = logl(c,x)
+Standard errors based on Outer Products matrix
+
+             estimate   std. error     z     p-value 
+  ---------------------------------------------------
+  c[1]       1.23627     0.176865    6.990   2.75e-12 ***
+  c[2]       1.20706     0.157473    7.665   1.79e-14 ***
+
+Log-likelihood      -96.55837   Akaike criterion     197.1167
+Schwarz criterion    202.3271   Hannan-Quinn         199.2255
+
+? summary x
+
+Summary statistics, using the observations 1 - 100
+for the variable 'x' (100 valid observations)
+
+  Mean                        0.97637
+  Median                      0.77534
+  Minimum                    0.022986
+  Maximum                      5.1206
+  Standard deviation          0.96378
+  C.V.                        0.98710
+  Skewness                     2.1542
+  Ex. kurtosis                 5.2809
+  5% percentile              0.079342
+  95% percentile               3.5578
+  Interquartile range         0.78096
+  Missing obs.                      0
+
+Done

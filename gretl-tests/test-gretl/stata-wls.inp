@@ -1,0 +1,6 @@
+open hetdata.dta
+ols exp 0 age income ownrent incomesq
+genr u = log($uhat*$uhat)
+ols u 0 income incomesq
+genr w = 1.0/exp($yhat)
+wls w exp 0 age income ownrent incomesq

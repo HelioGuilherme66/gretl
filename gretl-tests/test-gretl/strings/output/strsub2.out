@@ -1,0 +1,18 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strsub2.inp
+ /home/cottrell/stats/test-gretl/strings/strsub2.inp
+? string str
+? sprintf str "some stuff\n"
+Replaced string str
+str = 'some stuff
+'
+? string target
+? sprintf target "\n"
+Replaced string target
+? string trimmed = strsub(str, target, "")
+Generated string trimmed
+trimmed = 'some stuff'
+Done

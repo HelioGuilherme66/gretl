@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run sdc.inp
+ /home/cottrell/stats/test-gretl/matrix/sdc.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = {dataset}
+Generated matrix X
+? matrix SML = sdc(X)
+Generated matrix SML
+? matrix SDF = sdc(X, $nobs - 1)
+Generated matrix SDF
+? SML
+SML (1 x 4)
+
+      85.279       556.74      0.47916      0.43006 
+
+? SDF
+SDF (1 x 4)
+
+      88.498       577.76      0.49725      0.44629 
+
+? summary
+
+                     Mean         Median        Minimum        Maximum
+price              317.49         291.50         199.90         505.00
+sqft               1910.9         1835.0         1065.0         3000.0
+bedrms             3.6429         4.0000         3.0000         4.0000
+baths              2.3571         2.2500         1.7500         3.0000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+price              88.498        0.27874        0.65346       -0.52983
+sqft               577.76        0.30234        0.48526       -0.67212
+bedrms            0.49725        0.13650       -0.59628        -1.6444
+baths             0.44629        0.18934        0.33161        -1.3902
+
+                 IQ range   Missing obs.
+price              154.50              0
+sqft               832.75              0
+bedrms             1.0000              0
+baths             0.81250              0
+
+Done

@@ -1,0 +1,111 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run verbeek_5.4.inp
+ /home/cottrell/stats/test-gretl/gmm/verbeek_5.4.inp
+? open pricing.gdt
+
+Read datafile /opt/esl/share/gretl/data/verbeek/pricing.gdt
+periodicity: 12, maxobs: 418
+observations range: 1959:02 to 1993:11
+
+Listing 13 variables:
+  0) const    1) r1       2) r2       3) r3       4) r4     
+  5) r5       6) r6       7) r7       8) r8       9) r9     
+ 10) r10     11) rf      12) cons   
+
+? set force_hc on
+? scalar delta=0.5
+Generated scalar delta = 0.5
+? scalar gamma=0.5
+Generated scalar gamma = 0.5
+? series dcg = delta*cons^(-gamma)
+Generated series dcg (ID 13)
+? list elist = null
+Generated list elist
+? series e0 = dcg*(1+rf)-1
+Generated series e0 (ID 14)
+? elist = e0
+Replaced list elist
+? loop j=1..10
+> series e$j = dcg*(rf-r$j)
+> elist += e$j
+> endloop
+loop: j = 1
+
+? series e1 = dcg*(rf-r1)
+? elist += e1
+loop: j = 2
+
+? series e2 = dcg*(rf-r2)
+? elist += e2
+loop: j = 3
+
+? series e3 = dcg*(rf-r3)
+? elist += e3
+loop: j = 4
+
+? series e4 = dcg*(rf-r4)
+? elist += e4
+loop: j = 5
+
+? series e5 = dcg*(rf-r5)
+? elist += e5
+loop: j = 6
+
+? series e6 = dcg*(rf-r6)
+? elist += e6
+loop: j = 7
+
+? series e7 = dcg*(rf-r7)
+? elist += e7
+loop: j = 8
+
+? series e8 = dcg*(rf-r8)
+? elist += e8
+loop: j = 9
+
+? series e9 = dcg*(rf-r9)
+? elist += e9
+loop: j = 10
+
+? series e10 = dcg*(rf-r10)
+? elist += e10
+
+Number of iterations: 10
+
+? matrix V0=I(11)
+Generated matrix V0
+? gmm
+? dcg = delta*cons^(-gamma)
+? e0 = dcg*(1+rf)-1
+? e1 = dcg*(rf-r1)
+? e2 = dcg*(rf-r2)
+? e3 = dcg*(rf-r3)
+? e4 = dcg*(rf-r4)
+? e5 = dcg*(rf-r5)
+? e6 = dcg*(rf-r6)
+? e7 = dcg*(rf-r7)
+? e8 = dcg*(rf-r8)
+? e9 = dcg*(rf-r9)
+? e10 = dcg*(rf-r10)
+? orthog elist ; const
+? weights V0
+? params delta gamma
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 102
+Evaluations of gradient: 36
+
+Model 1: 1-step GMM, using observations 1959:02-1993:11 (T = 418)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  delta       0.699606    0.143567    4.873   1.10e-06 ***
+  gamma      91.4099     38.1187      2.398   0.0165   **
+
+  GMM criterion: Q = 4.46296e-06 (TQ = 0.00186552)
+
+Done

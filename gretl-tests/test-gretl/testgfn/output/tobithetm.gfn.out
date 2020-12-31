@@ -1,0 +1,61 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run tobithetm.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/tobithetm.gfn.inp
+? include ./tobithetm.gfn
+ /home/cottrell/stats/test-gretl/testgfn/tobithetm.gfn
+tobithetm 0.12, 2015-07-29 (Oleh Komashko)
+# load the data
+? open greene22_2.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene22_2.gdt
+periodicity: 1, maxobs: 601
+observations range: 1 to 601
+
+Listing 10 variables:
+  0) const    1) Y        2) Z1       3) Z2       4) Z3     
+  5) Z4       6) Z5       7) Z6       8) Z7       9) Z8     
+
+#list X = const male age yrsmarr
+? list X = const Z1 Z2 Z3
+Generated list X
+# estimation
+? b1 = tobithetm_estimate (Y, X)
+# printing the results
+? tobithetm_print(&b1)
+
+Model: Heteroscedastic Tobit, using observations 1-601
+Dependent variable: Y
+Standard errors based on Hessian
+
+Equation:
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const       -3.49282      3.02621     -1.154   0.2484 
+  Z1           2.74209      1.49497      1.834   0.0666  *
+  Z2          -0.249080     0.130503    -1.909   0.0563  *
+  Z3           0.527255     0.202287     2.606   0.0091  ***
+
+Heteroscedasticity (standardized variables):
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const        4.34804      0.141685    30.69     8.19e-207 ***
+  Z1          -0.164495     0.140542    -1.170    0.2418   
+  Z2           0.106740     0.208605     0.5117   0.6089   
+  Z3           0.150846     0.205446     0.7342   0.4628   
+
+LR-Chi-square(3)     9.15274     p-value           0.0273275
+Log-likelihood      -730.515     Akaike criterion  1477.03
+Schwarz criterion    1512.22     Hannan-Quinn      1490.73
+
+sigma(at means of hetm variables) = 8.79357
+Left-censored observations: 451
+
+LR test for heteroscedasticity in restricted model -
+  Null hypothesis: no heteroscedasticity
+  Test statistic: Chi-square(3) = 3.75908
+  with p-value = 0.288682
+
+Done

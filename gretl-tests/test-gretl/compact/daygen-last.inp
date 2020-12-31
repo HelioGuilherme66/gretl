@@ -1,0 +1,6 @@
+nulldata 100
+series y = index
+setobs 7 1993/12/22
+print -o
+dataset compact 12 last
+print -o

@@ -1,0 +1,12 @@
+function void myfun (series y)
+   print "in function, cross section"
+   print y -o
+   setobs 4 1946:1
+   print "in function, should be time series"
+   print y -o
+end function
+
+open data4-1
+myfun(price)
+print "in main, should be cross section"
+print price -o

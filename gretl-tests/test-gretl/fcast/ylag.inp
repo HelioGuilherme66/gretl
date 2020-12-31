@@ -1,0 +1,20 @@
+open data9-7
+ols QNC 0 QNC(-1) PRICE INCOME
+list 
+labels
+genr yh = $yhat
+# add an extra 8 observations to dataset
+dataset addobs 8
+# extend the series for PRICE, INCOME
+genr lastP = PRICE[1990:4]
+genr lastY = INCOME[1990:4]
+smpl 1991:1 1992:4 
+genr PRICE = lastP
+genr INCOME = lastY
+# reset to full sample
+smpl full
+genr QNC_1[1991:1] = QNC[1990:4]
+fcast fdyn
+fcast fstat --static
+print QNC yh fdyn fstat --byobs
+fcasterr 1991:1 1992:4

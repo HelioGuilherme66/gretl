@@ -1,0 +1,18 @@
+open data9-7
+# full dataset
+ar1 1 0 2 3
+series yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+# subsample
+series yh1 = NA
+smpl 1980:1 1989:4
+ar1 1 0 2 3
+series yh1 = $yhat
+smpl full
+fcast yh2
+fcast yh3 --static
+print yh1 yh2 yh3 --byobs
+fcasterr 1989:1 1990:4
+
+

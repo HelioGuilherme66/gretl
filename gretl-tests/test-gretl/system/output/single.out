@@ -1,0 +1,196 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run single.inp
+ /home/cottrell/stats/test-gretl/system/single.inp
+? nulldata 50
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+? set seed 3472913
+Pseudo-random number generator seeded with 3472913
+? series y1 = normal()
+Generated series y1 (ID 2)
+? series x1 = normal()
+Generated series x1 (ID 3)
+? fake <- system
+? equation y1 0 x1
+? end system
+? string methods = "ols tsls sur 3sls liml fiml"
+Generated string methods
+? matrix B = {}
+Generated matrix B
+? matrix S = {}
+Generated matrix S
+? loop foreach i ols tsls sur 3sls liml fiml -q
+> estimate fake method=$i --no-df-corr
+> B ~= $coeff
+> S ~= $stderr
+> endloop
+
+Equation system, fake
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-50
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7720 
+  x1         -0.196002      0.155691    -1.259    0.2141 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+R-squared            0.030724   Adjusted R-squared   0.010530
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+
+Equation system, fake
+Estimator: Two-Stage Least Squares
+
+Equation 1: TSLS, using observations 1-50
+Dependent variable: y1
+Instruments: const x1 
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7707 
+  x1         -0.196002      0.155691    -1.259    0.2081 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+R-squared            0.030724   Adjusted R-squared   0.010530
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+
+Equation system, fake
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1-50
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7720 
+  x1         -0.196002      0.155691    -1.259    0.2141 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+R-squared            0.030724   Adjusted R-squared   0.010530
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+
+Equation system, fake
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1-50
+Dependent variable: y1
+Instruments: const x1 
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7707 
+  x1         -0.196002      0.155691    -1.259    0.2081 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+R-squared            0.030724   Adjusted R-squared   0.010530
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+Equation system fake
+Endogenous variables: y1
+Exogenous variables: const x1
+
+Equation system, fake
+Estimator: Limited Information Maximum Likelihood
+
+Equation 1: LIML, using observations 1-50
+Dependent variable: y1
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7707 
+  x1         -0.196002      0.155691    -1.259    0.2081 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+Log-likelihood      -149.2052   Smallest eigenvalue  1.000000
+
+Equation is just identified
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+Equation system fake
+Endogenous variables: y1
+Exogenous variables: const x1
+
+Equation system, fake
+Estimator: Full Information Maximum Likelihood
+
+Convergence achieved after 1 iterations
+Log-likelihood = -76.4046
+
+Equation 1: FIML, using observations 1-50
+Dependent variable: y1
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.0461115     0.158213    -0.2915   0.7707 
+  x1         -0.196002      0.155691    -1.259    0.2081 
+
+Mean dependent var  -0.030598   S.D. dependent var   1.144375
+Sum squared resid    62.19855   S.E. of regression   1.115334
+R-squared            0.030724   Adjusted R-squared   0.010530
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.2440
+
+log determinant = 0.218309
+
+? colnames(B, methods)
+? colnames(S, methods)
+? print B S
+B (2 x 6)
+
+         ols         tsls          sur         3sls         liml         fiml 
+   -0.046111    -0.046111    -0.046111    -0.046111    -0.046111    -0.046111 
+    -0.19600     -0.19600     -0.19600     -0.19600     -0.19600     -0.19600 
+
+S (2 x 6)
+
+         ols         tsls          sur         3sls         liml         fiml 
+     0.15821      0.15821      0.15821      0.15821      0.15821      0.15821 
+     0.15569      0.15569      0.15569      0.15569      0.15569      0.15569 
+
+Done

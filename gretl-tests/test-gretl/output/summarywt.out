@@ -1,0 +1,64 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run summarywt.inp
+ /home/cottrell/stats/test-gretl/summarywt.inp
+? open summarywt.csv --quiet
+Read datafile /home/cottrell/stats/test-gretl/summarywt.csv
+? list X = nord SEX PARENT ANASC VOTOEDU ANNOEDU
+Generated list X
+? summary X --weights=pesofit
+
+Weighting variable: pesofit
+
+                     Mean         Median        Minimum        Maximum
+nord               1.9904         2.0000         1.0000         7.0000
+SEX                1.5253         2.0000         1.0000         2.0000
+PARENT             2.9680         2.0000         1.0000         15.000
+ANASC              1959.9         1956.0         1915.0         2011.0
+VOTOEDU            67.133         63.326         1.0000         110.00
+ANNOEDU            1988.0         1981.0         1938.0         2012.0
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+nord               1.0664        0.53576        0.98156        0.42455
+SEX               0.49961        0.32756       -0.10116        -1.9898
+PARENT             2.4811        0.83595         1.2327         1.1726
+ANASC              21.169       0.010801        0.36356       -0.81651
+VOTOEDU            32.169        0.47918       -0.33162       -0.93652
+ANNOEDU            18.884      0.0094989       -0.23407        -1.2107
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+nord               1.0000         4.0000         2.0000              0
+SEX                1.0000         2.0000         1.0000              0
+PARENT             1.0000         7.0000         5.0000              0
+ANASC              1929.0         1996.0         35.000              0
+VOTOEDU            7.0000         110.00         56.000            601
+ANNOEDU            1956.3         2010.0         34.496            600
+
+? foreign language=stata --send-data
+?     summa nord sex parent anasc votoedu annoedu [aw=pesofit]
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(40 vars, 1000 obs)
+
+. summa nord sex parent anasc votoedu annoedu [aw=pesofit]
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+        nord |    1000  609.538554    1.990448   1.066408          1          7
+         sex |    1000  609.538554    1.525258   .4996115          1          2
+      parent |    1000  609.538554    2.968015   2.481107          1         15
+       anasc |    1000  609.538554    1959.886    21.1693       1915       2011
+     votoedu |     399  231.107007    67.13315   32.16915          1        110
+-------------+-----------------------------------------------------------------
+     annoedu |     400  231.301358     1988.01    18.8839       1938       2012
+
+. 
+end of do-file
+
+Done

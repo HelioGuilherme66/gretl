@@ -1,0 +1,96 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run threesls_fcast.inp
+ /home/cottrell/stats/test-gretl/system/threesls_fcast.inp
+? open fakedata.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/system/fakedata.gdt
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+
+Listing 22 variables:
+  0) const          1) MEN_ID         2) VAGUESURV      3) WLOG         
+  4) WCAR           5) WCOMP          6) lnDEPTOTR      7) lnREVTOTR    
+  8) lnREVTOTUCR    9) lnPLOGCOMP    10) lnPCARBCOMP   11) DSTALOG_1    
+ 12) DSTALOG_2     13) NBTOT         14) NBENF         15) NBADULT      
+ 16) NBFEM         17) NBFEMACTIVE   18) CHILD         19) AUTOMOBILE   
+ 20) MRLOG         21) MRCAR        
+
+? list socdemo = CHILD AUTOMOBILE
+Generated list socdemo
+? list X = lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+Generated list X
+? list Z = lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR socdemo
+Generated list Z
+? system name=AIDS
+? equation WLOG const X MRLOG ; const Z MRLOG
+? equation WCAR const X MRCAR ; const Z MRCAR
+? end system
+? estimate AIDS method=3sls
+
+Equation system, AIDS
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1-500
+Dependent variable: WLOG
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRLOG 
+
+                coefficient    std. error      z      p-value 
+  ------------------------------------------------------------
+  const          0.551911      0.0737925     7.479    7.48e-14 ***
+  lnPLOGCOMP    -0.451434      0.158506     -2.848    0.0044   ***
+  lnPCARBCOMP   -0.0730518     0.0987909    -0.7395   0.4596  
+  lnDEPTOTR     -0.0555580     0.00979093   -5.674    1.39e-08 ***
+  CHILD         -0.00463447    0.00702926   -0.6593   0.5097  
+  AUTOMOBILE     0.0279463     0.00974719    2.867    0.0041   ***
+  MRLOG         -0.000350494   0.00263642   -0.1329   0.8942  
+
+Mean dependent var   0.067363   S.D. dependent var   0.067352
+Sum squared resid    1.750598   S.E. of regression   0.059171
+R-squared            0.231407   Adjusted R-squared   0.222052
+
+Equation 2: 3SLS, using observations 1-500
+Dependent variable: WCAR
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRCAR 
+
+                coefficient   std. error      z      p-value 
+  -----------------------------------------------------------
+  const          0.0387282    0.0554592     0.6983   0.4850  
+  lnPLOGCOMP    -0.0691766    0.118399     -0.5843   0.5590  
+  lnPCARBCOMP   -0.0136676    0.0739230    -0.1849   0.8533  
+  lnDEPTOTR     -0.00290462   0.00736700   -0.3943   0.6934  
+  CHILD         -0.00158873   0.00527366   -0.3013   0.7632  
+  AUTOMOBILE     0.0496770    0.00731006    6.796    1.08e-11 ***
+  MRCAR          0.00152565   0.00207344    0.7358   0.4618  
+
+Mean dependent var   0.047715   S.D. dependent var   0.048173
+Sum squared resid    0.980177   S.E. of regression   0.044276
+R-squared            0.153612   Adjusted R-squared   0.143311
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0035012      (0.007)
+   1.7292e-05    0.0019604
+
+log determinant = -11.8893
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.0217838 [0.8827]
+
+? matrix YH = $yhat
+Generated matrix YH
+? fcast --quiet
+? matrix FC = $fcast
+Generated matrix FC
+? matrix check = maxc(abs(YH - FC))
+Generated matrix check
+? print check
+check (1 x 2)
+
+  1.5266e-16   2.0817e-17 
+
+Done

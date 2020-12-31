@@ -1,0 +1,84 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run chdv.inp
+ /home/cottrell/stats/test-gretl/arma/chdv.inp
+? open data4-7
+
+Read datafile /opt/esl/share/gretl/data/data4-7.gdt
+periodicity: 1, maxobs: 34,
+observations range: 1947-1980
+
+Listing 10 variables:
+  0) const      1) chd        2) cal        3) unemp      4) cig      
+  5) edfat      6) meat       7) spirits    8) beer       9) wine     
+
+? arma 1 1 ; chd --conditional --verbose
+
+ARMA initialization: using linear AR model
+
+Iteration 1: loglikelihood = -113.197448036 (steplength = 0.5)
+Parameters:       73.627     0.79394   -0.026551
+Gradients:       -6.8897    0.018810    -0.10661 (norm 3.98e+00)
+
+Iteration 2: loglikelihood = -113.166853194 (steplength = 1)
+Parameters:       72.090     0.79829   -0.043806
+Gradients:       -3.0738   0.0086962   -0.034509 (norm 1.77e+00)
+
+Iteration 3: loglikelihood = -113.161165452 (steplength = 1)
+Parameters:       71.715     0.79957   -0.037910
+Gradients:      -0.37535   0.0012771   0.0058953 (norm 2.17e-01)
+
+Iteration 4: loglikelihood = -113.161153394 (steplength = 1)
+Parameters:       71.610     0.79977   -0.045275
+Gradients:      -0.21015  0.00039841   -0.014728 (norm 1.22e-01)
+
+Iteration 5: loglikelihood = -113.160328636 (steplength = 1)
+Parameters:       71.769     0.79935   -0.042448
+Gradients:       0.31869 -0.00084419   0.0056527 (norm 1.84e-01)
+
+Iteration 6: loglikelihood = -113.160222926 (steplength = 1)
+Parameters:       71.777     0.79931   -0.043294
+Gradients:      0.015206 -6.2606e-05  -0.0016919 (norm 8.83e-03)
+
+Iteration 7: loglikelihood = -113.160209388 (steplength = 1)
+Parameters:       71.808     0.79923   -0.042977
+Gradients:      0.063460 -0.00017093  0.00063477 (norm 3.66e-02)
+
+Iteration 8: loglikelihood = -113.160206842 (steplength = 1)
+Parameters:       71.829     0.79917   -0.043175
+Gradients:      0.020798 -5.9491e-05 -0.00019776 (norm 1.20e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -113.160206842 (steplength = 1)
+Parameters:       71.829     0.79917   -0.043175
+Gradients:      0.020798 -5.9491e-05 -0.00019776 (norm 1.20e-02)
+
+Convergence achieved after 8 iterations
+
+Model 1: ARMA, using observations 1948-1980 (T = 33)
+Estimated using BHHH method (conditional ML)
+Dependent variable: chd
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      71.8290       32.2615       2.226    0.0260   **
+  phi_1       0.799169      0.0915798    8.726    2.63e-18 ***
+  theta_1    -0.0431746     0.251626    -0.1716   0.8638  
+
+Mean dependent var   355.8333   S.D. dependent var   13.92782
+Mean of innovations -0.005426   S.D. of innovations  7.464501
+Log-likelihood      -113.1602   Akaike criterion     234.3204
+Schwarz criterion    240.3064   Hannan-Quinn         236.3345
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2513     0.0000     1.2513     0.0000
+  MA
+    Root  1          23.1618     0.0000    23.1618     0.0000
+  -----------------------------------------------------------
+
+Done

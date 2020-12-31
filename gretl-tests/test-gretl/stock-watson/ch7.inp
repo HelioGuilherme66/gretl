@@ -1,0 +1,38 @@
+# Stock and Watson, ch 7
+# Massachussetts schools data
+#
+open maschool.gdt
+set hc_version 1
+# rename variables -- as in CA dataset
+genr str = tchratio
+genr testscr = totsc4
+genr el_pct = pctel
+genr avginc = percap
+genr meal_pct = lnchpct
+# Summary statistics
+summary testscr str el_pct meal_pct avginc
+summary el_pct
+#
+# Table 7.2 
+#
+# Transformed Variables 
+genr avginc2 = avginc * avginc
+genr avginc3 = avginc2 * avginc
+genr loginc = ln(avginc)
+genr hiel = (el_pct > 0)
+genr strxhiel = str*hiel
+genr sttr2 = str*str
+genr sttr3 = sttr2*str
+#
+# Col(1)
+ols testscr 0 str --robust
+# Col(2)
+ols testscr 0 str el_pct meal_pct loginc --robust
+# Col(3)
+ols testscr 0 str el_pct meal_pct avginc avginc2 avginc3 --robust
+omit avginc2 avginc3 --quiet
+# Col(4)
+ols testscr 0 str sttr2 sttr3 el_pct meal_pct avginc avginc2 \
+ avginc3 --robust
+# Test mentioned in text (p. 257)
+omit sttr2 sttr3 --quiet

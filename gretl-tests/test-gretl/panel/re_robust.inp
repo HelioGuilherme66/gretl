@@ -1,0 +1,4 @@
+open baltagi_Gasoline
+list X = y rp car
+panel gas 0 X --random-effects
+panel gas 0 X --random-effects --robust

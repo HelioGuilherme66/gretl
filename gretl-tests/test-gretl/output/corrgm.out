@@ -1,0 +1,117 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run corrgm.inp
+ /home/cottrell/stats/test-gretl/corrgm.inp
+# Excercise the correlogram and periodogram code
+? open data4-2.gdt
+
+Read datafile /opt/esl/share/gretl/data/data4-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 6 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL  
+
+# Correlogram
+? corrgm Ct
+
+
+Correlogram
+
+  Ct
+   0.918143  |o                                                            
+             |                                                             
+             |                                                             
+   0.834201  +          o                                                  
+             |                                                             
+             |                                                             
+             |                    o                                        
+             |                                                             
+   0.694297  +                                                             
+             |                              o                              
+             |                                                             
+             |                                                             
+             |                                        o                    
+   0.554393  +                                                             
+             |                                                             
+             |                                                  o          
+             |                                                             
+             |                                                             
+   0.414489  +                                                            o
+             |+---------+---------+---------+---------+---------+---------+
+              1                            lag                            7
+
+
+Autocorrelation function for Ct
+***, **, * indicate significance at the 1%, 5%, 10% levels
+using standard error 1/T^0.5
+
+  LAG      ACF          PACF         Q-stat. [p-value]
+
+    1   0.9181  ***   0.9181 ***     32.9487  [0.000]
+    2   0.8356  ***  -0.0469         61.0437  [0.000]
+    3   0.7528  ***  -0.0471         84.5345  [0.000]
+    4   0.6721  ***  -0.0333        103.8450  [0.000]
+    5   0.5853  ***  -0.0877        118.9607  [0.000]
+    6   0.4987  ***  -0.0527        130.3032  [0.000]
+    7   0.4145  **   -0.0427        138.4074  [0.000]
+
+# Sample periodogram
+? pergm Ct
+
+Periodogram for Ct
+Number of observations = 36
+
+ omega  scaled frequency  periods  spectral density
+
+ 0.17453       1           36.00      1.4916e+06
+ 0.34907       2           18.00      4.5042e+05
+ 0.52360       3           12.00      1.6537e+05
+ 0.69813       4            9.00           71091
+ 0.87266       5            7.20           71149
+ 1.04720       6            6.00           33394
+ 1.22173       7            5.14           40340
+ 1.39626       8            4.50           26694
+ 1.57080       9            4.00           25051
+ 1.74533      10            3.60           20423
+ 1.91986      11            3.27           14273
+ 2.09440      12            3.00           14768
+ 2.26893      13            2.77           11702
+ 2.44346      14            2.57           13463
+ 2.61799      15            2.40           10250
+ 2.79253      16            2.25           11235
+ 2.96706      17            2.12           12801
+ 3.14159      18            2.00           12103
+
+# Bartlett window version
+? pergm Ct -o
+
+Periodogram for Ct
+Number of observations = 36
+Using Bartlett lag window, length 12
+
+ omega  scaled frequency  periods  spectral density
+
+ 0.17453       1           36.00      9.1147e+05
+ 0.34907       2           18.00      4.4453e+05
+ 0.52360       3           12.00      1.6237e+05
+ 0.69813       4            9.00           88065
+ 0.87266       5            7.20           62978
+ 1.04720       6            6.00           41827
+ 1.22173       7            5.14           33926
+ 1.39626       8            4.50           27942
+ 1.57080       9            4.00           22199
+ 1.74533      10            3.60           19260
+ 1.91986      11            3.27           16110
+ 2.09440      12            3.00           14015
+ 2.26893      13            2.77           13175
+ 2.44346      14            2.57           12076
+ 2.61799      15            2.40           11487
+ 2.79253      16            2.25           11318
+ 2.96706      17            2.12           11354
+ 3.14159      18            2.00           11527
+
+Done

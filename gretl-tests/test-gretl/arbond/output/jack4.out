@@ -1,0 +1,53 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run jack4.inp
+ /home/cottrell/stats/test-gretl/arbond/jack4.inp
+? open jack4.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/jack4.gdt
+periodicity: 5, maxobs: 40
+observations range: 1:1 to 8:5
+
+Listing 4 variables:
+  0) const    1) id       2) year     3) y      
+
+? arbond 1 0 ; y
+
+Model 1: 1-step Arellano-Bond, using 13 observations
+Included 7 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  Dy(-1)      0.479092      0.193322    2.478   0.0132  **
+
+Sum squared resid    12.70674   S.E. of regression   1.029026
+
+Number of instruments = 6
+Test for AR(1) errors: z = -0.792977 [0.4278]
+Test for AR(2) errors: z = -0.98772 [0.3233]
+Sargan over-identification test: Chi-square(5) = 1.68154 [0.8912]
+Wald (joint) test: Chi-square(1) = 6.14154 [0.0132]
+
+? dpanel 1 ; y
+
+Model 2: 1-step dynamic panel, using 14 observations
+Included 8 cross-sectional units
+Time-series length: minimum 1, maximum 3
+Dependent variable: y
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  y(-1)       0.491938      0.187920    2.618   0.0088  ***
+
+Sum squared resid    12.90414   S.E. of regression   0.996306
+
+Number of instruments = 6
+Test for AR(1) errors: z = -0.806261 [0.4201]
+Test for AR(2) errors: z = -0.985719 [0.3243]
+Sargan over-identification test: Chi-square(5) = 1.80845 [0.8750]
+Wald (joint) test: Chi-square(1) = 6.85288 [0.0088]
+
+Done

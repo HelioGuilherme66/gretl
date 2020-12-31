@@ -1,0 +1,187 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run sw.inp
+ /home/cottrell/stats/test-gretl/sw.inp
+# Reproduce some of the time-series material in Stock and Watson,
+# Introduction to Econometrics, chapter 12
+# Note that S and W seem to use "robust" standard errors throughout
+# Read from RATS database
+? open ~/stats/hamilton/macrodat.rat
+/home/cottrell/stats/hamilton/macrodat.rat
+? setobs 4 1959:1
+data frequency = 4
+? smpl 1959:1 1999:4
+? data (compact=average) LHUR PUNEW
+Series imported OK
+? data (compact=last) FYFF EXRUK
+Series imported OK
+# done reading from RATS database
+? genr infl = 400 * log(PUNEW/PUNEW(-1))
+Generated series infl (ID 5)
+? diff infl
+Listing 7 variables:
+  0) const     1) LHUR      2) PUNEW     3) FYFF      4) EXRUK   
+  5) infl      6) d_infl  
+
+? lags d_infl LHUR
+Listing 15 variables:
+  0) const       1) LHUR        2) PUNEW       3) FYFF        4) EXRUK     
+  5) infl        6) d_infl      7) d_infl_1    8) d_infl_2    9) d_infl_3  
+ 10) d_infl_4   11) LHUR_1     12) LHUR_2     13) LHUR_3     14) LHUR_4    
+
+? smpl 1962:1 1999:4
+Full data range: 1959:1 - 1999:4 (n = 164)
+Current sample: 1962:1 - 1999:4 (n = 152)
+
+? ols d_infl 0 d_infl_1
+
+Model 1: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0188173    0.134804      0.1396   0.8892 
+  d_infl_1   -0.210960     0.0797295    -2.646    0.0090  ***
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    414.3174   S.E. of regression   1.661962
+R-squared            0.044592   Adjusted R-squared   0.038223
+F(1, 150)            7.001040   P-value(F)           0.009015
+Log-likelihood      -291.8878   Akaike criterion     587.7756
+Schwarz criterion    593.8234   Hannan-Quinn         590.2324
+rho                 -0.076325   Durbin's h          -5.120849
+
+? ols d_infl 0 d_infl_1 d_infl_2 d_infl_3 d_infl_4
+
+Model 2: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0237541    0.124049      0.1915   0.8484 
+  d_infl_1   -0.207871     0.0824614    -2.521    0.0128  **
+  d_infl_2   -0.316133     0.0826094    -3.827    0.0002  ***
+  d_infl_3    0.193969     0.0825146     2.351    0.0201  **
+  d_infl_4   -0.0356630    0.0820702    -0.4345   0.6645 
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    343.7395   S.E. of regression   1.529171
+R-squared            0.207344   Adjusted R-squared   0.185775
+F(4, 147)            9.613087   P-value(F)           6.21e-07
+Log-likelihood      -277.6949   Akaike criterion     565.3899
+Schwarz criterion    580.5093   Hannan-Quinn         571.5319
+rho                  0.001392   Durbin-Watson        1.989650
+
+Excluding the constant, p-value was highest for variable 10 (d_infl_4)
+
+? omit d_infl_2 d_infl_3 d_infl_4
+Test on Model 2:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    d_infl_2, d_infl_3, d_infl_4
+  Test statistic: F(3, 147) = 10.0609, p-value 4.52804e-06
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 3: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0188173    0.134804      0.1396   0.8892 
+  d_infl_1   -0.210960     0.0797295    -2.646    0.0090  ***
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    414.3174   S.E. of regression   1.661962
+R-squared            0.044592   Adjusted R-squared   0.038223
+F(1, 150)            7.001040   P-value(F)           0.009015
+Log-likelihood      -291.8878   Akaike criterion     587.7756
+Schwarz criterion    593.8234   Hannan-Quinn         590.2324
+rho                 -0.076325   Durbin's h          -5.120849
+
+? ols d_infl 0 d_infl_1 d_infl_2 d_infl_3 d_infl_4 LHUR_1
+
+Model 4: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.41742      0.561014      2.527    0.0126   **
+  d_infl_1   -0.264521     0.0839712    -3.150    0.0020   ***
+  d_infl_2   -0.395535     0.0869062    -4.551    1.11e-05 ***
+  d_infl_3    0.113409     0.0869839     1.304    0.1944  
+  d_infl_4   -0.0924331    0.0836136    -1.105    0.2708  
+  LHUR_1     -0.231258     0.0908715    -2.545    0.0120   **
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    329.1391   S.E. of regression   1.501458
+R-squared            0.241012   Adjusted R-squared   0.215019
+F(5, 146)            9.272269   P-value(F)           1.10e-07
+Log-likelihood      -274.3963   Akaike criterion     560.7925
+Schwarz criterion    578.9358   Hannan-Quinn         568.1629
+rho                  0.014105   Durbin-Watson        1.965664
+
+Excluding the constant, p-value was highest for variable 10 (d_infl_4)
+
+? ols d_infl 0 d_infl_1 d_infl_2 d_infl_3 d_infl_4 LHUR_1 LHUR_2 \
+  LHUR_3 LHUR_4
+
+Model 5: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.31784      0.520062      2.534    0.0124   **
+  d_infl_1   -0.363005     0.0840295    -4.320    2.90e-05 ***
+  d_infl_2   -0.343201     0.0897604    -3.824    0.0002   ***
+  d_infl_3    0.0724664    0.0859955     0.8427   0.4008  
+  d_infl_4   -0.0345864    0.0780158    -0.4433   0.6582  
+  LHUR_1     -2.68340      0.469611     -5.714    6.18e-08 ***
+  LHUR_2      3.43224      0.931360      3.685    0.0003   ***
+  LHUR_3     -1.03966      0.955272     -1.088    0.2783  
+  LHUR_4      0.0719850    0.501121      0.1436   0.8860  
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    268.7935   S.E. of regression   1.371012
+R-squared            0.380168   Adjusted R-squared   0.345492
+F(8, 143)            10.96344   P-value(F)           5.47e-12
+Log-likelihood      -259.0034   Akaike criterion     536.0069
+Schwarz criterion    563.2218   Hannan-Quinn         547.0625
+rho                 -0.002972   Durbin-Watson        2.005690
+
+Excluding the constant, p-value was highest for variable 14 (LHUR_4)
+
+# ADF regression
+? genr infl_1 = infl(-1)
+Generated series infl_1 (ID 15)
+? ols d_infl 0 infl_1 d_infl_1 d_infl_2 d_infl_3 d_infl_4
+
+Model 6: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.531310     0.229906      2.311     0.0222  **
+  infl_1     -0.112568     0.0432619    -2.602     0.0102  **
+  d_infl_1   -0.139985     0.0849924    -1.647     0.1017 
+  d_infl_2   -0.249835     0.0849456    -2.941     0.0038  ***
+  d_infl_3    0.235007     0.0824636     2.850     0.0050  ***
+  d_infl_4    0.00664826   0.0821312     0.08095   0.9356 
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    328.5058   S.E. of regression   1.500013
+R-squared            0.242472   Adjusted R-squared   0.216530
+F(5, 146)            9.346445   P-value(F)           9.61e-08
+Log-likelihood      -274.2499   Akaike criterion     560.4997
+Schwarz criterion    578.6430   Hannan-Quinn         567.8702
+rho                  0.002808   Durbin-Watson        1.990310
+
+Excluding the constant, p-value was highest for variable 10 (d_infl_4)
+
+? genr adft = $coeff(infl_1) / $stderr(infl_1)
+Generated scalar adft = -2.60201
+? print adft
+
+           adft = -2.6020071
+Done

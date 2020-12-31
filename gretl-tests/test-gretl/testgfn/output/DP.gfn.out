@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DP.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DP.gfn.inp
+? include ./DP.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DP.gfn
+DP 1.3, 2015-07-15 (Uriel Rodriguez Ramirez)
+? open np.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/np.gdt
+periodicity: 1, maxobs: 111
+observations range: 1860 to 1970
+
+Listing 15 variables:
+  0) const       1) rgnp        2) ngnp        3) rpcgnp      4) iprod     
+  5) emply       6) unemp       7) gnpdefl     8) pcons       9) nwage     
+ 10) rwage      11) money      12) veloc      13) interest   14) pstock    
+
+? series y=ngnp
+Generated series y (ID 15)
+? DP(y)
+
+Model 1: OLS, using observations 1911-1970 (T = 60)
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  y2          -0.148320    0.0747615    -1.984    0.0519  *
+
+Mean dependent var   718.8500   S.D. dependent var   14778.37
+Sum squared resid    1.21e+10   S.E. of regression   14326.00
+R-squared            0.062538   Adjusted R-squared   0.062538
+F(1, 59)             3.935914   P-value(F)           0.051924
+Log-likelihood      -658.8220   Akaike criterion     1319.644
+Schwarz criterion    1321.738   Hannan-Quinn         1320.463
+rho                 -0.213173   Durbin-Watson        2.413899
+
+==============================================================
+double unit root Test
+==============================================================
+Null Hypothesis: two unit roots, y~I(2)
+Test Statistic = -1.98391
+p-value = 0.0459947
+--------------------------------------------------------------
+
+Done

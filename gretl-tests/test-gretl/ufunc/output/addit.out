@@ -1,0 +1,46 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run addit.inp
+ /home/cottrell/stats/test-gretl/ufunc/addit.inp
+? function void addlist (series y, list list0, list addlist)
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? list list0 = 0
+Generated list list0
+? list list1 = 2 3 4 5 6 7 8 9
+Generated list list1
+# list list1 = 9 8 7 6 5 4 3 2
+? addlist(ENROLL, list0, list1)
+Baseline        AIC = -155.421
+Adding CATHOL   AIC = -154.677
+Adding WHITE    AIC = -171.042
+
+Minimized AIC = -183.068, with this model:
+
+Model 23: OLS, using observations 1-51
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        0.170673    0.0341221     5.002    8.01e-06 ***
+  CATHOL       0.247774    0.0418675     5.918    3.34e-07 ***
+  WHITE       -0.144278    0.0403746    -3.573    0.0008   ***
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.073294   S.E. of regression   0.039076
+R-squared            0.462339   Adjusted R-squared   0.439937
+F(2, 48)             20.63782   P-value(F)           3.41e-07
+Log-likelihood       94.53418   Akaike criterion    -183.0684
+Schwarz criterion   -177.2729   Hannan-Quinn        -180.8537
+
+Done

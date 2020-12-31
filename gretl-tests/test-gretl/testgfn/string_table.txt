@@ -1,0 +1,36 @@
+Comics.csv
+
+One or more non-numeric variables were found.
+These variables have been given numeric codes as follows.
+
+String code table for variable 2 (area):
+  1 = 'paris'
+  2 = 'small'
+  3 = 'medium'
+  4 = 'rural'
+  5 = 'large'
+
+String code table for variable 7 (nationality):
+  1 = 'natfr'
+  2 = 'other'
+  3 = 'acqfr'
+  4 = 'europe'
+
+String code table for variable 8 (empl):
+  1 = 'retired'
+  2 = 'interm'
+  3 = 'manag'
+  4 = 'employed'
+  5 = 'worker'
+  6 = 'unemp'
+  7 = 'nonworking'
+  8 = 'tradmerch'
+  9 = 'agri'
+
+String code table for variable 9 (gender):
+  1 = 'male'
+  2 = 'female'
+
+String code table for variable 10 (couple):
+  1 = 'yes'
+  2 = 'no'

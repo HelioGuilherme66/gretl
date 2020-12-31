@@ -1,0 +1,204 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_wls.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_wls.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? set seed 456731
+Pseudo-random number generator seeded with 456731
+? genr wt = uniform()
+Generated series wt (ID 10)
+? genr wt = wt * wt
+Replaced series wt (ID 10)
+# full dataset
+? wls wt 1 0 2 3
+
+Model 1: WLS, using observations 1-51
+Dependent variable: ENROLL
+Variable used as weight: wt
+
+             coefficient    std. error   t-ratio    p-value
+  ---------------------------------------------------------
+  const       0.0732504     0.0547636     1.338     0.1873 
+  CATHOL      0.186137      0.0615924     3.022     0.0040  ***
+  PUPIL      -0.000162597   0.00274358   -0.05926   0.9530 
+
+Statistics based on the weighted data:
+
+Sum squared resid    0.029951   S.E. of regression   0.024980
+R-squared            0.189409   Adjusted R-squared   0.155634
+F(2, 48)             5.608018   P-value(F)           0.006475
+Log-likelihood       117.3545   Akaike criterion    -228.7090
+Schwarz criterion   -222.9135   Hannan-Quinn        -226.4944
+
+Statistics based on the original data:
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.099151   S.E. of regression   0.045449
+
+? series yh1 = $yhat
+Generated series yh1 (ID 11)
+? fcast yh2
+Generated series yh2 (ID 12)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL      0.07587      0.07587
+AK      0.08923      0.08923
+AZ    0.1034059    0.1034059
+AR      0.07521      0.07521
+CA    0.1117414    0.1117414
+CO    0.1012345    0.1012345
+CT    0.1500286    0.1500286
+DE    0.1001348    0.1001348
+DC    0.1048804    0.1048804
+FL      0.09333      0.09333
+GA      0.07584      0.07584
+HI    0.1049882    0.1049882
+ID      0.08247      0.08247
+IL    0.1284643    0.1284643
+IN      0.09468      0.09468
+IA    0.1041008    0.1041008
+KS      0.09703      0.09703
+KY      0.08914      0.08914
+LA    0.1299532    0.1299532
+ME    0.1170801    0.1170801
+MD    0.1028485    0.1028485
+MA    0.1687164    0.1687164
+MI    0.1173273    0.1173273
+MN    0.1183794    0.1183794
+MS      0.07723      0.07723
+MO    0.1021042    0.1021042
+MT    0.1038388    0.1038388
+NE    0.1109040    0.1109040
+NV      0.09831      0.09831
+NH    0.1270646    0.1270646
+NJ    0.1482745    0.1482745
+NM    0.1194892    0.1194892
+NY    0.1397957    0.1397957
+NC      0.07413      0.07413
+ND    0.1220173    0.1220173
+OH    0.1097163    0.1097163
+OK      0.07914      0.07914
+OR      0.09329      0.09329
+PA    0.1274332    0.1274332
+RI    0.1922197    0.1922197
+SC      0.07447      0.07447
+SD    0.1082577    0.1082577
+TN      0.07527      0.07527
+TX    0.1070054    0.1070054
+UT      0.07678      0.07678
+VT    0.1246672    0.1246672
+VA      0.08066      0.08066
+WA      0.08849      0.08849
+WV      0.08097      0.08097
+WI    0.1313216    0.1313216
+WY      0.09641      0.09641
+
+# subsample
+? series yh1 = NA
+Replaced series yh1 (ID 11)
+? smpl 10 40
+Full data range: 1 - 51 (n = 51)
+Current sample: 10 - 40 (n = 31)
+
+? wls wt 1 0 2 3
+
+Model 2: WLS, using observations 10-40 (n = 31)
+Dependent variable: ENROLL
+Variable used as weight: wt
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      0.00318960    0.0631841    0.05048   0.9601 
+  CATHOL     0.208987      0.0699865    2.986     0.0058  ***
+  PUPIL      0.00330905    0.00304191   1.088     0.2859 
+
+Statistics based on the weighted data:
+
+Sum squared resid    0.009251   S.E. of regression   0.018176
+R-squared            0.244535   Adjusted R-squared   0.190573
+F(2, 28)             4.531622   P-value(F)           0.019724
+Log-likelihood       81.82733   Akaike criterion    -157.6547
+Schwarz criterion   -153.3527   Hannan-Quinn        -156.2523
+
+Statistics based on the original data:
+
+Mean dependent var   0.100194   S.D. dependent var   0.047585
+Sum squared resid    0.046936   S.E. of regression   0.040943
+
+? series yh1 = $yhat
+Replaced series yh1 (ID 11)
+? smpl full
+Full data range: 1 - 51 (n = 51)
+
+? fcast yh2
+Replaced series yh2 (ID 12)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL                   0.07527
+AK                   0.07944
+AZ                 0.1012926
+AR                   0.06649
+CA                 0.1267128
+CO                   0.09816
+CT                 0.1372281
+DE                   0.08924
+DC                   0.08863
+FL      0.08684      0.08684
+GA      0.07209      0.07209
+HI    0.1177340    0.1177340
+ID      0.08477      0.08477
+IL    0.1259355    0.1259355
+IN      0.09115      0.09115
+IA      0.09195      0.09195
+KS      0.08365      0.08365
+KY      0.08598      0.08598
+LA    0.1314480    0.1314480
+ME    0.1065198    0.1065198
+MD      0.09613      0.09613
+MA    0.1606542    0.1606542
+MI    0.1197162    0.1197162
+MN    0.1146126    0.1146126
+MS      0.07400      0.07400
+MO      0.09285      0.09285
+MT      0.09200      0.09200
+NE      0.09819      0.09819
+NV    0.1025522    0.1025522
+NH    0.1191266    0.1191266
+NJ    0.1387503    0.1387503
+NM    0.1214452    0.1214452
+NY    0.1316748    0.1316748
+NC      0.06947      0.06947
+ND    0.1113647    0.1113647
+OH    0.1073302    0.1073302
+OK      0.06881      0.06881
+OR      0.08958      0.08958
+PA    0.1209371    0.1209371
+RI    0.1894868    0.1894868
+SC                   0.06496
+SD                   0.09696
+TN                   0.07494
+TX                 0.1011441
+UT                   0.08886
+VT                 0.1111975
+VA                   0.07016
+WA                   0.09188
+WV                   0.06528
+WI                 0.1253029
+WY                   0.07808
+
+Done

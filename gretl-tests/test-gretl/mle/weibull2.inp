@@ -1,0 +1,28 @@
+
+function series do_Z (scalar b0, scalar b1, series x, series Ti, scalar s)
+   series Xb = b0 + b1 * x
+   series Z = (log(Ti) - Xb) / s
+   return Z
+end function
+
+# Kennan strike duration data
+open kennan
+
+ols log(Ti) 0 Prod
+scalar b0 = $coeff(0)
+scalar b1 = $coeff(Prod)
+scalar s = 1
+
+series Z = do_Z(b0, b1, Prod, Ti, s)
+series W = 0
+
+mle loglik = Z - log(s) - exp(Z)
+  series Z = do_Z(b0, b1, Prod, Ti, s)
+  series W = -(1 - exp(Z)) / s
+  deriv s = -Z/s - 1/s + exp(Z)*Z/s
+  deriv b0 = W
+  deriv b1 = Prod * W
+end mle
+
+printf "lambda = %g\n", 1/s
+

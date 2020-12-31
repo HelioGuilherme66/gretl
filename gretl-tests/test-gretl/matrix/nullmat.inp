@@ -1,0 +1,13 @@
+eval zeros(5,0) * zeros(0,5)
+eval zeros(0,3) * zeros(3,0)
+eval zeros(0,5)'zeros(0,5)
+eval zeros(0,5) * zeros(5,2)
+
+set seed 8760743
+
+Y = mnormal(10,2)
+X = zeros(10,0)
+U = zeros(10,2)
+V = zeros(4,4)
+B = mols(Y, X, &U, &V)
+print B Y U V

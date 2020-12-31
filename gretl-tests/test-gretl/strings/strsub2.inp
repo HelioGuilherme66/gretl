@@ -1,0 +1,7 @@
+string str
+sprintf str "some stuff\n"
+printf "str = '%s'\n", str
+string target
+sprintf target "\n"
+string trimmed = strsub(str, target, "")
+printf "trimmed = '%s'\n", trimmed

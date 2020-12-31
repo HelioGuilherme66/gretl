@@ -1,0 +1,30 @@
+# Stock and Watson, ch 9
+#
+open boston_hmda.gdt
+set hc_version 1
+# generate the variables needed
+genr loan_val = s6/s50
+genr deny = (s7 = 3)
+genr black = (s13 = 3)
+genr medln = (loan_val>= .8 && loan_val <= .95)
+genr hiln = (loan_val > .95)
+genr pi_rat = s46 / 100
+genr hse_inc = s45 / 100
+genr ccred = s43
+genr mcred = s42
+genr pubrec = s44 > 0
+genr denpmi = (s53 = 1)
+genr hischl = (school >= 12)
+genr condo = (s51 = 1)
+genr ltv_med = (loan_val>=0.80 && loan_val<=0.95)
+genr ltv_high = (loan_val>0.95)
+genr selfemp = (s27a = 1)
+# First three columns in Table 9.2
+ols deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred pubrec \
+ denpmi selfemp --robust
+logit deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred pubrec \
+ denpmi selfemp
+probit deny 0 black pi_rat hse_inc ltv_med ltv_high ccred mcred pubrec \
+ denpmi selfemp
+
+

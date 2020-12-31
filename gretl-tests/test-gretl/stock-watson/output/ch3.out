@@ -1,0 +1,94 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch3.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch3.inp
+# Stock and Watson, ch 3
+#
+# Results for Table 3.1
+#
+? open cps_ch3.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/cps_ch3.gdt
+periodicity: 1, maxobs: 11130
+observations range: 1 to 11130
+
+Listing 4 variables:
+  0) const    1) asex     2) year     3) ahe98  
+
+? genr male = asex=1
+Generated series male (ID 4)
+? genr m_earn = zeromiss(male * ahe98)
+Generated series m_earn (ID 5)
+? genr f_earn = zeromiss((1-male) * ahe98)
+Generated series f_earn (ID 6)
+1992
+Full data range: 1 - 11130 (n = 11130)
+Current sample: 1 - 2962 (n = 2962)
+
+males:   mean = 17.57, sd = 7.50
+females: mean = 15.22, sd = 5.97
+
+Equality of means test (assuming unequal variances)
+
+   m_earn: Number of observations = 1591
+   f_earn: Number of observations = 1371
+   Difference between sample means = 17.5746 - 15.2205 = 2.3541
+   Null hypothesis: The two population means are the same.
+   Estimated standard error = 0.247682
+   Test statistic: t(2942) = 9.50454
+   p-value (two-tailed) = 4.02464e-21
+
+1994
+Full data range: 1 - 11130 (n = 11130)
+Current sample: 2963 - 5918 (n = 2956)
+
+males:   mean = 16.93, sd = 7.39
+females: mean = 15.01, sd = 6.41
+
+Equality of means test (assuming unequal variances)
+
+   m_earn: Number of observations = 1598
+   f_earn: Number of observations = 1358
+   Difference between sample means = 16.9252 - 15.0065 = 1.91868
+   Null hypothesis: The two population means are the same.
+   Estimated standard error = 0.25398
+   Test statistic: t(2952) = 7.55444
+   p-value (two-tailed) = 5.57595e-14
+
+1996
+Full data range: 1 - 11130 (n = 11130)
+Current sample: 5919 - 8527 (n = 2609)
+
+males:   mean = 16.88, sd = 7.29
+females: mean = 14.43, sd = 6.07
+
+Equality of means test (assuming unequal variances)
+
+   m_earn: Number of observations = 1374
+   f_earn: Number of observations = 1235
+   Difference between sample means = 16.8804 - 14.4253 = 2.45509
+   Null hypothesis: The two population means are the same.
+   Estimated standard error = 0.261782
+   Test statistic: t(2591) = 9.37835
+   p-value (two-tailed) = 1.41371e-20
+
+1998
+Full data range: 1 - 11130 (n = 11130)
+Current sample: 8528 - 11130 (n = 2603)
+
+males:   mean = 17.94, sd = 7.86
+females: mean = 15.49, sd = 6.80
+
+Equality of means test (assuming unequal variances)
+
+   m_earn: Number of observations = 1393
+   f_earn: Number of observations = 1210
+   Difference between sample means = 17.9439 - 15.4919 = 2.45192
+   Null hypothesis: The two population means are the same.
+   Estimated standard error = 0.287392
+   Test statistic: t(2600) = 8.53162
+   p-value (two-tailed) = 2.41257e-17
+
+Done

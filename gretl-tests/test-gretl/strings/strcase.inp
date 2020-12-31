@@ -1,0 +1,4 @@
+string s = "AbCdeFFg123"
+sl = tolower(s)
+su = toupper(s)
+print s sl su

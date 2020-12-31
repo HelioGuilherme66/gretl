@@ -1,0 +1,113 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run arma_obs.inp
+ /home/cottrell/stats/test-gretl/arma/arma_obs.inp
+
+OLS, using observations 3-500 (T = 498)
+Dependent variable: d_Y
+
+             coefficient    std. error    t-ratio     p-value 
+  ------------------------------------------------------------
+  const       -0.00773848   0.0944421     -0.08194   0.9347   
+  d_Y_1        0.825409     0.0257146     32.10      9.25e-123 ***
+  d_X          1.84677      0.0914308     20.20      1.62e-66  ***
+  d_X_1       -1.65364      0.103036     -16.05      6.38e-47  ***
+  P           51.5965       2.11086       24.44      5.66e-87  ***
+  P_1        -43.4357       2.51278      -17.29      1.16e-52  ***
+
+SSR = 2174.05, R-squared = 0.813273
+
+T = 498 (via ols -- should be ok)
+
+Model 2: ARMAX, using observations 3-500 (T = 498)
+Estimated using least squares (conditional ML)
+Dependent variable: d_Y
+
+             coefficient    std. error       z        p-value 
+  ------------------------------------------------------------
+  const       -0.00773848   0.0944421     -0.08194   0.9347   
+  phi_1        0.825409     0.0257146     32.10      4.58e-226 ***
+  d_X          1.84677      0.0914308     20.20      1.01e-90  ***
+  d_X_1       -1.65364      0.103036     -16.05      5.79e-58  ***
+  P           51.5965       2.11086       24.44      5.92e-132 ***
+  P_1        -43.4357       2.51278      -17.29      6.00e-67  ***
+
+Mean dependent var   0.158685   S.D. dependent var   4.840087
+Mean of innovations  0.000000   S.D. of innovations  2.102095
+Log-likelihood      -1073.595   Akaike criterion     2159.189
+Schwarz criterion    2184.453   Hannan-Quinn         2169.104
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2115     0.0000     1.2115     0.0000
+  -----------------------------------------------------------
+
+T = 498 (should be 498, same as ols)
+
+Model 3: ARMAX, using observations 3-500 (T = 498)
+Estimated using least squares (conditional ML)
+Dependent variable: (1-L) Y
+
+             coefficient    std. error       z        p-value 
+  ------------------------------------------------------------
+  const       -0.00773848   0.0944421     -0.08194   0.9347   
+  phi_1        0.825409     0.0257146     32.10      4.58e-226 ***
+  d_X          1.84677      0.0914308     20.20      1.01e-90  ***
+  d_X_1       -1.65364      0.103036     -16.05      5.79e-58  ***
+  P           51.5965       2.11086       24.44      5.92e-132 ***
+  P_1        -43.4357       2.51278      -17.29      6.00e-67  ***
+
+Mean dependent var   0.158685   S.D. dependent var   4.840087
+Mean of innovations  0.000000   S.D. of innovations  2.102095
+Log-likelihood      -1073.595   Akaike criterion     2159.189
+Schwarz criterion    2184.453   Hannan-Quinn         2169.104
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2115     0.0000     1.2115     0.0000
+  -----------------------------------------------------------
+
+T = 498 (should be 498, same as ols)
+
+
+OLS, using observations 3-500 (T = 498)
+Dependent variable: d_Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0800434    0.130860     -0.6117   0.5410  
+  d_Y_1       0.469426     0.0271694    17.28     1.15e-52 ***
+  d_X         1.70496      0.126325     13.50     1.47e-35 ***
+  P          53.5032       2.92196      18.31     1.52e-57 ***
+
+SSR = 4196.51, R-squared = 0.639566
+
+T = 498 (via ols -- should be ok)
+
+Model 5: ARMAX, using observations 3-500 (T = 498)
+Estimated using least squares (conditional ML)
+Dependent variable: (1-L) Y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.0800434    0.130860     -0.6117   0.5408  
+  phi_1       0.469426     0.0271694    17.28     6.92e-67 ***
+  d_X         1.70496      0.126325     13.50     1.64e-41 ***
+  P          53.5032       2.92196      18.31     6.80e-75 ***
+
+Mean dependent var   0.158685   S.D. dependent var   4.840087
+Mean of innovations  0.000000   S.D. of innovations  2.914612
+Log-likelihood      -1237.352   Akaike criterion     2482.704
+Schwarz criterion    2499.547   Hannan-Quinn         2489.314
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.1303     0.0000     2.1303     0.0000
+  -----------------------------------------------------------
+
+T = 498 (should be 498, same as ols)

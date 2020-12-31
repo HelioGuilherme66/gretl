@@ -1,0 +1,13 @@
+function matrix mtest (matrix M)
+  set echo off
+  set messages off
+  matrix M = sqrt(M)
+  return M
+end function
+
+matrix A = {1,2; 2,1}
+B = mtest(A)
+B
+
+
+

@@ -1,0 +1,86 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run jackgap1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/jackgap1.inp
+? function genarma22(series e, scalar a1, scalar a2, scalar ma1, scalar ma2)
+? nulldata 128
+periodicity: 1, maxobs: 128
+observations range: 1 to 128
+? setobs 4 1980:1
+Full data range: 1980:1 - 2011:4 (n = 128)
+
+? set seed 2340897
+Pseudo-random number generator seeded with 2340897
+? genr e = normal()
+Generated series e (ID 2)
+? y = genarma22(e, 0, 0.8, 0.1, 0)
+Generated series y (ID 3)
+? matrix sel = { 2 }
+Generated matrix sel
+? arma sel 2 ; y
+
+Function evaluations: 28
+Evaluations of gradient: 9
+
+Model 1: ARMA, using observations 1980:1-2011:4 (T = 128)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.465919     0.499415     -0.9329   0.3509  
+  phi_2       0.806005     0.0602603    13.38     8.42e-41 ***
+  theta_1     0.0501088    0.0894489     0.5602   0.5753  
+  theta_2     0.0970722    0.102679      0.9454   0.3445  
+
+Mean dependent var  -0.344049   S.D. dependent var   1.872367
+Mean of innovations -0.003549   S.D. of innovations  1.014328
+Log-likelihood      -184.6533   Akaike criterion     379.3067
+Schwarz criterion    393.5668   Hannan-Quinn         385.1006
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -1.1139     0.0000     1.1139     0.5000
+    Root  2           1.1139     0.0000     1.1139     0.0000
+  MA
+    Root  1          -0.2581    -3.1992     3.2096    -0.2628
+    Root  2          -0.2581     3.1992     3.2096     0.2628
+  -----------------------------------------------------------
+
+? arma 2 sel ; y
+
+Function evaluations: 27
+Evaluations of gradient: 9
+
+Model 2: ARMA, using observations 1980:1-2011:4 (T = 128)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.476309     0.541590     -0.8795   0.3791  
+  phi_1       0.0266765    0.0510971     0.5221   0.6016  
+  phi_2       0.802418     0.0604437    13.28     3.21e-40 ***
+  theta_2     0.102550     0.100604      1.019    0.3080  
+
+Mean dependent var  -0.344049   S.D. dependent var   1.872367
+Mean of innovations -0.004599   S.D. of innovations  1.014465
+Log-likelihood      -184.6728   Akaike criterion     379.3457
+Schwarz criterion    393.6058   Hannan-Quinn         385.1396
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -1.1331     0.0000     1.1331     0.5000
+    Root  2           1.0998     0.0000     1.0998     0.0000
+  MA
+    Root  1          -0.0000    -3.1227     3.1227    -0.2500
+    Root  2          -0.0000     3.1227     3.1227     0.2500
+  -----------------------------------------------------------
+
+Done

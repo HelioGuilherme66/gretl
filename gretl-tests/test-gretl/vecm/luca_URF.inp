@@ -1,0 +1,9 @@
+# unrestricted VAR for comparison with PcGive
+
+open luca_testcase.gdt -q
+var 2 l31 l35 w31 w35 s31 s35 p31 p35 --seas
+matrix SE = $stderr
+# SE *= sqrt($T/$df)
+printf "SE(eq 1):\n%10.4g\n", SE[,1]
+
+

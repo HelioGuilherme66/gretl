@@ -1,0 +1,31 @@
+set echo off
+set messages off
+set warnings off
+
+open pizza4.gdt
+series ages = age<=20 ? 0 : (age>20 && age <=40) ? 1 : 2
+
+foreign language=R --send-data --quiet
+  library(plyr)
+  ddply(gretldata[,c(1,2,4,6,8)], ~ female + college + ages, 
+    numcolwise(mean))
+end foreign
+
+list A = female college ages
+matrix m = aggregate(pizza, A, mean)
+m ~= aggregate(income, A, mean)[,cols(m)]
+m = selifr(m, !isnan(m[,cols(m)]))
+
+printf "\n  female college ages count    pizza    income\n"
+loop i=1..rows(m) -q
+  printf "%2d %5d %7d %4d %5d %8.4f  %8.4f\n", i, m[i,1], m[i,2],
+    m[i,3], m[i,4], m[i,5], m[i,6]
+endloop
+
+list X = pizza income
+m = aggregate(X, A, mean)
+print m
+
+
+
+

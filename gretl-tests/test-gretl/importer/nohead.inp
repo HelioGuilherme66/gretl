@@ -1,0 +1,2 @@
+open nohead.xls --rowoffset=2
+print -o

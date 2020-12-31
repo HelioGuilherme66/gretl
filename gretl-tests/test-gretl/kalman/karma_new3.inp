@@ -1,0 +1,22 @@
+function void apply_params (bundle *b, matrix p)
+    b.statemat[1,1] = p[1]
+    b.obsymat[2] = p[2]
+    b.statevar[1,1] = p[3]^2
+end function
+
+open arma.gdt
+
+matrix parms = {0, 0, 1}'
+
+/* Kalman filter setup */
+matrix H = {1; 0}
+matrix F = {0, 0; 1, 0}
+matrix Q = {0, 0; 0, 0}
+
+bundle kb = ksetup({y}, H, F, Q)
+
+mle logl = ERR ? NA : kb.llt
+    apply_params(&kb, parms)
+    ERR = kfilter(kb)
+    params parms
+end mle -h

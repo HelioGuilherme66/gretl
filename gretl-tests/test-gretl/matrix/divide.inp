@@ -1,0 +1,6 @@
+open data4-1
+matrix X = {const, sqft, bedrms}
+matrix y = price
+matrix B = X \ y
+print B
+ols 1 0 2 3

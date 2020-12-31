@@ -1,0 +1,216 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps7-3.inp
+ /opt/esl/share/gretl/scripts/ps7-3.inp
+# PS7.3, to duplicate Table 7.2
+? open data7-3
+
+Read datafile /opt/esl/share/gretl/data/data7-3.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 8 variables:
+  0) const      1) price      2) sqft       3) bedrms     4) baths    
+  5) pool       6) famroom    7) firepl   
+
+? ols price const sqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# This is model E in Table 7.2
+? ols price const sqft bedrms baths pool famroom firepl
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error    t-ratio    p-value
+  ---------------------------------------------------------
+  const       39.0571      89.5397       0.4362     0.6758 
+  sqft         0.146551     0.0301014    4.869      0.0018  ***
+  bedrms      -7.04553     28.7363      -0.2452     0.8134 
+  baths       -0.263691    41.4547      -0.006361   0.9951 
+  pool        53.1958      22.0635       2.411      0.0467  **
+  famroom    -21.3447      42.8734      -0.4979     0.6338 
+  firepl      26.1880      53.8454       0.4864     0.6416 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9010.244   S.E. of regression   35.87726
+R-squared            0.911504   Adjusted R-squared   0.835650
+F(6, 7)              12.01657   P-value(F)           0.002213
+Log-likelihood      -65.13456   Akaike criterion     144.2691
+Schwarz criterion    148.7425   Hannan-Quinn         143.8550
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# omit variable with highest pvalue, one at a time
+? omit baths
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for baths
+  Test statistic: F(1, 7) = 4.04618e-05, p-value 0.995102
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       38.9067      80.7830       0.4816   0.6430  
+  sqft         0.146419     0.0203633    7.190    9.33e-05 ***
+  bedrms      -7.11121     25.0850      -0.2835   0.7840  
+  pool        53.2086      20.5529       2.589    0.0322   **
+  famroom    -21.4518      36.8807      -0.5817   0.5768  
+  firepl      26.3052      47.3275       0.5558   0.5935  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9010.296   S.E. of regression   33.56020
+R-squared            0.911503   Adjusted R-squared   0.856193
+F(5, 8)              16.47976   P-value(F)           0.000496
+Log-likelihood      -65.13460   Akaike criterion     142.2692
+Schwarz criterion    146.1035   Hannan-Quinn         141.9143
+
+Excluding the constant, p-value was highest for variable 3 (bedrms)
+
+? omit bedrms
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for bedrms
+  Test statistic: F(1, 8) = 0.0803636, p-value 0.784003
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       18.2693      33.1797       0.5506   0.5953  
+  sqft         0.144969     0.0186760    7.762    2.81e-05 ***
+  pool        55.1793      18.3267       3.011    0.0147   **
+  famroom    -19.7763      34.4940      -0.5733   0.5805  
+  firepl      21.0357      41.2408       0.5101   0.6223  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9100.809   S.E. of regression   31.79939
+R-squared            0.910614   Adjusted R-squared   0.870887
+F(4, 9)              22.92180   P-value(F)           0.000097
+Log-likelihood      -65.20457   Akaike criterion     140.4091
+Schwarz criterion    143.6044   Hannan-Quinn         140.1134
+
+Excluding the constant, p-value was highest for variable 7 (firepl)
+
+? omit firepl
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for firepl
+  Test statistic: F(1, 9) = 0.260173, p-value 0.622275
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       22.7361      30.7966       0.7383   0.4773  
+  sqft         0.147290     0.0174302    8.450    7.27e-06 ***
+  pool        53.3693      17.3020       3.085    0.0116   **
+  famroom     -7.33610     23.4731      -0.3125   0.7611  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9363.895   S.E. of regression   30.60048
+R-squared            0.908030   Adjusted R-squared   0.880439
+F(3, 10)             32.91049   P-value(F)           0.000017
+Log-likelihood      -65.40405   Akaike criterion     138.8081
+Schwarz criterion    141.3643   Hannan-Quinn         138.5715
+
+Excluding the constant, p-value was highest for variable 6 (famroom)
+
+# Model F
+? omit famroom
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for famroom
+  Test statistic: F(1, 10) = 0.0976769, p-value 0.761055
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       22.6728      29.5058       0.7684   0.4584  
+  sqft         0.144415     0.0141849   10.18     6.18e-07 ***
+  pool        52.7898      16.4817       3.203    0.0084   ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9455.359   S.E. of regression   29.31856
+R-squared            0.907132   Adjusted R-squared   0.890247
+F(2, 11)             53.72383   P-value(F)           2.11e-06
+Log-likelihood      -65.47210   Akaike criterion     136.9442
+Schwarz criterion    138.8614   Hannan-Quinn         136.7667
+
+# rerun full model for Wald test
+? ols price const sqft bedrms baths pool famroom firepl
+
+Model 7: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error    t-ratio    p-value
+  ---------------------------------------------------------
+  const       39.0571      89.5397       0.4362     0.6758 
+  sqft         0.146551     0.0301014    4.869      0.0018  ***
+  bedrms      -7.04553     28.7363      -0.2452     0.8134 
+  baths       -0.263691    41.4547      -0.006361   0.9951 
+  pool        53.1958      22.0635       2.411      0.0467  **
+  famroom    -21.3447      42.8734      -0.4979     0.6338 
+  firepl      26.1880      53.8454       0.4864     0.6416 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9010.244   S.E. of regression   35.87726
+R-squared            0.911504   Adjusted R-squared   0.835650
+F(6, 7)              12.01657   P-value(F)           0.002213
+Log-likelihood      -65.13456   Akaike criterion     144.2691
+Schwarz criterion    148.7425   Hannan-Quinn         143.8550
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# Wald F-statistic for Models E and F is provided
+? omit bedrms baths famroom firepl
+Test on Model 7:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    bedrms, baths, famroom, firepl
+  Test statistic: F(4, 7) = 0.0864517, p-value 0.983881
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 8: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       22.6728      29.5058       0.7684   0.4584  
+  sqft         0.144415     0.0141849   10.18     6.18e-07 ***
+  pool        52.7898      16.4817       3.203    0.0084   ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    9455.359   S.E. of regression   29.31856
+R-squared            0.907132   Adjusted R-squared   0.890247
+F(2, 11)             53.72383   P-value(F)           2.11e-06
+Log-likelihood      -65.47210   Akaike criterion     136.9442
+Schwarz criterion    138.8614   Hannan-Quinn         136.7667
+
+Done

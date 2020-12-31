@@ -1,0 +1,8 @@
+open data9-7
+ols QNC 0 INCOME(-1 to -3) PRICE(-1 to -3)
+ols QNC 0 INCOME(0 to +3)
+ols QNC 0 INCOME(-2 to +2)
+ols QNC 0 INCOME(+2 to +3)
+ols QNC 0 INCOME(+3 to +2)
+ols QNC 0 INCOME(-2 to -1)
+

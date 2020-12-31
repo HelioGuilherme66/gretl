@@ -1,0 +1,19 @@
+function scalar vfun (series y)
+  scalar n = $nobs/2
+  smpl ; -n
+  n1 = $nobs - 1
+  v1 = var(y)
+  smpl --full
+  smpl +n ;
+  n2 = $nobs - 1
+  v2 = var(y)
+  printf "v1 = %g (n = %d), v2 = %g (n = %d)\n", v1, n1, v2, n2
+  Ft = (v1 > v2)? v1/v2 : v2/v1
+  pval = pvalue(F, n1, n2, Ft)
+  printf "F(%d,%d) = %g, p-value %g\n", n1, n2, Ft, pval
+  return pval 
+end function
+
+open data9-7
+scalar pv = vfun(QNC)
+

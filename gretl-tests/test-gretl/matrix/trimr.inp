@@ -1,0 +1,4 @@
+set seed 5642312
+matrix A = mnormal(10,3)
+matrix B = trimr(diff(A),1,0)
+print A B

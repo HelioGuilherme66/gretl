@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata version="1.3" name="hholds" frequency="1" startobs="1" endobs="6" type="cross-section">
+<description>Data imported from CSV file 'hholds.csv', 2014-10-31 14:21
+</description>
+<variables count="3">
+<variable name="hid"
+/>
+<variable name="country"
+ discrete="true"
+/>
+<variable name="xh"
+/>
+</variables>
+<observations count="6" labels="false">
+<obs>1 1 1 </obs>
+<obs>6 2 12 </obs>
+<obs>3 3 6 </obs>
+<obs>4 2 8 </obs>
+<obs>2 1 4 </obs>
+<obs>5 2 10 </obs>
+</observations>
+<string-tables count="1">
+<valstrings owner="country" count="3">"US" "IT" "UK" </valstrings>
+</string-tables>
+</gretldata>

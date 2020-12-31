@@ -1,0 +1,12 @@
+# Read from RATS database
+open hamilton/macrodat.rat
+setobs 4 1959:1
+smpl 1959:1 1999:4
+data (compact=average) LHUR PUNEW
+data (compact=last) FYFF EXRUK
+# done reading from RATS database
+genr infl = 400 * log(PUNEW/PUNEW(-1))
+diff infl 
+lags d_infl LHUR
+# smpl 1962:1 1999:4
+

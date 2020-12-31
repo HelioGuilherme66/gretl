@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run jack-aggr.inp
+ /home/cottrell/stats/test-gretl/builtins/jack-aggr.inp
+
+Read datafile /home/cottrell/stats/test-gretl/builtins/pizza4.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 8 variables:
+  0) const      1) pizza      2) female     3) hs         4) college  
+  5) grad       6) income     7) age      
+
+    female = 0        hs = 0      ages = 0
+cases = 1, mean(pizza) = 299, mean(income) = 23.4
+
+    female = 1        hs = 0      ages = 0
+cases = 1, mean(pizza) = 0, mean(income) = 15.6
+
+    female = 0        hs = 1      ages = 0
+cases = 1, mean(pizza) = 424, mean(income) = 13
+
+    female = 0        hs = 0      ages = 1
+cases = 8, mean(pizza) = 310.875, mean(income) = 64.025
+
+    female = 1        hs = 0      ages = 1
+cases = 9, mean(pizza) = 95.2222, mean(income) = 43.3333
+
+    female = 0        hs = 1      ages = 1
+cases = 4, mean(pizza) = 373.5, mean(income) = 54.6
+
+    female = 1        hs = 1      ages = 1
+cases = 7, mean(pizza) = 132.571, mean(income) = 30.2714
+
+    female = 0        hs = 0      ages = 2
+cases = 2, mean(pizza) = 214.5, mean(income) = 87.75
+
+    female = 1        hs = 0      ages = 2
+cases = 4, mean(pizza) = 100.75, mean(income) = 133.9
+
+    female = 0        hs = 1      ages = 2
+cases = 3, mean(pizza) = 113.667, mean(income) = 45.5
+

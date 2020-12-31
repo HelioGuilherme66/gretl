@@ -1,0 +1,3 @@
+open xsect.txt
+setobs 4 1.1 --stacked-cross-section
+print -o

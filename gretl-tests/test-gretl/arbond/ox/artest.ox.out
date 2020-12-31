@@ -1,0 +1,28 @@
+
+Ox version 4.04 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.24, object created on 25-10-2006
+
+DPD( 1) Modelling y by 1-step (using ardata.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dy(-1)               0.476739    0.08905     5.35   0.000
+
+sigma               0.1291926  sigma^2            0.01669073
+sigma levels       0.09135297
+RSS             0.48403115629  TSS             0.38056623885
+no. of observations        30  no. of parameters           1
+Using robust standard errors
+
+Transformation used:      first differences
+Level instruments:        Gmm("y",2,99)
+
+constant:                  no  time dummies:               0
+number of individuals      10 (derived from year)
+longest time series         3 [1984 - 1986]
+shortest time series        3 (balanced panel)
+
+Wald (joint):    Chi^2(1) =     28.66 [0.000] **
+Sargan test:     Chi^2(5) =     5.707 [0.336]
+AR(1) test:        N(0,1) =    -1.262 [0.207]
+AR(2) test:        N(0,1) =    -1.519 [0.129]

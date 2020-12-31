@@ -1,0 +1,33 @@
+function matrix mfcast(list lhs, list rhs, int t2)
+   list allrhs = null
+   loop foreach i lhs -q
+     list rhs_$i = lags(1, rhs)
+     if i=1
+       allrhs = const rhs_$i
+     else
+       allrhs = allrhs ; const rhs_$i
+     endif
+   endloop
+
+   smpl ; t2
+   system method=SUR
+     equations lhs allrhs
+   end system --quiet
+
+   scalar fc1 = t2 + 1
+   scalar fc2 = t2 + 3
+   fcast fc1 fc2 --no-stats
+   matrix fc = $fcast
+   return fc
+end function
+
+open denmark
+dataset addobs 3
+list lhs = IBO IDE LRM LRY
+list rhs = LRM
+scalar t2 = obsnum(1987:1)
+loop 3 -q
+   matrix fc = mfcast(lhs,rhs,t2)
+   print fc
+   t2++
+endloop

@@ -1,0 +1,2 @@
+open HDI.xls
+print -o

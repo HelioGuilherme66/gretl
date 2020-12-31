@@ -1,0 +1,12 @@
+open denmark.gdt
+genr dummy
+
+# reproduce results form J.'s book (pp. 25-29)
+# this is ok
+
+var 2 LRM LRY IBO IDE ; const dq1 dq2 dq3
+
+# reproduce results form J.'s book (p. 113)
+
+coint2 2 LRM LRY IBO IDE --rc --seasonals --verbose
+

@@ -1,0 +1,12 @@
+real    0m4.762s
+user    0m4.705s
+sys     0m0.055s
+
+real    0m4.728s
+user    0m4.671s
+sys     0m0.057s
+
+totals for 'newout':
+ BHHH iterations     266
+ BFGS gradient evals 36
+ BFGS function evals 122

@@ -1,0 +1,142 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps8-6.inp
+ /opt/esl/share/gretl/scripts/ps8-6.inp
+# PS8.6, to reproduce Example 8.7
+? open data8-2
+
+Read datafile /opt/esl/share/gretl/data/data8-2.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 4 variables:
+  0) const      1) exptrav    2) income     3) pop      
+
+? ols exptrav 0 income
+
+Model 1: OLS, using observations 1-51
+Dependent variable: exptrav
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.498120     0.535515      0.9302   0.3568  
+  income      0.0555731    0.00329311   16.88     4.70e-22 ***
+
+Mean dependent var   6.340706   S.D. dependent var   7.538343
+Sum squared resid    417.1103   S.E. of regression   2.917611
+R-squared            0.853199   Adjusted R-squared   0.850203
+F(1, 49)             284.7850   P-value(F)           4.70e-22
+Log-likelihood      -125.9548   Akaike criterion     255.9095
+Schwarz criterion    259.7732   Hannan-Quinn         257.3859
+
+# save absolute value of errors as absuhat1
+? genr absuhat1=abs($uhat)
+Generated series absuhat1 (ID 4)
+# auxiliary regression for the Glejer test
+? ols absuhat1 0 pop
+
+Model 2: OLS, using observations 1-51
+Dependent variable: absuhat1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.731167     0.410042      1.783    0.0808  *
+  pop         0.177408     0.0543465     3.264    0.0020  ***
+
+Mean dependent var   1.627895   S.D. dependent var   2.374692
+Sum squared resid    231.5927   S.E. of regression   2.174024
+R-squared            0.178627   Adjusted R-squared   0.161865
+F(1, 49)             10.65624   P-value(F)           0.002004
+Log-likelihood      -110.9513   Akaike criterion     225.9026
+Schwarz criterion    229.7663   Hannan-Quinn         227.3790
+
+# compute test statistic and p-value
+? genr LM1=$nrsq
+Generated scalar LM1 = 9.11
+? pvalue X 1 LM1
+Chi-square(1): area to the right of 9.11 = 0.00254216
+(to the left: 0.997458)
+# since heteroscedasticity is detected, divide model by pop and
+# estimate by OLS
+? genr pcexp=exptrav/pop
+Generated series pcexp (ID 5)
+? genr pcincm=income/pop
+Generated series pcincm (ID 6)
+? genr invpop=1/pop
+Generated series invpop (ID 7)
+# estimate transformed model -- note that there is no constant term
+? ols pcexp invpop pcincm
+
+Model 3: OLS, using observations 1-51
+Dependent variable: pcexp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  invpop      0.736824     0.332260      2.218    0.0312   **
+  pcincm      0.0585518    0.0122610     4.775    1.66e-05 ***
+
+Mean dependent var   1.525460   S.D. dependent var   1.382326
+Sum squared resid    78.66121   S.E. of regression   1.267016
+R-squared            0.632801   Adjusted R-squared   0.625307
+F(2, 49)             42.22136   P-value(F)           2.19e-11
+Log-likelihood      -83.41564   Akaike criterion     170.8313
+Schwarz criterion    174.6949   Hannan-Quinn         172.3077
+
+# test for heteroscedasticity on the transformed model
+? genr absuhat2=abs($uhat)
+Generated series absuhat2 (ID 8)
+? ols absuhat2 0 pop
+
+Model 4: OLS, using observations 1-51
+Dependent variable: absuhat2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.836698     0.201752      4.147    0.0001  ***
+  pop        -0.0426040    0.0267400    -1.593    0.1175 
+
+Mean dependent var   0.621352   S.D. dependent var   1.086013
+Sum squared resid    56.06664   S.E. of regression   1.069681
+R-squared            0.049254   Adjusted R-squared   0.029851
+F(1, 49)             2.538502   P-value(F)           0.117531
+Log-likelihood      -74.78111   Akaike criterion     153.5622
+Schwarz criterion    157.4259   Hannan-Quinn         155.0386
+
+? genr LM2=$nrsq
+Generated scalar LM2 = 2.51198
+# the high p-value suggests that we cannot reject homoscedasticity and
+# hence OLS is acceptable
+? pvalue X 1 LM2
+Chi-square(1): area to the right of 2.51198 = 0.112984
+(to the left: 0.887016)
+# wls command is a short cut -- coeff., tstat, ess, should be the same
+# but Rsquared will be different
+? genr w = invpop^2
+Generated series w (ID 9)
+? wls w exptrav 0 income
+
+Model 5: WLS, using observations 1-51
+Dependent variable: exptrav
+Variable used as weight: w
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.736824     0.332260      2.218    0.0312   **
+  income      0.0585518    0.0122610     4.775    1.66e-05 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    78.66121   S.E. of regression   1.267016
+R-squared            0.317594   Adjusted R-squared   0.303667
+F(1, 49)             22.80476   P-value(F)           0.000017
+Log-likelihood      -83.41564   Akaike criterion     170.8313
+Schwarz criterion    174.6949   Hannan-Quinn         172.3077
+
+Statistics based on the original data:
+
+Mean dependent var   6.340706   S.D. dependent var   7.538343
+Sum squared resid    439.6069   S.E. of regression   2.995258
+
+Done

@@ -1,0 +1,14 @@
+nulldata 10
+
+string fnum = $(ls | wc -l)
+scalar n
+sscanf(fnum, "%d", &n)
+printf("There are %d files in this directory\n", n)
+
+string bessel = $(echo "j(3,10)" | bc -l)
+scalar j
+sscanf(bessel, "%lf", &j)
+printf("Bessel function, order 3, of 10 = %.15g\n", j)
+
+
+

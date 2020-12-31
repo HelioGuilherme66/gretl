@@ -1,0 +1,27 @@
+set echo off
+set messages off
+
+open abdata.gdt -q
+
+series x = WAGE
+series p1 = pmax(x)
+series p2 = pmin(x)
+series p3 = psum(x)
+series p4 = pmean(x)
+series p5 = psd(x)
+series p6 = pnobs(x)
+# series p7 = pxsum(x)
+series p7 = pxnobs(x) == max(unit) ? pxsum(x) : NA
+# series p8 = pxnobs(x) == max(unit) ? pxsum(x) : NA
+print p1 p2 p3 p4 p5 p6 p7 -o
+
+series x = YEAR
+series p1 = pmax(x)
+series p2 = pmin(x)
+series p3 = psum(x)
+series p4 = pmean(x)
+series p5 = psd(x)
+series p6 = pnobs(x)
+series p7 = pxsum(x)
+# series p8 = pxnobs(x)
+print p1 p2 p3 p4 p5 p6 p7 -o

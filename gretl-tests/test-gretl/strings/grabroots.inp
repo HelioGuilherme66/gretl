@@ -1,0 +1,35 @@
+function matrix read_x12a_roots (series y, int type[1:2:1])
+
+  # compose the name of the X12A roots file...
+  sprintf yfile "%s/%s.rts", $x12adir, argname(y)
+
+  # and grab its content into a string
+  string rts = readfile(yfile)
+
+  matrix R, r
+
+  if (type = 1)
+     string targ = "AR"
+  else
+     string targ = "MA"
+  endif
+
+  string line = strstr(rts, targ)
+  loop while strlen(line) > 0 --quiet
+     # offset on line to find the numbers
+     string line = line + 18
+     # get 4 values: real, imaginary, modulus, frequency
+     sscanf(line, "%m",  r)
+     R |= r
+     line = strstr(line, targ)
+  endloop
+
+  return R
+end function 
+
+open data9-7
+arma 2 1 ; QNC --x-12-arima
+AR_roots = read_x12a_roots(QNC, 1)
+MA_roots = read_x12a_roots(QNC, 2)
+print AR_roots MA_roots
+

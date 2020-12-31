@@ -1,0 +1,57 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run armaxgen.inp
+ /home/allin/stats/test-gretl/bfgs/arma/armaxgen.inp
+? nulldata 500
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+? setobs 12 1950:01
+Full data range: 1950:01 - 1991:08 (n = 500)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr x = uniform()
+Generated series x (ID 3)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 4)
+? genr y = 10.0 + 3.0*x + u
+Generated series y (ID 5)
+? arma 0 1 ; y 0 x --vcv
+
+Function evaluations: 40
+Evaluations of gradient: 13
+
+Model 1: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       10.1358      0.101120     100.2    0.0000   ***
+  theta_1      0.426119    0.0421323     10.11   4.80e-24 ***
+  x            2.84830     0.146858      19.39   8.52e-84 ***
+
+Mean dependent var   11.61330   S.D. dependent var   1.401313
+Mean of innovations  0.000694   S.D. of innovations  1.042231
+Log-likelihood      -728.7910   Akaike criterion     1465.582
+Schwarz criterion    1482.432   Hannan-Quinn         1472.195
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.3468     0.0000     2.3468     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const       theta_1             x
+     0.0102253  -2.47627e-05    -0.0111875  const
+                  0.00177513   3.38899e-05  theta_1
+                                 0.0215673  x
+
+Done

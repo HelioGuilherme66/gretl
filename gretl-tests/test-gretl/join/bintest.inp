@@ -1,0 +1,13 @@
+nulldata 1000
+series foo = normal()
+series id = 4
+id[999] = 1
+foo[999] = 13
+store jtest.gdtb
+
+nulldata 100
+series id = 5
+id[10] = 1
+join jtest.gdtb foo --ikey=id
+print -o
+remove(jtest.gdtb)

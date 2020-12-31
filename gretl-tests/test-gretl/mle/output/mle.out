@@ -1,0 +1,107 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run mle.inp
+ /home/cottrell/stats/test-gretl/mle/mle.inp
+? nulldata 20
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+? set seed 4567311
+Pseudo-random number generator seeded with 4567311
+? series X = normal() > 0
+Generated series X (ID 2)
+? scalar EX = mean(X)
+Generated scalar EX = 0.6
+? series lt = X*log(EX) + (1-X)*log(1-EX)
+Generated series lt (ID 3)
+? print X lt -o
+
+              X           lt
+
+ 1            0   -0.9162907
+ 2            1   -0.5108256
+ 3            0   -0.9162907
+ 4            1   -0.5108256
+ 5            0   -0.9162907
+ 6            1   -0.5108256
+ 7            1   -0.5108256
+ 8            1   -0.5108256
+ 9            1   -0.5108256
+10            0   -0.9162907
+11            1   -0.5108256
+12            1   -0.5108256
+13            0   -0.9162907
+14            0   -0.9162907
+15            1   -0.5108256
+16            1   -0.5108256
+17            0   -0.9162907
+18            0   -0.9162907
+19            1   -0.5108256
+20            1   -0.5108256
+
+? scalar ll = sum(lt)
+Generated scalar ll = -13.4602
+? scalar p = 0.5
+Generated scalar p = 0.5
+? set nls_toler 1e-9
+? mle lt = X*log(p) + (1-X)*log(1-p)
+? deriv p = X/p - (1-X)/(1-p)
+? end mle --vcv --verbose
+Using analytical derivatives
+Iteration 1: loglikelihood = -13.8629436112
+Parameters:      0.50000
+Gradients:        8.0000 (norm 2.00e+00)
+
+Iteration 2: loglikelihood = -13.5133166149 (steplength = 0.008)
+Parameters:      0.56400
+Gradients:        2.9280 (norm 1.29e+00)
+
+Iteration 3: loglikelihood = -13.4602706333 (steplength = 1)
+Parameters:      0.60095
+Gradients:     -0.078880 (norm 2.18e-01)
+
+Iteration 4: loglikelihood = -13.4602333630 (steplength = 1)
+Parameters:      0.59998
+Gradients:     0.0019503 (norm 3.42e-02)
+
+Iteration 5: loglikelihood = -13.4602333427 (steplength = 0.008)
+Parameters:      0.59999
+Gradients:    0.00065015 (norm 1.98e-02)
+
+Iteration 6: loglikelihood = -13.4602333402 (steplength = 1)
+Parameters:      0.60000
+Gradients:   -1.2678e-08 (norm 8.72e-05)
+
+Iteration 6: loglikelihood = -13.4602333402 (steplength = 0.2)
+Parameters:      0.60000
+Gradients:   -1.2678e-08 (norm 8.72e-05)
+
+
+--- FINAL VALUES: 
+loglikelihood = -13.4602333402 (steplength = 0.008)
+Parameters:      0.60000
+Gradients:   -1.2678e-08 (norm 8.72e-05)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 18
+Evaluations of gradient: 6
+
+Model 1: ML, using observations 1-20
+lt = X*log(p) + (1-X)*log(1-p)
+Standard errors based on Outer Products matrix
+
+             estimate   std. error     z     p-value 
+  ---------------------------------------------------
+  p          0.600000    0.109545    5.477   4.32e-08 ***
+
+Log-likelihood      -13.46023   Akaike criterion     28.92047
+Schwarz criterion    29.91620   Hannan-Quinn         29.11484
+
+Covariance matrix of regression coefficients:
+
+             p
+         0.012  p
+
+Done

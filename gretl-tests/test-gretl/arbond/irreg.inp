@@ -1,0 +1,3 @@
+open irreg.csv
+setobs unit year --panel
+arbond 1 0 ; y

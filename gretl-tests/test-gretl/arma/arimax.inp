@@ -1,0 +1,8 @@
+open data9-3
+arma 0 1 1 ; reskwh 0 incm -v
+arma 0 1 1 ; reskwh 0 incm -x
+incm[1] = NA
+reskwh[2] = NA
+arma 0 1 1 ; reskwh 0 incm
+arma 0 1 1 ; reskwh 0 incm -x
+arma 0 1 1 ; reskwh 0 incm -y

@@ -1,0 +1,81 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run eigen.inp
+ /home/cottrell/stats/test-gretl/matrix/eigen.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = { sqft, price }
+Generated matrix X
+? X
+X (14 x 2) [t1 = 1, t2 = 14]
+
+   1065   199.9 
+   1254     228 
+   1300     235 
+   1577     285 
+   1600     239 
+   1750     293 
+   1800     285 
+   1870     365 
+   1935     295 
+   1948     290 
+   2254     385 
+   2600     505 
+   2800     425 
+   3000     415 
+
+? X = cdemean(X)
+Replaced matrix X
+? X
+X (14 x 2) [t1 = 1, t2 = 14]
+
+     -845.93      -117.59 
+     -656.93      -89.493 
+     -610.93      -82.493 
+     -333.93      -32.493 
+     -310.93      -78.493 
+     -160.93      -24.493 
+     -110.93      -32.493 
+     -40.929       47.507 
+      24.071      -22.493 
+      37.071      -27.493 
+      343.07       67.507 
+      689.07       187.51 
+      889.07       107.51 
+      1089.1       97.507 
+
+? matrix XPX = X'*X
+Generated matrix XPX
+? XPX
+XPX (2 x 2)
+
+  4.3394e+06   6.0210e+05 
+  6.0210e+05   1.0182e+05 
+
+? scalar rc = rcond(XPX)
+Generated scalar rc = 0.00324737
+? matrix V
+? matrix E = eigensym(XPX, &V)
+Generated matrix E
+? E
+E (2 x 1)
+
+      17927. 
+  4.4233e+06 
+
+? V
+V (2 x 2)
+
+     0.13799     -0.99043 
+    -0.99043     -0.13799 
+
+Done

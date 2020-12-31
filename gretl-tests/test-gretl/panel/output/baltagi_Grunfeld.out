@@ -1,0 +1,197 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run baltagi_Grunfeld.inp
+ /home/cottrell/stats/test-gretl/panel/baltagi_Grunfeld.inp
+? open baltagi_Grunfeld
+
+Read datafile /home/cottrell/stats/test-gretl/panel/baltagi_Grunfeld.gdt
+periodicity: 20, maxobs: 200
+observations range: 1:01 to 10:20
+
+Listing 6 variables:
+  0) const    1) id       2) year     3) INV      4) F      
+  5) C      
+
+? genr unitdum
+Panel dummy variables generated.
+? ols INV 0 F C
+
+Model 1: Pooled OLS, using 200 observations
+Included 10 cross-sectional units
+Time-series length = 20
+Dependent variable: INV
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -42.7144      9.51168      -4.491    1.21e-05 ***
+  F            0.115562    0.00583571   19.80     9.54e-49 ***
+  C            0.230678    0.0254758     9.055    1.35e-16 ***
+
+Mean dependent var   145.9582   S.D. dependent var   216.8753
+Sum squared resid     1755850   S.E. of regression   94.40840
+R-squared            0.812408   Adjusted R-squared   0.810504
+F(2, 197)            426.5757   P-value(F)           2.58e-72
+Log-likelihood      -1191.802   Akaike criterion     2389.605
+Schwarz criterion    2399.500   Hannan-Quinn         2393.609
+rho                  0.956242   Durbin-Watson        0.209717
+
+? hausman
+      Diagnostics: assuming a balanced panel with 10 cross-sectional units
+                         observed over 20 periods
+
+Fixed effects estimator
+allows for differing intercepts by cross-sectional unit
+slope standard errors in parentheses, p-values in brackets
+
+       const:        -58.744        (12.454)       [0.00000]
+           F:        0.11012      (0.011857)       [0.00000]
+           C:        0.31007      (0.017355)       [0.00000]
+
+10 group means were subtracted from the data
+
+Residual variance: 523478/(200 - 12) = 2784.46
+Joint significance of differing group means:
+ F(9, 188) = 49.1766 with p-value 8.70015e-45
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the fixed effects alternative.)
+
+
+Means of pooled OLS residuals for cross-sectional units:
+
+ unit  1:       0.32589
+ unit  2:         157.3
+ unit  3:       -171.65
+ unit  4:         20.76
+ unit  5:       -34.519
+ unit  6:        25.549
+ unit  7:       0.34878
+ unit  8:       -11.681
+ unit  9:       -22.673
+ unit 10:        36.233
+
+Breusch-Pagan test statistic:
+ LM = 798.162 with p-value = prob(chi-square(1) > 798.162) = 1.35448e-175
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the random effects alternative.)
+
+Variance estimators:
+ between = 7089.8
+ within = 2784.46
+theta used for quasi-demeaning = 0.861224
+
+                         Random effects estimator
+           allows for a unit-specific component to the error term
+           (standard errors in parentheses, p-values in brackets)
+
+          const:        -57.834        (28.899)       [0.04674]
+              F:        0.10978      (0.010493)       [0.00000]
+              C:        0.30811       (0.01718)       [0.00000]
+
+Hausman test statistic:
+ H = 2.18602 with p-value = prob(chi-square(2) > 2.18602) = 0.335207
+(A low p-value counts against the null hypothesis that the random effects
+model is consistent, in favor of the fixed effects model.)
+? scalar theta = 0.86122
+Generated scalar theta = 0.86122
+? loop foreach i INV F C
+> ols $i du_* -q
+> genr $iq = $uhat
+> genr $ip = $yhat
+> genr $itilde = $i - theta*$ip
+> end loop
+Warning: "end loop": obsolete construction; please use "endloop"
+? ols INV du_* -q
+? genr INVq = $uhat
+? genr INVp = $yhat
+? genr INVtilde = INV - theta*INVp
+? ols F du_* -q
+? genr Fq = $uhat
+? genr Fp = $yhat
+? genr Ftilde = F - theta*Fp
+? ols C du_* -q
+? genr Cq = $uhat
+? genr Cp = $yhat
+? genr Ctilde = C - theta*Cp
+
+Number of iterations: 3
+
+? ols INVtilde 0 Ftilde Ctilde -q
+? add Fq Cq -q
+Test on Model 5:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    Fq, Cq
+  Test statistic: F(2, 195) = 1.06574, p-value 0.346472
+
+? scalar H = $test*2
+Generated scalar H = 2.13147
+? panel INV 0 F C
+
+Model 7: Fixed-effects, using 200 observations
+Included 10 cross-sectional units
+Time-series length = 20
+Dependent variable: INV
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -58.7439      12.4537      -4.717    4.66e-06 ***
+  F            0.110124     0.0118567    9.288    3.92e-17 ***
+  C            0.310065     0.0173545   17.87     2.22e-42 ***
+
+Mean dependent var   145.9582   S.D. dependent var   216.8753
+Sum squared resid    523478.1   S.E. of regression   52.76797
+LSDV R-squared       0.944073   Within R-squared     0.766758
+LSDV F(11, 188)      288.4996   P-value(F)           2.4e-111
+Log-likelihood      -1070.781   Akaike criterion     2165.562
+Schwarz criterion    2205.142   Hannan-Quinn         2181.579
+rho                  0.663920   Durbin-Watson        0.684480
+
+Joint test on named regressors -
+  Test statistic: F(2, 188) = 309.014
+  with p-value = P(F(2, 188) > 309.014) = 3.74894e-60
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(9, 188) = 49.1766
+  with p-value = P(F(9, 188) > 49.1766) = 8.70015e-45
+
+? panel INV 0 F C --random-effects
+
+Model 8: Random-effects (GLS), using 200 observations
+Included 10 cross-sectional units
+Time-series length = 20
+Dependent variable: INV
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -57.8344      28.8989      -2.001    0.0467   **
+  F            0.109781     0.0104927   10.46     1.17e-20 ***
+  C            0.308113     0.0171805   17.93     2.81e-43 ***
+
+Mean dependent var   145.9582   S.D. dependent var   216.8753
+Sum squared resid     1841062   S.E. of regression   96.42765
+Log-likelihood      -1196.541   Akaike criterion     2399.083
+Schwarz criterion    2408.978   Hannan-Quinn         2403.087
+
+'Between' variance = 7089.8
+'Within' variance = 2784.46
+theta used for quasi-demeaning = 0.861224
+corr(y,yhat)^2 = 0.806104
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(2) = 657.674
+  with p-value = 1.54147e-143
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 798.162
+  with p-value = 1.35448e-175
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(2) = 2.18602
+  with p-value = 0.335207
+
+Done

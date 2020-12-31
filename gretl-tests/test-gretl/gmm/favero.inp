@@ -1,0 +1,38 @@
+function series OC(matrix theta, matrix X)
+  scalar g = theta[2]
+  scalar d = theta[1]
+
+  matrix tmp1 = g * log(X[,1])
+  series ret = d * exp(tmp1) .* X[,2] - 1
+  return ret
+end function
+
+open hs
+
+set bfgs_toler 1.0e-12
+set hac_lag 4
+
+matrix X = { x1, x2 }
+matrix W = { const } ~ mlag(X,1)
+W[1,1] = 0
+
+matrix b = { 0.98 , 0.9 }'
+
+series e = OC(b, X)
+matrix V = 10*I(3)
+
+gmm 
+   series e = OC(b, X)
+   orthog e ; W
+   weights V
+   params b
+end gmm --two-step
+
+# Favero (2001) Table 7.1
+
+gmm 
+   series e = OC(b, X)
+   orthog e ; W
+   weights V
+   params b
+end gmm --iterate

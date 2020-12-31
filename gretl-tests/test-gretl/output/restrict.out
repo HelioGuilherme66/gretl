@@ -1,0 +1,181 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run restrict.inp
+ /opt/esl/share/gretl/scripts/misc/restrict.inp
+# Illustrations of use of the "restrict" command
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+# initial OLS
+? ols 1 0 2 3 4 5
+
+Model 1: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.290669     0.0785301     3.701    0.0006   ***
+  CATHOL      0.221596     0.0458372     4.834    1.53e-05 ***
+  PUPIL      -0.00303514   0.00272652   -1.113    0.2714  
+  WHITE      -0.148189     0.0407444    -3.637    0.0007   ***
+  ADMEXP     -0.155052     0.134150     -1.156    0.2537  
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.068957   S.E. of regression   0.038718
+R-squared            0.494157   Adjusted R-squared   0.450170
+F(4, 46)             11.23431   P-value(F)           1.93e-06
+Log-likelihood       96.08969   Akaike criterion    -182.1794
+Schwarz criterion   -172.5203   Hannan-Quinn        -178.4883
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+# Evaluate two zero restrictions
+? restrict --quiet
+? b[4] = 0
+? b[5] = 0
+? end restrict
+Restriction set
+ 1: b[WHITE] = 0
+ 2: b[ADMEXP] = 0
+
+Test statistic: F(2, 46) = 7.74894, with p-value = 0.0012579
+
+# Equivalent: use the "omit" command
+? omit 4 5
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    WHITE, ADMEXP
+  Test statistic: F(2, 46) = 7.74894, p-value 0.0012579
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 2: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0855655    0.0579350     1.477    0.1462 
+  CATHOL      0.206523     0.0515958     4.003    0.0002  ***
+  PUPIL      -0.00169675   0.00302524   -0.5609   0.5775 
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.092189   S.E. of regression   0.043825
+R-squared            0.323733   Adjusted R-squared   0.295555
+F(2, 48)             11.48893   P-value(F)           0.000084
+Log-likelihood       88.68548   Akaike criterion    -171.3710
+Schwarz criterion   -165.5755   Hannan-Quinn        -169.1563
+
+# Now try a test for equality of coefficients
+? ols 1 0 2 3 4 5
+
+Model 3: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.290669     0.0785301     3.701    0.0006   ***
+  CATHOL      0.221596     0.0458372     4.834    1.53e-05 ***
+  PUPIL      -0.00303514   0.00272652   -1.113    0.2714  
+  WHITE      -0.148189     0.0407444    -3.637    0.0007   ***
+  ADMEXP     -0.155052     0.134150     -1.156    0.2537  
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.068957   S.E. of regression   0.038718
+R-squared            0.494157   Adjusted R-squared   0.450170
+F(4, 46)             11.23431   P-value(F)           1.93e-06
+Log-likelihood       96.08969   Akaike criterion    -182.1794
+Schwarz criterion   -172.5203   Hannan-Quinn        -178.4883
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+? restrict --quiet
+? b[4] - b[5] = 0
+? end restrict
+Restriction:
+ b[WHITE] - b[ADMEXP] = 0
+
+Test statistic: F(1, 46) = 0.00227694, with p-value = 0.962148
+
+# Manual equivalent to the above...
+? scalar essu = $ess
+Generated scalar essu = 0.0689568
+? scalar dfu = $df
+Generated scalar dfu = 46
+? series vsum = WHITE + ADMEXP
+Generated series vsum (ID 10)
+? ols 1 0 2 3 vsum
+
+Model 4: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.289262     0.0720069     4.017    0.0002   ***
+  CATHOL      0.221733     0.0452585     4.899    1.18e-05 ***
+  PUPIL      -0.00305490   0.00266612   -1.146    0.2577  
+  vsum       -0.148911     0.0374251    -3.979    0.0002   ***
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.068960   S.E. of regression   0.038305
+R-squared            0.494132   Adjusted R-squared   0.461842
+F(3, 47)             15.30318   P-value(F)           4.42e-07
+Log-likelihood       96.08843   Akaike criterion    -184.1769
+Schwarz criterion   -176.4496   Hannan-Quinn        -181.2240
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+? scalar essr = $ess
+Generated scalar essr = 0.0689602
+? scalar Fval = (essr - essu)/(essu/dfu)
+Generated scalar Fval = 0.00227694
+? pvalue F 1 dfu Fval
+F(1, 46): area to the right of 0.00227694 = 0.962148
+(to the left: 0.0378519)
+# Try testing for sum of coefficients
+? ols 1 0 2 3 4 5
+
+Model 5: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.290669     0.0785301     3.701    0.0006   ***
+  CATHOL      0.221596     0.0458372     4.834    1.53e-05 ***
+  PUPIL      -0.00303514   0.00272652   -1.113    0.2714  
+  WHITE      -0.148189     0.0407444    -3.637    0.0007   ***
+  ADMEXP     -0.155052     0.134150     -1.156    0.2537  
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.068957   S.E. of regression   0.038718
+R-squared            0.494157   Adjusted R-squared   0.450170
+F(4, 46)             11.23431   P-value(F)           1.93e-06
+Log-likelihood       96.08969   Akaike criterion    -182.1794
+Schwarz criterion   -172.5203   Hannan-Quinn        -178.4883
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+? restrict --quiet
+? b[WHITE] + b[ADMEXP] = 0
+? end restrict
+Restriction:
+ b[WHITE] + b[ADMEXP] = 0
+
+Test statistic: F(1, 46) = 4.9379, with p-value = 0.0312321
+
+# Alternative method (t-test)
+? coeffsum WHITE ADMEXP
+
+Variables: WHITE ADMEXP 
+   Sum of coefficients = -0.303241
+   Standard error = 0.136464
+   t(46) = -2.22214 with p-value = 0.0312321
+Done

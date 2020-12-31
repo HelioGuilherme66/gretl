@@ -1,0 +1,21 @@
+set echo off
+set messages off
+set warnings off
+
+open pizza4.gdt
+series ages = age<=20 ? 0 : (age>20 && age <=40) ? 1 : 2
+list A = female college ages
+list X = pizza income
+matrix amat = A
+scalar ny = cols(amat)
+loop i=1..ny -q
+  loop j=i+1..ny -q
+    list B = amat[i] amat[j]
+    m = aggregate(X, B, mean)
+    print m 
+  endloop
+endloop
+
+
+
+

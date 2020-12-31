@@ -1,0 +1,14 @@
+function scalar fact (scalar x)
+  # x must be a non-negative integer, but here we don't
+  # bother with error-checking
+  scalar ret
+  if x <= 2
+    ret = x
+  else
+    ret = x * fact(x-1)
+  endif
+  return ret
+end function
+
+scalar f = fact(5)
+printf "f = %d\n", f

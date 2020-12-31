@@ -1,0 +1,46 @@
+nulldata 8000
+set seed 3275641
+
+series x = (obs < 4001)? 1 : 0
+scalar b0 = 2
+scalar b1 = 1.1
+series xb = b0 + b1*x
+scalar scale = 2
+series y = randgen(W, 1/scale, exp(xb))
+
+# correct expected values?
+scalar E1 = exp(b0 + b1) * gammafun(1 + scale)
+scalar E2 = exp(b0) * gammafun(1 + scale)
+# expected values according to R's survreg
+scalar E1a = exp(b0 + b1) * gammafun(2)
+scalar E2a = exp(b0) * gammafun(2)
+
+duration y 0 x
+series ey = $yhat
+smpl 1 5
+print y ey -o
+smpl 4001 4005
+print y ey -o
+
+# find sample means
+smpl 1 4000
+M1 = mean(y)
+smpl 4001 8000
+M2 = mean(y)
+
+smpl --full
+
+foreign language=R --send-data
+  library(survival)
+  y <- gretldata[,"y"]
+  x <- gretldata[,"x"]
+  sr <- survreg(Surv(y) ~ x, dist='weibull')
+  summary(sr)
+  predict(sr, type='response')[1:5]
+  predict(sr, type='response')[4001:4005]
+end foreign
+
+ 
+
+
+

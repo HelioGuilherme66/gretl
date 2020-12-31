@@ -1,0 +1,218 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:06
+? run duration-cluster.inp
+ /home/cottrell/stats/test-gretl/cluster/duration-cluster.inp
+? open ../duration/ema1996.dta -q
+Read datafile /home/cottrell/stats/test-gretl/cluster/../duration/ema1996.dta
+? rrui = reprate * ui
+Generated series rrui (ID 44)
+? drui = disrate * ui
+Generated series drui (ID 45)
+? list X = reprate disrate ui rrui drui logwage
+Generated list X
+? cens = 1 - censor1
+Generated series cens (ID 46)
+? duration spell 0 X ; cens --exp
+
+Convergence achieved after 6 iterations
+
+Model 1: Duration (exponential), using observations 1-3343
+Dependent variable: spell
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        5.72469     0.703025      8.143    3.86e-16 ***
+  reprate     -0.966729    0.516187     -1.873    0.0611   *
+  disrate      1.75916     0.680021      2.587    0.0097   ***
+  ui           1.58866     0.238167      6.670    2.55e-11 ***
+  rrui        -1.00370     0.582260     -1.724    0.0847   *
+  drui        -0.277393    1.00760      -0.2753   0.7831  
+  logwage     -0.550894    0.0920424    -5.985    2.16e-09 ***
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        354.5185   p-value              1.65e-73
+Log-likelihood      -2835.232   Akaike criterion     5684.463
+Schwarz criterion    5727.266   Hannan-Quinn         5699.775
+
+? duration spell 0 X ; cens --exp --robust
+
+Convergence achieved after 6 iterations
+
+Model 2: Duration (exponential), using observations 1-3343
+Dependent variable: spell
+QML standard errors
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        5.72469     0.725529      7.890    3.01e-15 ***
+  reprate     -0.966729    0.565498     -1.710    0.0874   *
+  disrate      1.75916     0.734902      2.394    0.0167   **
+  ui           1.58866     0.251742      6.311    2.78e-10 ***
+  rrui        -1.00370     0.605867     -1.657    0.0976   *
+  drui        -0.277393    1.02188      -0.2715   0.7860  
+  logwage     -0.550894    0.0948107    -5.810    6.23e-09 ***
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        354.5185   p-value              1.65e-73
+Log-likelihood      -2835.232   Akaike criterion     5684.463
+Schwarz criterion    5727.266   Hannan-Quinn         5699.775
+
+? duration spell 0 X ; cens --exp --cluster=nonwhite
+
+Convergence achieved after 6 iterations
+
+Model 3: Duration (exponential), using observations 1-3343
+Dependent variable: spell
+Standard errors clustered by 2 values of nonwhite
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const        5.72469     2.60306        2.199    0.0279    **
+  reprate     -0.966729    0.969613      -0.9970   0.3188   
+  disrate      1.75916     0.329948       5.332    9.73e-08  ***
+  ui           1.58866     0.0580176     27.38     4.45e-165 ***
+  rrui        -1.00370     0.0560262    -17.91     9.03e-72  ***
+  drui        -0.277393    0.250296      -1.108    0.2677   
+  logwage     -0.550894    0.347674      -1.585    0.1131   
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        354.5185   p-value              1.65e-73
+Log-likelihood      -2835.232   Akaike criterion     5684.463
+Schwarz criterion    5727.266   Hannan-Quinn         5699.775
+
+? foreign language=stata --send-data
+?   stset spell, failure(censor1)
+?   streg reprate disrate ui rrui drui logwage, nohr dist(exp)
+?   streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(robust)
+?   streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(cluster nonwhite)
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(46 vars, 3343 obs)
+
+. stset spell, failure(censor1)
+
+     failure event:  censor1 != 0 & censor1 < .
+obs. time interval:  (0, spell]
+ exit on or before:  failure
+
+------------------------------------------------------------------------------
+     3343  total obs.
+        0  exclusions
+------------------------------------------------------------------------------
+     3343  obs. remaining, representing
+     1073  failures in single record/single failure data
+    20887  total analysis time at risk, at risk from t =         0
+                             earliest observed entry t =         0
+                                  last observed exit t =        28
+
+. streg reprate disrate ui rrui drui logwage, nohr dist(exp)
+
+         failure _d:  censor1
+   analysis time _t:  spell
+
+Iteration 0:   log likelihood = -3012.4909  
+Iteration 1:   log likelihood = -2885.3724  
+Iteration 2:   log likelihood =   -2835.92  
+Iteration 3:   log likelihood = -2835.2326  
+Iteration 4:   log likelihood = -2835.2317  
+Iteration 5:   log likelihood = -2835.2317  
+
+Exponential regression -- log relative-hazard form 
+
+No. of subjects =         3343                     Number of obs   =      3343
+No. of failures =         1073
+Time at risk    =        20887
+                                                   LR chi2(6)      =    354.52
+Log likelihood  =   -2835.2317                     Prob > chi2     =    0.0000
+
+------------------------------------------------------------------------------
+          _t |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     reprate |   .9667291   .5161866     1.87   0.061     -.044978    1.978436
+     disrate |   -1.75916   .6800213    -2.59   0.010    -3.091977   -.4263428
+          ui |   -1.58866   .2381675    -6.67   0.000     -2.05546    -1.12186
+        rrui |   1.003701   .5822603     1.72   0.085    -.1375078     2.14491
+        drui |   .2773934   1.007601     0.28   0.783    -1.697468    2.252255
+     logwage |   .5508936   .0920424     5.99   0.000     .3704938    .7312934
+       _cons |  -5.724694   .7030252    -8.14   0.000    -7.102598    -4.34679
+------------------------------------------------------------------------------
+
+. streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(robust)
+
+         failure _d:  censor1
+   analysis time _t:  spell
+
+Iteration 0:   log pseudolikelihood = -3012.4909  
+Iteration 1:   log pseudolikelihood = -2885.3724  
+Iteration 2:   log pseudolikelihood =   -2835.92  
+Iteration 3:   log pseudolikelihood = -2835.2326  
+Iteration 4:   log pseudolikelihood = -2835.2317  
+Iteration 5:   log pseudolikelihood = -2835.2317  
+
+Exponential regression -- log relative-hazard form 
+
+No. of subjects      =         3343                Number of obs   =      3343
+No. of failures      =         1073
+Time at risk         =        20887
+                                                   Wald chi2(6)    =    313.16
+Log pseudolikelihood =   -2835.2317                Prob > chi2     =    0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+          _t |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     reprate |   .9667291   .5655831     1.71   0.087    -.1417933    2.075252
+     disrate |   -1.75916   .7350116    -2.39   0.017    -3.199756   -.3185637
+          ui |   -1.58866   .2517797    -6.31   0.000    -2.082139   -1.095181
+        rrui |   1.003701    .605958     1.66   0.098    -.1839546    2.191357
+        drui |   .2773934   1.022029     0.27   0.786    -1.725747    2.280533
+     logwage |   .5508936   .0948248     5.81   0.000     .3650403    .7367469
+       _cons |  -5.724694   .7256376    -7.89   0.000    -7.146918   -4.302471
+------------------------------------------------------------------------------
+
+. streg reprate disrate ui rrui drui logwage, nohr dist(exp) vce(cluster nonwhi
+> te)
+
+         failure _d:  censor1
+   analysis time _t:  spell
+
+Iteration 0:   log pseudolikelihood = -3012.4909  
+Iteration 1:   log pseudolikelihood = -2885.3724  
+Iteration 2:   log pseudolikelihood =   -2835.92  
+Iteration 3:   log pseudolikelihood = -2835.2326  
+Iteration 4:   log pseudolikelihood = -2835.2317  
+Iteration 5:   log pseudolikelihood = -2835.2317  
+
+Exponential regression -- log relative-hazard form 
+
+No. of subjects      =         3343                Number of obs   =      3343
+No. of failures      =         1073
+Time at risk         =        20887
+                                                   Wald chi2(0)    =         .
+Log pseudolikelihood =   -2835.2317                Prob > chi2     =         .
+
+                               (Std. Err. adjusted for 2 clusters in nonwhite)
+------------------------------------------------------------------------------
+             |               Robust
+          _t |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     reprate |   .9667291   .9696135     1.00   0.319    -.9336784    2.867137
+     disrate |   -1.75916   .3299484    -5.33   0.000    -2.405847   -1.112473
+          ui |   -1.58866   .0580176   -27.38   0.000    -1.702372   -1.474947
+        rrui |   1.003701   .0560262    17.91   0.000      .893892    1.113511
+        drui |   .2773934   .2502963     1.11   0.268    -.2131784    .7679652
+     logwage |   .5508936   .3476742     1.58   0.113    -.1305353    1.232322
+       _cons |  -5.724694   2.603063    -2.20   0.028     -10.8266    -.622784
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+Done

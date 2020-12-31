@@ -1,0 +1,2 @@
+open Percentage_data.xls --sheet="1933"
+print -o

@@ -1,0 +1,6 @@
+open gpa3.gdt
+smpl spring --dummy
+ols cumgpa 0 sat hsperc tothrs female black white
+omit black white
+ols cumgpa 0 sat hsperc tothrs female black white --robust --vcv
+omit black white

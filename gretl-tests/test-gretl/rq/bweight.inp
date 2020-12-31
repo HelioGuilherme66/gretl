@@ -1,0 +1,16 @@
+open birth.gdt
+
+list xlist = boy married black mom_age mom_age2 ed_hs ed_smcol \
+  ed_col novisit tri2 tri3 smoke m_wtgain m_wtgain2
+
+set stopwatch
+ols weight 0 xlist
+printf "ols time = %g\n", $stopwatch
+
+# Frisch-Newton, one tau value
+quantreg .05 weight 0 xlist
+printf "F-N time = %g\n", $stopwatch
+scalar crit = qnorm(.95)
+matrix ci = $coeff - crit * $stderr
+ci = ci~($coeff + crit * $stderr)
+ci

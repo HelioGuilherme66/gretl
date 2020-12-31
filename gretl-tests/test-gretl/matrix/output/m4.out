@@ -1,0 +1,50 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m4.inp
+ /home/cottrell/stats/test-gretl/matrix/m4.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix A = {1,2,3;4,5,6;7,8,9}
+Generated matrix A
+? matrix B = A[1:2,2:3]
+Generated matrix B
+? B
+B (2 x 2)
+
+  2   3 
+  5   6 
+
+? scalar m = 3
+Generated scalar m = 3
+? scalar n = 4
+Generated scalar n = 4
+? set seed 37
+Pseudo-random number generator seeded with 37
+? matrix B = mnormal(m, n)
+Replaced matrix B
+? B
+B (3 x 4)
+
+      1.3201       1.1029     -0.18465      0.63338 
+    -0.76679      0.68799     -0.25963       1.8636 
+     0.53504     -0.73780      0.10064      0.42059 
+
+? A[2:3,2:3] = I(2)
+Modified matrix A
+? A
+A (3 x 3)
+
+  1   2   3 
+  4   1   0 
+  7   0   1 
+
+Done

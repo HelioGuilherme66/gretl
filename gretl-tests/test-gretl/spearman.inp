@@ -1,0 +1,6 @@
+open b-g
+set seed 34567888
+genr Z = normal()*Y
+spearman Y Z
+open spear.txt
+spearman IQ TV --verbose

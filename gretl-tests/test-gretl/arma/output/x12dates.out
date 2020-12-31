@@ -1,0 +1,265 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run x12dates.inp
+ /home/cottrell/stats/test-gretl/arma/x12dates.inp
+Read datafile /home/cottrell/stats/test-gretl/arma/Exemplo.gdt
+
+Function evaluations: 46
+Evaluations of gradient: 12
+
+Model 1: ARMA, using observations 2004:10-2011:10 (T = 85)
+Estimated using Kalman filter (exact ML)
+Dependent variable: ipc_dive_m
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.407476     0.0742870     5.485    4.13e-08 ***
+  Phi_1      -0.0507680    0.108371     -0.4685   0.6395  
+  theta_1     0.549245     0.0886597     6.195    5.83e-10 ***
+
+Mean dependent var   0.410204   S.D. dependent var   0.544479
+Mean of innovations  0.001229   S.D. of innovations  0.463257
+Log-likelihood      -55.39961   Akaike criterion     118.7992
+Schwarz criterion    128.5698   Hannan-Quinn         122.7292
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1         -19.6974     0.0000    19.6974     0.5000
+  MA
+    Root  1          -1.8207     0.0000     1.8207     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+ 2011:11          0.23         0.36        0.463        -0.55 -     1.27
+
+  Forecast evaluation statistics
+
+  Mean Error                       -0.13221
+  Mean Squared Error                0.017479
+  Root Mean Squared Error           0.13221
+  Mean Absolute Error               0.13221
+  Mean Percentage Error            -57.482
+  Mean Absolute Percentage Error    57.482
+  Theil's U                         0
+
+
+Model 2: ARMA, using observations 2004:10-2011:10 (T = 85)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: ipc_dive_m
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.407476     0.0742812     5.486    4.12e-08 ***
+  Phi_1      -0.0507714    0.113196     -0.4485   0.6538  
+  theta_1     0.549247     0.0907388     6.053    1.42e-09 ***
+
+Mean dependent var   0.410204   S.D. dependent var   0.544479
+Mean of innovations  0.002817   S.D. of innovations  0.463257
+Log-likelihood      -55.39961   Akaike criterion     118.7992
+Schwarz criterion    128.5698   Hannan-Quinn         122.7292
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1         -19.6961     0.0000    19.6961     0.5000
+  MA
+    Root  1          -1.8207     0.0000     1.8207     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+ 2011:11          0.23         0.36        0.463        -0.55 -     1.27
+
+  Forecast evaluation statistics
+
+  Mean Error                       -0.13221
+  Mean Squared Error                0.017479
+  Root Mean Squared Error           0.13221
+  Mean Absolute Error               0.13221
+  Mean Percentage Error            -57.482
+  Mean Absolute Percentage Error    57.482
+  Theil's U                         0
+
+
+Function evaluations: 38
+Evaluations of gradient: 13
+
+Model 3: ARMA, using observations 2004:01-2011:01 (T = 85)
+Estimated using Kalman filter (exact ML)
+Dependent variable: ipc_dive_m
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.429741     0.0771316     5.572    2.53e-08 ***
+  Phi_1      -0.0218594    0.106078     -0.2061   0.8367  
+  theta_1     0.572855     0.0872026     6.569    5.06e-11 ***
+
+Mean dependent var   0.424956   S.D. dependent var   0.548940
+Mean of innovations -0.000394   S.D. of innovations  0.462424
+Log-likelihood      -55.25341   Akaike criterion     118.5068
+Schwarz criterion    128.2774   Hannan-Quinn         122.4368
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1         -45.7470     0.0000    45.7470     0.5000
+  MA
+    Root  1          -1.7456     0.0000     1.7456     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+ 2011:02      1.571293     0.696850     0.462424    -0.209485 - 1.603186
+
+  Forecast evaluation statistics
+
+  Mean Error                        0.87444
+  Mean Squared Error                0.76465
+  Root Mean Squared Error           0.87444
+  Mean Absolute Error               0.87444
+  Mean Percentage Error             55.651
+  Mean Absolute Percentage Error    55.651
+  Theil's U                         0
+
+
+Model 4: ARMA, using observations 2004:01-2011:01 (T = 85)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: ipc_dive_m
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.429741     0.0771050     5.573    2.50e-08 ***
+  Phi_1      -0.0218521    0.110352     -0.1980   0.8430  
+  theta_1     0.572854     0.0867757     6.602    4.07e-11 ***
+
+Mean dependent var   0.424956   S.D. dependent var   0.548940
+Mean of innovations -0.005522   S.D. of innovations  0.462424
+Log-likelihood      -55.25341   Akaike criterion     118.5068
+Schwarz criterion    128.2774   Hannan-Quinn         122.4368
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1         -45.7622     0.0000    45.7622     0.5000
+  MA
+    Root  1          -1.7456     0.0000     1.7456     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+ 2011:02      1.571293     0.696851     0.462424    -0.209485 - 1.603186
+
+  Forecast evaluation statistics
+
+  Mean Error                        0.87444
+  Mean Squared Error                0.76465
+  Root Mean Squared Error           0.87444
+  Mean Absolute Error               0.87444
+  Mean Percentage Error             55.651
+  Mean Absolute Percentage Error    55.651
+  Theil's U                         0
+
+
+Function evaluations: 41
+Evaluations of gradient: 11
+
+Model 5: ARMA, using observations 2009:4-2034:1 (T = 98)
+Estimated using Kalman filter (exact ML)
+Dependent variable: ipc_dive_m
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.499769     0.125306     3.988    6.65e-05 ***
+  Phi_1       0.0139062    0.101082     0.1376   0.8906  
+  theta_1     0.406421     0.0891531    4.559    5.15e-06 ***
+
+Mean dependent var   0.503222   S.D. dependent var   0.957882
+Mean of innovations  0.000134   S.D. of innovations  0.872488
+Log-likelihood      -125.7785   Akaike criterion     259.5570
+Schwarz criterion    269.8968   Hannan-Quinn         263.7392
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1          71.9105     0.0000    71.9105     0.0000
+  MA
+    Root  1          -2.4605     0.0000     2.4605     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+  2034:2      0.261716     0.232304     0.872488    -1.477742 - 1.942350
+
+  Forecast evaluation statistics
+
+  Mean Error                        0.029412
+  Mean Squared Error                0.00086507
+  Root Mean Squared Error           0.029412
+  Mean Absolute Error               0.029412
+  Mean Percentage Error             11.238
+  Mean Absolute Percentage Error    11.238
+  Theil's U                         0
+
+
+Model 6: ARMA, using observations 2009:4-2034:1 (T = 98)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: ipc_dive_m
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.499768     0.125262     3.990    6.61e-05 ***
+  Phi_1       0.0139581    0.101453     0.1376   0.8906  
+  theta_1     0.406354     0.0921773    4.408    1.04e-05 ***
+
+Mean dependent var   0.503222   S.D. dependent var   0.957882
+Mean of innovations  0.005714   S.D. of innovations  0.872489
+Log-likelihood      -125.7785   Akaike criterion     259.5570
+Schwarz criterion    269.8968   Hannan-Quinn         263.7392
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR (seasonal)
+    Root  1          71.6431     0.0000    71.6431     0.0000
+  MA
+    Root  1          -2.4609     0.0000     2.4609     0.5000
+  -----------------------------------------------------------
+
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+           ipc_dive_m    prediction    std. error        95% interval
+
+  2034:2      0.261716     0.232326     0.872489    -1.477721 - 1.942372
+
+  Forecast evaluation statistics
+
+  Mean Error                        0.029391
+  Mean Squared Error                0.0008638
+  Root Mean Squared Error           0.029391
+  Mean Absolute Error               0.029391
+  Mean Percentage Error             11.23
+  Mean Absolute Percentage Error    11.23
+  Theil's U                         0
+

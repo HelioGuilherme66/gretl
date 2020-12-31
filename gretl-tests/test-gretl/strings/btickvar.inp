@@ -1,0 +1,5 @@
+string shellcall = "ls | wc -l"
+string fnum = $(shellcall)
+scalar n
+sscanf(fnum, "%d", &n)
+printf "There are %d files in this directory\n", n

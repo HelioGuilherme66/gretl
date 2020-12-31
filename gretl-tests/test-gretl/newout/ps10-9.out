@@ -1,0 +1,268 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps10-9.inp
+ /opt/esl/share/gretl/scripts/ps10-9.inp
+# PS10.9, for Example 10.7
+? open data10-5
+
+Read datafile /opt/esl/share/gretl/data/data10-5.gdt
+periodicity: 1, maxobs: 35
+observations range: 1960 to 1994
+
+Listing 4 variables:
+  0) const      1) year       2) calwage    3) uswage   
+
+? genr time
+Generated series time (ID 4)
+# For testing for random walk, first generate lagged variables
+? lags uswage calwage
+Listing 7 variables:
+  0) const        1) year         2) calwage      3) uswage     
+  4) time         5) uswage_1     6) calwage_1  
+
+# next generate differences and their lags
+? genr duswage = diff(uswage)
+Generated series duswage (ID 7)
+? genr dcalwage = diff(calwage)
+Generated series dcalwage (ID 8)
+? lags duswage dcalwage
+Listing 11 variables:
+  0) const         1) year          2) calwage       3) uswage      
+  4) time          5) uswage_1      6) calwage_1     7) duswage     
+  8) dcalwage      9) duswage_1    10) dcalwage_1  
+
+# lag of duswage is not defined for 1960 and 1961, start with 1962
+? smpl 1962 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1962 - 1994 (n = 33)
+
+# carry out F-tests for random walks
+? ols duswage 0 time uswage_1 duswage_1
+
+Model 1: OLS, using observations 1962-1994 (T = 33)
+Dependent variable: duswage
+
+              coefficient   std. error   t-ratio   p-value 
+  ---------------------------------------------------------
+  const        0.0526967    0.0271743     1.939    0.0623   *
+  time         0.0210106    0.00728077    2.886    0.0073   ***
+  uswage_1    -0.0602707    0.0206002    -2.926    0.0066   ***
+  duswage_1    0.781210     0.0878483     8.893    8.82e-10 ***
+
+Mean dependent var   0.295152   S.D. dependent var   0.158511
+Sum squared resid    0.122720   S.E. of regression   0.065052
+R-squared            0.847368   Adjusted R-squared   0.831579
+F(3, 29)             53.66651   P-value(F)           5.94e-12
+Log-likelihood       45.48196   Akaike criterion    -82.96391
+Schwarz criterion   -76.97788   Hannan-Quinn        -80.94979
+rho                  0.018540   Durbin's h           0.123363
+
+? omit time uswage_1
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    time, uswage_1
+  Test statistic: F(2, 29) = 4.28304, p-value 0.0234548
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 2: OLS, using observations 1962-1994 (T = 33)
+Dependent variable: duswage
+
+              coefficient   std. error   t-ratio   p-value 
+  ---------------------------------------------------------
+  const        0.0458701    0.0254834     1.800    0.0816   *
+  duswage_1    0.867752     0.0773700    11.22     1.93e-12 ***
+
+Mean dependent var   0.295152   S.D. dependent var   0.158511
+Sum squared resid    0.158969   S.E. of regression   0.071610
+R-squared            0.802283   Adjusted R-squared   0.795905
+F(1, 31)             125.7900   P-value(F)           1.93e-12
+Log-likelihood       41.21166   Akaike criterion    -78.42332
+Schwarz criterion   -75.43031   Hannan-Quinn        -77.41627
+rho                  0.119338   Durbin's h           0.765288
+
+? ols dcalwage 0 time calwage_1 dcalwage_1
+
+Model 3: OLS, using observations 1962-1994 (T = 33)
+Dependent variable: dcalwage
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const         0.103637     0.0528087     1.962    0.0594   *
+  time          0.0281635    0.0123516     2.280    0.0301   **
+  calwage_1    -0.0806191    0.0343655    -2.346    0.0260   **
+  dcalwage_1    0.697642     0.129769      5.376    8.92e-06 ***
+
+Mean dependent var   0.294545   S.D. dependent var   0.196438
+Sum squared resid    0.457169   S.E. of regression   0.125557
+R-squared            0.629768   Adjusted R-squared   0.591468
+F(3, 29)             16.44310   P-value(F)           1.97e-06
+Log-likelihood       23.78199   Akaike criterion    -39.56397
+Schwarz criterion   -33.57794   Hannan-Quinn        -37.54986
+rho                 -0.111596   Durbin's h          -0.961777
+
+? omit time calwage_1
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    time, calwage_1
+  Test statistic: F(2, 29) = 2.75415, p-value 0.0803303
+  Omitting variables improved 1 of 3 information criteria.
+
+Model 4: OLS, using observations 1962-1994 (T = 33)
+Dependent variable: dcalwage
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const         0.0717722    0.0423374     1.695    0.1001  
+  dcalwage_1    0.753229     0.120051      6.274    5.64e-07 ***
+
+Mean dependent var   0.294545   S.D. dependent var   0.196438
+Sum squared resid    0.544004   S.E. of regression   0.132471
+R-squared            0.559446   Adjusted R-squared   0.545234
+F(1, 31)             39.36591   P-value(F)           5.64e-07
+Log-likelihood       20.91257   Akaike criterion    -37.82514
+Schwarz criterion   -34.83213   Hannan-Quinn        -36.81808
+rho                 -0.055285   Durbin's h          -0.438568
+
+# For cointegrating regression, reset sample range to the beginning
+? smpl 1960 1994
+Full data range: 1960 - 1994 (n = 35)
+
+? ols calwage 0 uswage
+
+Model 5: OLS, using observations 1960-1994 (T = 35)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.308684     0.0386292      7.991   3.22e-09 ***
+  uswage      1.02953      0.00536285   192.0     6.94e-52 ***
+
+Mean dependent var   6.868857   S.D. dependent var   3.510177
+Sum squared resid    0.374778   S.E. of regression   0.106569
+R-squared            0.999105   Adjusted R-squared   0.999078
+F(1, 33)             36854.33   P-value(F)           6.94e-52
+Log-likelihood       29.73064   Akaike criterion    -55.46128
+Schwarz criterion   -52.35058   Hannan-Quinn        -54.38747
+rho                  0.641080   Durbin-Watson        0.778285
+
+# save residuals, generate their lags, and differences in lags
+? genr ut = $uhat
+Generated series ut (ID 11)
+? genr ut1 = ut(-1)
+Generated series ut1 (ID 12)
+? genr diffut = diff(ut)
+Generated series diffut (ID 13)
+? lags 4 ; diffut
+Listing 18 variables:
+  0) const         1) year          2) calwage       3) uswage      
+  4) time          5) uswage_1      6) calwage_1     7) duswage     
+  8) dcalwage      9) duswage_1    10) dcalwage_1   11) ut          
+ 12) ut1          13) diffut       14) diffut_1     15) diffut_2    
+ 16) diffut_3     17) diffut_4    
+
+# suppress the first five observations
+? smpl 1965 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1965 - 1994 (n = 30)
+
+? ols diffut ut1 diffut_1 diffut_2 diffut_3 diffut_4
+
+Model 6: OLS, using observations 1965-1994 (T = 30)
+Dependent variable: diffut
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  ut1        -0.395871      0.257091    -1.540     0.1362 
+  diffut_1    0.192899      0.285026     0.6768    0.5048 
+  diffut_2    0.0112363     0.260677     0.04310   0.9660 
+  diffut_3   -0.201642      0.249883    -0.8069    0.4273 
+  diffut_4    0.0104162     0.242184     0.04301   0.9660 
+
+Mean dependent var  -0.011048   S.D. dependent var   0.099337
+Sum squared resid    0.234005   S.E. of regression   0.096748
+Uncentered R-squared 0.192606   Centered R-squared   0.182276
+F(5, 25)             1.192767   P-value(F)           0.341065
+Log-likelihood       30.23601   Akaike criterion    -50.47201
+Schwarz criterion   -43.46603   Hannan-Quinn        -48.23074
+rho                 -0.007305   Durbin-Watson        1.743245
+
+P-value was highest for variable 17 (diffut_4)
+
+# compare shortcut command
+? smpl 1960 1994
+Full data range: 1960 - 1994 (n = 35)
+
+? coint 4 calwage uswage
+
+Step 1: testing for a unit root in calwage
+
+Augmented Dickey-Fuller test for calwage
+including 4 lags of (1-L)calwage
+sample size 30
+unit-root null hypothesis: a = 1
+
+  test with constant 
+  model: (1-L)y = b0 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.00886877
+  test statistic: tau_c(1) = -0.908332
+  asymptotic p-value 0.7863
+  1st-order autocorrelation coeff. for e: -0.044
+  lagged differences: F(4, 24) = 7.094 [0.0006]
+
+Step 2: testing for a unit root in uswage
+
+Augmented Dickey-Fuller test for uswage
+including 4 lags of (1-L)uswage
+sample size 30
+unit-root null hypothesis: a = 1
+
+  test with constant 
+  model: (1-L)y = b0 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.0010992
+  test statistic: tau_c(1) = -0.202981
+  asymptotic p-value 0.9358
+  1st-order autocorrelation coeff. for e: -0.046
+  lagged differences: F(4, 24) = 22.294 [0.0000]
+
+Step 3: cointegrating regression
+
+Cointegrating regression - 
+OLS, using observations 1960-1994 (T = 35)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.308684     0.0386292      7.991   3.22e-09 ***
+  uswage      1.02953      0.00536285   192.0     6.94e-52 ***
+
+Mean dependent var   6.868857   S.D. dependent var   3.510177
+Sum squared resid    0.374778   S.E. of regression   0.106569
+R-squared            0.999105   Adjusted R-squared   0.999078
+Log-likelihood       29.73064   Akaike criterion    -55.46128
+Schwarz criterion   -52.35058   Hannan-Quinn        -54.38747
+rho                  0.641080   Durbin-Watson        0.778285
+
+Step 4: testing for a unit root in uhat
+
+Augmented Dickey-Fuller test for uhat
+including 4 lags of (1-L)uhat
+sample size 30
+unit-root null hypothesis: a = 1
+
+  model: (1-L)y = (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.395871
+  test statistic: tau_c(2) = -1.53981
+  asymptotic p-value 0.7476
+  1st-order autocorrelation coeff. for e: -0.007
+  lagged differences: F(4, 25) = 0.465 [0.7604]
+
+There is evidence for a cointegrating relationship if:
+(a) The unit-root hypothesis is not rejected for the individual variables, and
+(b) the unit-root hypothesis is rejected for the residuals (uhat) from the 
+    cointegrating regression.
+
+Done

@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run spearman.inp
+ /home/cottrell/stats/test-gretl/spearman.inp
+? open b-g
+
+Read datafile /opt/esl/share/gretl/data/misc/b-g.gdt
+periodicity: 5, maxobs: 1974
+observations range: 1 to 1974
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? set seed 34567888
+Pseudo-random number generator seeded with 34567888
+? genr Z = normal()*Y
+Generated series Z (ID 2)
+? spearman Y Z
+
+For the variables 'Y' and 'Z'
+Spearman's rank correlation coefficient (rho) = 0.00413915
+Under the null hypothesis of no correlation:
+ t(1972) = 0.18381, with two-tailed p-value 0.8542
+
+? open spear.txt
+parsing /home/cottrell/stats/test-gretl/spear.txt...
+using delimiter ' '
+   longest line: 7 characters
+   first field: 'IQ'
+   number of columns = 2
+   number of variables: 2
+   number of non-blank lines: 11
+scanning for variable names...
+   line: IQ TV
+scanning for row labels and data...
+treating these as undated data
+
+Listing 3 variables:
+  0) const    1) IQ       2) TV     
+
+? spearman IQ TV --verbose
+
+For the variables 'IQ' and 'TV'
+Spearman's rank correlation coefficient (rho) = -0.17575758
+Under the null hypothesis of no correlation:
+ z-score = -0.527273, with two-tailed p-value 0.5980
+
+                IQ    rank             TV    rank
+
+ 1         106.000       4        7.00000       8
+ 2         86.0000      10        0.00000      10
+ 3         100.000       7        27.0000       4
+ 4         101.000       6        50.0000       1
+ 5         99.0000       8        28.0000       3
+ 6         103.000       5        29.0000       2
+ 7         97.0000       9        20.0000       5
+ 8         113.000       1        12.0000       7
+ 9         112.000       2        6.00000       9
+10         110.000       3        17.0000       6
+
+Done

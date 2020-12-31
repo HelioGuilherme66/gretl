@@ -1,0 +1,24 @@
+nulldata 600
+setobs 4 1950:1
+
+s_eps = 20
+s_level = 15
+s_slope = 0.1
+s_seas = 6
+
+series eps = s_eps * normal()
+series u_lev = s_level * normal()
+series u_slp = s_slope * normal()
+series u_sea = s_seas * normal()
+
+series n = 5
+series m = 500
+series s = 0
+
+n = n(-1) + u_slp(-1)
+m = m(-1) + n(-1) + u_lev(-1)
+s = -s(-1) - s(-2) - s(-3) + u_sea(-1)
+
+series x = m + s + eps
+# print x -o
+store bsmdata.gdt x

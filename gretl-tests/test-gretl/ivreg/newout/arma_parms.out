@@ -1,0 +1,42 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-19 10:48
+? run arma_parms.inp
+ /home/cottrell/stats/test-gretl/ivreg/arma_parms.inp
+# Seasonal ARMA test script
+
+Function evaluations: 44
+Evaluations of gradient: 12
+
+Model 1: ARMA, using observations 1921:09-1971:08 (T = 600)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error       z       p-value 
+  -----------------------------------------------------------
+  const      1111.02        0.125019     8887        0.0000   ***
+  phi_1         0.464536    0.0552480       8.408    4.16e-17 ***
+  Phi_1         0.208839    0.164082        1.273    0.2031  
+  theta_1       0.209670    0.0585031       3.584    0.0003   ***
+  Theta_1       0.0986753   0.169546        0.5820   0.5606  
+
+Mean dependent var   1111.034   S.D. dependent var   1.290624
+Mean of innovations  0.001442   S.D. of innovations  0.984581
+Log-likelihood      -842.8479   Akaike criterion     1697.696
+Schwarz criterion    1724.077   Hannan-Quinn         1707.966
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.1527     0.0000     2.1527     0.0000
+  AR (seasonal)
+    Root  1           4.7884     0.0000     4.7884     0.0000
+  MA
+    Root  1          -4.7694     0.0000     4.7694     0.5000
+  MA (seasonal)
+    Root  1         -10.1342     0.0000    10.1342     0.5000
+  -----------------------------------------------------------
+
+Done

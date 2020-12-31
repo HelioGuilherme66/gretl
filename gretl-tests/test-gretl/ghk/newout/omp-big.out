@@ -1,0 +1,9 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:12
+? run omp-big.inp
+ /home/cottrell/stats/test-gretl/ghk/omp-big.inp
+nmr = 320000
+elapsed: 0.100831
+Done

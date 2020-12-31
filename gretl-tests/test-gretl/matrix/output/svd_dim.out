@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run svd_dim.inp
+ /home/cottrell/stats/test-gretl/matrix/svd_dim.inp
+? set seed 1234567
+Pseudo-random number generator seeded with 1234567
+? A = mnormal(4,2)
+Generated matrix A
+? matrix U
+? matrix V
+? l = svd(A, &U, &V)
+Generated matrix l
+? print l
+l (1 x 2)
+
+      3.8620       2.3039 
+
+? print U
+U (4 x 2)
+
+    -0.45970     0.098255 
+    -0.78519     -0.10755 
+     0.39665     -0.37947 
+     0.12175      0.91366 
+
+? print V
+V (2 x 2)
+
+     0.95787     -0.28719 
+    -0.28719     -0.95787 
+
+? a = (U.*l) * V
+Generated matrix a
+? print A
+A (4 x 2)
+
+     -1.7656      0.29304 
+     -2.8335       1.1082 
+      1.7184      0.39750 
+    -0.15416      -2.1514 
+
+? print a
+a (4 x 2)
+
+     -1.7656      0.29304 
+     -2.8335       1.1082 
+      1.7184      0.39750 
+    -0.15416      -2.1514 
+
+Done

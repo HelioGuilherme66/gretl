@@ -1,0 +1,5 @@
+open jack4.csv
+setobs id year --panel
+arbond 1 0 ; y
+series u = $uhat
+print y u -o

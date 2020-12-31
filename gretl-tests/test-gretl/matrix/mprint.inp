@@ -1,0 +1,13 @@
+set seed 8976453
+matrix a = mnormal(4,3)
+
+printf "%12f\n", a
+printf "%8.3f\n", a
+scalar p = 4
+printf "%8.*f\n", p, a
+scalar w = 10
+printf "%*.*f\n", w, p, a
+printf "%21.12E\n", a
+printf "%3d\n", a
+
+

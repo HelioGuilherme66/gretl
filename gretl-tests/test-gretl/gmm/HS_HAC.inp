@@ -1,0 +1,73 @@
+# Hall, Generalized Method of Moments (Oxford), Table 3.5,
+# page 87: replicate the HAC standard-error estimates based
+# on the Hansen-Singleton model.  These entries in the table
+# use a fixed bandwidth of 7 and do not employ pre-whitening. 
+
+function void I_gmm (series ewr, series consrat, scalar g, scalar d, list inst)
+   matrix V = 100000*I(nelem(inst))
+   series e = 0
+   gmm e = d*ewr*consrat^(g-1) - 1
+     orthog e ; inst
+     weights V
+     params g d
+  end gmm  
+end function 
+
+function void Z_gmm (series ewr, series consrat, scalar g, scalar d, list inst, matrix *Z)
+   matrix V = $nobs*inv(Z'Z)
+   series e = 0
+   gmm e = d*ewr*consrat^(g-1) - 1
+     orthog e ; inst
+     weights V
+     params g d
+   end gmm
+end function
+
+open hall.gdt
+
+scalar g = 0.5
+scalar d = 0.5
+series e = 0
+
+list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+scalar ninst = nelem(inst)
+
+set hac_lag 7
+
+# Upper panel
+
+# HAC(B,7)
+set hac_kernel bartlett
+I_gmm(ewr, consrat, g, d, inst)
+
+# HAC(P,7)
+set hac_kernel parzen
+I_gmm(ewr, consrat, g, d, inst)
+
+# HAC(Q,7)
+set hac_kernel qs
+set qs_bandwidth 7
+I_gmm(ewr, consrat, g, d, inst)
+
+# Lower panel
+
+matrix Z = { inst }
+
+# HAC(B,7)
+set hac_kernel bartlett
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+# HAC(P,7)
+set hac_kernel parzen
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+# HAC(Q,7)
+set hac_kernel qs
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+
+
+
+
+
+

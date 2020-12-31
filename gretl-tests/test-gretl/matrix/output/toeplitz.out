@@ -1,0 +1,46 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run toeplitz.inp
+ /home/cottrell/stats/test-gretl/matrix/toeplitz.inp
+? function matrix toepmake(matrix c, matrix r)
+? function matrix byhand(matrix c, matrix r, matrix y)
+? nulldata 3
+periodicity: 1, maxobs: 3
+observations range: 1 to 3
+? set seed 87665435
+Pseudo-random number generator seeded with 87665435
+By hand: 0.022679
+Through function: 0.0043256
+     0.53908      0.53908   1.9651e-14 
+   -0.079950    -0.079950   2.3176e-14 
+    -0.24675     -0.24675   9.9643e-15 
+    0.069261     0.069261  -3.2196e-15 
+     0.31708      0.31708   1.4433e-15 
+    -0.34503     -0.34503   9.7700e-15 
+    -0.42401     -0.42401   5.8287e-15 
+     0.13718      0.13718   7.1609e-15 
+     0.23036      0.23036   1.9540e-14 
+   -0.036653    -0.036653   9.5618e-15 
+     0.23042      0.23042   3.4417e-15 
+    -0.55937     -0.55937   1.2990e-14 
+    -0.20392     -0.20392   1.0186e-14 
+     0.24466      0.24466  -7.7716e-16 
+   -0.044383    -0.044383   1.8138e-14 
+     0.28303      0.28303   2.3870e-14 
+    -0.12509     -0.12509   1.6070e-14 
+    -0.39430     -0.39430   1.3156e-14 
+   -0.024000    -0.024000  -2.2825e-14 
+   0.0061095    0.0061095  -2.1791e-14 
+    -0.67790     -0.67790  -2.2315e-14 
+    -0.10380     -0.10380  -2.1275e-14 
+    -0.26584     -0.26584  -1.4100e-14 
+     0.15005      0.15005  -6.4393e-15 
+    -0.22896     -0.22896  -2.3259e-14 
+     0.11784      0.11784  -2.8574e-14 
+     0.12730      0.12730  -2.5563e-14 
+    -0.48889     -0.48889  -2.3981e-14 
+    -0.14759     -0.14759  -2.0262e-14 
+    -0.15413     -0.15413  -1.4044e-14 
+

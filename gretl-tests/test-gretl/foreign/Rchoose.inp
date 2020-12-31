@@ -1,0 +1,2 @@
+set R_functions on
+scalar c = R.choose(10,4)

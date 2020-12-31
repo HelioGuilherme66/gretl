@@ -1,0 +1,7 @@
+nulldata 25
+setobs 5 1:1 --stacked-time-series
+append ambiguous.txt
+print -o
+delete x
+append ambiguous.txt -t
+print -o

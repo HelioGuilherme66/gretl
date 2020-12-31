@@ -1,0 +1,7 @@
+set seed 88775643
+matrix x = mnormal(8,2)
+matrix xx = x'x
+matrix a = invpd(xx)
+d = det(xx)
+matrix b = invpd(x'x)
+d = det(x'x)

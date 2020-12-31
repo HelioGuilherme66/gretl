@@ -1,0 +1,59 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run pqgap1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/pqgap1.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + .6 * eps(-1) - .3 * eps(-4)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-2) - 0.1 * y(-3) + u
+Replaced series y (ID 4)
+? arma {2 3} {1 4} ; y
+
+Function evaluations: 53
+Evaluations of gradient: 19
+
+Model 1: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0604196    0.122353      0.4938   0.6214  
+  phi_2       0.669515     0.0440064    15.21     2.85e-52 ***
+  phi_3      -0.104297     0.0373484    -2.793    0.0052   ***
+  theta_1     0.582911     0.0380798    15.31     6.80e-53 ***
+  theta_4    -0.286742     0.0392170    -7.312    2.64e-13 ***
+
+Mean dependent var   0.066849   S.D. dependent var   1.453040
+Mean of innovations  0.000057   S.D. of innovations  1.043098
+Log-likelihood      -912.2434   Akaike criterion     1836.487
+Schwarz criterion    1863.104   Hannan-Quinn         1846.830
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -1.1272     0.0000     1.1272     0.5000
+    Root  2           1.3793     0.0000     1.3793     0.0000
+    Root  3           6.1673     0.0000     6.1673     0.0000
+  MA
+    Root  1          -1.0702     0.0000     1.0702     0.5000
+    Root  2           1.6128     0.0000     1.6128     0.0000
+    Root  3          -0.2713    -1.3953     1.4214    -0.2806
+    Root  4          -0.2713     1.3953     1.4214     0.2806
+  -----------------------------------------------------------
+
+Done

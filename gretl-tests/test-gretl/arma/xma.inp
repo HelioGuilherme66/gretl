@@ -1,0 +1,13 @@
+nulldata 500
+setobs 12 1950:01
+set seed 371897
+genr eps = normal()
+genr x = uniform()
+genr u = eps + .4 * eps(-1)
+genr y = 10.0 + 3.0*x + u
+arma 0 1 ; y 0 x --vcv
+arma 0 1 ; y 0 x --x-12-arima
+
+
+
+

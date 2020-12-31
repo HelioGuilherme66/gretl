@@ -1,0 +1,90 @@
+*
+* UForeErrors computes error statistics on a series of
+* in-sample one-step forecasts.
+*
+* Syntax:
+*  @UForeErrors( options )  actual  forecast   start   end
+*
+* Parameters:
+*   actual     series of actual values
+*   forecast   series of forecasts
+*   start end  range of forecasts to analyze (by default, the
+*       range of the series forecast)
+*
+* Options:
+*   [print]/noprint
+*
+* Variables Defined:
+*   %%FERRMEAN   mean forecast error
+
+*   %%FERRMAE    mean absolute error
+*   %%FERRMSE    root mean square error
+*   %%FERRMPE    mean percentage error
+*   %%FERRMAPE   mean absolute percentage error
+*   %%FERRMSPE   root mean square percentage error
+*
+*  The last three are defined only if the actual series is
+*  positive throughout the range.
+*
+* Revision Schedule
+*  02/2003 Written by Estima
+*
+procedure UForeErrors actual forecast start end
+type series actual forecast
+type integer start end
+*
+option switch print 1
+*
+local integer startl endl nobs i
+local vector ferrors factual
+local string picture
+*
+if .not.%defined(actual).or..not.%defined(forecast) {
+   disp 'Syntax: @UForeErrors actual forecast start end'
+   return
+}
+*
+* If a range isn't provided, take the intersection between
+* the ranges of the actual and forecast series
+*
+inquire(reglist) startl>>start endl>>end
+# actual forecast
+*
+compute nobs=endl-startl+1
+dim ferrors(nobs) factual(nobs)
+ewise ferrors(i)=actual(startl+i-1)-forecast(startl+i-1)
+ewise factual(i)=actual(startl+i-1)
+*
+if print {
+   display
+   display 'Forecast Analysis for' %l(actual)
+   display 'From' %datelabel(startl) 'to' %datelabel(endl)
+}
+compute %%ferrmean=%avg(ferrors)
+compute %%ferrmae =%avg(%abs(ferrors))
+compute %%ferrmse =sqrt(%dot(ferrors,ferrors)/nobs)
+if print {
+   compute picture=%bestrep(||%%ferrmean,%%ferrmae,%%ferrmse||,10)
+   display 'Mean Error' @28 &picture %%ferrmean
+   display 'Mean Absolute Error' @28 &picture %%ferrmae
+   display 'Root Mean Square Error' @28 &picture %%ferrmse
+}
+if %minvalue(factual)>0.0 {
+   ewise ferrors(i)=ferrors(i)/factual(i)
+   compute %%ferrmpe=%avg(ferrors)
+   compute %%ferrmape=%avg(%abs(ferrors))
+   compute %%ferrmspe=sqrt(%dot(ferrors,ferrors)/nobs)
+   if print {
+      compute picture=%bestrep(||%%ferrmpe,%%ferrmape,%%ferrmspe||,10)
+      display 'Mean Pct Error' @28 &picture %%ferrmpe
+      display 'Mean Abs Pct Error' @28 &picture %%ferrmape
+      display 'Root Mean Square Pct Error' @28 &picture %%ferrmspe
+   }
+}
+else {
+   compute %%ferrmpe=%%ferrmape=%%ferrmspe=%na
+}
+if print
+   display
+end UForeErrors
+

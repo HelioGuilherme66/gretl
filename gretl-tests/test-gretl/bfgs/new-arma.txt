@@ -1,0 +1,9 @@
+arma + sarma - (x12a + conditional ML)
+
+                     output newout newer
+BFGS gradient evals:   1914   1797  1821
+BFGS function evals:   6111   6516  5505
+
+old: 11.16, 11.18
+new: 11.37, 11.45
+newer: 12.09, 11.76, 11.71

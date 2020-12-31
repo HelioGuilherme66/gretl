@@ -1,0 +1,18 @@
+/*
+ ARIMA(0,0, 1,1, 1,1) - multiplicative seasonal MA model  p.319
+       Box-Jenkins   TSP
+ theta    .396     .401823
+ (s.e.)  (.08)    (.089182)
+ THETA    .614     .556937
+ (s.e.)  (.07)    (.073493)
+ LogL		   244.697
+*/
+
+open bjg.gdt
+genr lg = log(g)
+arima 0 1 1 ; 0 1 1 ; lg  --nc
+# start at values obtained via TSP
+matrix start = { -.401823, -.556937 }
+set initvals start
+arima 0 1 1 ; 0 1 1 ; lg --nc --verbose
+

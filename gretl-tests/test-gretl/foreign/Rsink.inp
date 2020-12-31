@@ -1,0 +1,12 @@
+open data4-1
+foreign language=R --send-data
+  y <- gretldata[,"price"]
+  x <- gretldata[,"sqft"]
+  m <- lm(y~x + 1)
+  summary(m)
+  Rcoeff <- as.matrix(coefficients(m))
+  gretl.export(Rcoeff)
+end foreign
+
+matrix b = mread("@dotdir/Rcoeff.mat")
+b

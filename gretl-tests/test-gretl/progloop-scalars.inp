@@ -1,0 +1,18 @@
+nulldata 100
+set seed 89760143
+
+loop 10 --progressive --quiet
+  series x = normal()
+  scalar acbedacipously = mean(x)
+  scalar bluggerwork = sd(x)
+  print acbedacipously bluggerwork
+endloop
+
+loop 10 --progressive --quiet
+  series x = normal()
+  scalar a = mean(x)
+  scalar b = sd(x)
+  print a b
+endloop
+
+

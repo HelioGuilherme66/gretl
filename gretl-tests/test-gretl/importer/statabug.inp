@@ -1,0 +1,2 @@
+open boo_old.dta
+print -o

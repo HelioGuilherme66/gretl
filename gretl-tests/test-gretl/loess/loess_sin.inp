@@ -1,0 +1,9 @@
+nulldata 120
+series x = index
+scalar n = $nobs
+series y = sin(2*pi*x/n) + uniform(-1, 1)
+# store sin_noise.csv x y 
+# quit
+series yh = loess(y, x, 2, 0.75, 0)
+g1 <- gnuplot y yh x --with-lines=yh
+

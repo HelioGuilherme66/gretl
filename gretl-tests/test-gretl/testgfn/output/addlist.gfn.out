@@ -1,0 +1,82 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:36
+? run addlist.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/addlist.gfn.inp
+? include ./addlist.gfn
+ /home/cottrell/stats/test-gretl/testgfn/addlist.gfn
+addlist 1.2, 2010-12-17 (Allin Cottrell)
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? list l1 = const CATHOL INCOME
+Generated list l1
+? list l2 = PUPIL WHITE ADMEXP REV MEMNEA COLLEGE
+Generated list l2
+# use AIC
+? list final = addlist(ENROLL, l1, l2, 1)
+Baseline        AIC = -173.793
+Adding WHITE    AIC = -181.496
+Adding COLLEGE  AIC = -184.595
+
+Minimized AIC = -184.595, with this model:
+
+Model 17: OLS, using observations 1-51
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.168835     0.0576732     2.927    0.0053   ***
+  CATHOL      0.222060     0.0490123     4.531    4.16e-05 ***
+  INCOME      0.00680582   0.00359875    1.891    0.0649   *
+  WHITE      -0.151964     0.0421285    -3.607    0.0008   ***
+  COLLEGE    -0.500737     0.227681     -2.199    0.0329   **
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.065767   S.E. of regression   0.037812
+R-squared            0.517553   Adjusted R-squared   0.475601
+F(4, 46)             12.33680   P-value(F)           6.76e-07
+Log-likelihood       97.29725   Akaike criterion    -184.5945
+Schwarz criterion   -174.9354   Hannan-Quinn        -180.9035
+
+Generated list final
+? list final print
+const CATHOL INCOME WHITE COLLEGE 
+# use BIC
+? final = addlist(ENROLL, l1, l2, 2)
+Baseline        BIC = -167.997
+Adding WHITE    BIC = -173.768
+Adding COLLEGE  BIC = -174.935
+
+Minimized BIC = -174.935, with this model:
+
+Model 17: OLS, using observations 1-51
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.168835     0.0576732     2.927    0.0053   ***
+  CATHOL      0.222060     0.0490123     4.531    4.16e-05 ***
+  INCOME      0.00680582   0.00359875    1.891    0.0649   *
+  WHITE      -0.151964     0.0421285    -3.607    0.0008   ***
+  COLLEGE    -0.500737     0.227681     -2.199    0.0329   **
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.065767   S.E. of regression   0.037812
+R-squared            0.517553   Adjusted R-squared   0.475601
+F(4, 46)             12.33680   P-value(F)           6.76e-07
+Log-likelihood       97.29725   Akaike criterion    -184.5945
+Schwarz criterion   -174.9354   Hannan-Quinn        -180.9035
+
+Replaced list final
+? list final print
+const CATHOL INCOME WHITE COLLEGE 
+Done

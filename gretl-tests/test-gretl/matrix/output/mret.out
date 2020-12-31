@@ -1,0 +1,18 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mret.inp
+ /home/cottrell/stats/test-gretl/matrix/mret.inp
+? function matrix foomat (scalar m)
+? matrix B = foomat(4)
+Generated matrix B
+? B
+B (4 x 4)
+
+  1   1   1   1 
+  1   1   1   1 
+  1   1   1   1 
+  1   1   1   1 
+
+Done

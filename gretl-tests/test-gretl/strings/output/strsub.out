@@ -1,0 +1,12 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strsub.inp
+ /home/cottrell/stats/test-gretl/strings/strsub.inp
+? string S = "wally dug, smelly dug, dug up"
+Generated string S
+? S = strsub(S, "dug", "fruddle")
+Replaced string S
+S = 'wally fruddle, smelly fruddle, fruddle up'
+Done

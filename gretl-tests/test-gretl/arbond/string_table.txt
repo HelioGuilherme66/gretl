@@ -1,0 +1,9 @@
+provagretl.dta
+
+One or more non-numeric variables were found.
+These variables have been given numeric codes as follows.
+
+String code table for variable 5 (country):
+  1 = 'BRA'
+  2 = 'URY'
+  3 = 'ARG'

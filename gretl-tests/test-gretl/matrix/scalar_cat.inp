@@ -1,0 +1,23 @@
+set seed 34456
+
+X = mnormal(4,3)
+Z = muniform(4,2)
+a = 100
+
+Y = a ~ X
+print Y
+
+Y = X ~ a
+print Y
+
+Y = a | X
+print Y
+
+Y = X | a
+print Y
+
+Y = 0 ~ (0 | X | 0) ~ 0
+print Y
+
+Y = Z ~ X | 0
+print Y

@@ -1,0 +1,168 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run jchap2.inp
+ /home/cottrell/stats/test-gretl/vecm/jchap2.inp
+# Replication of the results on Danish macro data in
+# S. Johansen, "Likelihood-Based Inference in
+# Cointegrated Vector Auto-Regressive Models" (Oxford,
+# 1995), section 2.4.1
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+# estimate the model at full rank
+? vecm 2 4 LRM LRY IBO IDE --seasonals
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 4
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors)
+
+LRM       1.0000       0.0000       0.0000       0.0000 
+LRY       0.0000       1.0000       0.0000       0.0000 
+IBO       0.0000       0.0000       1.0000       0.0000 
+IDE       0.0000       0.0000       0.0000       1.0000 
+
+alpha (adjustment vectors)
+
+LRM     -0.18073      0.10977      -1.0417      0.63812 
+LRY      0.18582     -0.30905      0.65764     -0.64768 
+IBO     0.014488    -0.017710     0.081582     -0.16735 
+IDE   -0.0036773     0.020138      0.14312     -0.31424 
+
+Log-likelihood = 678.64385
+Determinant of covariance matrix = 8.8749845e-17
+AIC = -23.7979
+BIC = -22.0135
+HQC = -23.1117
+Portmanteau test: LB(13) = 197.625, df = 176 [0.1264]
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.58293      0.547678      2.890    0.0061   ***
+  d_LRM_1     0.194958     0.176615      1.104    0.2761  
+  d_LRY_1    -0.0960157    0.157827     -0.6084   0.5463  
+  d_IBO_1    -0.138489     0.436917     -0.3170   0.7529  
+  d_IDE_1    -0.461713     0.576711     -0.8006   0.4280  
+  S1         -0.0559173    0.0105633    -5.294    4.34e-06 ***
+  S2         -0.0164579    0.00942639   -1.746    0.0883   *
+  S3         -0.0394795    0.00896104   -4.406    7.40e-05 ***
+  EC1        -0.180730     0.0887567    -2.036    0.0482   **
+  EC2         0.109768     0.120060      0.9143   0.3659  
+  EC3        -1.04166      0.353320     -2.948    0.0053   ***
+  EC4         0.638122     0.434247      1.469    0.1493  
+
+Mean dependent var   0.007757   S.D. dependent var   0.033086
+Sum squared resid    0.019213   S.E. of regression   0.021648
+R-squared            0.662467   Adjusted R-squared   0.571909
+rho                 -0.044855   Durbin-Watson        2.071973
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.389553     0.561260     -0.6941   0.4916 
+  d_LRM_1     0.504019     0.180994      2.785    0.0081  ***
+  d_LRY_1    -0.0445609    0.161741     -0.2755   0.7843 
+  d_IBO_1    -0.377122     0.447752     -0.8423   0.4045 
+  d_IDE_1     0.0602769    0.591012      0.1020   0.9193 
+  S1         -0.0251214    0.0108253    -2.321    0.0254  **
+  S2          0.00733870   0.00966016    0.7597   0.4518 
+  S3         -0.0113687    0.00918326   -1.238    0.2228 
+  EC1         0.185819     0.0909578     2.043    0.0475  **
+  EC2        -0.309055     0.123038     -2.512    0.0160  **
+  EC3         0.657641     0.362082      1.816    0.0766  *
+  EC4        -0.647679     0.445015     -1.455    0.1532 
+
+Mean dependent var   0.003340   S.D. dependent var   0.025239
+Sum squared resid    0.020178   S.E. of regression   0.022184
+R-squared            0.390850   Adjusted R-squared   0.227419
+rho                  0.004637   Durbin-Watson        1.962760
+
+Equation 3: d_IBO
+
+             coefficient    std. error   t-ratio    p-value
+  ---------------------------------------------------------
+  const      -0.0641545     0.217896     -0.2944    0.7699 
+  d_LRM_1     0.0509340     0.0702669     0.7249    0.4727 
+  d_LRY_1     0.135637      0.0627923     2.160     0.0367  **
+  d_IBO_1     0.300986      0.173829      1.732     0.0909  *
+  d_IDE_1     0.253248      0.229447      1.104     0.2761 
+  S1         -6.88958e-05   0.00420266   -0.01639   0.9870 
+  S2          0.00739947    0.00375033    1.973     0.0553  *
+  S3          0.00482686    0.00356519    1.354     0.1832 
+  EC1         0.0144878     0.0353122     0.4103    0.6837 
+  EC2        -0.0177100     0.0477665    -0.3708    0.7127 
+  EC3         0.0815823     0.140570      0.5804    0.5648 
+  EC4        -0.167355      0.172767     -0.9687    0.3384 
+
+Mean dependent var  -0.001114   S.D. dependent var   0.009802
+Sum squared resid    0.003041   S.E. of regression   0.008613
+R-squared            0.391319   Adjusted R-squared   0.228014
+rho                  0.164639   Durbin-Watson        1.640559
+
+Equation 4: d_IDE
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0712178    0.138187     -0.5154   0.6091 
+  d_LRM_1     0.0686780    0.0445625     1.541    0.1310 
+  d_LRY_1    -0.0217442    0.0398222    -0.5460   0.5880 
+  d_IBO_1     0.227189     0.110241      2.061    0.0457  **
+  d_IDE_1     0.264860     0.145513      1.820    0.0760  *
+  S1         -0.00418900   0.00266529   -1.572    0.1237 
+  S2         -0.00108693   0.00237842   -0.4570   0.6501 
+  S3         -0.00273040   0.00226101   -1.208    0.2341 
+  EC1        -0.00367726   0.0223947    -0.1642   0.8704 
+  EC2         0.0201380    0.0302930     0.6648   0.5099 
+  EC3         0.143119     0.0891481     1.605    0.1161 
+  EC4        -0.314235     0.109567     -2.868    0.0065  ***
+
+Mean dependent var  -0.000384   S.D. dependent var   0.006897
+Sum squared resid    0.001223   S.E. of regression   0.005462
+R-squared            0.505434   Adjusted R-squared   0.372746
+rho                 -0.039959   Durbin-Watson        2.069829
+
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00036251   0.00019658  -6.4132e-05  -2.8128e-05 
+LRY    0.00019658   0.00038072  -1.2267e-05  -2.2303e-05 
+IBO   -6.4132e-05  -1.2267e-05   5.7381e-05   9.1097e-06 
+IDE   -2.8128e-05  -2.2303e-05   9.1097e-06   2.3079e-05 
+
+determinant = 8.87498e-17
+
+# correlations and standard deviations of residuals
+? scalar T = $T
+Generated scalar T = 53
+? matrix E = $uhat
+Generated matrix E
+? matrix mc = mcorr(E)
+Generated matrix mc
+? matrix msd = 100 * sdc(E)
+Generated matrix msd
+? print mc msd
+mc (4 x 4)
+
+      1.0000      0.52915     -0.44466     -0.30752 
+     0.52915       1.0000    -0.082996     -0.23794 
+    -0.44466    -0.082996       1.0000      0.25033 
+    -0.30752     -0.23794      0.25033       1.0000 
+
+msd (1 x 4)
+
+      1.9040       1.9512      0.75751      0.48040 
+
+Done

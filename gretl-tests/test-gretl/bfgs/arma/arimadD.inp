@@ -1,0 +1,13 @@
+nulldata 500
+setobs 4 1900:1
+set seed 456722
+genr u = normal()
+genr y = u + .5*u(-1)
+genr y0 = y
+genr y = y + y(-4)
+genr y = y + y(-1)
+genr y = y + y(-1)
+genr Dy = sdiff(diff(diff(y)))
+arma 0 0 1 ; Dy 
+arma 0 2 1 ; 0 1 0 ; y
+

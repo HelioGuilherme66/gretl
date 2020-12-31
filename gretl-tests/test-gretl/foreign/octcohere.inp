@@ -1,0 +1,18 @@
+open data9-7
+matrix xy = { PRIME, UNEMP }
+mwrite(xy, "@dotdir/xy.mat")
+
+foreign language=octave
+ pkg load signal
+ xy = gretl_loadmat("xy.mat");
+ x = xy(:,1);
+ y = xy(:,2);
+ # the last param is the Bartlett window size
+ h = coher(x, y, 8);
+ gretl_export(h, "h.mat");
+end foreign
+
+h = mread("@dotdir/h.mat")
+colnames(h, "coherence")
+print h
+

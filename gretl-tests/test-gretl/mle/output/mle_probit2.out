@@ -1,0 +1,86 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run mle_probit2.inp
+ /home/cottrell/stats/test-gretl/mle/mle_probit2.inp
+? open greene19_1
+
+Read datafile /opt/esl/share/gretl/data/greene/greene19_1.gdt
+periodicity: 1, maxobs: 32
+observations range: 1 to 32
+
+Listing 5 variables:
+  0) const    1) GPA      2) TUCE     3) PSI      4) GRADE  
+
+? scalar b0 = 0
+Generated scalar b0 = 0
+? scalar b1 = 0
+Generated scalar b1 = 0
+? scalar b2 = 0
+Generated scalar b2 = 0
+? scalar b3 = 0
+Generated scalar b3 = 0
+? mle logl = GRADE*ln(cnorm(Xb)) + (1-GRADE)*ln(1-cnorm(Xb))
+? series Xb = b0+b1*GPA+b2*TUCE+b3*PSI
+? series aux1 = dnorm(Xb)*(GRADE/cnorm(Xb) - (1-GRADE)/(1-cnorm(Xb)))
+? deriv b0 = 1 * aux1
+? deriv b1 = GPA * aux1
+? deriv b2 = TUCE * aux1
+? deriv b3 = PSI * aux1
+? end mle --robust
+Using analytical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 18
+
+Model 1: ML, using observations 1-32
+logl = GRADE*ln(cnorm(Xb)) + (1-GRADE)*ln(1-cnorm(Xb))
+QML standard errors
+
+              estimate    std. error      z      p-value
+  ------------------------------------------------------
+  b0         -7.45232     2.54427      -2.929    0.0034  ***
+  b1          1.62581     0.651512      2.495    0.0126  **
+  b2          0.0517289   0.0691328     0.7483   0.4543 
+  b3          1.42633     0.532765      2.677    0.0074  ***
+
+Log-likelihood      -12.81880   Akaike criterion     33.63761
+Schwarz criterion    39.50055   Hannan-Quinn         35.58101
+
+? probit GRADE const GPA TUCE PSI --robust
+
+Model 2: Probit, using observations 1-32
+Dependent variable: GRADE
+QML standard errors
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -7.45232      2.54427      -2.929             
+  GPA         1.62581      0.651510      2.495    0.533347 
+  TUCE        0.0517289    0.0691327     0.7483   0.0169697
+  PSI         1.42633      0.532765      2.677    0.464426 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.377478   Adjusted R-squared   0.183225
+Log-likelihood      -12.81880   Akaike criterion     33.63761
+Schwarz criterion    39.50055   Hannan-Quinn         35.58101
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.328
+Likelihood ratio test: Chi-square(3) = 15.5459 [0.0014]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.61059
+  with p-value = 0.164426
+
+Done

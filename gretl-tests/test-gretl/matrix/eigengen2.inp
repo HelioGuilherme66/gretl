@@ -1,0 +1,10 @@
+set seed 345678
+matrix M = mnormal(5,5)
+print M
+matrix V = {}
+evals = eigengen(M, &V)
+matrix mod = sqrt(evals[,1].^2 + evals[,2].^2)
+evals ~= mod
+colnames(evals, "real imag mod")
+print evals
+print V

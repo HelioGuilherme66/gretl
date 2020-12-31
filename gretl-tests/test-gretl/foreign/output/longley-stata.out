@@ -1,0 +1,91 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run longley-stata.inp
+ /home/cottrell/stats/test-gretl/foreign/longley-stata.inp
+? function matrix stata_reorder (matrix m)
+? open longley.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/longley.gdt
+? set messages off
+
+OLS, using observations 1947-1962 (T = 16)
+Dependent variable: employ
+
+              coefficient       std. error     t-ratio   p-value
+  --------------------------------------------------------------
+  const        -3.48226e+06   890420           -3.911    0.0036  ***
+  prdefl       15.0619            84.9149       0.1774   0.8631 
+  gnp          -0.0358192          0.0334910   -1.070    0.3127 
+  unemp        -2.02023            0.488400    -4.136    0.0025  ***
+  armfrc       -1.03323            0.214274    -4.822    0.0009  ***
+  pop          -0.0511041          0.226073    -0.2261   0.8262 
+  year       1829.15             455.478        4.016    0.0030  ***
+
+Warning: data matrix close to singularity!
+
+SSR = 836424, R-squared = 0.995479
+
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(8 vars, 16 obs)
+
+. regress employ prdefl gnp unemp armfrc pop year
+
+      Source |       SS       df       MS              Number of obs =      16
+-------------+------------------------------           F(  6,     9) =  330.29
+       Model |   184172402     6  30695400.3           Prob > F      =  0.0000
+    Residual |  836424.129     9  92936.0144           R-squared     =  0.9955
+-------------+------------------------------           Adj R-squared =  0.9925
+       Total |   185008826    15  12333921.7           Root MSE      =  304.85
+
+------------------------------------------------------------------------------
+      employ |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      prdefl |   15.06167   84.91486     0.18   0.863    -177.0291    207.1524
+         gnp |  -.0358191    .033491    -1.07   0.313     -.111581    .0399428
+       unemp |  -2.020229   .4883995    -4.14   0.003    -3.125065   -.9153928
+      armfrc |  -1.033227   .2142741    -4.82   0.001    -1.517948   -.5485049
+         pop |  -.0511045   .2260731    -0.23   0.826    -.5625173    .4603083
+        year |   1829.151   455.4785     4.02   0.003     798.7873    2859.515
+       _cons |   -3482258   890420.3    -3.91   0.004     -5496529    -1467987
+------------------------------------------------------------------------------
+
+. matrix b = e(b)
+
+. matrix vcv = e(V)
+
+. gretl_export b "b.mat"
+
+. gretl_export vcv "vcv.mat"
+
+. 
+end of do-file
+
+Comparison with NIST certified values
+
+Log-relative error (= correct digits): gretl
+
+     coeff    stderr
+    12.228    11.956
+    10.920    12.004
+    11.797    11.940
+    12.528    11.899
+    13.169    11.912
+    11.770    11.907
+    12.235    11.958
+
+Log-relative error (= correct digits): stata
+
+     coeff    stderr
+     6.839     7.095
+     4.873     6.127
+     5.819     6.243
+     6.470     6.365
+     6.742     6.972
+     5.139     6.248
+     6.892     7.184
+

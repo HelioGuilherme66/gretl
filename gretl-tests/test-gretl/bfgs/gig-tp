@@ -1,0 +1,19 @@
+gig
+
+                     output newout
+BFGS gradient evals:     62     63
+BFGS function evals:    291    317
+
+old: real 65.17, 64.91
+new: real 72.45, 72.12
+newer: 68.50
+
+new seems to fail test3.inp ("stopped after 500 iterations" on stderr,
+ and the results do not agree with native garch)
+
+newer: test3 now OK, but example4:
+ first model 
+   Hessian non-negative definite? (err = 44); dropping back to OPG
+ Model: EGARCH(1,1) [Nelson] (Skewed GED)
+   ESTIMATION FAILED: Matrix is not positive definite
+

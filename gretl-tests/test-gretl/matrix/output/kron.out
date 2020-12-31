@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run kron.inp
+ /home/cottrell/stats/test-gretl/matrix/kron.inp
+? set seed 3335
+Pseudo-random number generator seeded with 3335
+? matrix M = { 1,2,3 ; 4,5,6; 7,8,9 }
+Generated matrix M
+? scalar n1 = onenorm(M)
+Generated scalar n1 = 18
+? scalar nf = infnorm(M)
+Generated scalar nf = 24
+? A = mnormal(2,2)
+Generated matrix A
+? B = I(2)
+Generated matrix B
+? C = B ** A
+Generated matrix C
+? C
+C (4 x 4)
+
+    -0.75272     -0.65971       0.0000       0.0000 
+      1.1959     -0.56853       0.0000       0.0000 
+      0.0000       0.0000     -0.75272     -0.65971 
+      0.0000       0.0000       1.1959     -0.56853 
+
+? C = A ** B
+Replaced matrix C
+? C
+C (4 x 4)
+
+    -0.75272       0.0000     -0.65971       0.0000 
+      0.0000     -0.75272       0.0000     -0.65971 
+      1.1959       0.0000     -0.56853       0.0000 
+      0.0000       1.1959       0.0000     -0.56853 
+
+Done

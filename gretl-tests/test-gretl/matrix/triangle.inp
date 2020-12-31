@@ -1,0 +1,5 @@
+set seed 67564322
+matrix M = mnormal(4,4)
+matrix U = upper(M)
+matrix L = lower(M)
+print M U L

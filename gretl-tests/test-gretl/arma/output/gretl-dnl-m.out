@@ -1,0 +1,88 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run gretl-dnl-m.inp
+ /home/cottrell/stats/test-gretl/arma/gretl-dnl-m.inp
+? open gretl-dnl-m.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arma/gretl-dnl-m.gdt
+periodicity: 12, maxobs: 70
+observations range: 2002:03 to 2007:12
+
+Listing 3 variables:
+  0) const    1) mdnl     2) days   
+
+? genr y = log(mdnl)
+Generated series y (ID 3)
+? genr ld = log(days)
+Generated series ld (ID 4)
+? genr time
+Generated series time (ID 5)
+? matrix p = { 1,2,6 }
+Generated matrix p
+? arima p 0 ; y const time -c
+
+Model 1: ARMAX, using observations 2002:09-2007:09 (T = 61)
+Estimated using least squares (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       3.30180      0.965953      3.418    0.0006   ***
+  phi_1       0.756810     0.124310      6.088    1.14e-09 ***
+  phi_2      -0.366814     0.129309     -2.837    0.0046   ***
+  phi_6       0.0683608    0.104199      0.6561   0.5118  
+  time        0.0216484    0.00741663    2.919    0.0035   ***
+
+Mean dependent var   7.541673   S.D. dependent var   0.840732
+Mean of innovations  0.000000   S.D. of innovations  0.356478
+Log-likelihood      -21.02631   Akaike criterion     52.05263
+Schwarz criterion    62.60700   Hannan-Quinn         56.18898
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4661     0.0000     1.4661     0.0000
+    Root  2           0.7685    -1.0351     1.2892    -0.1484
+    Root  3           0.7685     1.0351     1.2892     0.1484
+    Root  4          -1.9617     0.0000     1.9617     0.5000
+    Root  5          -0.5207    -1.6701     1.7494    -0.2981
+    Root  6          -0.5207     1.6701     1.7494     0.2981
+  -----------------------------------------------------------
+
+? arima p 0 ; y const time
+
+Function evaluations: 43
+Evaluations of gradient: 10
+
+Model 2: ARMAX, using observations 2002:03-2007:09 (T = 67)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       6.07140      0.149429     40.63     0.0000   ***
+  phi_1       0.750173     0.112669      6.658    2.77e-11 ***
+  phi_2      -0.381898     0.118329     -3.227    0.0012   ***
+  phi_6       0.0719275    0.100815      0.7135   0.4756  
+  time        0.0397890    0.00382926   10.39     2.73e-25 ***
+
+Mean dependent var   7.428285   S.D. dependent var   0.890326
+Mean of innovations  0.004180   S.D. of innovations  0.344276
+Log-likelihood      -23.99679   Akaike criterion     59.99359
+Schwarz criterion    73.22174   Hannan-Quinn         65.22800
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4687     0.0000     1.4687     0.0000
+    Root  2           0.7501    -1.0296     1.2739    -0.1498
+    Root  3           0.7501     1.0296     1.2739     0.1498
+    Root  4          -1.9460     0.0000     1.9460     0.5000
+    Root  5          -0.5114    -1.6541     1.7313    -0.2977
+    Root  6          -0.5114     1.6541     1.7313     0.2977
+  -----------------------------------------------------------
+
+Done

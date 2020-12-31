@@ -1,0 +1,57 @@
+GNU Octave, version 3.0.0
+Copyright (C) 2007 John W. Eaton and others.
+This is free software; see the source code for copying conditions.
+There is ABSOLUTELY NO WARRANTY; not even for MERCHANTIBILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  For details, type `warranty'.
+
+Octave was configured for "i686-pc-linux-gnu".
+
+Additional information about Octave is available at http://www.octave.org.
+
+Please contribute if you find this software useful.
+For more information, visit http://www.octave.org/help-wanted.html
+
+Report bugs to <bug@octave.org> (but first, please read
+http://www.octave.org/bugs.html to learn how to write a helpful report).
+
+For information about changes from previous versions, type `news'.
+
+A =
+
+   1   2   3
+   4   7   2
+   1   6   3
+   2   0   4
+
+B =
+
+  -0.0853008   0.2711348  -0.2878903   0.1443260
+   0.0038081   0.0236101   0.1378522  -0.1180503
+   0.1245240  -0.1279513   0.1077685   0.1397563
+
+A =
+
+   1   4   1   2
+   2   7   6   0
+   3   2   3   4
+
+B =
+
+  -0.0853008   0.0038081   0.1245240
+   0.2711348   0.0236101  -0.1279513
+  -0.2878903   0.1378522   0.1077685
+   0.1443260  -0.1180503   0.1397563
+
+A =
+
+   1   2   3
+   1   2   3
+   1   2   3
+   1   2   3
+
+B =
+
+   0.017857   0.017857   0.017857   0.017857
+   0.035714   0.035714   0.035714   0.035714
+   0.053571   0.053571   0.053571   0.053571
+

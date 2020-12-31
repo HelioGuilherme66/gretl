@@ -1,0 +1,129 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run patents.inp
+ /home/cottrell/stats/test-gretl/count/patents.inp
+? open patents.gdt
+
+Read datafile /opt/esl/share/gretl/data/verbeek/patents.gdt
+periodicity: 1, maxobs: 181
+observations range: 1 to 181
+
+Listing 12 variables:
+  0) const       1) p91         2) p90         3) lr91        4) lr90      
+  5) aerosp      6) chemist     7) computer    8) machines    9) vehicles  
+ 10) japan      11) us        
+
+? list Industries = aerosp chemist computer machines vehicles
+Generated list Industries
+? list Countries = japan us
+Generated list Countries
+? poisson p91 0 lr91 Industries Countries
+
+Convergence achieved after 8 iterations
+
+Model 1: Poisson, using observations 1-181
+Dependent variable: p91
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const       -0.873731    0.0658703    -13.26    3.72e-40  ***
+  lr91         0.854525    0.00838674   101.9     0.0000    ***
+  aerosp      -1.42185     0.0956448    -14.87    5.48e-50  ***
+  chemist      0.636267    0.0255274     24.92    4.00e-137 ***
+  computer     0.595343    0.0233387     25.51    1.57e-143 ***
+  machines     0.688953    0.0383488     17.97    3.63e-72  ***
+  vehicles    -1.52965     0.0418650    -36.54    2.79e-292 ***
+  japan        0.222222    0.0275020      8.080   6.46e-16  ***
+  us          -0.299507    0.0253000    -11.84    2.48e-32  ***
+
+Mean dependent var   73.58564   S.D. dependent var   150.9517
+Sum squared resid     1530014   S.E. of regression   94.31559
+McFadden R-squared   0.675242   Adjusted R-squared   0.674652
+Log-likelihood      -4950.789   Akaike criterion     9919.578
+Schwarz criterion    9948.365   Hannan-Quinn         9931.249
+
+Overdispersion test: Chi-square(1) = 18.6564 [0.0000]
+
+? poisson p91 0 lr91 Industries Countries --robust
+
+Convergence achieved after 8 iterations
+
+Model 2: Poisson, using observations 1-181
+Dependent variable: p91
+QML standard errors
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       -0.873731    0.742948     -1.176    0.2396  
+  lr91         0.854525    0.0936943     9.120    7.49e-20 ***
+  aerosp      -1.42185     0.380164     -3.740    0.0002   ***
+  chemist      0.636267    0.225357      2.823    0.0048   ***
+  computer     0.595343    0.300802      1.979    0.0478   **
+  machines     0.688953    0.414676      1.661    0.0966   *
+  vehicles    -1.52965     0.280692     -5.450    5.05e-08 ***
+  japan        0.222222    0.352838      0.6298   0.5288  
+  us          -0.299507    0.273616     -1.095    0.2737  
+
+Mean dependent var   73.58564   S.D. dependent var   150.9517
+Sum squared resid     1530014   S.E. of regression   94.31559
+McFadden R-squared   0.675242   Adjusted R-squared   0.674652
+Log-likelihood      -4950.789   Akaike criterion     9919.578
+Schwarz criterion    9948.365   Hannan-Quinn         9931.249
+
+Overdispersion test: Chi-square(1) = 18.6564 [0.0000]
+
+? negbin p91 0 lr91 Industries Countries --model1
+
+Function evaluations: 120
+Evaluations of gradient: 64
+
+Model 3: Negative Binomial 1, using observations 1-181
+Dependent variable: p91
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        0.689876     0.506964     1.361    0.1736  
+  lr91         0.578441     0.0676273    8.553    1.20e-17 ***
+  aerosp      -0.786547     0.336790    -2.335    0.0195   **
+  chemist      0.733336     0.185160     3.961    7.48e-05 ***
+  computer     0.144976     0.206316     0.7027   0.4822  
+  machines     0.155855     0.254978     0.6112   0.5410  
+  vehicles    -0.817596     0.268609    -3.044    0.0023   ***
+  japan        0.400503     0.257281     1.557    0.1195  
+  us           0.158840     0.198395     0.8006   0.4233  
+  alpha       95.2438      14.0069       6.800    1.05e-11 ***
+
+Mean dependent var   73.58564   S.D. dependent var   150.9517
+Log-likelihood      -848.1952   Akaike criterion     1716.390
+Schwarz criterion    1748.375   Hannan-Quinn         1729.358
+
+? negbin p91 0 lr91 Industries Countries
+
+Function evaluations: 25
+Evaluations of gradient: 16
+
+Model 4: Negative Binomial, using observations 1-181
+Dependent variable: p91
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.324622     0.498168     -0.6516   0.5146  
+  lr91        0.831478     0.0765948    10.86     1.88e-27 ***
+  aerosp     -1.49746      0.377230     -3.970    7.20e-05 ***
+  chemist     0.488610     0.256768      1.903    0.0571   *
+  computer   -0.173552     0.298809     -0.5808   0.5614  
+  machines    0.0592628    0.279293      0.2122   0.8320  
+  vehicles   -1.53065      0.373899     -4.094    4.24e-05 ***
+  japan       0.252223     0.426426      0.5915   0.5542  
+  us         -0.590497     0.278778     -2.118    0.0342   **
+  alpha       1.30094      0.137459      9.464    2.96e-21 ***
+
+Mean dependent var   73.58564   S.D. dependent var   150.9517
+Log-likelihood      -819.5957   Akaike criterion     1659.191
+Schwarz criterion    1691.176   Hannan-Quinn         1672.159
+
+Done

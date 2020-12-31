@@ -1,0 +1,18 @@
+function void pantest (series y, list X)
+  genr u = $unit
+  list udum = dummify(u)
+  setobs 1 1 --cross
+  list L = y X
+  smpl ok(L) --restrict
+  ols y 0 X udum
+end function
+
+open greene14_1.gdt
+C[2:01] = NA
+logs C Q PF LF
+panel l_C 0 l_Q l_PF l_LF
+list XL = l_Q l_PF l_LF
+pantest(l_C, XL)
+panel l_C 0 l_Q l_PF l_LF
+
+

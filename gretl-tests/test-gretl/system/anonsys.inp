@@ -1,0 +1,18 @@
+function void anonsys(series x, series y)
+     system
+         equation x const
+         equation y const
+     end system
+     estimate $system method=ols
+     estimate $system method=sur
+     restrict $system
+         b[1,1] - b[2,1] = 0
+     end restrict
+     estimate $system method=ols
+end function
+
+nulldata 50
+set seed 987674521
+series x = normal()
+series y = normal()
+anonsys(x, y)

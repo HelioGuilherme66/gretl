@@ -1,0 +1,4 @@
+open frain.ods
+print -o
+open reverse.ods 
+print -o

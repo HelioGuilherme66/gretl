@@ -1,0 +1,236 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps3-1.inp
+ /opt/esl/share/gretl/scripts/ps3-1.inp
+# PS3.1, for various examples in Chapter 3
+? open data3-1
+
+Read datafile /opt/esl/share/gretl/data/data3-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 3 variables:
+  0) const    1) price    2) sqft   
+
+? textplot 1 2
+
+  price
+        505  |                                               o             
+             |                                                             
+             |                                                             
+     454.15  +                                                             
+             |                                                             
+             |                                                     o       
+             |                                                            o
+             |                                                             
+      369.4  +                                    o                        
+             |                        o                                    
+             |                                                             
+             |                                                             
+             |                                                             
+     284.65  +               o     oo   oo                                 
+             |                                                             
+             |                                                             
+             |       o        o                                            
+             |     o                                                       
+      199.9  +o                                                            
+             |+---------+---------+---------+---------+---------+---------+
+              1065                        sqft                            3000
+
+
+# learn about the ols command
+? help ols
+
+ols
+
+Arguments:  depvar indepvars 
+Options:    --vcv (print covariance matrix)
+            --robust (robust standard errors)
+            --cluster=clustvar (clustered standard errors)
+            --jackknife (see below)
+            --simple-print (do not print auxiliary statistics)
+            --quiet (suppress printing of results)
+            --anova (print an ANOVA table)
+            --no-df-corr (suppress degrees of freedom correction)
+            --print-final (see below)
+Examples:   ols 1 0 2 4 6 7
+            ols y 0 x1 x2 x3 --vcv
+            ols y 0 x1 x2 x3 --quiet
+
+Computes ordinary least squares (OLS) estimates with depvar as the dependent
+variable and indepvars as the list of independent variables. Variables may
+be specified by name or number; use the number zero for a constant term.
+
+Besides coefficient estimates and standard errors, the program also prints
+p-values for t (two-tailed) and F-statistics. A p-value below 0.01 indicates
+statistical significance at the 1 percent level and is marked with ***. **
+indicates significance between 1 and 5 percent and * indicates significance
+between the 5 and 10 percent levels. Model selection statistics (the Akaike
+Information Criterion or AIC and Schwarz's Bayesian Information Criterion)
+are also printed. The formula used for the AIC is that given by Akaike
+(1974), namely minus two times the maximized log-likelihood plus two times
+the number of parameters estimated.
+
+If the option --no-df-corr is given, the usual degrees of freedom correction
+is not applied when calculating the estimated error variance (and hence also
+the standard errors of the parameter estimates).
+
+The option --print-final is applicable only in the context of a "loop". It
+arranges for the regression to be run silently on all but the final
+iteration of the loop. See chapter 12 of the Gretl User's Guide for details.
+
+Various internal variables may be retrieved following estimation. For
+example
+
+	series uh = $uhat
+
+saves the residuals under the name uh. See the "accessors" section of the
+gretl function reference for details.
+
+The specific formula ("HC" version) used for generating robust standard
+errors when the --robust option is given can be adjusted via the "set"
+command. The --jackknife option has the effect of selecting an hc_version of
+3a. The --cluster overrides the selection of HC version, and produces robust
+standard errors by grouping the observations by the distinct values of
+clustvar; see chapter 17 of the Gretl User's Guide for details.
+
+Menu path:    /Model/Ordinary Least Squares
+Other access: Beta-hat button on toolbar
+
+# estimate model; --vcv is to get covariance
+? ols 1 0 2 --vcv
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+Covariance matrix of regression coefficients:
+
+         const          sqft
+       1390.21     -0.670583  const
+                 3.50920e-04  sqft
+
+# gretl saves fitted values under the name $yhat.  Copy this to phat1
+? genr phat1 = $yhat
+Generated series phat1 (ID 3)
+# print values
+? print phat1
+
+Full data range: 1 - 14 (n = 14)
+
+200.120  226.344  232.726  271.160  274.351  295.164  302.101  311.814  
+320.833  322.637  365.094  413.102  440.852  468.602  
+
+# gretl saves residuals under the name $uhat.  Copy this to ut
+? genr ut = $uhat
+Generated series ut (ID 4)
+# another way to get fitted value is to subtract the error from the
+# actual value of the dependent variable
+? genr yh2 = price - ut
+Generated series yh2 (ID 5)
+# print values
+? print yh2
+
+Full data range: 1 - 14 (n = 14)
+
+200.120  226.344  232.726  271.160  274.351  295.164  302.101  311.814  
+320.833  322.637  365.094  413.102  440.852  468.602  
+
+# retrieve number of obsservations
+? genr n = $nobs
+Generated scalar n = 14
+# retrieve ESS - Section 3.4
+? genr ESS = $ess
+Generated scalar ESS = 18273.6
+# compute standard deviation for price
+? genr sdy = sd(price)
+Generated scalar sdy = 88.4982
+# compute TSS - Example 3.4
+? genr TSS = (n-1)*sdy*sdy
+Generated scalar TSS = 101815
+# compute RSS
+? genr RSS = TSS - ESS
+Generated scalar RSS = 83541.4
+# retrieve R-square
+? genr RSQ = $rsq
+Generated scalar RSQ = 0.820522
+# print values
+? print TSS ESS RSS RSQ
+
+            TSS =  101815.01
+
+            ESS =  18273.568
+
+            RSS =  83541.442
+
+            RSQ =  0.82052187
+# F-statistic in Example 3.6
+? genr Fc = RSS*(n-2)/ESS
+Generated scalar Fc = 54.8605
+# print F-statistic
+? print Fc
+
+             Fc =  54.860513
+# graph price and phat1 against sqft - connect x to get approximate line
+? textplot price phat1 sqft
+
+  'o' stands for price and 'x' stands for phat1 (+ means they are equal)
+
+  price, phat1
+        505  |                                               o             
+    485.931  +                                                             
+             |                                                            x
+             |                                                             
+             |                                                     x       
+             |                                               x     o      o
+    390.587  +                                                             
+             |                                    o                        
+             |                        o           x                        
+             |                                                             
+             |                          xx                                 
+    295.244  +                      x x                                    
+             |               o     +o   oo                                 
+             |               xx                                            
+             |                o                                            
+             |     + +                                                     
+      199.9  ++                                                            
+             |+---------+---------+---------+---------+---------+---------+
+              1065                        sqft                            3000
+
+
+# Reproduce predicted averages in Table 3.1 using only 3 decimals
+? genr phat3 = 52.351+(0.139*sqft)
+Generated series phat3 (ID 6)
+? print -o price phat3
+
+          price        phat3
+
+ 1        199.9      200.386
+ 2        228.0      226.657
+ 3        235.0      233.051
+ 4        285.0      271.554
+ 5        239.0      274.751
+ 6        293.0      295.601
+ 7        285.0      302.551
+ 8        365.0      312.281
+ 9        295.0      321.316
+10        290.0      323.123
+11        385.0      365.657
+12        505.0      413.751
+13        425.0      441.551
+14        415.0      469.351
+
+Done

@@ -1,0 +1,56 @@
+gretl version 1.9.8cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2012-04-11 14:21
+? run ects.inp
+ /home/cottrell/stats/test-gretl/nls/ects.inp
+? open ects_nls.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/ects_nls.gdt
+periodicity: 1, maxobs: 50
+observations range: 1-50
+
+Listing 4 variables:
+  0) const    1) y        2) x1       3) x2     
+
+? ols y const x1 x2 --quiet
+? genr alpha = $coeff(0)
+Generated scalar alpha = -22.3283
+? genr beta = $coeff(x1)
+Generated scalar beta = 3.19528
+? nls y = alpha + beta*x1 + (1/beta)*x2
+? deriv alpha = 1
+? deriv beta = x1 - x2/(beta*beta)
+? end nls
+Using analytical derivatives
+temp = wa1off[2] = 0.185206
+temp = wa1off[1] = -5.32433
+wa3[0] = 131.445
+wa3[1] = -13.9117
+temp = wa1off[2] = -0.000144358
+temp = wa1off[1] = -0.0392581
+wa3[0] = -0.388295
+wa3[1] = -0.102718
+temp = wa1off[2] = -3.43672e-07
+temp = wa1off[1] = 4.07567e-05
+wa3[0] = -4.27072e-05
+wa3[1] = 0.000106639
+Tolerance = 1.81899e-12
+
+Convergence achieved after 5 iterations
+
+Model 2: NLS, using observations 1-50
+y = alpha + beta*x1 + (1/beta)*x2
+
+             estimate    std. error   t-ratio   p-value 
+  ------------------------------------------------------
+  alpha      -27.6919    22.0199      -1.258    0.2146  
+  beta         3.38034    0.172369    19.61     1.47e-24 ***
+
+Mean dependent var   407.0616   S.D. dependent var   188.7951
+Sum squared resid    159333.6   S.E. of regression   57.61466
+R-squared            0.908772   Adjusted R-squared   0.906871
+Log-likelihood      -272.6152   Akaike criterion     549.2305
+Schwarz criterion    553.0545   Hannan-Quinn         550.6867
+
+Done

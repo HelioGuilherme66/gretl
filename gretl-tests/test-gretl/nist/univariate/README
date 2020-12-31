@@ -1,0 +1,5 @@
+Running unitest.sh should produce values that are
+comparable with the NIST results, recorded in the
+.hdr files that accompany the datasets
+
+

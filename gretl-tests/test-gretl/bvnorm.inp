@@ -1,0 +1,37 @@
+nulldata 10
+
+set echo off
+set messages off
+
+r = 0.99
+
+loop for (i=-0.2; i<0.3; i+=0.1)
+  printf "i=%5.2f  ",i
+  loop for (j=-0.2; j<0.3; j+=0.1) --quiet
+    a = cdf(D, j, i, r)
+    printf "%9.6f", a
+  end loop
+  printf "\n"
+end loop
+
+r = -r
+
+loop for (i=-0.2; i<0.3; i+=0.1)
+  printf "i=%5.2f  ",i
+  loop for (j=-0.2; j<0.3; j+=0.1) --quiet
+    a = cdf(D, j, i, r)
+    printf "%9.6f", a
+  end loop
+  printf "\n"
+end loop
+
+r = 0
+
+loop for (i=-0.2; i<0.3; i+=0.1)
+  printf "i=%5.2f  ",i
+  loop for (j=-0.2; j<0.3; j+=0.1) --quiet
+    a = cdf(D, j, i, r)
+    printf "%9.6f", a
+  end loop
+  printf "\n"
+end loop

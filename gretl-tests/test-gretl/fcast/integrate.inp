@@ -1,0 +1,24 @@
+open data9-7
+
+diff 1 2 3
+
+# dynamic integrated forecast
+ols d_QNC 0 d_PRICE d_INCOME --quiet
+fcast 1989:1 1990:4 --dynamic --integrate
+# check: do the same thing manually
+fcast 1989:1 1990:4 --quiet
+series fc = zeros($nobs-8,1) | (QNC[1988:4] + cum($fcast))
+smpl 1989:1 ;
+print QNC fc --byobs
+
+# static integrated forecast
+smpl full
+ols d_QNC 0 d_PRICE d_INCOME --quiet
+fcast 1989:1 1990:4 --static --integrate
+# again, check against manual version
+fcast 1989:1 1990:4 --quiet
+series fc = (zeros($nobs-8,1) | $fcast) + misszero(QNC(-1))
+smpl 1989:1 ;
+print QNC fc --byobs
+
+

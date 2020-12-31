@@ -1,0 +1,35 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strings2.inp
+ /home/cottrell/stats/test-gretl/strings/strings2.inp
+? nulldata 20
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+? set seed 8976453
+Pseudo-random number generator seeded with 8976453
+? genr x = normal()
+Generated series x (ID 2)
+? string xname = "x"
+Generated string xname
+? string foo = "avocado"
+Generated string foo
+foo = 'avocado'
+? print x
+
+Full data range: 1 - 20 (n = 20)
+
+ 0.936470   0.266012   0.369483   0.412466   1.54516   0.946116  -0.671005  
+ 0.187529   0.442903  -1.23598   0.546595   0.981054  -0.473209   1.31748  
+-0.909202   0.330777   1.47972  -0.0441716   0.630008  -0.195256  
+
+? loop for i=1..5 --quiet
+> printf "%s\t %10.4f\n", obslabel(i), x[i]
+> endloop
+1	     0.9365
+2	     0.2660
+3	     0.3695
+4	     0.4125
+5	     1.5452
+Done

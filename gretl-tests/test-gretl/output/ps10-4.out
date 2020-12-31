@@ -1,0 +1,294 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps10-4.inp
+ /opt/esl/share/gretl/scripts/ps10-4.inp
+# PS10.4, for Application Section 10.5
+? open data6-3
+
+Read datafile /opt/esl/share/gretl/data/data6-3.gdt
+periodicity: 1, maxobs: 42
+observations range: 1948 to 1989
+
+Listing 4 variables:
+  0) const    1) Year     2) Cons     3) DI     
+
+? genr C1 = Cons(-1)
+Generated series C1 (ID 4)
+? genr DI1 = DI(-1)
+Generated series DI1 (ID 5)
+# Generate first difference of disposable income
+? genr DiffI = diff(DI)
+Generated series DiffI (ID 6)
+# Model A - Static model with OLS estimation
+? ols Cons 0 DI
+
+Model 1: OLS, using observations 1948-1989 (T = 42)
+Dependent variable: Cons
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      168.315       43.2796       3.889    0.0004   ***
+  DI           0.864323     0.0133004   64.98     3.52e-42 ***
+
+Mean dependent var   2876.548   S.D. dependent var   771.6100
+Sum squared resid    229044.6   S.E. of regression   75.67110
+R-squared            0.990617   Adjusted R-squared   0.990382
+F(1, 40)             4223.040   P-value(F)           3.52e-42
+Log-likelihood      -240.2795   Akaike criterion     484.5589
+Schwarz criterion    488.0343   Hannan-Quinn         485.8328
+rho                  0.927294   Durbin-Watson        0.247444
+
+# Model A - Static model with AR(1) error & CORC estimation
+? ar1 Cons 0 DI
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.92729   55266.9
+                   2      0.90465   55070.3
+                   3      0.89215   55025.0
+                   4      0.88957   55023.2
+                   5      0.88921   55023.2
+                   6      0.88917   55023.2
+                   7      0.88916   55023.2
+
+Model 2: Cochrane-Orcutt, using observations 1949-1989 (T = 41)
+Dependent variable: Cons
+rho = 0.889164
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const       80.6564      162.858        0.4953   0.6232  
+  DI           0.892795      0.0406172   21.98     1.41e-23 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
+Sum squared resid    55023.15   S.E. of regression   37.56128
+R-squared            0.997694   Adjusted R-squared   0.997635
+F(1, 39)             483.1513   P-value(F)           1.41e-23
+rho                  0.282250   Durbin-Watson        1.427351
+
+# Model A - Static model with AR(1) error & mixed HILU-CORC
+# estimation.  Note that CORC misses the global minimum here also.
+? ar1 Cons 0 DI --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99      772796.    -0.90      707423.    -0.80      638413.
+ -0.70      573222.    -0.60      511849.    -0.50      454297.
+ -0.40      400566.    -0.30      350658.    -0.20      304575.
+ -0.10      262320.     0.00      223898.     0.10      189315.
+  0.20      158578.     0.30      131701.     0.40      108705.
+  0.50      89626.1     0.60      74527.4     0.70      63535.2
+  0.80      56910.7     0.90      55046.7     0.99      54914.7   
+
+ESS is minimized for rho = 0.9999
+
+  ESS
+     772796  |o                             |                              
+             |                              |                              
+             |  o                           |                              
+     653149  +                              |                              
+             |     o                        |                              
+             |                              |                              
+             |        o                     |                              
+             |           o                  |                              
+     453738  +              o               |                              
+             |                              |                              
+             |                 o            |                              
+             |                    o         |                              
+             |                       o      |                              
+     254326  +                          o   |                              
+             |                              o                              
+             |                              |  o                           
+             |                              |     o                        
+             |                              |        o  o                  
+    54914.7  +                              |              o  o  o  o  o  o
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1      0.99990   54367.1
+                   2      0.99990   54367.1
+
+Model 3: Hildreth-Lu, using observations 1949-1989 (T = 41)
+Dependent variable: Cons
+rho = 0.9999
+
+             coefficient     std. error     t-ratio   p-value 
+  ------------------------------------------------------------
+  const      93454.7        80203.9          1.165    0.2510  
+  DI             0.780593       0.0699443   11.16     1.04e-13 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
+Sum squared resid    54367.12   S.E. of regression   37.33669
+R-squared            0.997951   Adjusted R-squared   0.997899
+F(1, 39)             124.5504   P-value(F)           1.04e-13
+rho                  0.325452   Durbin-Watson        1.336346
+
+# Retrieve sigma tilde square for Likelihood Ratio test
+? genr sgmasqr = $ess/$T
+Generated scalar sgmasqr = 1326.03
+# Suppress the first observation
+? smpl 1949 1989
+Full data range: 1948 - 1989 (n = 42)
+Current sample: 1949 - 1989 (n = 41)
+
+# Model B - General dynamic model with no restrictions
+? ols Cons 0 C1 DI DI1
+
+Model 4: OLS, using observations 1949-1989 (T = 41)
+Dependent variable: Cons
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -56.0947      29.9363      -1.874    0.0689   *
+  C1           1.06831      0.0972977   10.98     3.38e-13 ***
+  DI           0.684000     0.0849863    8.048    1.19e-09 ***
+  DI1         -0.723031     0.0803155   -9.002    7.42e-11 ***
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
+Sum squared resid    45682.20   S.E. of regression   35.13765
+R-squared            0.998043   Adjusted R-squared   0.997885
+F(3, 37)             6291.164   P-value(F)           3.86e-50
+Log-likelihood      -202.0023   Akaike criterion     412.0045
+Schwarz criterion    418.8588   Hannan-Quinn         414.5005
+rho                  0.166491   Durbin-Watson        1.595453
+
+# Save uhat for LM test for AR(1) and generate uhat(t-1)
+? genr ut = $uhat
+Generated series ut (ID 7)
+? genr ut1=ut(-1)
+Generated series ut1 (ID 8)
+# Retrieve error sum of squares for Wald test
+? genr essu = $ess
+Generated scalar essu = 45682.2
+# Retrieve sigma hat square for Likelihood Ratio test
+? genr sgmasqu = $ess/$T
+Generated scalar sgmasqu = 1114.2
+# Retrieve d.f. for unrestricted Model B
+? genr dfu = $df
+Generated scalar dfu = 37
+# compute -2log likelihood for LR test
+? genr LR=-$T*ln(sgmasqu/sgmasqr)
+Generated scalar LR = 7.13608
+? pvalue X 1 LR
+Chi-square(1): area to the right of 7.13608 = 0.00755479
+(to the left: 0.992445)
+# Reset sample range for LM test for AR(1)
+? smpl 1950 1989
+Full data range: 1948 - 1989 (n = 42)
+Current sample: 1950 - 1989 (n = 40)
+
+# Auxiliary regression for the LM test
+? ols ut 0 ut1 C1 DI DI1
+
+Model 5: OLS, using observations 1950-1989 (T = 40)
+Dependent variable: ut
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      23.5484       34.7539       0.6776   0.5025 
+  ut1         0.332617      0.247016     1.347    0.1868 
+  C1         -0.0977465     0.123169    -0.7936   0.4328 
+  DI         -0.0132061     0.0861456   -0.1533   0.8790 
+  DI1         0.0953818     0.107669     0.8859   0.3817 
+
+Mean dependent var   0.047535   S.D. dependent var   34.22343
+Sum squared resid    43428.37   S.E. of regression   35.22514
+R-squared            0.049260   Adjusted R-squared  -0.059396
+F(4, 35)             0.453358   P-value(F)           0.769258
+Log-likelihood      -196.5573   Akaike criterion     403.1146
+Schwarz criterion    411.5590   Hannan-Quinn         406.1679
+rho                  0.034576   Durbin-Watson        1.844301
+
+Excluding the constant, p-value was highest for variable 3 (DI)
+
+# Compute trsquare statistic and corresponding p-value
+? genr LM1 = $trsq
+Generated scalar LM1 = 1.9704
+? pvalue X 1 LM1
+Chi-square(1): area to the right of 1.9704 = 0.160405
+(to the left: 0.839595)
+# Model C - Restricted model with coeff. for DI and DI1 adding to zero
+? smpl 1949 1989
+Full data range: 1948 - 1989 (n = 42)
+Current sample: 1949 - 1989 (n = 41)
+
+? ols Cons 0 C1 DiffI
+
+Model 6: OLS, using observations 1949-1989 (T = 41)
+Dependent variable: Cons
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -46.8020      22.5661        -2.074   0.0449   **
+  C1           1.02188      0.00830664   123.0     4.85e-51 ***
+  DiffI        0.705785     0.0710598      9.932   4.12e-12 ***
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
+Sum squared resid    45965.44   S.E. of regression   34.77955
+R-squared            0.998031   Adjusted R-squared   0.997928
+F(2, 38)             9631.956   P-value(F)           3.89e-52
+Log-likelihood      -202.1290   Akaike criterion     410.2580
+Schwarz criterion    415.3987   Hannan-Quinn         412.1299
+rho                  0.208728   Durbin-Watson        1.535694
+
+# Save uhat for LM test for AR(1) and generate uhat(t-1)
+? genr utt = $uhat
+Generated series utt (ID 9)
+? genr utt1=utt(-1)
+Generated series utt1 (ID 10)
+# Retrieve error sum of squares for WALD test
+? genr essr = $ess
+Generated scalar essr = 45965.4
+# Reset sample range for LM test for AR(1)
+? smpl 1950 1989
+Full data range: 1948 - 1989 (n = 42)
+Current sample: 1950 - 1989 (n = 40)
+
+# Auxiliary regression for the LM test
+? ols utt 0 utt1 C1 DiffI
+
+Model 7: OLS, using observations 1950-1989 (T = 40)
+Dependent variable: utt
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const       2.93127       23.3755        0.1254    0.9009 
+  utt1        0.271720       0.193136      1.407     0.1680 
+  C1          0.000236158    0.00848017    0.02785   0.9779 
+  DiffI      -0.0509874      0.0797827    -0.6391    0.5268 
+
+Mean dependent var  -0.028653   S.D. dependent var   34.33026
+Sum squared resid    43568.58   S.E. of regression   34.78848
+R-squared            0.052117   Adjusted R-squared  -0.026873
+F(3, 36)             0.659792   P-value(F)           0.582174
+Log-likelihood      -196.6218   Akaike criterion     401.2436
+Schwarz criterion    407.9991   Hannan-Quinn         403.6861
+rho                  0.021460   Durbin-Watson        1.842388
+
+Excluding the constant, p-value was highest for variable 4 (C1)
+
+# Compute trsquare and p-value for LM test
+? genr LM2 = $trsq
+Generated scalar LM2 = 2.08468
+? pvalue X 1 LM2
+Chi-square(1): area to the right of 2.08468 = 0.148783
+(to the left: 0.851217)
+# Compute WALD F-statistic
+? genr WALD = dfu*(essr-essu)/essu
+Generated scalar WALD = 0.229407
+# Compute p-value for F-distribution
+? pvalue F 1 dfu WALD
+F(1, 37): area to the right of 0.229407 = 0.634782
+(to the left: 0.365218)
+Done

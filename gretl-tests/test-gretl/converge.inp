@@ -1,0 +1,19 @@
+open pwt56_60_89.gdt
+# for 1989 (last obs), lag 29 gives 1960, the first obs
+genr gdp60 = RGDPL(-29)
+# find total growth of real GDP over 30 years
+genr gdpgro = (RGDPL - gdp60)/gdp60
+# restrict the sample to a 1989 cross-section
+smpl (YEAR=1989) --restrict
+# Convergence?  Have countries with a lower base grown faster?
+ols gdpgro const gdp60
+# result: No! Try inverse relationship
+genr gdp60inv = 1/gdp60
+ols gdpgro const gdp60inv
+# No again.  Try "dummying out" Africa?
+genr afdum = (CCODE = 1)
+genr afslope = afdum * gdp60
+ols gdpgro const afdum gdp60 afslope
+
+
+

@@ -1,0 +1,35 @@
+set echo off
+set messages off
+
+function matrix my_aggregate (series x, series y, string funname)
+  matrix m = values(y) ~ 0
+  loop i=1..rows(m) --quiet
+    smpl y == m[i,1] --restrict --replace
+    m[i,2] = @funname(x)
+    printf "@funname(x) for y=%g: %g\n", m[i,1], m[i,2]
+  endloop
+  colnames(m, "y f(x)")
+  return m
+end function
+
+function scalar my_aggregator (series x)
+  return sum(x^3)
+end function
+
+open credscore.gdt
+
+m = my_aggregate(Income, Acc, "mean")
+print m
+m = aggregate(Income, Acc, mean)
+print m
+
+m = my_aggregate(Income, Acc, "sd")
+print m
+m = aggregate(Income, Acc, sd)
+print m
+
+m = my_aggregate(Income, Acc, "my_aggregator")
+print m
+m = aggregate(Income, Acc, my_aggregator)
+print m
+

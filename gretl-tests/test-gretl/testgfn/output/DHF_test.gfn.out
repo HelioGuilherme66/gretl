@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DHF_test.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DHF_test.gfn.inp
+? include ./DHF_test.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DHF_test.gfn
+DHF_test 1.041, 2015-11-03 (Marcin Blazejowski (marcin.blazejowski@wsb.torun.pl))
+# Simple example
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? diff QNC
+Listing 13 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL     12) d_QNC   
+
+# Variant 1:
+# We just want to find value of DHF statistics for series u
+# and adequate critical value:
+# including seasonal dummies:
+? DHF_test(d_QNC, 0, 1, 0.1, 1)
+H0: series has a seasonal unit root
+DHF statistics:		-2.964098
+10% critical value:	-3.780000
+Decision: no evidence against the null (H0)
+
+# including constant, without seasonal dummies:
+? DHF_test(d_QNC, 1, 0, 0.1, 1)
+H0: series has a seasonal unit root
+DHF statistics:		-2.964187
+10% critical value:	-2.010000
+Decision: reject the null (H0)
+
+# without constant and without seasonal dummies:
+? DHF_test(d_QNC, 0, 0, 0.1, 1)
+H0: series has a seasonal unit root
+DHF statistics:		-2.958662
+10% critical value:	-1.530000
+Decision: reject the null (H0)
+
+# Variant 2:
+# We want to know if we should reject H0 (1) or not reject (0)
+# including seasonal dummies:
+Do we reject H0?	0
+# we get 0: do not reject H0 - there is seasonal unit root
+# including constant, without seasonal dummies:
+Do we reject H0?	1
+# we get 1: we reject H0 - there is not seasonal unit root
+# without constant and without seasonal dummies:
+Do we reject H0?	1
+# we get 1: we reject H0 - there is not seasonal unit-root
+Done

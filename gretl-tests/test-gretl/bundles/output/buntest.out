@@ -1,0 +1,17 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run buntest.inp
+ /home/cottrell/stats/test-gretl/bundles/buntest.inp
+? bundle b
+? b["str"] = "throgmorton"
+? eval inbundle(b, "str")
+4
+? eval typestr(inbundle(b, "str"))
+string
+? eval inbundle(b, "x")
+0
+? eval typestr(inbundle(b, "x"))
+null
+Done

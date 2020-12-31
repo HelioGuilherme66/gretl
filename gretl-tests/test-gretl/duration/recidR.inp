@@ -1,0 +1,50 @@
+open recid.dta -q
+
+list X = workprg priors tserved felon alcohol drugs black \
+  married educ age
+
+mwrite({X}, "@dotdir/X.mat")
+mwrite({durat}, "@dotdir/y.mat")
+mwrite({cens}, "@dotdir/cens.mat")
+
+foreign language=R --send-data
+  library(survival)
+
+  fname <- paste(gretl.dotdir, "X.mat", sep="")
+  X <- as.matrix(read.table(fname, skip=1))
+	
+  colnames(X) <- c("workprg", "priors", "tserved", "felon",
+   "alcohol", "drugs", "black", "married", "educ", "age")
+
+  fname <- paste(gretl.dotdir, "y.mat", sep="")
+  durat <- as.matrix(read.table(fname, skip=1))
+
+  fname <- paste(gretl.dotdir, "cens.mat", sep="")
+  cens <- as.matrix(read.table(fname, skip=1))
+
+  sy <- Surv(durat, 1 - cens)
+
+  sr <- survreg(sy ~ X, dist='weibull')
+  summary(sr)
+  p1 <- as.matrix(predict(sr, type='response')[1:10])
+
+  sr <- survreg(sy ~ X, dist='exponential')
+  summary(sr)
+  p2 <- as.matrix(predict(sr)[1:10])
+
+  sr <- survreg(sy ~ X, dist='loglogistic')
+  summary(sr)
+  p3 <- as.matrix(predict(sr)[1:10])
+
+  sr <- survreg(sy ~ X, dist='lognormal')
+  summary(sr)
+  p4 <- as.matrix(predict(sr)[1:10])
+
+  pred <- cbind(p1, p2, p3, p4);
+  gretl.export(pred)
+end foreign
+
+matrix Rpred = mread("@dotdir/pred.mat")
+colnames(Rpred, "weibull expon loglog lognorm")
+Rpred
+  

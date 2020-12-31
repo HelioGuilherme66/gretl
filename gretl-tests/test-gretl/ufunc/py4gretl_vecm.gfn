@@ -1,0 +1,2149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gretl-functions>
+<gretl-function-package name="py4gretl_vecm" ID="1176886370" needs-time-series-data="true" minver="1.6.1">
+<author>Sven Schreiber</author>
+<version>0.9.1</version>
+<date>2007-04-18</date>
+<description>VECM extras with NumPy engine</description>
+<gretl-function name="py4gretl_vecm" private="0">
+<help>Pick the &quot;proc&quot; number to do what you need: 
+
+1. Just calculate Johansen procedure eigenvalues and 
+  trace statistics. 
+
+2. Estimate alpha and beta (generically identified, 
+  including restricted terms). 
+
+3. Test all variables for weak exogeneity (w.r.t. the 
+  long-run coefficients). 
+
+4. Test all variables for exclusion from the 
+  Gonzalo-Granger common factors.
+
+You need Python in your PATH, and the NumPy extension 
+(&gt;=1.0) installed! To adjust the command to call the 
+specific Python version on your system, edit the 
+&quot;p4g_call&quot; helper function (default is 'python'). You 
+also need to allow shell commands in functions 
+(preferences -&gt; main -&gt; general).
+
+For more information as well as the background Python 
+scripts (classes and functions) see 
+&lt;www.wiwi.uni-frankfurt.de/profs/nautz/schreibersoftware.htm&gt;.
+
+License: same as gretl 1.6.1, copyright Sven Schreiber</help>
+ <params count="8">
+  <param name="proc" type="int" min="1" max="4" default="1"/>
+  <param name="endogenous" type="list" const="true"/>
+  <param name="max_lag" type="int" min="1" max="99" default="1"/>
+  <param name="ci_rank" type="int" min="1" max="10" default="1"/>
+  <param name="determ_case" type="int" min="1" max="5" default="3"/>
+  <param name="seasonals" type="bool" default="0"/>
+  <param name="restr_exo" type="list" optional="true" const="true"/>
+  <param name="unrestr_exo" type="list" optional="true" const="true"/>
+ </params>
+ <return name="result" type="matrix"/>
+<code>##################### meta function as public interface ###############
+# mapping from proc to functions:
+# 1: traceevals
+# 2: alphabeta
+# 3: weakexo
+# 4: testGGfctrs
+######################
+set messages off
+set echo off
+scalar n_y = nelem(endogenous)
+# input checks
+if n_y &lt;= 1
+  funcerr &quot;Zero or one endogenous variables doesn't make much sense for a VECM.&quot;
+endif
+if n_y &lt;= ci_rank
+  funcerr &quot;Your chosen cointegration rank is too large.&quot;
+endif
+if $nobs &lt; max_lag + 3
+  funcerr &quot;Your chosen lag order is too large.&quot;
+endif
+# this is only a lower bound, too lazy to do the exact accounting....
+if $nobs &lt; (n_y * max_lag + nelem(unrestr_exo) + ci_rank)
+  funcerr &quot;The number of endogenous variables and/or your chosen lag order is too large for your sample.&quot;
+endif
+# write background python file embedded in function (filename temp_p4gvecm.py)
+write_p4gvecmstuff(max_lag, ci_rank, determ_case, seasonals, nelem(restr_exo), nelem(unrestr_exo))
+# save data (current workfile sample will be used)
+store_vecmdata(endogenous, restr_exo, unrestr_exo)
+# call the respective subroutine
+if proc = 1
+  matrix result = vec_traceevals()
+endif
+if proc = 2
+  matrix result = vec_alphabeta()
+endif
+if proc = 3
+  matrix result = vec_weakexo()
+endif
+if proc = 4
+  matrix result = vec_testGGfctrs()
+endif
+if (proc &gt; 4 | proc &lt; 1)
+  funcerr &quot;This option is not available. Stopping.&quot;
+endif
+# clean up
+# ! python -c 'import os; os.remove(&quot;temp_p4gvecm.py&quot;); os.remove(&quot;temp_p4gvecmresults.inp&quot;)'
+p4g_call(99)
+</code>
+</gretl-function>
+<gretl-function name="p4g_call" private="1">
+ <params count="1">
+  <param name="whichcall" type="int"/>
+ </params>
+<code># (change here all 'python' occurrences to non-standard variant if needed)
+if whichcall = 1
+  ! python temp_p4gvecm.py
+endif
+if whichcall = 99		# to clean up
+  # It seems that the enclosing quotes have to be double on Windows!
+  ! python -c &quot;import os; os.remove('temp_p4gvecm.py'); os.remove('temp_p4gvecmresults.inp')&quot;
+endif
+</code>
+</gretl-function>
+<gretl-function name="vec_traceevals" private="1">
+ <return name="traceevals" type="matrix"/>
+<code>###############################################################################
+# Yields the eigenvalues and trace statistics of the Johansen procedure.
+###############################################################################
+# complete python control script with specific stuff (vecm instance 'nv')
+outfile --append ./temp_p4gvecm.py
+print &quot;nv.output2gretl('temp_p4gvecmresults.inp', ['evals', 'tracestats'])&quot;
+# (the following line is not really specific but must come last)
+print &quot;for f in filenames: os.remove(f)&quot;
+outfile --close
+# the python call (outsourced for simple python version choice)
+p4g_call(1)
+# transfer results from python to gretl
+run ./temp_p4gvecmresults.inp
+print &quot;These are the ordered eigenvalues:&quot;
+print evals
+print &quot;And these are the corresponding trace statistics:&quot;
+print tracestats
+print &quot;The return matrix (of dimension 2 x n_y) ...&quot;
+print &quot;... holds the eigenvalues in row 1,&quot;
+print &quot;... and the trace statistics in row 2.&quot;
+matrix traceevals = (evals' ~ tracestats')'
+</code>
+</gretl-function>
+<gretl-function name="vec_alphabeta" private="1">
+ <return name="alphabeta" type="matrix"/>
+<code>################################################################################
+# This function yields the estimated alpha and (generically identified) beta
+# matrices for the chosen cointegration rank (along with standard errors).
+################################################################################
+# complete python control script with specific stuff (vecm instance 'nv')
+outfile --append ./temp_p4gvecm.py
+print &quot;nv.output2gretl('temp_p4gvecmresults.inp', ['beta_star_id', 'alpha_id', 'beta_star_id_se', 'alpha_id_se'])&quot;
+# (the following line is not really specific but must come last)
+print &quot;for f in filenames: os.remove(f)&quot;
+outfile --close
+# the python call (outsourced for simple python version choice)
+p4g_call(1)
+# transfer results from python to gretl
+run ./temp_p4gvecmresults.inp
+print &quot;These are the cointegration vectors beta (n_y + n_rexo, r):&quot;
+print beta_star_id
+print &quot;...with the following standard errors:&quot;
+print beta_star_id_se
+print &quot;And these are the corresponding adjustment coefficients alpha (n_y, r):&quot;
+print alpha_id
+print &quot;...with the following standard errors:&quot;
+print alpha_id_se
+print &quot;The return matrix (of dimension 2*n_y+2*(n_y+n_rexo) x r) ...&quot;
+print &quot;... holds beta in the first n_y+n_rexo rows, &quot;
+print &quot;... its standard errors in the next n_y+n_rexo rows,&quot;
+print &quot;... then alpha in the following n_y rows,&quot;
+print &quot;... and alpha's s.e.'s in the final n_y rows.&quot;
+matrix alphabeta = (beta_star_id' ~ beta_star_id_se' ~ alpha_id' ~  alpha_id_se')'
+</code>
+</gretl-function>
+<gretl-function name="vec_weakexo" private="1">
+ <return name="weakexo" type="matrix"/>
+<code>################################################################################
+# This function tests all endogenous variables for weak exogeneity
+# (w.r.t. the long-run parameters).
+################################################################################
+# complete python control script with specific stuff (vecm instance 'nv')
+outfile --append ./temp_p4gvecm.py
+print &quot;weakexoresults = nv.restrictAlpha()&quot;
+print &quot;nv.weakexostats = weakexoresults[0, :]&quot;
+print &quot;nv.weakexodfs = weakexoresults[1, :]&quot;
+print &quot;nv.output2gretl('temp_p4gvecmresults.inp', ['weakexostats', 'weakexodfs'])&quot;
+# (the following line is not really specific but must come last)
+print &quot;for f in filenames: os.remove(f)&quot;
+outfile --close
+# the python call (outsourced for simple python version choice)
+p4g_call(1)
+# transfer results from python to gretl
+run ./temp_p4gvecmresults.inp
+# continue here to calc p-values of the weak exo stats...
+print &quot;These are the LR weak exogeneity test statistics:&quot;
+print weakexostats
+print &quot;...being chi-square with the following DOFs:&quot;
+print weakexodfs
+print &quot;And these are the corresponding p-values:&quot;
+scalar n_y = cols(weakexostats)
+matrix weakexopvals = zeros(1,n_y)
+loop for i = 1..n_y --quiet
+  scalar temp1 = weakexodfs[1,i]
+  scalar temp2 = weakexostats[1,i]
+  matrix weakexopvals[1,i] = pvalue(X temp1 temp2)
+endloop
+print weakexopvals
+print &quot;A matrix of dimension (3,n_y) will now be added to your workspace;&quot;
+print &quot;it holds the weak-exo-test stats, dofs, and p-values (in columns).&quot;
+matrix weakexo = (weakexostats' ~ weakexodfs' ~ weakexopvals')'
+</code>
+</gretl-function>
+<gretl-function name="vec_testGGfctrs" private="1">
+ <return name="testGGfactors" type="matrix"/>
+<code>###############################################################################
+# This function tests all endogenous variables for exclusion from the common
+# permanent factors in the Gonzalo-Granger sense.
+# (I.e. these are tests for a zero row in alpha_orthogonal.)
+###############################################################################
+# complete python control script with specific stuff (vecm instance 'nv')
+outfile --append ./temp_p4gvecm.py
+print &quot;testGGresults = nv.testGGfactors()&quot;
+print &quot;nv.testGGstats = testGGresults[0, :]&quot;
+print &quot;nv.testGGdfs = testGGresults[1, :]&quot;
+print &quot;nv.output2gretl('temp_p4gvecmresults.inp', ['testGGstats', 'testGGdfs'])&quot;
+# (the following line is not really specific but must come last)
+print &quot;for f in filenames: os.remove(f)&quot;
+outfile --close
+# the python call (outsourced for simple python version choice)
+p4g_call(1)
+# transfer results from python to gretl
+run ./temp_p4gvecmresults.inp
+# continue here to calc p-values of the weak exo stats...
+print &quot;These are the LR test statistics for exclusion from the Gonzalo-Granger factors:&quot;
+print testGGstats
+print &quot;...being chi-square with the following DOFs:&quot;
+print testGGdfs
+print &quot;And these are the corresponding p-values:&quot;
+scalar n_y = cols(testGGstats)
+matrix testGGpvals = zeros(1,n_y)
+loop for i = 1..n_y --quiet
+  scalar temp1 = testGGdfs[1,i]
+  scalar temp2 = testGGstats[1,i]
+  matrix testGGpvals[1,i] = pvalue(X temp1 temp2)
+endloop
+print testGGpvals
+print &quot;The return matrix (of dimension 3 x n_y) ...&quot;
+print &quot;... holds the test stats, dofs, and p-values (one column for each variable).&quot;
+matrix testGGfactors = (testGGstats' ~ testGGdfs' ~ testGGpvals')'
+</code>
+</gretl-function>
+<gretl-function name="store_vecmdata" private="1">
+ <params count="3">
+  <param name="endo" type="list"/>
+  <param name="rexo" type="list"/>
+  <param name="uexo" type="list"/>
+ </params>
+<code>set messages off
+set echo off
+set csv_delim comma
+store ./temp_p4g_endo.csv endo --csv
+if nelem(rexo) &gt; 0
+  store ./temp_p4g_rexo.csv rexo --csv
+endif
+if nelem(uexo) &gt; 0
+  store ./temp_p4g_uexo.csv uexo --csv
+endif
+</code>
+</gretl-function>
+<gretl-function name="write_p4gvecmstuff" private="1">
+ <params count="6">
+  <param name="maxlag" type="int"/>
+  <param name="cirank" type="int"/>
+  <param name="determcase" type="int"/>
+  <param name="seasonals" type="bool"/>
+  <param name="n_rexo" type="int"/>
+  <param name="n_uexo" type="int"/>
+ </params>
+<code>set messages off
+set echo off
+outfile --write ./temp_p4gvecm.py
+### start of embedded former helpers.py ###
+print &quot;'''(Mostly time-series-related) functions needed and written by Sven Schreiber.&quot;
+print &quot;&quot;
+print &quot;This is free but copyrighted software, distributed under the same license terms&quot;
+print &quot;(as of January 2007) as the 'gretl' program by Allin Cottrell and others, see&quot;
+print &quot;gretl.sf.net (in short: GPL v2, see www.gnu.org/copyleft/gpl.html).&quot;
+print &quot;&quot;
+print &quot;(see end of this file for a changelog)&quot;
+print &quot;'''&quot;
+print &quot;from numpy import r_, c_, arange, diff, mean, sqrt, log, mat&quot;
+print &quot;from numpy import asarray, nan&quot;
+print &quot;from numpy.matlib import ones, zeros, rand, eye, empty&quot;
+print &quot;from numpy.linalg import eigh, cholesky, solve, lstsq&quot;
+print &quot;# (lstsq also as tool to determine rank)&quot;
+print &quot;&quot;
+print &quot;# some constants/dictionaries first&quot;
+print &quot;quarter2month = {1: 1, 2: 4, 3: 7, 4: 10}&quot;
+print &quot;# in theory we only need the four months 1, 4, 7, 10, but well...&quot;
+print &quot;month2quarter = {1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 3, 8: 3, 9: 3, \&quot;
+print &quot;                 10: 4, 11: 4, 12: 4}&quot;
+print &quot;qNumber2qFloat = {1: 0.0, 2: 0.25, 3: 0.5, 4: 0.75}&quot;
+print &quot;mNumber2mFloat = {1: 0.0, 2: 0.0833, 3: 0.1666, 4: 0.2499, 5: 0.3332, \&quot;
+print &quot;                  6: 0.4165, 7: 0.4998, 8: 0.5831, 9: 0.6664, 10: 0.7497, \&quot;
+print &quot;                  11: 0.8330, 12: 0.9163}&quot;
+print &quot;qFracstring2qString = {0.0: 1, 0.25: 2, 0.5: 3, 0.75: 4}&quot;
+print &quot;mFloat2mNumber = {0.0: 1, 0.0833: 2, 0.1666: 3, 0.2499: 4, 0.3332: 5, \&quot;
+print &quot;                  0.4165: 6, 0.4998: 7, 0.5831: 8, 0.6664: 9, 0.7497: 10, \&quot;
+print &quot;                  0.8330: 11, 0.9163: 12}&quot;
+print &quot;# with onetwelfth == 0.0833 approx.&quot;
+print &quot;&quot;
+print &quot;&quot;
+print &quot;def vec(m):&quot;
+print &quot;    '''&quot;
+print &quot;    Returns all columns of the input as a stacked (column) vector.&quot;
+print &quot;&quot;
+print &quot;    If m is a numpy-array, a 1d-array is returned. For a numpy-matrix m,&quot;
+print &quot;     the output has shape (n*m, 1).&quot;
+print &quot;    '''&quot;
+print &quot;    return m.T.ravel().T&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;def unvec(m, rows, cols):&quot;
+print &quot;    '''&quot;
+print &quot;    Turns (column) vector into matrix of shape rows, cols.&quot;
+print &quot;&quot;
+print &quot;    Also accepts 1d-array input, but always returns numpy matrix.&quot;
+print &quot;    '''&quot;
+print &quot;    if type(m) == type(mat(m)):&quot;
+print &quot;        assert m.shape[1] == 1                            # col vector&quot;
+print &quot;        intype = 'matrix'&quot;
+print &quot;    else:&quot;
+print &quot;        assert len(m.shape) == 1                          # 1d array&quot;
+print &quot;        intype = 'array'&quot;
+print &quot;        m = mat(m).T&quot;
+print &quot;    assert cols * rows == m.shape[0]&quot;
+print &quot;    out = m.reshape(cols, rows).T&quot;
+print &quot;    if intype == 'array': return asarray(out)&quot;
+print &quot;    else: return out&quot;
+print &quot;&quot;
+print &quot;from numpy import mat&quot;
+print &quot;def mat2gretlmatstring(m):&quot;
+print &quot;    '''&quot;
+print &quot;    Turns numpy matrix or array (or scalar!) m into gretl string representation.&quot;
+print &quot;    '''&quot;
+print &quot;    # mat(m) is necessary because if m is 1d-array, map() would fail&quot;
+print &quot;    out =  ';'.join( [  ','.join(map(str, row)) for row in mat(m).tolist() ] )&quot;
+print &quot;    return '{' + out + '}'&quot;
+print &quot;&quot;
+print &quot;def startobs2obslist(startperiod, numofobs):&quot;
+print &quot;    '''&quot;
+print &quot;    Constructs list of observation labels following the input pattern.&quot;
+print &quot;&quot;
+print &quot;    Example:&quot;
+print &quot;    startperiod = '1999q3', numofobs = 2 -&gt; ['1999q3', '1999q4']&quot;
+print &quot;    Currently supports only annual (pure number), monthly, quarterly.&quot;
+print &quot;    Years must be in 4-digit format.&quot;
+print &quot;    '''&quot;
+print &quot;    if startperiod.isdigit():           # pure (integer) number&quot;
+print &quot;        startnumber = int(startperiod)&quot;
+print &quot;        return [ str(startnumber + ix) for ix in range(numofobs) ]&quot;
+print &quot;    elif startperiod[4] in 'qQ':        # quarterly dates&quot;
+print &quot;        wrap = 4&quot;
+print &quot;        period = int(startperiod[5])&quot;
+print &quot;    elif startperiod[4] in 'mM':&quot;
+print &quot;        wrap = 12&quot;
+print &quot;        period = int(startperiod[5:7])&quot;
+print &quot;    else: raise NotImplementedError&quot;
+print &quot;&quot;
+print &quot;    year = int(startperiod[:4])&quot;
+print &quot;    out = [str(year) + startperiod[4] + str(period)]&quot;
+print &quot;    for ix in range(numofobs):&quot;
+print &quot;        if period == wrap:&quot;
+print &quot;            period = 1&quot;
+print &quot;            year += 1&quot;
+print &quot;        else: period += 1&quot;
+print &quot;        out.append(str(year) + startperiod[4] + str(period))&quot;
+print &quot;&quot;
+print &quot;    return out&quot;
+print &quot;&quot;
+print &quot;import csv&quot;
+print &quot;from numpy import mat&quot;
+print &quot;def writecsv(filename, data, orientation = 'cols', delim = ',', \&quot;
+print &quot;     varnames = [],  obslabels = [], comments = [], commentchar = '# '):&quot;
+print &quot;    '''&quot;
+print &quot;    Saves array or matrix &lt;data&gt; in csv format in file &lt;filename&gt; (path string).&quot;
+print &quot;&quot;
+print &quot;    &lt;comments&gt; must be passed as a sequence of strings, one for each line,&quot;
+print &quot;     and will be written at the top of the file, each line starting with&quot;
+print &quot;     &lt;commentchar&gt;.&quot;
+print &quot;    &lt;orientation&gt; can be 'cols' or 'rows', determines whether the&quot;
+print &quot;     variable names will be used as column or row headers, and how to treat&quot;
+print &quot;     1d-input. (And observation labels will be written accordingly.)&quot;
+print &quot;    &lt;varnames&gt; and &lt;obslabels&gt; must be sequences of strings.&quot;
+print &quot;    '''&quot;
+print &quot;    data = mat(data)&quot;
+print &quot;    if orientation == 'rows':&quot;
+print &quot;        colheaders = obslabels&quot;
+print &quot;        rowheaders = varnames&quot;
+print &quot;        cell11 = 'var'&quot;
+print &quot;    else:                           # 'cols' orientation as fallback&quot;
+print &quot;        colheaders = varnames&quot;
+print &quot;        rowheaders = obslabels&quot;
+print &quot;        cell11 = 'obs'&quot;
+print &quot;        if data.shape[0] == 1: data = data.T    # make 1d-array a column vector&quot;
+print &quot;    if len(colheaders) &gt; 0: assert len(colheaders) == data.shape[1]&quot;
+print &quot;&quot;
+print &quot;    # start writing to the file&quot;
+print &quot;    target = csv.writer(open(filename, 'w'), delimiter = delim)&quot;
+print &quot;    target.writerows([ [commentchar + comment] for comment in comments])&quot;
+print &quot;    # (additional trivial list layer because otherwise the comment string itself&quot;
+print &quot;    #  would be split up with the delim character)&quot;
+print &quot;    if len(rowheaders) &gt; 0:&quot;
+print &quot;        assert len(rowheaders) == data.shape[0]&quot;
+print &quot;        target.writerow(colheaders.insert(0, cell11))&quot;
+print &quot;    else: target.writerow(colheaders)&quot;
+print &quot;    temp = data.tolist()        # temp to have list conversion only once&quot;
+print &quot;    for ix in range(len(rowheaders)): temp[ix].insert(0, rowheaders[ix])&quot;
+print &quot;    target.writerows(temp)&quot;
+print &quot;&quot;
+print &quot;    return 0            # success&quot;
+print &quot;&quot;
+print &quot;import csv&quot;
+print &quot;from numpy import mat&quot;
+print &quot;def readcsv(filename, delim = ',', commentchar = '#', colheader = 'names', \&quot;
+print &quot;        rowheader = 'obs'):&quot;
+print &quot;    '''&quot;
+print &quot;    Read in a csv file (may contain comments starting with commentchar).&quot;
+print &quot;&quot;
+print &quot;    The contents of the first non-comment row and column must be indicated in&quot;
+print &quot;     rowheader and colheader as one of 'names', 'obs' (labels), or None.&quot;
+print &quot;    The array (matrix) of the data is returned as is, i.e. w/o transpose, hence&quot;
+print &quot;     the caller must know whether variables are in rows or columns.&quot;
+print &quot;    If both colheader and rowheader are not None, the upper-left cell (header&quot;
+print &quot;     of the first row/col) is ignored (but must be non-empty).&quot;
+print &quot;&quot;
+print &quot;    Returns a five-element tuple:&quot;
+print &quot;    0. numpy-matrix of the actual data as floats&quot;
+print &quot;    1. orientation of variables: 'cols', 'rows', or 'unknown'&quot;
+print &quot;    2. 1d-array of variable names (or None)&quot;
+print &quot;    3. 1d-array of observation labels (or None)&quot;
+print &quot;    4. the type/frequency of the data&quot;
+print &quot;        (currently one of 'a', 'q', 'm', guessed from the first date label)&quot;
+print &quot;        (if this deduction failed, 'unknown' is returned here)&quot;
+print &quot;&quot;
+print &quot;    Easiest example with upper-left data cell in second row/second column:&quot;
+print &quot;    mydata = readcsv('myfile.csv')[0]&quot;
+print &quot;    '''&quot;
+print &quot;    read_from = csv.reader(open(filename, 'rb'), delimiter = delim, \&quot;
+print &quot;        skipinitialspace = True)&quot;
+print &quot;    tempnestedlist = [ line for line in read_from if not \&quot;
+print &quot;        line[0].strip().startswith(commentchar) ]&quot;
+print &quot;    data = mat(tempnestedlist, dtype = str)&quot;
+print &quot;&quot;
+print &quot;    if colheader == 'names':&quot;
+print &quot;        orientation = 'cols'&quot;
+print &quot;        varnames, data = data[0, :].A1, data[1:, :]&quot;
+print &quot;        if rowheader == 'obs':&quot;
+print &quot;            obslabels, data = data[:, 0].A1, data[:, 1:]&quot;
+print &quot;            varnames = varnames[1:]&quot;
+print &quot;    elif rowheader == 'names':&quot;
+print &quot;        orientation = 'rows'&quot;
+print &quot;        varnames, data = data[:, 0].A1, data[:, 1:]&quot;
+print &quot;        if colheader == 'obs':&quot;
+print &quot;            obslabels, data = data[0, :].A1, data[1:, :]&quot;
+print &quot;            varnames = varnames[1:]&quot;
+print &quot;    elif colheader == 'obs':&quot;
+print &quot;        orientation = 'rows'&quot;
+print &quot;        obslabels, data = data[0, :].A1, data[1:, :]&quot;
+print &quot;        if rowheader == 'names':&quot;
+print &quot;            varnames, data = data[:, 0].A1, data[:, 1:]&quot;
+print &quot;            obslabels = obslabels[1:]&quot;
+print &quot;    elif rowheader == 'obs':&quot;
+print &quot;        orientation = 'cols'&quot;
+print &quot;        obslabels, data = data[:, 0].A1, data[:, 1:]&quot;
+print &quot;        if colheader == 'names':&quot;
+print &quot;            varnames, data = data[0, :].A1, data[1:, :]&quot;
+print &quot;            obslabels = obslabels[1:]&quot;
+print &quot;    else:&quot;
+print &quot;        assert colheader == None        # to catch typos, e.g. 'Names', 'OBS'&quot;
+print &quot;        assert rowheader == None&quot;
+print &quot;        orientation = 'unknown'&quot;
+print &quot;        varnames = None&quot;
+print &quot;        obslabels = None&quot;
+print &quot;&quot;
+print &quot;    # detect the dataset type:&quot;
+print &quot;    # annual&quot;
+print &quot;    if len(obslabels[0]) == 4: freq = 'a'&quot;
+print &quot;    # quarterly&quot;
+print &quot;    elif len(obslabels[0]) == 6 and obslabels[0][4] in 'qQ': freq = 'q'&quot;
+print &quot;    # monthly&quot;
+print &quot;    elif len(obslabels[0]) == 7 and obslabels[0][4] in 'mM': freq = 'm'&quot;
+print &quot;    else: freq = 'unknown'&quot;
+print &quot;&quot;
+print &quot;    return data.astype(float), orientation, varnames, obslabels, freq&quot;
+print &quot;&quot;
+print &quot;from numpy import nan&quot;
+print &quot;def floatAndNanConverter(datapoint, nacode = 'na'):&quot;
+print &quot;    '''&quot;
+print &quot;    Converts nacode to numpy.nan value.&quot;
+print &quot;&quot;
+print &quot;    Also returns other input as float (e.g. for matplotlib's load, asarray).&quot;
+print &quot;    '''&quot;
+print &quot;    if datapoint == nacode: return nan&quot;
+print &quot;    return float(datapoint)&quot;
+print &quot;&quot;
+print &quot;def dateString2dateFloat(datestring):&quot;
+print &quot;    '''&quot;
+print &quot;    Converts '1999q2' -&gt; 1999.25, '1999m2' -&gt; 1999.0833, etc.&quot;
+print &quot;&quot;
+print &quot;    So far only for quarterly and monthly.&quot;
+print &quot;    '''&quot;
+print &quot;    year, freq = float(datestring[:4]), datestring[4]&quot;
+print &quot;    assert freq in 'qQmM', 'sorry, only quarterly or monthly'&quot;
+print &quot;    if freq in 'qQ':    #quarterly&quot;
+print &quot;        result = year + qNumber2qFloat[int(datestring[5])]&quot;
+print &quot;    elif freq in 'mM':               #monthly&quot;
+print &quot;        result = year + mNumber2mFloat[int(datestring[5:7])]&quot;
+print &quot;    return result&quot;
+print &quot;&quot;
+print &quot;from datetime import date, timedelta&quot;
+print &quot;def getQuarterlyDates(startyear, startquarter, t):&quot;
+print &quot;    '''&quot;
+print &quot;    Constructs a list of quarterly date labels for t obs.&quot;
+print &quot;&quot;
+print &quot;    Algorithm to get a sequence of strings relating to quarterly dates:&quot;
+print &quot;     1. start with first day in the startquarter, e.g. 2006-04-01&quot;
+print &quot;     2. map the month to quarter and make string year + 'q' + quarter&quot;
+print &quot;     3. the longest quarters are 3rd and 4th (2*31 days + 30 days = 92 days),&quot;
+print &quot;        1st the shortest (90 or 91), so add a timedelta (in days,&quot;
+print &quot;        apparently default) of 100 days (anything between 92+1 and&quot;
+print &quot;        sum of shortest quarter plus one month = approx. 118)&quot;
+print &quot;     4. reset the day of that intermediate date to 1&quot;
+print &quot;     5. return to step 2&quot;
+print &quot;    '''&quot;
+print &quot;    try:&quot;
+print &quot;        y = int(startyear); q = int(startquarter); t = int(t)&quot;
+print &quot;    except: raise TypeError, 'need integers for year, quarter, t'&quot;
+print &quot;    if q not in range(1,5): raise ValueError, 'startquarter input out of range'&quot;
+print &quot;    # create list for date strings:&quot;
+print &quot;    datestrings = []&quot;
+print &quot;    # step 1.:&quot;
+print &quot;    d = date(y, quarter2month[startquarter], 1)&quot;
+print &quot;    for t in range(t):&quot;
+print &quot;        datestrings.append(str(d.year) + 'Q' + str(month2quarter[d.month]))&quot;
+print &quot;        d += timedelta(100)&quot;
+print &quot;        d = d.replace(day = 1)&quot;
+print &quot;    return datestrings&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;from numpy.matlib import empty, zeros, eye&quot;
+print &quot;from numpy.linalg import lstsq&quot;
+print &quot;def getOrthColumns(m):&quot;
+print &quot;    '''&quot;
+print &quot;    Constructs the orthogonally complementing columns of the input.&quot;
+print &quot;&quot;
+print &quot;    Input of the form pxr is assumed to have r&lt;=p,&quot;
+print &quot;    and have either full column rank r or rank 0 (scalar or matrix)&quot;
+print &quot;    Output is of the form px(p-r), except:&quot;
+print &quot;    a) if M square and full rank p, returns scalar 0&quot;
+print &quot;    b) if rank(M)=0 (zero matrix), returns I_p&quot;
+print &quot;    (Note you cannot pass scalar zero, because dimension info would be&quot;
+print &quot;    missing.)&quot;
+print &quot;    Return type is as input type.&quot;
+print &quot;    '''&quot;
+print &quot;    if type(m) == type(asarray(m)):&quot;
+print &quot;        m = mat(m)&quot;
+print &quot;        output = 'array'&quot;
+print &quot;    else: output = 'matrix'&quot;
+print &quot;    p, r = m.shape&quot;
+print &quot;    # first catch the stupid input case&quot;
+print &quot;    if p &lt; r: raise ValueError, 'need at least as many rows as columns'&quot;
+print &quot;    # we use lstsq(M, ones) just to exploit its rank-finding algorithm,&quot;
+print &quot;    rk = lstsq(m, ones(p).T)[2]&quot;
+print &quot;    # first the square and full rank case:&quot;
+print &quot;    if rk == p: return 0&quot;
+print &quot;    # then the zero-matrix case (within machine precision):&quot;
+print &quot;    elif rk == 0: result = eye(p)&quot;
+print &quot;    # now the rank-deficient case:&quot;
+print &quot;    elif rk &lt; r:&quot;
+print &quot;        raise ValueError, 'sorry, matrix does not have full column rank'&quot;
+print &quot;    # (what's left should be ok)&quot;
+print &quot;    else:&quot;
+print &quot;        # we have to watch out for zero rows in M,&quot;
+print &quot;        # if they are in the first p-r positions!&quot;
+print &quot;        # so the (probably inefficient) algorithm:&quot;
+print &quot;            # 1. check the rank of each row&quot;
+print &quot;            # 2. if zero, then also put a zero row in c&quot;
+print &quot;            # 3. if not, put the next unit vector in c-row&quot;
+print &quot;        idr = eye(r)&quot;
+print &quot;        idpr = eye(p-r)&quot;
+print &quot;        c = empty([0,r])    # starting point&quot;
+print &quot;        co = empty([0, p-r]) # will hold orth-compl.&quot;
+print &quot;        idrcount = 0&quot;
+print &quot;        for row in range(p):&quot;
+print &quot;            # (must be ones() instead of 1 because of 2d-requirement&quot;
+print &quot;            if lstsq( m[row,:], ones(1) )[2] == 0 or idrcount &gt;= r:&quot;
+print &quot;                c = r_[ c, zeros(r) ]&quot;
+print &quot;                co = r_[ co, idpr[row-idrcount, :] ]&quot;
+print &quot;            else:     # row is non-zero, and we haven't used all unit vecs&quot;
+print &quot;                c = r_[ c, idr[idrcount, :] ]&quot;
+print &quot;                co = r_[ co, zeros(p-r) ]&quot;
+print &quot;                idrcount += 1&quot;
+print &quot;        # earlier non-general (=bug) line: c = mat(r_[eye(r), zeros((p-r, r))])&quot;
+print &quot;        # and:  co = mat( r_[zeros((r, p-r)), eye(p-r)] )&quot;
+print &quot;        # old:&quot;
+print &quot;        # result = ( eye(p) - c * (M.T * c).I * M.T ) * co&quot;
+print &quot;        result = co - c * solve(m.T * c, m.T * co)&quot;
+print &quot;    if output == 'array': return asarray(result)&quot;
+print &quot;    else: return result&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;def addLags(m, maxlag):&quot;
+print &quot;    '''&quot;
+print &quot;    Adds (contiguous) lags as additional columns to the TxN input.&quot;
+print &quot;&quot;
+print &quot;    Early periods first. If maxlag is zero, original input is returned.&quot;
+print &quot;    maxlag rows are deleted (the matrix is shortened)&quot;
+print &quot;    '''&quot;
+print &quot;    if type(m) == type(asarray(m)):&quot;
+print &quot;        m = mat(m)&quot;
+print &quot;        output = 'array'&quot;
+print &quot;    else: output = 'matrix'&quot;
+print &quot;    T, N = m.shape&quot;
+print &quot;    if type(maxlag) != type(4):&quot;
+print &quot;        raise TypeError, 'addLags: need integer for lag order'&quot;
+print &quot;    if maxlag &gt; m.shape[0]:&quot;
+print &quot;        raise ValueError, 'addLags: sample too short for this lag'&quot;
+print &quot;    temp = m[ maxlag: ,:]  # first maxlag periods must be dropped due to lags&quot;
+print &quot;    for lag in range(1, maxlag + 1) :&quot;
+print &quot;        temp = c_[ temp, m[(maxlag-lag):(T-lag) ,:] ]&quot;
+print &quot;    if output == 'array': return asarray(temp)&quot;
+print &quot;    else: return temp&quot;
+print &quot;&quot;
+print &quot;from numpy.matlib import empty, ones, zeros&quot;
+print &quot;from numpy import mat, c_, r_&quot;
+print &quot;def getDeterministics(nobs, which = 'c', date = 0.5):&quot;
+print &quot;    '''&quot;
+print &quot;    Returns various useful deterministic terms for a given sample length T.&quot;
+print &quot;&quot;
+print &quot;    Return object is a numpy-matrix-type of dimension Tx(len(which));&quot;
+print &quot;    (early periods first, where relevant).&quot;
+print &quot;    In the 'which' argument pass a string composed of the following letters,&quot;
+print &quot;    in arbitrary order:&quot;
+print &quot;    c - constant (=1) term&quot;
+print &quot;    t - trend (starting with 0)&quot;
+print &quot;    q - centered quarterly seasonal dummies (starting with 0.75, -0.25...)&quot;
+print &quot;    m - centered monthly seasonal dummies (starting with 11/12, -1/12, ...)&quot;
+print &quot;    l - level shift (date applies)&quot;
+print &quot;    s - slope shift (date applies)&quot;
+print &quot;    i - impulse dummy (date applies)&quot;
+print &quot;&quot;
+print &quot;    If the date argument is a floating point number (between 0 and 1),&quot;
+print &quot;    it is treated as the fraction of the sample where the break occurs.&quot;
+print &quot;    If instead it is an integer between 0 and T, then that observation is&quot;
+print &quot;    treated as the shift date.&quot;
+print &quot;    '''&quot;
+print &quot;    # some input checks (as well as assignment of shiftperiod):&quot;
+print &quot;    if type(nobs) != type(4):  # is not an integer&quot;
+print &quot;        raise TypeError, 'need integer for sample length'&quot;
+print &quot;    if nobs &lt;=0: raise ValueError, 'need positive sample length'&quot;
+print &quot;    if type(date) == type(0.5):     #is a float, treat as break fraction&quot;
+print &quot;        if date &lt; 0 or date &gt; 1:&quot;
+print &quot;            raise ValueError, 'need break fraction between 0 and 1'&quot;
+print &quot;        shiftperiod = int(date * nobs)&quot;
+print &quot;    elif type(date) == type(4):     # is integer, treat as period number&quot;
+print &quot;        if date not in range(1, nobs+1):&quot;
+print &quot;            raise ValueError, 'need period within sample range'&quot;
+print &quot;        shiftperiod = date&quot;
+print &quot;    else: raise TypeError, 'need float or integer input for date'&quot;
+print &quot;    if type(which) != type('a string'):&quot;
+print &quot;        raise TypeError, 'need string for case spec'&quot;
+print &quot;    # end input checks&quot;
+print &quot;&quot;
+print &quot;    out = empty([nobs,0])   # create starting point&quot;
+print &quot;    if 'c' in which: out = c_[ out, ones(nobs).T ]&quot;
+print &quot;    if 't' in which: out = c_[ out, r_['c', :nobs] ]&quot;
+print &quot;    if 'l' in which:&quot;
+print &quot;        shift = r_[ zeros(shiftperiod).T, ones(nobs-shiftperiod).T ]&quot;
+print &quot;        out = c_[ out, shift ]&quot;
+print &quot;    if 's' in which:&quot;
+print &quot;        slopeshift = r_[ zeros(shiftperiod).T, r_['c', 1:(nobs - shiftperiod + 1)] ]&quot;
+print &quot;        out = c_[ out, slopeshift ]&quot;
+print &quot;    if 'i' in which:&quot;
+print &quot;        impulse = r_[ zeros(shiftperiod).T, ones(1), zeros(nobs-shiftperiod-1).T ]&quot;
+print &quot;        out = c_[ out, impulse ]&quot;
+print &quot;    if 'q' in which or 'Q' in which:&quot;
+print &quot;        # to end of next full year, thus need to slice at T below:&quot;
+print &quot;        q1 = [0.75, -0.25, -0.25, -0.25] * (1 + nobs/4)&quot;
+print &quot;        q2 = [-0.25, 0.75, -0.25, -0.25] * (1 + nobs/4)&quot;
+print &quot;        q3 = [-0.25, -0.25, 0.75, -0.25] * (1 + nobs/4)&quot;
+print &quot;        out = c_[ out, mat(q1[:nobs]).T, mat(q2[:nobs]).T, mat(q3[:nobs]).T ]&quot;
+print &quot;    if 'm' in which or 'M' in which:&quot;
+print &quot;        temp = [-1./12] * 11&quot;
+print &quot;        for month in range(11):&quot;
+print &quot;            temp.insert(month, 1-temp[0])&quot;
+print &quot;            # again, to end of next full year, thus need to slice at T below:&quot;
+print &quot;            monthly = temp * (1 + nobs/12)  # temp is still a list here!&quot;
+print &quot;            out = c_[ out, mat(monthly[:nobs]).T ]&quot;
+print &quot;    return out&quot;
+print &quot;&quot;
+print &quot;from numpy.matlib import empty&quot;
+print &quot;def getImpulseDummies(sampledateslist, periodslist):&quot;
+print &quot;    '''&quot;
+print &quot;    Returns a (numpy-)matrix of impulse dummies for the specified periods.&quot;
+print &quot;&quot;
+print &quot;    sampledateslist must consist of 1999.25 -style dates (quarterly or monthly).&quot;
+print &quot;    However, because periodslist is probably human-made, it expects strings&quot;
+print &quot;     such as '1999q3' or '1999M12'.&quot;
+print &quot;    Variables in columns.&quot;
+print &quot;    So far only for quarterly and monthly data.&quot;
+print &quot;    '''&quot;
+print &quot;    nobs = len(sampledateslist)&quot;
+print &quot;    result = empty([nobs,0])&quot;
+print &quot;    for periodstring in periodslist:&quot;
+print &quot;        period = dateString2dateFloat(periodstring)&quot;
+print &quot;        result = c_[result, getDeterministics(nobs, 'i', \&quot;
+print &quot;                            sampledateslist.index(period))]&quot;
+print &quot;    return result&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;from numpy.linalg import cholesky, eigh&quot;
+print &quot;def geneigsympos(A, B):&quot;
+print &quot;    ''' Solves symmetric-positive-def. generalized eigenvalue problem Az=lBz.&quot;
+print &quot;&quot;
+print &quot;    Takes two real-valued symmetric matrices A and B (B must also be&quot;
+print &quot;    positive-definite) and returns the corresponding (also real-valued)&quot;
+print &quot;    eigenvalues and eigenvectors.&quot;
+print &quot;&quot;
+print &quot;    Return format: as in scipy.linalg.eig, tuple (l, Z); l is taken from eigh&quot;
+print &quot;    output (a 1-dim array of length A.shape[0] ?) ordered ascending, and Z is&quot;
+print &quot;    an array or matrix (depending on type of input A) with the corresponding&quot;
+print &quot;    eigenvectors in columns (hopefully).&quot;
+print &quot;&quot;
+print &quot;    Steps:&quot;
+print &quot;        1. get lower triang Choleski factor of B: L*L.T = B&quot;
+print &quot;         &lt;=&gt; A (LL^-1)' z = l LL' z&quot;
+print &quot;         &lt;=&gt; (L^-1 A L^-1') (L'z) = l (L'z)&quot;
+print &quot;        2. standard eig problem, with same eigvals l&quot;
+print &quot;        3. premultiply eigvecs L'z by L^-1' to get z&quot;
+print &quot;    '''&quot;
+print &quot;    output = 'matrix'&quot;
+print &quot;    if type(A) == type(asarray(A)):&quot;
+print &quot;        output = 'array'&quot;
+print &quot;        A, B = mat(A), mat(B)&quot;
+print &quot;    # step 1&quot;
+print &quot;    LI = cholesky(B).I&quot;
+print &quot;    # step 2&quot;
+print &quot;    evals, evecs = eigh(LI * A * LI.T)&quot;
+print &quot;    # sort&quot;
+print &quot;    evecs = evecs[:, evals.argsort()]&quot;
+print &quot;    evals.sort()        # in-place!&quot;
+print &quot;    # step 3&quot;
+print &quot;    evecs = LI.T * evecs&quot;
+print &quot;    if output == 'array': return evals, asarray(evecs)&quot;
+print &quot;    else:   return evals, evecs&quot;
+print &quot;&quot;
+print &quot;from numpy.matlib import eye, c_&quot;
+print &quot;def vecm2varcoeffs(gammas, maxlag, alpha, beta):&quot;
+print &quot;    '''&quot;
+print &quot;    Converts Vecm coeffs to levels VAR representation.&quot;
+print &quot;&quot;
+print &quot;    Gammas need to be coeffs in shape #endo x (maxlag-1)*#endo,&quot;
+print &quot;    such that contemp_diff = alpha*ect + Gammas * lagged_diffs&quot;
+print &quot;    is okay when contemp_diff is  #endo x 1.&quot;
+print &quot;    We expect matrix input!&quot;
+print &quot;    '''&quot;
+print &quot;    if alpha.shape != beta.shape:   # hope this computes for tuples&quot;
+print &quot;        raise ValueError, 'alpha and beta must have equal dim'&quot;
+print &quot;    N_y = alpha.shape[0]&quot;
+print &quot;    if beta.shape[0] != N_y:&quot;
+print &quot;        raise ValueError, &quot;alpha or beta dim doesn't match&quot;&quot;
+print &quot;    if gammas.shape[0] != N_y:&quot;
+print &quot;        raise ValueError, &quot;alpha or gammas dim doesn't match&quot;&quot;
+print &quot;    if gammas.shape[1] != (maxlag-1)*N_y:&quot;
+print &quot;        raise ValueError, &quot;maxlag or gammas dim doesn't match&quot;&quot;
+print &quot;&quot;
+print &quot;    # starting point first lag:&quot;
+print &quot;    levelscoeffs = eye(N_y) + alpha * beta.T + gammas[ : , :N_y ]&quot;
+print &quot;    # intermediate lags:&quot;
+print &quot;    for lag in range(1, maxlag-1):&quot;
+print &quot;        levelscoeffs = c_[ levelscoeffs, gammas[:, N_y*lag : N_y*(lag+1)] - \&quot;
+print &quot;                          gammas[:,  N_y*(lag-1) : N_y*lag ] ]&quot;
+print &quot;    # last diff-lag, now this should be N_y x maxlags*N_y:&quot;
+print &quot;    return c_[ levelscoeffs, -gammas[:, -N_y: ] ]&quot;
+print &quot;&quot;
+print &quot;def gammas2alternativegammas(gammas, alpha, beta):&quot;
+print &quot;    '''&quot;
+print &quot;    Converts Vecm-coeffs for ect at t-1 to the ones for ect at t-maxlag.&quot;
+print &quot;&quot;
+print &quot;    The input gammas (shortrun coeffs) refer to a Vecm where the levels are&quot;
+print &quot;     lagged one period. In the alternative representation with the levels&quot;
+print &quot;     lagged maxlag periods the shortrun coeffs are different; the relation is:&quot;
+print &quot;         alt_gamma_i = alpha * beta' + gamma_i&quot;
+print &quot;&quot;
+print &quot;    Actually with numpy's broadcasting the function is a one-liner so this here&quot;
+print &quot;     is mainly for documentation and reference purposes.&quot;
+print &quot;    In terms of the levels VAR coefficients A_i (i=1..maxlag) the gammas are&quot;
+print &quot;     defined as:&quot;
+print &quot;         gamma_i = - \sum_{j=i+1)^maxlag A_j for i=1..maxlag-1;&quot;
+print &quot;     and the alternative gammas (used py Proietti e.g.) are:&quot;
+print &quot;         alt_gamma_i = -I + \sum_{j=1}^i A_j for i=1..maxlag-1.&quot;
+print &quot;     (And \alpha \beta' = -I + \sum_{j=1}^maxlag A_j.)&quot;
+print &quot;    '''&quot;
+print &quot;    # use broadcasting to do the summation in one step:&quot;
+print &quot;    return  alpha * beta.T + gammas&quot;
+print &quot;&quot;
+print &quot;################################&quot;
+print &quot;## now some more econometrically oriented helper functions&quot;
+print &quot;################################&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;from numpy.matlib import zeros&quot;
+print &quot;def autocovar(series, LagInput, Demeaned=False):&quot;
+print &quot;    '''&quot;
+print &quot;    Computes the autocovariance of a uni- or multivariate time series.&quot;
+print &quot;&quot;
+print &quot;    Usage: autocovar(series, Lag [, Demeaned=False]) returns the NxN&quot;
+print &quot;    autocovariance matrix (even for N=1), where series is&quot;
+print &quot;    an TxN matrix holding the N-variable T-period data (early periods first),&quot;
+print &quot;    and Lag specifies the lag at which to compute the autocovariance.&quot;
+print &quot;    Specify Demeaned=True if passing ols-residuals to avoid double demeaning.&quot;
+print &quot;    Returns a numpy-matrix-type.&quot;
+print &quot;    '''&quot;
+print &quot;    if type(series) == type(asarray(series)):&quot;
+print &quot;        output = 'array'&quot;
+print &quot;        series = mat(series)&quot;
+print &quot;    else: output = 'matrix'&quot;
+print &quot;    t, n = series.shape&quot;
+print &quot;    try: Lag = int(LagInput)&quot;
+print &quot;    except: raise TypeError, 'autocovar: nonsense lag input type'&quot;
+print &quot;    if Demeaned == False:&quot;
+print &quot;        # axis=0 for columns (otherwise does overall-average):&quot;
+print &quot;        xbar = series.mean(axis=0)&quot;
+print &quot;    else: xbar = 0              # seems to broadcast to vector-0 ok (below)&quot;
+print &quot;    result = zeros([n,n])&quot;
+print &quot;    for tindex in range(Lag, t):&quot;
+print &quot;        xdev1 = series[tindex,:] - xbar&quot;
+print &quot;        xdev2 = series[tindex-Lag, :] - xbar&quot;
+print &quot;        result += xdev1.T * xdev2&quot;
+print &quot;    result /= t&quot;
+print &quot;    if output == 'array': return asarray(result)&quot;
+print &quot;    else: return result&quot;
+print &quot;&quot;
+print &quot;from numpy import mat, asarray&quot;
+print &quot;from numpy.matlib import zeros&quot;
+print &quot;def longrunvar(series, Demeaned = False, LagTrunc = 4):&quot;
+print &quot;    '''&quot;
+print &quot;    Estimates the long-run variance (aka spectral density at frequency zero)&quot;
+print &quot;    of a uni- or multivariate time series.&quot;
+print &quot;&quot;
+print &quot;    Usage: lrv = longrunvar(series [, Demeaned, LagTrunc]),&quot;
+print &quot;    where series is a TxN matrix holding&quot;
+print &quot;    the N-variable T-period data (early periods first).&quot;
+print &quot;    The Bartlett weighting function is used&quot;
+print &quot;    up to the specified lag truncation (default = 4).&quot;
+print &quot;    Specify Demeaned=True when passing Ols-residuals etc. (default False).&quot;
+print &quot;    Returns an NxN matrix (even for N=1).&quot;
+print &quot;    '''&quot;
+print &quot;    if type(series) == type(asarray(series)):&quot;
+print &quot;        output = 'array'&quot;
+print &quot;        series = mat(series)&quot;
+print &quot;    else: output = 'matrix'&quot;
+print &quot;    t, n = series.shape&quot;
+print &quot;&quot;
+print &quot;    # set the lag window constant:&quot;
+print &quot;    try: Lag = int(LagTrunc)&quot;
+print &quot;    except: raise TypeError, 'longrunvar: nonsense lag input type'&quot;
+print &quot;    if Lag &gt;= t-1:&quot;
+print &quot;        Lag = int(sqrt(t))&quot;
+print &quot;        print 'longrunvar warning: not enough data for chosen lag window'&quot;
+print &quot;        print '(was ', LagTrunc, ', reset to ', Lag, ')'&quot;
+print &quot;&quot;
+print &quot;    result = zeros([n,n])&quot;
+print &quot;    for tau in range(1, Lag+1):&quot;
+print &quot;        Gamma = autocovar(series, tau, Demeaned)    # numpy-matrix here&quot;
+print &quot;        #the positive and negative range together:&quot;
+print &quot;        result += (1-tau/(Lag+1)) * (Gamma + Gamma.T)&quot;
+print &quot;    # add the tau=0 part:&quot;
+print &quot;    result +=  autocovar(series, 0, Demeaned)&quot;
+print &quot;    if output == 'array': return asarray(result)&quot;
+print &quot;    else: return result&quot;
+print &quot;&quot;
+print &quot;from numpy import mat&quot;
+print &quot;from numpy.matlib import ones, zeros&quot;
+print &quot;from numpy.linalg import solve&quot;
+print &quot;def commontrendstest(series, LagTrunc=4, determ = 'c', breakpoint=0.5):&quot;
+print &quot;    '''&quot;
+print &quot;    The Nyblom&amp;Harvey(2000)-type tests for K_0 against K&gt;K_0&quot;
+print &quot;    common stochastic trends in time series.&quot;
+print &quot;&quot;
+print &quot;    Usage: commontrendstest(series [, LagTrunc, Deterministics, breakpoint])&quot;
+print &quot;    returns a 1d N-array with the test statistics&quot;
+print &quot;    (partial sums of relevant eigenvalues),&quot;
+print &quot;    starting with the null hypothesis K_0=N-1 and ending with K_0=0.&quot;
+print &quot;    Pass a TxN array of data in series (early periods first).&quot;
+print &quot;    Optional:&quot;
+print &quot;    1)&quot;
+print &quot;    A number in LagTrunc to influence the lag window that is used&quot;
+print &quot;    for the implicit estimation of the long-run covariance matrix (default 4).&quot;
+print &quot;    2)&quot;
+print &quot;    Specify the type of deterministics; default is a constant mean,&quot;
+print &quot;    but you can set 't' to automatically de-trend the data (linearly),&quot;
+print &quot;    or use one of the following models with (one-time) deterministic shifts&quot;
+print &quot;    (see Busetti 2002):&quot;
+print &quot;    '1' (a string!) for a level shift w/o trend,&quot;
+print &quot;    '2' for a model with breaks in the mean and the trend slope,&quot;
+print &quot;    '2a' for a trend model where only the mean shifts.&quot;
+print &quot;    (Case 2b --broken trends with connected segments-- will not be implemented.)&quot;
+print &quot;    3) The relative breakpoint in the sample can be chosen for the shift-cases&quot;
+print &quot;    (otherwise it is ignored); it defaults to 0.5.&quot;
+print &quot;    '''&quot;
+print &quot;    series = mat(series)&quot;
+print &quot;    t, n = series.shape&quot;
+print &quot;    try: Lag = int(LagTrunc)&quot;
+print &quot;    except: raise TypeError, 'commontrendstest: nonsense lag input type'&quot;
+print &quot;    if Lag &lt;= 0:&quot;
+print &quot;        print 'commontrendstest warning: lag trunc too small, set to default!'&quot;
+print &quot;        Lag = 4&quot;
+print &quot;    if type(breakpoint) != type(0.5):   # check for floating point input&quot;
+print &quot;        raise TypeError, 'commontrendstest: nonsense breakpoint input type'&quot;
+print &quot;    elif (breakpoint &lt;= 0) or (breakpoint &gt;= 1):&quot;
+print &quot;        raise ValueError, 'commontrendstest: breakpoint not in unit interval'&quot;
+print &quot;    # (end check input)&quot;
+print &quot;    if determ == 'c': D = ones(t).T&quot;
+print &quot;    elif determ == 't': D = getDeterministics(t, 'ct')&quot;
+print &quot;    elif determ == '1': D = getDeterministics(t, 'cl', breakpoint)&quot;
+print &quot;    elif determ == '2': D = getDeterministics(t, 'ctls', breakpoint)&quot;
+print &quot;    elif determ == '2a': D = getDeterministics(t, 'ctl', breakpoint)&quot;
+print &quot;&quot;
+print &quot;    # okay, now remove the deterministics:&quot;
+print &quot;    # (by now, D should be Tx(1,2,3, or 4) )&quot;
+print &quot;    # this should do the projection:&quot;
+print &quot;    Resid = series - D * solve(D.T * D, D.T * series)&quot;
+print &quot;    Cmat = zeros([n,n])&quot;
+print &quot;    for i in range(t):&quot;
+print &quot;        temp = zeros((1,n))&quot;
+print &quot;        for tindex in range(i):&quot;
+print &quot;            temp += Resid[tindex,:]&quot;
+print &quot;        Cmat += temp.T * temp&quot;
+print &quot;    Cmat /= t**2&quot;
+print &quot;    Sm = longrunvar(Resid, True, Lag)&quot;
+print &quot;    # (True for data w/o deterministics, because everything removed)&quot;
+print &quot;&quot;
+print &quot;    # generalized eigenvalues, corresponding to det(Cmat- lambda_j Sm)=0&quot;
+print &quot;    try: evals = geneigsympos(Cmat, Sm)[0]&quot;
+print &quot;    except:&quot;
+print &quot;        # most probably Sm wasn't pos-def, which can happen depending on lags,&quot;
+print &quot;        # then we try to switch over to scipy's more general eigenvalues&quot;
+print &quot;        print Sm    #to get some insight before everything dies&quot;
+print &quot;        from scipy import linalg as sl&quot;
+print &quot;        evals = sl.eigvals(Cmat, Sm)&quot;
+print &quot;        evals.sort()        # in-place!&quot;
+print &quot;    # default axis in cumsum works here:&quot;
+print &quot;    return evals.cumsum()&quot;
+print &quot;&quot;
+print &quot;#############################################################&quot;
+print &quot;&quot;
+print &quot;'''&quot;
+print &quot;Changelog:&quot;
+print &quot;15Jan2007:&quot;
+print &quot;    new unvec() function&quot;
+print &quot;11Jan2007:&quot;
+print &quot;    new writecsv() function,&quot;
+print &quot;    deleted writeGpl...,&quot;
+print &quot;    new startobs2obslist(),&quot;
+print &quot;    new vec() function&quot;
+print &quot;10Jan2007:&quot;
+print &quot;    fixed use of c_ / r_ due to change in numpy API,&quot;
+print &quot;    fix bug in readcsv&quot;
+print &quot;7Jan2007:&quot;
+print &quot;    rewrote input checks using assert,&quot;
+print &quot;    generalized readcsv (formerly known as readgretlcsv)&quot;
+print &quot;5Jan2007:&quot;
+print &quot;    explicit sorting of eigenvalues instead of relying on numpy implementation&quot;
+print &quot;3Jan2007:&quot;
+print &quot;    new and simpler readgretlcsv (after gretl cvs changes),&quot;
+print &quot;    converter for numpy matrix to gretl-type matrix string&quot;
+print &quot;17Aug2006:&quot;
+print &quot;    fixes for readGplFile,&quot;
+print &quot;    finished writeGplFile&quot;
+print &quot;16Aug2006:&quot;
+print &quot;    removed obsolete qString2qNumber(),&quot;
+print &quot;    rewrote readGplFile with csv module, scipy or matplotlib not required,&quot;
+print &quot;    started analogous writeGplFile&quot;
+print &quot;15Aug2006:&quot;
+print &quot;    minor cosmetics&quot;
+print &quot;12Aug2006:&quot;
+print &quot;    added readGplFile,&quot;
+print &quot;    added getImpulseDummies&quot;
+print &quot;11Aug2006:&quot;
+print &quot;    added helpers for use with matplotlib and or gpl-formatted csv files,&quot;
+print &quot;    renamed getDetermMatrix to getDeterministics&quot;
+print &quot;10Aug2006:&quot;
+print &quot;    commented out diagm, can use .diagonal() and diagflat() in numpy&quot;
+print &quot;21Jul2006:&quot;
+print &quot;    commented out zerosm, onesm, emptym, eyem, randm, which are obsoleted&quot;
+print &quot;     by the new numpy.matlib,&quot;
+print &quot;    what about diag?: still needs to be fixed in numpy,&quot;
+print &quot;    tried to avoid inefficient inverses (and use solve instead),&quot;
+print &quot;    replace asm/asmatrix by mat which now means the same in numpy,&quot;
+print &quot;    try to make makeNumpyMatrix redundant,&quot;
+print &quot;2Jun2006:&quot;
+print &quot;    added helpers zerosm, onesm, emptym, eyem, diagm to return numpy-matrices,&quot;
+print &quot;    added helper randm including workaround,&quot;
+print &quot;    switched to using ' instead of &quot; where possible,&quot;
+print &quot;    don't add the replaced stuff like zeros etc. to the namespace anymore,&quot;
+print &quot;15May2006:&quot;
+print &quot;    kron is now in numpy, no need to substitute anymore;&quot;
+print &quot;    evals from geneigsympos are now always returned as array&quot;
+print &quot;1Mar2006:&quot;
+print &quot;    moved the Vecm class to file Vecmclass.py, and &quot;stole&quot; kron from scipy&quot;
+print &quot;28Feb2006:&quot;
+print &quot;    add Stock-Watson common-trends calculation&quot;
+print &quot;20Feb2006:&quot;
+print &quot;    work on deterministic adjustment of GG-decomp&quot;
+print &quot;14Feb2006:&quot;
+print &quot;    bugfixes and better treatment of S&amp;L deterministics&quot;
+print &quot;12Feb2006:&quot;
+print &quot;    deterministics estimation a la S&amp;L added to Vecm class,&quot;
+print &quot;    more use of numpy-lstsq-function 31Jan2006: all functions should&quot;
+print &quot;    return arrays or matrix-type according to the input, where that makes&quot;
+print &quot;    sense, i.e. whenever a data matrix is passed to a function(and where&quot;
+print &quot;    the purpose is not explicitly to produce matrices)&quot;
+print &quot;28Jan2006:&quot;
+print &quot;    bugfixing related to coeffs of restricted variables, wrote function&quot;
+print &quot;    for symmetric-def-gen.eigval problem to remove scipy-dependency&quot;
+print &quot;19Jan2006:&quot;
+print &quot;    work started on a vecm class 19Jan2006: switched over to&quot;
+print &quot;    raising exceptions instead of home-cooked string generation&quot;
+print &quot;19Jan2006:&quot;
+print &quot;    functions should all return numpy-matrix-type&quot;
+print &quot;6Jan2006:&quot;
+print &quot;    switched over to numpy/new-scipy&quot;
+print &quot;'''&quot;
+##############################################
+### start of embedded former vecmclass.py
+# remember that the &quot;from helpers import...&quot;
+#  line must be commented out!
+############################################
+print &quot;'''&quot;
+print &quot;NumPy class for cointegration/VECM analysis written by Sven Schreiber.&quot;
+print &quot;&quot;
+print &quot;This is free but copyrighted software, distributed under the same license terms&quot;
+print &quot;(as of January 2007) as the 'gretl' program by Allin Cottrell and others, see&quot;
+print &quot;gretl.sf.net (in short: GPL v2, see www.gnu.org/copyleft/gpl.html).&quot;
+print &quot;&quot;
+print &quot;(see end of this file for a changelog)&quot;
+print &quot;'''&quot;
+print &quot;from numpy import ( r_, c_, fliplr, where,&quot;
+print &quot; inf, log, diff, sqrt, diag, mat, kron, abs, trace )&quot;
+print &quot;from numpy.linalg import eigh, solve, lstsq, det&quot;
+print &quot;from numpy.matlib import ones, zeros, empty, rand, eye&quot;
+#print &quot;from helpers import ( geneigsympos, addLags, getOrthColumns, getDeterministics,&quot;
+#print &quot; vecm2varcoeffs, readcsv, vec, unvec )&quot;
+print &quot;import os&quot;
+print &quot;&quot;
+print &quot;class Vecm:             # capitalized due to Python convention (?)&quot;
+print &quot;    '''&quot;
+print &quot;    Estimate a cointegrated VAR (aka Vector Error Correction Model).&quot;
+print &quot;&quot;
+print &quot;    Usage:&quot;
+print &quot;    First specify your model,&quot;
+print &quot;    my = vecm(endo_vars, lags, [cirank, determ, sd, restr_exo, unrestr_exo])&quot;
+print &quot;    * endo_vars as a TxN array/matrix of the endogenous vector&quot;
+print &quot;    * lags refers to the lag order (in levels, only affects endo-vars)&quot;
+print &quot;    * cirank specifies rank(Pi)=rank(beta)=rank(alpha) = r&quot;
+print &quot;    * determ chooses &quot;Eviews-cases&quot; 1 through 5&quot;
+print &quot;    * sd requests centered seasonal dummies: pass &quot;q&quot; for quarterly and &quot;m&quot; for&quot;
+print &quot;       monthly, or pass True if info in the endo data file (else False)&quot;
+print &quot;    * restr-exo (optional) passes further variables, restricted to the ci-space&quot;
+print &quot;    * unrestr-exo (optional) for further variables &quot;outside&quot; the ci-space&quot;
+print &quot;        (these are included with lags, just pass the contemp level!)&quot;
+print &quot;&quot;
+print &quot;    For all data matrices, note that early periods come first.&quot;
+print &quot;    Alternatively you can pass filenames as strings instead of numpy matrices,&quot;
+print &quot;     where the data are assumed to be in csv files (gretl export format).&quot;
+print &quot;&quot;
+print &quot;    Then access the attributes you need:&quot;
+print &quot;     my.beta_star gets ( n_y + # of restricted variables) beta with&quot;
+print &quot;        coeffs for the restricted variables as well&quot;
+print &quot;     my.alpha&quot;
+print &quot;     my.beta_star_id (auto-identified by eye-matrix)&quot;
+print &quot;     my.alpha_id (corresponding)&quot;
+print &quot;     my.beta_o&quot;
+print &quot;     my.alpha_o&quot;
+print &quot;     etc.&quot;
+print &quot;    Returns numpy-matrices even if array is passed!&quot;
+print &quot;&quot;
+print &quot;    The _id variants are immutable and come from the unrestricted estimation;&quot;
+print &quot;     any subsequent restrictions will potentially affect all other coefficients.&quot;
+print &quot;    So after creating an instance, all coeffs are for the unrestricted estimate.&quot;
+print &quot;    Then it depends...&quot;
+print &quot;    '''&quot;
+print &quot;    def __init__(self, endo, maxlag, cirank = 1, determcase = 3, sd = False, \&quot;
+print &quot;                 restr_exo = None, unrestr_exo = None):&quot;
+print &quot;        '''&quot;
+print &quot;        Prepares everything and estimates the unrestricted stuff.&quot;
+print &quot;        '''&quot;
+print &quot;        ## load the data&quot;
+print &quot;        if type(endo) == type('filename'):&quot;
+print &quot;            endo, orientation, varnames, obslabels, freq = readcsv(endo)&quot;
+print &quot;            if orientation == 'rows': endo = endo.T&quot;
+print &quot;        else: endo = mat(endo)&quot;
+print &quot;        if sd == True: sd = freq&quot;
+print &quot;        # (freq must be deductable from csv-file if True is chosen)&quot;
+print &quot;        if type(restr_exo) == type('filename'):&quot;
+print &quot;            restr_exo, orientation = readcsv(restr_exo)[0:2]&quot;
+print &quot;            if orientation == 'rows': restr_exo = restr_exo.T&quot;
+print &quot;        if type(unrestr_exo) == type('filename'):&quot;
+print &quot;            unrestr_exo, orientation = readcsv(unrestr_exo)[0:2]&quot;
+print &quot;            if orientation == 'rows': unrestr_exo = unrestr_exo.T&quot;
+print &quot;&quot;
+print &quot;        ## some input checks&quot;
+print &quot;        if type(sd) == type('a'):&quot;
+print &quot;            try: assert freq == sd      # freq may not exist&quot;
+print &quot;            except: pass                # got error w/o this line&quot;
+print &quot;            assert sd in 'mqMQ', 'vecm: only &quot;q&quot; or &quot;m&quot; supported for seasonals'&quot;
+print &quot;        if restr_exo is not None:&quot;
+print &quot;            assert endo.shape[0] == restr_exo.shape[0], \&quot;
+print &quot;             'vecm: restricted exo var obs numbers unmatched'&quot;
+print &quot;        if unrestr_exo is not None:&quot;
+print &quot;            assert endo.shape[0] == unrestr_exo.shape[0], \&quot;
+print &quot;             'vecm: unrestricted exo var obs numbers unmatched'&quot;
+print &quot;        assert ( type(maxlag) == type(4) and type(cirank) == type(4) \&quot;
+print &quot;           and type(determcase) == type(4) ), \&quot;
+print &quot;             'vecm: bogus input where integer expected'&quot;
+print &quot;        assert maxlag in range(1, endo.shape[0]), 'vecm: bogus maxlag'&quot;
+print &quot;        assert cirank in range(1, endo.shape[1]), 'vecm: bogus cirank'&quot;
+print &quot;        assert determcase in range(1, 6), 'vecm: bogus determcase'&quot;
+print &quot;&quot;
+print &quot;        ## calculate some useful numbers&quot;
+print &quot;        nobs, n_y = endo.shape      # nobs: full sample&quot;
+print &quot;        teff = nobs - maxlag        # teff: eff. sample&quot;
+print &quot;        if sd == False:     n_ud = 0    # num of unrestr. determ.&quot;
+print &quot;        elif sd in 'qQ':    n_ud = 3&quot;
+print &quot;        elif sd in 'mM':    n_ud = 11&quot;
+print &quot;        else:               n_ud = 0              # e.g. sd=='a', or 'unknown'&quot;
+print &quot;        if restr_exo == None: n_rx = 0       # to be able to use n_rx later&quot;
+print &quot;        else:&quot;
+print &quot;            restr_exo = mat(restr_exo)&quot;
+print &quot;            n_rx = restr_exo.shape[1]&quot;
+print &quot;        if unrestr_exo == None: n_ux = 0       # to be able to use n_ux later&quot;
+print &quot;        else:&quot;
+print &quot;            unrestr_exo = mat(unrestr_exo)&quot;
+print &quot;            n_ux = unrestr_exo.shape[1]&quot;
+print &quot;        if determcase == 2 or determcase == 4:  n_rd = 1&quot;
+print &quot;        else:                                   n_rd = 0&quot;
+print &quot;        if determcase == 3 or determcase == 4:  n_ud += 1&quot;
+print &quot;        elif determcase == 5:                   n_ud += 2&quot;
+print &quot;        n1 = n_y + n_rx + n_rd        # rows of beta_star, all ect-components&quot;
+print &quot;                                      # (==p1 in Boswijk/Doornik)&quot;
+print &quot;&quot;
+print &quot;        ## construct the needed data matrices&quot;
+print &quot;        # starting points for unrestricted and restricted:&quot;
+print &quot;        dy = diff(endo, axis=0)&quot;
+print &quot;        dylags = addLags(dy, maxlag-1)      # addLags shortens the sample&quot;
+print &quot;        dy = dy[-teff: , :]                 # only preserve effective sample&quot;
+print &quot;        # discarding the contemp diff is starting point for unrestricted:&quot;
+print &quot;        unrestr = dylags[:, n_y:]&quot;
+print &quot;            # (if no lag-diffs specified, \&quot;
+print &quot;            #  then unrestr.shape == (teff, 0) should hold at this point)&quot;
+print &quot;        # lagged level is starting point for restricted, only effective sample:&quot;
+print &quot;        restr = endo[:-1, :][-teff:, :]&quot;
+print &quot;&quot;
+print &quot;        # now the unrestricted exo- and d-stuff (only effective sample)&quot;
+print &quot;        if unrestr_exo is not None:&quot;
+print &quot;            unrestr = c_[unrestr, unrestr_exo[-teff:, :] ]&quot;
+print &quot;        if sd == 'q' or sd == 'Q' or sd == 'm' or sd == 'M':&quot;
+print &quot;            unrestr = c_[unrestr, getDeterministics(teff, sd)]&quot;
+print &quot;        if determcase &gt;= 3:&quot;
+print &quot;            unrestr = c_[unrestr, getDeterministics(teff, 'c')]&quot;
+print &quot;        if determcase == 5:&quot;
+print &quot;            unrestr = c_[unrestr, getDeterministics(teff, 't')]&quot;
+print &quot;        # (If no data was added, unrestr.shape == (self.teff, 0) still !&quot;
+print &quot;&quot;
+print &quot;        # now the restricted exo- and d-stuff&quot;
+print &quot;        #  (also adjust for lost starting obs due to endo-lags)&quot;
+print &quot;        if restr_exo is not None:&quot;
+print &quot;            # lag the restricted exog. vars by one period to match the y_{t-1}:&quot;
+print &quot;            restr = c_[restr, restr_exo[:-1, :][-teff:, :]]&quot;
+print &quot;        if determcase == 2: restr = c_[restr,  getDeterministics(teff, 'c')]&quot;
+print &quot;        # for determcase &gt;= 3 the constant is already unrestricted, no need here&quot;
+print &quot;        if determcase == 4: restr = c_[restr,  getDeterministics(teff, 't')]&quot;
+print &quot;        # for determcase == 5 the trend is already unrestricted, no need here&quot;
+print &quot;&quot;
+print &quot;        ## RRR in __init__, no use for vecm without it&quot;
+print &quot;        if unrestr.shape[1] &gt; 0:    # actually some columns there&quot;
+print &quot;            R0 = dy - unrestr * lstsq(unrestr, dy)[0]&quot;
+print &quot;            R1 = restr - unrestr * lstsq(unrestr, restr)[0]&quot;
+print &quot;        else:&quot;
+print &quot;            R0 = dy&quot;
+print &quot;            R1 = restr&quot;
+print &quot;        S00 = R0.T * R0 / teff&quot;
+print &quot;        S01 = R0.T * R1 / teff&quot;
+print &quot;        S11 = R1.T * R1 / teff&quot;
+print &quot;        S = S01.T * solve(S00, S01)&quot;
+print &quot;        # generalized eigenvalues, corresponding to det(lambda_j S11 - S)=0&quot;
+print &quot;        # only the largest n_y eigenvalues are relevant,&quot;
+print &quot;        # the rest are zeroes due to the restricted variables;&quot;
+print &quot;        # need the evals ascending first for tracestats&quot;
+print &quot;        evals, evectors = geneigsympos(S, S11)&quot;
+print &quot;        evals = evals[-n_y:]&quot;
+print &quot;        tracestats = -teff * log(1-evals).cumsum()&quot;
+print &quot;        tracestats = tracestats[::-1]      # reversed&quot;
+print &quot;        evals = evals[::-1]                # accordingly descending&quot;
+print &quot;        logL = -teff/2 * ( log(det(S00)) + log(1-evals[:cirank]).sum() )&quot;
+print &quot;&quot;
+print &quot;        ## first the most natural coeffs in the model with restricted vars:&quot;
+print &quot;        # since evals was ascending, we have to pick the _last_ vectors...!&quot;
+print &quot;        beta_star = evectors[:, -cirank:]&quot;
+print &quot;        # now offer the usual (trivial) identification for beta&quot;
+print &quot;        c_id = r_[eye(cirank), zeros((n1 - cirank, cirank))]&quot;
+print &quot;        c_id_o = r_[zeros((cirank, n1 - cirank)), eye(n1 - cirank)]&quot;
+print &quot;        beta_star_id = solve((c_id.T * beta_star).T, beta_star.T).T&quot;
+print &quot;        # old (delete later if no assertion errors):&quot;
+print &quot;        beta1 = beta_star[:cirank, :].T    # should now be rxr&quot;
+print &quot;        beta2 = beta_star[cirank:, :].T&quot;
+print &quot;        beta_star_id_old = r_[eye(cirank), solve(beta1, beta2).T]&quot;
+print &quot;        assert (beta_star_id == beta_star_id_old).all()&quot;
+print &quot;&quot;
+print &quot;        ## estimate the unrestricted alpha:&quot;
+print &quot;        remainingVecmCoeffs = lstsq(c_[restr * beta_star_id, unrestr], dy)[0]&quot;
+print &quot;        # (Dimension is (cirank+N_unrestr x n_y), and the ordering:&quot;
+print &quot;        #  alpha.T, dylags coeffs --gammas--, unrestr_exo coeffs,&quot;
+print &quot;        #  seasonal coeffs, constant, trend)&quot;
+print &quot;        alpha_id = remainingVecmCoeffs[:cirank, :].T&quot;
+print &quot;&quot;
+print &quot;        # (the cov matrix of beta_star_id and alpha_id is relegated to the end)&quot;
+print &quot;&quot;
+print &quot;        ## make stuff available&quot;
+print &quot;        self.beta_star = beta_star&quot;
+print &quot;        self.beta_star_id = beta_star_id&quot;
+print &quot;        self.alpha_id = alpha_id&quot;
+print &quot;        self.R0 = R0            #e.g. for some restricted estimations&quot;
+print &quot;        self.R1 = R1&quot;
+print &quot;        self.S00 = S00&quot;
+print &quot;        self.S11 = S11&quot;
+print &quot;        self.S01 = S01&quot;
+print &quot;        self.cirank = cirank&quot;
+print &quot;        self.tracestats = tracestats&quot;
+print &quot;        self.evals = evals&quot;
+print &quot;        self.logL = logL&quot;
+print &quot;        self.maxlag = maxlag&quot;
+print &quot;        self.teff = teff&quot;
+print &quot;        self.endo = endo                # this has full sample!&quot;
+print &quot;        self.restr_exo = restr_exo      #  dito, may be None&quot;
+print &quot;        self.unrestr_exo = unrestr_exo  #  dito, may be None&quot;
+print &quot;        self.dy = dy                    #  only effective sample&quot;
+print &quot;        self.unrestr = unrestr          # effective sample&quot;
+print &quot;        self.restr = restr              #  dito&quot;
+print &quot;        self.sd = sd                    # seasonal spec. needed for S&amp;L etc.&quot;
+print &quot;        self.determcase = determcase&quot;
+print &quot;        self.n1 = n1&quot;
+print &quot;&quot;
+print &quot;        # outsourced all other coeffs&quot;
+print &quot;        #  (including omegamat, needed for alpha/beta standard errors)&quot;
+print &quot;        self.setOtherCoeffs(use_given_alpha = False)&quot;
+print &quot;&quot;
+print &quot;        ## the cov-matrix of beta_star_id and alpha_id,&quot;
+print &quot;        #   based on eq 9 in Boswijk/Doornik&quot;
+print &quot;        # standard errors for alpha_id&quot;
+print &quot;        omI = self.omegamat.I; a = alpha_id; b = beta_star_id; co = c_id_o&quot;
+print &quot;        topright = kron(omI*a, b.T*S11*co)&quot;
+print &quot;        aBinfo = c_[kron(omI, b.T*S11*b), topright]&quot;
+print &quot;        aBinfo = teff * r_[aBinfo, c_[topright.T, kron(a.T*omI*a, co.T*S11*co)]]&quot;
+print &quot;        aBcov = aBinfo.I&quot;
+print &quot;        # first part refers to vec(a.T)&quot;
+print &quot;        self.alpha_id_se = sqrt(unvec(diag(aBcov)[:n_y*cirank], cirank, n_y).T)&quot;
+print &quot;        # and B is just the lower part of beta_star_id&quot;
+print &quot;        beta_star_id_se = zeros((cirank, cirank))&quot;
+print &quot;        self.beta_star_id_se = r_[beta_star_id_se, \&quot;
+print &quot;         sqrt(unvec(diag(aBcov)[n_y*cirank:], n1-cirank, cirank))]&quot;
+print &quot;&quot;
+print &quot;    def setOtherCoeffs(self, use_given_alpha = True):&quot;
+print &quot;        '''&quot;
+print &quot;        Estimates the model given self.alpha_id and self.beta_star_id.&quot;
+print &quot;&quot;
+print &quot;        This is useful because the user can specify restricted alphas and betas&quot;
+print &quot;         (on the already started vecm-instance), and then all methods of this&quot;
+print &quot;         class work with those estimates.&quot;
+print &quot;&quot;
+print &quot;        If the new alpha is not restricted (use_given_alpha==False),&quot;
+print &quot;         for a given self.beta_star all other coefficients including&quot;
+print &quot;         alpha_id can be found by regression.&quot;
+print &quot;        '''&quot;
+print &quot;        n_y = self.endo.shape[1];   nobs = self.endo.shape[0]&quot;
+print &quot;        cirank = self.cirank;       beta_star = self.beta_star&quot;
+print &quot;&quot;
+print &quot;        # then the beta-o estimate by matrix algebra:&quot;
+print &quot;        #  (only the rows relating to the endogenous variables)&quot;
+print &quot;        beta_o = getOrthColumns(beta_star[:n_y, :])&quot;
+print &quot;&quot;
+print &quot;        if use_given_alpha:&quot;
+print &quot;            alpha = self.alpha&quot;
+print &quot;            shortruncoeffs = lstsq(self.unrestr, \&quot;
+print &quot;                self.dy - self.restr * beta_star * alpha.T)[0]&quot;
+print &quot;            # (Dimension is (N_unrestr x n_y), and the ordering:&quot;
+print &quot;            #  dylags coeffs --gammas--, unrestr_exo coeffs,&quot;
+print &quot;            #  seasonal coeffs, constant, trend)&quot;
+print &quot;            # determine alpha_orth by dumb mechanics&quot;
+print &quot;            alpha_o = getOrthColumns(alpha)&quot;
+print &quot;&quot;
+print &quot;        else:&quot;
+print &quot;            # estimate the unrestricted alpha:&quot;
+print &quot;            remainingVecmCoeffs = lstsq(c_[self.restr * beta_star, \&quot;
+print &quot;             self.unrestr], self.dy)[0]&quot;
+print &quot;            alpha = remainingVecmCoeffs[:cirank, :].T&quot;
+print &quot;            shortruncoeffs = remainingVecmCoeffs[cirank:, :]&quot;
+print &quot;            # (Dimension is (cirank+N_unrestr x n_y), and the ordering:&quot;
+print &quot;            #  alpha.T, dylags coeffs --gammas--, unrestr_exo coeffs,&quot;
+print &quot;            #  seasonal coeffs, constant, trend)&quot;
+print &quot;&quot;
+print &quot;            # estimate alpha_o (cf. Gonzalo-Granger eq 27)&quot;
+print &quot;            # (eigenvecs corresponding to the zero eigvals of the following,&quot;
+print &quot;            #  but this only allows a restricted beta, so can only use this&quot;
+print &quot;            #  formula for freely estimated alpha)&quot;
+print &quot;            evecs = geneigsympos(alpha * alpha.T, self.S00)[1]&quot;
+print &quot;            alpha_o = evecs[:, :n_y - cirank]&quot;
+print &quot;&quot;
+print &quot;        # new: generalized cov matrix for the possibly restricted case&quot;
+print &quot;        #  (Boswijk/Doornik p. 455)&quot;
+print &quot;        omegamat = self.S00 - self.S01*beta_star*alpha.T \&quot;
+print &quot;         - alpha*beta_star.T*self.S01.T \&quot;
+print &quot;         + alpha*beta_star.T*self.S11*beta_star*alpha.T&quot;
+print &quot;&quot;
+print &quot;        # gammas here are textbook-style for Nx1 convention, therefore .T&quot;
+print &quot;        gammas = shortruncoeffs[:(self.maxlag-1) * n_y, :].T&quot;
+print &quot;        # (skip the unrestr_exo coeffs and seasonal coeffs for now,&quot;
+print &quot;        #  don't need them?)&quot;
+print &quot;        if self.determcase == 5:             # unrestr. trend coeff is last&quot;
+print &quot;            mu_unr = shortruncoeffs[-2, :]&quot;
+print &quot;            tau_unr = shortruncoeffs[-1, :]&quot;
+print &quot;        elif self.determcase in range(3, 5):  # unrestr. constant is last&quot;
+print &quot;            mu_unr = shortruncoeffs[-1, :]&quot;
+print &quot;            tau_unr = zeros(n_y)&quot;
+print &quot;        else:&quot;
+print &quot;            mu_unr = zeros(n_y)&quot;
+print &quot;            tau_unr = zeros(n_y)&quot;
+print &quot;        # from the short-run gammas construct I-\sum G_i = Psi&quot;
+print &quot;        #  (don't forget our Nx1 convention gammas)&quot;
+print &quot;        psimat = eye(n_y)&quot;
+print &quot;        for lag in range(1, self.maxlag):&quot;
+print &quot;            psimat -= gammas[:, (lag-1) * n_y : lag * n_y]&quot;
+print &quot;        # and for convenience the C-matrix&quot;
+print &quot;        #  (long-run impact/common-trends, def. follows alpha, beta, etc)&quot;
+print &quot;        cmat = beta_o * solve(alpha_o.T * psimat * beta_o, alpha_o.T)&quot;
+print &quot;        # for the common trends the residuals are also useful:&quot;
+print &quot;        resids = self.dy - self.restr * beta_star * alpha.T \&quot;
+print &quot;            - self.unrestr * shortruncoeffs&quot;
+print &quot;        ## construct the full-sample ect:&quot;
+print &quot;        if self.restr_exo is None:&quot;
+print &quot;            temp = empty([nobs, 0])       # should do no harm&quot;
+print &quot;        else: temp = self.restr_exo&quot;
+print &quot;        if self.determcase == 2:          # need constant in cispace&quot;
+print &quot;            # as beta is a subset of beta_star, we pick the&quot;
+print &quot;            # relevant rows&quot;
+print &quot;            ect = c_[self.endo, ones(nobs).T, temp] * \&quot;
+print &quot;                  beta_star[:n_y + 1 + temp.shape[1], :]&quot;
+print &quot;        elif self.determcase == 4:      # need trend in cispace&quot;
+print &quot;            ect = c_[ self.endo, r_['c', 1:nobs+1], temp] * \&quot;
+print &quot;                  beta_star[:n_y + 1 + temp.shape[1], :]&quot;
+print &quot;        else:                           # just the exog. vars needed&quot;
+print &quot;            ect = c_[self.endo, temp] * \&quot;
+print &quot;                  beta_star[:n_y + temp.shape[1], :]&quot;
+print &quot;&quot;
+print &quot;        ## Make the (possibly) changed stuff available:&quot;
+print &quot;        self.alpha = alpha&quot;
+print &quot;        self.alpha_o = alpha_o&quot;
+print &quot;        self.beta_o = beta_o&quot;
+print &quot;        self.omegamat = omegamat&quot;
+print &quot;        self.gammas = gammas&quot;
+print &quot;        self.psimat = psimat            # I - \sum G_i&quot;
+print &quot;        self.cmat = cmat                # bo (ao'Psi bo)^{-1} ao'&quot;
+print &quot;        self.mu_unr = mu_unr            # unrestr. const., may be zero vec&quot;
+print &quot;        self.tau_unr = tau_unr          # unrestr. trend, may be zero vec&quot;
+print &quot;        self.ect = ect                  # dito&quot;
+print &quot;        self.resids = resids            # dito&quot;
+print &quot;&quot;
+print &quot;    def output2gretl(self, outfile, matnames = []):&quot;
+print &quot;        '''&quot;
+print &quot;        Writes a gretl script (genr and print statements) to transfer results.&quot;
+print &quot;&quot;
+print &quot;        outfile should be a path string,&quot;
+print &quot;        matnames is a string list of wanted matrix names, e.g. ['beta'],&quot;
+print &quot;        '''&quot;
+print &quot;        out = open(outfile, 'w')&quot;
+print &quot;        # gretl needs double quotes for print!&quot;
+print &quot;        out.write('print &quot;List of result objects (python side)):&quot;' + os.linesep)&quot;
+print &quot;        for name in matnames:&quot;
+print &quot;            out.write('matrix ' + name + ' = ' + \&quot;
+print &quot;                mat2gretlmatstring(eval('self.' + name)))&quot;
+print &quot;            out.write(os.linesep + 'print &quot;' + name + '&quot;' + os.linesep)&quot;
+print &quot;        out.close()&quot;
+print &quot;&quot;
+print &quot;    def getOrthogTrend(self, extraterms = None):&quot;
+print &quot;        '''&quot;
+print &quot;        Estimates linear trend in data under assumption b'mu_1 = 0.&quot;
+print &quot;&quot;
+print &quot;        Reference is Saikkonen&amp;Luetkepohl (2000, JoE). Only the first step&quot;
+print &quot;        is implemented, i.e. the coeff is bo(bo'bo)^{-1} tau_*, where&quot;
+print &quot;        tau_* is from regression bo' Delta(y_t) = tau_* + delta_* iota_t .&quot;
+print &quot;        Returns the (n_y x 1) coefficient (not the data component).&quot;
+print &quot;        This is the complete trend coeff of the levels under the assumption&quot;
+print &quot;        that b'tau = 0 (no trend in I(0) directions).&quot;
+print &quot;        '''&quot;
+print &quot;        # just an abbrev:&quot;
+print &quot;        bo = self.beta_o; y = self.endo; nobs, n_y = y.shape&quot;
+print &quot;        # prepare the data for aux regression (zero starting val, iota):&quot;
+print &quot;        dy = r_[zeros(n_y), y]&quot;
+print &quot;        dy = diff(dy, axis=0)      # should auto-adjust the sample&quot;
+print &quot;        rhs = ones(nobs).T    # the constant term&quot;
+print &quot;        iota = zeros(nobs).T&quot;
+print &quot;        iota[0, 0] = 1&quot;
+print &quot;        rhs = c_[rhs, iota]&quot;
+print &quot;&quot;
+print &quot;        if extraterms is not None:&quot;
+print &quot;            ## input checks:&quot;
+print &quot;            extraterms = mat(extraterms)&quot;
+print &quot;            assert extraterms.shape[0] == nobs, 'vecm: dims unmatched'&quot;
+print &quot;            # difference those extra variables, but preserve their starting val:&quot;
+print &quot;            #  (first row values should actually be irrelevant due to iota)&quot;
+print &quot;            extraterms = r_[extraterms[0, :], diff(extraterms, axis=0)]&quot;
+print &quot;            rhs = c_[rhs, extraterms]&quot;
+print &quot;        # get the tau_* coeff (at first p-r in first tuple element)&quot;
+print &quot;        #  (and again watch out for TxN vs. NxT and pre-/postmulti)&quot;
+print &quot;        coeff = lstsq(rhs, dy * bo)[0]&quot;
+print &quot;            # (coeff should be (2 x n_y-cirank) )&quot;
+print &quot;        taustar = coeff[0, :].T&quot;
+print &quot;            # (and taustar now should be (n_y-cirank x 1) as in S&amp;L 2000)&quot;
+print &quot;        # transform in the I(1) directions:&quot;
+print &quot;        return bo * solve(bo.T * bo, taustar)&quot;
+print &quot;&quot;
+print &quot;    def getSW(self, withrestricted = True, pstyle = False):&quot;
+print &quot;        '''&quot;
+print &quot;        Returns the Stock-Watson permanent components (with drifts).&quot;
+print &quot;&quot;
+print &quot;        Best for no trend in I(0)-directions.&quot;
+print &quot;        With respect to further restricted terms, we will (eventually) follow&quot;
+print &quot;         the approach as for Gonzalo-Granger adjustment below...&quot;
+print &quot;        The returned matrix holds data for the whole sample, but only the&quot;
+print &quot;         effective sample is filled non-trivially, the starting periods are&quot;
+print &quot;         set to y_0, i.e. first pre-eff-sample obs.&quot;
+print &quot;&quot;
+print &quot;        If proiettistyle is chosen, then the permanent components are not&quot;
+print &quot;         calculated from the cumulated residuals (not robust w.r.t. outliers),&quot;
+print &quot;         but from distributed lags of the variables themselves:&quot;
+print &quot;             sw_proietti_t = (I-P)*(G(1)+a*b')^-1 * G(L) * X_t,&quot;
+print &quot;         where P = gabi * a * (b' * gabi * a)^-1 * b',&quot;
+print &quot;         and gabi = (G(1) + a*b')^-1,&quot;
+print &quot;         a = alpha, b = beta,&quot;
+print &quot;         and G(L) = I - G_1 L - G_2 L^2 -...-G_{maxlag-1) L^{maxlag-1},&quot;
+print &quot;         and the G_i are the alternative short-run gammas referring to the&quot;
+print &quot;         model with the ect lagged maxlag periods.&quot;
+print &quot;         (See Proietti 1997)&quot;
+print &quot;        Adjustment for unrestricted constant (drift) is automatically done,&quot;
+print &quot;         implicitly rendering the&quot;
+print &quot;&quot;
+print &quot;        '''&quot;
+print &quot;        teff = self.teff; n_y = self.endo.shape[1];  maxlag = self.maxlag&quot;
+print &quot;        a = self.alpha; b = self.beta_star[:n_y,:]&quot;
+print &quot;&quot;
+print &quot;        if pstyle:&quot;
+print &quot;            # transform our gammas into alternative gammas (with broadcasting)&quot;
+print &quot;            # (Both gammas and altgammas should have shape (n_y, n_y*(maxlag-1)),&quot;
+print &quot;            #  textbook style, used with gammas * dy)&quot;
+print &quot;            if maxlag == 1:         # no short run, because of kron-limitation&quot;
+print &quot;                altgamma1 = eye(n_y)&quot;
+print &quot;            else:&quot;
+print &quot;                altgammas = kron(ones(maxlag-1), a * b.T) + self.gammas&quot;
+print &quot;                # G(1), gabi, P&quot;
+print &quot;                altgamma1 = eye(n_y) - \&quot;
+print &quot;                 altgammas * kron(ones(maxlag-1).T, eye(n_y))&quot;
+print &quot;            gabi = (altgamma1 + a * b.T).I&quot;
+print &quot;            pmat = gabi * a * solve(b.T * gabi * a, b.T)&quot;
+print &quot;&quot;
+print &quot;            # distributed lags of levels&quot;
+print &quot;            # (in endo: early periods first,&quot;
+print &quot;            #  but in (alt)gammas: low lags first!)&quot;
+print &quot;            # (implicitly set pre-sample values to zero)&quot;
+print &quot;            # (also remember (alt)gammas refer to gamma * y convention)&quot;
+print &quot;            glx = self.endo.copy()&quot;
+print &quot;            # (w/o copy the passed Y would be messed up!)&quot;
+print &quot;            for lag in range(1, maxlag):&quot;
+print &quot;                glx[lag:, :] -= self.endo[:-lag, :] * \&quot;
+print &quot;                    altgammas[:, (lag-1) * n_y : lag * n_y].T&quot;
+print &quot;&quot;
+print &quot;            # the permanent component&quot;
+print &quot;            sw = glx * gabi.T * (eye(n_y) - pmat).T&quot;
+print &quot;            # (demeaning should come after dealing with restricted terms)&quot;
+print &quot;&quot;
+print &quot;        else:                  # standard Stock-Watson residual-based components&quot;
+print &quot;            sw = zeros([maxlag + teff, n_y])&quot;
+print &quot;            # fill everything with the one initial value y_0&quot;
+print &quot;            sw += self.endo[maxlag - 1 , :] # hope for broadcasting here&quot;
+print &quot;            # add the drifts in I(1)-direction, but only for effective sample:&quot;
+print &quot;            # (watch out for different cmat Nx1 convention)&quot;
+print &quot;            sw[-teff:, :] += r_['c', 1:teff + 1] * self.mu_unr * self.cmat.T&quot;
+print &quot;            # add the random walks:&quot;
+print &quot;            sw[-teff:, :] += self.resids.cumsum(axis=0) * self.cmat.T&quot;
+print &quot;&quot;
+print &quot;        # now the adjustment for restricted terms:&quot;
+print &quot;        # (this actually should also deal with restricted constant and trend)&quot;
+print &quot;        if withrestricted:&quot;
+print &quot;            # taken from GG, so this actually only deals with the PX_t part&quot;
+print &quot;            #  i.e. the difference of the restricted terms probably would&quot;
+print &quot;            #  show up in the psi2_t term (relating to a comb. of Delta X_t)&quot;
+print &quot;            sw += (self.endo * b - self.ect) * solve(a.T * b, a.T)&quot;
+print &quot;&quot;
+print &quot;        if pstyle and (self.determcase in range(3,5)):&quot;
+print &quot;            # we shift the mean of the transitory comp. to the permanent one,&quot;
+print &quot;            #  but only calculated for the effective sample&quot;
+print &quot;            transeff = (self.endo - sw)[-teff:, :]&quot;
+print &quot;            sw[-teff:, :] += transeff.mean(axis=0)&quot;
+print &quot;&quot;
+print &quot;        # use initial obs values for pre-eff sample starting periods&quot;
+print &quot;        sw[:maxlag, :] = self.endo[:maxlag, :]&quot;
+print &quot;&quot;
+print &quot;        return sw&quot;
+print &quot;&quot;
+print &quot;    def getGG(self, withrestricted = True, adjusted = True):&quot;
+print &quot;        '''&quot;
+print &quot;        Returns stuff coming from the Gonzalo-Granger decomposition.&quot;
+print &quot;&quot;
+print &quot;        Returns 3 matrices (in tuple) w/&quot;
+print &quot;        1) permanent&quot;
+print &quot;        2) and transitory data components,&quot;
+print &quot;        3) and the common I(1) factors.&quot;
+print &quot;&quot;
+print &quot;        All items are given for the full available sample.&quot;
+print &quot;&quot;
+print &quot;        Treatment of adjustment for levels and other deterministics:&quot;
+print &quot;        (pass adjusted=False to leave all that out and return the&quot;
+print &quot;         plain gg-decomp, where the transitory comp is from beta'Y_t)&quot;
+print &quot;        1. For case 3 (unrestr. constant) we use the expectation of&quot;
+print &quot;         beta'Y_t:&quot;
+print &quot;         alpha-bar' (Psi C - I) mu, and so we de-mean the transitory component&quot;
+print &quot;         alpha (beta'alpha)^{-1} beta' Y_t by subtracting&quot;
+print &quot;         alpha (beta'alpha)^{-1} alpha-bar' (Psi C - I) mu.&quot;
+print &quot;         Then we add that mean to the permanent part to preserve Y = P + T.&quot;
+print &quot;        2. We don't adjust for other unrestricted terms (yet); i.e., we want&quot;
+print &quot;         to preserve the additivity of Y = P + T, so we don't want to adjust T&quot;
+print &quot;         without changing P accordingly. But then removing stuff from T would&quot;
+print &quot;         add noise to P, which we don't want. (But maybe we should do that for&quot;
+print &quot;         seasonals, because their effects belong in the P-part if the Y_t are&quot;
+print &quot;         not seasonally adjusted....)&quot;
+print &quot;        3. If there are restricted terms (constant --case 2--, trend --case 4--,&quot;
+print &quot;         or user-specified), we compare the ect's with and without them, i.e.&quot;
+print &quot;         beta'Y_t - beta_star'Y_star_t.&quot;
+print &quot;         The remaining deterministic terms should be removed from the transitory&quot;
+print &quot;         part, i.e., we de-mean it by alpha(beta'alpha)^{-1} (.-.), and as in 1.&quot;
+print &quot;         we add the same part to the permanent component.&quot;
+print &quot;         By passing 'withrestricted = False' you can leave that step out; the&quot;
+print &quot;         transitory component should then (more or less visibly) still contain&quot;
+print &quot;         the restricted variables.&quot;
+print &quot;        4. With restricted trend &amp; unrestr. constant (case 4) we still do step&quot;
+print &quot;         1, with the proviso that the estimate is the expectation only after&quot;
+print &quot;         detrending.&quot;
+print &quot;        5. the ordering of steps 1. and 3. seems relevant, i.e. demeaning&quot;
+print &quot;         should come last (?)&quot;
+print &quot;        '''&quot;
+print &quot;        # just some abbrevs:&quot;
+print &quot;        n_y = self.endo.shape[1]&quot;
+print &quot;        bo = self.beta_o; ao = self.alpha_o&quot;
+print &quot;        b = self.beta_star[:n_y,:]; a = self.alpha&quot;
+print &quot;&quot;
+print &quot;        postfix = solve(a.T * b, a.T)&quot;
+print &quot;&quot;
+print &quot;        # (watch out for the TxN vs. NxT convention and required transpose)&quot;
+print &quot;        trans = self.endo * b * postfix&quot;
+print &quot;        perma = self.endo * solve(ao.T * bo, ao.T).T * bo.T&quot;
+print &quot;        factors = self.endo * ao&quot;
+print &quot;        # stop here if no adjustment wanted:&quot;
+print &quot;        if adjusted == False: return (perma, trans, factors)&quot;
+print &quot;        # do number 3 first:&quot;
+print &quot;        if withrestricted == True:&quot;
+print &quot;            transdiff = (self.endo * b - self.ect) * postfix&quot;
+print &quot;            trans -= transdiff&quot;
+print &quot;            perma += transdiff&quot;
+print &quot;        # now number 1:&quot;
+print &quot;        if self.determcase in range(3, 5):&quot;
+print &quot;            # (remember self.mu_unr comes from TxN convention)&quot;
+print &quot;            # (but transmean is textbook Nx1 style)&quot;
+print &quot;            transmean = postfix.T * solve(a.T * a, a.T) * \&quot;
+print &quot;                    (self.psimat * self.cmat - eye(n_y)) * self.mu_unr.T&quot;
+print &quot;            trans -= transmean.T&quot;
+print &quot;            perma += transmean.T&quot;
+print &quot;        return (perma, trans, factors)&quot;
+print &quot;&quot;
+print &quot;    def restrictAlpha(self, amatinput = None):&quot;
+print &quot;        '''&quot;
+print &quot;        Estimates the model with alpha = amatinput * psi, with known amatinput.&quot;
+print &quot;&quot;
+print &quot;        If no amatinput is given, a sequence of weak exogeneity tests will be&quot;
+print &quot;         carried out. (each with a row of zero in amatinput) In that case no&quot;
+print &quot;         coefficients of the vecm are changed.&quot;
+print &quot;&quot;
+print &quot;        For given amatinput sets the resulting coefficients of the restricted&quot;
+print &quot;        model for further use, and returns the corresponding LR test.&quot;
+print &quot;&quot;
+print &quot;        Returns a three-row matrix with typical column (Lr-stat, dof, pvalue)'.&quot;
+print &quot;         (pvalue will be -1 if importing scipy --which is necessary-- failed)&quot;
+print &quot;&quot;
+print &quot;        See Johansen book p. 124-126, amat has dimension p x m2, m2 &gt;= r.&quot;
+print &quot;         1: get amato = A_orthogonal&quot;
+print &quot;         2: define R^tilde_0t = R_0t - ..., where R_0t are data vectors in R0?&quot;
+print &quot;         3: same for R^tilde_1t, where restricted variables should be included&quot;
+print &quot;         4: define the analogues to S0, S01, S11&quot;
+print &quot;         5: solve the generalized eigenvalue problem:&quot;
+print &quot;             lambda S11_o - S10_Ao * Abar * (Abar.T*S00_Ao*Abar).I&quot;
+print &quot;                    * Abar.T * S01_Ao&quot;
+print &quot;         6: The &quot;first&quot; eigenvectors of this are the restricted beta_star&quot;
+print &quot;         7: estimate alpha by eq. (8.8), and other coefficients&quot;
+print &quot;        '''&quot;
+print &quot;        S00 = self.S00; S01 = self.S01; R0 = self.R0; R1 = self.R1&quot;
+print &quot;        n_y = self.endo.shape[1]&quot;
+print &quot;&quot;
+print &quot;        if amatinput is not None:&quot;
+print &quot;            numoftests = 1&quot;
+print &quot;            assert amatinput.shape[0] == self.endo.shape[1], \&quot;
+print &quot;                'amat needs n_y rows'&quot;
+print &quot;            assert amatinput.shape[1] &gt;= self.cirank, \&quot;
+print &quot;                'amat needs &gt;= r (cirank) cols'&quot;
+print &quot;        else: numoftests = n_y&quot;
+print &quot;&quot;
+print &quot;        output = empty([3, numoftests])&quot;
+print &quot;        for test in range(numoftests):&quot;
+print &quot;            if amatinput is None:&quot;
+print &quot;                amat = r_[eye(n_y-1)[:test, :], zeros(n_y-1), \&quot;
+print &quot;                 eye(n_y-1)[test:, :]]&quot;
+print &quot;            else: amat = amatinput&quot;
+print &quot;            #1:&quot;
+print &quot;            amato = getOrthColumns(amat)&quot;
+print &quot;            #2:&quot;
+print &quot;            temp =  amato * solve((amato.T * S00 * amato), amato.T * R0.T)&quot;
+print &quot;            Rt0 = R0 - temp.T * S00&quot;
+print &quot;            #3:&quot;
+print &quot;            Rt1 = R1 - temp.T * S01&quot;
+print &quot;            #4:&quot;
+print &quot;            S00ao = Rt0.T * Rt0 / self.teff&quot;
+print &quot;            S01ao = Rt0.T * Rt1 / self.teff&quot;
+print &quot;            S11ao = Rt1.T * Rt1 / self.teff&quot;
+print &quot;            #5:&quot;
+print &quot;            amatbar = solve((amat.T * amat), amat.T).T&quot;
+print &quot;            temp = solve((amatbar.T * S00ao * amatbar), amatbar.T * S01ao)&quot;
+print &quot;            evals, evecs = geneigsympos(S01ao.T * amatbar * temp, S11ao)&quot;
+print &quot;            # evals descending:&quot;
+print &quot;            evals = evals[::-1]&quot;
+print &quot;            # calculate the corresponding LR stat&quot;
+print &quot;            lr = log((1 - evals[:self.cirank]) / (1 - self.evals[:self.cirank]))&quot;
+print &quot;            output[0, test] = self.teff * lr.sum()          # is now a scalar&quot;
+print &quot;            output[1, test] = self.cirank * (n_y - amat.shape[1])&quot;
+print &quot;            try:&quot;
+print &quot;                from scipy import stats&quot;
+print &quot;                pval = float(stats.chi2.sf(lr, df))&quot;
+print &quot;                # sf (== survival function) is 1-cdf, so one-sided pvalue&quot;
+print &quot;            except: pval = -1.&quot;
+print &quot;            output[2, test] = pval&quot;
+print &quot;&quot;
+print &quot;        # change vecm coefficients only if amat was provided&quot;
+print &quot;        if amatinput is not None:&quot;
+print &quot;            #6:&quot;
+print &quot;            self.beta_star = evecs[:, -self.cirank:]&quot;
+print &quot;            #7:&quot;
+print &quot;            temp = lstsq(c_[R1 * self.beta_star, R0 * amato], R0 * amatbar)[0]&quot;
+print &quot;            psi = temp[:self.cirank, :amat.shape[1]].T&quot;
+print &quot;            self.alpha = amat * psi&quot;
+print &quot;            self.setOtherCoeffs()&quot;
+print &quot;&quot;
+print &quot;        return output&quot;
+print &quot;&quot;
+print &quot;    def restrictAlphaBeta(self, G, H, h0 = None, maxiter = 1000, tol = 1e-7):&quot;
+print &quot;        '''&quot;
+print &quot;        Estimate the Vecm with general linear restrictions on alpha and beta.&quot;
+print &quot;&quot;
+print &quot;        See Boswijk/Doornik 2004, section 4.4;&quot;
+print &quot;        Two input formats:&quot;
+print &quot;        1. either directly, corresponding to...&quot;
+print &quot;          vec(alpha.T) = gmat * psi&quot;
+print &quot;          vec(beta) = h0 + hmat * phi&quot;
+print &quot;        2. or specify h0 = None to trigger the following:&quot;
+print &quot;          gmat a pattern for alpha (not alpha.T!) consisting of 99s&quot;
+print &quot;           (free parameter) and 0s (literally zero);&quot;
+print &quot;          hmat a pattern of 99s (free parameter) and arbitrary other numbers;&quot;
+print &quot;           those other numbers will literally appear in beta!&quot;
+print &quot;&quot;
+print &quot;        Returns a 2-tuple of:&quot;
+print &quot;        0. return code, integer:&quot;
+print &quot;         0 if everything went ok, results are definitely usable&quot;
+print &quot;         -1000: no convergence; None is returned as result&quot;
+print &quot;         -100: beta is not identified: test result is returned anyway,&quot;
+print &quot;          coeffs are updated, but standard errors are not set&quot;
+print &quot;         -10: information matrix is not pos. semi-def.: everything is set anyway&quot;
+print &quot;        1. actual results (matrix or None)&quot;
+print &quot;&quot;
+print &quot;        If convergence was achieved, update the coefficients in the instance,&quot;
+print &quot;         and if identification holds:&quot;
+print &quot;        self.beta_star_se&quot;
+print &quot;        self.alpha_se&quot;
+print &quot;        '''&quot;
+print &quot;        p1 = self.beta_star.shape[0]&quot;
+print &quot;        n_y = self.endo.shape[1]&quot;
+print &quot;        r = self.cirank&quot;
+print &quot;        S00 = self.S00; S01 = self.S01; S10 = S01.T; S11 = self.S11&quot;
+print &quot;        vecPiT = vec(solve(S11, S01.T))&quot;
+print &quot;&quot;
+print &quot;        if h0 == None:           # special input format, conversion needed&quot;
+print &quot;            assert G.shape == (n_y, r)&quot;
+print &quot;            assert H.shape == (p1, r)&quot;
+print &quot;&quot;
+print &quot;            ## G first&quot;
+print &quot;            # how many (fuzzy) zeros are there, resulting in zero-rows in G&quot;
+print &quot;            gzerorows = where(G &lt; 0.1, 1, 0).sum()&quot;
+print &quot;            # and how many 99s (free params), yielding unit vectors in G&quot;
+print &quot;            gfree = where(G &gt; 98.9, 1, 0).sum()&quot;
+print &quot;            assert gzerorows + gfree == n_y * r&quot;
+print &quot;            # initialize new gmat&quot;
+print &quot;            gmat = empty((0, gfree))&quot;
+print &quot;            vecaTinput = vec(G.T)&quot;
+print &quot;            freecount = 0&quot;
+print &quot;            for row in range(n_y*r):&quot;
+print &quot;                if vecaTinput[row,0] &lt; 0.1:         # restrict to zero&quot;
+print &quot;                    gmat = r_[gmat, zeros((1, gfree))]&quot;
+print &quot;                elif vecaTinput[row,0] &gt; 98.9:      # free param&quot;
+print &quot;                    gmat = r_[gmat, eye(gfree)[freecount,:]]&quot;
+print &quot;                    freecount += 1&quot;
+print &quot;&quot;
+print &quot;            ## now H&quot;
+print &quot;            # how many (fuzzy) free params&quot;
+print &quot;            bfree = where((H &gt; 98.9) &amp; (H &lt; 99.1), 1, 0).sum()&quot;
+print &quot;            hmat = empty((0, bfree))&quot;
+print &quot;            h0 = empty((0, 1))&quot;
+print &quot;            vecbinput = vec(H)&quot;
+print &quot;            freecount = 0&quot;
+print &quot;            for row in range(p1*r):&quot;
+print &quot;                if 98.9 &lt; vecbinput[row,0] &lt; 99.1:  # free param&quot;
+print &quot;                    h0 = r_[h0, zeros(1)]&quot;
+print &quot;                    hmat = r_[hmat, eye(bfree)[freecount, :]]&quot;
+print &quot;                    freecount += 1&quot;
+print &quot;                else:                               # restrict number directly&quot;
+print &quot;                    h0 = r_[h0, vecbinput[row]]&quot;
+print &quot;                    hmat = r_[hmat, zeros((1,bfree))]&quot;
+print &quot;        else:               # G, H, h0 directly specified by user&quot;
+print &quot;            gmat = G&quot;
+print &quot;            hmat = H&quot;
+print &quot;        # input checks&quot;
+print &quot;        assert gmat.shape[0] == n_y * r, 'gmat must have n * r rows'&quot;
+print &quot;        assert (gmat.shape[1] &lt;= gmat.shape[0] and \&quot;
+print &quot;         hmat.shape[1] &lt;= hmat.shape[0]), 'gmat and hmat need rows &gt;= cols'&quot;
+print &quot;        assert (h0.shape[0] == p1 * r and hmat.shape[0] == p1 * r), \&quot;
+print &quot;            'h0 and hmat must have (n_y+n_rexo)*r rows'&quot;
+print &quot;        assert h0.shape[1] == 1, 'h0 must be a column vector'&quot;
+print &quot;&quot;
+print &quot;        # starting values (last used values in class):&quot;
+print &quot;        a = self.alpha; b = self.beta_star; omega = self.omegamat&quot;
+print &quot;        omI = omega.I; outstatus = 0&quot;
+print &quot;        iteration = 0; lik = -inf; ldiff = inf&quot;
+print &quot;&quot;
+print &quot;        # switching algorithm&quot;
+print &quot;        while ldiff &gt; tol and iteration &lt; maxiter:&quot;
+print &quot;            # new phi&quot;
+print &quot;            phi = solve(hmat.T * kron(a.T * omI * a, S11) * hmat, hmat.T) \&quot;
+print &quot;                * kron(a.T * omI, S11) * (vecPiT - kron(a, eye(p1)) * h0)&quot;
+print &quot;            #print phi.shape&quot;
+print &quot;            # new beta&quot;
+print &quot;            vecb = h0 + hmat * phi&quot;
+print &quot;            #print vecb&quot;
+print &quot;            b = unvec(vecb, p1, r)&quot;
+print &quot;            #print b&quot;
+print &quot;            # new psi&quot;
+print &quot;            psi = solve(gmat.T * kron(omI, b.T * S11 * b) * gmat, gmat.T)\&quot;
+print &quot;                * kron(omI, b.T * S11) * vecPiT&quot;
+print &quot;            # new alpha&quot;
+print &quot;            vecaT = gmat * psi&quot;
+print &quot;            a = unvec(vecaT, r, n_y).T&quot;
+print &quot;            # new omega&quot;
+print &quot;            omega = S00 - S01*b*a.T - a*b.T*S10 + a*b.T*S11*b*a.T&quot;
+print &quot;            omI = omega.I&quot;
+print &quot;            # logL value eq (22), concentrated&quot;
+print &quot;            oldlik = +lik       # explicit copy not needed for python scalars&quot;
+print &quot;            lik = -self.teff/2 * log(det(omega))&quot;
+print &quot;            ldiff = lik - oldlik&quot;
+print &quot;            iteration += 1&quot;
+print &quot;&quot;
+print &quot;        if iteration &gt;= maxiter: return (-1000, None)   # no convergence&quot;
+print &quot;&quot;
+print &quot;        # for generic identification: random stuff (eq 40)&quot;
+print &quot;        psirand = 2 * ( rand((gmat.shape[1], 1)) - 0.5 )&quot;
+print &quot;        phirand = 2 * ( rand((hmat.shape[1], 1)) - 0.5 )&quot;
+print &quot;        arand = unvec(gmat * psirand, r, n_y).T&quot;
+print &quot;        brand = unvec(h0 + hmat * phirand, p1, r)&quot;
+print &quot;        jacobi = c_[kron(eye(n_y), brand) * gmat, kron(arand, eye(p1)) * hmat]&quot;
+print &quot;        jrank = lstsq(jacobi, ones((jacobi.shape[0], 1)))[2]&quot;
+print &quot;        ## stuff for inference&quot;
+print &quot;        # LR stat eq (27)&quot;
+print &quot;        lrstat = 2 * (self.logL - lik)&quot;
+print &quot;        # dof eq (28)&quot;
+print &quot;        lrdof = (n_y + p1 - r) * r - jrank&quot;
+print &quot;        # (delegate the p-value calc e.g. to gretl...)&quot;
+print &quot;        if jrank &lt; jacobi.shape[1]:&quot;
+print &quot;            outstatus = -100            # generic identification failed&quot;
+print &quot;            alpha_se = None&quot;
+print &quot;            beta_star_se = None&quot;
+print &quot;        else:&quot;
+print &quot;            # p. 455&quot;
+print &quot;            # the info matrix eq (41) (w.r.t. theta):&quot;
+print &quot;            bl11 = gmat.T * kron(omI, b.T * S11 * b) * gmat&quot;
+print &quot;            bl12 = gmat.T * kron(omI * a, b.T * S11) * hmat&quot;
+print &quot;            bl21 = hmat.T * kron(a.T * omI, S11 * b) * gmat&quot;
+print &quot;            bl22 = hmat.T * kron(a.T * omI * a, S11) * hmat&quot;
+print &quot;            infomattheta = self.teff * r_[c_[bl11, bl12], c_[bl21, bl22]]&quot;
+print &quot;&quot;
+print &quot;            # check pos. semi-def'ness (possibly somewhat inefficient...)&quot;
+print &quot;            evals = eigh(infomattheta)[0]&quot;
+print &quot;            if (evals &lt; 0).any():&quot;
+print &quot;                outstatus = -10     # inormation matrix is not pos. semi-def.&quot;
+print &quot;            # mapping from theta to alphaT/beta involves {G : 0 ; 0 : H}&quot;
+print &quot;            theta2abT = r_[c_[gmat, zeros((n_y * r, hmat.shape[1]))], \&quot;
+print &quot;                          c_[zeros((p1 * r, gmat.shape[1])), hmat]]&quot;
+print &quot;            covab = theta2abT * solve(infomattheta, theta2abT.T)&quot;
+print &quot;            # first n_y*r diag elements refer to alphaT&quot;
+print &quot;            alpha_se = sqrt(unvec(diag(covab)[:n_y * r], r, n_y).T)&quot;
+print &quot;            # and the rest to beta&quot;
+print &quot;            beta_star_se = sqrt(unvec(diag(covab)[n_y * r:], p1, r))&quot;
+print &quot;&quot;
+print &quot;        self.alpha = a&quot;
+print &quot;        self.beta_star = b&quot;
+print &quot;        self.alpha_se = alpha_se&quot;
+print &quot;        self.beta_star_se = beta_star_se&quot;
+print &quot;        # omegamat will automatically be calculated in setOtherCoeffs()&quot;
+print &quot;        self.setOtherCoeffs()&quot;
+print &quot;        # and eventually return test result&quot;
+print &quot;        return (outstatus, c_[lrstat, lrdof])&quot;
+print &quot;&quot;
+print &quot;    def testGGfactors(self, gmatinput = None, restrict_model = False):&quot;
+print &quot;        '''&quot;
+print &quot;        Tests linear hypotheses on the Gonzalo-Granger factors (alpha_o).&quot;
+print &quot;&quot;
+print &quot;        If gmat is specified, it must be a n_y x m - matrix from the expression&quot;
+print &quot;         ao = gmat * theta, and m &gt;= n_y - cirank must hold.&quot;
+print &quot;        If nothing is specified, all individual variables are tested separately&quot;
+print &quot;         if they can be excluded from the factors (sequence of zero rows in&quot;
+print &quot;         gmat).&quot;
+print &quot;        If restrict_model is True, the restriction of gmat is imposed&quot;
+print &quot;         model-wide for further estimation (this only makes sense for a&quot;
+print &quot;         specified gmat with m = n_y - cirank).&quot;
+print &quot;        Returned are LR test statistics, dof's, and p-values in a 3-row matrix.&quot;
+print &quot;         (p-values == -1. if scipy import fails)&quot;
+print &quot;        '''&quot;
+print &quot;        n_y = self.endo.shape[1]&quot;
+print &quot;        S01 = self.S01; S11 = self.S11; S00 = self.S00;&quot;
+print &quot;        R0 = self.R0; R1 = self.R1&quot;
+print &quot;&quot;
+print &quot;        if gmatinput is None: numoftests = n_y&quot;
+print &quot;        else:                           # do sequence of individual tests&quot;
+print &quot;            numoftests = 1&quot;
+print &quot;            assert gmatinput.shape[0] == n_y, &quot;gmat rows don't match model&quot;&quot;
+print &quot;            assert gmatinput.shape[1] &gt;= n_y - self.cirank, \&quot;
+print &quot;                'too few cols in gmat'&quot;
+print &quot;                # (previous line will raise exception for numpy-1d-array input)&quot;
+print &quot;        output = empty([3, numoftests])&quot;
+print &quot;&quot;
+print &quot;        ## do a 1- or n_y-sequence of tests:&quot;
+print &quot;        for test in range(numoftests):&quot;
+print &quot;            if gmatinput is None:&quot;
+print &quot;                gmat = r_[eye(n_y-1)[:test, :], zeros(n_y-1), \&quot;
+print &quot;                    eye(n_y-1)[test:, :]]&quot;
+print &quot;            else: gmat = gmatinput&quot;
+print &quot;            sg = gmat.T * S01 * solve(S11, S01.T) * gmat&quot;
+print &quot;            # ascending:&quot;
+print &quot;            ggevals, ggevecs = geneigsympos(sg, gmat.T * S00 * gmat)&quot;
+print &quot;            # descending:&quot;
+print &quot;            ggevals = ggevals[::-1]&quot;
+print &quot;            lr = log((1 - ggevals[-(n_y - self.cirank):]) / \&quot;
+print &quot;                    (1 - self.evals[-(n_y - self.cirank):]))&quot;
+print &quot;            output[0, test] = -self.teff * lr.sum()  # is now a scalar&quot;
+print &quot;            output[1, test] = (n_y - self.cirank) * (n_y - gmat.shape[1])&quot;
+print &quot;&quot;
+print &quot;            # calculate p-values&quot;
+print &quot;            try:&quot;
+print &quot;                from scipy import stats&quot;
+print &quot;                output[2, test] = float(stats.chi2.sf(output[0, test], \&quot;
+print &quot;                                    output[1, test]))&quot;
+print &quot;                # (sf (== survival function) is 1-cdf, so one-sided pvalue)&quot;
+print &quot;            except:&quot;
+print &quot;                output[2, test] = -1.&quot;
+print &quot;&quot;
+print &quot;        if restrict_model:&quot;
+print &quot;            assert gmat.shape[1] == n_y - self.cirank, \&quot;
+print &quot;                'too many columns in gmat to restrict model'&quot;
+print &quot;            # convert restricted alpha_o into restricted alpha = amat*psi&quot;
+print &quot;            # (evecs refer to ascending evals):&quot;
+print &quot;            evals, amat = eigh(gmat*gmat.T)&quot;
+print &quot;            amat = amat[:, evals.argsort()]&quot;
+print &quot;            amat = amat[:, :n_y - gmat.shape[1]]&quot;
+print &quot;            # and estimate with that restriction&quot;
+print &quot;            self.restrictAlpha(amat)&quot;
+print &quot;            # then we estimate alpha_o as described in GG p. 30/31,&quot;
+print &quot;            #  overriding the alpha_o found by dumb algebra&quot;
+print &quot;            self.alpha_o = gmat * ggevecs[:, :n_y - self.cirank]&quot;
+print &quot;&quot;
+print &quot;        return output&quot;
+print &quot;&quot;
+print &quot;    def getSLdeterm(self, which = ''):&quot;
+print &quot;        '''&quot;
+print &quot;        Returns S&amp;L-estimation of deterministics.&quot;
+print &quot;&quot;
+print &quot;        W.r.t. the deterministics, the VECM spec is used;&quot;
+print &quot;         however, 1 and 5 are not implemented.&quot;
+print &quot;        Pass the setup in 'which' parameter:&quot;
+print &quot;        'u' in which: unrestricted exogenous variables will also be used.&quot;
+print &quot;        'r' in which: restricted exogenous variables will also be used.&quot;
+print &quot;         (Selecting subsets is not currently possible.)&quot;
+print &quot;        Furthermore, if 'r' (or 'ru') is specified and we are in determcase 3,&quot;
+print &quot;         then the estimation of the orthogonal trend also accounts for the&quot;
+print &quot;         restricted exogenous variables.&quot;
+print &quot;        So therefore the differences of the restricted exog. vars should&quot;
+print &quot;         normally be included in the unrestr. exog. vars by the user, just like&quot;
+print &quot;         a constant is always included unrestrictedly whenever a trend term is&quot;
+print &quot;         specified.&quot;
+print &quot;        Ordering is trend, const, seasonals, restr_exo terms, unrestr_exo terms.&quot;
+print &quot;        Returns a 3-tuple with data component (T x n_y),&quot;
+print &quot;         deterministic regressors (T x...), and the coefficients (n_y x ...).&quot;
+print &quot;        '''&quot;
+print &quot;        assert which in 'rur', 'bogus input for &quot;which&quot;'&quot;
+print &quot;        assert self.determcase in range(2,5), 'SL proc only for cases 2 to 4'&quot;
+print &quot;&quot;
+print &quot;        # just some abbrevs:&quot;
+print &quot;        y = self.endo&quot;
+print &quot;        nobs, n_y = y.shape&quot;
+print &quot;        b = self.beta_star[:n_y,:]; bo = self.beta_o&quot;
+print &quot;        a = self.alpha; ao = self.alpha_o&quot;
+print &quot;&quot;
+print &quot;        # case 3 = orthog. trend requires special treatment;&quot;
+print &quot;        # (but don't forget to add the trendcoeff at first position later!)&quot;
+print &quot;        if self.determcase == 3:&quot;
+print &quot;            # first adjust for that trend separately:&quot;
+print &quot;            # (and save the coeffs for output)&quot;
+print &quot;            if 'r' in which and self.restr_exo is not None:     #user choice!&quot;
+print &quot;                trendcoeff = self.getOrthogTrend(self.restr_exo)&quot;
+print &quot;            else: trendcoeff = self.getOrthogTrend()&quot;
+print &quot;            y = self.endo - r_['c', 1:nobs+1] * trendcoeff.T&quot;
+print &quot;            # and then implicitly apply the normal analysis w/o trend&quot;
+print &quot;&quot;
+print &quot;        # build the appropriate auxiliary regressor matrix&quot;
+print &quot;        # starting point for determ-matrix&quot;
+print &quot;        determ = empty([nobs, 0])&quot;
+print &quot;        if self.determcase == 4:               # add trend&quot;
+print &quot;            # (try a subtle difference and have the trend start at 1...)&quot;
+print &quot;            determ = c_[determ, r_['c', 1:nobs+1]]&quot;
+print &quot;        # always add constant:&quot;
+print &quot;        determ = c_[determ, ones(nobs).T]&quot;
+print &quot;        # seasonals:&quot;
+print &quot;        if self.sd == 'q': determ = c_[determ, getDeterministics(nobs, 'q')]&quot;
+print &quot;        elif self.sd == 'm': determ = c_[determ, getDeterministics(nobs, 'm')]&quot;
+print &quot;        # other exogenous terms if requested:&quot;
+print &quot;        if 'r' in which and self.restr_exo is not None:&quot;
+print &quot;            determ = c_[determ, self.restr_exo]&quot;
+print &quot;        if 'u' in which and self.unrestr_exo is not None:&quot;
+print &quot;            determ = c_[determ, self.unrestr_exo]&quot;
+print &quot;&quot;
+print &quot;        # first get the short-run dynamics:&quot;
+print &quot;        levelscoeffs = vecm2varcoeffs(self.gammas, self.maxlag, a, b)&quot;
+print &quot;        # the levels coeffs now should be of shape n_y x (maxlags*n_y)&quot;
+print &quot;        #  (to pre-multiply, as in diss)&quot;
+print &quot;&quot;
+print &quot;        ## the GLS-transformation&quot;
+print &quot;        # calculate the Q-matrix:&quot;
+print &quot;        temp1 = (a.T * solve(self.omegamat, a)).I   # to be sqrt-ed&quot;
+print &quot;        temp2 = (ao.T * self.omegamat * ao).I       # dito&quot;
+print &quot;        evals1, evecs1 = eigh(temp1)&quot;
+print &quot;        evals2, evecs2 = eigh(temp2)&quot;
+print &quot;        Q = c_[solve(self.omegamat, a) * \&quot;
+print &quot;                evecs1 * sqrt(mat(diag(evals1))) * evecs1.T, \&quot;
+print &quot;                ao * (evecs2 * sqrt(mat(diag(evals2))) * evecs2.T)]&quot;
+print &quot;            # (Q should now have dim n_y x n_y)&quot;
+print &quot;        # transform A(L) with Q:&quot;
+print &quot;        QTAL = Q.T * levelscoeffs&quot;
+print &quot;&quot;
+print &quot;        # fill the data matrices with zero starting values:&quot;
+print &quot;        y = r_[zeros([self.maxlag, n_y]), y]&quot;
+print &quot;        determ = r_[zeros([self.maxlag, determ.shape[1]]), determ]&quot;
+print &quot;            # (so now both y and determ have nobs + maxlag rows)&quot;
+print &quot;&quot;
+print &quot;        ###### now we do the whole thing as we did earlier, to avoid mistakes;&quot;
+print &quot;        # no fancy stuff, where in contrast to the rest of this code we use&quot;
+print &quot;        # a stacked system (the endo-data is in a single column)&quot;
+print &quot;        # (it might be faster to use kronecker, but messy??)&quot;
+print &quot;        yAux = empty([0, 1])&quot;
+print &quot;            # (will have nobs*n_y rows)&quot;
+print &quot;        bigAuxMat = empty([0, n_y * determ.shape[1]])&quot;
+print &quot;            # (will also have nobs*n_y rows)&quot;
+print &quot;        for period in range(self.maxlag, nobs):&quot;
+print &quot;            tempy = y[period, :].T&quot;
+print &quot;            for lag in range(self.maxlag):&quot;
+print &quot;                currenttrafo = QTAL[:, lag * n_y : (lag+1) * n_y]&quot;
+print &quot;                tempy -= currenttrafo * (y[period-(lag+1), :]).T&quot;
+print &quot;            yAux = r_[yAux, tempy]&quot;
+print &quot;            temprowblock = empty([n_y, 0])  # will be n_y x num-of-exo*n_y&quot;
+print &quot;            for var in range(determ.shape[1]):&quot;
+print &quot;                tempexomat = eye(n_y) * determ[period, var]&quot;
+print &quot;                for lag in range(self.maxlag):&quot;
+print &quot;                    currenttrafo = QTAL[:, lag * n_y : (lag+1) * n_y]&quot;
+print &quot;                    tempexomat -= currenttrafo * determ[period-(lag+1), var]&quot;
+print &quot;                temprowblock = c_[temprowblock, tempexomat]&quot;
+print &quot;            bigAuxMat = r_[bigAuxMat, temprowblock]&quot;
+print &quot;&quot;
+print &quot;        ### now we're ready for showtime&quot;
+print &quot;        determcoeff = lstsq(bigAuxMat, yAux)[0]&quot;
+print &quot;        # this should be n_y*num-of-exo x 1 !&quot;
+print &quot;        # so try elegant reshaping to conform to determ-shape (=(T,num-of-exo):&quot;
+print &quot;        # (careful here! my first direct attempt messed up columns and&quot;
+print &quot;        #   rows! reshape apparently fills row-wise first.&quot;
+print &quot;        #   Here determcoeff is for post-multi after transposing.)&quot;
+print &quot;        determcoeff = determcoeff.reshape(n_y, determ.shape[1])&quot;
+print &quot;        # discard the artificial zero starting values:&quot;
+print &quot;        determ = determ[-nobs:, :]&quot;
+print &quot;        # re-insert the trend and coeff if orthog. trend was specified:&quot;
+print &quot;        if self.determcase == 3:&quot;
+print &quot;            determ = c_[r_['c', 1:nobs+1], determ]&quot;
+print &quot;            determcoeff = c_[trendcoeff, determcoeff]&quot;
+print &quot;        # we return everything, to whom it may concern:&quot;
+print &quot;        return (determ * determcoeff.T, determ, determcoeff)&quot;
+print &quot;&quot;
+print &quot;#### end of Vecm class ###############&quot;
+print &quot;&quot;
+print &quot;'''&quot;
+print &quot;Changelog:&quot;
+print &quot;25Jan2007:&quot;
+print &quot;    bugfix for maxlag == 1 in getSW, pstyle True&quot;
+print &quot;18Jan2007:&quot;
+print &quot;    fixed and 'finished' restrictAlphaBeta, added matrix pattern input method&quot;
+print &quot;     (and made it the default)&quot;
+print &quot;    fixed the use of setOtherCoeffs&quot;
+print &quot;15Jan2007:&quot;
+print &quot;    switched sd API to one of False/True/'m'/'q',&quot;
+print &quot;    fixed c_/r_ according to new numpy API,&quot;
+print &quot;    started to extend restrictAlphaBeta()&quot;
+print &quot;11Jan2007:&quot;
+print &quot;    switched to cross-platform lineendings with os.linesep&quot;
+print &quot;10Jan2007:&quot;
+print &quot;    set a default =3 for determcase&quot;
+print &quot;9Jan2007:&quot;
+print &quot;    set a default =1 for cirank, for easy retrieval of tracestats/evals only,&quot;
+print &quot;    generalize restrictAlpha() to do automatic weak exog. tests&quot;
+print &quot;     (like testGGfactors)&quot;
+print &quot;7Jan2007:&quot;
+print &quot;    adapt to generalized readcsv,&quot;
+print &quot;    add output2gretl method&quot;
+print &quot;6Jan2007:&quot;
+print &quot;    allow for csv filenames instead of direct numpy matrices&quot;
+print &quot;5Jan2007:&quot;
+print &quot;    explicit sorting of eigenvals instead of relying on numpy's implementation&quot;
+print &quot;2Oct2006:&quot;
+print &quot;    small name-change fix,&quot;
+print &quot;7Sep2006:&quot;
+print &quot;    change estim_w_restr_alpha() to restrictAlpha(), add test,&quot;
+print &quot;    add p-values to alpha-o Test,&quot;
+print &quot;    added estimation under general linear restrictions on alpha and beta&quot;
+print &quot;26Aug2006:&quot;
+print &quot;    add Proietti-style Stock-Watson trends based on variables&quot;
+print &quot;15Aug2006:&quot;
+print &quot;    fix estimation with restricted alpha-o&quot;
+print &quot;11Aug2006:&quot;
+print &quot;    adapted to new name h.getDeterministics,&quot;
+print &quot;10Aug2006:&quot;
+print &quot;    estimation with restricted alpha-o (common trends) as&quot;
+print &quot;     part of .testGGfactors(),&quot;
+print &quot;25Jul2006:&quot;
+print &quot;    used new numpy.matlib,&quot;
+print &quot;    removed h.makeNumpymatrix calls,&quot;
+print &quot;    replaced most inverses by solve-commands&quot;
+print &quot;2Jun2006:&quot;
+print &quot;    removed extra imports, instead only depending on helpers.py,&quot;
+print &quot;    used new helpers zerosm, emptym etc.,&quot;
+print &quot;    removed a lot of unnecessary asm, discovered numpy.diff bug,&quot;
+print &quot;15May2006:&quot;
+print &quot;    adapted to evals from geneigsympos returned as array&quot;
+print &quot;8Mar2006:&quot;
+print &quot;    added setOtherCoeffs() so that user can specify own alphas and betas,&quot;
+print &quot;    added tests on alpha_o, ie., whether variables are not in GG-factors&quot;
+print &quot;1Mar2006:&quot;
+print &quot;    separated the VECM class into this file instead of ts.py&quot;
+print &quot;28Feb2006:&quot;
+print &quot;    add Stock-Watson common-trends calculation&quot;
+print &quot;20Feb2006:&quot;
+print &quot;    work on deterministic adjustment of GG-decomp&quot;
+print &quot;14Feb2006:&quot;
+print &quot;    bugfixes and better treatment of S&amp;L deterministics&quot;
+print &quot;12Feb2006:&quot;
+print &quot;    deterministics estimation a la S&amp;L added to Vecm class,&quot;
+print &quot;    more use of numpy-lstsq-function&quot;
+print &quot;31Jan2006:&quot;
+print &quot;    all functions should return arrays or matrix-type according to the input&quot;
+print &quot;     where that makes sense, i.e. whenever a data matrix is passed to a&quot;
+print &quot;     function (and where the purpose is not explicitly to produce matrices)&quot;
+print &quot;28Jan2006:&quot;
+print &quot;    bugfixing related to coeffs of restricted variables,&quot;
+print &quot;    function for symmetric-def-gen.eigval problem to remove scipy-dependency&quot;
+print &quot;19Jan2006:&quot;
+print &quot;    work started on a vecm class,&quot;
+print &quot;    switched over to exceptions instead of home-cooked string generation,&quot;
+print &quot;    functions should all return numpy-matrix-type&quot;
+print &quot;6Jan2006:&quot;
+print &quot;    switched over to numpy/new-scipy&quot;
+print &quot;'''&quot;
+########################################
+### end of embedded vecmclass.py
+## start of common py4gretl_vecm stuff
+########################################
+printf &quot;nv = Vecm('temp_p4g_endo.csv', %2d, %1d, %1d,&quot;, maxlag, cirank, determcase
+if n_rexo &gt; 0
+  if n_uexo &gt; 0
+    if seasonals = 1
+      printf &quot; True,&quot;
+    else
+      printf &quot; False,&quot;
+    endif
+    printf &quot; 'temp_p4g_rexo.csv', 'temp_p4g_uexo.csv')&quot;
+    print &quot;&quot;
+    print &quot;filenames = ['temp_p4g_endo.csv', 'temp_p4g_rexo.csv', 'temp_p4g_uexo.csv']&quot;
+  else
+    if seasonals = 1
+      printf &quot; True,&quot;
+    else
+      printf &quot; False,&quot;
+    endif
+    printf &quot; 'temp_p4g_rexo.csv', None)&quot;
+    print &quot;&quot;
+    print &quot;filenames = ['temp_p4g_endo.csv', 'temp_p4g_rexo.csv']&quot;
+  endif
+else
+  if n_uexo &gt; 0
+    if seasonals = 1
+      printf &quot; True,&quot;
+    else
+      printf &quot; False,&quot;
+    endif
+    printf &quot; None, 'temp_p4g_uexo.csv')&quot;
+    print &quot;&quot;
+    print &quot;filenames = ['temp_p4g_endo.csv', 'temp_p4g_uexo.csv']&quot;
+  else
+    if seasonals = 1
+      printf &quot; True,&quot;
+    else
+      printf &quot; False,&quot;
+    endif
+    printf &quot; None, None)&quot;
+    print &quot;&quot;
+    print &quot;filenames = ['temp_p4g_endo.csv']&quot;
+  endif
+endif
+print &quot;import os&quot;
+outfile --close
+</code>
+</gretl-function>
+</gretl-function-package>
+</gretl-functions>

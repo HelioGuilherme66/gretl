@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run wtp.inp
+ /opt/esl/share/gretl/scripts/misc/wtp.inp
+# Interval regression: Verbeek's "willingness to pay" example
+Read datafile /opt/esl/share/gretl/data/misc/wtp.gdt
+
+Convergence achieved after 5 iterations
+
+Model 1: Interval estimates, using observations 1-312
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const        18.7388      2.49696     7.505   6.16e-14 ***
+
+Log-likelihood      -409.0045   Akaike criterion     822.0090
+Schwarz criterion    829.4950   Hannan-Quinn         825.0009
+
+sigma = 38.6127 (2.93331)
+Left-unbounded observations: 123
+Right-unbounded observations: 58
+Bounded observations: 131
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 11.0669
+  with p-value = 0.00395227
+
+
+Convergence achieved after 6 iterations
+
+Model 2: Interval estimates, using observations 1-312
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       30.5475       8.31237      3.675   0.0002   ***
+  age         -6.92946      1.66495     -4.162   3.16e-05 ***
+  female      -5.87624      4.77453     -1.231   0.2184  
+  income       4.86467      1.91166      2.545   0.0109   **
+
+Chi-square(3)        31.55880   p-value              6.48e-07
+Log-likelihood      -391.2544   Akaike criterion     792.5087
+Schwarz criterion    811.2237   Hannan-Quinn         799.9886
+
+sigma = 36.4685 (2.74809)
+Left-unbounded observations: 123
+Right-unbounded observations: 58
+Bounded observations: 131
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 6.07141
+  with p-value = 0.0480407
+
+LR test: Chi-square(3) = 35.5002, p-value = 9.55056e-08

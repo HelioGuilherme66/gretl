@@ -1,0 +1,20 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:12
+? run simple.inp
+ /home/cottrell/stats/test-gretl/ghk/simple.inp
+P = 
+0.902508
+0.902508
+0.902508
+
+dP (3 x 7)
+
+   -0.055519    -0.055519     0.055519     0.055519     -0.21764       0.0000     -0.21764 
+   -0.055519    -0.055519     0.055519     0.055519     -0.21764       0.0000     -0.21764 
+   -0.055519    -0.055519     0.055519     0.055519     -0.21764       0.0000     -0.21764 
+
+0.9025
+0.055518897
+Done

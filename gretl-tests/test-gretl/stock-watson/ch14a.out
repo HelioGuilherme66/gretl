@@ -1,0 +1,91 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-04 15:56
+? run ch14a.inp
+ /home/cottrell/stats/test-gretl/stock-watson/ch14a.inp
+? function matrix stock_watson_varb (matrix X, matrix u, bool dfc)
+? open us_macro_quarterly.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/stock-watson/us_macro_quarterly.gdt
+periodicity: 4, maxobs: 228
+observations range: 1957:1 to 2013:4
+
+Listing 10 variables:
+  0) const       1) GDPC96      2) JAPAN_IP    3) PCECTPI     4) GS10      
+  5) GS1         6) TB3MS       7) UNRATE      8) EXUSUK      9) CPIAUCSL  
+
+? series GDPGR = 400*ldiff(GDPC96)
+Generated series GDPGR (ID 10)
+? series TSpread = GS10 - TB3MS
+Generated series TSpread (ID 11)
+? smpl 1962:1 2012:4
+Full data range: 1957:1 - 2013:4 (n = 228)
+Current sample: 1962:1 - 2012:4 (n = 204)
+
+? set force_hc on
+? set hc_version 0
+? setopt ols persist --robust
+Set option(s) for command "ols"
+# eq. 14.7
+# ols GDPGR const GDPGR(-1)
+# eq. 14.12
+# ols GDPGR const GDPGR(-1 to -2)
+# eq 14.15
+# ols GDPGR const GDPGR(-1 to -2) TSpread(-1)
+# eq 14.16
+? ols GDPGR const GDPGR(-1 to -2) TSpread(-1 to -2)
+
+Model 1: OLS, using observations 1962:1-2012:4 (T = 204)
+Dependent variable: GDPGR
+Heteroskedasticity-robust standard errors, variant HC0
+
+              coefficient   std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const         0.967967    0.472470      2.049    0.0418  **
+  GDPGR_1       0.243175    0.0778357     3.124    0.0020  ***
+  GDPGR_2       0.177070    0.0770275     2.299    0.0226  **
+  TSpread_1    -0.139554    0.422162     -0.3306   0.7413 
+  TSpread_2     0.656347    0.429802      1.527    0.1283 
+
+Mean dependent var   3.053323   S.D. dependent var   3.354501
+Sum squared resid    1860.501   S.E. of regression   3.057655
+R-squared            0.185524   Adjusted R-squared   0.169153
+F(4, 199)            9.719489   P-value(F)           3.36e-07
+Log-likelihood      -514.9326   Akaike criterion     1039.865
+Schwarz criterion    1056.456   Hannan-Quinn         1046.576
+rho                  0.006254   Durbin-Watson        1.981318
+
+Excluding the constant, p-value was highest for variable 14 (TSpread_1)
+
+? matrix V = $vcv
+Generated matrix V
+? print V
+V (5 x 5)
+
+     0.22323   -0.0087924    -0.015605    -0.019176    -0.031559 
+  -0.0087924    0.0060584   -0.0020035   -0.0027510   -0.0010836 
+   -0.015605   -0.0020035    0.0059332    0.0050319   -0.0038863 
+   -0.019176   -0.0027510    0.0050319      0.17822     -0.16514 
+   -0.031559   -0.0010836   -0.0038863     -0.16514      0.18473 
+
+? list Full = const GDPGR(-1 to -2) TSpread(-1 to -2)
+Generated list Full
+? smpl +2 ;
+Full data range: 1957:1 - 2013:4 (n = 228)
+Current sample: 1962:3 - 2012:4 (n = 202)
+
+? series uh = $uhat
+Generated series uh (ID 16)
+? matrix V = stock_watson_varb({Full}, {uh}, 0)
+Replaced matrix V
+? print V
+V (5 x 5)
+
+     0.22364   -0.0089875    -0.015776    -0.019109    -0.031445 
+  -0.0089875    0.0061559   -0.0019282   -0.0027797   -0.0011396 
+   -0.015776   -0.0019282    0.0060107    0.0050012   -0.0039312 
+   -0.019109   -0.0027797    0.0050012      0.17815     -0.16509 
+   -0.031445   -0.0011396   -0.0039312     -0.16509      0.18475 
+
+Done

@@ -1,0 +1,7 @@
+open keane.gdt -q
+smpl (year==87) --restrict
+logit status 0 educ exper expersq black --multinomial --cluster=educ
+
+foreign language=stata --send-data
+  mlogit status educ exper expersq black, base(1) vce(cluster educ)
+end foreign

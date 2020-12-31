@@ -1,0 +1,10 @@
+open data4-7
+arma 1 1 ; chd -x
+arma 1 1 ; chd
+arma 1 1 ; chd -c
+arma 1 0 ; chd -x
+arma 1 0 ; chd
+arma 1 0 ; chd -c
+genr chd1 = chd(-1)
+smpl 1948 ;
+ols chd 0 chd1

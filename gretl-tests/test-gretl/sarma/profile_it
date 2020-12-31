@@ -1,0 +1,5 @@
+LIB="libgretl-1.0.so.0"
+export LD_PROFILE=$LIB
+export LD_PROFILE_OUTPUT=`pwd`
+gretlcli -b prof.inp
+# sprof $LIB >sprof.out

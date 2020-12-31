@@ -1,0 +1,28 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run readfile.inp
+ /home/cottrell/stats/test-gretl/strings/readfile.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? string mat = readfile("mat.txt")
+Generated string mat
+mat (string form) = 
+1 2 3 4
+5 6 7 8
+? matrix m
+? sscanf(mat, "%m", &m)
+? print m
+m (2 x 4)
+
+  1   2   3   4 
+  5   6   7   8 
+
+? scalar x
+? sscanf("14.56", "%g", &x)
+? print x
+
+              x =  14.560000
+Done

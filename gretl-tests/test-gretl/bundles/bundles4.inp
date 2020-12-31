@@ -1,0 +1,24 @@
+# copy bundle by assignment
+
+matrix m = I(3)
+string s = "foo"
+
+bundle b1
+b1["mat"] = m
+b1["str"] = s
+matrix m1 = b1["mat"]
+m1
+string s1 = b1["str"]
+s1
+
+bundle b2 = b1
+matrix m2 = b2["mat"]
+m2
+string s2 = b2["str"]
+s2
+
+delete b1
+delete b2
+
+
+

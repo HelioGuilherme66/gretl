@@ -1,0 +1,109 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run Rloclev.inp
+ /home/cottrell/stats/test-gretl/foreign/Rloclev.inp
+? nulldata 200
+periodicity: 1, maxobs: 200
+observations range: 1 to 200
+? set seed 202020
+Pseudo-random number generator seeded with 202020
+? setobs 1 1 --special
+Full data range: 1 - 200 (n = 200)
+
+? u = normal()
+Generated series u (ID 2)
+? e = normal() * 0.5
+Generated series e (ID 3)
+? U = 2 + cum(u)
+Generated series U (ID 4)
+? y = U + e
+Generated series y (ID 5)
+? set stopwatch
+? foreign language=R --send-data
+?   y <- gretldata[,"y"]
+?   a <- StructTS(y, type="level")
+?   a
+?   StateFromR1 <- as.ts(tsSmooth(a))
+?   gretl.export(StateFromR1)
+? end foreign
+
+Call:
+StructTS(x = y, type = "level")
+
+Variances:
+  level  epsilon  
+  1.217    0.000  
+wrote /home/cottrell/.gretl/StateFromR1.csv 
+? y *= 2
+Replaced series y (ID 5)
+? foreign language=R --send-data
+?   y <- gretldata[,"y"]
+?   a <- StructTS(y, type="level")
+?   a
+?   StateFromR2 <- as.ts(tsSmooth(a))
+?   gretl.export(StateFromR2)
+? end foreign
+
+Call:
+StructTS(x = y, type = "level")
+
+Variances:
+  level  epsilon  
+  4.868    0.000  
+wrote /home/cottrell/.gretl/StateFromR2.csv 
+
+*** Rlib time = 0.229581
+
+? append /home/cottrell/.gretl/StateFromR1.csv
+parsing /home/cottrell/.gretl/StateFromR1.csv...
+using delimiter ' '
+   longest line: 19 characters
+   first field: 'StateFromR1'
+   number of columns = 1
+   number of variables: 1
+   number of non-blank lines: 201
+scanning for variable names...
+   line: StateFromR1
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 7 variables:
+  0) const          1) index          2) u              3) e            
+  4) U              5) y              6) StateFromR1  
+
+? append /home/cottrell/.gretl/StateFromR2.csv
+parsing /home/cottrell/.gretl/StateFromR2.csv...
+using delimiter ' '
+   longest line: 19 characters
+   first field: 'StateFromR2'
+   number of columns = 1
+   number of variables: 1
+   number of non-blank lines: 201
+scanning for variable names...
+   line: StateFromR2
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 8 variables:
+  0) const          1) index          2) u              3) e            
+  4) U              5) y              6) StateFromR1    7) StateFromR2  
+
+? summary StateFromR1 StateFromR2
+
+                       Mean         Median        Minimum        Maximum
+StateFromR1          3.5069         4.5149        -7.2584         9.6830
+StateFromR2          7.0139         9.0297        -14.517         19.366
+
+                  Std. Dev.           C.V.       Skewness   Ex. kurtosis
+StateFromR1          4.0753         1.1621       -0.75839       -0.18880
+StateFromR2          8.1506         1.1621       -0.75839       -0.18880
+
+                   5% perc.      95% perc.       IQ range   Missing obs.
+StateFromR1         -5.4040         8.7785         5.6026              0
+StateFromR2         -10.808         17.557         11.205              0
+
+Done

@@ -1,0 +1,22 @@
+open nlswork.dta
+setobs idcode year --panel-vars
+setmiss 101
+genr age2 = age^2
+genr ttl_exp2 = ttl_exp^2
+genr tenure2 = tenure^2
+genr black = (race = 2)
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south --between
+
+genr b_wage = pmean(ln_wage)
+genr b_grade = pmean(grade)
+genr b_age = pmean(age)
+genr b_age2 = pmean(age2)
+genr b_ttl_exp = pmean(ttl_exp)
+genr b_ttl_exp2 = pmean(ttl_exp2)
+genr b_tenure = pmean(tenure)
+genr b_tenure2 = pmean(tenure2)
+genr b_black = pmean(black)
+genr b_not_smsa = pmean(not_smsa)
+genr b_south = pmean(south)
+smpl year=80 --restrict
+ols b_wage 0 b_grade b_age* b_ttl_exp* b_tenure* b_black b_not_smsa b_south

@@ -1,0 +1,144 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run rq4.inp
+ /home/cottrell/stats/test-gretl/rq/rq4.inp
+? open engel
+
+Read datafile /opt/esl/share/gretl/data/misc/engel.gdt
+periodicity: 1, maxobs: 235
+observations range: 1 to 235
+
+Listing 3 variables:
+  0) const      1) foodexp    2) income   
+
+? quantreg .25 1 0 2
+
+Model 1: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       95.4835      15.8619       6.020    6.74e-09 ***
+  income       0.474103     0.0142807   33.20     2.70e-90 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+? matrix V0 = $vcv
+Generated matrix V0
+? matrix s0 = $stderr
+Generated matrix s0
+? quantreg .25 1 0 2 --intervals
+
+Model 2: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+With 90 percent confidence intervals
+
+             coefficient     lower       upper   
+  -----------------------------------------------
+  const       95.4835      73.7861     120.098   
+  income       0.474103     0.420330     0.494329
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+? matrix V1 = $vcv
+Generated matrix V1
+? matrix s1 = $stderr
+Generated matrix s1
+? print V0 V1
+V0 (2 x 2)
+
+      251.60     -0.20036 
+    -0.20036   0.00020394 
+
+V1 (2 x 2)
+
+      251.60     -0.20036 
+    -0.20036   0.00020394 
+
+? print s0 s1
+s0 (2 x 1)
+
+      15.862 
+    0.014281 
+
+s1 (2 x 1)
+
+      15.862 
+    0.014281 
+
+? quantreg .25 1 0 2 --robust
+
+Model 3: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       95.4835      21.3924       4.463    1.26e-05 ***
+  income       0.474103     0.0290553   16.32     1.97e-40 ***
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+? matrix V2 = $vcv
+Generated matrix V2
+? matrix s2 = $stderr
+Generated matrix s2
+? quantreg .25 1 0 2 --intervals --robust
+
+Model 4: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+tau = 0.25
+With robust 90 percent confidence intervals
+
+             coefficient     lower       upper   
+  -----------------------------------------------
+  const       95.4835      68.7748     134.077   
+  income       0.474103     0.418438     0.509021
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+Sum absolute resid   21552.20   Sum squared resid     3970500
+Log-likelihood      -1428.741   Akaike criterion     2861.481
+Schwarz criterion    2868.400   Hannan-Quinn         2864.271
+
+? matrix V3 = $vcv
+Generated matrix V3
+? matrix s3 = $stderr
+Generated matrix s3
+? print V2 V3
+V2 (2 x 2)
+
+      457.63     -0.59248 
+    -0.59248   0.00084421 
+
+V3 (2 x 2)
+
+      457.63     -0.59248 
+    -0.59248   0.00084421 
+
+? print s2 s3
+s2 (2 x 1)
+
+      21.392 
+    0.029055 
+
+s3 (2 x 1)
+
+      21.392 
+    0.029055 
+
+Done

@@ -1,0 +1,48 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-05-02 15:13
+? run reduce-test.inp
+ /home/cottrell/stats/test-gretl/mpi/reduce-test.inp
+gretlcli-mpi 1.9.15cvs
+Current session: 2014-05-02 15:13
+master here, reduce via vcat
+m (16 x 4)
+
+  1   0   0   0 
+  0   1   0   0 
+  0   0   1   0 
+  0   0   0   1 
+  2   0   0   0 
+  0   2   0   0 
+  0   0   2   0 
+  0   0   0   2 
+  3   0   0   0 
+  0   3   0   0 
+  0   0   3   0 
+  0   0   0   3 
+  4   0   0   0 
+  0   4   0   0 
+  0   0   4   0 
+  0   0   0   4 
+
+master here, reduce via hcat
+m (4 x 16)
+
+  1   0   0   0   2   0   0   0   3   0   0   0   4   0   0   0 
+  0   1   0   0   0   2   0   0   0   3   0   0   0   4   0   0 
+  0   0   1   0   0   0   2   0   0   0   3   0   0   0   4   0 
+  0   0   0   1   0   0   0   2   0   0   0   3   0   0   0   4 
+
+master here, reduce via sum
+m (4 x 4)
+
+  10    0    0    0 
+   0   10    0    0 
+   0    0   10    0 
+   0    0    0   10 
+
+reduced scalar foo = 3
+Done
+
+Done

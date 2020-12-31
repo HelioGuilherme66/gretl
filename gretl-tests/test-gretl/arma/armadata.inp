@@ -1,0 +1,8 @@
+nulldata 624
+setobs 12 1950:01
+set seed 397
+genr eps = normal()
+genr u = eps + 0.4*eps(-1) - 0.2*eps(-2) 
+genr y = 0 * const
+genr y = 0.6 * y(-1) + u
+store armagen10.gdt

@@ -1,0 +1,94 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run sarma3.inp
+ /home/allin/stats/test-gretl/bfgs/arma/sarma3.inp
+# Seasonal ARMA test script
+? nulldata 620
+periodicity: 1, maxobs: 620
+observations range: 1 to 620
+? setobs 4 1920:1
+Full data range: 1920:1 - 2074:4 (n = 620)
+
+? set seed 3711113
+Pseudo-random number generator seeded with 3711113
+? scalar phi_1 = 0.5
+Generated scalar phi_1 = 0.5
+? scalar phi_2 = -0.2
+Generated scalar phi_2 = -0.2
+? scalar phi_3 = 0.3
+Generated scalar phi_3 = 0.3
+? scalar phi_4 = -0.1
+Generated scalar phi_4 = -0.1
+? scalar Phi_1 = 0.1
+Generated scalar Phi_1 = 0.1
+? scalar theta_1 = 0.2
+Generated scalar theta_1 = 0.2
+? scalar Theta_1 = 0.2
+Generated scalar Theta_1 = 0.2
+? genr eps = normal()
+Generated series eps (ID 2)
+# Artificial error process
+? genr u = eps + theta_1*eps(-1) + Theta_1*eps(-4) + theta_1*Theta_1*eps(-5)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+# Artificial seasonal series
+? genr y = phi_1*y(-1) + phi_2*y(-2) + phi_3*y(-3) + (phi_4+Phi_1)*y(-4) - \
+  phi_1*Phi_1*y(-5) - phi_2*Phi_1*y(-6) - phi_3*Phi_1*y(-7) - \
+  phi_4*Phi_1*y(-8) + u
+Replaced series y (ID 4)
+? scalar phisum = phi_1 + phi_2 + phi_3 + phi_4
+Generated scalar phisum = 0.5
+? scalar phiprod = phisum * Phi_1
+Generated scalar phiprod = 0.05
+? genr y = y + 500 / (1 - phisum - Phi_1 + phiprod)
+Replaced series y (ID 4)
+? smpl +20 ;
+Full data range: 1920:1 - 2074:4 (n = 620)
+Current sample: 1925:1 - 2074:4 (n = 600)
+
+# Kalman
+? arma 4 1 ; 1 1 ; y
+
+Function evaluations: 55
+Evaluations of gradient: 13
+
+Model 1: ARMA, using observations 1925:1-2074:4 (T = 600)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error       z       p-value
+  ----------------------------------------------------------
+  const      1111.18         0.159470    6968        0.0000  ***
+  phi_1         0.834983     0.387978       2.152    0.0314  **
+  phi_2        -0.418184     0.290942      -1.437    0.1506 
+  phi_3         0.444260     0.149457       2.972    0.0030  ***
+  phi_4        -0.145521     0.115435      -1.261    0.2074 
+  Phi_1         0.131862     0.177110       0.7445   0.4566 
+  theta_1      -0.0812565    0.388914      -0.2089   0.8345 
+  Theta_1       0.0669534    0.160900       0.4161   0.6773 
+
+Mean dependent var   1111.172   S.D. dependent var   1.472615
+Mean of innovations -0.000281   S.D. of innovations  0.989629
+Log-likelihood      -845.7632   Akaike criterion     1709.526
+Schwarz criterion    1749.099   Hannan-Quinn         1724.931
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3863     0.0000     1.3863     0.0000
+    Root  2           2.3347     0.0000     2.3347     0.0000
+    Root  3          -0.3341    -1.4183     1.4571    -0.2868
+    Root  4          -0.3341     1.4183     1.4571     0.2868
+  AR (seasonal)
+    Root  1           7.5837     0.0000     7.5837     0.0000
+  MA
+    Root  1          12.3067     0.0000    12.3067     0.0000
+  MA (seasonal)
+    Root  1         -14.9358     0.0000    14.9358     0.5000
+  -----------------------------------------------------------
+
+Done

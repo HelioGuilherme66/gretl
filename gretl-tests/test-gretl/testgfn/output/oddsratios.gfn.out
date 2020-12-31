@@ -1,0 +1,71 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run oddsratios.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/oddsratios.gfn.inp
+? include ./oddsratios/oddsratios.gfn
+ /home/cottrell/stats/test-gretl/testgfn/oddsratios/oddsratios.gfn
+oddsratios 1.0, 2015-03-22 (Riccardo "Jack" Lucchetti and Allin Cottrell)
+? open mroz87.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+? list X = const KL6 K618 WA WE HA
+Generated list X
+? logit LFP X
+
+Model 1: Logit, using observations 1-753
+Dependent variable: LFP
+Standard errors based on Hessian
+
+             coefficient   std. error     z         slope   
+  ----------------------------------------------------------
+  const       1.29183      0.810596      1.594              
+  KL6        -1.49944      0.197709     -7.584   -0.366717  
+  K618       -0.0965864    0.0667117    -1.448   -0.0236221 
+  WA         -0.0448592    0.0217967    -2.058   -0.0109712 
+  WE          0.195722     0.0373175     5.245    0.0478677 
+  HA         -0.0222591    0.0215983    -1.031   -0.00544391
+
+Mean dependent var   0.568393   S.D. dependent var   0.495630
+McFadden R-squared   0.097818   Adjusted R-squared   0.086164
+Log-likelihood      -464.5095   Akaike criterion     941.0189
+Schwarz criterion    968.7633   Hannan-Quinn         951.7075
+
+Number of cases 'correctly predicted' = 500 (66.4%)
+f(beta'x) at mean of independent vars = 0.245
+Likelihood ratio test: Chi-square(5) = 100.727 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  152   173
+         1   80   348
+
+Excluding the constant, p-value was highest for variable 10 (HA)
+
+# bundle version, with automatic trimming of const plus printout
+? bundle b = oddsratios($coeff, $stderr, 0.05, $depvar, $xlist)
+
+Odds-ratios for LFP:
+
+====================================================
+        Variable  Odds-ratio    95.0% conf. interval
+====================================================
+             KL6      0.2233     [   0.152,   0.329]
+            K618      0.9079     [   0.797,   1.035]
+              WA      0.9561     [   0.916,   0.998]
+              WE      1.2162     [   1.130,   1.308]
+              HA      0.9780     [   0.937,   1.020]
+====================================================
+# "do-it-yourself" matrix version
+? matrix OR = oddsratios_matrix($coeff[2:], $stderr[2:], 0.05)
+Generated matrix OR
+? print OR
+OR (5 x 3)
+
+     0.22326      0.15153      0.32892 
+     0.90793      0.79665       1.0348 
+     0.95613      0.91615      0.99786 
+      1.2162       1.1304       1.3085 
+     0.97799      0.93745       1.0203 
+
+Done

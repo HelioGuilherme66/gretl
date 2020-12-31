@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run levene.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/levene.gfn.inp
+? include ./levene.gfn
+ /home/cottrell/stats/test-gretl/testgfn/levene.gfn
+levene 0.2, 2009-08-22 (Marcos Larios Santa Rosa)
+# use NIST data
+? open gear.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/gear.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 3 variables:
+  0) const    1) y        2) x      
+
+# Is the y homogeneous in variance with respect to
+# the level of x?
+? levene(y, x)
+
+LEVENE TEST FOR HOMOGENEITY OF VARIANCE
+NULL HYPOTHESIS: VARIANCES ARE EQUAL, S(1)=S(2)=...=S(k)
+
+TEST RESULTS using Median
+   Degrees of Freedom Numerator 	=   9.000000
+   Degrees of Freedom Denominator 	=  90.000000
+   Levene's F statistic 		=   1.705918
+   Critical Value 95% 			=   1.985595
+   Critical Value 99% 			=   2.610879
+   P-Value 				=   0.099083
+# Now try using the trimmed mean (giving 3 for the third
+# argument), and using 4 bins for x (4 in the final argument).
+? levene(y, x, 3, 4)
+
+LEVENE TEST FOR HOMOGENEITY OF VARIANCE
+NULL HYPOTHESIS: VARIANCES ARE EQUAL, S(1)=S(2)=...=S(k)
+
+TEST RESULTS using 10% trimmed mean
+   Degrees of Freedom Numerator 	=   3.000000
+   Degrees of Freedom Denominator 	=  96.000000
+   Levene's F statistic 		=   3.056068
+   Critical Value 95% 			=   2.699393
+   Critical Value 99% 			=   3.992403
+   P-Value 				=   0.032050
+Done

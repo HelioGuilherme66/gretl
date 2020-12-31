@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run arzero.inp
+ /home/cottrell/stats/test-gretl/ufunc/arzero.inp
+? function scalar BGzeros (series x, series u, scalar T, scalar order)
+? nulldata 50
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+? set seed 786445221
+Pseudo-random number generator seeded with 786445221
+? setobs 1 1 --time
+Full data range: 1 - 50 (n = 50)
+
+? scalar rho = .7
+Generated scalar rho = 0.7
+? series x = uniform()
+Generated series x (ID 2)
+? loop 500 --prog --quiet
+> series e = 0
+> series u = normal()
+> e = rho*e(-1) + u
+> series y = 10 + 10*x + e
+> ols y 0 x -q
+> genr uh = $uhat
+> genr uh1 = uh(-1)
+> ols uh 0 x uh1 -q
+> scalar rbg = $coeff[3]
+> scalar rzeros = BGzeros(x, uh, 50, 1)
+> print rbg rzeros
+> endloop
+Statistics for 500 repetitions
+
+                  mean       std. dev
+     rbg      0.617307       0.127692
+  rzeros      0.617622       0.127557
+
+Done

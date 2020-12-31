@@ -1,0 +1,66 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-06 11:16
+? run karma.inp
+ /home/cottrell/stats/test-gretl/kalman/karma.inp
+? function void arma11_via_kalman(series y)
+# ------------------------ main ---------------------------
+? open arma.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/arma.gdt
+periodicity: 12, maxobs: 624
+observations range: 1950:01 to 2001:12
+
+Listing 4 variables:
+  0) const    1) u        2) eps      3) y      
+
+? arma11_via_kalman(y)
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 48
+Evaluations of gradient: 13
+
+Model 1: ML, using observations 1950:01-2001:12 (T = 624)
+logl = ERR ? NA : $kalman_llt
+Standard errors based on Hessian
+
+             estimate   std. error     z      p-value 
+  ----------------------------------------------------
+  phi        0.654960   0.0353968    18.50   1.94e-76  ***
+  theta      0.493380   0.0425986    11.58   5.08e-31  ***
+  sigma      1.00288    0.0283884    35.33   2.26e-273 ***
+
+Log-likelihood      -887.9102   Akaike criterion     1781.820
+Schwarz criterion    1795.129   Hannan-Quinn         1786.992
+
+? arma 1 1 ; y --nc
+
+Function evaluations: 35
+Evaluations of gradient: 10
+
+Model 1: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  phi_1       0.654960     0.0353976    18.50   1.95e-76 ***
+  theta_1     0.493380     0.0425990    11.58   5.09e-31 ***
+
+Mean dependent var   0.334917   S.D. dependent var   1.795495
+Mean of innovations  0.079399   S.D. of innovations  1.002877
+Log-likelihood      -887.9102   Akaike criterion     1781.820
+Schwarz criterion    1795.129   Hannan-Quinn         1786.992
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.5268     0.0000     1.5268     0.0000
+  MA
+    Root  1          -2.0268     0.0000     2.0268     0.5000
+  -----------------------------------------------------------
+
+Done

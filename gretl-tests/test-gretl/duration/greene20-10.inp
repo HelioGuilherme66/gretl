@@ -1,0 +1,21 @@
+open kennan -q
+
+set echo off
+set messages off
+matrix Gr = zeros(4, 2)
+
+duration Ti 0 --expon
+Gr[1,1] = exp(-$coeff[1])
+Gr[1,2] = 1.0
+duration Ti 0 # weibull
+Gr[2,1] = exp(-$coeff[1])
+Gr[2,2] = 1/$coeff[2]
+duration Ti 0 --loglog
+Gr[3,1] = exp(-$coeff[1])
+Gr[3,2] = 1/$coeff[2]
+duration Ti 0 --lognorm
+Gr[4,1] = exp(-$coeff[1])
+Gr[4,2] = 1/$coeff[2]
+
+colnames(Gr, "lambda p")
+printf "\nGreene\n\n%10.5f\n", Gr

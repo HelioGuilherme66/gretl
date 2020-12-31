@@ -1,0 +1,42 @@
+open bs75d.gdt
+
+smpl +1 ;
+
+Drop3 <- system
+  equation y1 0 lx1 lx2 lx3
+  equation y2 0 lx1 lx2 lx3
+end system
+
+estimate "Drop3" method=sur
+
+restrict "Drop3"
+  b[1,3] - b[2,2] = 0
+  b[1,2] + b[1,3] + b[1,4] = 0
+  b[2,2] + b[2,3] + b[2,4] = 0
+end restrict
+
+estimate "Drop3" method=sur --iterate
+
+/*
+  demonstrate that whatever equation you drop,
+  you get the same results
+*/
+
+system name="Drop2"
+  equation y1 0 lx1 lx2 lx3
+  equation y3 0 lx1 lx2 lx3
+  endog y1 y3
+end system
+
+estimate "Drop2" method=sur
+
+restrict "Drop2"
+  b[1,4] - b[2,2] = 0
+  b[1,2] + b[1,3] + b[1,4] = 0
+  b[2,2] + b[2,3] + b[2,4] = 0
+end restrict
+
+estimate "Drop2" method=sur --iterate
+# check via fiml
+estimate "Drop2" method=fiml --verbose
+

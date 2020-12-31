@@ -1,0 +1,4 @@
+set matsize 300
+insheet using "missing_x.csv"
+tsset id year
+xtabond y x, noconst robust

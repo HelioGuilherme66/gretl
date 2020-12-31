@@ -1,0 +1,282 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run arelbond.inp
+ /home/cottrell/stats/test-gretl/panel/arelbond.inp
+? open abdata.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? genr dummy
+Periodic dummy variables generated.
+? list dlist = dummy_4 dummy_5 dummy_6 dummy_7 dummy_8 dummy_9
+Generated list dlist
+? ols n 0 n(-1 to -2) w(0 to -1) k(0 to -2) ys(0 to -2) dlist
+
+Model 1: Pooled OLS, using 751 observations
+Included 140 cross-sectional units
+Time-series length: minimum 5, maximum 7
+Dependent variable: n
+
+             coefficient   std. error   t-ratio     p-value 
+  ----------------------------------------------------------
+  const       0.274727     0.350530       0.7837   0.4334   
+  n_1         1.04464      0.0336647     31.03     1.04e-135 ***
+  n_2        -0.0765427    0.0328437     -2.331    0.0200    **
+  w          -0.523673     0.0487799    -10.74     4.50e-25  ***
+  w_1         0.476754     0.0486954      9.791    2.34e-21  ***
+  k           0.343395     0.0255185     13.46     4.71e-37  ***
+  k_1        -0.201899     0.0400683     -5.039    5.90e-07  ***
+  k_2        -0.115647     0.0284922     -4.059    5.46e-05  ***
+  ys          0.432874     0.122681       3.528    0.0004    ***
+  ys_1       -0.767912     0.165816      -4.631    4.30e-06  ***
+  ys_2        0.312472     0.111457       2.804    0.0052    ***
+  dummy_4     0.0158888    0.0143976      1.104    0.2701   
+  dummy_5     0.0219932    0.0166632      1.320    0.1873   
+  dummy_6    -0.0221533    0.0204143     -1.085    0.2782   
+  dummy_7    -0.0150344    0.0206845     -0.7268   0.4676   
+  dummy_8     0.00739307   0.0204243      0.3620   0.7175   
+  dummy_9     0.0153955    0.0230101      0.6691   0.5037   
+
+Mean dependent var   1.013664   S.D. dependent var   1.342084
+Sum squared resid    7.573782   S.E. of regression   0.101580
+R-squared            0.994393   Adjusted R-squared   0.994271
+F(16, 734)           8136.584   P-value(F)           0.000000
+Log-likelihood       660.4429   Akaike criterion    -1286.886
+Schwarz criterion   -1208.322   Hannan-Quinn        -1256.615
+rho                  0.027216   Durbin-Watson        1.699426
+
+Excluding the constant, p-value was highest for variable 19 (dummy_8)
+
+? hausman
+Fixed effects estimator
+allows for differing intercepts by cross-sectional unit
+slope standard errors in parentheses, p-values in brackets
+
+       const:         1.7921       (0.50779)       [0.00045]
+         n_1:        0.73295      (0.039304)       [0.00000]
+         n_2:       -0.13948      (0.040026)       [0.00053]
+           w:       -0.55974      (0.057033)       [0.00000]
+         w_1:          0.315      (0.060976)       [0.00000]
+           k:        0.38842      (0.030954)       [0.00000]
+         k_1:      -0.080518      (0.038465)       [0.03675]
+         k_2:      -0.027801      (0.032826)       [0.39737]
+          ys:        0.46866       (0.12313)       [0.00016]
+        ys_1:       -0.62856       (0.15796)       [0.00008]
+        ys_2:       0.057976       (0.13454)       [0.66667]
+     dummy_4:      0.0046562      (0.013752)       [0.73505]
+     dummy_5:       0.011233      (0.016492)       [0.49607]
+     dummy_6:      -0.025369      (0.021704)       [0.24291]
+     dummy_7:      -0.034397      (0.022355)       [0.12441]
+     dummy_8:      -0.028035      (0.024074)       [0.24468]
+     dummy_9:      -0.011915      (0.026172)       [0.64909]
+
+140 group means were subtracted from the data
+
+Residual variance: 5.25278/(751 - 156) = 0.00882819
+Joint significance of differing group means:
+ F(139, 595) = 1.89143 with p-value 1.58598e-07
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the fixed effects alternative.)
+
+
+Breusch-Pagan test statistic:
+ LM = 0.0299369 with p-value = prob(chi-square(1) > 0.0299369) = 0.862633
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the random effects alternative.)
+
+Variance estimators:
+ between = 0
+ within = 0.00882819
+Panel is unbalanced: theta varies across units
+
+                         Random effects estimator
+           allows for a unit-specific component to the error term
+           (standard errors in parentheses, p-values in brackets)
+
+          const:        0.27473       (0.35053)       [0.43344]
+            n_1:         1.0446      (0.033665)       [0.00000]
+            n_2:      -0.076543      (0.032844)       [0.02005]
+              w:       -0.52367       (0.04878)       [0.00000]
+            w_1:        0.47675      (0.048695)       [0.00000]
+              k:         0.3434      (0.025519)       [0.00000]
+            k_1:        -0.2019      (0.040068)       [0.00000]
+            k_2:       -0.11565      (0.028492)       [0.00005]
+             ys:        0.43287       (0.12268)       [0.00044]
+           ys_1:       -0.76791       (0.16582)       [0.00000]
+           ys_2:        0.31247       (0.11146)       [0.00519]
+        dummy_4:       0.015889      (0.014398)       [0.27014]
+        dummy_5:       0.021993      (0.016663)       [0.18729]
+        dummy_6:      -0.022153      (0.020414)       [0.27820]
+        dummy_7:      -0.015034      (0.020685)       [0.46755]
+        dummy_8:      0.0073931      (0.020424)       [0.71748]
+        dummy_9:       0.015396       (0.02301)       [0.50366]
+
+Hausman test statistic:
+ H = 247.95 with p-value = prob(chi-square(16) > 247.95) = 1.36219e-43
+(A low p-value counts against the null hypothesis that the random effects
+model is consistent, in favor of the fixed effects model.)
+? panel n 0 n(-1 to -2) w(0 to -1) k(0 to -2) ys(0 to -2) dlist \
+  --robust
+
+Model 2: Fixed-effects, using 751 observations
+Included 140 cross-sectional units
+Time-series length: minimum 5, maximum 7
+Dependent variable: n
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.79212      0.624614      2.869    0.0048   ***
+  n_1         0.732948     0.0588317    12.46     2.16e-24 ***
+  n_2        -0.139477     0.0770416    -1.810    0.0724   *
+  w          -0.559744     0.157343     -3.557    0.0005   ***
+  w_1         0.314999     0.141018      2.234    0.0271   **
+  k           0.388419     0.0561160     6.922    1.51e-10 ***
+  k_1        -0.0805184    0.0531089    -1.516    0.1318  
+  k_2        -0.0278013    0.0420142    -0.6617   0.5093  
+  ys          0.468665     0.168807      2.776    0.0063   ***
+  ys_1       -0.628558     0.203664     -3.086    0.0024   ***
+  ys_2        0.0579765    0.130783      0.4433   0.6582  
+  dummy_4     0.00465617   0.00912513    0.5103   0.6107  
+  dummy_5     0.0112326    0.0156267     0.7188   0.4735  
+  dummy_6    -0.0253694    0.0246337    -1.030    0.3049  
+  dummy_7    -0.0343974    0.0225556    -1.525    0.1295  
+  dummy_8    -0.0280345    0.0258335    -1.085    0.2797  
+  dummy_9    -0.0119153    0.0277634    -0.4292   0.6685  
+
+Mean dependent var   1.013664   S.D. dependent var   1.342084
+Sum squared resid    5.252776   S.E. of regression   0.093958
+LSDV R-squared       0.996112   Within R-squared     0.797300
+Log-likelihood       797.8519   Akaike criterion    -1283.704
+Schwarz criterion   -562.7645   Hannan-Quinn        -1005.928
+rho                 -0.100347   Durbin-Watson        1.845532
+
+Joint test on named regressors -
+  Test statistic: F(16, 139) = 156.613
+  with p-value = P(F(16, 139) > 156.613) = 1.91334e-80
+
+Robust test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: Welch F(139, 202.7) = 1.68969
+  with p-value = P(F(139, 202.7) > 1.68969) = 0.000325949
+
+# Anderson-Hsiao dynamic estimator
+? diff n w k ys dummy_*
+Listing 41 variables:
+  0) const        1) IND          2) YEAR         3) EMP        
+  4) WAGE         5) CAP          6) INDOUTPT     7) n          
+  8) w            9) k           10) ys          11) unit       
+ 12) dummy_1     13) dummy_2     14) dummy_3     15) dummy_4    
+ 16) dummy_5     17) dummy_6     18) dummy_7     19) dummy_8    
+ 20) dummy_9     21) n_1         22) n_2         23) w_1        
+ 24) k_1         25) k_2         26) ys_1        27) ys_2       
+ 28) d_n         29) d_w         30) d_k         31) d_ys       
+ 32) d_dummy_1   33) d_dummy_2   34) d_dummy_3   35) d_dummy_4  
+ 36) d_dummy_5   37) d_dummy_6   38) d_dummy_7   39) d_dummy_8  
+ 40) d_dummy_9  
+
+? list dlist = d_dummy_5 d_dummy_6 d_dummy_7 d_dummy_8 d_dummy_9
+Replaced list dlist
+? tsls d_n d_n(-1) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) \
+  dlist ; d_n(-3) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) \
+  dlist --robust
+
+Model 3: TSLS, using 471 observations
+Dependent variable: d_n
+Instrumented: d_n_1 
+Instruments: d_n_3 d_n_2 d_w d_w_1 d_k d_k_1 d_k_2 d_ys d_ys_1 d_ys_2 
+  d_dummy_5 d_dummy_6 d_dummy_7 d_dummy_8 d_dummy_9 
+Robust (HAC) standard errors
+
+              coefficient   std. error      z      p-value
+  --------------------------------------------------------
+  d_n_1        1.42277      1.34195       1.060    0.2890 
+  d_n_2       -0.164552     0.139302     -1.181    0.2375 
+  d_w         -0.752467     0.255861     -2.941    0.0033  ***
+  d_w_1        0.962763     0.955593      1.008    0.3137 
+  d_k          0.322168     0.119454      2.697    0.0070  ***
+  d_k_1       -0.324879     0.501113     -0.6483   0.5168 
+  d_k_2       -0.0953951    0.159239     -0.5991   0.5491 
+  d_ys         0.766087     0.350298      2.187    0.0287  **
+  d_ys_1      -1.36188      1.06889      -1.274    0.2026 
+  d_ys_2       0.321300     0.493545      0.6510   0.5150 
+  d_dummy_5    0.0161201    0.0261968     0.6153   0.5383 
+  d_dummy_6   -0.0251795    0.0381311    -0.6603   0.5090 
+  d_dummy_7   -0.0399343    0.0458216    -0.8715   0.3835 
+  d_dummy_8   -0.0418340    0.0526706    -0.7943   0.4270 
+  d_dummy_9   -0.0366089    0.0524357    -0.6982   0.4851 
+
+Mean dependent var  -0.087452   S.D. dependent var   0.150442
+Sum squared resid    16.21304   S.E. of regression   0.188560
+R-squared            0.154589   Adjusted R-squared   0.128633
+F(14, 456)           30.50024   P-value(F)           1.03e-56
+Log-likelihood      -1270.811   Akaike criterion     2571.622
+Schwarz criterion    2633.945   Hannan-Quinn         2596.139
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 1.89479
+  with p-value = 0.168663
+
+Weak instrument test - 
+  First-stage F-statistic (1, 456) = 1.11413
+  A value < 10 may indicate weak instruments
+
+? list dlist = d_dummy_4 dlist
+Replaced list dlist
+? tsls d_n d_n(-1) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) \
+  dlist ; n(-3) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) \
+  dlist --robust
+
+Model 4: TSLS, using 611 observations
+Dependent variable: d_n
+Instrumented: d_n_1 
+Instruments: n_3 d_n_2 d_w d_w_1 d_k d_k_1 d_k_2 d_ys d_ys_1 d_ys_2 
+  d_dummy_4 d_dummy_5 d_dummy_6 d_dummy_7 d_dummy_8 d_dummy_9 
+Robust (HAC) standard errors
+
+              coefficient   std. error     z      p-value
+  -------------------------------------------------------
+  d_n_1        2.30762      1.01767       2.268   0.0234  **
+  d_n_2       -0.224027     0.121287     -1.847   0.0647  *
+  d_w         -0.810362     0.292509     -2.770   0.0056  ***
+  d_w_1        1.42224      0.808564      1.759   0.0786  *
+  d_k          0.253097     0.101438      2.495   0.0126  **
+  d_k_1       -0.552461     0.358129     -1.543   0.1229 
+  d_k_2       -0.212636     0.142116     -1.496   0.1346 
+  d_ys         0.990576     0.336228      2.946   0.0032  ***
+  d_ys_1      -1.93791      0.967247     -2.004   0.0451  **
+  d_ys_2       0.487084     0.408693      1.192   0.2333 
+  d_dummy_4    0.0626484    0.0338477     1.851   0.0642  *
+  d_dummy_5    0.108002     0.0565429     1.910   0.0561  *
+  d_dummy_6    0.0704237    0.0646363     1.090   0.2759 
+  d_dummy_7    0.0765148    0.0681263     1.123   0.2614 
+  d_dummy_8    0.0895758    0.0807209     1.110   0.2671 
+  d_dummy_9    0.0956024    0.0816455     1.171   0.2416 
+
+Mean dependent var  -0.068347   S.D. dependent var   0.143721
+Sum squared resid    37.27685   S.E. of regression   0.250300
+R-squared            0.104786   Adjusted R-squared   0.082217
+F(15, 595)           17.72391   P-value(F)           6.64e-39
+Log-likelihood      -1719.448   Akaike criterion     3470.897
+Schwarz criterion    3541.538   Hannan-Quinn         3498.374
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 6.52481
+  with p-value = 0.010638
+
+Weak instrument test - 
+  First-stage F-statistic (1, 595) = 1.70398
+  A value < 10 may indicate weak instruments
+
+Done

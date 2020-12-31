@@ -1,0 +1,12 @@
+open greene11_3.gdt
+
+y = log(Y)
+c = log(C)
+
+vecm 1 1 c y
+
+restrict
+  b[1,1] = 1
+  b[1,2] = -1
+end restrict -v
+

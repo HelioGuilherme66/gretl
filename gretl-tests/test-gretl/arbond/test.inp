@@ -1,0 +1,7 @@
+open test.gdt
+panel lnwreal 0 eta eta2 
+panel lnwreal 0 eta eta2 --random
+genr dy = diff(lnwreal)
+print year lnwreal dy -o
+arbond 1 0 ; lnwreal
+# store xxx codlav year lnwreal x3reg eta eta2 --csv

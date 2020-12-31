@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run det.inp
+ /home/cottrell/stats/test-gretl/matrix/det.inp
+? matrix m = {1,2,3; 4,5,6; 7,8,9}
+Generated matrix m
+? print m
+m (3 x 3)
+
+  1   2   3 
+  4   5   6 
+  7   8   9 
+
+? d = det(m)
+Generated scalar d = 0
+? m = {1,2,3; 4,5,6; 7,8,10}
+Replaced matrix m
+? d = det(m)
+Replaced scalar d = -3
+? m = {4,1; 1,5}
+Replaced matrix m
+? d = det(m)
+Replaced scalar d = 19
+Done

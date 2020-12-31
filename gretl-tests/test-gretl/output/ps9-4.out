@@ -1,0 +1,115 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps9-4.inp
+ /opt/esl/share/gretl/scripts/ps9-4.inp
+# PS9.4, for Example 9.5
+? open data6-6
+
+Read datafile /opt/esl/share/gretl/data/data6-6.gdt
+periodicity: 1, maxobs: 44
+observations range: 1948 to 1991
+
+Listing 3 variables:
+  0) const      1) year       2) farmpop  
+
+? genr time
+Generated series time (ID 3)
+# graph farmpop against year
+? textplot farmpop year
+
+  farmpop
+       16.6  |o                                                            
+             | o                                                           
+             |  o                                                          
+      14.15  +    o                                                        
+             |     o                                                       
+             |                                                             
+             |      o                                                      
+             |        oo o                                                 
+    10.0667  +            o                                                
+             |             o o                                             
+             |                o                                            
+             |                  oo                                         
+             |                    o                                        
+    5.98333  +                      oo                                     
+             |                         ooo                                 
+             |                             oo ooo                          
+             |                                    oo o                     
+             |                                        oo o                 
+        1.9  +                                            o ooo oo ooo oo o
+             |+---------+---------+---------+---------+---------+---------+
+              1948                        year                            1991
+
+
+# linear time trend
+? ols farmpop 0 time
+
+Model 1: OLS, using observations 1948-1991 (T = 44)
+Dependent variable: farmpop
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       13.7773      0.436669      31.55    7.07e-31 ***
+  time        -0.324848    0.0169016    -19.22    1.99e-22 ***
+
+Mean dependent var   6.468182   S.D. dependent var   4.403581
+Sum squared resid    85.12467   S.E. of regression   1.423649
+R-squared            0.897912   Adjusted R-squared   0.895481
+F(1, 42)             369.4094   P-value(F)           1.99e-22
+Log-likelihood      -76.95169   Akaike criterion     157.9034
+Schwarz criterion    161.4718   Hannan-Quinn         159.2267
+rho                  0.944462   Durbin-Watson        0.055649
+
+# generate square of time
+? genr timesq = time*time
+Generated series timesq (ID 4)
+# quadratic time trend
+? ols farmpop 0 time timesq
+
+Model 2: OLS, using observations 1948-1991 (T = 44)
+Dependent variable: farmpop
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      17.0255       0.150064      113.5     7.58e-53 ***
+  time       -0.748535     0.0153817     -48.66    6.76e-38 ***
+  timesq      0.00941526   0.000331437    28.41    1.36e-28 ***
+
+Mean dependent var   6.468182   S.D. dependent var   4.403581
+Sum squared resid    4.115803   S.E. of regression   0.316837
+R-squared            0.995064   Adjusted R-squared   0.994823
+F(2, 41)             4132.669   P-value(F)           5.18e-48
+Log-likelihood      -10.30747   Akaike criterion     26.61494
+Schwarz criterion    31.96751   Hannan-Quinn         28.59993
+rho                  0.695629   Durbin-Watson        0.601455
+
+# compute growth rate of farmpop
+? genr gfarmpop=ldiff(farmpop)
+Generated series gfarmpop (ID 5)
+# suppress 1948 observation
+? smpl 1949 1991
+Full data range: 1948 - 1991 (n = 44)
+Current sample: 1949 - 1991 (n = 43)
+
+# time trend for log difference
+? ols gfarmpop 0 time
+
+Model 3: OLS, using observations 1949-1991 (T = 43)
+Dependent variable: gfarmpop
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -0.0637816     0.0164700     -3.873    0.0004  ***
+  time        0.000581457   0.000630206    0.9226   0.3616 
+
+Mean dependent var  -0.050408   S.D. dependent var   0.051193
+Sum squared resid    0.107830   S.E. of regression   0.051283
+R-squared            0.020340   Adjusted R-squared  -0.003554
+F(1, 41)             0.851273   P-value(F)           0.361590
+Log-likelihood       67.73628   Akaike criterion    -131.4726
+Schwarz criterion   -127.9502   Hannan-Quinn        -130.1736
+rho                 -0.148626   Durbin-Watson        2.266147
+
+Done

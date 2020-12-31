@@ -1,0 +1,89 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run bierens.inp
+ /home/allin/stats/test-gretl/bfgs/arma/bierens.inp
+? open bierens.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/bierens.gdt
+periodicity: 4, maxobs: 200
+observations range: 1950:1 to 1999:4
+
+Listing 2 variables:
+  0) const    1) y      
+
+? diff y
+Listing 3 variables:
+  0) const    1) y        2) d_y    
+
+? smpl 1950:2 1997:1
+Full data range: 1950:1 - 1999:4 (n = 200)
+Current sample: 1950:2 - 1997:1 (n = 188)
+
+# native Kalman
+? arma 1 1 ; 0 1 ; d_y
+
+Function evaluations: 33
+Evaluations of gradient: 9
+
+Model 1: ARMA, using observations 1950:2-1997:1 (T = 188)
+Estimated using Kalman filter (exact ML)
+Dependent variable: d_y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.0911347    0.337016     -0.2704   0.7868  
+  phi_1       0.739212     0.0618453    11.95     6.29e-33 ***
+  theta_1     0.485453     0.0931349     5.212    1.86e-07 ***
+  Theta_1    -0.191194     0.0876606    -2.181    0.0292   **
+
+Mean dependent var  -0.036239   S.D. dependent var   1.977462
+Mean of innovations  0.003236   S.D. of innovations  1.018950
+Log-likelihood      -271.1525   Akaike criterion     552.3049
+Schwarz criterion    568.4872   Hannan-Quinn         558.8614
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3528     0.0000     1.3528     0.0000
+  MA
+    Root  1          -2.0599     0.0000     2.0599     0.5000
+  MA (seasonal)
+    Root  1           5.2303     0.0000     5.2303     0.0000
+  -----------------------------------------------------------
+
+? arima 1 1 1 ; 0 0 1 ; y
+
+Function evaluations: 33
+Evaluations of gradient: 9
+
+Model 2: ARIMA, using observations 1950:2-1997:1 (T = 188)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.0911347    0.337016     -0.2704   0.7868  
+  phi_1       0.739212     0.0618453    11.95     6.29e-33 ***
+  theta_1     0.485453     0.0931349     5.212    1.86e-07 ***
+  Theta_1    -0.191194     0.0876606    -2.181    0.0292   **
+
+Mean dependent var  -0.036239   S.D. dependent var   1.977462
+Mean of innovations  0.003236   S.D. of innovations  1.018950
+Log-likelihood      -271.1525   Akaike criterion     552.3049
+Schwarz criterion    568.4872   Hannan-Quinn         558.8614
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3528     0.0000     1.3528     0.0000
+  MA
+    Root  1          -2.0599     0.0000     2.0599     0.5000
+  MA (seasonal)
+    Root  1           5.2303     0.0000     5.2303     0.0000
+  -----------------------------------------------------------
+
+Done

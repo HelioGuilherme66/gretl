@@ -1,0 +1,147 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run poisson_mfx.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/poisson_mfx.gfn.inp
+? include ./poisson_mfx.gfn
+ /home/cottrell/stats/test-gretl/testgfn/poisson_mfx.gfn
+poisson_mfx 0.1, 2015-08-01 (Oleg Komashko)
+? open affairs.gdt
+
+Read datafile /opt/esl/share/gretl/data/wooldridge/affairs.gdt
+periodicity: 1, maxobs: 601
+observations range: 1 to 601
+
+Listing 20 variables:
+  0) const       1) id          2) male        3) age         4) yrsmarr   
+  5) kids        6) relig       7) educ        8) occup       9) ratemarr  
+ 10) naffairs   11) affair     12) vryhap     13) hapavg     14) avgmarr   
+ 15) unhap      16) vryrel     17) smerel     18) slghtrel   19) notrel    
+
+# stata to compare
+# use "http://www.dartmouth.edu/~econ20pa/affairs.dta"
+? list X = const male age yrsmarr
+Generated list X
+? poisson naffairs X
+
+Convergence achieved after 5 iterations
+
+Model 1: Poisson, using observations 1-601
+Dependent variable: naffairs
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.255463     0.143578      1.779   0.0752   *
+  male        0.127063     0.0697160     1.823   0.0684   *
+  age        -0.0316662    0.00589056   -5.376   7.63e-08 ***
+  yrsmarr     0.119483     0.00982520   12.16    5.02e-34 ***
+
+Mean dependent var   1.455907   S.D. dependent var   3.298758
+Sum squared resid    6268.378   S.E. of regression   3.240339
+McFadden R-squared   0.055423   Adjusted R-squared   0.053083
+Log-likelihood      -1614.965   Akaike criterion     3237.931
+Schwarz criterion    3255.525   Hannan-Quinn         3244.779
+
+Overdispersion test: Chi-square(1) = 265.516 [0.0000]
+
+? b1 = poisson_mfx(naffairs,X,$coeff,$vcv)
+? poisson_mfx_print(&b1)
+
+Poisson/Negbin marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs) = 1.3025
+
+               dp/dx        s.e.           z        pval        xbar
+   male      0.16612    0.091423      1.8170    0.069216     0.47587
+    age    -0.041244   0.0075899     -5.4341  5.5069e-08      32.488
+yrsmarr      0.15562    0.011847      13.136  2.0536e-39      8.1777
+
+# stata to compare
+# poisson naffairs male age yrsmarr
+# mfx compute
+? eval poisson_dp_dx({1,2,3,4},X,{0.1,0.2,0.3,1})
+      948.22       664.22       885.63 
+
+? negbin naffairs X
+
+Function evaluations: 45
+Evaluations of gradient: 19
+
+Model 2: Negative Binomial, using observations 1-601
+Dependent variable: naffairs
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.170178     0.505069      0.3369   0.7362  
+  male        0.136773     0.257950      0.5302   0.5960  
+  age        -0.0322776    0.0215238    -1.500    0.1337  
+  yrsmarr     0.130311     0.0365172     3.568    0.0004   ***
+  alpha       8.22531      0.887141      9.272    1.83e-20 ***
+
+Mean dependent var   1.455907   S.D. dependent var   3.298758
+Log-likelihood      -743.2222   Akaike criterion     1496.444
+Schwarz criterion    1518.437   Hannan-Quinn         1505.005
+
+? b2 = poisson_mfx(naffairs,X,$coeff,$vcv,0)
+? poisson_mfx_print(&b2)
+
+Poisson/Negbin marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs) = 1.2870
+
+               dp/dx        s.e.           z        pval        xbar
+   male      0.17674     0.33553     0.52675     0.59837     0.47587
+    age    -0.041540    0.028083     -1.4792     0.13908      32.488
+yrsmarr      0.16771    0.050588      3.3152  0.00091584      8.1777
+
+# stata to compare
+# nbreg naffairs male age yrsmarr, dispersion(mean)
+# mfx compute
+? negbin naffairs X --model1
+
+Function evaluations: 49
+Evaluations of gradient: 23
+
+Model 3: Negative Binomial 1, using observations 1-601
+Dependent variable: naffairs
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.478160     0.354413      1.349   0.1773  
+  male        0.274461     0.167121      1.642   0.1005  
+  age        -0.0350398    0.0143849    -2.436   0.0149   **
+  yrsmarr     0.101677     0.0232652     4.370   1.24e-05 ***
+  alpha      12.3896       2.03013       6.103   1.04e-09 ***
+
+Mean dependent var   1.455907   S.D. dependent var   3.298758
+Log-likelihood      -739.9085   Akaike criterion     1489.817
+Schwarz criterion    1511.810   Hannan-Quinn         1498.378
+
+? b3 = poisson_mfx(naffairs,X,$coeff,$vcv,0)
+? poisson_mfx_print(&b3)
+
+Poisson/Negbin marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs) = 1.3524
+
+               dp/dx        s.e.           z        pval        xbar
+   male      0.37483     0.23218      1.6144     0.10644     0.47587
+    age    -0.047388    0.019662     -2.4101    0.015947      32.488
+yrsmarr      0.13751    0.032437      4.2393  2.2424e-05      8.1777
+
+# stata to compare
+# nbreg naffairs male age yrsmarr, dispersion(constant)
+# mfx compute
+Done

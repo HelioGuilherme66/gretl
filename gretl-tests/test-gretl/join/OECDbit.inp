@@ -1,0 +1,7 @@
+nulldata 10
+setobs 4 1959:2
+join OECDbit.csv FRA --tkey="Period,Q%q-%Y" --data=Value \
+ --filter="Country==\"France\""
+join OECDbit.csv GER --tkey="Period,Q%q-%Y" --data=Value \
+ --filter="Country==\"Germany\""
+print -o

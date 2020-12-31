@@ -1,0 +1,32 @@
+# Box and Jenkins (1976) Series E
+open bje.gdt
+
+# title 'AR(2) with constant';
+#                     TSP         TSP
+#       Box-Jenkins  BJEST         ML
+#  phi1   1.42     1.40757      1.40757
+# (s.e.)  (.07)    (.070592)    (.070436)
+#  phi2   -.73     -.712806     -.712806
+# (s.e.)  (.07)    (.069149)    (.070077)
+# Const. 14.35    14.7098      14.7098
+# (s.e.)          (2.48212)    (2.48737)
+# LogL            -414.617   -414.617
+
+arma 2 0 ; e
+scalar mu = $coeff[1] * (1 - $coeff[2] - $coeff[3])
+
+# title 'AR(3) with constant';
+#       Box-Jenkins  TSP
+#  phi1   1.57     1.55312
+# (s.e.)  (.10)    (.099788)
+#  phi2  -1.02    -1.00175
+# (s.e.)  (.15)    (.156114)
+#  phi3    .21      .206338
+# (s.e.)  (.10)    (.099307)
+# Const. 11.31    11.7374
+# (s.e.)          (2.78818)
+# LogL            -412.495
+
+arma 3 0 ; e
+scalar mu = $coeff[1] * (1 - $coeff[2] - $coeff[3] - $coeff[4])
+

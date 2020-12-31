@@ -1,0 +1,49 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run VSG_test.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/VSG_test.gfn.inp
+? include ./VSG_test.gfn
+ /home/cottrell/stats/test-gretl/testgfn/VSG_test.gfn
+VSG_test 1.11, 2011-02-21 (Daniel Ventosa-Santaulària)
+? open chomage.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/chomage.gdt
+periodicity: 4, maxobs: 66
+observations range: 1980:1 to 1996:2
+
+Listing 2 variables:
+  0) const    1) y      
+
+? bundle TRIAL = VSG_test(y,10,2,1,0)
+------------------------------------------
+GVS TEST FOR DRIFT AND SHIFT IN A DRIFT
+NULL HYPOTHESES: (i)  NO DRIFT
+                 (ii) NO BREAK IN DRIFT
+------------------------------------------
+The R square test statistic (drift) is 0.89
+ and the corresponding critical value is 0.93
+The null hypothesis (no-drift) is not rejected
+The null hypothesis (no-break) is not performed
+#------------------------------------------------
+# "10" accounts for the omitted observations at
+# the  beginning (at at the end of the sample);
+# "2"  chooses the level of the test, 5% in this
+#      case;
+# "1"  indicates that you are looking for a break
+# "0"  indicates that you don't want to plot the
+#      variable
+? print TRIAL
+bundle TRIAL, created by VSG_test:
+ Break date (obs. No) = 42
+ Gamma = 0.191496
+ Drift R2 statistic = 0.89007
+ Lambda = 0.636364
+ Break Critical Value = 1.66
+ Drift Critical Value = 0.93
+ Gamma normalized t-ratio = 12.2199
+ Break? (Yes=1 & No=0) = 0
+ Drift? (Yes=1 & No=0) = 0
+
+Done

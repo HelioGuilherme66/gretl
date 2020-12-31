@@ -1,0 +1,353 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run keane.inp
+ /opt/esl/share/gretl/scripts/misc/keane.inp
+? function series mlogitlogprobs(series y, matrix X, matrix theta)
+# Replicate the multinomial logit example from Table 15.2 in
+# Wooldridge's panel data book (2002a).
+# We first do this manually using gretl's mle command, then
+# show the result from gretl's built-in logit command
+? open keane.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/keane.gdt
+periodicity: 1, maxobs: 12723
+observations range: 1 to 12723
+
+Listing 19 variables:
+  0) const      1) id         2) numyrs     3) year       4) choice   
+  5) wage       6) educ       7) expwc      8) expbc      9) expser   
+ 10) manuf     11) black     12) lwage     13) enroll    14) employ   
+ 15) attrit    16) exper     17) expersq   18) status   
+
+# for the manual variant the dep. var. must be 0-based
+? status = status - 1
+Replaced series status (ID 18)
+# and we must exclude NAs
+? smpl (year=87 && ok(status)) --restrict
+Full data set: 12723 observations
+Current sample: 1717 observations
+? matrix X = { const, educ, exper, expersq, black }
+Generated matrix X
+? scalar k = cols(X)
+Generated scalar k = 5
+? matrix theta = zeros(2*k, 1)
+Generated matrix theta
+? mle ll = mlogitlogprobs(status,X,theta)
+? params theta
+? end mle --verbose --hessian
+Using numerical derivatives
+Iteration 1: loglikelihood = -1886.31729964
+Parameters:       0.0000      0.0000      0.0000      0.0000      0.0000      0.0000
+                  0.0000      0.0000      0.0000      0.0000
+Gradients:       -240.33     -3444.3     -1289.0     -6985.7     -22.334      713.67
+                  9096.7      3104.0      16237.      219.67 (norm 0.00e+00)
+
+Iteration 2: loglikelihood = -1289.09902194 (steplength = 2.56e-06)
+Parameters:  -0.00061525  -0.0088175  -0.0032998   -0.017883 -5.7175e-05   0.0018270
+                0.023287   0.0079462    0.041568  0.00056235
+Gradients:        41.164     -1.9795      12.789      376.49      72.366      250.53
+                  3465.9      875.30      3329.4      67.236 (norm 4.83e+00)
+
+Iteration 3: loglikelihood = -1191.55849679 (steplength = 1.28e-05)
+Parameters:   0.00076482   0.0014320  0.00075372   0.0090299   0.0011745   0.0037299
+                0.051931    0.012772    0.046698  0.00098905
+Gradients:        14.137     -286.74     -169.75     -674.22      63.121      170.16
+                  2361.6      714.42      2830.1      36.169 (norm 5.21e+00)
+
+Iteration 4: loglikelihood = -1184.76975345 (steplength = 6.4e-05)
+Parameters:    0.0036963    0.010115  -0.0044599  -0.0029554   0.0059508   0.0039834
+                0.066420    0.020790    0.034055 -0.00049643
+Gradients:        32.020     -61.710     -98.882     -334.33      69.287      143.27
+                  1979.1      685.58      2855.1      25.466 (norm 4.96e+00)
+
+Iteration 5: loglikelihood = -1182.33857140 (steplength = 6.4e-05)
+Parameters:     0.010734    0.040254   -0.012167   -0.015185    0.016226   0.0028102
+                0.070934    0.038312    0.029664  -0.0043182
+Gradients:       -19.194     -786.88     -150.16     -334.92      47.659      171.03
+                  2385.2      702.99      2792.3      37.195 (norm 5.65e+00)
+
+Iteration 6: loglikelihood = -1135.83227578 (steplength = 0.0016)
+Parameters:     0.093640    0.034435    -0.13849   0.0059577     0.17207   -0.024028
+                0.049418     0.31975  -0.0070533   -0.070586
+Gradients:       -10.077     -680.19     -79.683     -199.52      40.200      157.56
+                  2253.0      596.49      2559.4      41.803 (norm 6.09e+00)
+
+Iteration 7: loglikelihood = -1108.21970749 (steplength = 0.008)
+Parameters:      0.47041   -0.023203    0.090568   -0.031378     0.66024    -0.18897
+                0.059305     0.39424   -0.018384    -0.20575
+Gradients:       -32.379     -794.71     -151.63     -358.33     -15.052      178.35
+                  2372.0      668.62      2819.0      91.597 (norm 7.60e+00)
+
+Iteration 8: loglikelihood = -1082.60588689 (steplength = 0.04)
+Parameters:       2.2326    -0.19890     0.53835    -0.10864      1.1971    -0.77876
+                0.025370     0.86260   -0.082095      1.1531
+Gradients:       -30.033     -568.02     -128.24     -131.71      5.5490      204.85
+                  2687.4      749.87      3632.3      25.597 (norm 1.21e+01)
+
+Iteration 9: loglikelihood = -1061.79547924 (steplength = 0.04)
+Parameters:       3.9008    -0.26165    -0.31650    0.015204      1.4853     -1.3625
+                0.092109     0.37936  -0.0051652      1.6135
+Gradients:       -59.066     -792.05     -154.79     -447.73     -10.244      210.49
+                  2616.3      701.95      2978.7      25.050 (norm 1.17e+01)
+
+Iteration 10: loglikelihood = -1034.52574220 (steplength = 0.2)
+Parameters:       6.9444    -0.43537    -0.16565   -0.017441    -0.35501     -1.1010
+                0.090239     0.77124   -0.058443     0.22443
+Gradients:       -85.455     -963.24     -232.40     -841.85      6.8029      173.33
+                  1958.0      564.30      2529.5      38.292 (norm 1.42e+01)
+
+Iteration 11: loglikelihood = -964.825881750 (steplength = 0.2)
+Parameters:       8.3364    -0.53351    -0.30763   0.0077026    -0.10310      2.0158
+                -0.10619     0.67798   -0.055076    0.020855
+Gradients:       -55.472     -625.68     -174.32     -817.28      3.7199      127.44
+                  1533.5      416.25      1962.0      31.171 (norm 1.29e+01)
+
+Iteration 12: loglikelihood = -917.681490217 (steplength = 1)
+Parameters:       7.7743    -0.50816    -0.18453  -0.0027091     0.72033      3.7845
+                -0.19755     0.71124   -0.064454     0.13387
+Gradients:        4.4831      5.9838     -7.0901     -63.525      1.2613      17.071
+                  233.18      101.86      547.68      9.6594 (norm 5.10e+00)
+
+Iteration 13: loglikelihood = -911.274945707 (steplength = 1)
+Parameters:       8.5913    -0.56795    -0.14972  -0.0059997     0.80478      4.1385
+                -0.22693     0.80123   -0.071860     0.24302
+Gradients:        5.7133      50.616      9.1980      23.000      1.2027      8.2047
+                  111.52      42.415      234.79      4.7979 (norm 4.38e+00)
+
+Iteration 14: loglikelihood = -908.425287810 (steplength = 1)
+Parameters:       9.5917    -0.63564    -0.11788  -0.0099134     0.85971      4.8214
+                -0.27244     0.84980   -0.075807     0.33247
+Gradients:        5.7046      71.749      17.045      79.085      1.4495     0.33081
+                  4.4460    -0.83612     -3.5240     0.30171 (norm 3.29e+00)
+
+Iteration 15: loglikelihood = -907.988129199 (steplength = 1)
+Parameters:       10.013    -0.66062    -0.11716  -0.0098743     0.86514      5.2058
+                -0.29522     0.85088   -0.076019     0.35032
+Gradients:        3.5471      48.560      10.135      41.506     0.86112     -1.4093
+                 -20.906     -5.8272     -24.598    -0.62481 (norm 3.01e+00)
+
+Iteration 16: loglikelihood = -907.878686284 (steplength = 1)
+Parameters:       10.241    -0.67297    -0.11293   -0.010945     0.84721      5.4762
+                -0.31100     0.84348   -0.075648     0.34071
+Gradients:        1.4443      20.200      4.6842      24.227     0.27757     -1.0027
+                 -13.267     -4.8678     -29.665    -0.51911 (norm 2.13e+00)
+
+Iteration 17: loglikelihood = -907.862210615 (steplength = 1)
+Parameters:       10.282    -0.67404    -0.11510   -0.010801     0.83028      5.5373
+                -0.31417     0.84195   -0.075876     0.32702
+Gradients:       0.19523      3.2423     0.39857    -0.54583   -0.031184    -0.34387
+                 -4.9030     -1.2422     -6.6769    -0.20251 (norm 9.66e-01)
+
+Iteration 18: loglikelihood = -907.858663483 (steplength = 1)
+Parameters:       10.281    -0.67365    -0.11181   -0.011504     0.81808      5.5497
+                -0.31486     0.84279   -0.076229     0.31622
+Gradients:     -0.076500     -1.1795   -0.027023     0.34701   -0.056497   0.0087198
+                 0.47931    -0.34552     -4.4253   -0.021436 (norm 4.97e-01)
+
+Iteration 19: loglikelihood = -907.857690198 (steplength = 1)
+Parameters:       10.273    -0.67313    -0.10968   -0.011880     0.81248      5.5418
+                -0.31441     0.84530   -0.076674     0.31094
+Gradients:     -0.086374     -1.3507    -0.16886    -0.86608   -0.024500    0.071452
+                  1.1263    0.067894    -0.92975    0.035794 (norm 5.23e-01)
+
+Iteration 20: loglikelihood = -907.857376670 (steplength = 1)
+Parameters:       10.272    -0.67316    -0.10751   -0.012236     0.81085      5.5386
+                -0.31428     0.84749   -0.077026     0.30930
+Gradients:     -0.016161    -0.32637   -0.019384    -0.11332   0.0077080    0.027592
+                 0.42347   -0.019952    -0.72752    0.031628 (norm 2.76e-01)
+
+Iteration 21: loglikelihood = -907.857277869 (steplength = 1)
+Parameters:       10.274    -0.67337    -0.10632   -0.012434     0.81127      5.5396
+                -0.31439     0.84868   -0.077223     0.30966
+Gradients:      0.014330     0.17580    0.028069    0.090279    0.014609   -0.010772
+                -0.16198   -0.098140    -0.69528    0.014779 (norm 2.31e-01)
+
+Iteration 22: loglikelihood = -907.857241356 (steplength = 1)
+Parameters:       10.276    -0.67353    -0.10592   -0.012516     0.81222      5.5417
+                -0.31453     0.84903   -0.077301     0.31055
+Gradients:      0.016303     0.22834    0.024846    0.092132   0.0095952   -0.021970
+                -0.30221    -0.10018    -0.53916   0.0025125 (norm 2.60e-01)
+
+Iteration 23: loglikelihood = -907.857241122 (steplength = 1.28e-05)
+Parameters:       10.276    -0.67353    -0.10592   -0.012514     0.81222      5.5417
+                -0.31454     0.84903   -0.077307     0.31055
+Gradients:     -0.017945    -0.17133    -0.12241    -0.74897  -0.0066279    0.020339
+                 0.19655    0.072686     0.44295    0.019998 (norm 2.46e-01)
+
+Iteration 24: loglikelihood = -907.857238189 (steplength = 6.4e-05)
+Parameters:       10.276    -0.67352    -0.10593   -0.012535     0.81222      5.5417
+                -0.31455     0.84902   -0.077319     0.31055
+Gradients:     -0.024471    -0.28130   -0.077148    -0.32789   -0.011357    0.041530
+                 0.50708    0.078012     0.29676    0.027524 (norm 3.08e-01)
+
+Iteration 25: loglikelihood = -907.857236586 (steplength = 6.4e-05)
+Parameters:       10.276    -0.67352    -0.10593   -0.012547     0.81222      5.5417
+                -0.31454     0.84902   -0.077334     0.31055
+Gradients:    -0.0097259   -0.092319   -0.057094    -0.31271  -0.0034106    0.026262
+                 0.30141    0.087186     0.49628    0.019827 (norm 2.31e-01)
+
+Iteration 26: loglikelihood = -907.857236149 (steplength = 6.4e-05)
+Parameters:       10.276    -0.67352    -0.10593   -0.012548     0.81222      5.5417
+                -0.31453     0.84902   -0.077335     0.31056
+Gradients:     -0.012830    -0.13457   -0.060334    -0.31199  -0.0048772    0.025705
+                 0.28174    0.086834     0.48883    0.020430 (norm 2.42e-01)
+
+Iteration 27: loglikelihood = -907.857235004 (steplength = 0.008)
+Parameters:       10.276    -0.67351    -0.10598   -0.012541     0.81223      5.5417
+                -0.31454     0.84903   -0.077335     0.31066
+Gradients:     -0.011482    -0.14054   -0.051068    -0.31158  0.00082991    0.023800
+                 0.28287    0.076693     0.48445    0.013347 (norm 2.35e-01)
+
+Iteration 28: loglikelihood = -907.857233359 (steplength = 0.008)
+Parameters:       10.276    -0.67351    -0.10600   -0.012538     0.81231      5.5418
+                -0.31454     0.84893   -0.077322     0.31082
+Gradients:     -0.011238    -0.13244   -0.057469    -0.30649   0.0039790    0.023812
+                 0.28143    0.086135     0.47667   0.0084810 (norm 2.35e-01)
+
+Iteration 29: loglikelihood = -907.857229510 (steplength = 0.04)
+Parameters:       10.276    -0.67351    -0.10634   -0.012489     0.81325      5.5420
+                -0.31455     0.84868   -0.077287     0.31140
+Gradients:     -0.010738    -0.13133   -0.040160    -0.27614   -0.013131    0.021328
+                 0.26265    0.073845     0.41804    0.016223 (norm 2.28e-01)
+
+Iteration 30: loglikelihood = -907.857228714 (steplength = 0.04)
+Parameters:       10.276    -0.67352    -0.10623   -0.012505     0.81335      5.5421
+                -0.31456     0.84877   -0.077301     0.31151
+Gradients:     -0.010675    -0.13483   -0.041177    -0.26199   -0.013790    0.020566
+                 0.25198    0.068985     0.39507    0.014870 (norm 2.25e-01)
+
+Iteration 31: loglikelihood = -907.857228449 (steplength = 1)
+Parameters:       10.278    -0.67362    -0.10608   -0.012533     0.81317      5.5427
+                -0.31460     0.84894   -0.077321     0.31165
+Gradients:    -0.0073499   -0.051529  -0.0027342    0.025301 -0.00042064   0.0029615
+               -0.017275   -0.015172   -0.075443  -0.0036096 (norm 1.24e-01)
+
+Iteration 32: loglikelihood = -907.857227021 (steplength = 0.2)
+Parameters:       10.278    -0.67361    -0.10601   -0.012541     0.81306      5.5432
+                -0.31463     0.84891   -0.077319     0.31151
+Gradients:    -0.0052466   -0.055024   0.0024500    0.092575   0.0013870  -0.0031662
+               -0.060419   -0.029644    -0.19103  -0.0047635 (norm 1.31e-01)
+
+Iteration 33: loglikelihood = -907.857226264 (steplength = 1)
+Parameters:       10.276    -0.67354    -0.10620   -0.012508     0.81307      5.5428
+                -0.31459     0.84872   -0.077291     0.31138
+Gradients:     0.0063437    0.050505   0.0095667    0.035800   0.0027967  -0.0037915
+               -0.039660  -0.0056104   -0.037210  -0.0015348 (norm 1.20e-01)
+
+Iteration 34: loglikelihood = -907.857225440 (steplength = 1)
+Parameters:       10.277    -0.67359    -0.10616   -0.012519     0.81311      5.5432
+                -0.31463     0.84878   -0.077304     0.31143
+Gradients:    -0.0026319   -0.039006  -0.0089869   -0.037670  -0.0025636   0.0036664
+                0.041973   0.0095497    0.047356   0.0021487 (norm 1.01e-01)
+
+Iteration 35: loglikelihood = -907.857225264 (steplength = 1)
+Parameters:       10.278    -0.67362    -0.10619   -0.012517     0.81306      5.5436
+                -0.31464     0.84876   -0.077302     0.31142
+Gradients:   -0.00073896   -0.014512  -0.0011198   0.0028479 -0.00043201  0.00068781
+              0.00080718  -0.0016030   -0.012170 -0.00026148 (norm 4.93e-02)
+
+Iteration 36: loglikelihood = -907.857225256 (steplength = 0.04)
+Parameters:       10.278    -0.67363    -0.10620   -0.012517     0.81305      5.5437
+                -0.31465     0.84875   -0.077302     0.31141
+Gradients:    -0.0010687   -0.011244 -0.00038085   0.0079183 -0.00022737      0.0000
+              -0.0044622  -0.0024329   -0.020424 -0.00062528 (norm 4.91e-02)
+
+Iteration 37: loglikelihood = -907.857225223 (steplength = 1)
+Parameters:       10.278    -0.67363    -0.10620   -0.012517     0.81302      5.5437
+                -0.31465     0.84875   -0.077302     0.31137
+Gradients:   -9.6634e-05 -0.00043769   0.0010687   0.0060822  0.00019327 -9.0949e-05
+              -0.0056502  -0.0023419   -0.010516 -0.00039222 (norm 2.62e-02)
+
+Iteration 38: loglikelihood = -907.857225218 (steplength = 0.2)
+Parameters:       10.278    -0.67363    -0.10620   -0.012517     0.81301      5.5437
+                -0.31465     0.84875   -0.077302     0.31136
+Gradients:    0.00032401   0.0030070   0.0013301   0.0052466  0.00036380 -0.00034674
+              -0.0051728  -0.0021316  -0.0079751 -0.00030695 (norm 3.45e-02)
+
+Iteration 39: loglikelihood = -907.857225213 (steplength = 1)
+Parameters:       10.278    -0.67363    -0.10621   -0.012516     0.81302      5.5438
+                -0.31466     0.84874   -0.077301     0.31136
+Gradients:    0.00010232   0.0013074 -0.00025011 -3.4106e-05  3.4106e-05      0.0000
+              -0.0015859 -0.00043769  0.00021032 -1.1369e-05 (norm 1.70e-02)
+
+Iteration 39: loglikelihood = -907.857225213 (steplength = 0.0016)
+Parameters:       10.278    -0.67363    -0.10621   -0.012516     0.81302      5.5438
+                -0.31466     0.84874   -0.077301     0.31136
+Gradients:    0.00010232   0.0013074 -0.00025011 -3.4106e-05  3.4106e-05      0.0000
+              -0.0015859 -0.00043769  0.00021032 -1.1369e-05 (norm 1.70e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -907.857225213 (steplength = 1.28e-05)
+Parameters:       10.278    -0.67363    -0.10621   -0.012516     0.81302      5.5438
+                -0.31466     0.84874   -0.077301     0.31136
+Gradients:    0.00010232   0.0013074 -0.00025011 -3.4106e-05  3.4106e-05      0.0000
+              -0.0015859 -0.00043769  0.00021032 -1.1369e-05 (norm 1.70e-02)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 131
+Evaluations of gradient: 39
+
+Model 1: ML, using observations 1-1717
+ll = mlogitlogprobs(status,X,theta)
+Standard errors based on Hessian
+
+               estimate    std. error      z      p-value 
+  --------------------------------------------------------
+  theta[1]    10.2779      1.12159       9.164    5.02e-20 ***
+  theta[2]    -0.673630    0.0696006    -9.679    3.72e-22 ***
+  theta[3]    -0.106210    0.169378     -0.6271   0.5306  
+  theta[4]    -0.0125158   0.0256896    -0.4872   0.6261  
+  theta[5]     0.813018    0.302703      2.686    0.0072   ***
+  theta[6]     5.54377     1.07827       5.141    2.73e-07 ***
+  theta[7]    -0.314656    0.0649067    -4.848    1.25e-06 ***
+  theta[8]     0.848741    0.154437      5.496    3.89e-08 ***
+  theta[9]    -0.0773009   0.0232882    -3.319    0.0009   ***
+  theta[10]    0.311362    0.281454      1.106    0.2686  
+
+Log-likelihood      -907.8572   Akaike criterion     1835.714
+Schwarz criterion    1890.198   Hannan-Quinn         1855.874
+
+# Compare the built-in command (in this case we don't need
+# status to be 0-based, and NAs are handled correctly)
+? smpl full
+Full data range: 1 - 12723 (n = 12723)
+
+? status = status + 1
+Replaced series status (ID 18)
+? smpl (year=87) --restrict
+Full data set: 12723 observations
+Current sample: 1738 observations
+? logit status 0 educ exper expersq black --multinomial
+
+Model 2: Multinomial Logit, using observations 1-1738 (n = 1717)
+Missing or incomplete observations dropped: 21
+Dependent variable: status
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  status = 2
+  const      10.2779       1.13334       9.069    1.20e-19 ***
+  educ       -0.673631     0.0698999    -9.637    5.57e-22 ***
+  exper      -0.106215     0.173282     -0.6130   0.5399  
+  expersq    -0.0125152    0.0252291    -0.4961   0.6199  
+  black       0.813017     0.302723      2.686    0.0072   ***
+  status = 3
+  const       5.54380      1.08641       5.103    3.35e-07 ***
+  educ       -0.314657     0.0651096    -4.833    1.35e-06 ***
+  exper       0.848737     0.156986      5.406    6.43e-08 ***
+  expersq    -0.0773003    0.0229217    -3.372    0.0007   ***
+  black       0.311361     0.281534      1.106    0.2687  
+
+Mean dependent var   2.691322   S.D. dependent var   0.573502
+Log-likelihood      -907.8572   Akaike criterion     1835.714
+Schwarz criterion    1890.198   Hannan-Quinn         1855.874
+
+Number of cases 'correctly predicted' = 1366 (79.6%)
+Likelihood ratio test: Chi-square(8) = 583.722 [0.0000]
+
+Done

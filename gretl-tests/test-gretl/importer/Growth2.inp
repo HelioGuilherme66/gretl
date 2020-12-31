@@ -1,0 +1,2 @@
+open Growth2.xls --coloffset=2
+print -o

@@ -1,0 +1,26 @@
+open pricing.gdt
+
+loop i=1..10 --quiet
+  genr ex$i = r$i - rf
+endloop
+
+series gf = 1 + rf
+
+list exlist = ex*
+matrix exr = { exlist }
+
+scalar d = 1
+scalar g = 100
+
+matrix V = I(11)
+series m = d * cons^(-g)
+series oc1 = m * gf - 1
+
+gmm 
+  m = d * cons^(-g)
+  oc1 = m * gf - 1
+  orthog oc1 ; const
+  orthog m ; exr
+  weights V
+  params d g
+end gmm

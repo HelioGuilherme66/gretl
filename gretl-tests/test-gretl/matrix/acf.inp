@@ -1,0 +1,20 @@
+open data9-7 -q
+corrgm PRIME 12 -q
+matrix a = corrgm(PRIME, 12)
+a
+matrix x = {PRIME}
+a = corrgm(x, 12)
+a
+corrgm UNEMP 12 -q
+x = {PRIME,UNEMP}
+a = corrgm(x, 12)
+a
+xcorrgm PRIME UNEMP 6 -q
+a = corrgm(PRIME, 6, UNEMP)
+a
+x = {PRIME}
+matrix y = {UNEMP}
+a = corrgm(x, 6, y)
+a
+
+

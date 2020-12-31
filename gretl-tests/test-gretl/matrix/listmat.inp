@@ -1,0 +1,7 @@
+open data4-1
+list X = price sqft
+matrix x = X
+print x
+matrix A = {1,0,2,3}
+list mlist = A
+print mlist

@@ -1,0 +1,23 @@
+open sun-activity.gdt
+arima 9 0 0 ; sunactivity
+fcast 1709 1720 gretl_fc --dynamic
+smpl 1709 1719
+print sunactivity gretl_fc --byobs
+
+smpl --full
+genr year = time + 1699
+
+foreign language=stata --send-data
+  tsset year
+  arima sunactivity, arima(9,0,0)
+  predict stata_fc, dyn(1709)
+  list year sunactivity stata_fc in 10/20
+end foreign
+
+
+
+
+
+
+
+

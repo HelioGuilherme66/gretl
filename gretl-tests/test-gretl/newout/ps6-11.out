@@ -1,0 +1,81 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps6-11.inp
+ /opt/esl/share/gretl/scripts/ps6-11.inp
+# PS6.11 for Example 6.8
+? open data6-4
+
+Read datafile /opt/esl/share/gretl/data/data6-4.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 5 variables:
+  0) const    1) WAGE     2) EDUC     3) EXPER    4) AGE    
+
+? logs WAGE
+Listing 6 variables:
+  0) const     1) WAGE      2) EDUC      3) EXPER     4) AGE     
+  5) l_WAGE  
+
+? ols l_WAGE const EDUC EXPER AGE
+
+Model 1: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      6.83596       0.203431     33.60      1.62e-33 ***
+  EDUC       0.0645527     0.0167498     3.854     0.0004   ***
+  EXPER      0.0226995     0.00687276    3.303     0.0019   ***
+  AGE        0.000391786   0.00403304    0.09714   0.9230  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    3.156615   S.E. of regression   0.264853
+R-squared            0.327625   Adjusted R-squared   0.282800
+F(3, 45)             7.308992   P-value(F)           0.000429
+Log-likelihood      -2.341143   Akaike criterion     12.68229
+Schwarz criterion    20.24957   Hannan-Quinn         15.55330
+
+Log-likelihood for WAGE = -367.634
+
+Excluding the constant, p-value was highest for variable 4 (AGE)
+
+? genr ut = $uhat
+Generated series ut (ID 6)
+? square EDUC EXPER AGE
+Listing 10 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) l_WAGE      6) ut          7) sq_EDUC     8) sq_EXPER    9) sq_AGE    
+
+? ols ut const EDUC EXPER AGE sq_EDUC sq_EXPER sq_AGE
+
+Model 2: OLS, using observations 1-49
+Dependent variable: ut
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const       0.493369      0.809178       0.6097    0.5453 
+  EDUC       -0.157594      0.0863849     -1.824     0.0752  *
+  EXPER      -0.00883617    0.0244844     -0.3609    0.7200 
+  AGE        -0.000817855   0.0338212     -0.02418   0.9808 
+  sq_EDUC     0.0115248     0.00627372     1.837     0.0733  *
+  sq_EXPER    0.000429261   0.00111872     0.3837    0.7031 
+  sq_AGE      2.11475e-05   0.000381367    0.05545   0.9560 
+
+Mean dependent var   0.000000   S.D. dependent var   0.256443
+Sum squared resid    2.907844   S.E. of regression   0.263124
+R-squared            0.078809   Adjusted R-squared  -0.052789
+F(6, 42)             0.598861   P-value(F)           0.729514
+Log-likelihood      -0.329981   Akaike criterion     14.65996
+Schwarz criterion    27.90271   Hannan-Quinn         19.68424
+
+Excluding the constant, p-value was highest for variable 4 (AGE)
+
+? genr LM = $nrsq
+Generated scalar LM = 3.86166
+? pvalue X 3 LM
+Chi-square(3): area to the right of 3.86166 = 0.276795
+(to the left: 0.723205)
+Done

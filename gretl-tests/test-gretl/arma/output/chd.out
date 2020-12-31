@@ -1,0 +1,193 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run chd.inp
+ /home/cottrell/stats/test-gretl/arma/chd.inp
+? open data4-7
+
+Read datafile /opt/esl/share/gretl/data/data4-7.gdt
+periodicity: 1, maxobs: 34
+observations range: 1947 to 1980
+
+Listing 10 variables:
+  0) const      1) chd        2) cal        3) unemp      4) cig      
+  5) edfat      6) meat       7) spirits    8) beer       9) wine     
+
+? arma 1 1 ; chd -x
+
+Model 1: ARMA, using observations 1947-1980 (T = 34)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: chd
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const      345.631       10.6826      32.35     1.20e-229 ***
+  phi_1        0.901997     0.0732827   12.31     8.16e-35  ***
+  theta_1     -0.0383400    0.187370    -0.2046   0.8379   
+
+Mean dependent var   354.8147   S.D. dependent var   14.94605
+Mean of innovations  1.415547   S.D. of innovations  7.875193
+Log-likelihood      -119.2158   Akaike criterion     246.4316
+Schwarz criterion    252.5370   Hannan-Quinn         248.5137
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1087     0.0000     1.1087     0.0000
+  MA
+    Root  1          26.0824     0.0000    26.0824     0.0000
+  -----------------------------------------------------------
+
+? arma 1 1 ; chd
+
+Function evaluations: 35
+Evaluations of gradient: 14
+
+Model 2: ARMA, using observations 1947-1980 (T = 34)
+Estimated using Kalman filter (exact ML)
+Dependent variable: chd
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const      345.629       12.1569      28.43     8.46e-178 ***
+  phi_1        0.902020     0.0865292   10.42     1.92e-25  ***
+  theta_1     -0.0383137    0.174385    -0.2197   0.8261   
+
+Mean dependent var   354.8147   S.D. dependent var   14.94605
+Mean of innovations  0.691263   S.D. of innovations  7.875162
+Log-likelihood      -119.2158   Akaike criterion     246.4316
+Schwarz criterion    252.5370   Hannan-Quinn         248.5137
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1086     0.0000     1.1086     0.0000
+  MA
+    Root  1          26.1003     0.0000    26.1003     0.0000
+  -----------------------------------------------------------
+
+? arma 1 1 ; chd -c
+
+Function evaluations: 20
+Evaluations of gradient: 8
+
+Model 3: ARMA, using observations 1948-1980 (T = 33)
+Estimated using BHHH method (conditional ML)
+Dependent variable: chd
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      71.8290       32.2615       2.226    0.0260   **
+  phi_1       0.799169      0.0915798    8.726    2.63e-18 ***
+  theta_1    -0.0431746     0.251626    -0.1716   0.8638  
+
+Mean dependent var   355.8333   S.D. dependent var   13.92782
+Mean of innovations -0.005426   S.D. of innovations  7.464501
+Log-likelihood      -113.1602   Akaike criterion     234.3204
+Schwarz criterion    240.3064   Hannan-Quinn         236.3345
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2513     0.0000     1.2513     0.0000
+  MA
+    Root  1          23.1618     0.0000    23.1618     0.0000
+  -----------------------------------------------------------
+
+? arma 1 0 ; chd -x
+
+Model 4: ARMA, using observations 1947-1980 (T = 34)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: chd
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const      346.234       10.2818      33.67   1.37e-248 ***
+  phi_1        0.892157     0.0697795   12.79   1.98e-37  ***
+
+Mean dependent var   354.8147   S.D. dependent var   14.94605
+Mean of innovations  1.060566   S.D. of innovations  7.883231
+Log-likelihood      -119.2397   Akaike criterion     244.4793
+Schwarz criterion    249.0584   Hannan-Quinn         246.0409
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1209     0.0000     1.1209     0.0000
+  -----------------------------------------------------------
+
+? arma 1 0 ; chd
+
+Function evaluations: 27
+Evaluations of gradient: 10
+
+Model 5: ARMA, using observations 1947-1980 (T = 34)
+Estimated using Kalman filter (exact ML)
+Dependent variable: chd
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const      346.235       11.3520      30.50   2.61e-204 ***
+  phi_1        0.892129     0.0803050   11.11   1.13e-28  ***
+
+Mean dependent var   354.8147   S.D. dependent var   14.94605
+Mean of innovations  0.656904   S.D. of innovations  7.883259
+Log-likelihood      -119.2397   Akaike criterion     244.4793
+Schwarz criterion    249.0584   Hannan-Quinn         246.0409
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1209     0.0000     1.1209     0.0000
+  -----------------------------------------------------------
+
+? arma 1 0 ; chd -c
+
+Model 6: ARMA, using observations 1948-1980 (T = 33)
+Estimated using least squares (conditional ML)
+Dependent variable: chd
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       75.3493      32.7615      2.300   0.0215   **
+  phi_1        0.789240     0.0921085   8.569   1.05e-17 ***
+
+Mean dependent var   355.8333   S.D. dependent var   13.92782
+Mean of innovations  0.000000   S.D. of innovations  7.710185
+Log-likelihood      -113.1973   Akaike criterion     230.3946
+Schwarz criterion    233.3876   Hannan-Quinn         231.4016
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2670     0.0000     1.2670     0.0000
+  -----------------------------------------------------------
+
+? genr chd1 = chd(-1)
+Generated series chd1 (ID 10)
+? smpl 1948 ;
+Full data range: 1947 - 1980 (n = 34)
+Current sample: 1948 - 1980 (n = 33)
+
+? ols chd 0 chd1
+
+Model 7: OLS, using observations 1948-1980 (T = 33)
+Dependent variable: chd
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       75.3493      32.7615       2.300    0.0283   **
+  chd1         0.789240     0.0921085    8.569    1.12e-09 ***
+
+Mean dependent var   355.8333   S.D. dependent var   13.92782
+Sum squared resid    1842.855   S.E. of regression   7.710185
+R-squared            0.703124   Adjusted R-squared   0.693547
+F(1, 31)             73.42072   P-value(F)           1.12e-09
+Log-likelihood      -113.1973   Akaike criterion     230.3946
+Schwarz criterion    233.3876   Hannan-Quinn         231.4016
+rho                 -0.052039   Durbin-Watson        2.080512
+
+Done

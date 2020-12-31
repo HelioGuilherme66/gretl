@@ -1,0 +1,12 @@
+open data4-1
+matrix X = { sqft, price }
+X
+X = cdemean(X)
+X
+matrix XPX = X'*X
+XPX
+scalar rc = rcond(XPX)
+matrix V
+matrix E = eigensym(XPX, &V)
+E
+V

@@ -1,0 +1,461 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run summary-by.inp
+ /home/cottrell/stats/test-gretl/summary-by.inp
+? open summby.txt
+parsing /home/cottrell/stats/test-gretl/summby.txt...
+using delimiter ' '
+   longest line: 41 characters
+   first field: 'xvar'
+   number of columns = 3
+   number of variables: 3
+   number of non-blank lines: 101
+scanning for variable names...
+   line: xvar yvar svar
+scanning for row labels and data...
+variable 3 (svar): non-numeric values = 100 (100.00 percent)
+allocating string table
+treating these as undated data
+
+String code table written to
+ /home/cottrell/stats/test-gretl/string_table.txt
+Listing 4 variables:
+  0) const    1) xvar     2) yvar     3) svar   
+
+? summary xvar
+
+Summary statistics, using the observations 1 - 100
+for the variable 'xvar' (100 valid observations)
+
+  Mean                      -0.019766
+  Median                      0.10552
+  Minimum                     -3.1152
+  Maximum                      1.9934
+  Standard deviation          0.98921
+  C.V.                         50.045
+  Skewness                   -0.53196
+  Ex. kurtosis                0.24767
+  5% percentile               -1.8903
+  95% percentile               1.4842
+  Interquartile range          1.3036
+  Missing obs.                      0
+
+? summary xvar yvar
+
+                     Mean         Median        Minimum        Maximum
+xvar            -0.019766        0.10552        -3.1152         1.9934
+yvar             0.048973      -0.072259        -2.2805         2.3399
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.98921         50.045       -0.53196        0.24767
+yvar               1.0353         21.141       0.040630       -0.65643
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+xvar              -1.8903         1.4842         1.3036              0
+yvar              -1.5349         1.7307         1.5524              0
+
+? summary xvar --by=svar
+
+Summary statistics for xvar, by value of svar
+
+  svar = one (n = 9):
+    Mean                       -0.56465
+    Median                     -0.67989
+    Minimum                     -3.1152
+    Maximum                      1.4388
+    Standard deviation           1.3228
+    C.V.                         2.3427
+    Skewness                   -0.48874
+    Ex. kurtosis               -0.14576
+    Interquartile range          1.6658
+    Missing obs.                      0
+
+  svar = two (n = 10):
+    Mean                      -0.037599
+    Median                      0.16488
+    Minimum                     -2.4099
+    Maximum                     0.90848
+    Standard deviation          0.98029
+    C.V.                         26.072
+    Skewness                    -1.4466
+    Ex. kurtosis                 1.5165
+    Interquartile range          1.1466
+    Missing obs.                      0
+
+  svar = third (n = 10):
+    Mean                      -0.075945
+    Median                     -0.24376
+    Minimum                     -1.3173
+    Maximum                      1.1354
+    Standard deviation          0.82577
+    C.V.                         10.873
+    Skewness                    0.16506
+    Ex. kurtosis                -1.1583
+    Interquartile range          1.4004
+    Missing obs.                      0
+
+  svar = fourthly (n = 10):
+    Mean                        0.21104
+    Median                      0.48460
+    Minimum                     -1.8421
+    Maximum                      1.6528
+    Standard deviation           1.0523
+    C.V.                         4.9865
+    Skewness                   -0.63366
+    Ex. kurtosis               -0.46868
+    Interquartile range          1.6448
+    Missing obs.                      0
+
+  svar = five (n = 10):
+    Mean                       -0.36783
+    Median                     -0.33224
+    Minimum                     -1.8140
+    Maximum                      1.2644
+    Standard deviation          0.92028
+    C.V.                         2.5019
+    Skewness                   -0.17950
+    Ex. kurtosis               -0.25481
+    Interquartile range          1.0018
+    Missing obs.                      0
+
+  svar = sixth (n = 10):
+    Mean                       -0.13605
+    Median                    -0.096168
+    Minimum                     -2.0922
+    Maximum                      1.4189
+    Standard deviation           1.1047
+    C.V.                         8.1201
+    Skewness                   -0.25787
+    Ex. kurtosis               -0.81362
+    Interquartile range          2.0150
+    Missing obs.                      0
+
+  svar = seeven (n = 10):
+    Mean                     -0.0013096
+    Median                      0.14740
+    Minimum                    -0.87711
+    Maximum                     0.41527
+    Standard deviation          0.42711
+    C.V.                         326.13
+    Skewness                   -0.82169
+    Ex. kurtosis               -0.35334
+    Interquartile range         0.71256
+    Missing obs.                      0
+
+  svar = ocho (n = 10):
+    Mean                        0.18316
+    Median                      0.39772
+    Minimum                     -1.4978
+    Maximum                      1.4866
+    Standard deviation           1.0394
+    C.V.                         5.6752
+    Skewness                   -0.24046
+    Ex. kurtosis                -1.2681
+    Interquartile range          1.7310
+    Missing obs.                      0
+
+  svar = neun (n = 10):
+    Mean                       -0.16605
+    Median                     -0.18211
+    Minimum                     -2.0018
+    Maximum                      1.7471
+    Standard deviation           1.1940
+    C.V.                         7.1907
+    Skewness                   -0.18061
+    Ex. kurtosis               -0.83216
+    Interquartile range          1.8741
+    Missing obs.                      0
+
+  svar = dix (n = 11):
+    Mean                        0.63737
+    Median                      0.39044
+    Minimum                    -0.44552
+    Maximum                      1.9934
+    Standard deviation          0.73190
+    C.V.                         1.1483
+    Skewness                    0.40803
+    Ex. kurtosis               -0.73601
+    Interquartile range          1.1739
+    Missing obs.                      0
+
+? summary xvar --by=svar --simple
+
+Summary statistics for xvar, by value of svar
+
+  svar = one (n = 9):
+    Mean                      -0.56465
+    Minimum                    -3.1152
+    Maximum                     1.4388
+    Standard deviation          1.3228
+    Missing obs.                     0
+
+  svar = two (n = 10):
+    Mean                     -0.037599
+    Minimum                    -2.4099
+    Maximum                    0.90848
+    Standard deviation         0.98029
+    Missing obs.                     0
+
+  svar = third (n = 10):
+    Mean                     -0.075945
+    Minimum                    -1.3173
+    Maximum                     1.1354
+    Standard deviation         0.82577
+    Missing obs.                     0
+
+  svar = fourthly (n = 10):
+    Mean                       0.21104
+    Minimum                    -1.8421
+    Maximum                     1.6528
+    Standard deviation          1.0523
+    Missing obs.                     0
+
+  svar = five (n = 10):
+    Mean                      -0.36783
+    Minimum                    -1.8140
+    Maximum                     1.2644
+    Standard deviation         0.92028
+    Missing obs.                     0
+
+  svar = sixth (n = 10):
+    Mean                      -0.13605
+    Minimum                    -2.0922
+    Maximum                     1.4189
+    Standard deviation          1.1047
+    Missing obs.                     0
+
+  svar = seeven (n = 10):
+    Mean                    -0.0013096
+    Minimum                   -0.87711
+    Maximum                    0.41527
+    Standard deviation         0.42711
+    Missing obs.                     0
+
+  svar = ocho (n = 10):
+    Mean                       0.18316
+    Minimum                    -1.4978
+    Maximum                     1.4866
+    Standard deviation          1.0394
+    Missing obs.                     0
+
+  svar = neun (n = 10):
+    Mean                      -0.16605
+    Minimum                    -2.0018
+    Maximum                     1.7471
+    Standard deviation          1.1940
+    Missing obs.                     0
+
+  svar = dix (n = 11):
+    Mean                       0.63737
+    Minimum                   -0.44552
+    Maximum                     1.9934
+    Standard deviation         0.73190
+    Missing obs.                     0
+
+? summary xvar yvar --by=svar
+
+svar = one (n = 9):
+
+                     Mean         Median        Minimum        Maximum
+xvar             -0.56465       -0.67989        -3.1152         1.4388
+yvar             0.069606       -0.30596        -1.5351         1.5913
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar               1.3228         2.3427       -0.48874       -0.14576
+yvar               1.0376         14.906       0.081990        -1.1189
+
+                 IQ range   Missing obs.
+xvar               1.6658              0
+yvar               1.7252              0
+
+svar = two (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar            -0.037599        0.16488        -2.4099        0.90848
+yvar            0.0077710       -0.46123        -1.2067         1.6663
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.98029         26.072        -1.4466         1.5165
+yvar               1.1705         150.62        0.57279        -1.3212
+
+                 IQ range   Missing obs.
+xvar               1.1466              0
+yvar               2.5394              0
+
+svar = third (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar            -0.075945       -0.24376        -1.3173         1.1354
+yvar              0.31680        0.18786        -1.6505         2.1440
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.82577         10.873        0.16506        -1.1583
+yvar               1.2684         4.0038      -0.034252        -1.1150
+
+                 IQ range   Missing obs.
+xvar               1.4004              0
+yvar               2.0890              0
+
+svar = fourthly (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar              0.21104        0.48460        -1.8421         1.6528
+yvar             0.054976       -0.34861        -1.4075         1.9315
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar               1.0523         4.9865       -0.63366       -0.46868
+yvar               1.0836         19.710        0.40309        -1.0926
+
+                 IQ range   Missing obs.
+xvar               1.6448              0
+yvar               1.7424              0
+
+svar = five (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar             -0.36783       -0.33224        -1.8140         1.2644
+yvar             0.054353     -0.0044810        -2.2523         1.4566
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.92028         2.5019       -0.17950       -0.25481
+yvar               1.0125         18.628       -0.97148        0.88090
+
+                 IQ range   Missing obs.
+xvar               1.0018              0
+yvar               1.1134              0
+
+svar = sixth (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar             -0.13605      -0.096168        -2.0922         1.4189
+yvar             -0.34045       -0.39791        -2.2805         1.4017
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar               1.1047         8.1201       -0.25787       -0.81362
+yvar               1.2564         3.6904      -0.051603        -1.2571
+
+                 IQ range   Missing obs.
+xvar               2.0150              0
+yvar               2.2877              0
+
+svar = seeven (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar           -0.0013096        0.14740       -0.87711        0.41527
+yvar             -0.13151       0.023846        -1.3541        0.91805
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.42711         326.13       -0.82169       -0.35334
+yvar              0.74039         5.6300       -0.37758        -1.0194
+
+                 IQ range   Missing obs.
+xvar              0.71256              0
+yvar               1.3492              0
+
+svar = ocho (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar              0.18316        0.39772        -1.4978         1.4866
+yvar             -0.12021      -0.035540        -1.5323        0.93712
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar               1.0394         5.6752       -0.24046        -1.2681
+yvar              0.75966         6.3192       -0.49788       -0.69271
+
+                 IQ range   Missing obs.
+xvar               1.7310              0
+yvar               1.2716              0
+
+svar = neun (n = 10):
+
+                     Mean         Median        Minimum        Maximum
+xvar             -0.16605       -0.18211        -2.0018         1.7471
+yvar              0.38761        0.42406        -1.3735         1.7337
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar               1.1940         7.1907       -0.18061       -0.83216
+yvar              0.99232         2.5601       -0.18922       -0.79403
+
+                 IQ range   Missing obs.
+xvar               1.8741              0
+yvar               1.7069              0
+
+svar = dix (n = 11):
+
+                     Mean         Median        Minimum        Maximum
+xvar              0.63737        0.39044       -0.44552         1.9934
+yvar              0.17977        0.51832        -1.2887         2.3399
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+xvar              0.73190         1.1483        0.40803       -0.73601
+yvar               1.1622         6.4650        0.20527       -0.86969
+
+                 IQ range   Missing obs.
+xvar               1.1739              0
+yvar               2.1876              0
+
+? summary xvar yvar --by=svar --simple
+
+svar = one (n = 9):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar             -0.56465         1.3228        -3.1152         1.4388
+yvar             0.069606         1.0376        -1.5351         1.5913
+
+svar = two (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar            -0.037599        0.98029        -2.4099        0.90848
+yvar            0.0077710         1.1705        -1.2067         1.6663
+
+svar = third (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar            -0.075945        0.82577        -1.3173         1.1354
+yvar              0.31680         1.2684        -1.6505         2.1440
+
+svar = fourthly (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar              0.21104         1.0523        -1.8421         1.6528
+yvar             0.054976         1.0836        -1.4075         1.9315
+
+svar = five (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar             -0.36783        0.92028        -1.8140         1.2644
+yvar             0.054353         1.0125        -2.2523         1.4566
+
+svar = sixth (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar             -0.13605         1.1047        -2.0922         1.4189
+yvar             -0.34045         1.2564        -2.2805         1.4017
+
+svar = seeven (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar           -0.0013096        0.42711       -0.87711        0.41527
+yvar             -0.13151        0.74039        -1.3541        0.91805
+
+svar = ocho (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar              0.18316         1.0394        -1.4978         1.4866
+yvar             -0.12021        0.75966        -1.5323        0.93712
+
+svar = neun (n = 10):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar             -0.16605         1.1940        -2.0018         1.7471
+yvar              0.38761        0.99232        -1.3735         1.7337
+
+svar = dix (n = 11):
+
+                     Mean      Std. Dev.        Minimum        Maximum
+xvar              0.63737        0.73190       -0.44552         1.9934
+yvar              0.17977         1.1622        -1.2887         2.3399
+
+Done

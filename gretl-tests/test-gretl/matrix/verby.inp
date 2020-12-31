@@ -1,0 +1,27 @@
+function matrix OCfun (matrix theta, matrix X)
+  set echo off
+  set messages off
+
+  scalar gam = theta[2]
+  scalar delta = theta[1]
+  scalar T = rows(X)
+  scalar j = 0
+  matrix elmrs = exp(log(delta) - gam*log(X[,12]))
+  matrix tmp = zeros(T, 11)
+  tmp[,1] = (X[,11] + 1) .* elmrs - 1
+  loop i=2..11 --quiet
+    j = i - 1
+    matrix tmp[,$i] = (X[,j] - X[,11]) .* elmrs
+  end loop
+  return tmp
+end function
+
+open pricing.gdt
+matrix X = { dataset }
+matrix theta = { 1, 100 }
+matrix tmp = OCfun(theta, X)
+tmp
+
+
+
+

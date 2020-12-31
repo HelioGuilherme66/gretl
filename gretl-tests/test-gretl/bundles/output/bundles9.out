@@ -1,0 +1,59 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles9.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles9.inp
+? n = 3
+Generated scalar n = 3
+? bundle test
+? loop i=1..n --quiet
+> sprintf s "x_%d", i
+> printf "key = %s\n", s
+> test[s] = I(i)*i
+> printf "%4g\n", test[s]
+> endloop
+Generated string s
+key = x_1
+   1
+Replaced string s
+key = x_2
+   2   0
+   0   2
+
+Replaced string s
+key = x_3
+   3   0   0
+   0   3   0
+   0   0   3
+
+? print test
+bundle test:
+ x_3 (matrix: 3 x 3)
+ x_1 = 1
+ x_2 (matrix: 2 x 2)
+
+? bundle test2
+? loop i=1..n --quiet
+> printf "key = x_$i\n"
+> test2.x_$i = I(i)*i
+> printf "%4g\n", test2.x_$i
+> endloop
+key = x_1
+   1
+key = x_2
+   2   0
+   0   2
+
+key = x_3
+   3   0   0
+   0   3   0
+   0   0   3
+
+? print test2
+bundle test2:
+ x_3 (matrix: 3 x 3)
+ x_1 = 1
+ x_2 (matrix: 2 x 2)
+
+Done

@@ -1,0 +1,38 @@
+# cf. http://support.sas.com/rnd/app/examples/ets/harvey/sas.htm
+
+open harvey.txt
+
+list clags = cinst(-1 to -4)
+list rlags = rinst(-1 to -4)
+
+smpl +4 ;
+
+list zlist = const clags rlags
+matrix Z = { zlist }
+matrix W = 1000*I(36)
+
+scalar alpha = 0.5
+scalar beta = 1.0
+
+series m = 0
+series h1 = 0
+series h2 = 0
+series h3 = 0
+series h4 = 0
+
+set hac_kernel parzen
+set hac_lag 1
+
+gmm
+   m = beta * (1+conrat)^(-alpha)
+   h1 = m * (1+gb) - 1
+   h2 = m * (1+cb) - 1
+   h3 = m * (1+d1) - 1
+   h4 = m * (1+d10) - 1
+   orthog h1 ; Z
+   orthog h2 ; Z
+   orthog h3 ; Z
+   orthog h4 ; Z
+   weights W
+   params alpha beta
+end gmm --iterate

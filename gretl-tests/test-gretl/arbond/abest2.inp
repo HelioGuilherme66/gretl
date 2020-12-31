@@ -1,0 +1,6 @@
+open abdata.gdt
+genr Dw = diff(w)
+genr Dk = diff(k)
+genr Dys = diff(ys)
+arbond 2 0 ; n Dw Dw(-1) Dk Dys Dys(-1) 0 --two-step --time-dummies
+dpanel 2 ; n w w(-1) k ys ys(-1) 0 --two-step --time-dummies --dpdstyle

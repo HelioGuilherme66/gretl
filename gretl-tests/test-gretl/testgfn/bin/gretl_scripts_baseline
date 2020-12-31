@@ -1,0 +1,28 @@
+#!/bin/sh
+
+SITEVARS=`dirname $0`/sitevars
+
+if [ -f $SITEVARS ] ; then
+  . $SITEVARS
+fi
+
+if [ "x$CLI" = "x" ] ; then
+  CLI=gretlcli
+fi
+
+cat /dev/null > fails
+
+rm -rf ./output
+mkdir ./output
+
+for f in $(cat ps.list | awk '{ print $1 }') ; do
+   echo $f
+   if ! ${CLI} -b $f > ./output/${f%.inp}.out ; then
+      echo "$f failed" >> fails
+   fi
+done 
+
+cat fails
+
+
+  

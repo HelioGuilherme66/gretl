@@ -1,0 +1,90 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m13.inp
+ /home/cottrell/stats/test-gretl/matrix/m13.inp
+? nulldata 100
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+? set seed 333
+Pseudo-random number generator seeded with 333
+? series x = normal()
+Generated series x (ID 2)
+? series y = uniform()
+Generated series y (ID 3)
+? series s = (y > 0.5)
+Generated series s (ID 4)
+? ls
+Listing 5 variables:
+  0) const    1) index    2) x        3) y        4) s      
+
+? list l = 1 2 3
+Generated list l
+? smpl s --restrict
+Full data set: 100 observations
+Current sample: 50 observations
+? matrix X = { l }
+Generated matrix X
+? X
+X (50 x 3) [t1 = 1, t2 = 50]
+
+       index            x            y 
+      4.0000      0.70185      0.77315 
+      5.0000     -0.64433      0.51034 
+      9.0000      0.61697      0.73448 
+      12.000       1.8837      0.91457 
+      14.000      0.64722      0.56246 
+      15.000     -0.71335      0.79074 
+      16.000  -0.00062355      0.91303 
+      17.000    -0.015010      0.85013 
+      19.000      0.31166      0.98559 
+      22.000      0.67917      0.55460 
+      23.000      0.65011      0.96326 
+      24.000      0.36310      0.83384 
+      25.000     -0.45627      0.52060 
+      28.000      -1.3956      0.86665 
+      30.000      0.36625      0.81200 
+      31.000      0.19902      0.58838 
+      32.000      0.46688      0.53285 
+      33.000     0.083662      0.87466 
+      34.000     -0.37365      0.57998 
+      35.000     -0.51977      0.91416 
+      36.000     -0.89292      0.75350 
+      37.000      0.54996      0.78594 
+      38.000      -1.4128      0.92828 
+      39.000       1.6594      0.50190 
+      40.000     -0.76671      0.55299 
+      45.000       1.1286      0.91197 
+      46.000      0.33965      0.73251 
+      47.000      -1.0795      0.68524 
+      52.000      -1.0207      0.59776 
+      55.000      0.46556      0.59848 
+      57.000      0.19872      0.58218 
+      58.000      0.86545      0.92584 
+      59.000     -0.11219      0.82253 
+      61.000      0.31856      0.50927 
+      64.000      0.75398      0.82080 
+      72.000    -0.032045      0.71934 
+      74.000     -0.72163      0.55456 
+      76.000       1.2943      0.86846 
+      78.000       1.3990      0.84242 
+      79.000     -0.72995      0.83479 
+      81.000      0.84438      0.71544 
+      82.000      0.21138      0.74660 
+      83.000       1.0119      0.67870 
+      87.000     -0.37198      0.67102 
+      88.000      0.30276      0.50692 
+      89.000     -0.39207      0.59449 
+      94.000      0.70230      0.65949 
+      95.000      -1.4032      0.92527 
+      98.000     -0.13076      0.71956 
+      100.00     -0.37612      0.90069 
+
+? scalar r = rows(X)
+Generated scalar r = 50
+? matrix X1 = X
+Generated matrix X1
+? scalar same = (X=X1)
+Generated scalar same = 1
+Done

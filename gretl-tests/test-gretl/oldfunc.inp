@@ -1,0 +1,26 @@
+# main script
+nulldata 5
+set echo off
+genr testvar = 1
+printf "in main: testvar = %d\n", testvar  
+
+function foo
+   # create a local variable
+   genr my testvar = 2
+   printf "in foo: testvar = %d\n", testvar
+   bar
+   printf "back in foo: testvar = %d\n", testvar
+   # generate a global variable
+   genr glob = 15
+end function
+
+function bar
+   genr my testvar = 3
+   printf "in bar: testvar = %d\n", testvar
+end function
+
+# call foo, which in turn calls bar
+foo
+printf "back in main: testvar = %d, glob = %d\n", testvar, glob 
+# list the global variables 
+ls 

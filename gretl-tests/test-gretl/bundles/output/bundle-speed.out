@@ -1,0 +1,8 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundle-speed.inp
+ /home/cottrell/stats/test-gretl/bundles/bundle-speed.inp
+copy-in mode: 0.111303 secs
+pointer mode: 0.000352812 secs

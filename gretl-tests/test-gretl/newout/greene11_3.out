@@ -1,0 +1,87 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run greene11_3.inp
+ /opt/esl/share/gretl/scripts/greene11_3.inp
+# script to replicate Example 11.3 in Greene
+? open greene11_3.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene11_3.gdt
+periodicity: 1, maxobs: 36
+observations range: 1950 to 1985
+
+Listing 3 variables:
+  0) const    1) Y        2) C      
+
+# run initial OLS
+? ols C 0 Y
+
+Model 1: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       11.3737      9.62946        1.181   0.2457  
+  Y            0.898329    0.00584839   153.6     6.61e-50 ***
+
+Mean dependent var   1409.806   S.D. dependent var   489.0210
+Sum squared resid    12044.20   S.E. of regression   18.82130
+R-squared            0.998561   Adjusted R-squared   0.998519
+F(1, 34)             23593.84   P-value(F)           6.61e-50
+Log-likelihood      -155.7125   Akaike criterion     315.4251
+Schwarz criterion    318.5921   Hannan-Quinn         316.5305
+rho                  0.590733   Durbin-Watson        0.843063
+
+? scalar essbak = $ess
+Generated scalar essbak = 12044.2
+? scalar essdiff = 1
+Generated scalar essdiff = 1
+? scalar beta = $coeff(Y)
+Generated scalar beta = 0.898329
+? scalar gamma = 1
+Generated scalar gamma = 1
+# iterate OLS till the error sum of squares converges
+? loop while essdiff > .00001 --quiet
+>    # form the linearized variables
+> series C0 = C + gamma * beta * Y^gamma * log(Y)
+> series x1 = Y^gamma
+> series x2 = beta * Y^gamma * log(Y)
+>    # run OLS
+> ols C0 0 x1 x2 --print-final --no-df-corr --vcv
+> beta = $coeff[2]
+> gamma = $coeff[3]
+> ess = $ess
+> essdiff = abs(ess - essbak)/essbak
+> essbak = ess
+> endloop
+
+Model 2: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C0
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const      187.549       38.9848       4.811   1.50e-06  ***
+  x1           0.247091     0.0798271    3.095   0.0020    ***
+  x2           1.15583      0.0392699   29.43    2.08e-190 ***
+
+Mean dependent var   11903.18   S.D. dependent var   5137.196
+Sum squared resid    8424.057   S.E. of regression   15.29711
+R-squared            0.999991   Adjusted R-squared   0.999990
+Chi-square(2)         3947277   p-value              0.000000
+Log-likelihood      -149.2777   Akaike criterion     304.5554
+Schwarz criterion    309.3059   Hannan-Quinn         306.2134
+rho                  0.371264   Durbin-Watson        1.230007
+
+Covariance matrix of regression coefficients:
+
+         const            x1            x2
+       1519.81      -3.07023        1.5064  const
+                  0.00637237   -0.00313438  x1
+                                0.00154212  x2
+
+# print parameter estimates using their "proper names"
+alpha = 187.549
+beta  = 0.247091
+gamma = 1.15583
+Done

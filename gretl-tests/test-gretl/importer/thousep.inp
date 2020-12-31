@@ -1,0 +1,7 @@
+open HEIsmall.csv -q
+printf "Volumen 1 = %f\n", Volumen[1]
+print 1 2 3 -o
+
+open HEIsmall_dot.csv -q
+printf "Volumen 1 = %f\n", Volumen[1]
+print 1 2 3 -o

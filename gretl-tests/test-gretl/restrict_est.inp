@@ -1,0 +1,14 @@
+open data4-1
+ols 1 0 2 3 4
+restrict
+ b3 - b4 = 0
+end restrict
+genr x = bedrms + baths
+ols 1 0 2 x
+
+ols 1 0 2 3 4
+restrict
+ b1 = 100
+end restrict
+genr p2 = price - 100
+ols p2 2 3 4

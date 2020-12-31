@@ -1,0 +1,147 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run lags.inp
+ /home/cottrell/stats/test-gretl/lags.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ols QNC 0 INCOME(-1 to -3) PRICE(-1 to -3)
+
+Model 1: OLS, using observations 1975:4-1990:4 (T = 61)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const        -65.8504     914.979     -0.07197   0.9429 
+  INCOME_1     887.687      347.580      2.554     0.0135  **
+  INCOME_2     122.132      450.116      0.2713    0.7872 
+  INCOME_3    -602.514      342.809     -1.758     0.0845  *
+  PRICE_1      -23.0969      52.0395    -0.4438    0.6589 
+  PRICE_2       14.5801      68.8772     0.2117    0.8332 
+  PRICE_3      -10.0397      51.4729    -0.1950    0.8461 
+
+Mean dependent var   2507.934   S.D. dependent var   327.8938
+Sum squared resid     4714466   S.E. of regression   295.4741
+R-squared            0.269173   Adjusted R-squared   0.187970
+F(6, 54)             3.314810   P-value(F)           0.007501
+Log-likelihood      -429.8411   Akaike criterion     873.6821
+Schwarz criterion    888.4582   Hannan-Quinn         879.4730
+rho                  0.333630   Durbin-Watson        1.297307
+
+Excluding the constant, p-value was highest for variable 17 (PRICE_3)
+
+? ols QNC 0 INCOME(0 to +3)
+
+Model 2: OLS, using observations 1975:1-1990:1 (T = 61)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1353.08       573.837      2.358    0.0219  **
+  INCOME       -85.8070     377.477     -0.2273   0.8210 
+  INCOME1      280.825      497.842      0.5641   0.5749 
+  INCOME2     -167.234      497.675     -0.3360   0.7381 
+  INCOME3       80.7190     367.143      0.2199   0.8268 
+
+Mean dependent var   2496.393   S.D. dependent var   336.8748
+Sum squared resid     6325460   S.E. of regression   336.0873
+R-squared            0.071026   Adjusted R-squared   0.004670
+F(4, 56)             1.070382   P-value(F)           0.379831
+Log-likelihood      -438.8064   Akaike criterion     887.6129
+Schwarz criterion    898.1673   Hannan-Quinn         891.7492
+rho                  0.548006   Durbin-Watson        0.872918
+
+Excluding the constant, p-value was highest for variable 20 (INCOME3)
+
+? ols QNC 0 INCOME(-2 to +2)
+
+Model 3: OLS, using observations 1975:3-1990:2 (T = 60)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1767.99       558.515      3.166    0.0025  ***
+  INCOME_2    -625.419      362.006     -1.728    0.0898  *
+  INCOME_1     -83.2012     474.736     -0.1753   0.8615 
+  INCOME       422.779      478.928      0.8828   0.3813 
+  INCOME1      482.879      476.670      1.013    0.3156 
+  INCOME2     -133.364      352.166     -0.3787   0.7064 
+
+Mean dependent var   2512.067   S.D. dependent var   328.2466
+Sum squared resid     5486760   S.E. of regression   318.7580
+R-squared            0.136896   Adjusted R-squared   0.056978
+F(5, 54)             1.712969   P-value(F)           0.147339
+Log-likelihood      -427.8414   Akaike criterion     867.6829
+Schwarz criterion    880.2489   Hannan-Quinn         872.5981
+rho                  0.469391   Durbin-Watson        1.044052
+
+Excluding the constant, p-value was highest for variable 12 (INCOME_1)
+
+? ols QNC 0 INCOME(+2 to +3)
+
+Model 4: OLS, using observations 1975:1-1990:1 (T = 61)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      1362.78        565.196     2.411     0.0191  **
+  INCOME2       5.78637     356.644     0.01622   0.9871 
+  INCOME3     101.274       359.781     0.2815    0.7793 
+
+Mean dependent var   2496.393   S.D. dependent var   336.8748
+Sum squared resid     6364954   S.E. of regression   331.2712
+R-squared            0.065225   Adjusted R-squared   0.032992
+F(2, 58)             2.023522   P-value(F)           0.141417
+Log-likelihood      -438.9963   Akaike criterion     883.9926
+Schwarz criterion    890.3252   Hannan-Quinn         886.4744
+rho                  0.547186   Durbin-Watson        0.877245
+
+? ols QNC 0 INCOME(+3 to +2)
+
+Model 5: OLS, using observations 1975:1-1990:1 (T = 61)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      1362.78        565.196     2.411     0.0191  **
+  INCOME3     101.274       359.781     0.2815    0.7793 
+  INCOME2       5.78637     356.644     0.01622   0.9871 
+
+Mean dependent var   2496.393   S.D. dependent var   336.8748
+Sum squared resid     6364954   S.E. of regression   331.2712
+R-squared            0.065225   Adjusted R-squared   0.032992
+F(2, 58)             2.023522   P-value(F)           0.141417
+Log-likelihood      -438.9963   Akaike criterion     883.9926
+Schwarz criterion    890.3252   Hannan-Quinn         886.4744
+rho                  0.547186   Durbin-Watson        0.877245
+
+? ols QNC 0 INCOME(-2 to -1)
+
+Model 6: OLS, using observations 1975:3-1990:4 (T = 62)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2109.32       534.794      3.944    0.0002  ***
+  INCOME_2    -538.156      361.215     -1.490    0.1416 
+  INCOME_1     573.119      362.393      1.581    0.1191 
+
+Mean dependent var   2502.935   S.D. dependent var   327.5686
+Sum squared resid     6249050   S.E. of regression   325.4476
+R-squared            0.045272   Adjusted R-squared   0.012908
+F(2, 59)             1.398849   P-value(F)           0.254948
+Log-likelihood      -445.1192   Akaike criterion     896.2383
+Schwarz criterion    902.6197   Hannan-Quinn         898.7438
+rho                  0.476704   Durbin-Watson        1.027269
+
+Done

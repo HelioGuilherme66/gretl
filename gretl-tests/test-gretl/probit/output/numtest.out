@@ -1,0 +1,287 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run numtest.inp
+ /home/cottrell/stats/test-gretl/probit/numtest.inp
+SMALL = 1e-06
+
+Model 1: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient     std. error       z      slope 
+  ---------------------------------------------------------
+  const      -0.222170           0.121439   -1.829         
+  resc_x      1.25024e+06   186723           6.696   494795
+  resc_z      1.30687e+06   186433           7.010   517206
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-07
+
+Model 2: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+07   1.86723e+06    6.696   4.94795e+06
+  resc_z      1.30687e+07   1.86433e+06    7.010   5.17206e+06
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-08
+
+Model 3: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+08   1.86723e+07    6.696   4.94795e+07
+  resc_z      1.30687e+08   1.86433e+07    7.010   5.17206e+07
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-09
+
+Model 4: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+09   1.86723e+08    6.696   4.94795e+08
+  resc_z      1.30687e+09   1.86433e+08    7.010   5.17206e+08
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-10
+
+Model 5: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+10   1.86723e+09    6.696   4.94795e+09
+  resc_z      1.30687e+10   1.86433e+09    7.010   5.17206e+09
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-11
+
+Model 6: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+11   1.86723e+10    6.696   4.94795e+10
+  resc_z      1.30687e+11   1.86433e+10    7.010   5.17206e+10
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-12
+
+Model 7: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+12   1.86723e+11    6.696   4.94795e+11
+  resc_z      1.30687e+12   1.86433e+11    7.010   5.17206e+11
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 13.8291
+  with p-value = 0.000993228
+
+SMALL = 1e-13
+
+Model 8: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+13   1.86723e+12    6.696   4.94795e+12
+  resc_z      1.30687e+13   1.86433e+12    7.010   5.17206e+12
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+
+SMALL = 1e-14
+
+Model 9: Probit, using observations 1-200
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope   
+  ------------------------------------------------------------
+  const      -0.222170      0.121439      -1.829              
+  resc_x      1.25024e+14   1.86723e+13    6.696   4.94795e+13
+  resc_z      1.30687e+14   1.86433e+13    7.010   5.17206e+13
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   0.475000   S.D. dependent var   0.500628
+McFadden R-squared   0.472897   Adjusted R-squared   0.451217
+Log-likelihood      -72.94020   Akaike criterion     151.8804
+Schwarz criterion    161.7753   Hannan-Quinn         155.8847
+
+Number of cases 'correctly predicted' = 172 (86.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(2) = 130.878 [0.0000]
+
+           Predicted
+             0    1
+  Actual 0  93   12
+         1  16   79
+

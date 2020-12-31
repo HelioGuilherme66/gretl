@@ -1,0 +1,43 @@
+open abdata.gdt
+
+# Take first differences of the independent variables
+genr Dw = diff(w)
+genr Dk = diff(k)
+genr Dys = diff(ys)
+
+# 1-step GMM estimation
+arbond 2 ; n Dw Dw(-1) Dk Dys Dys(-1) 0 --time-dummies
+matrix parm = $coeff
+
+# compare with Ox
+set csv_na .NaN
+store abdata.csv
+
+foreign language=Ox
+#include <oxstd.h>
+#import <packages/dpd/dpd>
+
+main ()
+{
+    decl dpd = new DPD();
+
+    dpd.Load("abdata.csv"); 
+    dpd.SetYear("YEAR");
+
+    dpd.Select(Y_VAR, {"n", 0, 2});
+    dpd.Select(X_VAR, {"w", 0, 1, "k", 0, 0, "ys", 0, 1});
+    dpd.Select(I_VAR, {"w", 0, 1, "k", 0, 0, "ys", 0, 1});
+
+    dpd.Gmm("n", 2, 99);  // GMM-type instrument
+    dpd.SetDummies(D_CONSTANT + D_TIME);
+    dpd.SetTest(2, 2); // Sargan, AR 1-2 tests
+    dpd.Estimate();    // 1-step estimation
+    decl parm = dpd.GetPar();
+    gretl_export(parm, "oxparm.mat");
+   
+    delete dpd;
+}
+end foreign
+
+matrix oxparm = mread("@dotdir/oxparm.mat")
+eval abs((parm - oxparm) ./ oxparm)

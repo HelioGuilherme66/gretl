@@ -1,0 +1,18 @@
+set echo off
+set messages off
+set seed 12347
+
+matrix A = {0.2,      0.5,     -0.4 }
+matrix B = ones(1,3) * $huge
+matrix C = { 1, 0,  0;  0.2, 1, 0;  -0.2, -0.9, 0.1 }
+
+loop i=1..3  -q
+    rep = 10^i
+    printf "%d replications\n", rep
+    loop 10
+	matrix U = muniform(3,rep)
+	printf "P = %g\n", ghk(C, A, B, U)
+    end loop
+    printf "\n\n\n"
+end loop
+

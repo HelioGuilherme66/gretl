@@ -1,0 +1,82 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run kwh.inp
+ /home/cottrell/stats/test-gretl/arma/kwh.inp
+# NAM series A - Pankratz series 12, log of kilowatt hours
+# apparently over the sample 70:1,83:12  (skip final 12 months).
+#         NAM ML1   NAM ML2     TSP
+# theta    .693      .694     .695934
+# (s.e.)  (.057)    (.056)   (.086643)
+# THETA    .803      .804     .803243
+# (s.e.)  (.076)    (.075)   (.086926)
+# LogL    233.855   233.856   233.856
+? open kwh
+
+Read datafile /home/cottrell/stats/test-gretl/arma/kwh.gdt
+periodicity: 12, maxobs: 180
+observations range: 1970:01 to 1984:12
+
+Listing 2 variables:
+  0) const    1) kwh    
+
+? genr y = log(kwh)
+Generated series y (ID 2)
+? smpl ; 1983:12
+Full data range: 1970:01 - 1984:12 (n = 180)
+Current sample: 1970:01 - 1983:12 (n = 168)
+
+? arima 0 1 1 ; 0 1 1 ; y --nc
+
+Function evaluations: 28
+Evaluations of gradient: 11
+
+Model 1: ARIMA, using observations 1971:02-1983:12 (T = 155)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  theta_1     -0.695933    0.0686098    -10.14    3.55e-24 ***
+  Theta_1     -0.803243    0.0919932     -8.732   2.51e-18 ***
+
+Mean dependent var   0.000339   S.D. dependent var   0.072751
+Mean of innovations -0.003122   S.D. of innovations  0.051308
+Log-likelihood       233.8559   Akaike criterion    -461.7119
+Schwarz criterion   -452.5816   Hannan-Quinn        -458.0034
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.4369     0.0000     1.4369     0.0000
+  MA (seasonal)
+    Root  1           1.2450     0.0000     1.2450     0.0000
+  -----------------------------------------------------------
+
+? arima 0 1 1 ; 0 1 1 ; y --nc --x-12-arima
+
+Model 2: ARIMA, using observations 1971:02-1983:12 (T = 155)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: (1-L)(1-Ls) y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  theta_1     -0.695900    0.0558831    -12.45   1.35e-35 ***
+  Theta_1     -0.803021    0.0555588    -14.45   2.38e-47 ***
+
+Mean dependent var   0.000339   S.D. dependent var   0.072751
+Mean of innovations -0.001878   S.D. of innovations  0.051310
+Log-likelihood       233.8559   Akaike criterion    -461.7119
+Schwarz criterion   -452.5816   Hannan-Quinn        -458.0034
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.4370     0.0000     1.4370     0.0000
+  MA (seasonal)
+    Root  1           1.2453     0.0000     1.2453     0.0000
+  -----------------------------------------------------------
+
+Done

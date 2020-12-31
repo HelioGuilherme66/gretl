@@ -1,0 +1,41 @@
+function scalar BP (matrix *S, int T)
+  scalar BP = 0
+  loop i=2..rows(S) -q
+    scalar sii = S[i,i]
+    loop j=1..i-1 -q
+      BP += (S[i,j] * S[i,j]) / (sii * S[j,j])
+    endloop
+  endloop
+  BP *= T
+  return BP
+end function
+
+nulldata 500
+set seed 786513
+
+srv = ((index-1)%5) + 1
+y1 = normal()
+y2 = normal()
+
+x1 = normal()
+x2 = normal()
+
+smpl srv=1 --restrict --replace
+mod <- system
+    equation y1 const x1
+    equation y2 const x2
+end system
+restrict mod
+    b[1,1] - b[2,1] = 0
+end restrict
+estimate mod method=ols
+matrix S = $sigma
+scalar bp = BP(&S, $T)
+
+restrict mod
+end restrict
+estimate mod method=ols
+
+
+
+

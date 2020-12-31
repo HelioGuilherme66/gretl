@@ -1,0 +1,157 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-03-11 11:56
+? run recidR.inp
+ /home/cottrell/stats/test-gretl/duration/recidR.inp
+? open recid.dta --quiet
+Stata file version 5
+? list X = workprg priors tserved felon alcohol drugs black married educ age
+Generated list X
+? mwrite({X}, "/home/cottrell/.gretl/X.mat")
+? mwrite({durat}, "/home/cottrell/.gretl/y.mat")
+? mwrite({cens}, "/home/cottrell/.gretl/cens.mat")
+? foreign language=R --send-data
+? library(survival)
+? fname <- paste(gretl.dotdir, "X.mat", sep="")
+? X <- as.matrix(read.table(fname, skip=1))
+? colnames(X) <- c("workprg", "priors", "tserved", "felon", "alcohol", \
+  "drugs", "black", "married", "educ", "age")
+? fname <- paste(gretl.dotdir, "y.mat", sep="")
+? durat <- as.matrix(read.table(fname, skip=1))
+? fname <- paste(gretl.dotdir, "cens.mat", sep="")
+? cens <- as.matrix(read.table(fname, skip=1))
+? sy <- Surv(durat, 1 - cens)
+? sr <- survreg(sy ~ X, dist='weibull')
+? summary(sr)
+? p1 <- as.matrix(predict(sr, type='response')[1:10])
+? sr <- survreg(sy ~ X, dist='exponential')
+? summary(sr)
+? p2 <- as.matrix(predict(sr)[1:10])
+? sr <- survreg(sy ~ X, dist='loglogistic')
+? summary(sr)
+? p3 <- as.matrix(predict(sr)[1:10])
+? sr <- survreg(sy ~ X, dist='lognormal')
+? summary(sr)
+? p4 <- as.matrix(predict(sr)[1:10])
+? pred <- cbind(p1, p2, p3, p4);
+? gretl.export(pred)
+? end foreign
+
+Call:
+survreg(formula = sy ~ X, dist = "weibull")
+               Value Std. Error     z        p
+(Intercept)  4.22167   0.341311 12.37 3.85e-35
+Xworkprg    -0.11278   0.112535 -1.00 3.16e-01
+Xpriors     -0.11018   0.017067 -6.46 1.08e-10
+Xtserved    -0.01683   0.002130 -7.90 2.78e-15
+Xfelon       0.37162   0.131995  2.82 4.87e-03
+Xalcohol    -0.55513   0.132243 -4.20 2.69e-05
+Xdrugs      -0.34927   0.121880 -2.87 4.16e-03
+Xblack      -0.56302   0.110817 -5.08 3.76e-07
+Xmarried     0.18810   0.135752  1.39 1.66e-01
+Xeduc        0.02891   0.024115  1.20 2.31e-01
+Xage         0.00462   0.000665  6.95 3.60e-12
+Log(scale)   0.21584   0.038915  5.55 2.92e-08
+
+Scale= 1.24 
+
+Weibull distribution
+Loglik(model)= -3192.1   Loglik(intercept only)= -3274.8
+	Chisq= 165.48 on 10 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 5 
+n= 1445 
+
+
+Call:
+survreg(formula = sy ~ X, dist = "exponential")
+               Value Std. Error     z        p
+(Intercept)  4.16921   0.275628 15.13 1.09e-51
+Xworkprg    -0.09558   0.090551 -1.06 2.91e-01
+Xpriors     -0.09134   0.013343 -6.85 7.64e-12
+Xtserved    -0.01440   0.001660 -8.68 4.12e-18
+Xfelon       0.31222   0.105655  2.96 3.13e-03
+Xalcohol    -0.46767   0.105775 -4.42 9.81e-06
+Xdrugs      -0.29416   0.097858 -3.01 2.65e-03
+Xblack      -0.47567   0.088196 -5.39 6.91e-08
+Xmarried     0.15195   0.109258  1.39 1.64e-01
+Xeduc        0.02421   0.019407  1.25 2.12e-01
+Xage         0.00391   0.000528  7.40 1.31e-13
+
+Scale fixed at 1 
+
+Exponential distribution
+Loglik(model)= -3208.8   Loglik(intercept only)= -3299
+	Chisq= 180.28 on 10 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 5 
+n= 1445 
+
+
+Call:
+survreg(formula = sy ~ X, dist = "loglogistic")
+               Value Std. Error      z        p
+(Intercept)  3.81771   0.350981 10.877 1.48e-27
+Xworkprg    -0.06645   0.119564 -0.556 5.78e-01
+Xpriors     -0.14829   0.023094 -6.421 1.35e-10
+Xtserved    -0.01914   0.002991 -6.401 1.55e-10
+Xfelon       0.41081   0.143651  2.860 4.24e-03
+Xalcohol    -0.63251   0.142780 -4.430 9.43e-06
+Xdrugs      -0.34939   0.129943 -2.689 7.17e-03
+Xblack      -0.56121   0.116111 -4.833 1.34e-06
+Xmarried     0.27086   0.138767  1.952 5.09e-02
+Xeduc        0.03146   0.025363  1.240 2.15e-01
+Xage         0.00451   0.000663  6.800 1.05e-11
+Log(scale)   0.03477   0.037515  0.927 3.54e-01
+
+Scale= 1.04 
+
+Log logistic distribution
+Loglik(model)= -3170   Loglik(intercept only)= -3259.5
+	Chisq= 178.92 on 10 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 4 
+n= 1445 
+
+
+Call:
+survreg(formula = sy ~ X, dist = "lognormal")
+               Value Std. Error      z        p
+(Intercept)  4.09939   0.347535 11.796 4.11e-32
+Xworkprg    -0.06257   0.120037 -0.521 6.02e-01
+Xpriors     -0.13725   0.021459 -6.396 1.59e-10
+Xtserved    -0.01933   0.002978 -6.491 8.51e-11
+Xfelon       0.44399   0.145087  3.060 2.21e-03
+Xalcohol    -0.63491   0.144217 -4.402 1.07e-05
+Xdrugs      -0.29816   0.132736 -2.246 2.47e-02
+Xblack      -0.54272   0.117443 -4.621 3.82e-06
+Xmarried     0.34068   0.139843  2.436 1.48e-02
+Xeduc        0.02292   0.025397  0.902 3.67e-01
+Xage         0.00391   0.000606  6.450 1.12e-10
+Log(scale)   0.59359   0.034412 17.249 1.13e-66
+
+Scale= 1.81 
+
+Log Normal distribution
+Loglik(model)= -3156.1   Loglik(intercept only)= -3239.5
+	Chisq= 166.74 on 10 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 4 
+n= 1445 
+
+? matrix Rpred = mread("/home/cottrell/.gretl/pred.mat")
+Generated matrix Rpred
+? colnames(Rpred, "weibull expon loglog lognorm")
+? Rpred
+Rpred (10 x 4)
+
+     weibull        expon       loglog      lognorm 
+      239.27       184.97       151.88       155.64 
+      213.49       168.65       148.16       155.45 
+      168.28       138.03       109.76       115.08 
+      110.05       96.470       67.495       78.977 
+      180.01       146.89       118.46       132.20 
+      126.99       109.22       82.998       86.811 
+      89.173       80.814       51.380       51.121 
+      129.71       110.84       80.093       86.780 
+      418.30       297.84       267.00       281.84 
+      355.13       257.10       255.49       268.74 
+
+Done

@@ -1,0 +1,144 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run pwe_fcast.inp
+ /home/cottrell/stats/test-gretl/pwe_fcast.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ar1 QNC 0 PRICE INCOME --pwe
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.41891   4.10460e+06
+                   2      0.42214   4.10387e+06
+                   3      0.42220   4.10386e+06
+                   4      0.42220   4.10386e+06
+                   5      0.42220   4.10386e+06
+
+Model 1: Prais-Winsten, using observations 1975:1-1990:4 (T = 64)
+Dependent variable: QNC
+rho = 0.422202
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1407.61      1181.17      -1.192    0.2380 
+  PRICE        -24.1883       7.93030   -3.050    0.0034  ***
+  INCOME       588.187      175.884      3.344    0.0014  ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Sum squared resid     4103860   S.E. of regression   259.3769
+R-squared            0.412566   Adjusted R-squared   0.393305
+F(2, 61)             4.306698   P-value(F)           0.017800
+rho                 -0.028256   Durbin-Watson        1.984232
+
+# get the fitted values according to gretl
+? fcast fit1
+Generated series fit1 (ID 12)
+# The "uhats" here are the estimated innovations
+? genr e = $uhat
+Generated series e (ID 13)
+# Work on reconstructing the error process...
+? genr u = 0 * const
+Generated series u (ID 14)
+# Get the estimated autocorrelation coeff.  This was wrong
+# until I just fixed it: gretl was giving the autocorrelation
+# coeff for the _innovations_ as "rho(1)".
+? genr r1 = $rho(1)
+Generated scalar r1 = 0.422202
+# Special Prais-Winsten treatment of first observation
+? genr u[1] = e[1] / sqrt(1.0 - r1^2)
+Modified series u (ID 14)
+# Generate the full error process
+? genr u = r1 * u(-1) + e
+Replaced series u (ID 14)
+# Generate the systematic part of the fit
+? genr sysfit = $coeff(0) + $coeff(PRICE)*PRICE + $coeff(INCOME)*INCOME
+Generated series sysfit (ID 15)
+# Form full one-step ahead forecasts: systematic component plus the
+# predictable portion of the error term
+? genr fit2 = sysfit + r1 * u(-1)
+Generated series fit2 (ID 16)
+# Compare the two "fitted" series
+? print -o QNC fit1 fit2
+
+                QNC         fit1         fit2
+
+1975:1         1923                          
+1975:2         2165     2257.845     2257.845
+1975:3         2198     2337.285     2337.285
+1975:4         2328     2408.170     2408.170
+1976:1         2381     2443.826     2443.826
+1976:2         2788     2482.091     2482.091
+1976:3         2416     2657.364     2657.364
+1976:4         2513     2435.557     2435.557
+1977:1         2617     2560.001     2560.001
+1977:2         3195     2581.991     2581.991
+1977:3         2668     2879.616     2879.616
+1977:4         2688     2635.775     2635.775
+1978:1         2540     2602.029     2602.029
+1978:2         3337     2679.122     2679.122
+1978:3         2713     2945.769     2945.769
+1978:4         2710     2705.456     2705.456
+1979:1         2739     2678.325     2678.325
+1979:2         2942     2635.528     2635.528
+1979:3         2571     2716.545     2716.545
+1979:4         2396     2517.927     2517.927
+1980:1         2511     2464.861     2464.861
+1980:2         2139     2333.619     2333.619
+1980:3         2130     2239.248     2239.248
+1980:4         2189     2241.205     2241.205
+1981:1         2373     2282.782     2282.782
+1981:2         2207     2299.247     2299.247
+1981:3         2192     2211.104     2211.104
+1981:4         1754     2206.430     2206.430
+1982:1         1944     1918.428     1918.428
+1982:2         2094     2119.717     2119.717
+1982:3         1910     2089.450     2089.450
+1982:4         2032     2017.434     2017.434
+1983:1         2045     2108.972     2108.972
+1983:2         2505     2117.813     2117.813
+1983:3         2237     2364.618     2364.618
+1983:4         2394     2265.575     2265.575
+1984:1         2584     2432.456     2432.456
+1984:2         2895     2503.325     2503.325
+1984:3         2448     2633.763     2633.763
+1984:4         2463     2432.562     2432.562
+1985:1         2644     2504.749     2504.749
+1985:2         2988     2598.420     2598.420
+1985:3         2968     2644.673     2644.673
+1985:4         2442     2670.818     2670.818
+1986:1         2600     2503.161     2503.161
+1986:2         3046     2691.332     2691.332
+1986:3         3124     2687.093     2687.093
+1986:4         2689     2734.237     2734.237
+1987:1         2341     2550.362     2550.362
+1987:2         2767     2193.658     2193.658
+1987:3         2785     2653.571     2653.571
+1987:4         2382     2674.257     2674.257
+1988:1         2636     2523.573     2523.573
+1988:2         2864     2630.395     2630.395
+1988:3         2556     2807.293     2807.293
+1988:4         2486     2650.238     2650.238
+1989:1         2337     2585.956     2585.956
+1989:2         2757     2521.628     2521.628
+1989:3         2631     2749.590     2749.590
+1989:4         2053     2647.323     2647.323
+1990:1         2310     2407.269     2407.269
+1990:2         2532     2541.181     2541.181
+1990:3         2358     2628.688     2628.688
+1990:4         2100     2396.277     2396.277
+
+Done

@@ -1,0 +1,167 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run oprob.inp
+ /home/cottrell/stats/test-gretl/oprob.inp
+? open MFontaine.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/MFontaine.gdt
+periodicity: 1, maxobs: 571
+observations range: 1 to 571
+
+Listing 6 variables:
+  0) const       1) Rtg         2) Cap         3) Profit      4) StateDiv  
+  5) LineDiv   
+
+? probit Rtg 0 2 3 4 5
+
+Function evaluations: 84
+Evaluations of gradient: 23
+
+Model 1: Ordered Probit, using observations 1-571
+Dependent variable: Rtg
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  Cap        -0.00321392   0.00522878    -0.6147   0.5388  
+  Profit      0.00160711   0.00124810     1.288    0.1979  
+  StateDiv   -0.102668     0.0182514     -5.625    1.85e-08 ***
+  LineDiv    -0.154283     0.0245335     -6.289    3.20e-10 ***
+
+  cut1       -3.02350      0.225290     -13.42     4.59e-41 ***
+  cut2       -2.08785      0.181830     -11.48     1.62e-30 ***
+  cut3       -1.10069      0.165003      -6.671    2.55e-11 ***
+  cut4       -0.170105     0.161752      -1.052    0.2930  
+  cut5        0.400467     0.164415       2.436    0.0149   **
+  cut6        0.826202     0.170503       4.846    1.26e-06 ***
+  cut7        1.34353      0.187514       7.165    7.78e-13 ***
+  cut8        1.68912      0.211920       7.971    1.58e-15 ***
+  cut9        1.97791      0.247620       7.988    1.38e-15 ***
+  cut10       2.49384      0.381692       6.534    6.42e-11 ***
+
+Mean dependent var   4.164623   S.D. dependent var   1.531268
+Log-likelihood      -966.7833   Akaike criterion     1961.567
+Schwarz criterion    2022.430   Hannan-Quinn         1985.312
+
+Number of cases 'correctly predicted' = 185 (32.4%)
+Likelihood ratio test: Chi-square(4) = 80.3753 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.84212
+  with p-value = 0.241458
+
+? logit Rtg 0 2 3 4 5
+
+Function evaluations: 84
+Evaluations of gradient: 27
+
+Model 2: Ordered Logit, using observations 1-571
+Dependent variable: Rtg
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Cap        -0.00243957   0.00825594   -0.2955   0.7676  
+  Profit      0.00697449   0.00419764    1.662    0.0966   *
+  StateDiv   -0.176005     0.0320936    -5.484    4.16e-08 ***
+  LineDiv    -0.252222     0.0423916    -5.950    2.68e-09 ***
+
+  cut1       -5.08563      0.555662     -9.152    5.57e-20 ***
+  cut2       -3.13917      0.459573     -6.831    8.45e-12 ***
+  cut3       -1.41024      0.438839     -3.214    0.0013   ***
+  cut4        0.114107     0.438027      0.2605   0.7945  
+  cut5        1.09143      0.445752      2.449    0.0143   **
+  cut6        1.88938      0.459545      4.111    3.93e-05 ***
+  cut7        2.95874      0.499805      5.920    3.22e-09 ***
+  cut8        3.74046      0.563562      6.637    3.20e-11 ***
+  cut9        4.44817      0.666622      6.673    2.51e-11 ***
+  cut10       5.85109      1.09635       5.337    9.46e-08 ***
+
+Mean dependent var   4.164623   S.D. dependent var   1.531268
+Log-likelihood      -969.7087   Akaike criterion     1967.417
+Schwarz criterion    2028.281   Hannan-Quinn         1991.163
+
+Number of cases 'correctly predicted' = 188 (32.9%)
+Likelihood ratio test: Chi-square(4) = 280.156 [0.0000]
+
+? Rtg = (Rtg == 12)? 11 : Rtg
+Replaced series Rtg (ID 1)
+? Rtg -= 1
+Replaced series Rtg (ID 1)
+? probit Rtg 0 2 3 4 5
+
+Function evaluations: 84
+Evaluations of gradient: 23
+
+Model 3: Ordered Probit, using observations 1-571
+Dependent variable: Rtg
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  Cap        -0.00321392   0.00522878    -0.6147   0.5388  
+  Profit      0.00160711   0.00124810     1.288    0.1979  
+  StateDiv   -0.102668     0.0182514     -5.625    1.85e-08 ***
+  LineDiv    -0.154283     0.0245335     -6.289    3.20e-10 ***
+
+  cut1       -3.02350      0.225290     -13.42     4.59e-41 ***
+  cut2       -2.08785      0.181830     -11.48     1.62e-30 ***
+  cut3       -1.10069      0.165003      -6.671    2.55e-11 ***
+  cut4       -0.170105     0.161752      -1.052    0.2930  
+  cut5        0.400467     0.164415       2.436    0.0149   **
+  cut6        0.826202     0.170503       4.846    1.26e-06 ***
+  cut7        1.34353      0.187514       7.165    7.78e-13 ***
+  cut8        1.68912      0.211920       7.971    1.58e-15 ***
+  cut9        1.97791      0.247620       7.988    1.38e-15 ***
+  cut10       2.49384      0.381692       6.534    6.42e-11 ***
+
+Mean dependent var   3.162872   S.D. dependent var   1.522840
+Log-likelihood      -966.7833   Akaike criterion     1961.567
+Schwarz criterion    2022.430   Hannan-Quinn         1985.312
+
+Number of cases 'correctly predicted' = 185 (32.4%)
+Likelihood ratio test: Chi-square(4) = 80.3753 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.84212
+  with p-value = 0.241458
+
+? logit Rtg 0 2 3 4 5
+
+Function evaluations: 84
+Evaluations of gradient: 27
+
+Model 4: Ordered Logit, using observations 1-571
+Dependent variable: Rtg
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Cap        -0.00243957   0.00825594   -0.2955   0.7676  
+  Profit      0.00697449   0.00419764    1.662    0.0966   *
+  StateDiv   -0.176005     0.0320936    -5.484    4.16e-08 ***
+  LineDiv    -0.252222     0.0423916    -5.950    2.68e-09 ***
+
+  cut1       -5.08563      0.555662     -9.152    5.57e-20 ***
+  cut2       -3.13917      0.459573     -6.831    8.45e-12 ***
+  cut3       -1.41024      0.438839     -3.214    0.0013   ***
+  cut4        0.114107     0.438027      0.2605   0.7945  
+  cut5        1.09143      0.445752      2.449    0.0143   **
+  cut6        1.88938      0.459545      4.111    3.93e-05 ***
+  cut7        2.95874      0.499805      5.920    3.22e-09 ***
+  cut8        3.74046      0.563562      6.637    3.20e-11 ***
+  cut9        4.44817      0.666622      6.673    2.51e-11 ***
+  cut10       5.85109      1.09635       5.337    9.46e-08 ***
+
+Mean dependent var   3.162872   S.D. dependent var   1.522840
+Log-likelihood      -969.7087   Akaike criterion     1967.417
+Schwarz criterion    2028.281   Hannan-Quinn         1991.163
+
+Number of cases 'correctly predicted' = 188 (32.9%)
+Likelihood ratio test: Chi-square(4) = 280.156 [0.0000]
+
+Done

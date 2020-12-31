@@ -1,0 +1,145 @@
+gretl version 1.9.6cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2011-11-12 09:43
+? run marry2.inp
+ /home/cottrell/stats/test-gretl/vecm/marry2.inp
+? open marry2.xls --quiet
+Excel 97 +
+rows=65, total cols=2, data cols=2
+check for label strings in first imported column: not found
+Read datafile /home/cottrell/stats/test-gretl/vecm/marry2.xls
+? set messages off
+? setobs 1 1947 --time-series
+? genr time
+? genr I76 = (t == 30)
+? lags 1; I76
+? genr Sh76 = (t >= 30)
+? lags 2; Sh76
+? genr Tr76 = time * Sh76
+? lags 2; Tr76
+# Replicate the VAR estimated by Ox
+? genr time
+? var 1 Men Women ; time Sh76 I76 Tr76(-2)
+
+VAR system, lag order 1
+OLS estimates, observations 1949-2010 (T = 62)
+Log-likelihood = 74.103146
+Determinant of covariance matrix = 0.00031398097
+AIC = -1.9388
+BIC = -1.4585
+HQC = -1.7502
+Portmanteau test: LB(15) = 56.3802, df = 56 [0.4606]
+
+Equation 1: Men
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      6.52921       1.64502      3.969     0.0002  ***
+  Men_1      0.394701      0.130902     3.015     0.0039  ***
+  Women_1    0.353193      0.134734     2.621     0.0113  **
+  time       0.00674233    0.00541733   1.245     0.2186 
+  Sh76       0.313800      0.145004     2.164     0.0348  **
+  I76        0.0268812     0.222018     0.1211    0.9041 
+  Tr76_2     0.00736089    0.00619935   1.187     0.2402 
+
+Mean dependent var   24.79355   S.D. dependent var   1.884699
+Sum squared resid    1.586412   S.E. of regression   0.169835
+R-squared            0.992678   Adjusted R-squared   0.991880
+F(6, 55)             1242.847   P-value(F)           7.84e-57
+rho                 -0.012026   Durbin-Watson        1.984044
+
+F-tests of zero restrictions:
+
+All lags of Men              F(1, 55) =   9.0916 [0.0039]
+All lags of Women            F(1, 55) =   6.8718 [0.0113]
+
+Equation 2: Women
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       1.68382      1.18800       1.417     0.1620  
+  Men_1       0.198212     0.0945347     2.097     0.0406   **
+  Women_1     0.687900     0.0973015     7.070     2.90e-09 ***
+  time        0.0121610    0.00391227    3.108     0.0030   ***
+  Sh76        0.0941776    0.104719      0.8993    0.3724  
+  I76        -0.0155115    0.160336     -0.09674   0.9233  
+  Tr76_2      0.00198730   0.00447703    0.4439    0.6589  
+
+Mean dependent var   22.52742   S.D. dependent var   2.074527
+Sum squared resid    0.827378   S.E. of regression   0.122651
+R-squared            0.996848   Adjusted R-squared   0.996505
+F(6, 55)             2899.378   P-value(F)           6.77e-67
+rho                 -0.394203   Durbin-Watson        2.556245
+
+F-tests of zero restrictions:
+
+All lags of Men              F(1, 55) =   4.3962 [0.0406]
+All lags of Women            F(1, 55) =   49.982 [0.0000]
+
+# VECM with restricted broken trend
+? vecm 1 2 Men Women ; Sh76 I76 ; Tr76_2 --crt
+
+VECM system, lag order 1
+Maximum likelihood estimates, observations 1949-2010 (T = 62)
+Cointegration rank = 2
+Case 4: Restricted trend, unrestricted constant
+
+beta (cointegrating vectors)
+
+Men          1.0000       0.0000 
+Women        0.0000       1.0000 
+trend     -0.053819    -0.073145 
+Tr76_2    -0.025223    -0.022387 
+
+alpha (adjustment vectors)
+
+Men        -0.60530      0.35319 
+Women       0.19821     -0.31210 
+
+Log-likelihood = 74.103146
+Determinant of covariance matrix = 0.00031398097
+AIC = -2.0678
+BIC = -1.7248
+HQC = -1.9331
+Portmanteau test: LB(15) = 56.3802, df = 56 [0.4606]
+
+Equation 1: d_Men
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       6.53595      1.30312       5.016    5.86e-06 ***
+  Sh76        0.313800     0.0567512     5.529    9.14e-07 ***
+  I76         0.0268812    0.176212      0.1526   0.8793  
+  EC1        -0.605299     0.128704     -4.703    1.77e-05 ***
+  EC2         0.353193     0.119860      2.947    0.0047   ***
+
+Mean dependent var   0.077419   S.D. dependent var   0.210713
+Sum squared resid    1.586412   S.E. of regression   0.169835
+R-squared            0.414260   Adjusted R-squared   0.350361
+rho                 -0.012026   Durbin-Watson        1.984044
+
+Equation 2: d_Women
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1.69598      0.941081      1.802    0.0770  *
+  Sh76        0.0941776    0.0409844     2.298    0.0254  **
+  I76        -0.0155115    0.127256     -0.1219   0.9034 
+  EC1         0.198212     0.0929468     2.133    0.0374  **
+  EC2        -0.312100     0.0865604    -3.606    0.0007  ***
+
+Mean dependent var   0.088710   S.D. dependent var   0.146102
+Sum squared resid    0.827378   S.E. of regression   0.122651
+R-squared            0.364581   Adjusted R-squared   0.295262
+rho                 -0.394203   Durbin-Watson        2.556245
+
+Cross-equation covariance matrix:
+
+                Men        Women
+Men        0.025587    0.0052418 
+Women     0.0052418     0.013345 
+
+determinant = 0.000313981
+
+Done

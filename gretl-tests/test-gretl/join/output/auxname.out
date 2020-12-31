@@ -1,0 +1,22 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:16
+? run auxname.inp
+ /home/cottrell/stats/test-gretl/join/auxname.inp
+? open hholds.csv -q
+Read datafile /home/cottrell/stats/test-gretl/join/hholds.csv
+? join people.csv ypid --ikey=hid --data=pid --aggr="min(age)"
+Data appended OK
+? print -o
+
+           hid      country           xh         ypid
+
+1            1           US            1            2
+2            6           IT           12           10
+3            3           UK            6            5
+4            4           IT            8            6
+5            2           US            4            4
+6            5           IT           10            9
+
+Done

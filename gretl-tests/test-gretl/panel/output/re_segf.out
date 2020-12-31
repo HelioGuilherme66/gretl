@@ -1,0 +1,142 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run re_segf.inp
+ /home/cottrell/stats/test-gretl/panel/re_segf.inp
+? open re_segf.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/panel/re_segf.gdt
+periodicity: 8, maxobs: 536
+observations range: 1:1 to 67:8
+
+Listing 6 variables:
+  0) const    1) id       2) year     3) y        4) x1     
+  5) x2     
+
+? panel y 0 x1 x2 --random --time
+
+Model 1: Random-effects (GLS), using 536 observations
+Included 67 cross-sectional units
+Time-series length = 8
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       3.40240      0.105651     32.20     1.70e-126 ***
+  x1          0.600946     0.0333155    18.04     5.58e-57  ***
+  x2          0.347995     0.0286963    12.13     5.13e-30  ***
+  dt_2       -0.0479834    0.0271814    -1.765    0.0781    *
+  dt_3       -0.0342912    0.0276194    -1.242    0.2150   
+  dt_4       -0.0342774    0.0284975    -1.203    0.2296   
+  dt_5       -0.0255183    0.0291167    -0.8764   0.3812   
+  dt_6        0.0225258    0.0296417     0.7599   0.4476   
+  dt_7        0.0690893    0.0298415     2.315    0.0210    **
+  dt_8        0.0467500    0.0308687     1.514    0.1305   
+
+Mean dependent var   5.497312   S.D. dependent var   1.948797
+Sum squared resid    60.66335   S.E. of regression   0.339280
+Log-likelihood      -176.6341   Akaike criterion     373.2683
+Schwarz criterion    416.1096   Hannan-Quinn         390.0289
+
+'Between' variance = 0.0881589
+'Within' variance = 0.0241149
+theta used for quasi-demeaning = 0.818171
+corr(y,yhat)^2 = 0.97095
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(2) = 3582.54
+  with p-value = 0
+
+Wald test for joint significance of time dummies
+  Asymptotic test statistic: Chi-square(7) = 30.4911
+  with p-value = 7.71503e-05
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1123.08
+  with p-value = 3.18389e-246
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(9) = 9.46043
+  with p-value = 0.395902
+
+? list dts = dt_*
+Generated list dts
+? dts -= dt_1
+Replaced list dts
+? omit dts --test-only
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    dt_2, dt_3, dt_4, dt_5, dt_6, dt_7, dt_8
+  Test statistic: F(7, 526) = 4.35587, p-value 0.000104196
+
+? panel y 0 x1 x2 --random --time
+
+Model 2: Random-effects (GLS), using 536 observations
+Included 67 cross-sectional units
+Time-series length = 8
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       3.40240      0.105651     32.20     1.70e-126 ***
+  x1          0.600946     0.0333155    18.04     5.58e-57  ***
+  x2          0.347995     0.0286963    12.13     5.13e-30  ***
+  dt_2       -0.0479834    0.0271814    -1.765    0.0781    *
+  dt_3       -0.0342912    0.0276194    -1.242    0.2150   
+  dt_4       -0.0342774    0.0284975    -1.203    0.2296   
+  dt_5       -0.0255183    0.0291167    -0.8764   0.3812   
+  dt_6        0.0225258    0.0296417     0.7599   0.4476   
+  dt_7        0.0690893    0.0298415     2.315    0.0210    **
+  dt_8        0.0467500    0.0308687     1.514    0.1305   
+
+Mean dependent var   5.497312   S.D. dependent var   1.948797
+Sum squared resid    60.66335   S.E. of regression   0.339280
+Log-likelihood      -176.6341   Akaike criterion     373.2683
+Schwarz criterion    416.1096   Hannan-Quinn         390.0289
+
+'Between' variance = 0.0881589
+'Within' variance = 0.0241149
+theta used for quasi-demeaning = 0.818171
+corr(y,yhat)^2 = 0.97095
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(2) = 3582.54
+  with p-value = 0
+
+Wald test for joint significance of time dummies
+  Asymptotic test statistic: Chi-square(7) = 30.4911
+  with p-value = 7.71503e-05
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1123.08
+  with p-value = 3.18389e-246
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(9) = 9.46043
+  with p-value = 0.395902
+
+? panel y 0 x1 x2 --between
+
+Model 3: Between-groups, using 67 observations
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       3.60990      0.244800     14.75     2.94e-22 ***
+  x1          0.709846     0.0792665     8.955    6.77e-13 ***
+  x2          0.281241     0.0679820     4.137    0.0001   ***
+
+Mean dependent var   5.497312   S.D. dependent var   1.936912
+Sum squared resid    5.835087   S.E. of regression   0.301949
+R-squared            0.976434   Adjusted R-squared   0.975698
+F(2, 64)             1325.895   P-value(F)           8.19e-53
+Log-likelihood      -13.30197   Akaike criterion     32.60393
+Schwarz criterion    39.21801   Hannan-Quinn         35.22114
+
+Done

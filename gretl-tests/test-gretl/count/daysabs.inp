@@ -1,0 +1,11 @@
+open poissonreg.dta -q
+set optimizer newton
+negbin daysabs 0 math langarts male
+quit
+
+foreign language=R --send-data
+ library(MASS)
+ m1 <- glm.nb(daysabs~math+langarts+male)
+ summary(m1)
+end foreign
+

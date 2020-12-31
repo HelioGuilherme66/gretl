@@ -1,0 +1,44 @@
+gretl version 1.9.8cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2012-04-11 14:15
+? run ects.inp
+ /home/cottrell/stats/test-gretl/nls/ects.inp
+? open ects_nls.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/ects_nls.gdt
+periodicity: 1, maxobs: 50
+observations range: 1-50
+
+Listing 4 variables:
+  0) const    1) y        2) x1       3) x2     
+
+? ols y const x1 x2 --quiet
+? genr alpha = $coeff(0)
+Generated scalar alpha = -22.3283
+? genr beta = $coeff(x1)
+Generated scalar beta = 3.19528
+? nls y = alpha + beta*x1 + (1/beta)*x2
+? deriv alpha = 1
+? deriv beta = x1 - x2/(beta*beta)
+? end nls
+Using analytical derivatives
+Tolerance = 1.81899e-12
+
+Convergence achieved after 37 iterations
+
+Model 2: NLS, using observations 1-50
+y = alpha + beta*x1 + (1/beta)*x2
+
+             estimate    std. error   t-ratio   p-value 
+  ------------------------------------------------------
+  alpha      -22.3283    23.2287      -0.9612   0.3413  
+  beta         3.19528    0.182783    17.48     1.88e-22 ***
+
+Mean dependent var   407.0616   S.D. dependent var   188.7951
+Sum squared resid    176815.1   S.E. of regression   60.69306
+R-squared            0.898762   Adjusted R-squared   0.896653
+Log-likelihood      -275.2178   Akaike criterion     554.4357
+Schwarz criterion    558.2597   Hannan-Quinn         555.8919
+
+Done

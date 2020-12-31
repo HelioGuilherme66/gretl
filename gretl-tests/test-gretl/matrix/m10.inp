@@ -1,0 +1,6 @@
+open data4-1
+series s1 = sqft * sqft
+matrix x = {sqft}
+x = x .^ 2
+series s2 = x
+print s1 s2 -o

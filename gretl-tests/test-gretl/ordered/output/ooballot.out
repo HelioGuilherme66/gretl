@@ -1,0 +1,151 @@
+gretl version 2015e-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-12-07 11:53
+? run ooballot.inp
+ /opt/esl/share/gretl/scripts/misc/ooballot.inp
+? open ooballot
+
+Read datafile /opt/esl/share/gretl/data/misc/ooballot.gdt
+periodicity: 1, maxobs: 87
+observations range: 1 to 87
+
+Listing 4 variables:
+  0) const     1) Vote      2) Status    3) CPI     
+
+# restrict to 'P' and 'O' countries
+? smpl Status > 0 --restrict
+Full data set: 87 observations
+Current sample: 70 observations
+# split CPI on median
+? series hicorr = CPI < 3.95
+Generated series hicorr (ID 4)
+# make binary approval variable (omits abstainers)
+? series approv = (Vote==0)? 0 : ((Vote>1)? 1 : NA)
+Generated series approv (ID 5)
+# mark the two new variables as discrete
+? discrete hicorr approv
+# and cross-tabulate
+? xtab hicorr approv
+
+Cross-tabulation of hicorr (rows) against approv (columns)
+
+       [   0][   1]  TOT.
+  
+[   0]    11    13     24
+[   1]     7    23     30
+
+TOTAL     18    36     54
+
+16 missing values
+
+Pearson chi-square test = 3.0375 (1 df, p-value = 0.0813611)
+
+Fisher's Exact Test:
+  Left:   P-value = 0.979152
+  Right:  P-value = 0.0732764
+  2-Tail: P-value = 0.0929028
+
+# An econometrician might be more inclined to run a
+# regression...
+? ols Vote 0 CPI
+
+Model 1: OLS, using observations 1-70
+Dependent variable: Vote
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        2.51423     0.297913      8.439    3.49e-12 ***
+  CPI         -0.193943    0.0536834    -3.613    0.0006   ***
+
+Mean dependent var   1.542857   S.D. dependent var   1.163275
+Sum squared resid    78.33587   S.E. of regression   1.073312
+R-squared            0.161030   Adjusted R-squared   0.148692
+F(1, 68)             13.05172   P-value(F)           0.000576
+Log-likelihood      -103.2636   Akaike criterion     210.5271
+Schwarz criterion    215.0241   Hannan-Quinn         212.3134
+
+# But of course plain OLS is suspect because "Vote" is not
+# on an interval scale: so try ordered probit
+? probit Vote 0 CPI
+
+Function evaluations: 27
+Evaluations of gradient: 10
+
+Model 2: Ordered Probit, using observations 1-70
+Dependent variable: Vote
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  CPI         -0.197624    0.0569544    -3.470   0.0005   ***
+
+  cut1        -1.71786     0.348800     -4.925   8.43e-07 ***
+  cut2        -1.06343     0.334542     -3.179   0.0015   ***
+  cut3        -0.367894    0.314881     -1.168   0.2427  
+
+Mean dependent var   1.542857   S.D. dependent var   1.163275
+Log-likelihood      -90.57804   Akaike criterion     189.1561
+Schwarz criterion    198.1501   Hannan-Quinn         192.7286
+
+Number of cases 'correctly predicted' = 27 (38.6%)
+Likelihood ratio test: Chi-square(1) = 12.3049 [0.0005]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 24.355
+  with p-value = 5.14505e-06
+
+# Normality is strongly rejected so use QML standard errors:
+# CPI is still strongly significant
+? probit Vote 0 CPI --robust
+
+Function evaluations: 27
+Evaluations of gradient: 10
+
+Model 3: Ordered Probit, using observations 1-70
+Dependent variable: Vote
+QML standard errors
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  CPI         -0.197624    0.0538898    -3.667   0.0002   ***
+
+  cut1        -1.71786     0.378557     -4.538   5.68e-06 ***
+  cut2        -1.06343     0.356075     -2.987   0.0028   ***
+  cut3        -0.367894    0.343275     -1.072   0.2838  
+
+Mean dependent var   1.542857   S.D. dependent var   1.163275
+Log-likelihood      -90.57804   Akaike criterion     189.1561
+Schwarz criterion    198.1501   Hannan-Quinn         192.7286
+
+Number of cases 'correctly predicted' = 27 (38.6%)
+Likelihood ratio test: Chi-square(1) = 12.3049 [0.0005]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 24.355
+  with p-value = 5.14505e-06
+
+# Compare the rank-sum test given on effi.org, using
+# all non-abstaining countries for which CPI is available
+? smpl --full
+Full data range: 1 - 87 (n = 87)
+
+? series capp = (Vote > 1)? CPI : NA
+Generated series capp (ID 6)
+? series cdis = (Vote == 0)? CPI : NA
+Generated series cdis (ID 7)
+? difftest capp cdis --rank-sum
+
+Test for difference between capp and cdis
+Wilcoxon Rank-Sum Test
+Null hypothesis: the two medians are equal
+
+  n1 = 18, n2 = 50
+  w (sum of ranks, sample 1) = 789.5
+  z = (789.5 - 621) / 71.9375 = 2.34231
+  P(Z > 2.34231) = 0.00958235
+  Two-tailed p-value = 0.0191647
+
+Done

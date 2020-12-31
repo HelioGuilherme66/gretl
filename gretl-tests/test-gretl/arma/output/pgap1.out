@@ -1,0 +1,144 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run pgap1.inp
+ /home/cottrell/stats/test-gretl/arma/pgap1.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-1) + u
+Replaced series y (ID 4)
+? matrix pvec = {1,3}
+Generated matrix pvec
+? arma pvec 1 ; y -cx
+
+Model 1: ARMA, using observations 1950:04-2001:12 (T = 621)
+Estimated using X-13-ARIMA (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0826329    0.185359      0.4458   0.6557  
+  phi_1       0.661786     0.0393050    16.84     1.30e-63 ***
+  phi_3       0.0106392    0.0340123     0.3128   0.7544  
+  theta_1     0.454729     0.0421103    10.80     3.50e-27 ***
+
+Mean dependent var   0.094084   S.D. dependent var   1.878119
+Mean of innovations  0.000603   S.D. of innovations  1.040874
+Log-likelihood      -906.0387   Akaike criterion     1822.077
+Schwarz criterion    1844.234   Hannan-Quinn         1830.689
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4609     0.0000     1.4609     0.0000
+    Root  2          -0.7305     7.9877     8.0210     0.2645
+    Root  3          -0.7305    -7.9877     8.0210    -0.2645
+  MA
+    Root  1          -2.1991     0.0000     2.1991     0.5000
+  -----------------------------------------------------------
+
+? arma pvec 1 ; y -c
+
+Function evaluations: 16
+Evaluations of gradient: 8
+
+Model 2: ARMA, using observations 1950:04-2001:12 (T = 621)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0270668    0.0612775     0.4417   0.6587  
+  phi_1       0.661784     0.0396795    16.68     1.89e-62 ***
+  phi_3       0.0106418    0.0322142     0.3303   0.7411  
+  theta_1     0.454728     0.0444568    10.23     1.48e-24 ***
+
+Mean dependent var   0.094084   S.D. dependent var   1.878119
+Mean of innovations  0.000604   S.D. of innovations  1.040874
+Log-likelihood      -906.0387   Akaike criterion     1822.077
+Schwarz criterion    1844.234   Hannan-Quinn         1830.689
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4609     0.0000     1.4609     0.0000
+    Root  2          -0.7305    -7.9867     8.0201    -0.2645
+    Root  3          -0.7305     7.9867     8.0201     0.2645
+  MA
+    Root  1          -2.1991     0.0000     2.1991     0.5000
+  -----------------------------------------------------------
+
+? arma pvec 1 ; y -x
+
+Model 3: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0830637    0.183256      0.4533   0.6504  
+  phi_1       0.660561     0.0392777    16.82     1.81e-63 ***
+  phi_3       0.0108273    0.0339287     0.3191   0.7496  
+  theta_1     0.452149     0.0421652    10.72     7.91e-27 ***
+
+Mean dependent var   0.091332   S.D. dependent var   1.874244
+Mean of innovations  0.000317   S.D. of innovations  1.039918
+Log-likelihood      -910.5113   Akaike criterion     1831.023
+Schwarz criterion    1853.203   Hannan-Quinn         1839.642
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4626     0.0000     1.4626     0.0000
+    Root  2          -0.7313     7.9128     7.9466     0.2647
+    Root  3          -0.7313    -7.9128     7.9466    -0.2647
+  MA
+    Root  1          -2.2117     0.0000     2.2117     0.5000
+  -----------------------------------------------------------
+
+? arma pvec 1 ; y
+
+Function evaluations: 31
+Evaluations of gradient: 10
+
+Model 4: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0830701    0.179762      0.4621   0.6440  
+  phi_1       0.660565     0.0397185    16.63     4.14e-62 ***
+  phi_3       0.0108246    0.0334810     0.3233   0.7465  
+  theta_1     0.452143     0.0437097    10.34     4.44e-25 ***
+
+Mean dependent var   0.091332   S.D. dependent var   1.874244
+Mean of innovations -0.000553   S.D. of innovations  1.039918
+Log-likelihood      -910.5113   Akaike criterion     1831.023
+Schwarz criterion    1853.203   Hannan-Quinn         1839.642
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4626     0.0000     1.4626     0.0000
+    Root  2          -0.7313    -7.9138     7.9476    -0.2647
+    Root  3          -0.7313     7.9138     7.9476     0.2647
+  MA
+    Root  1          -2.2117     0.0000     2.2117     0.5000
+  -----------------------------------------------------------
+
+Done

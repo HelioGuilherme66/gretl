@@ -1,0 +1,11 @@
+nulldata 10
+numcat=4
+mnart={14, 7, 23, 18}
+scalar princ=1
+loop i=1..numcat -q
+    scalar ultc=mnart[1,i]
+    printf "ultc = %d\n", ultc
+    loop j=princ..ultc -q
+        printf "iteration= %d\n", j
+    endloop
+endloop

@@ -1,0 +1,326 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run greene.inp
+ /home/cottrell/stats/test-gretl/probit/greene.inp
+# logit and probit examples from William Greene
+? open greene19_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene19_1.gdt
+periodicity: 1, maxobs: 32
+observations range: 1 to 32
+
+Listing 5 variables:
+  0) const    1) GPA      2) TUCE     3) PSI      4) GRADE  
+
+? logit GRADE 0 GPA TUCE PSI -o
+
+Model 1: Logit, using observations 1-32
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -13.0213       4.93132     -2.641             
+  GPA          2.82611      1.26294      2.238    0.533859 
+  TUCE         0.0951577    0.141554     0.6722   0.0179755
+  PSI          2.37869      1.06456      2.234    0.456498 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.374038   Adjusted R-squared   0.179786
+Log-likelihood      -12.88963   Akaike criterion     33.77927
+Schwarz criterion    39.64221   Hannan-Quinn         35.72267
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.189
+Likelihood ratio test: Chi-square(3) = 15.4042 [0.0015]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Covariance matrix of regression coefficients:
+
+         const           GPA          TUCE           PSI
+        24.318      -4.57348     -0.346256      -2.35916  const
+                     1.59502    -0.0369206      0.427616  GPA
+                                 0.0200376     0.0149126  TUCE
+                                                  1.1333  PSI
+
+? logit GRADE 0 GPA TUCE PSI -or
+
+Model 2: Logit, using observations 1-32
+Dependent variable: GRADE
+QML standard errors
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -13.0213       5.19759     -2.505             
+  GPA          2.82611      1.26755      2.230    0.533859 
+  TUCE         0.0951577    0.117922     0.8070   0.0179755
+  PSI          2.37869      0.964419     2.466    0.456498 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.374038   Adjusted R-squared   0.179786
+Log-likelihood      -12.88963   Akaike criterion     33.77927
+Schwarz criterion    39.64221   Hannan-Quinn         35.72267
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.189
+Likelihood ratio test: Chi-square(3) = 15.4042 [0.0015]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Covariance matrix of regression coefficients:
+
+         const           GPA          TUCE           PSI
+       27.0149      -5.59338     -0.336821      -1.48374  const
+                     1.60667    0.00610493      0.197325  GPA
+                                 0.0139057     0.0193466  TUCE
+                                                0.930104  PSI
+
+? probit GRADE 0 GPA TUCE PSI -o
+
+Model 3: Probit, using observations 1-32
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -7.45232      2.54247      -2.931             
+  GPA         1.62581      0.693882      2.343    0.533347 
+  TUCE        0.0517289    0.0838903     0.6166   0.0169697
+  PSI         1.42633      0.595038      2.397    0.464426 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.377478   Adjusted R-squared   0.183225
+Log-likelihood      -12.81880   Akaike criterion     33.63761
+Schwarz criterion    39.50055   Hannan-Quinn         35.58101
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.328
+Likelihood ratio test: Chi-square(3) = 15.5459 [0.0014]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Covariance matrix of regression coefficients:
+
+         const           GPA          TUCE           PSI
+       6.46417      -1.16967     -0.101173     -0.594792  const
+                    0.481473    -0.0189135      0.105439  GPA
+                                0.00703758    0.00247186  TUCE
+                                                 0.35407  PSI
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.61059
+  with p-value = 0.164426
+
+? probit GRADE 0 GPA TUCE PSI -or
+
+Model 4: Probit, using observations 1-32
+Dependent variable: GRADE
+QML standard errors
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -7.45232      2.54427      -2.929             
+  GPA         1.62581      0.651510      2.495    0.533347 
+  TUCE        0.0517289    0.0691327     0.7483   0.0169697
+  PSI         1.42633      0.532765      2.677    0.464426 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.377478   Adjusted R-squared   0.183225
+Log-likelihood      -12.81880   Akaike criterion     33.63761
+Schwarz criterion    39.50055   Hannan-Quinn         35.58101
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.328
+Likelihood ratio test: Chi-square(3) = 15.5459 [0.0014]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Covariance matrix of regression coefficients:
+
+         const           GPA          TUCE           PSI
+       6.47332      -1.29925    -0.0927206     -0.241572  const
+                    0.424466   -0.00435101     0.0196519  GPA
+                                0.00477933    0.00250535  TUCE
+                                                0.283839  PSI
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.61059
+  with p-value = 0.164426
+
+? GRADE[16] = NA
+Modified series GRADE (ID 4)
+? logit GRADE 0 GPA TUCE PSI
+
+Model 5: Logit, using observations 1-32 (n = 31)
+Missing or incomplete observations dropped: 1
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -12.8593       4.95896     -2.593             
+  GPA          2.79797      1.26378      2.214    0.552370 
+  TUCE         0.0930805    0.141279     0.6588   0.0183757
+  PSI          2.35053      1.06798      2.201    0.460140 
+
+Mean dependent var   0.354839   S.D. dependent var   0.486373
+McFadden R-squared   0.362254   Adjusted R-squared   0.163863
+Log-likelihood      -12.85830   Akaike criterion     33.71659
+Schwarz criterion    39.45254   Hannan-Quinn         35.58637
+
+Number of cases 'correctly predicted' = 25 (80.6%)
+f(beta'x) at mean of independent vars = 0.197
+Likelihood ratio test: Chi-square(3) = 14.6076 [0.0022]
+
+           Predicted
+             0    1
+  Actual 0  17    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+? probit GRADE 0 GPA TUCE PSI
+
+Model 6: Probit, using observations 1-32 (n = 31)
+Missing or incomplete observations dropped: 1
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -7.37802      2.56606      -2.875             
+  GPA         1.61414      0.695288      2.322    0.546453 
+  TUCE        0.0506586    0.0838141     0.6044   0.0171500
+  PSI         1.41194      0.598643      2.359    0.466747 
+
+Mean dependent var   0.354839   S.D. dependent var   0.486373
+McFadden R-squared   0.365344   Adjusted R-squared   0.166952
+Log-likelihood      -12.79600   Akaike criterion     33.59201
+Schwarz criterion    39.32795   Hannan-Quinn         35.46178
+
+Number of cases 'correctly predicted' = 25 (80.6%)
+f(beta'x) at mean of independent vars = 0.339
+Likelihood ratio test: Chi-square(3) = 14.7322 [0.0021]
+
+           Predicted
+             0    1
+  Actual 0  17    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.07416
+  with p-value = 0.215008
+
+? open greene22_2.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene22_2.gdt
+periodicity: 1, maxobs: 601
+observations range: 1 to 601
+
+Listing 10 variables:
+  0) const    1) Y        2) Z1       3) Z2       4) Z3     
+  5) Z4       6) Z5       7) Z6       8) Z7       9) Z8     
+
+? genr Ydum = Y > 0
+Generated series Ydum (ID 10)
+? probit Ydum 0 Z2 Z3 Z5 Z7 Z8
+
+Model 1: Probit, using observations 1-601
+Dependent variable: Ydum
+Standard errors based on Hessian
+
+             coefficient   std. error     z         slope   
+  ----------------------------------------------------------
+  const       0.976665     0.361048      2.705              
+  Z2         -0.0220238    0.0101774    -2.164   -0.00669530
+  Z3          0.0599008    0.0170860     3.506    0.0182101 
+  Z5         -0.183646     0.0514932    -3.566   -0.0558291 
+  Z7          0.0375131    0.0328446     1.142    0.0114041 
+  Z8         -0.272982     0.0524733    -5.202   -0.0829876 
+
+Mean dependent var   0.249584   S.D. dependent var   0.433133
+McFadden R-squared   0.090003   Adjusted R-squared   0.072235
+Log-likelihood      -307.2955   Akaike criterion     626.5909
+Schwarz criterion    652.9825   Hannan-Quinn         636.8638
+
+Number of cases 'correctly predicted' = 457 (76.0%)
+f(beta'x) at mean of independent vars = 0.304
+Likelihood ratio test: Chi-square(5) = 60.7861 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  437    14
+         1  130    20
+
+Excluding the constant, p-value was highest for variable 8 (Z7)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.90639
+  with p-value = 0.233822
+
+? probit Ydum 0 Z2 Z3 Z5 Z7 Z8 -r
+
+Model 2: Probit, using observations 1-601
+Dependent variable: Ydum
+QML standard errors
+
+             coefficient   std. error     z         slope   
+  ----------------------------------------------------------
+  const       0.976665     0.382923      2.551              
+  Z2         -0.0220238    0.0109397    -2.013   -0.00669530
+  Z3          0.0599008    0.0174123     3.440    0.0182101 
+  Z5         -0.183646     0.0525341    -3.496   -0.0558291 
+  Z7          0.0375131    0.0328380     1.142    0.0114041 
+  Z8         -0.272982     0.0529399    -5.156   -0.0829876 
+
+Mean dependent var   0.249584   S.D. dependent var   0.433133
+McFadden R-squared   0.090003   Adjusted R-squared   0.072235
+Log-likelihood      -307.2955   Akaike criterion     626.5909
+Schwarz criterion    652.9825   Hannan-Quinn         636.8638
+
+Number of cases 'correctly predicted' = 457 (76.0%)
+f(beta'x) at mean of independent vars = 0.304
+Likelihood ratio test: Chi-square(5) = 60.7861 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  437    14
+         1  130    20
+
+Excluding the constant, p-value was highest for variable 8 (Z7)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.90639
+  with p-value = 0.233822
+
+Done

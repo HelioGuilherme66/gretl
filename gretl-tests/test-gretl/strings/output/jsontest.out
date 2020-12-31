@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run jsontest.inp
+ /home/cottrell/stats/test-gretl/strings/jsontest.inp
+{"STR": "42", "ARR": [ 11, 22 ] , "DARR": [["foo", 111], ["bar", 222]] }
+$.STR:
+'42'
+
+$.ARR[0]:
+'11'
+
+$.ARR:
+'11
+22
+'
+
+$.DARR[0][1]:
+'111'
+
+$.DARR[0]:
+'foo
+111
+'
+

@@ -1,0 +1,229 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps9-8.inp
+ /opt/esl/share/gretl/scripts/ps9-8.inp
+# PS9.8, ARCH estimation: Example 9.10 and Table 9.4
+? open data9-2
+
+Read datafile /opt/esl/share/gretl/data/data9-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1960 to 1995
+
+Listing 5 variables:
+  0) const    1) year     2) r        3) M        4) D      
+
+? genr M1 = M(-1)
+Generated series M1 (ID 5)
+? genr M2 = M(-2)
+Generated series M2 (ID 6)
+? genr D1 = D(-1)
+Generated series D1 (ID 7)
+? genr D2 = D(-2)
+Generated series D2 (ID 8)
+# estimate model
+? ols r const M1 M2 D1 D2
+
+Model 1: OLS, using observations 1962-1995 (T = 34)
+Dependent variable: r
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       2.86219      0.808459      3.540    0.0014   ***
+  M1          0.0328443    0.00640273    5.130    1.77e-05 ***
+  M2         -0.0300233    0.00644044   -4.662    6.49e-05 ***
+  D1         -0.0377725    0.0130976    -2.884    0.0073   ***
+  D2         -0.00757117   0.0130620    -0.5796   0.5666  
+
+Mean dependent var   6.232353   S.D. dependent var   2.551697
+Sum squared resid    99.96801   S.E. of regression   1.856656
+R-squared            0.534747   Adjusted R-squared   0.470575
+F(4, 29)             8.332930   P-value(F)           0.000133
+Log-likelihood      -66.57824   Akaike criterion     143.1565
+Schwarz criterion    150.7883   Hannan-Quinn         145.7591
+rho                  0.635348   Durbin-Watson        0.711692
+
+Excluding the constant, p-value was highest for variable 8 (D2)
+
+# generate uhat square and lags
+? genr usq = $uhat*$uhat
+Generated series usq (ID 9)
+? genr usq1 = usq(-1)
+Generated series usq1 (ID 10)
+? genr usq2 = usq(-2)
+Generated series usq2 (ID 11)
+? genr usq3 = usq(-3)
+Generated series usq3 (ID 12)
+# estimate auxiliary regression for ARCH(3)
+? ols usq const usq1 usq2 usq3
+
+Model 2: OLS, using observations 1965-1995 (T = 31)
+Dependent variable: usq
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2.17704       1.21311      1.795    0.0839  *
+  usq1        0.335336      0.191514     1.751    0.0913  *
+  usq2        0.0596875     0.202238     0.2951   0.7701 
+  usq3       -0.103880      0.192141    -0.5406   0.5932 
+
+Mean dependent var   3.079088   S.D. dependent var   5.200652
+Sum squared resid    709.1719   S.E. of regression   5.125000
+R-squared            0.125993   Adjusted R-squared   0.028882
+F(3, 27)             1.297405   P-value(F)           0.295544
+Log-likelihood      -92.50381   Akaike criterion     193.0076
+Schwarz criterion    198.7436   Hannan-Quinn         194.8774
+rho                 -0.012083   Durbin-Watson        2.014178
+
+Excluding the constant, p-value was highest for variable 11 (usq2)
+
+# compute nRsquared and pvalue
+? genr LM1=$nrsq
+Generated scalar LM1 = 3.90579
+? pvalue X 3 LM1
+Chi-square(3): area to the right of 3.90579 = 0.271818
+(to the left: 0.728182)
+# ARCH(3) is not supported but ARCH(1) term is significant at 9 percent
+? ols usq const usq1
+
+Model 3: OLS, using observations 1963-1995 (T = 33)
+Dependent variable: usq
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1.93082       0.981680     1.967    0.0582  *
+  usq1        0.345432      0.169108     2.043    0.0497  **
+
+Mean dependent var   2.971390   S.D. dependent var   5.053932
+Sum squared resid    720.3892   S.E. of regression   4.820618
+R-squared            0.118630   Adjusted R-squared   0.090198
+F(1, 31)             4.172505   P-value(F)           0.049668
+Log-likelihood      -97.69916   Akaike criterion     199.3983
+Schwarz criterion    202.3913   Hannan-Quinn         200.4054
+rho                 -0.010731   Durbin-Watson        2.016559
+
+? genr LM2=$nrsq
+Generated scalar LM2 = 3.91478
+# generate predicted variance as observed minus error uhat
+? genr usqhat = usq-$uhat
+Generated series usqhat (ID 13)
+? pvalue X 1 LM2
+Chi-square(1): area to the right of 3.91478 = 0.0478632
+(to the left: 0.952137)
+# all values of predicted variance are positive
+? print usqhat
+
+Full data range: 1960 - 1995 (n = 33)
+
+     NA       NA       NA  2.59133  2.41085  2.35036  2.10500  2.05358  
+2.01628  1.93949  2.40068  2.15091  2.16961  3.34412  1.98969  2.81912  
+1.95381  2.85607  2.94875  1.93683  5.20327  5.96900  10.8530  2.95024  
+2.13041  2.75441  2.25533  1.96378  4.14240  2.07023  4.04512  4.80398  
+2.12754  2.04769  2.71338  1.98956  
+
+# compute weights for WLS
+? genr wt=1/usqhat
+Generated series wt (ID 14)
+# estimate model by weighted least squares
+? wls wt r const M1 M2 D1 D2
+
+Model 4: WLS, using observations 1963-1995 (T = 33)
+Dependent variable: r
+Variable used as weight: wt
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       3.30753      0.756858      4.370    0.0002   ***
+  M1          0.0277830    0.00583622    4.760    5.34e-05 ***
+  M2         -0.0255060    0.00580649   -4.393    0.0001   ***
+  D1         -0.0323199    0.0123802    -2.611    0.0144   **
+  D2         -0.00462097   0.0129086    -0.3580   0.7230  
+
+Statistics based on the weighted data:
+
+Sum squared resid    30.80528   S.E. of regression   1.048899
+R-squared            0.485452   Adjusted R-squared   0.411945
+F(4, 28)             6.604177   P-value(F)           0.000711
+Log-likelihood      -45.68942   Akaike criterion     101.3788
+Schwarz criterion    108.8614   Hannan-Quinn         103.8965
+rho                  0.683477   Durbin-Watson        0.616116
+
+Statistics based on the original data:
+
+Mean dependent var   6.330303   S.D. dependent var   2.525517
+Sum squared resid    101.2192   S.E. of regression   1.901308
+
+Excluding the constant, p-value was highest for variable 8 (D2)
+
+# compare shortcut command
+? arch 1 r const M1 M2 D1 D2
+
+Model 5: WLS (ARCH), using observations 1963-1995 (T = 33)
+Dependent variable: r
+Variable used as weight: 1/sigma
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       3.30753      0.756858      4.370    0.0002   ***
+  M1          0.0277830    0.00583622    4.760    5.34e-05 ***
+  M2         -0.0255060    0.00580649   -4.393    0.0001   ***
+  D1         -0.0323199    0.0123802    -2.611    0.0144   **
+  D2         -0.00462097   0.0129086    -0.3580   0.7230  
+
+  alpha(0)    1.93082      0.981680      1.967    0.0592   *
+  alpha(1)    0.345432     0.169108      2.043    0.0506   *
+
+Statistics based on the weighted data:
+
+Sum squared resid    30.80528   S.E. of regression   1.048899
+R-squared            0.485452   Adjusted R-squared   0.411945
+F(4, 28)             6.604177   P-value(F)           0.000711
+Log-likelihood      -45.68942   Akaike criterion     101.3788
+Schwarz criterion    108.8614   Hannan-Quinn         103.8965
+rho                  0.683477   Durbin-Watson        0.616116
+
+Statistics based on the original data:
+
+Mean dependent var   6.330303   S.D. dependent var   2.525517
+Sum squared resid    101.2192   S.E. of regression   1.901308
+
+Excluding the constant, p-value was highest for variable 8 (D2)
+
+# omit D2 which has an insignificant coefficient
+? omit D2
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for D2
+  Test statistic: F(1, 28) = 0.128148, p-value 0.723045
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: WLS (ARCH), using observations 1963-1995 (T = 33)
+Dependent variable: r
+Variable used as weight: 1/sigma
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       3.33646      0.725020      4.602    7.66e-05 ***
+  M1          0.0285168    0.00558434    5.107    1.89e-05 ***
+  M2         -0.0263726    0.00538381   -4.898    3.36e-05 ***
+  D1         -0.0355055    0.0103041    -3.446    0.0018   ***
+
+  alpha(0)    2.04862      1.04483       1.961    0.0596   *
+  alpha(1)    0.313434     0.171161      1.831    0.0774   *
+
+Statistics based on the weighted data:
+
+Sum squared resid    30.26039   S.E. of regression   1.021500
+R-squared            0.486603   Adjusted R-squared   0.433493
+F(3, 29)             9.162163   P-value(F)           0.000201
+Log-likelihood      -45.39495   Akaike criterion     98.78990
+Schwarz criterion    104.7759   Hannan-Quinn         100.8040
+rho                  0.677238   Durbin-Watson        0.628373
+
+Statistics based on the original data:
+
+Mean dependent var   6.330303   S.D. dependent var   2.525517
+Sum squared resid    101.9506   S.E. of regression   1.874977
+
+Done

@@ -1,0 +1,3 @@
+open people.csv
+join hholds.csv country --ikey=hid --filter=xh>100
+printf "\nGot here\n"

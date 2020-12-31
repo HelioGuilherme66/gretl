@@ -1,0 +1,128 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run dentricks.inp
+ /home/cottrell/stats/test-gretl/vecm/dentricks.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+# unrestricted rank-1 VECM
+? vecm 2 2 LRM LRY IBO IDE --rc --seas --quiet
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 2
+Case 2: Restricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000       0.0000 
+           (0.0000)     (0.0000) 
+LRY         0.0000       1.0000 
+           (0.0000)     (0.0000) 
+IBO         20.506       14.811 
+           (5.0014)     (4.6500) 
+IDE        -38.294      -32.991 
+           (10.717)     (9.9638) 
+const      -11.574      -5.3381 
+          (0.59108)    (0.54956) 
+
+alpha (adjustment vectors)
+
+LRM       -0.21777      0.22656 
+LRY        0.13477     -0.14583 
+IBO       0.012581   -0.0094444 
+IDE    -0.00081808     0.010976 
+
+Log-likelihood = 674.29636
+Determinant of covariance matrix = 1.0457218e-16
+AIC = -23.7848
+BIC = -22.1491
+HQC = -23.1558
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00038585   0.00022641  -6.5245e-05  -2.9779e-05 
+LRY    0.00022641   0.00042138  -1.1177e-05  -2.4577e-05 
+IBO   -6.5245e-05  -1.1177e-05   5.9933e-05   9.0263e-06 
+IDE   -2.9779e-05  -2.4577e-05   9.0263e-06   2.3206e-05 
+
+determinant = 1.04572e-16
+
+# restriction on first column of beta
+? restrict
+? b[1,1] = 1
+? b[1,1] + b[1,2] = 0
+? b[1,3] + b[1,4] = 0
+? end restrict
+Restriction set
+ 1: b[1,1] = 1
+ 2: b[1,1] + b[1,2] = 0
+ 3: b[1,3] + b[1,4] = 0
+Rank of Jacobian = 13, number of free parameters = 15
+Model is not fully identified
+Based on Jacobian, df = 1
+Switching algorithm: 10 iterations
+ -(T/2)log|Omega| = 975.10656, lldiff = 7.56055e-07
+Strong convergence
+
+Unrestricted loglikelihood (lu) = 674.29636
+Restricted loglikelihood (lr) = 674.29159
+2 * (lu - lr) = 0.00954362
+P(Chi-square(1) > 0.00954362) = 0.922177
+
+Cointegrating vectors
+
+LRM         1.0000      -14.813 
+LRY        -1.0000       19.894 
+IBO         5.9419      -3.9744 
+IDE        -5.9419      -102.49 
+const      -6.2174       65.650 
+
+alpha (adjustment vectors)
+
+LRM       -0.18398    0.0023337 
+LRY        0.10190   -0.0022492 
+IBO       0.020339   0.00050880 
+IDE       0.025620    0.0017548 
+
+# normalize on first row of beta
+? restrict
+? b[1,1] = 1
+? b[2,1] = 1
+? end restrict
+Restriction set
+ 1: b[1,1] = 1
+ 2: b[2,1] = 1
+Rank of Jacobian = 14, number of free parameters = 16
+Model is not fully identified
+Based on Jacobian, df = 0
+Switching algorithm: 2 iterations
+ -(T/2)log|Omega| = 975.11133, lldiff = -6.37783e-11
+Strong convergence
+
+loglikelihood = 674.29636
+
+Cointegrating vectors
+
+LRM         1.0000       1.0000 
+LRY        -1.0329      -1.3681 
+IBO         5.2069      0.24298 
+IDE        -4.2159       6.8411 
+const      -6.0599      -4.2708 
+
+alpha (adjustment vectors)
+
+LRM       -0.21295   -0.0048150 
+LRY        0.11502     0.019750 
+IBO       0.023177    -0.010596 
+IDE       0.029411    -0.030229 
+
+Done

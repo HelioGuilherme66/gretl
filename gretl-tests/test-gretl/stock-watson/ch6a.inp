@@ -1,0 +1,24 @@
+# Stock and Watson, chapter 6, boxed feature
+#
+open journals.gdt
+
+# Set S & W's preferred HC variant
+set hc_version 1
+
+# generate price per citation
+genr ppc = libprice / citestot
+
+# Simplest model
+logs oclc ppc 
+ols l_oclc 0 l_ppc --robust
+
+# Find the log-age of the journals
+genr l_age = log(2000 - date1)
+
+# Find log of size (in millions of chars)
+genr l_size = log(charpp * pages / 10^6)
+
+# Second model
+ols l_oclc 0 l_ppc l_age l_size --robust
+
+# You get the idea; now you do the rest...

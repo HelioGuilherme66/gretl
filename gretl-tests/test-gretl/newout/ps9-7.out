@@ -1,0 +1,138 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps9-7.inp
+ /opt/esl/share/gretl/scripts/ps9-7.inp
+# PS9.7, for Example 9.8 on CORC HILU differences
+? open data4-2
+
+Read datafile /opt/esl/share/gretl/data/data4-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 6 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL  
+
+? genr Wt=WAGES*100/PRDEFL
+Generated series Wt (ID 6)
+# The above is real wages, Pt is real profit income
+? genr Pt=Yt-Wt
+Generated series Pt (ID 7)
+? ols Ct 0 Wt Pt
+
+Model 1: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -222.158      19.5527      -11.36    6.03e-13 ***
+  Wt            0.693262    0.0326064    21.26    7.83e-21 ***
+  Pt            0.735916    0.0488218    15.07    2.34e-16 ***
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    38976.50   S.E. of regression   34.36722
+R-squared            0.998754   Adjusted R-squared   0.998679
+F(2, 33)             13230.34   P-value(F)           1.18e-48
+Log-likelihood      -176.8513   Akaike criterion     359.7026
+Schwarz criterion    364.4532   Hannan-Quinn         361.3607
+rho                  0.494451   Durbin-Watson        0.969426
+
+? ar1 Ct 0 Wt Pt
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.49445   26839.4
+                   2      0.54149   26718.4
+                   3      0.55528   26707.3
+                   4      0.55991   26706.1
+                   5      0.56154   26705.9
+                   6      0.56211   26705.9
+                   7      0.56232   26705.9
+                   8      0.56239   26705.9
+                   9      0.56242   26705.9
+
+Model 2: Cochrane-Orcutt, using observations 1960-1994 (T = 35)
+Dependent variable: Ct
+rho = 0.562416
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -230.938      40.3488      -5.724    2.42e-06 ***
+  Wt            0.759256    0.0549679   13.81     4.94e-15 ***
+  Pt            0.641476    0.0773663    8.291    1.79e-09 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2851.680   S.D. dependent var   927.1223
+Sum squared resid    26705.88   S.E. of regression   28.88873
+R-squared            0.999088   Adjusted R-squared   0.999031
+F(2, 32)             3479.228   P-value(F)           3.72e-38
+rho                  0.078512   Durbin-Watson        1.812239
+
+# note that the mixed hilu-corc procedure yields global minimum
+? ar1 Ct 0 Wt Pt --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99      113283.    -0.90      103212.    -0.80      92763.0
+ -0.70      83092.0    -0.60      74199.1    -0.50      66083.6
+ -0.40      58744.5    -0.30      52180.3    -0.20      46388.8
+ -0.10      41366.7     0.00      37109.1     0.10      33608.3
+  0.20      30852.6     0.30      28823.5     0.40      27492.7
+  0.50      26818.3     0.60      26745.3     0.70      27224.5
+  0.80      28237.6     0.90      29029.3     0.99      21338.1   
+
+ESS is minimized for rho = 0.9999
+
+  ESS
+     113283  |o                             |                              
+             |                              |                              
+             |  o                           |                              
+    97958.9  +                              |                              
+             |                              |                              
+             |     o                        |                              
+             |        o                     |                              
+             |                              |                              
+    72418.6  +           o                  |                              
+             |                              |                              
+             |              o               |                              
+             |                 o            |                              
+             |                    o         |                              
+    46878.4  +                              |                              
+             |                       o      |                              
+             |                          o   o                              
+             |                              |  o                           
+             |                              |     o  o  o  o  o  o  o  o   
+    21338.1  +                              |                             o
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1      0.99990   20046.4
+                   2      0.99990   20046.4
+
+Model 3: Hildreth-Lu, using observations 1960-1994 (T = 35)
+Dependent variable: Ct
+rho = 0.9999
+
+              coefficient     std. error     t-ratio   p-value 
+  -------------------------------------------------------------
+  const      267009          73661.0          3.625    0.0010   ***
+  Wt              0.553660       0.0929498    5.957    1.23e-06 ***
+  Pt              0.395789       0.0953291    4.152    0.0002   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2851.680   S.D. dependent var   927.1223
+Sum squared resid    20046.41   S.E. of regression   25.02899
+R-squared            0.999360   Adjusted R-squared   0.999320
+F(2, 32)             53.83655   P-value(F)           5.76e-11
+rho                  0.146696   Durbin-Watson        1.696159
+
+Done

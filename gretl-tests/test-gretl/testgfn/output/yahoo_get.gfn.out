@@ -1,0 +1,35 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run yahoo_get.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/yahoo_get.gfn.inp
+? include ./yahoo_get.gfn
+ /home/cottrell/stats/test-gretl/testgfn/yahoo_get.gfn
+yahoo_get 1.17, 2015-07-02 (Riccardo "Jack" Lucchetti)
+# sample function call
+? nulldata 1800
+periodicity: 1, maxobs: 1800
+observations range: 1 to 1800
+? setobs 5 2008-01-01
+Full data range: 2008-01-01 - 2014-11-24 (n = 1800)
+
+? redhat = yahoo_price("RHT")
+RHT imported ok
+Generated series redhat (ID 2)
+? list L = yahoo_full("IBM")
+IBM imported ok (full)
+Generated list L
+? foo = yahoo_price("ZZZ")
+Ticker ZZZ not found
+Generated series foo (ID 9)
+? msft = yahoo_price("MSFT",1)
+MSFT imported ok
+Generated series msft (ID 10)
+? eni = yahoo_price("E",2)
+E imported ok
+Generated series eni (ID 11)
+? mmm_div = yahoo_dividends("MMM")
+Dividend deries for MMM imported ok
+Generated series mmm_div (ID 12)
+Done

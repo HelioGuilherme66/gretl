@@ -1,0 +1,5 @@
+bundle foo
+foo["A"] = { 4 }
+print foo
+foo["B"] = cholesky(foo["A"])
+print foo

@@ -1,0 +1,60 @@
+set echo off
+set messages off
+
+function series pllik(matrix *b, series y, list X)
+    series ndx = lincomb(X, b)
+    return y ? ln(cnorm(ndx)) : ln(cnorm(-ndx))
+end function
+
+function matrix pscore(matrix *b, series y, list X)
+    mX = {X}
+    series ndx = lincomb(X, b)
+    series m = y ? invmills(-ndx) : -invmills(ndx) 
+    return {m} .* mX
+end function
+
+function scalar phess(matrix *H, matrix *b, series y, list X)
+    mX = {X}
+    series ndx = lincomb(X, b)
+    series m = y ? invmills(-ndx) : -invmills(ndx) 
+    series d = m * (ndx+m)
+    matrix tmp = {d} .* mX
+    matrix H = tmp'mX
+    return 0
+end function
+
+open mroz87.gdt --quiet
+
+list X = const KL6 K618 WA WE HA HE HW HHRS FAMINC UN CIT AX
+
+ols LFP X -q
+b0 = $coeff
+
+set optimizer bfgs
+b = b0
+mle llik = pllik(&b, LFP, X)
+    deriv b = pscore(&b, LFP, X)
+end mle -v
+t0 = $stopwatch
+
+matrix H
+set optimizer newton
+
+b = b0
+set stopwatch
+mle llik = pllik(&b, LFP, X)
+    deriv b = pscore(&b, LFP, X)
+end mle -v
+t1 = $stopwatch
+
+b = b0
+set stopwatch
+mle llik = pllik(&b, LFP, X)
+    deriv b = pscore(&b, LFP, X)
+    hessian phess(&H, &b, LFP, X)
+end mle -v
+t2 = $stopwatch
+
+printf "BFGS time:              %g seconds\n", t0
+printf "Newton time:            %g seconds\n", t1
+printf "Newton + hessian time:  %g seconds\n", t2

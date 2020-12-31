@@ -1,0 +1,7 @@
+open data4-1
+set seed 332211
+series z = 0
+genr foo = sqft * 3
+genr baz = sqft * 6
+genr egg = sqft + normal()/5
+ols 1 0 2 foo baz z egg

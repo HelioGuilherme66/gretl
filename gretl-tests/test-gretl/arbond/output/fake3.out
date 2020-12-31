@@ -1,0 +1,37 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run fake3.inp
+ /home/cottrell/stats/test-gretl/arbond/fake3.inp
+? open fake3.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/fake3.gdt
+periodicity: 7, maxobs: 70
+observations range: 1:1 to 10:7
+
+Listing 5 variables:
+  0) const    1) y        2) x        3) unit     4) year   
+
+? genr Dx = diff(x)
+Generated series Dx (ID 5)
+? arbond 1 0 ; y Dx
+
+Model 1: 1-step Arellano-Bond, using 48 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  Dy(-1)      0.506699     0.0135248    37.46   3.48e-307 ***
+  Dx          0.411362     0.0315534    13.04   7.54e-39  ***
+
+Sum squared resid    0.714209   S.E. of regression   0.124604
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.42773 [0.1534]
+Test for AR(2) errors: z = -1.93942 [0.0525]
+Sargan over-identification test: Chi-square(14) = 19.8838 [0.1338]
+Wald (joint) test: Chi-square(2) = 1564.44 [0.0000]
+
+Done

@@ -1,0 +1,214 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run grunsur.inp
+ /home/cottrell/stats/test-gretl/grunsur.inp
+? open grun.txt
+parsing /home/cottrell/stats/test-gretl/grun.txt...
+using delimiter ' '
+   longest line: 60 characters
+   first field: 'ige'
+   number of columns = 6
+   number of variables: 6
+   number of non-blank lines: 21
+scanning for variable names...
+   line: ige fge kge iwh fwh kwh
+scanning for row labels and data...
+treating these as undated data
+
+Listing 7 variables:
+  0) const    1) ige      2) fge      3) kge      4) iwh    
+  5) fwh      6) kwh    
+
+? system name=Grunfeld
+? equation ige 0 fge kge
+? equation iwh 0 fwh kwh
+? end system
+? estimate Grunfeld method=ols
+
+Equation system, Grunfeld
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-20
+Dependent variable: ige
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -9.95631      31.3742      -0.3173   0.7548  
+  fge         0.0265512     0.0155661    1.706    0.1063  
+  kge         0.151694      0.0257041    5.902    1.74e-05 ***
+
+Mean dependent var   102.2900   S.D. dependent var   48.58450
+Sum squared resid    13216.59   S.E. of regression   27.88272
+R-squared            0.705307   Adjusted R-squared   0.670637
+
+Equation 2: OLS, using observations 1-20
+Dependent variable: iwh
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -0.509390     8.01529      -0.06355   0.9501 
+  fwh         0.0528941    0.0157065     3.368     0.0037  ***
+  kwh         0.0924065    0.0560990     1.647     0.1179 
+
+Mean dependent var   42.89150   S.D. dependent var   19.11019
+Sum squared resid    1773.234   S.E. of regression   10.21312
+R-squared            0.744446   Adjusted R-squared   0.714381
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       660.83      (0.729)
+       176.45       88.662
+
+log determinant = 10.2203
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 10.6278 [0.0011]
+
+? estimate Grunfeld method=sur
+
+Equation system, Grunfeld
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1-20
+Dependent variable: ige
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -27.7193      27.0328      -1.025    0.3195  
+  fge          0.0383102    0.0132901    2.883    0.0103   **
+  kge          0.139036     0.0230356    6.036    1.34e-05 ***
+
+Mean dependent var   102.2900   S.D. dependent var   48.58450
+Sum squared resid    13788.38   S.E. of regression   26.25679
+R-squared            0.692656   Adjusted R-squared   0.656498
+
+Equation 2: SUR, using observations 1-20
+Dependent variable: iwh
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1.25199      6.95635      -0.1800   0.8593 
+  fwh         0.0576298    0.0134110     4.297    0.0005  ***
+  kwh         0.0639781    0.0489010     1.308    0.2082 
+
+Mean dependent var   42.89150   S.D. dependent var   19.11019
+Sum squared resid    1801.301   S.E. of regression   9.490260
+R-squared            0.740966   Adjusted R-squared   0.710492
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       689.42      (0.765)
+       190.64       90.065
+
+log determinant = 10.1562
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 11.7058 [0.0006]
+
+Hansen-Sargan over-identification test:
+  Chi-square(4) = 9.51701 [0.0494]
+
+? estimate Grunfeld method=sur --iterate
+
+Equation system, Grunfeld
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 9 iterations
+Log-likelihood = -158.303
+
+Equation 1: SUR, using observations 1-20
+Dependent variable: ige
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -30.7485      27.3459      -1.124    0.2765  
+  fge          0.0405107    0.0134082    3.021    0.0077   ***
+  kge          0.135931     0.0235472    5.773    2.25e-05 ***
+
+Mean dependent var   102.2900   S.D. dependent var   48.58450
+Sum squared resid    14044.68   S.E. of regression   26.49970
+R-squared            0.686976   Adjusted R-squared   0.650150
+
+Equation 2: SUR, using observations 1-20
+Dependent variable: iwh
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1.70161      6.92840      -0.2456   0.8089 
+  fwh         0.0593521    0.0132941     4.465    0.0003  ***
+  kwh         0.0557355    0.0487563     1.143    0.2688 
+
+Mean dependent var   42.89150   S.D. dependent var   19.11019
+Sum squared resid    1819.062   S.E. of regression   9.536934
+R-squared            0.738467   Adjusted R-squared   0.707699
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       702.23      (0.773)
+       195.35       90.953
+
+log determinant = 10.1546
+LR test for diagonal covariance matrix:
+  Chi-square(1) = 16.4753 [0.0000]
+
+Hansen-Sargan over-identification test:
+  Chi-square(4) = 10.2709 [0.0361]
+
+? restrict Grunfeld
+? b[1,2] - b[2,2] = 0
+? b[1,3] - b[2,3] = 0
+? end restrict
+Restriction set
+ 1: b[1,2] - b[2,2] = 0
+ 2: b[1,3] - b[2,3] = 0
+? estimate Grunfeld method=sur --iterate
+
+Equation system, Grunfeld
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 6 iterations
+Log-likelihood = -160.645
+
+Equation 1: SUR, using observations 1-20
+Dependent variable: ige
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -23.1747      18.6232       -1.244    0.2302  
+  fge          0.0357563    0.00791803    4.516    0.0003   ***
+  kge          0.140069     0.0233044     6.010    1.40e-05 ***
+
+Mean dependent var   102.2900   S.D. dependent var   48.58450
+Sum squared resid    13603.72   S.E. of regression   26.08037
+R-squared            0.697008   Adjusted R-squared   0.661362
+
+Equation 2: SUR, using observations 1-20
+Dependent variable: iwh
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       6.90673      6.01470       1.148    0.2667  
+  fwh         0.0357563    0.00791803    4.516    0.0003   ***
+  kwh         0.140069     0.0233044     6.010    1.40e-05 ***
+
+Mean dependent var   42.89150   S.D. dependent var   19.11019
+Sum squared resid    1897.797   S.E. of regression   9.741143
+R-squared            0.728009   Adjusted R-squared   0.696010
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       680.19      (0.705)
+       179.03       94.890
+
+log determinant = 10.3887
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = -160.645
+  Unrestricted log-likelihood = -158.303
+  Chi-square(2) = 4.68281 [0.0962]
+
+Done

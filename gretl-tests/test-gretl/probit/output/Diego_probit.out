@@ -1,0 +1,148 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run Diego_probit.inp
+ /home/cottrell/stats/test-gretl/probit/Diego_probit.inp
+? include logprob.inp
+ /home/cottrell/stats/test-gretl/probit/logprob.inp
+
+Read datafile /home/cottrell/stats/test-gretl/probit/SHIW_3_32.gdt
+periodicity: 1, maxobs: 1155
+observations range: 1 to 1155
+
+Listing 16 variables:
+  0) const          1) eta            2) pos_af         3) educ         
+  4) married        5) male           6) mcity          7) lcity        
+  8) north          9) center        10) southisland   11) income       
+ 12) wealth        13) sq_eta        14) sq_income     15) sq_wealth    
+
+Using analytical derivatives
+
+Convergence achieved after 6 iterations
+
+Model 2: ML, using observations 1-1155
+ll = ln(P(y, ndx, mtype))
+QML standard errors
+
+               estimate     std. error       z      p-value 
+  ----------------------------------------------------------
+  b[1]       -3.43139       0.852196      -4.027    5.66e-05 ***
+  b[2]        0.0542473     0.0134329      4.038    5.38e-05 ***
+  b[3]        0.0592449     0.0372130      1.592    0.1114  
+  b[4]       -0.000597420   0.000401587   -1.488    0.1368  
+  b[5]        0.0910134     0.0998535      0.9115   0.3620  
+  b[6]       -0.218974      0.114462      -1.913    0.0557   *
+  b[7]        0.114976      0.123067       0.9342   0.3502  
+  b[8]       -0.137704      0.136395      -1.010    0.3127  
+  b[9]       -0.124753      0.0970661     -1.285    0.1987  
+  b[10]      -0.282547      0.174068      -1.623    0.1045  
+  b[11]       0.0178545     0.00487979     3.659    0.0003   ***
+  b[12]      -3.32250e-05   2.49610e-05   -1.331    0.1832  
+  b[13]       0.000813813   0.000333247    2.442    0.0146   **
+  b[14]      -4.53340e-08   8.90395e-08   -0.5091   0.6107  
+
+Log-likelihood      -487.8398   Akaike criterion     1003.680
+Schwarz criterion    1074.406   Hannan-Quinn         1030.372
+
+Iteration 1: loglikelihood = -511.133150486 (steplength = 1)
+Parameters:      -1.9196    0.030586    0.021667 -0.00020457    0.055249    -0.12005
+                0.074986   -0.062079   -0.062388    -0.12544    0.010909 -1.9758e-05
+              0.00055063 -4.1899e-08
+Gradients:       -949.45     -10079.     -43984. -2.1456e+06     -559.84     -676.75
+                 -422.15     -345.89     -402.43     -87.306     -30573. -1.5402e+06
+             -1.7977e+05 -1.4840e+08 (norm 1.73e+01)
+
+Iteration 2: loglikelihood = -488.471426117 (steplength = 1)
+Parameters:      -3.0121    0.049674    0.044119 -0.00043143    0.084065    -0.19473
+                 0.11230    -0.11673    -0.10634    -0.23035    0.016730 -3.0563e-05
+              0.00079166 -4.8145e-08
+Gradients:       -97.074     -773.97     -4403.8 -2.1486e+05     -50.828     -66.720
+                 -29.981     -51.146     -44.134     -10.357     -948.07  3.4875e+05
+                  8712.1  9.7638e+07 (norm 7.02e+00)
+
+Iteration 3: loglikelihood = -487.842188569 (steplength = 1)
+Parameters:      -3.3953    0.054084    0.057684 -0.00057967    0.090592    -0.21760
+                 0.11484    -0.13717    -0.12398    -0.27970    0.017803 -3.3060e-05
+              0.00081248 -4.5585e-08
+Gradients:       -11.968     -86.364     -570.74     -29971.     -5.9458     -8.5614
+                 -2.9140     -7.3225     -6.0991     -1.9777     -127.89      35066.
+                  357.92  8.8491e+06 (norm 2.74e+00)
+
+Iteration 4: loglikelihood = -487.839824602 (steplength = 1)
+Parameters:      -3.4311    0.054247    0.059232 -0.00059727    0.091010    -0.21897
+                 0.11497    -0.13771    -0.12475    -0.28254    0.017854 -3.3224e-05
+              0.00081380 -4.5335e-08
+Gradients:      -0.46671     -3.1124     -25.234     -1536.8    -0.19818    -0.31946
+                -0.10869    -0.27867    -0.23460   -0.099206     -6.5022      824.46
+                 -7.6415  2.3429e+05 (norm 5.69e-01)
+
+Iteration 5: loglikelihood = -487.839824473 (steplength = 1)
+Parameters:      -3.4314    0.054247    0.059245 -0.00059742    0.091013    -0.21897
+                 0.11498    -0.13770    -0.12475    -0.28255    0.017855 -3.3225e-05
+              0.00081381 -4.5334e-08
+Gradients:    -0.0019601   -0.012168    -0.12720     -9.0933 -0.00049670  -0.0010417
+             -0.00065319 -0.00083443 -0.00089991 -0.00029480   -0.036039     0.54155
+                -0.12166      370.23 (norm 3.95e-02)
+
+Iteration 6: loglikelihood = -487.839824473 (steplength = 0.0625)
+Parameters:      -3.4314    0.054247    0.059245 -0.00059742    0.091013    -0.21897
+                 0.11498    -0.13770    -0.12475    -0.28255    0.017855 -3.3225e-05
+              0.00081381 -4.5334e-08
+Gradients:   -1.0758e-07 -6.5786e-07 -7.5022e-06 -0.00056401 -1.7926e-08 -4.7978e-08
+             -4.3582e-08 -3.5468e-08 -4.8339e-08 -8.6527e-09 -2.2698e-06 -5.2824e-05
+             -9.1175e-06   0.0036645 (norm 3.01e-04)
+
+
+--- FINAL VALUES: 
+loglikelihood = -487.839824473 (steplength = 0.0625)
+Parameters:      -3.4314    0.054247    0.059245 -0.00059742    0.091013    -0.21897
+                 0.11498    -0.13770    -0.12475    -0.28255    0.017855 -3.3225e-05
+              0.00081381 -4.5334e-08
+Gradients:   -1.0086e-07 -6.1674e-07 -7.0333e-06 -0.00052876 -1.6805e-08 -4.4979e-08
+             -4.0858e-08 -3.3251e-08 -4.5318e-08 -8.1119e-09 -2.1279e-06 -4.9523e-05
+             -8.5477e-06   0.0034356 (norm 2.91e-04)
+
+
+Model 1: Probit, using observations 1-1155
+Dependent variable: pos_af
+QML standard errors
+
+                coefficient    std. error       z      p-value 
+  -------------------------------------------------------------
+  const         -3.43139       0.852196      -4.027    5.66e-05 ***
+  educ           0.0542473     0.0134329      4.038    5.38e-05 ***
+  eta            0.0592449     0.0372130      1.592    0.1114  
+  sq_eta        -0.000597420   0.000401587   -1.488    0.1368  
+  male           0.0910134     0.0998535      0.9115   0.3620  
+  married       -0.218974      0.114462      -1.913    0.0557   *
+  north          0.114976      0.123067       0.9342   0.3502  
+  southisland   -0.137704      0.136395      -1.010    0.3127  
+  mcity         -0.124753      0.0970661     -1.285    0.1987  
+  lcity         -0.282547      0.174068      -1.623    0.1045  
+  income         0.0178545     0.00487979     3.659    0.0003   ***
+  sq_income     -3.32250e-05   2.49610e-05   -1.331    0.1832  
+  wealth         0.000813813   0.000333247    2.442    0.0146   **
+  sq_wealth     -4.53340e-08   8.90395e-08   -0.5091   0.6107  
+
+Mean dependent var   0.204329   S.D. dependent var   0.403385
+McFadden R-squared   0.165842   Adjusted R-squared   0.141903
+Log-likelihood      -487.8398   Akaike criterion     1003.680
+Schwarz criterion    1074.406   Hannan-Quinn         1030.372
+
+Number of cases 'correctly predicted' = 934 (80.9%)
+f(beta'x) at mean of independent vars = 0.249
+Likelihood ratio test: Chi-square(13) = 193.978 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  888    31
+         1  190    46
+
+Excluding the constant, p-value was highest for variable 15 (sq_wealth)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 19.2327
+  with p-value = 6.66296e-05
+

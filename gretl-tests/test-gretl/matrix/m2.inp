@@ -1,0 +1,22 @@
+open data4-1
+matrix X = { const , sqft }
+matrix XX = X'*X
+matrix y = { price }
+matrix Xy = X'*y
+matrix b = XX \ Xy
+printf "estimated coefficient vector\n"
+b
+matrix uh = y - X*b
+scalar SSR = uh'*uh
+scalar s2 = SSR / (rows(X) - rows(b))
+matrix V = s2 * inv(X'*X)
+V
+matrix se = sqrt(diag(V))
+printf "estimated standard errors\n"
+se
+# compare
+ols 1 0 2 --vcv
+
+
+
+

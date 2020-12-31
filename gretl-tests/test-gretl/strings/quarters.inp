@@ -1,0 +1,9 @@
+open data9-7 -q
+series quarter year
+string s
+loop t=1..$nobs -q
+  s = obslabel(t)
+  sscanf(s, "%d:%d", year[t], quarter[t])
+endloop
+print year quarter --byobs
+

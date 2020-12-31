@@ -1,0 +1,51 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:12
+? run pathological.inp
+ /home/cottrell/stats/test-gretl/ghk/pathological.inp
+Warning: "end loop": obsolete construction; please use "endloop"
+Warning: "end loop": obsolete construction; please use "endloop"
+10 replications
+P = 0.0043267
+P = 0.00114894
+P = 6.16498e-06
+P = 0.0035315
+P = 0.00249621
+P = 0.000424986
+P = 0.00274153
+P = 0.00187374
+P = 0.00683306
+P = 0.000164045
+
+
+
+100 replications
+P = 0.00182644
+P = 0.00152245
+P = 0.0029784
+P = 0.00237717
+P = 0.00343123
+P = 0.00392396
+P = 0.00224898
+P = 0.00150185
+P = 0.00179231
+P = 0.0022226
+
+
+
+1000 replications
+P = 0.0024147
+P = 0.00240122
+P = 0.00302358
+P = 0.00242876
+P = 0.00236385
+P = 0.00252172
+P = 0.00249134
+P = 0.00288905
+P = 0.00234079
+P = 0.00266264
+
+
+
+Done

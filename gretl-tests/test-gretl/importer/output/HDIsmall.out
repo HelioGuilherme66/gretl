@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run HDIsmall.inp
+ /home/cottrell/stats/test-gretl/importer/HDIsmall.inp
+? open HDIsmall.xls
+Excel 97 +
+rows=26, total cols=5, data cols=5
+found label strings in first imported column
+Warning: there were missing values
+Listing 5 variables:
+  0) const      1) HDI1975    2) HDI1980    3) HDI1985    4) HDI1990  
+
+? print -o
+
+                  HDI1975      HDI1980      HDI1985      HDI1990
+
+      Angola                                                    
+       Benin     0.312000      0.34400      0.36700      0.37400
+    Botswana     0.509000      0.57100      0.62400      0.67400
+Burkina Faso     0.257000      0.28000      0.30500      0.32100
+     Burundi     0.290000      0.31800      0.35200      0.36600
+      Angola                  84.33980     83.99065     83.29795
+       Benin                  72.21462     72.98316     74.19565
+    Botswana                  74.44348     71.03288     67.13199
+Burkina Faso                  86.25555     85.82605     85.64331
+     Burundi                  91.08393     90.68198     91.30622
+      Angola                                0.00000      0.00877
+       Benin     0.000000      0.00000      0.00000      0.00000
+    Botswana     0.000000      0.21824      0.13205      0.19421
+Burkina Faso     0.071981      0.00172      0.00193      0.00000
+     Burundi                                0.00000      0.00052
+      Angola                                                    
+       Benin                                                    
+    Botswana                                            12.93705
+Burkina Faso                                                    
+     Burundi                                                    
+      Angola     1.000000      1.00000      1.00000      1.00000
+       Benin     0.000000      0.00000      0.00000      0.00000
+    Botswana     0.000000      0.00000      0.00000      0.00000
+Burkina Faso     0.000000      0.00000      0.00000      0.00000
+     Burundi     1.000000      1.00000      1.00000      1.00000
+
+Done

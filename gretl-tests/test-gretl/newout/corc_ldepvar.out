@@ -1,0 +1,105 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run corc_ldepvar.inp
+ /home/cottrell/stats/test-gretl/corc_ldepvar.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? genr QNC_1 = QNC(-1)
+Generated series QNC_1 (ID 12)
+? ar1 QNC 0 PRICE QNC_1 --vcv
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1     -0.06046   4.39477e+06
+                   2     -0.09952   4.38412e+06
+                   3     -0.12243   4.38062e+06
+                   4     -0.13423   4.37972e+06
+                   5     -0.13987   4.37951e+06
+                   6     -0.14246   4.37947e+06
+                   7     -0.14364   4.37946e+06
+                   8     -0.14416   4.37946e+06
+                   9     -0.14440   4.37946e+06
+                  10     -0.14451   4.37946e+06
+                  11     -0.14455   4.37946e+06
+
+Model 1: Cochrane-Orcutt, using observations 1975:3-1990:4 (T = 62)
+Dependent variable: QNC
+rho = -0.144552
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      969.100       424.903       2.281    0.0262   **
+  PRICE       -1.13536       1.68440    -0.6740   0.5029  
+  QNC_1        0.656453      0.132520    4.954    6.45e-06 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2502.935   S.D. dependent var   327.5686
+Sum squared resid     4379458   S.E. of regression   272.4483
+R-squared            0.330908   Adjusted R-squared   0.308227
+F(2, 59)             22.69169   P-value(F)           4.90e-08
+rho                 -0.029007   Durbin-Watson        2.033123
+
+Covariance matrix of regression coefficients:
+
+         const         PRICE         QNC_1
+        180543      -317.591       -50.453  const
+                     2.83722    0.00184526  PRICE
+                                 0.0175614  QNC_1
+
+? genr eps = $uhat
+Generated series eps (ID 13)
+? genr uh = QNC - $coeff(const) - $coeff(PRICE)*PRICE - $coeff(QNC_1)*QNC_1
+Generated series uh (ID 14)
+? genr uh1 = uh(-1)
+Generated series uh1 (ID 15)
+# print -o QNC eps uh
+? genr r = $rho(1)
+Generated scalar r = -0.144552
+? genr PRICEr = PRICE - r * PRICE(-1)
+Generated series PRICEr (ID 16)
+? genr Q1r = QNC_1 - r * QNC_1(-1)
+Generated series Q1r (ID 17)
+? ols eps 0 PRICEr Q1r uh1 --vcv
+
+Model 2: OLS, using observations 1975:3-1990:4 (T = 62)
+Dependent variable: eps
+
+             coefficient    std. error    t-ratio     p-value
+  -----------------------------------------------------------
+  const      -0.0547357     424.903      -0.0001288   0.9999 
+  PRICEr      6.69040e-06     1.68440     3.972e-06   1.0000 
+  Q1r         1.89010e-05     0.132520    0.0001426   0.9999 
+  uh1        -3.76355e-05     0.176011   -0.0002138   0.9998 
+
+Mean dependent var   1.27e-13   S.D. dependent var   267.9448
+Sum squared resid     4379458   S.E. of regression   274.7870
+R-squared            0.000000   Adjusted R-squared  -0.051724
+F(3, 58)             1.52e-08   P-value(F)           1.000000
+Log-likelihood      -434.0985   Akaike criterion     876.1970
+Schwarz criterion    884.7056   Hannan-Quinn         879.5377
+rho                 -0.028996   Durbin-Watson        2.033102
+
+Excluding the constant, p-value was highest for variable 16 (PRICEr)
+
+Covariance matrix of regression coefficients:
+
+         const        PRICEr           Q1r           uh1
+        180543      -317.591       -50.453       45.0561  const
+                     2.83722    0.00184526   -0.00550725  PRICEr
+                                 0.0175614    -0.0155585  Q1r
+                                               0.0309799  uh1
+
+Done

@@ -1,0 +1,6 @@
+matrix A = { 1, 2, 3; 4, 5, 6}
+A
+matrix B = {2,3}'
+B
+matrix C = B .* A
+C

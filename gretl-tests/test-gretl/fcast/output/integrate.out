@@ -1,0 +1,128 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run integrate.inp
+ /home/cottrell/stats/test-gretl/fcast/integrate.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? diff 1 2 3
+Listing 15 variables:
+  0) const       1) QNC         2) PRICE       3) INCOME      4) PRIME     
+  5) UNEMP       6) STOCK       7) POP         8) WINTER      9) SPRING    
+ 10) SUMMER     11) FALL       12) d_QNC      13) d_PRICE    14) d_INCOME  
+
+# dynamic integrated forecast
+? ols d_QNC 0 d_PRICE d_INCOME --quiet
+? fcast 1989:1 1990:4 --dynamic --integrate
+
+ For 95% confidence intervals, t(60, 0.025) = 2.000
+
+                  QNC    prediction    std. error        95% interval
+
+  1989:1       2337.00      2481.28      302.427      1876.33 -  3086.22
+  1989:2       2757.00      2474.10      427.696      1618.59 -  3329.62
+  1989:3       2631.00      2528.08      523.818      1480.29 -  3575.87
+  1989:4       2053.00      2516.34      604.853      1306.46 -  3726.23
+  1990:1       2310.00      2498.15      676.247      1145.46 -  3850.85
+  1990:2       2532.00      2547.11      740.791      1065.31 -  4028.92
+  1990:3       2358.00      2567.29      800.146       966.76 -  4167.82
+  1990:4       2100.00      2440.47      855.392       729.43 -  4151.51
+
+  Forecast evaluation statistics
+
+  Mean Error                       -121.86
+  Mean Squared Error                65185
+  Root Mean Squared Error           255.31
+  Mean Absolute Error               218.31
+  Mean Percentage Error            -6.0501
+  Mean Absolute Percentage Error    9.5933
+  Theil's U                         0.81822
+  Bias proportion, UM               0.22779
+  Regression proportion, UR         0.0013877
+  Disturbance proportion, UD        0.77082
+
+# check: do the same thing manually
+? fcast 1989:1 1990:4 --quiet
+? series fc = zeros($nobs-8,1) | (QNC[1988:4] + cum($fcast))
+Generated series fc (ID 15)
+? smpl 1989:1 ;
+Full data range: 1975:1 - 1990:4 (n = 64)
+Current sample: 1989:1 - 1990:4 (n = 8)
+
+? print QNC fc --byobs
+
+                QNC           fc
+
+1989:1         2337     2481.277
+1989:2         2757     2474.104
+1989:3         2631     2528.080
+1989:4         2053     2516.345
+1990:1         2310     2498.154
+1990:2         2532     2547.114
+1990:3         2358     2567.294
+1990:4         2100     2440.473
+
+# static integrated forecast
+? smpl full
+Full data range: 1975:1 - 1990:4 (n = 64)
+
+? ols d_QNC 0 d_PRICE d_INCOME --quiet
+? fcast 1989:1 1990:4 --static --integrate
+
+
+                  QNC    prediction
+
+  1989:1       2337.00      2481.28
+  1989:2       2757.00      2329.83
+  1989:3       2631.00      2810.98
+  1989:4       2053.00      2619.26
+  1990:1       2310.00      2034.81
+  1990:2       2532.00      2358.96
+  1990:3       2358.00      2552.18
+  1990:4       2100.00      2231.18
+
+  Forecast evaluation statistics
+
+  Mean Error                       -42.559
+  Mean Squared Error                89616
+  Root Mean Squared Error           299.36
+  Mean Absolute Error               261.41
+  Mean Percentage Error            -2.6046
+  Mean Absolute Percentage Error    11.165
+  Theil's U                         0.96852
+  Bias proportion, UM               0.020212
+  Regression proportion, UR         0.40693
+  Disturbance proportion, UD        0.57286
+
+# again, check against manual version
+? fcast 1989:1 1990:4 --quiet
+? series fc = (zeros($nobs-8,1) | $fcast) + misszero(QNC(-1))
+Replaced series fc (ID 15)
+? smpl 1989:1 ;
+Full data range: 1975:1 - 1990:4 (n = 64)
+Current sample: 1989:1 - 1990:4 (n = 8)
+
+? print QNC fc --byobs
+
+                QNC           fc
+
+1989:1         2337     2481.277
+1989:2         2757     2329.827
+1989:3         2631     2810.975
+1989:4         2053     2619.265
+1990:1         2310     2034.809
+1990:2         2532     2358.961
+1990:3         2358     2552.180
+1990:4         2100     2231.178
+
+Done

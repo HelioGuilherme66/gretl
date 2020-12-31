@@ -1,0 +1,298 @@
+gretl version 1.9.14cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-10-31 09:57
+? run panelstr_fn.inp
+ /home/cottrell/stats/test-gretl/strings/panelstr_fn.inp
+? function get_abbrev (int c)
+? open asean_panel.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/strings/asean_panel.gdt
+periodicity: 55, maxobs: 495
+observations range: 1:01 to 9:55
+
+Listing 30 variables:
+  0) const      1) country    2) year       3) POP        4) XRAT     
+  5) PPP        6) cgdp       7) cc         8) cg         9) ci       
+ 10) p         11) pc        12) pg        13) pinv      14) openc    
+ 15) cgnp      16) y         17) rgdpl     18) rgdpch    19) rgdpeqa  
+ 20) rgdpwok   21) rgdptt    22) openk     23) kc        24) kg       
+ 25) ki        26) grgdpch   27) cid       28) regmaj    29) regmin   
+
+? matrix Cmat = {96,116,360,418,458,608,702,764,704}
+Generated matrix Cmat
+? matrix X = zeros(55,9)
+Generated matrix X
+? y = misszero(rgdpl)
+Replaced series y (ID 16)
+? loop j=1..9
+> smpl cid = Cmat[j] --restrict --replace
+> X[,j] = y
+> endloop
+loop: j = 1
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 2
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 3
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 4
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 5
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 6
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 7
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 8
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+loop: j = 9
+
+? smpl cid = Cmat[j] --replace --restrict
+Full data set: 495 observations
+Current sample: 55 observations
+? X[,j] = y
+
+Number of iterations: 9
+
+? nulldata 55 --preserve
+periodicity: 1, maxobs: 55
+observations range: 1 to 55
+? setobs 1 1950 --time-series
+Full data range: 1950 - 2004 (n = 55)
+
+? string sername, desc
+? loop j=1..9
+> abb = get_abbrev(Cmat[j])
+> sprintf(sername, "rgdpl_%s", abb)
+> series @sername = X[,j]
+> series @sername = zeromiss(@sername)
+> sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+> setinfo @sername -d "@desc"
+> endloop
+loop: j = 1
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_BRN = X[,j]
+? series rgdpl_BRN = zeromiss(rgdpl_BRN)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_BRN -d "Real GDP per capita (Laspeyres) for BRN"
+loop: j = 2
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_KHM = X[,j]
+? series rgdpl_KHM = zeromiss(rgdpl_KHM)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_KHM -d "Real GDP per capita (Laspeyres) for KHM"
+loop: j = 3
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_IDN = X[,j]
+? series rgdpl_IDN = zeromiss(rgdpl_IDN)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_IDN -d "Real GDP per capita (Laspeyres) for IDN"
+loop: j = 4
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_LAO = X[,j]
+? series rgdpl_LAO = zeromiss(rgdpl_LAO)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_LAO -d "Real GDP per capita (Laspeyres) for LAO"
+loop: j = 5
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_MYS = X[,j]
+? series rgdpl_MYS = zeromiss(rgdpl_MYS)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_MYS -d "Real GDP per capita (Laspeyres) for MYS"
+loop: j = 6
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_PHL = X[,j]
+? series rgdpl_PHL = zeromiss(rgdpl_PHL)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_PHL -d "Real GDP per capita (Laspeyres) for PHL"
+loop: j = 7
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_SGP = X[,j]
+? series rgdpl_SGP = zeromiss(rgdpl_SGP)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_SGP -d "Real GDP per capita (Laspeyres) for SGP"
+loop: j = 8
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_THA = X[,j]
+? series rgdpl_THA = zeromiss(rgdpl_THA)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_THA -d "Real GDP per capita (Laspeyres) for THA"
+loop: j = 9
+
+? abb = get_abbrev(Cmat[j])
+? sprintf(sername, "rgdpl_%s", abb)
+? series rgdpl_VNM = X[,j]
+? series rgdpl_VNM = zeromiss(rgdpl_VNM)
+? sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+? setinfo rgdpl_VNM -d "Real GDP per capita (Laspeyres) for VNM"
+
+Number of iterations: 9
+
+? print --byobs
+
+            index    rgdpl_BRN    rgdpl_KHM    rgdpl_IDN    rgdpl_LAO
+
+1950            1                                                    
+1951            2                                                    
+1952            3                                                    
+1953            4                                                    
+1954            5                                                    
+1955            6                                                    
+1956            7                                                    
+1957            8                                                    
+1958            9                                                    
+1959           10                                                    
+1960           11                               1098.519             
+1961           12                               1113.686             
+1962           13                               1061.712             
+1963           14                               1026.085             
+1964           15                               1068.094             
+1965           16                               1018.746             
+1966           17                               1055.970             
+1967           18                               1017.830             
+1968           19                               1119.399             
+1969           20                               1180.769             
+1970           21     30936.41     1086.875     1279.187      999.256
+1971           22     31193.34     1019.625     1364.433     1017.309
+1972           23     32528.01      953.017     1514.275     1035.096
+1973           24     34241.57      763.063     1693.674     1001.833
+1974           25     35586.82      713.168     1715.736      999.170
+1975           26     34683.60      693.403     1733.784      979.070
+1976           27     40130.23      684.313     1863.453      919.794
+1977           28     43225.15      577.037     1978.189      901.634
+1978           29     44754.70      571.278     2067.059      829.258
+1979           30     52917.15      493.056     2066.570      877.751
+1980           31     47123.49      458.228     2082.793      892.105
+1981           32     36018.70      456.602     2075.142      969.019
+1982           33     35268.41      434.455     1960.392     1005.273
+1983           34     34916.86      413.599     2095.920      990.758
+1984           35     33995.41      399.523     2245.642     1013.200
+1985           36     32394.16      379.628     2213.989     1126.046
+1986           37     30482.42      355.968     2317.184     1144.336
+1987           38     30079.41      346.806     2416.486     1084.351
+1988           39     29451.50      397.795     2610.867     1122.118
+1989           40     28259.34      389.743     2792.848     1289.749
+1990           41     28167.78      388.430     2917.416     1309.415
+1991           42     28456.46      413.039     3123.352     1315.281
+1992           43     27338.31      435.785     3313.176     1347.925
+1993           44     26704.64      447.386     3466.984     1324.966
+1994           45     26444.70      468.566     3575.543     1360.394
+1995           46     26245.68      444.490     3695.108     1371.768
+1996           47     26757.50      462.936     3907.014     1409.871
+1997           48     26861.81      477.369     3958.075     1432.544
+1998           49     26745.77      471.562     3604.029     1220.657
+1999           50     24971.05      476.738     3595.568     1277.010
+2000           51     25111.92      513.906     3771.861     1257.347
+2001           52     25317.57      544.332     3826.473     1263.803
+2002           53     25593.23      561.518     3975.576     1423.895
+2003           54     26239.19      580.033     4121.022     1412.360
+2004           55                               4064.211             
+
+        rgdpl_MYS    rgdpl_PHL    rgdpl_SGP    rgdpl_THA    rgdpl_VNM
+
+1950                  1372.178                  1144.313             
+1951                  1394.243                  1062.705             
+1952                  1550.011                  1010.113             
+1953                  1600.815                   893.261             
+1954                  1708.877                   947.357             
+1955      1715.31     1721.193                   850.093             
+1956      1744.20     1895.363                   861.658             
+1957      1718.34     1816.886                   938.475             
+1958      1654.68     1901.033                   926.254             
+1959      1776.07     2017.088                   994.095             
+1960      1829.30     2037.327      4211.01     1085.837             
+1961      1910.08     2080.329      4285.27     1108.186             
+1962      1962.54     2136.973      4437.68     1150.172             
+1963      2046.59     2237.137      4632.15     1206.145             
+1964      2109.93     2225.869      4392.87     1248.527             
+1965      2206.85     2285.703      4537.45     1310.967             
+1966      2315.67     2311.237      4763.17     1407.574             
+1967      2330.61     2308.414      5028.47     1473.872             
+1968      2436.07     2329.660      5571.47     1552.785             
+1969      2505.94     2359.579      6028.11     1609.392             
+1970      2571.76     2427.130      6843.57     1748.067             
+1971      3083.64     2492.936      7445.31     1847.651             
+1972      3299.91     2591.656      8046.04     1832.944             
+1973      3573.63     2771.741      8835.64     1939.354             
+1974      3755.63     2744.955      9419.57     1992.651             
+1975      3762.84     2866.546      9351.92     2068.220             
+1976      4115.52     3042.973      9842.51     2232.996             
+1977      4295.43     3134.525     10176.96     2408.912             
+1978      4468.94     3159.881     10957.37     2651.568             
+1979      4751.74     3152.535     11947.26     2639.082             
+1980      5009.63     3293.286     13001.41     2741.715             
+1981      5206.47     3381.872     13130.88     2917.337             
+1982      5362.95     3312.746     13420.22     3054.824             
+1983      5549.62     3331.164     14406.02     3046.671             
+1984      5795.83     3200.859     15187.13     3206.132             
+1985      5688.13     2927.927     14594.53     3393.087             
+1986      5658.84     3028.005     14700.09     3494.599             
+1987      5840.30     2972.566     15894.01     3673.291             
+1988      6161.56     3086.433     17036.57     3950.456             
+1989      6555.39     3164.960     18142.43     4319.003     1380.488
+1990      6924.16     3208.788     19472.46     4844.584     1441.606
+1991      7290.07     3187.478     20217.40     5195.629     1475.987
+1992      7818.34     3167.355     20937.37     5577.573     1549.402
+1993      8271.45     3156.339     23092.78     5921.746     1628.110
+1994      8788.50     3289.818     24501.35     6331.146     1691.434
+1995      9335.19     3274.039     25819.48     6680.056     1804.374
+1996     10071.79     3339.729     26739.54     6915.208     1937.593
+1997     10496.42     3514.835     28305.65     6773.107     2033.209
+1998     10241.00     3317.053     26454.19     6159.406     2109.133
+1999     10851.94     3457.680     27484.46     6382.857     2121.433
+2000     11405.50     3825.615     29433.77     6473.595     2189.408
+2001     11335.01     3644.197     27194.10     6638.379     2283.904
+2002     11601.40     3616.650     27413.94     6882.736     2413.365
+2003     12130.75     3576.113     27004.43     7275.024     2560.629
+2004                  3938.135     29418.76                          
+
+# store ./asean_rgdpl.gdt rg*
+Done

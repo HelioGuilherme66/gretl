@@ -1,0 +1,7 @@
+open re_segf.gdt
+panel y 0 x1 x2 --random --time
+list dts = dt_*
+dts -= dt_1
+omit dts --test-only
+panel y 0 x1 x2 --random --time
+panel y 0 x1 x2 --between 

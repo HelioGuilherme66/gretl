@@ -1,0 +1,68 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps6-3.inp
+ /opt/esl/share/gretl/scripts/ps6-3.inp
+# PS6.3, for Example 6.3
+? open data6-2
+
+Read datafile /opt/esl/share/gretl/data/data6-2.gdt
+periodicity: 1, maxobs: 34
+observations range: 1961 to 1994
+
+Listing 4 variables:
+  0) const     1) year      2) catch     3) effort  
+
+? square effort
+Listing 5 variables:
+  0) const        1) year         2) catch        3) effort     
+  4) sq_effort  
+
+? ols catch effort sq_effort
+
+Model 1: OLS, using observations 1961-1994 (T = 34)
+Dependent variable: catch
+
+              coefficient   std. error   t-ratio   p-value 
+  ---------------------------------------------------------
+  effort       1.64162      0.0959909    17.10     1.18e-17 ***
+  sq_effort   -0.0165297    0.00205560   -8.041    3.51e-09 ***
+
+Mean dependent var   31.83994   S.D. dependent var   9.449949
+Sum squared resid    975.3128   S.E. of regression   5.520736
+Uncentered R-squared 0.973933   Centered R-squared   0.669043
+F(2, 32)             597.8016   P-value(F)           4.54e-26
+Log-likelihood      -105.3027   Akaike criterion     214.6053
+Schwarz criterion    217.6581   Hannan-Quinn         215.6464
+rho                  0.242565   Durbin-Watson        1.512102
+
+? genr yhat1 = catch-$uhat
+Generated series yhat1 (ID 5)
+? textplot yhat1 effort
+
+  yhat1
+     40.756  |                                              o              
+             |                                        ooo      o oo        
+             |                                 o                        o o
+    36.4918  +                             o                               
+             |                        o                                    
+             |                                                             
+             |                   o o                                       
+             |                  o                                          
+    29.3847  +                                                             
+             |             oo                                              
+             |             o                                               
+             |          oo                                                 
+             |        o                                                    
+    22.2776  +       oo                                                    
+             |      o                                                      
+             |                                                             
+             |                                                             
+             |  o                                                          
+    15.1705  +o                                                            
+             |+---------+---------+---------+---------+---------+---------+
+              10.3118                    effort                          61.2475
+
+
+Done

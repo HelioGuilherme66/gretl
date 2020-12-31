@@ -1,0 +1,43 @@
+open pntsprd.gdt --quiet
+set messages off
+
+# The OLS model
+ols favwin 0 spread
+# test of const = 0.5, regular standard error
+tstat = ($coeff[1] - 0.5) / $stderr[1]
+pv = 2 * pvalue(t, $df, abs(tstat))
+printf "Using regular standard error --\n"
+printf " H0: b0 = 0.5: t(%d) = %g [%g]\n\n", $df, tstat, pv
+
+# and with robust standard error
+ols favwin 0 spread --robust --quiet
+tstat = ($coeff[1] - 0.5) / $stderr[1]
+pv = 2 * pvalue(t, $df, abs(tstat))
+printf "Using robust standard error --\n"
+printf " H0: b0 = 0.5: t(%d) = %g [%g]\n\n", $df, tstat, pv
+
+# probability when spread = 10
+OLSProb = $coeff[1] + $coeff[2] * 10
+printf "OLS: Prob(favwin=1|spread=10) = %g\n", OLSProb
+
+# probit model
+probit favwin 0 spread --p-values
+# compute probability using the cnorm() function
+ProbitProb = cnorm($coeff[1] + $coeff[2] * 10)
+printf "Probit: Prob(favwin=1|spread=10) = %g\n", ProbitProb
+# record restricted log-likelihood
+llr = $lnl
+list addvars = favhome fav25 und25
+# estimate the unrestricted model
+probit favwin 0 spread addvars --p-values
+# calculate Likelihood Ratio
+llu = $lnl
+LR = 2*(llu - llr)
+df = nelem(addvars)
+pv = pvalue(X, df, LR)
+printf "LR joint test: chi-square(%d) = %g [%g]\n\n", df, LR, pv
+
+# extra: compare result of Wald test
+omit addvars --wald 
+
+

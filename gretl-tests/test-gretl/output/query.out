@@ -1,0 +1,9 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run query.inp
+ /home/cottrell/stats/test-gretl/query.inp
+? scalar y = isnull(x) ? 0 : x
+Generated scalar y = 0
+Done

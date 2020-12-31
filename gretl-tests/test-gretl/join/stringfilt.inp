@@ -1,0 +1,5 @@
+# filter test (sum xp for the youngsters, then for women)
+open hholds.csv -q
+join people.csv young_xp --ikey=hid --filter="age<40" --data=xp --aggr=sum
+join people.csv female_xp --ikey=hid --filter="gender==F" --data=xp --aggr=sum
+print hid young_xp female_xp -o

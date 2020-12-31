@@ -1,0 +1,159 @@
+nulldata 10
+
+# Poisson
+pvalue P 200 0
+pvalue P 200 10
+pvalue P 200 50
+pvalue P 200 100
+pvalue P 200 103
+pvalue P 200 104
+pvalue P 200 110
+pvalue P 200 133
+pvalue P 200 134
+pvalue P 200 200
+pvalue P 200 250
+pvalue P 200 314
+pvalue P 200 315
+pvalue P 200 500
+pvalue P 200 569
+pvalue P 200 570
+pvalue P 200 900
+pvalue P 200 950
+pvalue P 200 956
+pvalue P 200 957
+
+
+# Binomial
+pvalue B 0.5 1030 10
+pvalue B 0.5 1030 50
+pvalue B 0.5 1030 100
+pvalue B 0.5 1030 200
+pvalue B 0.5 1030 390
+pvalue B 0.5 1030 391
+pvalue B 0.5 1030 400
+pvalue B 0.5 1030 499
+pvalue B 0.5 1030 500
+pvalue B 0.5 1030 515
+pvalue B 0.5 1030 550
+pvalue B 0.5 1030 575
+
+# Hypergeometric -- not available
+
+# Gamma
+p = cdf(G, 0.2, 1, 0.3)
+p = cdf(G, 0.2, 1, 0.2)
+p = cdf(G, 0.2, 1, 0.1)
+p = cdf(G, 0.1, 1, 0.2)
+p = cdf(G, 0.1, 1, 0.1)
+p = cdf(G, 0.1, 1, 0.05)
+p = cdf(G, 0.05, 1, 0.2)
+p = cdf(G, 0.05, 1, 0.1)
+p = cdf(G, 0.05, 1, 0.05)
+p = cdf(G, 0.05, 1, 0.01)
+p = cdf(G, 0.05, 1, 0.001)
+
+# Normal
+p = cdf(N, -3)
+p = cdf(N, -4)
+p = cdf(N, -5)
+p = cdf(N, -6)
+p = cdf(N, -8.2)
+p = cdf(N, -8.3)
+p = cdf(N, 4.6)
+p = cdf(N, 4.5)
+p = cdf(N, 0)
+p = cdf(N, -11)
+p = cdf(N, -21)
+p = cdf(N, -22)
+p = cdf(N, -27)
+p = cdf(N, -37)
+p = cdf(N, -38)
+
+# Normal p-values
+p = pvalue(N, 3)
+p = pvalue(N, 11)
+p = pvalue(N, 21)
+p = pvalue(N, 22)
+p = pvalue(N, 27)
+pvalue N 40
+
+# Inverse normal
+z = -critical(N, 1.0e-3)
+z = -critical(N, 1.0e-4)
+z = -critical(N, 1.0e-5)
+z = -critical(N, 1.0e-6)
+z = -critical(N, 3.0e-7)
+z = -critical(N, 2.0e-7)
+z = -critical(N, 1.0e-200)
+z = -critical(N, 1.0e-250)
+z = -critical(N, 1.0e-300)
+z = invcdf(N, 1.0e-300)
+
+# Inverse chi-square
+x = critical(X, 1, 1.0e-3)
+x = critical(X, 10, 1.0e-3)
+x = critical(X, 1, 1.0e-6)
+x = critical(X, 10, 1.0e-6)
+x = critical(X, 1, 1.0e-7)
+x = critical(X, 10, 1.0e-7)
+x = critical(X, 1, 1.0e-12)
+x = critical(X, 10, 1.0e-12)
+x = critical(X, 1, 1.0e-13)
+x = critical(X, 10, 1.0e-13)
+x = critical(X, 1, 1.0e-100)
+x = critical(X, 10, 1.0e-100)
+
+# Inverse F
+x = critical(F, 2, 2, 1.0e-3)
+x = critical(F, 5, 5, 1.0e-3)
+x = critical(F, 10, 10, 1.0e-3)
+x = critical(F, 2, 2, 1.0e-6)
+x = critical(F, 5, 5, 1.0e-6)
+x = critical(F, 10, 10, 1.0e-6)
+x = critical(F, 1, 1, 1.0e-4)
+x = critical(F, 1, 1, 1.0e-5)
+x = critical(F, 1, 1, 1.0e-6)
+x = critical(F, 1, 1, 1.0e-12)
+x = critical(F, 1, 1, 1.0e-13)
+x = critical(F, 1, 1, 1.0e-100)
+
+# Inverse beta -- not available
+
+# Inverse Student's t
+x = critical(t, 2, 1.0e-3)
+x = critical(t, 5, 1.0e-3)
+x = critical(t, 10, 1.0e-3)
+x = critical(t, 2, 1.0e-6)
+x = critical(t, 5, 1.0e-6)
+x = critical(t, 10, 1.0e-6)
+x = critical(t, 1, 1.0e-7)
+x = critical(t, 1, 1.0e-8)
+x = critical(t, 1, 1.0e-9)
+x = critical(t, 1, 1.0e-12)
+x = critical(t, 1, 1.0e-13)
+x = critical(t, 1e+8, 0.1)
+x = critical(t, 1e+9, 0.1)
+x = critical(t, 1e+10, 0.1)
+x = critical(t, 1e+12, 0.1)
+x = critical(t, 1e+13, 0.1)
+
+# t p-values
+x = pvalue(t, 100, 3)
+x = pvalue(t, 100, 30)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

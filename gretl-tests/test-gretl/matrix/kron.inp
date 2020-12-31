@@ -1,0 +1,10 @@
+set seed 3335
+matrix M = { 1,2,3 ; 4,5,6; 7,8,9 }
+scalar n1 = onenorm(M)
+scalar nf = infnorm(M)
+A = mnormal(2,2)
+B = I(2)
+C = B ** A
+C
+C = A ** B
+C

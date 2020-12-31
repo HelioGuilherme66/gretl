@@ -1,0 +1,36 @@
+# cf. http://support.sas.com/rnd/app/examples/ets/harvey/sas.htm
+
+open harvey.txt
+
+list clags = cinst(-1 to -4)
+list rlags = rinst(-1 to -4)
+
+smpl +4 ;
+
+# data matrix
+list xlist = gb cb d1 d10
+matrix X = { xlist } + 1
+
+# instrument matrix
+list zlist = const clags rlags
+matrix Z = { zlist }
+
+# weights
+matrix W = 1000*I(36)
+
+scalar alpha = 0.5
+scalar beta = 1.0
+
+series m = 0
+matrix H = X
+
+set hac_kernel parzen
+set hac_lag 1
+
+gmm
+   m = beta * (1+conrat)^(-alpha)
+   H = m .* X - 1
+   orthog H ; Z
+   weights W
+   params alpha beta
+end gmm --iterate

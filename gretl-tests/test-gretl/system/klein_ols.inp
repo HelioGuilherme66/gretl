@@ -1,0 +1,15 @@
+open klein.gdt
+
+series W = Wp + Wg
+
+ols C 0 P P(-1) W --no-df-corr
+
+Klein_mod <- system 
+ equation C 0 P P(-1) W 
+ equation I 0 P P(-1) K(-1)
+end system
+
+estimate Klein_mod method=ols
+estimate Klein_mod method=ols --no-df-corr
+
+

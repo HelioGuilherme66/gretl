@@ -1,0 +1,109 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run stata-wls.inp
+ /home/cottrell/stats/test-gretl/stata-wls.inp
+? open hetdata.dta
+Stata file version 7
+endianness: little
+number of variables = 6
+number of observations = 72
+length of varnames = 32
+Max length of labels = 81
+dataset label: ''
+timestamp: ' 6 Sep 2001 08:35'
+variable 1: float type
+variable 2: float type
+variable 3: float type
+variable 4: float type
+variable 5: float type
+variable 6: float type
+variable 1: name = 'exp'
+variable 2: name = 'age'
+variable 3: name = 'income'
+variable 4: name = 'ownrent'
+variable 5: name = 'selfemp'
+variable 6: name = 'incomesq'
+variable 1: label = 'cc expen'
+variable 2: label = 'age'
+variable 3: label = 'income'
+variable 4: label = 'own rent'
+Listing 7 variables:
+  0) const       1) exp         2) age         3) income      4) ownrent   
+  5) selfemp     6) incomesq  
+
+? ols exp 0 age income ownrent incomesq
+
+Model 1: OLS, using observations 1-72
+Dependent variable: exp
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -237.147      199.352      -1.190    0.2384 
+  age          -3.08181      5.51472    -0.5588   0.5781 
+  income      234.347       80.3659      2.916    0.0048  ***
+  ownrent      27.9409      82.9223      0.3370   0.7372 
+  incomesq    -14.9968       7.46934    -2.008    0.0487  **
+
+Mean dependent var   262.5321   S.D. dependent var   318.0468
+Sum squared resid     5432562   S.E. of regression   284.7508
+R-squared            0.243578   Adjusted R-squared   0.198418
+F(4, 67)             5.393722   P-value(F)           0.000795
+Log-likelihood      -506.4888   Akaike criterion     1022.978
+Schwarz criterion    1034.361   Hannan-Quinn         1027.509
+
+Excluding the constant, p-value was highest for variable 4 (ownrent)
+
+? genr u = log($uhat*$uhat)
+Generated series u (ID 7)
+? ols u 0 income incomesq
+
+Model 2: OLS, using observations 1-72
+Dependent variable: u
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        4.13735     1.11626       3.706    0.0004   ***
+  income       2.48571     0.518176      4.797    8.97e-06 ***
+  incomesq    -0.244891    0.0499075    -4.907    5.94e-06 ***
+
+Mean dependent var   9.090467   S.D. dependent var   2.237883
+Sum squared resid    263.4314   S.E. of regression   1.953931
+R-squared            0.259143   Adjusted R-squared   0.237669
+F(2, 69)             12.06769   P-value(F)           0.000032
+Log-likelihood      -148.8601   Akaike criterion     303.7203
+Schwarz criterion    310.5503   Hannan-Quinn         306.4393
+
+? genr w = 1.0/exp($yhat)
+Generated series w (ID 8)
+? wls w exp 0 age income ownrent incomesq
+
+Model 3: WLS, using observations 1-72
+Dependent variable: exp
+Variable used as weight: w
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -117.867      101.386      -1.163    0.2491 
+  age          -1.23368      2.55120    -0.4836   0.6303 
+  income      145.304       46.3627      3.134    0.0026  ***
+  ownrent      50.9498      52.8143      0.9647   0.3382 
+  incomesq     -7.93828      3.73672    -2.124    0.0373  **
+
+Statistics based on the weighted data:
+
+Sum squared resid    270.0859   S.E. of regression   2.007768
+R-squared            0.806226   Adjusted R-squared   0.794657
+F(4, 67)             69.69092   P-value(F)           3.73e-23
+Log-likelihood      -149.7582   Akaike criterion     309.5165
+Schwarz criterion    320.8998   Hannan-Quinn         314.0482
+
+Statistics based on the original data:
+
+Mean dependent var   262.5321   S.D. dependent var   318.0468
+Sum squared resid     5565689   S.E. of regression   288.2186
+
+Excluding the constant, p-value was highest for variable 2 (age)
+
+Done

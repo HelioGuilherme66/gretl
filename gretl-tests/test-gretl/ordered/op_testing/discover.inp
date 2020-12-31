@@ -1,0 +1,63 @@
+include op_predict.inp
+
+nulldata 100
+
+scalar myseed
+scalar c11 c12 c21 c22
+scalar c11_hi = 0
+scalar c12_hi = 0
+scalar perv1 = 0
+scalar perv2 = 0
+matrix P
+scalar iters = 5000
+
+loop iters -q
+  # choose a seed at random
+  myseed = 10000000*muniform(1,1)
+  set seed myseed
+  # generate artificial data
+  series y = floor(uniform(0,4))
+  series x1 = y + 4*normal()
+  series x2 = -(y + 4*normal())
+  # run ordered probit using both x's
+  probit y 0 x1 x2 --quiet
+  # record p-value for x2
+  x2pval = 2*pvalue(z, abs($coeff[2]/$stderr[2]))
+  P = op_predict($coeff[3:], $yhat)
+  c11 = sumc(P[,5] .= y)
+  c12 = sumc(P[,7] .= y)
+  if c11 > c12
+    c11_hi++
+  elif c12 > c11
+    c12_hi++
+  endif  
+  if x2pval < 0.01
+    # OK, x2 was "significant"
+    scalar ll1 = $lnl
+    # drop x2
+    probit y 0 x1 --quiet
+    scalar ll2 = $lnl
+    scalar LR = 2*(ll1 - ll2)
+    P = op_predict($coeff[2:], $yhat)
+    c21 = sumc(P[,5] .= y)
+    c22 = sumc(P[,7] .= y)
+    if c21 > c11 || c22 > c12
+      # removal of a "significant" regressor raised the
+      # number of "correct predictions", on at least one
+      # criterion; print the specs
+      printf "seed = %d:\n", $seed
+      printf " x2pval = %g\n", x2pval
+      printf " LR test: %g [%g]\n", LR, pvalue(X, 1, LR)
+      printf " c11=%g, c12=%g\n", c11, c12
+      printf " c21=%g, c22=%g\n", c21, c22
+      perv1 += c21 > c11
+      perv2 += c22 > c12
+    endif
+  endif
+endloop
+
+printf "cases of c11 > c12: %.2f%%; cases of c12 > c11: %.2f%%\n",
+  100*c11_hi/iters, 100*c12_hi/iters
+
+printf "'perverse' cases on criterion 1: %d\n", perv1
+printf "'perverse' cases on criterion 2: %d\n", perv2

@@ -1,0 +1,25 @@
+function list RStructTS(series y)
+    smpl ok(y) --restrict
+    sx = argname(y)
+
+    foreign language=R --send-data
+        y <- gretldata[, "y"]
+        strmod <- StructTS(y)
+        compon <- as.ts(tsSmooth(strmod))
+        gretl.export(compon)
+    end foreign
+
+    append @dotdir/compon.csv
+    rename level @sx_level
+    rename slope @sx_slope
+    rename sea @sx_seas
+
+    list ret = @sx_level @sx_slope @sx_seas
+    return ret
+end function
+
+# ------------ main -------------------------
+
+open bjg.gdt
+list X = RStructTS(lg)
+print X -o

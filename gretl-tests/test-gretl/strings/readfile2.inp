@@ -1,0 +1,5 @@
+sprintf fname "%s/QNC.rts", $x12adir
+string foo = readfile(fname)
+string baz = readfile("@x12adir/QNC.rts")
+print "@foo"
+eval foo == baz

@@ -1,0 +1,18 @@
+open djclose
+
+series y = 100*ldiff(djclose)
+scalar mu = 0.0
+scalar omega = 1
+scalar alpha = 0.4
+scalar beta = 0.5
+
+mle ll = -0.5*(log(h) + (e^2)/h)
+  series e = y - mu
+  series h = var(y)
+  series h = omega + alpha*(e(-1))^2 + beta*h(-1)
+  params mu omega alpha beta
+end mle --hessian
+
+garch 1 1 ; y
+
+

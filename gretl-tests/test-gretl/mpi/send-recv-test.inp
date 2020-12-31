@@ -1,0 +1,25 @@
+set echo off
+set messages off
+
+mpi
+
+# send/recv a matrix
+if $mpirank == 1
+  matrix m1 = I(3)
+  mpisend(m1, 2)
+elif $mpirank == 2
+  matrix m2 = mpirecv(1)
+  printf "hello from 2, my matrix\n"
+  print m2
+endif
+
+# send/recv a scalar
+if $mpirank == 2
+  scalar s2 = 32
+  mpisend(s2, 1)
+elif $mpirank == 1
+  scalar s1 = mpirecv(2)
+  printf "hello from 1, my scalar = %g\n", s1
+endif
+
+end mpi --np=3

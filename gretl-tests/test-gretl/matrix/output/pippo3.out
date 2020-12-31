@@ -1,0 +1,61 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run pippo3.inp
+ /home/cottrell/stats/test-gretl/matrix/pippo3.inp
+? function matrix pippo(scalar T, matrix G)
+? nulldata 30
+periodicity: 1, maxobs: 30
+observations range: 1 to 30
+? set seed 111
+Pseudo-random number generator seeded with 111
+? scalar T = $nobs
+Generated scalar T = 30
+? scalar k = 2
+Generated scalar k = 2
+? matrix AAA = { 1, 0.5 ; 0.5, 4 }
+Generated matrix AAA
+? AAA
+AAA (2 x 2)
+
+    1   0.5 
+  0.5     4 
+
+? matrix Z = pippo(T, AAA)
+Generated matrix Z
+? Z
+Z (30 x 2)
+
+    -0.29137      -4.1102 
+      2.0391       4.9313 
+    -0.93344     -0.45216 
+    -0.43496       1.6653 
+     -1.5243      -3.7935 
+     0.88335      -1.5257 
+    -0.34919       1.1728 
+     0.13692       5.8136 
+    -0.21761      -5.2872 
+    -0.66612      -3.7932 
+    -0.53432       6.0635 
+    -0.38016      -3.1280 
+    -0.55952       2.3163 
+    0.083526      -4.7468 
+    -0.36150      -1.6281 
+      1.4666       2.2054 
+      1.7332      -5.7298 
+     0.10008      -3.4689 
+     0.80961       1.9665 
+     0.32070      0.77461 
+     0.18769       1.2531 
+    -0.30520      -1.8532 
+     0.59082       3.6010 
+     0.25547      -10.161 
+      2.9920       2.0445 
+     0.26808      0.52545 
+     0.42617       2.6465 
+      1.2174       1.4477 
+    0.038799      -2.4486 
+    -0.38219      -3.6228 
+
+Done

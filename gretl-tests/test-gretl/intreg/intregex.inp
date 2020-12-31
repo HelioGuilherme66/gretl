@@ -1,0 +1,15 @@
+# cf. http://www.ats.ucla.edu/stat/stata/dae/intreg.htm
+open intregex.dta
+intreg lgpa ugpa 0
+scalar ll0 = $lnl
+intreg lgpa ugpa 0 write rating read
+scalar ll1 = $lnl
+scalar LR = 2*(ll1-ll0)
+intreg lgpa ugpa 0 write rating read --robust
+genr p = $yhat
+corr lgpa ugpa p
+
+
+
+
+

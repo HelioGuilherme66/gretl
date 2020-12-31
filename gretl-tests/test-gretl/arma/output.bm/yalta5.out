@@ -1,0 +1,206 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run yalta5.inp
+ /home/cottrell/stats/test-gretl/arma/yalta5.inp
+? open yalta5.csv
+parsing /home/cottrell/stats/test-gretl/arma/yalta5.csv...
+using delimiter ','
+   longest line: 14 characters
+   first field: 'Period'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 37
+scanning for variable names...
+   line: Period,Data
+scanning for row labels and data...
+   first row label "1", last label "36"
+treating these as undated data
+
+Listing 2 variables:
+  0) const    1) Data   
+
+? setobs 5 1 --time-series
+Full data range: 1 - 36 (n = 36)
+
+? genr y = Data
+Generated series y (ID 2)
+? addobs 5
+Dataset extended by 5 observations
+Full data range: 1 - 41 (n = 41)
+
+# conditional ML
+? arma 1 0 0 ; 1 1 0 ; y --conditional
+Convergence achieved after 25 iterations
+
+Model 1: ARIMA, using observations 12-36 (T = 25)
+Estimated using least squares (conditional ML)
+Dependent variable: (1-Ls) y
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1786.24       1168.51       -1.529    0.1264 
+  phi_1          0.512370      0.185111    2.768    0.0056  ***
+  Phi_1         -0.400672      0.184990   -2.166    0.0303  **
+
+Mean dependent var  -2667.160   S.D. dependent var   5346.501
+Mean of innovations -4.11e-07   S.D. of innovations  4509.400
+Log-likelihood      -244.2235   Akaike criterion     494.4471
+Schwarz criterion    498.1037   Hannan-Quinn         495.4613
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.9517     0.0000     1.9517     0.0000
+  AR (seasonal)
+    Root  1          -2.4958     0.0000     2.4958     0.5000
+  -----------------------------------------------------------
+
+? scalar l1 = $lnl
+Generated scalar l1 = -244.224
+-2.442235309E+02
+? fcast 37 41 fc
+Generated series fc (ID 3)
+? arma 1 0 0 ; 1 1 0 ; y --conditional --x-12-arima
+
+Model 2: ARIMA, using observations 12-36 (T = 25)
+Estimated using X-12-ARIMA (conditional ML)
+Dependent variable: (1-Ls) y
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -2615.24       1238.70       -2.111    0.0347  **
+  phi_1          0.512370      0.173548    2.952    0.0032  ***
+  Phi_1         -0.400663      0.173514   -2.309    0.0209  **
+
+Mean dependent var  -2667.160   S.D. dependent var   5346.501
+Mean of innovations -2.55e-13   S.D. of innovations  4230.192
+Log-likelihood      -244.2235   Akaike criterion     496.4471
+Schwarz criterion    501.3226   Hannan-Quinn         497.7993
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.9517     0.0000     1.9517     0.0000
+  AR (seasonal)
+    Root  1          -2.4959     0.0000     2.4959     0.5000
+  -----------------------------------------------------------
+
+? scalar l2 = $lnl
+Generated scalar l2 = -244.224
+-2.442235312E+02
+? fcast 37 41 fcx
+Generated series fcx (ID 4)
+# exact ML
+? arma 1 0 0 ; 1 1 0 ; y
+Function evaluations: 21
+Evaluations of gradient: 7
+
+Model 3: ARIMA, using observations 6-36 (T = 31)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-Ls) y
+Standard errors based on Hessian
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -2284.68       1053.91       -2.168    0.0302  **
+  phi_1          0.489333      0.157213    3.113    0.0019  ***
+  Phi_1         -0.378012      0.159801   -2.366    0.0180  **
+
+Mean dependent var  -2229.968   S.D. dependent var   5060.294
+Mean of innovations  46.31452   S.D. of innovations  4054.239
+Log-likelihood      -302.0319   Akaike criterion     612.0639
+Schwarz criterion    617.7998   Hannan-Quinn         613.9337
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.0436     0.0000     2.0436     0.0000
+  AR (seasonal)
+    Root  1          -2.6454     0.0000     2.6454     0.5000
+  -----------------------------------------------------------
+
+? scalar l1 = $lnl
+Replaced scalar l1 = -302.032
+-3.020319457E+02
+? fcast 37 41 f
+Generated series f (ID 5)
+? arma 1 0 0 ; 1 1 0 ; y --x-12-arima
+
+Model 4: ARIMA, using observations 6-36 (T = 31)
+Estimated using X-12-ARIMA (exact ML)
+Dependent variable: (1-Ls) y
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -2284.66       1048.89       -2.178    0.0294  **
+  phi_1          0.489350      0.155393    3.149    0.0016  ***
+  Phi_1         -0.377988      0.161260   -2.344    0.0191  **
+
+Mean dependent var  -2229.968   S.D. dependent var   5060.294
+Mean of innovations  16.70170   S.D. of innovations  4054.244
+Log-likelihood      -302.0319   Akaike criterion     612.0639
+Schwarz criterion    617.7998   Hannan-Quinn         613.9337
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.0435     0.0000     2.0435     0.0000
+  AR (seasonal)
+    Root  1          -2.6456     0.0000     2.6456     0.5000
+  -----------------------------------------------------------
+
+? scalar l2 = $lnl
+Replaced scalar l2 = -302.032
+-3.020319461E+02
+? fcast 37 41 fx
+Generated series fx (ID 6)
+? print y fc fcx f fx --byobs
+
+              y           fc          fcx            f           fx
+
+ 1        33129                                                    
+ 2        36763                                                    
+ 3        35807                                                    
+ 4        41240                                                    
+ 5        35938                                                    
+ 6        34381                                                    
+ 7        38558                                                    
+ 8        40055                                                    
+ 9        36549                                                    
+10        34065                                                    
+11        31200                                                    
+12        36003                                                    
+13        35690                                                    
+14        30420                                                    
+15        39161                                                    
+16        34786                                                    
+17        25773                                                    
+18        24441                                                    
+19        23168                                                    
+20        22885                                                    
+21        21237                                                    
+22        28787                                                    
+23        25874                                                    
+24        23481                                                    
+25        22243                                                    
+26        21115                                                    
+27        25511                                                    
+28        25860                                                    
+29        22937                                                    
+30        21851                                                    
+31        20372                                                    
+32        24055                                                    
+33        23951                                                    
+34        23351                                                    
+35        22320                                                    
+36        20071                                                    
+37                  22545.39     22545.39     22712.92     22712.98
+38                  21857.26     21857.26     22138.84     22138.90
+39                  19934.21     19934.24     20346.90     20347.01
+40                  18680.18     18680.21     19141.55     19141.65
+41                  16636.71     16636.74     17108.47     17108.56
+
+Done

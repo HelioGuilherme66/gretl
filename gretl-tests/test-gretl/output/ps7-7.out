@@ -1,0 +1,455 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps7-7.inp
+ /opt/esl/share/gretl/scripts/ps7-7.inp
+# PS7.7, for the Application in Section 7.8
+? open data7-5
+
+Read datafile /opt/esl/share/gretl/data/data7-5.gdt
+periodicity: 12, maxobs: 89
+observations range: 1983:01 to 1990:05
+
+Listing 9 variables:
+  0) const     1) PERIOD    2) Q         3) P         4) HS      
+  5) SHC       6) OC        7) L         8) PL      
+
+? ols Q const P HS SHC OC L PL
+
+Model 1: OLS, using observations 1983:01-1990:05 (T = 89)
+Dependent variable: Q
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -2064.70       1867.84       -1.105    0.2722 
+  P           -301.670        97.2940     -3.101    0.0026  ***
+  HS            14.4228        7.16167     2.014    0.0473  **
+  SHC            0.628742      0.404272    1.555    0.1237 
+  OC            33.6773       12.8024      2.631    0.0102  **
+  L          -1075.20        464.037      -2.317    0.0230  **
+  PL          -733.934       597.786      -1.228    0.2231 
+
+Mean dependent var   2531.494   S.D. dependent var   1564.670
+Sum squared resid    1.30e+08   S.E. of regression   1257.539
+R-squared            0.398094   Adjusted R-squared   0.354052
+F(6, 82)             9.038971   P-value(F)           1.40e-07
+Log-likelihood      -757.8254   Akaike criterion     1529.651
+Schwarz criterion    1547.071   Hannan-Quinn         1536.672
+rho                  0.037596   Durbin-Watson        1.921694
+
+Excluding the constant, p-value was highest for variable 8 (PL)
+
+# Above command estimates Model A. Now generate monthly dummies
+? genr dummy
+Periodic dummy variables generated.
+# estimate Model B with monthly dummies
+? ols Q const P HS SHC OC L PL dm2 dm3 dm4 dm5 dm6 dm7 dm8 dm9 dm10 \
+  dm11 dm12
+
+Model 2: OLS, using observations 1983:01-1990:05 (T = 89)
+Dependent variable: Q
+
+             coefficient    std. error   t-ratio    p-value
+  ---------------------------------------------------------
+  const      -2615.05       2177.37      -1.201     0.2337 
+  P           -251.103       107.394     -2.338     0.0222  **
+  HS            13.9275       13.9409     0.9990    0.3212 
+  SHC           -0.446782      1.67699   -0.2664    0.7907 
+  OC            36.8720       14.7329     2.503     0.0146  **
+  L          -1034.51        510.567     -2.026     0.0465  **
+  PL          -538.380       751.212     -0.7167    0.4759 
+  dm2          313.355       627.483      0.4994    0.6191 
+  dm3          527.192       751.302      0.7017    0.4852 
+  dm4          500.330      1164.55       0.4296    0.6688 
+  dm5         1543.82       1604.27       0.9623    0.3392 
+  dm6           91.0403     2022.28       0.04502   0.9642 
+  dm7         1028.73       2019.98       0.5093    0.6121 
+  dm8         2417.60       2174.10       1.112     0.2699 
+  dm9         1632.96       2029.70       0.8045    0.4238 
+  dm10        1317.37       1954.07       0.6742    0.5024 
+  dm11         504.486      1220.74       0.4133    0.6807 
+  dm12         297.730       708.207      0.4204    0.6755 
+
+Mean dependent var   2531.494   S.D. dependent var   1564.670
+Sum squared resid    1.08e+08   S.E. of regression   1231.385
+R-squared            0.500290   Adjusted R-squared   0.380641
+F(17, 71)            4.181322   P-value(F)           9.71e-06
+Log-likelihood      -749.5451   Akaike criterion     1535.090
+Schwarz criterion    1579.886   Hannan-Quinn         1553.146
+rho                  0.068504   Durbin-Watson        1.862864
+
+Excluding the constant, p-value was highest for variable 14 (dm6)
+
+# reset sample range to the first period only
+? smpl 1983.01 1986.06
+Full data range: 1983:01 - 1990:05 (n = 89)
+Current sample: 1983:01 - 1986:06 (n = 42)
+
+# Next estimate Model C
+? ols Q const P HS SHC OC dm2 dm3 dm4 dm5 dm6 dm7 dm8 dm9 dm10 dm11 \
+  dm12
+
+Model 3: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio    p-value
+  ---------------------------------------------------------
+  const      -2944.10      2999.20      -0.9816     0.3353 
+  P           -466.990      206.911     -2.257      0.0326  **
+  HS             8.45698     27.1274     0.3118     0.7577 
+  SHC            4.47745      4.46099    1.004      0.3248 
+  OC            42.4072      21.2435     1.996      0.0565  *
+  dm2           31.6230    1031.41       0.03066    0.9758 
+  dm3            2.83659   1293.78       0.002192   0.9983 
+  dm4        -1498.57      1826.11      -0.8206     0.4193 
+  dm5        -2511.15      2612.35      -0.9613     0.3453 
+  dm6        -4059.04      3542.36      -1.146      0.2623 
+  dm7        -3331.12      3817.33      -0.8726     0.3909 
+  dm8        -3104.26      4600.42      -0.6748     0.5058 
+  dm9        -2757.03      4140.50      -0.6659     0.5114 
+  dm10       -2763.19      3679.28      -0.7510     0.4594 
+  dm11       -1796.66      2482.54      -0.7237     0.4757 
+  dm12       -1098.47      1221.61      -0.8992     0.3768 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    48628498   S.E. of regression   1367.599
+R-squared            0.600789   Adjusted R-squared   0.370476
+F(15, 26)            2.608569   P-value(F)           0.015484
+Log-likelihood      -352.7985   Akaike criterion     737.5970
+Schwarz criterion    765.3997   Hannan-Quinn         747.7878
+rho                  0.033571   Durbin-Watson        1.930043
+
+Excluding the constant, p-value was highest for variable 11 (dm3)
+
+# omit variables with highest p-values, a few at a time
+? omit dm2 dm3
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    dm2, dm3
+  Test statistic: F(2, 26) = 0.000539684, p-value 0.99946
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -2935.95      2773.15      -1.059    0.2988 
+  P           -465.326      193.232     -2.408    0.0229  **
+  HS             8.41259     20.1730     0.4170   0.6798 
+  SHC            4.44105      4.10257    1.083    0.2883 
+  OC            42.4951      20.1446     2.110    0.0440  **
+  dm4        -1498.02      1326.54      -1.129    0.2684 
+  dm5        -2499.09      2261.23      -1.105    0.2785 
+  dm6        -4038.66      3250.69      -1.242    0.2244 
+  dm7        -3307.41      3562.25      -0.9285   0.3611 
+  dm8        -3072.62      4312.10      -0.7126   0.4820 
+  dm9        -2731.67      3904.66      -0.6996   0.4900 
+  dm10       -2740.49      3428.23      -0.7994   0.4308 
+  dm11       -1787.10      2357.10      -0.7582   0.4547 
+  dm12       -1104.52      1133.85      -0.9741   0.3383 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    48630517   S.E. of regression   1317.879
+R-squared            0.600773   Adjusted R-squared   0.415417
+F(13, 28)            3.241193   P-value(F)           0.004425
+Log-likelihood      -352.7994   Akaike criterion     733.5987
+Schwarz criterion    757.9261   Hannan-Quinn         742.5157
+rho                  0.034206   Durbin-Watson        1.928876
+
+Excluding the constant, p-value was highest for variable 4 (HS)
+
+? omit HS
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for HS
+  Test statistic: F(1, 28) = 0.173907, p-value 0.679842
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -2251.37      2202.99      -1.022    0.3153 
+  P           -503.104      168.232     -2.991    0.0056  ***
+  SHC            5.11881      3.71287    1.379    0.1785 
+  OC            44.7837      19.1046     2.344    0.0261  **
+  dm4        -1281.68      1203.38      -1.065    0.2956 
+  dm5        -2448.22      2225.54      -1.100    0.2804 
+  dm6        -4132.06      3196.44      -1.293    0.2063 
+  dm7        -3569.82      3455.93      -1.033    0.3102 
+  dm8        -3502.34      4127.11      -0.8486   0.4030 
+  dm9        -3139.15      3726.19      -0.8425   0.4064 
+  dm10       -2994.86      3325.14      -0.9007   0.3752 
+  dm11       -2097.85      2204.13      -0.9518   0.3491 
+  dm12       -1298.36      1019.36      -1.274    0.2129 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    48932560   S.E. of regression   1298.973
+R-squared            0.598293   Adjusted R-squared   0.432070
+F(12, 29)            3.599331   P-value(F)           0.002340
+Log-likelihood      -352.9294   Akaike criterion     731.8588
+Schwarz criterion    754.4485   Hannan-Quinn         740.1388
+rho                  0.067294   Durbin-Watson        1.862214
+
+Excluding the constant, p-value was highest for variable 17 (dm9)
+
+? omit dm8 dm9
+Test on Model 5:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    dm8, dm9
+  Test statistic: F(2, 29) = 0.364588, p-value 0.697621
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      -1990.14      2133.08       -0.9330   0.3580 
+  P           -506.087      162.750      -3.110    0.0040  ***
+  SHC            1.99430      0.615492    3.240    0.0029  ***
+  OC            54.2211      15.2390      3.558    0.0012  ***
+  dm4         -460.891      708.894      -0.6502   0.5204 
+  dm5         -661.125      740.945      -0.8923   0.3791 
+  dm6        -1489.81       782.634      -1.904    0.0663  *
+  dm7         -716.869      864.279      -0.8294   0.4132 
+  dm10        -255.091      854.125      -0.2987   0.7672 
+  dm11        -351.050      803.277      -0.4370   0.6651 
+  dm12        -780.068      801.808      -0.9729   0.3381 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    50162919   S.E. of regression   1272.069
+R-squared            0.588193   Adjusted R-squared   0.455352
+F(10, 31)            4.427794   P-value(F)           0.000660
+Log-likelihood      -353.4509   Akaike criterion     728.9018
+Schwarz criterion    748.0161   Hannan-Quinn         735.9079
+rho                  0.086862   Durbin-Watson        1.816675
+
+Excluding the constant, p-value was highest for variable 18 (dm10)
+
+? omit dm10 dm11
+Test on Model 6:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    dm10, dm11
+  Test statistic: F(2, 31) = 0.11976, p-value 0.887542
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 7: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      -2021.84      2074.40       -0.9747   0.3368 
+  P           -504.205      158.298      -3.185    0.0032  ***
+  SHC            1.90836      0.555637    3.435    0.0016  ***
+  OC            54.3669      14.8076      3.672    0.0008  ***
+  dm4         -400.265      679.021      -0.5895   0.5596 
+  dm5         -573.129      697.350      -0.8219   0.4171 
+  dm6        -1380.63       723.645      -1.908    0.0651  *
+  dm7         -600.904      801.737      -0.7495   0.4589 
+  dm12        -728.505      773.362      -0.9420   0.3530 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    50550499   S.E. of regression   1237.673
+R-squared            0.585011   Adjusted R-squared   0.484408
+F(8, 33)             5.815022   P-value(F)           0.000119
+Log-likelihood      -353.6125   Akaike criterion     725.2250
+Schwarz criterion    740.8640   Hannan-Quinn         730.9573
+rho                  0.089140   Durbin-Watson        1.811829
+
+Excluding the constant, p-value was highest for variable 12 (dm4)
+
+? omit dm4
+Test on Model 7:
+
+  Null hypothesis: the regression parameter is zero for dm4
+  Test statistic: F(1, 33) = 0.34748, p-value 0.559558
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 8: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      -2058.83      2053.46       -1.003    0.3231 
+  P           -497.818      156.404      -3.183    0.0031  ***
+  SHC            1.96163      0.542951    3.613    0.0010  ***
+  OC            53.4674      14.5867      3.665    0.0008  ***
+  dm5         -514.965      683.678      -0.7532   0.4565 
+  dm6        -1346.90       714.424      -1.885    0.0680  *
+  dm7         -570.806      792.395      -0.7204   0.4762 
+  dm12        -658.832      756.907      -0.8704   0.3902 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    51082780   S.E. of regression   1225.738
+R-squared            0.580641   Adjusted R-squared   0.494303
+F(7, 34)             6.725167   P-value(F)           0.000050
+Log-likelihood      -353.8325   Akaike criterion     723.6649
+Schwarz criterion    737.5663   Hannan-Quinn         728.7603
+rho                  0.080299   Durbin-Watson        1.829310
+
+Excluding the constant, p-value was highest for variable 15 (dm7)
+
+? omit dm5 dm7
+Test on Model 8:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    dm5, dm7
+  Test statistic: F(2, 34) = 0.484497, p-value 0.620195
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 9: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      -1820.09      1981.51       -0.9185   0.3645 
+  P           -499.568      153.863      -3.247    0.0025  ***
+  SHC            1.81318      0.502514    3.608    0.0009  ***
+  OC            52.1244      13.8078      3.775    0.0006  ***
+  dm6        -1172.49       681.696      -1.720    0.0940  *
+  dm12        -600.437      743.051      -0.8081   0.4244 
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    52538631   S.E. of regression   1208.059
+R-squared            0.568690   Adjusted R-squared   0.508785
+F(5, 36)             9.493315   P-value(F)           7.71e-06
+Log-likelihood      -354.4226   Akaike criterion     720.8452
+Schwarz criterion    731.2712   Hannan-Quinn         724.6668
+rho                  0.095003   Durbin-Watson        1.799301
+
+Excluding the constant, p-value was highest for variable 20 (dm12)
+
+# This is Model D, the final model with all significant coefficients
+? omit dm12
+Test on Model 9:
+
+  Null hypothesis: the regression parameter is zero for dm12
+  Test statistic: F(1, 36) = 0.652975, p-value 0.424359
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 10: OLS, using observations 1983:01-1986:06 (T = 42)
+Dependent variable: Q
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      -1915.09      1968.72       -0.9728   0.3370 
+  P           -499.986      153.139      -3.265    0.0024  ***
+  SHC            1.89594      0.489653    3.872    0.0004  ***
+  OC            51.9277      13.7408      3.779    0.0006  ***
+  dm6        -1157.33       678.235      -1.706    0.0963  *
+
+Mean dependent var   2721.143   S.D. dependent var   1723.664
+Sum squared resid    53491587   S.E. of regression   1202.380
+R-squared            0.560866   Adjusted R-squared   0.513393
+F(4, 37)             11.81421   P-value(F)           2.78e-06
+Log-likelihood      -354.8001   Akaike criterion     719.6002
+Schwarz criterion    728.2885   Hannan-Quinn         722.7848
+rho                  0.094069   Durbin-Watson        1.800480
+
+# obtain predicted values for the loss and post loss periods
+? fcast 1986.07 1990.05 Qhat
+Generated series Qhat (ID 21)
+# reset sample range to the second and third periods
+? smpl 1986.07 1990.05
+Full data range: 1983:01 - 1990:05 (n = 89)
+Current sample: 1986:07 - 1990:05 (n = 47)
+
+# compute loss in sales for each month
+? genr Qloss = Qhat - Q
+Generated series Qloss (ID 22)
+# compute loss in revenues for each month
+? genr dolrloss = P*Qloss
+Generated series dolrloss (ID 23)
+# print values
+? print -o Q Qhat Qloss dolrloss
+
+                   Q         Qhat        Qloss     dolrloss
+
+1986:07         2655     3660.096     1005.096     11267.13
+1986:08         4120     5370.462     1250.462     10303.81
+1986:09         1095     5154.226     4059.226     33529.21
+1986:10         3740     5387.135     1647.135     12781.77
+1986:11          680     3928.074     3248.074     27900.95
+1986:12          635     3156.402     2521.402     23877.67
+1987:01          305     2507.638     2202.638     22510.96
+1987:02         2250     2913.142      663.142      5477.55
+1987:03         2515     3929.207     1414.207     11950.05
+1987:04         1205     1198.387       -6.613       -90.53
+1987:05         5765     4241.955    -1523.045    -13265.73
+1987:06         2675     4144.451     1469.451     13107.50
+1987:07         3455     5769.096     2314.096     19600.40
+1987:08         5930     5984.408       54.408       489.67
+1987:09         2300     5767.034     3467.034     29053.74
+1987:10         2865     6228.469     3363.469     28354.05
+1987:11         1165     4397.744     3232.744     29450.29
+1987:12          485     2009.529     1524.529     19590.20
+1988:01           90      405.372      315.372      4210.21
+1988:02          965      632.621     -332.379     -4723.10
+1988:03         2370     3823.151     1453.151     12003.03
+1988:04         2635     4241.057     1606.057     13876.33
+1988:05         4265     5375.505     1110.505      9494.82
+1988:06          740     4877.751     4137.751     38522.46
+1988:07          190     4563.823     4373.823     46887.39
+1988:08         2740     6675.849     3935.849     27432.87
+1988:09         4425     5337.898      912.898      7996.98
+1988:10         1325     6113.633     4788.633     39985.09
+1988:11         3185     5451.984     2266.984     16707.67
+1988:12         3685     5108.747     1423.747     11632.01
+1989:01         1715     4224.613     2509.613     20704.30
+1989:02         1790     3213.252     1423.252     11998.01
+1989:03         2890     3342.164      452.164      3766.52
+1989:04         2855     4402.508     1547.508     14407.30
+1989:05         3685     5157.168     1472.168     13249.51
+1989:06         3015     5136.907     2121.907     17272.32
+1989:07         2985     5882.253     2897.253     24916.38
+1989:08         3320     6097.490     2777.490     25080.73
+1989:09         3165     6563.782     3398.782     32492.36
+1989:10         3470     6208.311     2738.311     24672.19
+1989:11          410     4991.143     4581.143     40451.49
+1989:12         1390     3101.503     1711.503     18655.38
+1990:01         1150     4436.404     3286.404     22446.14
+1990:02         1190     2409.089     1219.089     12605.38
+1990:03         1620     3578.350     1958.350     16841.81
+1990:04         3355     2936.464     -418.536     -3992.83
+1990:05         2555     3654.764     1099.764     11690.50
+
+# set sample range to the middle period
+? smpl 1986.07 1988.10
+Full data range: 1983:01 - 1990:05 (n = 89)
+Current sample: 1986:07 - 1988:10 (n = 28)
+
+# compute sum of losses during the litigation period
+? genr totqloss = 28*mean(Qloss)
+Generated scalar totqloss = 54209.1
+? genr totdloss = 28*mean(dolrloss)
+Generated scalar totdloss = 481575
+# print the values
+? print totqloss totdloss
+
+       totqloss =  54209.116
+
+       totdloss =  481574.78
+# reset sample range for the post loss period
+? smpl 1988.11 1990.05
+Full data range: 1983:01 - 1990:05 (n = 89)
+Current sample: 1988:11 - 1990:05 (n = 19)
+
+# compute sum of losses for this period
+? genr qloss2 = 19*mean(Qloss)
+Generated scalar qloss2 = 38466.9
+? genr dloss2 = 19*mean(dolrloss)
+Generated scalar dloss2 = 335597
+# print the values
+? print qloss2 dloss2
+
+         qloss2 =  38466.896
+
+         dloss2 =  335597.18
+Done

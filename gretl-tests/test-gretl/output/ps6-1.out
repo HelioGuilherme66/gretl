@@ -1,0 +1,122 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-1.inp
+ /opt/esl/share/gretl/scripts/ps6-1.inp
+# PS6.1 for Example 6.1
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? logs sqft bedrms baths
+Listing 8 variables:
+  0) const       1) price       2) sqft        3) bedrms      4) baths     
+  5) l_sqft      6) l_bedrms    7) l_baths   
+
+# learn about the logs command
+? help logs
+
+logs
+
+Argument:   varlist 
+
+The natural log of each of the series in varlist is obtained and the result
+stored in a new series with the prefix l_ ("el" underscore). For example,
+"logs x y" creates the new variables l_x = ln(x) and l_y = ln(y).
+
+Menu path:    /Add/Logs of selected variables
+
+# "best" linear model
+? ols price 0 sqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# estimate linear-log model
+? ols price 0 l_sqft l_bedrms l_baths
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -1773.14       372.290     -4.763     0.0008  ***
+  l_sqft       303.709       58.6762     5.176     0.0004  ***
+  l_bedrms    -143.249       91.1029    -1.572     0.1469 
+  l_baths       -8.65825     95.1471    -0.09100   0.9293 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    14969.35   S.E. of regression   38.69024
+R-squared            0.852975   Adjusted R-squared   0.808868
+F(3, 10)             19.33856   P-value(F)           0.000174
+Log-likelihood      -68.68806   Akaike criterion     145.3761
+Schwarz criterion    147.9323   Hannan-Quinn         145.1395
+
+Excluding the constant, p-value was highest for variable 7 (l_baths)
+
+# omit l_baths
+? omit l_baths
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for l_baths
+  Test statistic: F(1, 10) = 0.00828074, p-value 0.929291
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1749.97      259.141     -6.753    3.14e-05 ***
+  l_sqft        299.972      39.9758     7.504    1.19e-05 ***
+  l_bedrms     -145.094      84.7188    -1.713    0.1148  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    14981.74   S.E. of regression   36.90497
+R-squared            0.852853   Adjusted R-squared   0.826099
+F(2, 11)             31.87767   P-value(F)           0.000026
+Log-likelihood      -68.69385   Akaike criterion     143.3877
+Schwarz criterion    145.3049   Hannan-Quinn         143.2102
+
+# omit l_bedrms also
+? omit l_bedrms
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for l_bedrms
+  Test statistic: F(1, 11) = 2.93319, p-value 0.114784
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 4: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1660.81      273.543     -6.071    5.57e-05 ***
+  l_sqft        263.316      36.3816     7.238    1.03e-05 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18976.68   S.E. of regression   39.76670
+R-squared            0.813616   Adjusted R-squared   0.798084
+F(1, 12)             52.38323   P-value(F)           0.000010
+Log-likelihood      -70.34850   Akaike criterion     144.6970
+Schwarz criterion    145.9751   Hannan-Quinn         144.5787
+
+Done

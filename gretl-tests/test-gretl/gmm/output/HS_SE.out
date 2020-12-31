@@ -1,0 +1,157 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run HS_SE.inp
+ /home/cottrell/stats/test-gretl/gmm/HS_SE.inp
+# Hall, Generalized Method of Moments (Oxford), Table 3.5,
+# page 87: replicate the SE standard-error estimates based
+# on the Hansen-Singleton model.  These entries in the table
+# use pre-whitening.
+? function void I_gmm (series ewr, series consrat, scalar g, scalar \
+  d, list inst)
+? function void Z_gmm (series ewr, series consrat, scalar g, scalar \
+  d, list inst, matrix *Z)
+? open hall.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/hall.gdt
+periodicity: 12, maxobs: 467
+observations range: 1959:02 to 1997:12
+
+Listing 4 variables:
+  0) const      1) consrat    2) ewr        3) vwr      
+
+? scalar g = 0.5
+Generated scalar g = 0.5
+? scalar d = 0.5
+Generated scalar d = 0.5
+? series e = 0
+Generated series e (ID 4)
+? list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+Generated list inst
+? scalar ninst = nelem(inst)
+Generated scalar ninst = 5
+? set hac_prewhiten on
+# SE(B,1)
+? set hac_kernel bartlett
+? I_gmm(ewr, consrat, g, d, inst)
+Tolerance = 1.81899e-12
+
+Function evaluations: 116
+Evaluations of gradient: 21
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 2 (Bartlett kernel, prewhitened)
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -3.14448    7.26576      -0.4328   0.6652 
+  d           0.999215   0.0127773    78.20     0.0000  ***
+
+  GMM criterion: Q = 0.0128481 (TQ = 5.97437)
+
+In regard to function I_gmm:
+Warning: norm of gradient = 3.38025
+# SE(P,4)
+? set hac_kernel parzen
+? I_gmm(ewr, consrat, g, d, inst)
+Tolerance = 1.81899e-12
+
+Function evaluations: 116
+Evaluations of gradient: 21
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 4 (Parzen kernel, prewhitened)
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -3.14448    7.14000      -0.4404   0.6596 
+  d           0.999215   0.0125316    79.74     0.0000  ***
+
+  GMM criterion: Q = 0.0128481 (TQ = 5.97437)
+
+In regard to function I_gmm:
+Warning: norm of gradient = 3.38025
+# SE(Q,2.2)
+? set hac_kernel qs
+? I_gmm(ewr, consrat, g, d, inst)
+Tolerance = 1.81899e-12
+
+Function evaluations: 116
+Evaluations of gradient: 21
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 2.20 (QS kernel, prewhitened)
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -3.14448    7.35738      -0.4274   0.6691 
+  d           0.999215   0.0129588    77.11     0.0000  ***
+
+  GMM criterion: Q = 0.0128481 (TQ = 5.97437)
+
+In regard to function I_gmm:
+Warning: norm of gradient = 3.38025
+? matrix Z = { inst }
+Generated matrix Z
+# SE(B,0)
+? set hac_kernel bartlett
+? Z_gmm(ewr, consrat, g, d, inst, &Z)
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 11
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 2 (Bartlett kernel, prewhitened)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.398222   2.33025        0.1709   0.8643 
+  d          0.993180   0.00477425   208.0      0.0000  ***
+
+  GMM criterion: Q = 6.58898e-05 (TQ = 0.0306388)
+
+# SE(P,1)
+? set hac_kernel parzen
+? Z_gmm(ewr, consrat, g, d, inst, &Z)
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 11
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 1 (Parzen kernel, prewhitened)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.398222   2.41925        0.1646   0.8693 
+  d          0.993180   0.00489357   203.0      0.0000  ***
+
+  GMM criterion: Q = 6.58898e-05 (TQ = 0.0306388)
+
+# SE(QS,2.49)
+? set hac_kernel QS
+? Z_gmm(ewr, consrat, g, d, inst, &Z)
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 11
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 2.49 (QS kernel, prewhitened)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.398222   2.32451        0.1713   0.8640 
+  d          0.993180   0.00476211   208.6      0.0000  ***
+
+  GMM criterion: Q = 6.58898e-05 (TQ = 0.0306388)
+
+Done

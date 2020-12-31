@@ -1,0 +1,94 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps3-2.inp
+ /opt/esl/share/gretl/scripts/ps3-2.inp
+# PS3.2, for Section 3.6 on changing units
+? open data3-1
+
+Read datafile /opt/esl/share/gretl/data/data3-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 3 variables:
+  0) const    1) price    2) sqft   
+
+? ols price 0 sqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# price in dollars
+? genr price2 = price*1000
+Generated series price2 (ID 3)
+# estimate new model
+? ols price2 0 sqft
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52350.9      37285.5       1.404    0.1857  
+  sqft          138.750       18.7329    7.407    8.20e-06 ***
+
+Mean dependent var   317492.9   S.D. dependent var   88498.16
+Sum squared resid    1.83e+10   S.E. of regression   39023.04
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -166.7928   Akaike criterion     337.5856
+Schwarz criterion    338.8637   Hannan-Quinn         337.4673
+
+# sqft in hundredths
+? genr sqft2 = sqft/100
+Generated series sqft2 (ID 4)
+# estimate new model
+? ols price 0 sqft2
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        52.3509      37.2855      1.404    0.1857  
+  sqft2        13.8750       1.87329     7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# both units changed
+? ols price2 0 sqft2
+
+Model 4: OLS, using observations 1-14
+Dependent variable: price2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        52350.9      37285.5      1.404    0.1857  
+  sqft2        13875.0       1873.29     7.407    8.20e-06 ***
+
+Mean dependent var   317492.9   S.D. dependent var   88498.16
+Sum squared resid    1.83e+10   S.E. of regression   39023.04
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -166.7928   Akaike criterion     337.5856
+Schwarz criterion    338.8637   Hannan-Quinn         337.4673
+
+Done

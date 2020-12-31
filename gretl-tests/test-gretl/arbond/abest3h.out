@@ -1,0 +1,57 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/04/13 17:43
+? run abest3h.inp
+? open abdata.gdt
+
+Read datafile /home/cottrell/stats/test-esl/arbond/abdata.gdt
+periodicity: 9, maxobs: 1260,
+observations range: 1:1-140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? genr Ow = orthdev(w)
+Generated series Ow (ID 12)
+? genr Ow1 = orthdev(w(-1))
+Generated series Ow1 (ID 13)
+? genr Ok = orthdev(k)
+Generated series Ok (ID 14)
+? genr Oys = orthdev(ys)
+Generated series Oys (ID 15)
+? genr Oys1 = orthdev(ys(-1))
+Generated series Oys1 (ID 16)
+? list pred = Ow Ow(-1) Ok
+Generated list pred
+? list exog = Oys Oys(-1) 0
+Generated list exog
+? arbond 2 0 ; n pred exog ; exog GMM(k,2,3) GMM(w,2,3) --orthdev
+
+Model 1: 1-step Arellano-Bond estimates using 611 observations
+Included 140 cross-sectional units
+Dependent variable: n
+
+      VARIABLE       COEFFICIENT        STDERROR      T STAT   P-VALUE
+
+  On(-1)                0.811613         0.0916627     8.854  <0.00001 ***
+  On(-2)               -0.180190         0.0492852    -3.656   0.00026 ***
+  Ow                   -0.813498         0.164918     -4.933  <0.00001 ***
+  Ow_1                  0.715403         0.162561      4.401   0.00001 ***
+  Ok                    0.218248         0.0791143     2.759   0.00580 ***
+  Oys                   0.703798         0.113085      6.224  <0.00001 ***
+  Oys_1                -0.670747         0.139218     -4.818  <0.00001 ***
+  const                 0.0166327        0.00994323    1.673   0.09437 *
+
+  Sum of squared residuals = 4.79489
+  Standard error of residuals = 0.0891724
+  Test for AR(1) errors: z = -0.220382 (p-value 0.8256)
+  Test for AR(2) errors: z = -0.812082 (p-value 0.4167)
+  Sargan over-identification test:
+   Chi-square(46) = 164.075 (p-value 0.0000)
+  Wald (joint) test:
+   Chi-square(7) = 463.953 (p-value 0.0000)
+
+Done

@@ -1,0 +1,62 @@
+set echo off
+set messages off
+
+function series pack(list X, matrix *pwrof2)
+     /*
+     a check should be necessary that all series in X
+     are discrete; for the moment, let's just skip it
+     */
+     series ret = 0
+     # pwrtot = 1
+     # k = nelem(X)
+     # first build the nvalues vector
+     pwrof2 = {}
+     n = 1
+     k = 1
+     loop foreach i X --quiet
+         ret += k*X.$i
+         n = 2^ceil(log2(1+max(X.$i)))
+         k *= n
+         pwrof2 |= n
+     endloop
+
+     return ret
+end function
+
+function matrix unpack(scalar x, matrix pwr)
+     k = rows(pwr)
+     matrix ret = zeros(k,1)
+     
+     loop i=1..k --quiet
+         h = pwr[i]
+         a = x % h
+         ret[i] = a
+         x = (x-a)/h
+     endloop
+
+     return ret
+end function
+
+# --- END FUNCTIONS -----------------------------------------
+
+open pizza4.gdt
+series ages = age<=20 ? 0 : (age>20 && age <=40) ? 1 : 2
+
+list A = female hs ages
+matrix codes = {}
+u = pack(A, &codes)
+
+n_u = values(u)
+loop i = 1..rows(n_u) --quiet
+     k = n_u[i]
+     smpl u==k --restrict --replace
+     c = unpack(k, codes)
+     l = 1
+     loop foreach j A --quiet
+         printf "%10s = %d", "$j", c[l]
+         l++
+     endloop
+
+     printf "\ncases = %d, mean(pizza) = %g, mean(income) = %g\n\n", \
+       $nobs, mean(pizza), mean(income)
+endloop

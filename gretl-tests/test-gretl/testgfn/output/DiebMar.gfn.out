@@ -1,0 +1,107 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DiebMar.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DiebMar.gfn.inp
+? include ./DiebMar.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DiebMar.gfn
+DiebMar 1.0, 2015-08-06 (Giulio Palomba)
+Read datafile /opt/esl/share/gretl/data/misc/AWM.gdt
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+Symmetric loss functions                  DM test    p-value
+   U-shape                                -0.7622     0.4460
+   V-shape                                 0.3203     0.7487
+ 
+Asymmetric loss functions                 DM test    p-value
+   Lin-Lin (order parameter 0.70)*         0.2555     0.7983
+   Linex (shape parameter  0.80)**        -1.0272     0.3043
+   Direction-of-change                     0.1378     0.8904
+ 
+ * The highest p-value=0.9295 is for order parameter 0.
+   The lowest p-value=0.7487 is for order parameter 0.5.
+ 
+** The highest p-value=0.7264 is for shape parameter -2.
+   The lowest p-value=0.1062 is for shape parameter 2.
+ 
+The test with Forecast-direction loss function is not performed:
+  both forecast series have exactly the same predictive accuracy.
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   U-shaped loss function
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+   DM test statistic: -0.7622 
+   p-value: 0.4460
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   V-shaped loss function
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+   DM test statistic: 0.3203 
+   p-value: 0.7487
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   Lin-Lin loss function with order parameter 0.7
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+   DM test statistic: 0.2555 
+   p-value: 0.7983
+ 
+ Highest p-value=0.9295 for order parameter 0.
+ Lowest p-value=0.7487 for order parameter 0.5.
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   Linex loss function with shape parameter 0.8
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+   DM test statistic: -1.0272 
+   p-value: 0.3043
+ 
+ Highest p-value=0.7264 for shape parameter -2.
+ Lowest p-value=0.1062 for shape parameter 2.
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   Direction-of-change loss function
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+   DM test statistic: 0.1378 
+   p-value: 0.8904
+==================================================================
+
+
+==================================================================
+Diebold-Mariano (DM) test for forecasting accuracy
+   Forecast-direction loss function
+   Bartlett windows size: 4 (default)
+   Prewhitening correction
+ 
+This test is not performed: both forecast 
+   series have exactly the same predictive accuracy.
+==================================================================
+

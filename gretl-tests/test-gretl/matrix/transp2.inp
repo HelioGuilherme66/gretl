@@ -1,0 +1,13 @@
+matrix a = ones(3,2)
+a[1,2] = 2
+print a
+matrix b = ones(2,2)
+print b
+matrix c = a[1:2,]*b
+print c
+matrix c = a[1:2,]'b
+print c
+matrix c = transp(a[1:2,])'b
+print c
+matrix c = transp(a[1:2,]')'b
+print c

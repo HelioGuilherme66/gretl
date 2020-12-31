@@ -1,0 +1,63 @@
+# Stock and Watson, ch 11
+# Analysis of Project STAR official data set
+#
+open star_sw.gdt
+set hc_version 1
+# 
+# *************************************************************
+# The following command are not executed.  They are included to
+# document how the variables in STAR_SW were computed from 
+# WEBSTAR
+# *************************************************************
+# genr tscorek = tmathssk+treadssk
+# genr tscore1 = tmathss1+treadss1
+# genr tscore2 = tmathss2+treadss2
+# genr tscore3 = tmathss3+treadss3
+# genr sck = cltypek=1
+# genr sc1 = cltype1=1
+# genr sc2 = cltype2=1
+# genr sc3 = cltype3=1
+# genr rak = cltypek=3
+# genr ra1 = cltype1=3
+# genr ra2 = cltype2=3
+# genr ra3 = cltype3=3
+# genr white = (srace=1)
+# genr black = (srace=2)
+# genr other = (srace>2 & srace<=6)
+# genr boy = (ssex=1)
+# genr freelunk = (sesk=1)
+# genr freelun1 = (ses1=1)
+# genr freelun2 = (ses2=1)
+# genr freelun3 = (ses3=1)
+# *********************************************
+# Table 11.1: differences estimators
+# ----- summary for K -----
+# 
+# ----- kindergarten -----
+smpl --restrict stark=1 && ok(tscorek) && ok(sck) && ok(rak)
+summary tscorek sck rak
+ols tscorek 0 sck rak --robust
+# ----- grade 1 -----
+smpl --restrict --replace star1=1 && ok(tscore1) && ok(sc1) && ok(ra1)
+summary tscore1 sc1 ra1
+ols tscore1 0 sc1 ra1 --robust
+# ----- grade 2 -----
+smpl --restrict --replace star2=1 && ok(tscore2) && ok(sc2) && ok(ra2)
+summary tscore2 sc2 ra2
+ols tscore2 0 sc2 ra2 --robust
+# ----- grade 3 -----
+smpl --restrict --replace star3=1 && ok(tscore3) && ok(sc3) && ok(ra3)
+summary tscore3 sc3 ra3
+ols tscore3 0 sc3 ra3 --robust
+#
+# Table 11.2: differences estimators with X's for K
+smpl full
+smpl --restrict stark=1 && ok(tscorek) && ok(sck) && ok(rak)
+ols tscorek 0 sck rak --robust
+smpl --restrict ok(totexpk)
+ols tscorek 0 sck rak totexpk --robust 
+# Note: below we are missing the "school indicator variables"
+list xlist = boy freelunk black other
+smpl ok(xlist) --restrict
+ols tscorek 0 sck rak totexpk xlist --robust
+# end

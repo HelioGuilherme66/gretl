@@ -1,0 +1,16 @@
+set echo off
+set messages off
+mpi
+
+matrix m
+
+if $mpirank == 0
+  set seed 1234
+  m = mnormal(8,2)
+  printf "m at root:\n%10.5f\n", m
+endif
+mpiscatter(&m, byrows)
+
+printf "m at %d:\n%10.5f\n", $mpirank, m
+
+end mpi --np=4

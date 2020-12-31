@@ -1,0 +1,14 @@
+open data4-1
+matrix X = {const, sqft, bedrms, baths}
+X = X'X
+matrix U
+matrix V
+matrix S = svd(X, &U, &V)
+U
+S
+V
+matrix B = I(cols(U))
+B[diag] = S
+matrix A = U*B*V
+A
+X

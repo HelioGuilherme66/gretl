@@ -1,0 +1,51 @@
+set skip_missing off
+open bankscoperefacut.xlsx --sheet=1 --rowoffset=2 --coloffset=1 --preserve
+
+# grab the transpose of the data as a matrix
+M = {dataset}'
+# and record the length of the time dimension
+scalar T = rows(M)
+# print M
+
+open bankscoperefacut.xlsx --sheet=2 --rowoffset=2 --coloffset=1 --preserve
+# stick on row-wise the transpose of the next data
+M |= {dataset}'
+
+open bankscoperefacut.xlsx --sheet=3 --rowoffset=2 --coloffset=1 --preserve
+# stick on row-wise the transpose of the next data
+M |= {dataset}'
+
+open bankscoperefacut.xlsx --sheet=4 --rowoffset=2 --coloffset=1 --preserve
+# stick on row-wise the transpose of the next data
+M |= {dataset}'
+
+
+scalar NT = rows(M)
+
+# create a suitably sized dataset
+nulldata NT --preserve
+# pull out the columns of M as series
+series v1 = M[,1]
+series v2 = M[,2]
+series v3 = M[,3]
+series v5 = M[,5]
+series v8 = M[,8]
+series v55 = M[,55]
+
+#series v10 = M[,10]
+delete index
+# hello gretl, this is a panel!
+setobs T 1.1 --stacked-time-series
+series year = -time + 2012
+#daca datele sunt in ordine invers cronologica 2009,2008,2007, etc folosesc
+#series year = 2009-time
+# take a look
+print --byobs
+
+#arrange after time
+setobs 1 1 --cross-section
+genr sortkey = -obs
+dataset sortby sortkey
+setobs T 1.1 --stacked-time-series
+delete sortkey
+print v1 v2 year --byobs

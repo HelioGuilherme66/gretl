@@ -1,0 +1,58 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run transp2.inp
+ /home/cottrell/stats/test-gretl/matrix/transp2.inp
+? matrix a = ones(3,2)
+Generated matrix a
+? a[1,2] = 2
+Modified matrix a
+? print a
+a (3 x 2)
+
+  1   2 
+  1   1 
+  1   1 
+
+? matrix b = ones(2,2)
+Generated matrix b
+? print b
+b (2 x 2)
+
+  1   1 
+  1   1 
+
+? matrix c = a[1:2,]*b
+Generated matrix c
+? print c
+c (2 x 2)
+
+  3   3 
+  2   2 
+
+? matrix c = a[1:2,]'b
+Replaced matrix c
+? print c
+c (2 x 2)
+
+  2   2 
+  3   3 
+
+? matrix c = transp(a[1:2,])'b
+Replaced matrix c
+? print c
+c (2 x 2)
+
+  3   3 
+  2   2 
+
+? matrix c = transp(a[1:2,]')'b
+Replaced matrix c
+? print c
+c (2 x 2)
+
+  2   2 
+  3   3 
+
+Done

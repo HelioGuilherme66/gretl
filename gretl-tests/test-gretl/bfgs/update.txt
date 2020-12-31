@@ -1,0 +1,33 @@
+Here's a comparison of the performance of the quadratic step-length
+code as patched on 2013-01-06 wth the previous iteration.
+Question marks against timing judgements indicate that I'm not
+sure whether the difference is just noise.
+
+arma + sarma: gradient evals up; function evals down; overal time up
+slightly.
+
+cluster: gradient evals up; function evals down; overall time down
+slightly?
+
+gig: still somewhat slower than with the simple step-length code; now
+test3 completes OK but example4 fails: "numerical_hessian_inverse:
+failed" for the Normal model, and no estimates produced for the Skewed
+GED model ("non-p.d. G'G").
+
+gmm: with the new weights normalization code I get 4 failures (CKLS,
+hall, HS_HAC, HS_SE); without the new normalization only CKLS fails
+but the gradient and function evals both increase very substantially
+and the time taken increases by over 80 percent.
+
+kalman: gradient and function evals down some, but overall time taken
+goes up?
+
+mle: gradient evals up; function evals down; overall time down
+slightly?
+
+SVAR: overall time indistinguishable.
+
+
+
+
+

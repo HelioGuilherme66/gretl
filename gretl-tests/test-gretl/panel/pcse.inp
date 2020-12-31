@@ -1,0 +1,15 @@
+open ziliak.gdt
+
+# pooled OLS with Arellano-type standard errors
+ols 1 0 2 --robust
+# and PCSE
+set pcse on
+ols 1 0 2 --robust
+# fixed effects, robust, both ways
+set pcse off
+panel 1 0 2 --robust
+set pcse on
+panel 1 0 2 --robust
+
+
+

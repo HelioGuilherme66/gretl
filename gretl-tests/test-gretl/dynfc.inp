@@ -1,0 +1,35 @@
+open gdpc.gdt
+
+dataset addobs 4
+genr time
+lags 4 ; gdpc96
+scalar T = $nobs
+
+# forecast horizon: one year
+scalar steps = 4
+
+# start of first forecast range
+scalar ft1 = obsnum(1950:4)
+
+# end of first forecast range
+scalar ft2 = ft1 + steps - 1
+
+# matrix to hold forecasts
+matrix FM = zeros(T,1)
+
+smpl 1948:2 1950:3
+set messages off
+
+loop i=1950:3..2008:3 --quiet
+    ols gdpc96 const time gdpc96(-1 to -4) --quiet
+    fcast ft1 ft2 fc --dynamic
+    FM[ft1-1] = fc[ft1+steps-1]
+    ft1++
+    ft2++
+    smpl ; +1
+endloop
+
+smpl 1950:3 2008:3
+series fseries = FM
+series compare = gdpc96(+steps)
+print 1 time fseries compare --byobs

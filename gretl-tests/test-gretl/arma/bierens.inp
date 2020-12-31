@@ -1,0 +1,15 @@
+open bierens.gdt
+diff y
+smpl 1950:2 1997:1
+# BHHH
+arma 1 1 ; 0 1 ; d_y -c
+arima 1 1 1 ; 0 0 1 ; y -c
+# X12A
+arma 1 1 ; 0 1 ; d_y -x 
+arima 1 1 1 ; 0 0 1 ; y -x
+# native Kalman
+arma 1 1 ; 0 1 ; d_y 
+arima 1 1 1 ; 0 0 1 ; y 
+
+
+

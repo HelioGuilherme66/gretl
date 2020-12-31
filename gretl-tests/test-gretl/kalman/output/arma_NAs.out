@@ -1,0 +1,61 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-06 11:16
+? run arma_NAs.inp
+ /home/cottrell/stats/test-gretl/kalman/arma_NAs.inp
+? function void arma11_via_kalman(series y)
+# ------------------------ main ---------------------------
+? nulldata 40
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+? setobs 1 1 --special
+Full data range: 1 - 40 (n = 40)
+
+? set seed 6754831
+Pseudo-random number generator seeded with 6754831
+? u = normal()
+Generated series u (ID 2)
+? series y = 0
+Generated series y (ID 3)
+? y = 0.8*y(-1) + u + 0.2*u(-1)
+Replaced series y (ID 3)
+? y[30] = NA
+Modified series y (ID 3)
+? arma11_via_kalman(y)
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 42
+Evaluations of gradient: 16
+
+Model 1: ML, using observations 1-40
+logl = ERR ? NA : misszero(llt)
+Standard errors based on Hessian
+
+             estimate   std. error     z     p-value 
+  ---------------------------------------------------
+  phi        0.615991   0.177319     3.474   0.0005   ***
+  theta      0.435061   0.289700     1.502   0.1332  
+  sigma      0.866220   0.0984336    8.800   1.37e-18 ***
+
+Log-likelihood      -50.74837   Akaike criterion     107.4967
+Schwarz criterion    112.5634   Hannan-Quinn         109.3287
+
+In regard to function arma11_via_kalman:
+Warning: generated non-finite values
+? foreign language=R --send-data
+?     y <- gretldata[,"y"]
+?     arima(y, c(1,0,1), include.mean=F)
+? end foreign
+
+Call:
+arima(x = y, order = c(1, 0, 1), include.mean = F)
+
+Coefficients:
+         ar1     ma1
+      0.6160  0.4350
+s.e.  0.1772  0.2898
+
+sigma^2 estimated as 0.7503:  log likelihood = -50.75,  aic = 107.5
+Done

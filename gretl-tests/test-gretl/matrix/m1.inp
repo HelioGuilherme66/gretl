@@ -1,0 +1,7 @@
+open data4-1
+ols 1 0 2
+matrix uh = $uhat
+scalar s1 = uh'*uh
+matrix uh = {1,2,3}'
+scalar s2 = uh'*uh
+

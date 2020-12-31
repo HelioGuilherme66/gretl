@@ -1,0 +1,4 @@
+open people.csv -q
+join strval.gdt strval 
+print gender -o
+print strval -o

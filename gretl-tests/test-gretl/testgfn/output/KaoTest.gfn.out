@@ -1,0 +1,50 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run KaoTest.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/KaoTest.gfn.inp
+? include ./KaoTest.gfn
+ /home/cottrell/stats/test-gretl/testgfn/KaoTest.gfn
+KaoTest 2.0, 2013-03-06 (Uriel Rodriguez Ramirez)
+? open penngrow.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/penngrow.gdt
+periodicity: 6, maxobs: 564
+observations range: 1:1 to 94:6
+
+Listing 5 variables:
+  0) const      1) country    2) year       3) Y          4) X        
+
+? series h=Y
+Generated series h (ID 5)
+? list j=X
+Generated list j
+? KaoTest(h, j, 1)
+
+Model 2: Pooled OLS, using 376 observations
+Included 94 cross-sectional units
+Time-series length = 4
+Dependent variable: e
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  e_1         0.471362     0.0417399     11.29    1.18e-25 ***
+
+Mean dependent var   0.047126   S.D. dependent var   0.168475
+Sum squared resid    8.565892   S.E. of regression   0.151137
+R-squared            0.253773   Adjusted R-squared   0.253773
+F(1, 375)            127.5278   P-value(F)           1.18e-25
+Log-likelihood       177.4577   Akaike criterion    -352.9153
+Schwarz criterion   -348.9857   Hannan-Quinn        -351.3554
+rho                  0.401047   Durbin-Watson        1.038502
+
+==============================================================
+Cointegration Test
+==============================================================
+Null Hypothesis: Not Cointegration
+Test Statistic = -0.521628
+p-value = 0.699035
+--------------------------------------------------------------
+
+Done

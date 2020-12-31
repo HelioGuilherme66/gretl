@@ -1,0 +1,18 @@
+open greene19_1
+
+scalar b0 = 0
+scalar b1 = 0
+scalar b2 = 0
+scalar b3 = 0
+
+mle logl = GRADE*ln(cnorm(Xb)) + (1-GRADE)*ln(1-cnorm(Xb))
+  series Xb = b0+b1*GPA+b2*TUCE+b3*PSI
+  series aux1 = dnorm(Xb)*(GRADE/cnorm(Xb) - (1-GRADE)/(1-cnorm(Xb)))
+  deriv b0 = 1    * aux1
+  deriv b1 = GPA  * aux1
+  deriv b2 = TUCE * aux1
+  deriv b3 = PSI  * aux1
+end mle --robust
+
+probit GRADE const GPA TUCE PSI --robust
+

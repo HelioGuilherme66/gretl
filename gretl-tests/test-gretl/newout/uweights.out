@@ -1,0 +1,141 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run uweights.inp
+ /home/cottrell/stats/test-gretl/uweights.inp
+? open grenard.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/grenard.gdt
+periodicity: 16, maxobs: 64
+observations range: 1:01 to 4:16
+
+Listing 13 variables:
+  0) const            1) unit             2) year             3) Popgrowth      
+  4) GDP              5) Investment       6) ValueAddedAg     7) ValuAddIndust  
+  8) Trades           9) Unemp           10) CPI             11) EXCh           
+ 12) DEFICIT        
+
+? panel 4 0 5 6 7 --unit
+
+Model 1: WLS, using 64 observations
+Included 4 cross-sectional units
+Dependent variable: GDP
+Weights based on per-unit error variances
+
+                  coefficient   std. error   t-ratio   p-value
+  ------------------------------------------------------------
+  const            226.723       58.1302      3.900    0.0002  ***
+  Investment        -6.09918      2.03123    -3.003    0.0039  ***
+  ValueAddedAg     -15.5904       4.71016    -3.310    0.0016  ***
+  ValuAddIndust      4.89791      1.30042     3.766    0.0004  ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    49.26480   S.E. of regression   0.906135
+R-squared            0.237827   Adjusted R-squared   0.199718
+F(3, 60)             6.240745   P-value(F)           0.000927
+Log-likelihood      -82.43852   Akaike criterion     172.8770
+Schwarz criterion    181.5126   Hannan-Quinn         176.2790
+
+Statistics based on the original data:
+
+Mean dependent var   166.8929   S.D. dependent var   128.0715
+Sum squared resid     1027887   S.E. of regression   130.8872
+
+? omit 6 7
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    ValueAddedAg, ValuAddIndust
+  Test statistic: F(2, 60) = 8.16501, p-value 0.000730591
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 2: WLS, using 64 observations
+Included 4 cross-sectional units
+Dependent variable: GDP
+Weights based on per-unit error variances
+
+               coefficient   std. error   t-ratio   p-value
+  ---------------------------------------------------------
+  const         224.879       56.7782      3.961    0.0002  ***
+  Investment     -3.10984      2.08313    -1.493    0.1405 
+
+Statistics based on the weighted data:
+
+Sum squared resid    58.24135   S.E. of regression   0.969214
+R-squared            0.034699   Adjusted R-squared   0.019129
+F(1, 62)             2.228652   P-value(F)           0.140544
+Log-likelihood      -87.79487   Akaike criterion     179.5897
+Schwarz criterion    183.9075   Hannan-Quinn         181.2907
+
+Statistics based on the original data:
+
+Mean dependent var   166.8929   S.D. dependent var   128.0715
+Sum squared resid    970921.0   S.E. of regression   125.1400
+
+? panel 4 0 5 6 7 --unit --iter
+Convergence achieved after 27 iterations
+
+Model 3: Maximum Likelihood, using 64 observations
+Included 4 cross-sectional units
+Dependent variable: GDP
+Allowing for groupwise heteroskedasticity
+
+                  coefficient   std. error   t-ratio   p-value 
+  -------------------------------------------------------------
+  const            58.8885       23.9728      2.456    0.0169   **
+  Investment       -0.942827      1.29213    -0.7297   0.4684  
+  ValueAddedAg     -9.24733       2.49428    -3.707    0.0005   ***
+  ValuAddIndust     4.97024       1.10623     4.493    3.26e-05 ***
+
+Statistics based on the weighted data:
+
+Log-likelihood      -353.1784   Akaike criterion     714.3568
+Schwarz criterion    722.9924   Hannan-Quinn         717.7588
+
+Statistics based on the original data:
+
+Mean dependent var   166.8929   S.D. dependent var   128.0715
+Sum squared resid     1228315   S.E. of regression   143.0801
+
+Likelihood ratio test for groupwise heteroskedasticity -
+  Null hypothesis: the units have a common error variance
+  Test statistic: Chi-square(3) = 84.013
+  with p-value = 4.22673e-18
+
+? omit 6 7
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    ValueAddedAg, ValuAddIndust
+  Test statistic: F(2, 60) = 11.3487, p-value 6.60383e-05
+  Omitting variables improved 0 of 3 information criteria.
+Convergence achieved after 13 iterations
+
+Model 4: Maximum Likelihood, using 64 observations
+Included 4 cross-sectional units
+Dependent variable: GDP
+Allowing for groupwise heteroskedasticity
+
+               coefficient   std. error   t-ratio   p-value 
+  ----------------------------------------------------------
+  const         22.9449      19.8266       1.157    0.2516  
+  Investment     4.43472      0.830982     5.337    1.42e-06 ***
+
+Statistics based on the weighted data:
+
+Log-likelihood      -360.9379   Akaike criterion     725.8758
+Schwarz criterion    730.1936   Hannan-Quinn         727.5768
+
+Statistics based on the original data:
+
+Mean dependent var   166.8929   S.D. dependent var   128.0715
+Sum squared resid     1302565   S.E. of regression   144.9452
+
+Likelihood ratio test for groupwise heteroskedasticity -
+  Null hypothesis: the units have a common error variance
+  Test statistic: Chi-square(3) = 71.2446
+  with p-value = 2.31055e-15
+
+Done

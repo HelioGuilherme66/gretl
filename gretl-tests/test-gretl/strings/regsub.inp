@@ -1,0 +1,5 @@
+string test = "-100.35, A-Z, 1998-02-13"
+string mod1 = strsub(test, "-", "")
+print mod1
+string mod2 = regsub(test, "([0-9]+)-([0-9]+)-([0-9]+)", "\1\2\3")
+print mod2

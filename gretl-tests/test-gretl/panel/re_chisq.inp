@@ -1,0 +1,18 @@
+open baltagi_Gasoline
+genr time
+list X = y rp car
+panel gas 0 X --random-effects --time-dummies
+# test on named regressors
+restrict
+ b2 = 0
+ b3 = 0
+ b4 = 0
+end restrict
+# test on time dummies
+scalar k = $ncoeff - 4
+matrix qd = zeros(k, 1)
+matrix Rd = zeros(k,4) ~ I(k)
+restrict
+ R = Rd
+ q = qd
+end restrict

@@ -1,0 +1,14 @@
+set seed 56432674
+nulldata 150
+                                                                                
+loop for i=1..5
+     x = normal()
+     ystar = 1 + 2*x + 2*normal()
+     list X = const x
+                                                                                
+     hi = ystar + uniform()
+     lo = ystar - uniform()
+                                                                                
+     intreg lo hi const x
+     printf "%g\n", $sigma
+endloop

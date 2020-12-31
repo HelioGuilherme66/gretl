@@ -1,0 +1,199 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run eqmat.inp
+ /home/cottrell/stats/test-gretl/system/eqmat.inp
+? open greene14_1.gdt -q
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+? list L = C Q PF LF
+Generated list L
+? L = logs(L)
+Replaced list L
+? matrix X = {L}
+Generated matrix X
+? nulldata 15 --preserve
+periodicity: 1, maxobs: 15
+observations range: 1 to 15
+? matrix eqmat
+? loop i=1..6 -q
+> scalar r1 = (i-1) * 15 + 1
+> scalar r2 = r1 + 14
+> series y$i  = X[r1:r2,1]
+> series x1$i = X[r1:r2,2]
+> series x2$i = X[r1:r2,3]
+> series x3$i = X[r1:r2,4]
+> list L$i = y$i 0 x1$i x2$i x3$i
+> eqmat |= L$i
+> endloop
+? sursys <- system
+? equations eqmat
+? end system
+? restrict sursys
+? b[1,2] - b[2,2] = 0
+? end restrict
+Restriction:
+ b[1,2] - b[2,2] = 0
+? estimate sursys method=SUR --unrestrict-init
+
+Equation system, sursys
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1-15
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.58555     0.219582      39.10    3.71e-13 ***
+  x11          1.31698     0.0599631     21.96    1.95e-10 ***
+  x21          0.374768    0.0142518     26.30    2.79e-11 ***
+  x31         -1.73349     0.167945     -10.32    5.38e-07 ***
+
+Mean dependent var   14.67563   S.D. dependent var   0.494617
+Sum squared resid    0.008988   S.E. of regression   0.024478
+R-squared            0.997384   Adjusted R-squared   0.996671
+
+Equation 2: SUR, using observations 1-15
+Dependent variable: y2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.00423     0.241325      37.31    6.19e-13 ***
+  x12          1.31698     0.0599631     21.96    1.95e-10 ***
+  x22          0.358403    0.0207388     17.28    2.55e-09 ***
+  x32         -1.38796     0.105789     -13.12    4.63e-08 ***
+
+Mean dependent var   14.37247   S.D. dependent var   0.680536
+Sum squared resid    0.010515   S.E. of regression   0.026476
+R-squared            0.998398   Adjusted R-squared   0.997960
+
+Equation 3: SUR, using observations 1-15
+Dependent variable: y3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.06246     0.393244     20.50     4.09e-10 ***
+  x13          0.725907    0.113393      6.402    5.07e-05 ***
+  x23          0.450196    0.0286815    15.70     7.06e-09 ***
+  x33         -0.397853    0.264040     -1.507    0.1600  
+
+Mean dependent var   13.37231   S.D. dependent var   0.522066
+Sum squared resid    0.023134   S.E. of regression   0.039271
+R-squared            0.993939   Adjusted R-squared   0.992286
+
+Equation 4: SUR, using observations 1-15
+Dependent variable: y4
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.14982     0.594935     13.70     2.95e-08 ***
+  x14          0.868822    0.0614833    14.13     2.13e-08 ***
+  x24          0.485413    0.0366532    13.24     4.20e-08 ***
+  x34         -0.335222    0.207723     -1.614    0.1349  
+
+Mean dependent var   13.13580   S.D. dependent var   0.727387
+Sum squared resid    0.038895   S.E. of regression   0.050922
+R-squared            0.994770   Adjusted R-squared   0.993344
+
+Equation 5: SUR, using observations 1-15
+Dependent variable: y5
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.87537     0.541372     18.24     1.43e-09 ***
+  x15          0.992889    0.0552765    17.96     1.69e-09 ***
+  x25          0.341931    0.0327160    10.45     4.75e-07 ***
+  x35         -0.668039    0.135985     -4.913    0.0005   ***
+
+Mean dependent var   12.36304   S.D. dependent var   0.711945
+Sum squared resid    0.014658   S.E. of regression   0.031261
+R-squared            0.997939   Adjusted R-squared   0.997377
+
+Equation 6: SUR, using observations 1-15
+Dependent variable: y6
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      10.2956       0.419893     24.52     5.95e-11 ***
+  x16         0.929089     0.0247421    37.55     5.77e-13 ***
+  x26         0.335173     0.0236964    14.14     2.11e-08 ***
+  x36        -0.0265636    0.186612     -0.1423   0.8894  
+
+Mean dependent var   12.27441   S.D. dependent var   0.891749
+Sum squared resid    0.017818   S.E. of regression   0.034465
+R-squared            0.998417   Adjusted R-squared   0.997985
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00059919      (0.237)     (-0.089)     (-0.168)     (-0.111)     (-0.293)
+   0.00015352   0.00070099      (0.334)      (0.254)      (0.145)      (0.655)
+  -8.5430e-05   0.00034729    0.0015422      (0.388)      (0.706)      (0.409)
+  -0.00020971   0.00034228   0.00077636    0.0025930      (0.512)      (0.375)
+  -8.5308e-05   0.00011969   0.00086683   0.00081563   0.00097723      (0.381)
+  -0.00024698   0.00059739   0.00055318   0.00065727   0.00041067    0.0011878
+
+log determinant = -43.272
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(15) = 32.7058 [0.0052]
+
+F test for the specified restrictions:
+  F(1,66) = 10.7706 [0.0017]
+
+# check use of trailing 0s in matrix-row lists
+? eqmat = eqmat[1:2,]
+Replaced matrix eqmat
+? eqmat[2,4:5] = 0
+Modified matrix eqmat
+? print eqmat
+eqmat (2 x 5)
+
+  2   0   3   4   5 
+  6   0   7   0   0 
+
+? system method=sur
+? equations eqmat
+? end system
+
+Equation system, Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1-15
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.73566     0.234191     37.30     6.20e-13 ***
+  x11          1.17453     0.0829812    14.15     2.10e-08 ***
+  x21          0.381156    0.0158326    24.07     7.25e-11 ***
+  x31         -1.37458     0.209545     -6.560    4.08e-05 ***
+
+Mean dependent var   14.67563   S.D. dependent var   0.494617
+Sum squared resid    0.007718   S.E. of regression   0.022684
+R-squared            0.997756   Adjusted R-squared   0.997143
+
+Equation 2: SUR, using observations 1-15
+Dependent variable: y2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       14.4368      0.0413284    349.3     3.27e-27 ***
+  x12          1.94640     0.125580      15.50    9.21e-10 ***
+
+Mean dependent var   14.37247   S.D. dependent var   0.680536
+Sum squared resid    0.380473   S.E. of regression   0.159263
+R-squared            0.941325   Adjusted R-squared   0.936811
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00051454      (0.388)
+    0.0014029     0.025365
+
+log determinant = -11.4101
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 2.26192 [0.1326]
+
+Hansen-Sargan over-identification test:
+  Chi-square(4) = 13.2481 [0.0101]
+
+Done

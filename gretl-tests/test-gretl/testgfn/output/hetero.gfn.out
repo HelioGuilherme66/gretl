@@ -1,0 +1,60 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run hetero.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/hetero.gfn.inp
+? include ./hetero.gfn
+ /home/cottrell/stats/test-gretl/testgfn/hetero.gfn
+hetero 1.0, 2012-12-12 (Yi-Nung Yang)
+? open keane.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/keane.gdt
+periodicity: 1, maxobs: 12723
+observations range: 1 to 12723
+
+Listing 19 variables:
+  0) const      1) id         2) numyrs     3) year       4) choice   
+  5) wage       6) educ       7) expwc      8) expbc      9) expser   
+ 10) manuf     11) black     12) lwage     13) enroll    14) employ   
+ 15) attrit    16) exper     17) expersq   18) status   
+
+? list xlist = const educ exper expersq
+Generated list xlist
+? hetero(wage, xlist, 1, 1, 1, 1, 1, 1, 0)
+===============================================
+      Heteroskedasticity Tests
+
+          by Yi-Nung Yang
+      Dept. of IB, CYCU, Taiwan. 
+-----------------------------------------------In regard to function hetero (package hetero):
+Warning: generated missing values
+
+White's test for heteroskedasticity (squares only)
+
+Test statistic: TR^2 = 16.662900,
+with p-value = P(Chi-square(5) > 16.662900) = 0.005186
+
+
+White's test for heteroskedasticity
+
+Test statistic: TR^2 = 24.921846,
+with p-value = P(Chi-square(8) > 24.921846) = 0.001603
+
+White LM (with cross)	 24.921846	0.002
+
+
+
+===============================================
+      Heteroskedasticity Tests
+-----------------------------------------------
+Tests			 Static		p-value
+-----------------------------------------------
+Breusch-Pagan LM	 14.144730	0.003
+Glesjer LM		 149.625625	0.000
+Harvey-Godfrey LM	 341.870892	0.000
+Park LM			 243.006350	0.000
+White LM (no cross)	 16.662900	0.005
+White LM (with cross)	 24.921846	0.002
+===============================================
+Done

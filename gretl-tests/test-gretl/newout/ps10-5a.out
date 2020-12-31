@@ -1,0 +1,117 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps10-5a.inp
+ /opt/esl/share/gretl/scripts/ps10-5a.inp
+# PS10.5a, for the Breusch-Godfrey test for AR(24) in
+# Application Section 10.6
+? open data10-2
+
+Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+periodicity: 24, maxobs: 744
+observations range: 1:01 to 31:24
+
+Listing 4 variables:
+  0) const       1) day_hour    2) load        3) temp      
+
+? genr load1 = load(-1)
+Generated series load1 (ID 4)
+# suppress the first observation
+? smpl 1.02 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 1:02 - 31:24 (n = 743)
+
+# estimate model with lagged dependent variable
+? ols load 0 load1 temp
+
+Model 1: OLS, using observations 1:02-31:24 (T = 743)
+Dependent variable: load
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      405.174       70.4926       5.748    1.32e-08  ***
+  load1        0.915869     0.0143796   63.69     1.48e-302 ***
+  temp        -4.14000      1.26091     -3.283    0.0011    ***
+
+Mean dependent var   2640.847   S.D. dependent var   489.2167
+Sum squared resid    26954627   S.E. of regression   190.8538
+R-squared            0.848216   Adjusted R-squared   0.847805
+F(2, 740)            2067.670   P-value(F)           1.1e-303
+Log-likelihood      -4954.638   Akaike criterion     9915.277
+Schwarz criterion    9929.109   Hannan-Quinn         9920.609
+rho                  0.783199   Durbin-Watson        0.434240
+
+# Save residuals for Breusch-Godfrey test for AR(24)
+? genr ut = $uhat
+Generated series ut (ID 5)
+# generate 24 lags
+? lags ut
+Listing 30 variables:
+  0) const       1) day_hour    2) load        3) temp        4) load1     
+  5) ut          6) ut_1        7) ut_2        8) ut_3        9) ut_4      
+ 10) ut_5       11) ut_6       12) ut_7       13) ut_8       14) ut_9      
+ 15) ut_10      16) ut_11      17) ut_12      18) ut_13      19) ut_14     
+ 20) ut_15      21) ut_16      22) ut_17      23) ut_18      24) ut_19     
+ 25) ut_20      26) ut_21      27) ut_22      28) ut_23      29) ut_24     
+
+# Suppress 25 observations
+? smpl 2.02 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 2:02 - 31:24 (n = 719)
+
+# Estimate the auxiliary regression
+? ols ut 0 load1 temp ut_1 ut_2 ut_3 ut_4 ut_5 ut_6 ut_7 ut_8 ut_9 \
+  ut_10 ut_11 ut_12 ut_13 ut_14 ut_15 ut_16 ut_17 ut_18 ut_19 ut_20 \
+  ut_21 ut_22 ut_23 ut_24
+
+Model 2: OLS, using observations 2:02-31:24 (T = 719)
+Dependent variable: ut
+
+             coefficient    std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const      -75.3379       88.3515      -0.8527    0.3941  
+  load1       -0.00329393    0.0212751   -0.1548    0.8770  
+  temp         1.92445       0.810136     2.375     0.0178   **
+  ut_1         0.686108      0.0414734   16.54      4.77e-52 ***
+  ut_2        -0.475990      0.0477259   -9.973     5.58e-22 ***
+  ut_3         0.0391039     0.0500950    0.7806    0.4353  
+  ut_4         0.0310062     0.0502306    0.6173    0.5373  
+  ut_5        -0.150698      0.0492417   -3.060     0.0023   ***
+  ut_6        -0.0406532     0.0492241   -0.8259    0.4092  
+  ut_7        -0.0860892     0.0491719   -1.751     0.0804   *
+  ut_8        -0.0350838     0.0486542   -0.7211    0.4711  
+  ut_9        -0.137737      0.0485016   -2.840     0.0046   ***
+  ut_10        0.0480640     0.0483575    0.9939    0.3206  
+  ut_11       -0.00805341    0.0477535   -0.1686    0.8661  
+  ut_12       -0.246256      0.0472364   -5.213     2.45e-07 ***
+  ut_13        0.176177      0.0472989    3.725     0.0002   ***
+  ut_14       -0.170522      0.0476547   -3.578     0.0004   ***
+  ut_15       -0.109151      0.0479550   -2.276     0.0231   **
+  ut_16        0.0428575     0.0480329    0.8923    0.3726  
+  ut_17       -0.118268      0.0480086   -2.463     0.0140   **
+  ut_18       -0.0382542     0.0481543   -0.7944    0.4272  
+  ut_19       -0.0416059     0.0482316   -0.8626    0.3886  
+  ut_20       -0.00277988    0.0478618   -0.05808   0.9537  
+  ut_21       -0.119181      0.0478595   -2.490     0.0130   **
+  ut_22       -0.0503893     0.0480289   -1.049     0.2945  
+  ut_23        0.169023      0.0446310    3.787     0.0002   ***
+  ut_24        0.277562      0.0361138    7.686     5.22e-14 ***
+
+Mean dependent var   1.057541   S.D. dependent var   192.0083
+Sum squared resid     2260311   S.E. of regression   57.15195
+R-squared            0.914611   Adjusted R-squared   0.911402
+F(26, 692)           285.0789   P-value(F)           0.000000
+Log-likelihood      -3915.325   Akaike criterion     7884.650
+Schwarz criterion    8008.252   Hannan-Quinn         7932.370
+rho                  0.091337   Durbin-Watson        1.816746
+
+Excluding the constant, p-value was highest for variable 25 (ut_20)
+
+# Compute nRsquare statistic and p-value
+? genr LM=$trsq
+Generated scalar LM = 657.605
+? pvalue X 24 LM
+Chi-square(24): area to the right of 657.605 = 2.0079e-123
+(to the left: 1)
+Done

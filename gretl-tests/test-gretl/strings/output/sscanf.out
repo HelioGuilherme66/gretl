@@ -1,0 +1,46 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run sscanf.inp
+ /home/cottrell/stats/test-gretl/strings/sscanf.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? string foo = "x = 10.5, k = 30, gobble_futz"
+Generated string foo
+? scalar x
+? scalar k
+? string s
+? sscanf(foo, "x = %f, k = %d, %16[^_]", &x, &k, s)
+? print x k
+
+              x =  10.500000
+
+              k =  30.000000
+s = gobble
+? scalar y
+? sscanf("0.123456", "%3g%3g", &x, &y)
+? print x y
+
+              x =  0.10000000
+
+              y =  234.00000
+? sscanf("123456", "%3d%3d", &x, &y)
+? print x y
+
+              x =  123.00000
+
+              y =  456.00000
+? string s = "Operator	Factor	Root"
+Replaced string s
+? string w1 = null
+Generated string w1
+? string w2 = null
+Generated string w2
+? sscanf(s, "%s\t%s", w1, w2)
+? w1
+Operator
+? w2
+Factor
+Done

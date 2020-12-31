@@ -1,0 +1,14 @@
+open pension.gdt
+# demographic characteristics of participant
+list DEMOG = age educ female black married
+# dummies coding for income level
+list INCOME = finc25 finc35 finc50 finc75 finc100 finc101
+# estimate ordered probit
+probit pctstck const choice DEMOG INCOME wealth89 prftshr -v
+genr yh = $yhat
+genr uh = $uhat
+genr ystar = yh + uh
+print pctstck yh uh ystar -o
+summary ystar
+freq ystar
+normtest ystar --all

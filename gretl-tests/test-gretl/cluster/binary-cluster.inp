@@ -1,0 +1,13 @@
+open greene19_1.gdt
+
+# check that this works with missing values
+# GPA[14] = NA
+
+logit GRADE 0 GPA TUCE PSI --cluster=PSI
+probit GRADE 0 GPA TUCE PSI --cluster=PSI
+
+foreign language=stata --send-data
+  logit grade gpa tuce psi, vce(cluster psi)
+  probit grade gpa tuce psi, vce(cluster psi)
+end foreign
+

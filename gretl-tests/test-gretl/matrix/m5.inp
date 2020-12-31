@@ -1,0 +1,5 @@
+matrix A = {1,2;3,4}
+A
+matrix B = I(2)
+scalar x = det(A*B)
+

@@ -1,0 +1,26 @@
+# Kalbfleisch and Prentice, 2e, example on pp. 72-73
+
+open kpdata1.txt
+
+d1 = type==1
+d2 = type==2
+d3 = type==3
+cens = 1 - censor
+
+# Full model
+list X = status mfd age prior d1 d2 d3 treat
+duration durat 0 X ; cens
+printf "%8.4f\n", $coeff
+
+# Reduced model, Weibull
+list Xmin = status d1 d2 d3
+duration durat 0 Xmin ; cens --quiet
+printf "Weibull, status and cell dummies: ll = %.2f\n", $lnl
+
+# Reduced model, log-nomal
+list Xmin = status d1 d2 d3
+duration durat 0 Xmin ; cens --lognormal --quiet
+printf "Log-normal, status and cell dummies: ll = %.2f\n", $lnl
+
+
+

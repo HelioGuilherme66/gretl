@@ -1,0 +1,119 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.2   Copyright 1984-2005
+  Statistics/Data Analysis            StataCorp
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set mem 200m
+(204800k)
+
+. set more off
+
+. set matsize 800
+
+. 
+. use nlswork.dta,clear
+(National Longitudinal Survey.  Young Women 14-26 years of age in 1968)
+
+. 
+. iis idcode
+
+. tis year
+
+. 
+. gen age2 = age^2
+(24 missing values generated)
+
+. gen ttl_exp2 = ttl_exp^2
+
+. gen tenure2 = tenure^2
+(433 missing values generated)
+
+. gen byte black = race==2
+
+. 
+. * GLS Random-effects model 
+. xtreg ln_w grade age* ttl_exp* tenure* black not_smsa south, re sa theta
+
+Random-effects GLS regression                   Number of obs      =     28091
+Group variable (i): idcode                      Number of groups   =      4697
+
+R-sq:  within  = 0.1713                         Obs per group: min =         1
+       between = 0.4790                                        avg =       6.0
+       overall = 0.3712                                        max =        15
+
+Random effects u_i ~ Gaussian                   Wald chi2(10)      =   9577.82
+corr(u_i, X)       = 0 (assumed)                Prob > chi2        =    0.0000
+
+------------------- theta --------------------
+  min      5%       median        95%      max
+0.2282   0.2282     0.5229     0.6809   0.7009
+
+------------------------------------------------------------------------------
+     ln_wage |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |    .064576   .0017037    37.90   0.000     .0612369    .0679151
+         age |   .0368923   .0031262    11.80   0.000      .030765    .0430196
+        age2 |   -.000713   .0000502   -14.22   0.000    -.0008113   -.0006147
+     ttl_exp |   .0286539   .0024069    11.90   0.000     .0239364    .0333713
+    ttl_exp2 |   .0003124   .0001164     2.68   0.007     .0000843    .0005405
+      tenure |   .0395911   .0017626    22.46   0.000     .0361366    .0430457
+     tenure2 |  -.0020066   .0001198   -16.75   0.000    -.0022414   -.0017718
+       black |  -.0535821   .0095351    -5.62   0.000    -.0722706   -.0348936
+    not_smsa |  -.1335701   .0070585   -18.92   0.000    -.1474045   -.1197357
+       south |  -.0880875   .0071376   -12.34   0.000     -.102077   -.0740981
+       _cons |   .2393639   .0489981     4.89   0.000     .1433294    .3353984
+-------------+----------------------------------------------------------------
+     sigma_u |  .23948728
+     sigma_e |  .29069544
+         rho |  .40430682   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. estimates store re_est
+
+. quietly xtreg ln_w grade age* ttl_exp* tenure* black not_smsa south, fe
+
+. hausman . re_est
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |       .          re_est       Difference          S.E.
+-------------+----------------------------------------------------------------
+         age |    .0359987     .0368923       -.0008937        .0013017
+        age2 |    -.000723     -.000713       -9.95e-06        .0000179
+     ttl_exp |    .0334668     .0286539        .0048129        .0017321
+    ttl_exp2 |    .0002163     .0003124       -.0000961        .0000527
+      tenure |    .0357539     .0395911       -.0038372        .0005577
+     tenure2 |   -.0019701    -.0020066        .0000365        .0000356
+    not_smsa |   -.0890108    -.1335701        .0445594        .0064054
+       south |   -.0606309    -.0880875        .0274566        .0082802
+------------------------------------------------------------------------------
+                           b = consistent under Ho and Ha; obtained from xtreg
+            B = inconsistent under Ha, efficient under Ho; obtained from xtreg
+
+    Test:  Ho:  difference in coefficients not systematic
+
+                  chi2(8) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+                          =      175.81
+                Prob>chi2 =      0.0000
+
+. 
+. 

@@ -1,0 +1,27 @@
+function matrix solstest (series y, const list xlist)
+  # OLS showing standardized coefficients
+  ols y xlist --simple-print
+  matrix coeff = $coeff
+  matrix scoeff = $coeff
+  scalar sdy = sd(y)
+  printf "\nStandard deviation of dependent var. = %g\n\n", sdy
+  printf "Independent variables:\n\n"
+  printf "                    std. dev.    standardized coeff.\n\n"
+  loop foreach i xlist --quiet
+    genr sdx = sd(xlist.$i)
+    if sdx = 0
+      matrix scoeff[i] = scoeff[i] / sdy
+    else
+      matrix scoeff[i] = scoeff[i] * (sdx / sdy)
+    endif
+    genr sc = scoeff[i]
+    printf "%16s %12.5g %16.5g\n", "$i", sdx, sc
+  endloop
+  return scoeff
+end function
+
+open data4-1
+list X = 0 2 3 4
+solstest(price, X)
+ols 1 X
+

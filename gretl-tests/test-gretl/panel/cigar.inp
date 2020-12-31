@@ -1,0 +1,11 @@
+open cigar.txt
+setobs state year --panel-vars
+lnC = log(sales)
+lnP = log(price/cpi)
+lnPn = log(pimin/cpi)
+lnY = log(ndi/cpi)
+# store cigar.csv state year lnC lnP lnPn lnY
+# ols lnC 0 lnC(-1) lnP lnPn lnY
+# panel lnC 0 lnC(-1) lnP lnPn lnY --time-dummies=noprint
+dpanel 1 ; lnC lnP lnPn lnY const --dpdstyle --time-dummies
+dpanel 1 ; lnC lnP lnPn lnY const --dpdstyle --two-step --time-dummies

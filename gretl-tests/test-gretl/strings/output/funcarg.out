@@ -1,0 +1,32 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run funcarg.inp
+ /home/cottrell/stats/test-gretl/strings/funcarg.inp
+? nulldata 100
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+? setobs 12 1959:1
+Full data range: 1959:01 - 1967:04 (n = 100)
+
+? string label = "1960:1"
+Generated string label
+? string two_labels = "1960:1 1970:1"
+Generated string two_labels
+? t1 = obsnum(1960:1)
+Generated scalar t1 = 13
+? print t1
+
+             t1 =  13.000000
+? t2 = obsnum(label)
+Generated scalar t2 = 13
+? print t2
+
+             t2 =  13.000000
+? t3 = obsnum(strsplit(two_labels,1))
+Generated scalar t3 = 13
+? print t3
+
+             t3 =  13.000000
+Done

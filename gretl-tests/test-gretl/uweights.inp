@@ -1,0 +1,7 @@
+open grenard.gdt
+
+panel 4 0 5 6 7 --unit
+omit 6 7
+
+panel 4 0 5 6 7 --unit --iter
+omit 6 7

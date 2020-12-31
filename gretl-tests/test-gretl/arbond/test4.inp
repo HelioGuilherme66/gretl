@@ -1,0 +1,5 @@
+open test4.gdt
+diff eta eta2
+arbond 1 0 ; lnwreal d_eta d_eta2
+dpanel 1 ; lnwreal eta eta2
+

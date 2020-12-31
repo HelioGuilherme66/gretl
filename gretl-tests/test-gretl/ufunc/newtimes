@@ -1,0 +1,21 @@
+< Elapsed time: numerical = 0.06, analytical = 0.02
+> Elapsed time: numerical = 0.04, analytical = 0.01
+< Elapsed time = 3.59
+> Elapsed time = 2.7
+< elapsed time: 1.470000
+> elapsed time: 1.200000
+
+< Elapsed time: numerical = 0.06, analytical = 0.02
+> Elapsed time: numerical = 0.04, analytical = 0.01
+< Elapsed time = 3.59
+> Elapsed time = 2.62
+< elapsed time: 1.470000
+> elapsed time: 1.170000
+
+< Elapsed time: numerical = 0.06, analytical = 0.02
+> Elapsed time: numerical = 0.05, analytical = 0.01
+< Elapsed time = 3.59
+> Elapsed time = 2.48
+< elapsed time: 1.470000
+> elapsed time: 1.160000
+

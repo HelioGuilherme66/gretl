@@ -1,0 +1,20 @@
+open greene14_1.gdt
+
+matrix m = zeros(15,1)
+scalar k = 1
+loop i=1970..1984
+  smpl year=i --restrict
+  m[k] = sum(LF)
+  k++
+  smpl --full
+endloop
+
+nulldata 15 --preserve
+series baz = m
+store baz.txt baz
+
+open greene14_1.gdt
+series foo = pxsum(LF)
+append baz.txt
+
+print LF foo baz -o

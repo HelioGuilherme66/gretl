@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run Lew.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/Lew.inp
+? open Lew.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/Lew.hdr
+periodicity: 1, maxobs: 200,
+observations range: 1-200
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/Lew.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+              Summary Statistics, using the observations 1 - 200
+                for the variable 'Y' (200 valid observations)
+
+  Mean                  -177.44      
+  Median                -162.00      
+  Minimum               -579.00      
+  Maximum                300.00      
+  Standard deviation     277.33      
+  C.V.                     1.5630    
+  Skewness                -0.050226  
+  Ex. kurtosis            -1.4888    
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = -0.308072
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = -177.435
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 277.332
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 1.53057e+07
+? smpl 2
+Full data range: 1 - 200 (n = 200)
+Current sample:  2 - 200 (n = 199)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = -4.70352e+06
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = -0.307305
+ybar  = -177.435
+ysd   = 277.332168044
+r1    = -0.308071529271
+rnist = -0.307304800606
+Done

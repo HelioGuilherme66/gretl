@@ -1,0 +1,23 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run vfun.inp
+ /home/cottrell/stats/test-gretl/ufunc/vfun.inp
+? function scalar vfun (series y)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? scalar pv = vfun(QNC)
+v1 = 136185 (n = 31), v2 = 78100 (n = 31)
+F(31,31) = 1.74373, p-value 0.063525
+Generated scalar pv = 0.063525
+Done

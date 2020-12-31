@@ -1,0 +1,20 @@
+#!/bin/sh
+
+. `dirname $0`/sitevars
+
+# for ATLAS
+# export GRETL_PLUGIN_PATH="/home/cottrell/src/atlas/plugin/.libs/"
+
+cat /dev/null > fails
+
+rm -rf newout
+mkdir -p newout
+
+for f in $(cat ps.list | grep -v ^# | awk '{ print $1 }') ; do
+   echo "*** $f ***"
+   if ! ${CLI} -b $f > newout/${f%.inp}.out ; then
+      echo "$f failed" >> fails
+   fi
+done 
+
+  

@@ -1,0 +1,8 @@
+open data4-1
+nulldata 100
+open data4-10
+append add4-10.txt
+corr ENROLL XENROLL
+open data9-7
+append add9-7.txt
+corr QNC XQNC

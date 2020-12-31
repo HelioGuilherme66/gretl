@@ -1,0 +1,54 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run rq3a.inp
+ /home/cottrell/stats/test-gretl/rq/rq3a.inp
+? open engel.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/engel.gdt
+periodicity: 1, maxobs: 235
+observations range: 1 to 235
+
+Listing 3 variables:
+  0) const      1) foodexp    2) income   
+
+? matrix tau = {0.25, 0.50, 0.75}
+Generated matrix tau
+? quantreg tau 1 0 2
+
+Model 1: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+Asymptotic standard errors assuming IID errors
+
+             tau    coefficient   std. error      t-ratio 
+  -------------------------------------------------------
+  const     0.250       95.4835      15.8619      6.01968
+            0.500       81.4822      13.2391      6.15468
+            0.750       62.3966      9.85947      6.32860
+
+  income    0.250      0.474103    0.0142807      33.1989
+            0.500      0.560181    0.0119193      46.9977
+            0.750      0.644014   0.00887662      72.5518
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+
+? quantreg tau 1 0 2 --robust
+
+Model 2: Quantile estimates, using observations 1-235
+Dependent variable: foodexp
+Robust (sandwich) standard errors
+
+             tau    coefficient   std. error      t-ratio 
+  -------------------------------------------------------
+  const     0.250       95.4835      21.3924      4.46344
+            0.500       81.4822      19.2507      4.23270
+            0.750       62.3966      16.3054      3.82675
+
+  income    0.250      0.474103    0.0290553      16.3173
+            0.500      0.560181    0.0282772      19.8103
+            0.750      0.644014    0.0232392      27.7124
+
+Median depend. var   582.5413   S.D. dependent var   276.4570
+
+Done

@@ -1,0 +1,67 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run sarma1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/sarma1.inp
+? nulldata 640
+periodicity: 1, maxobs: 640
+observations range: 1 to 640
+? setobs 12 1920:01
+Full data range: 1920:01 - 1973:04 (n = 640)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? scalar phi_1 = 0.5
+Generated scalar phi_1 = 0.5
+? scalar Phi_1 = 0.1
+Generated scalar Phi_1 = 0.1
+? scalar theta_1 = 0.3
+Generated scalar theta_1 = 0.3
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + theta_1 * eps(-1)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = phi_1*y(-1) + Phi_1*y(-12) - phi_1*Phi_1*y(-13) + u
+Replaced series y (ID 4)
+? genr y = y + 500 / (1 - phi_1 - Phi_1 + phi_1*Phi_1)
+Replaced series y (ID 4)
+? smpl +20 ;
+Full data range: 1920:01 - 1973:04 (n = 640)
+Current sample: 1921:09 - 1973:04 (n = 620)
+
+? arma 1 1 ; 1 0 ; y
+
+Function evaluations: 40
+Evaluations of gradient: 10
+
+Model 1: ARMA, using observations 1921:09-1973:04 (T = 620)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error      z       p-value 
+  ----------------------------------------------------------
+  const      1111.14        0.113439     9795       0.0000   ***
+  phi_1         0.443456    0.0521499       8.503   1.84e-17 ***
+  Phi_1         0.0941859   0.0403495       2.334   0.0196   **
+  theta_1       0.375992    0.0548876       6.850   7.37e-12 ***
+
+Mean dependent var   1111.136   S.D. dependent var   1.419656
+Mean of innovations -0.000355   S.D. of innovations  1.038629
+Log-likelihood      -903.6345   Akaike criterion     1817.269
+Schwarz criterion    1839.418   Hannan-Quinn         1825.878
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.2550     0.0000     2.2550     0.0000
+  AR (seasonal)
+    Root  1          10.6173     0.0000    10.6173     0.0000
+  MA
+    Root  1          -2.6596     0.0000     2.6596     0.5000
+  -----------------------------------------------------------
+
+Done

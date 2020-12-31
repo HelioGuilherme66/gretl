@@ -1,0 +1,53 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run bandplot.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/bandplot.gfn.inp
+? include ./bandplot.gfn
+ /home/cottrell/stats/test-gretl/testgfn/bandplot.gfn
+bandplot 0.3, 2015-07-11 (Allin Cottrell)
+? open data4-10.gdt
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? list Xlist = 0 CATHOL PUPIL WHITE
+Generated list Xlist
+? ols ENROLL Xlist
+
+Model 1: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.241105     0.0660225     3.652    0.0007   ***
+  CATHOL      0.223530     0.0459701     4.863    1.34e-05 ***
+  PUPIL      -0.00338200   0.00271962   -1.244    0.2198  
+  WHITE      -0.152643     0.0407064    -3.750    0.0005   ***
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.070959   S.E. of regression   0.038856
+R-squared            0.479466   Adjusted R-squared   0.446241
+F(3, 47)             14.43065   P-value(F)           8.53e-07
+Log-likelihood       95.35969   Akaike criterion    -182.7194
+Schwarz criterion   -174.9921   Hannan-Quinn        -179.7665
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+? matrix b = $coeff
+Generated matrix b
+? matrix V = $vcv
+Generated matrix V
+? matrix X = {Xlist}
+Generated matrix X
+? colnames(X, Xlist)
+? scalar xvar = 2
+Generated scalar xvar = 2
+? bandplot(&b, &V, &X, xvar, 0.95, $df, $depvar)
+Done

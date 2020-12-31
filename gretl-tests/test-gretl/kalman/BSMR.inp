@@ -1,0 +1,26 @@
+open data9-3.gdt
+
+! rm -f @dotdir/compon.csv
+! rm -f @dotdir/vars.mat
+! rm -f @dotdir/Rll.mat
+
+foreign language=R --send-data
+    y <- gretldata[, "reskwh"]
+    bsm <- StructTS(y)
+    compon <- as.ts(tsSmooth(bsm))
+    vars <- as.matrix(bsm$coef)
+    Rll <- as.matrix(bsm$loglik)
+    gretl.export(compon)
+    gretl.export(vars)
+    gretl.export(Rll)
+end foreign
+
+vars = mread("@dotdir/vars.mat")
+vars
+Rll = mread("@dotdir/Rll.mat")
+
+append @dotdir/compon.csv -q
+print -o level slope sea
+
+
+

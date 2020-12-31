@@ -1,0 +1,150 @@
+*** Using intregex.dta:
+
+intreg lgpa ugpa write rating read
+
+Fitting constant-only model:
+
+Iteration 0:   log likelihood = -52.129849  
+Iteration 1:   log likelihood =  -51.74803  
+Iteration 2:   log likelihood = -51.747288  
+Iteration 3:   log likelihood = -51.747288  
+
+Fitting full model:
+
+Iteration 0:   log likelihood = -38.212102  
+Iteration 1:   log likelihood = -36.680551  
+Iteration 2:   log likelihood = -36.662189  
+Iteration 3:   log likelihood = -36.662185  
+Iteration 4:   log likelihood = -36.662185  
+
+Interval regression                               Number of obs   =         30
+                                                  LR chi2(3)      =      30.17
+Log likelihood = -36.662185                       Prob > chi2     =     0.0000
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       write |   .0052829   .0015363     3.44   0.001     .0022718    .0082939
+      rating |    .016789    .009751     1.72   0.085    -.0023226    .0359005
+        read |    .002329   .0008046     2.89   0.004      .000752     .003906
+       _cons |   .9133711   .4794007     1.91   0.057     -.026237    1.852979
+-------------+----------------------------------------------------------------
+    /lnsigma |  -1.090882   .1516747    -7.19   0.000    -1.388159   -.7936051
+-------------+----------------------------------------------------------------
+       sigma |   .3359201   .0509506                      .2495343    .4522116
+------------------------------------------------------------------------------
+
+  Observation summary:         0  left-censored observations
+                               0     uncensored observations
+                               0 right-censored observations
+                              30       interval observations
+
+intreg lgpa ugpa write rating read, robust
+
+Fitting constant-only model:
+
+Iteration 0:   log pseudolikelihood = -52.129849  
+Iteration 1:   log pseudolikelihood =  -51.74803  
+Iteration 2:   log pseudolikelihood = -51.747288  
+Iteration 3:   log pseudolikelihood = -51.747288  
+
+Fitting full model:
+
+Iteration 0:   log pseudolikelihood = -38.212102  
+Iteration 1:   log pseudolikelihood = -36.680551  
+Iteration 2:   log pseudolikelihood = -36.662189  
+Iteration 3:   log pseudolikelihood = -36.662185  
+Iteration 4:   log pseudolikelihood = -36.662185  
+
+Interval regression                               Number of obs   =         30
+                                                  Wald chi2(3)    =      54.85
+Log pseudolikelihood = -36.662185                 Prob > chi2     =     0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       write |   .0052829   .0014818     3.57   0.000     .0023786    .0081872
+      rating |    .016789   .0106434     1.58   0.115    -.0040717    .0376497
+        read |    .002329   .0010766     2.16   0.031     .0002189     .004439
+       _cons |   .9133711   .4883437     1.87   0.061     -.043765    1.870507
+-------------+----------------------------------------------------------------
+    /lnsigma |  -1.090882   .1267837    -8.60   0.000    -1.339373   -.8423906
+-------------+----------------------------------------------------------------
+       sigma |   .3359201   .0425892                      .2620098    .4306797
+------------------------------------------------------------------------------
+
+predict p
+
+correlate lgpa ugpa p
+(obs=30)
+
+             |     lgpa     ugpa        p
+-------------+---------------------------
+        lgpa |   1.0000
+        ugpa |   0.9488   1.0000
+           p |   0.7494   0.7963   1.0000 
+
+display .7494^2
+
+.56160036
+
+display .7963^2
+
+.63409369
+
+fitstat
+
+Measures of Fit for intreg of lgpa ugpa
+
+Log-Lik Intercept Only:        -51.747   Log-Lik Full Model:            -36.662
+D(25):                          73.324   LR(3):                          30.170
+                                         Prob > LR:                       0.000
+McFadden's R2:                   0.292   McFadden's Adj R2:               0.195
+ML (Cox-Snell) R2:               0.634   Cragg-Uhler(Nagelkerke) R2:      0.655
+McKelvey & Zavoina's R2:         0.677                              
+Variance of y*:                  0.350   Variance of error:               0.113
+AIC:                             2.777   AIC*n:                          83.324
+BIC:                           -11.706   BIC':                          -19.967
+BIC used by Stata:              90.330   AIC used by Stata:              83.324
+
+*** Using intregex2.dta:
+
+intreg lgpa ugpa write rating read, robust
+
+Fitting constant-only model:
+
+Iteration 0:   log pseudolikelihood = -51.784888  
+Iteration 1:   log pseudolikelihood =  -51.75397  
+Iteration 2:   log pseudolikelihood = -51.753956  
+Iteration 3:   log pseudolikelihood = -51.753956  
+
+Fitting full model:
+
+Iteration 0:   log pseudolikelihood = -36.722734  
+Iteration 1:   log pseudolikelihood = -36.427115  
+Iteration 2:   log pseudolikelihood = -36.425896  
+Iteration 3:   log pseudolikelihood = -36.425896  
+
+Interval regression                               Number of obs   =         30
+                                                  Wald chi2(3)    =      48.39
+Log pseudolikelihood = -36.425896                 Prob > chi2     =     0.0000
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       write |   .0054281    .001462     3.71   0.000     .0025627    .0082936
+      rating |   .0185163   .0109571     1.69   0.091    -.0029592    .0399917
+        read |   .0024199   .0011216     2.16   0.031     .0002216    .0046182
+       _cons |   .7927504   .5138823     1.54   0.123    -.2144405    1.799941
+-------------+----------------------------------------------------------------
+    /lnsigma |  -1.053316   .1300213    -8.10   0.000    -1.308153   -.7984792
+-------------+----------------------------------------------------------------
+       sigma |   .3487792   .0453487                      .2703188    .4500128
+------------------------------------------------------------------------------
+
+  Observation summary:         1  left-censored observation
+                               0     uncensored observations
+                               1 right-censored observation
+                              28       interval observations

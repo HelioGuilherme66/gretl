@@ -1,0 +1,21 @@
+# Stock and Watson, ch 14
+# illustrative VAR and GARCH
+# 
+open sw_ch14.gdt
+set force_hc on
+set hc_version 1
+genr infl = 400 * log(PUNEW/PUNEW(-1))
+diff infl 
+lags d_infl LHUR
+smpl 1962:1 1995:4
+# GARCH model
+garch 1 1 ; d_infl const d_infl(-1 to -4) LHUR(-1 to -4) -r
+genr yh1 = $yhat
+fcast 1995:1 1999:4 yh2
+smpl 1995:1 1999:4
+print d_infl yh1 yh2 -o
+fcasterr 1995:1 1999:4
+
+
+
+

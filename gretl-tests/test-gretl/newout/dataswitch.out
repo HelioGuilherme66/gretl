@@ -1,0 +1,95 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run dataswitch.inp
+ /home/cottrell/stats/test-gretl/dataswitch.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? nulldata 100
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? append add4-10.txt
+parsing /home/cottrell/stats/test-gretl/add4-10.txt...
+using delimiter ' '
+   longest line: 24 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 52
+scanning for variable names...
+   line: obs XENROLL
+scanning for row labels and data...
+   first row label "AL", last label "WY"
+trying to parse row labels as dates...
+treating these as undated data
+
+Data appended OK
+Listing 11 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+ 10) XENROLL  
+
+? corr ENROLL XENROLL
+
+corr(ENROLL, XENROLL) = 1.00000000
+5% critical value (two-tailed) = 0.2759 for n = 51
+
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? append add9-7.txt
+parsing /home/cottrell/stats/test-gretl/add9-7.txt...
+using delimiter ' '
+   longest line: 23 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 65
+scanning for variable names...
+   line: obs XQNC
+scanning for row labels and data...
+   first row label "1975Q1", last label "1990Q4"
+trying to parse row labels as dates...
+   1975: probably a year... quarter 1?
+taking date information from row labels
+
+Data appended OK
+Listing 13 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL     12) XQNC    
+
+? corr QNC XQNC
+
+corr(QNC, XQNC) = 1.00000000
+5% critical value (two-tailed) = 0.2461 for n = 64
+
+Done

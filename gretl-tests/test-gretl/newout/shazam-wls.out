@@ -1,0 +1,106 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run shazam-wls.inp
+ /home/cottrell/stats/test-gretl/shazam-wls.inp
+? open GREENE.txt
+parsing /home/cottrell/stats/test-gretl/GREENE.txt...
+using delimiter ' '
+   longest line: 21 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 3
+   number of variables: 2
+   number of non-blank lines: 52
+scanning for variable names...
+   line: obs Exp Income
+scanning for row labels and data...
+   first row label "Ala", last label "Wyo"
+trying to parse row labels as dates...
+treating these as undated data
+
+Listing 3 variables:
+  0) const     1) Exp       2) Income  
+
+# Scale Income (cf. http://shazam.econ.ubc.ca/intro/glshet1.htm )
+? Income = Income / 1000
+Replaced series Income (ID 2)
+# Generate the square of income
+? genr Income2 = Income^2
+Generated series Income2 (ID 3)
+# Model estimation as reported in Table 14.2 of Greene (1993)
+? ols Exp 0 Income Income2 --simple-print
+
+OLS, using observations 1-51 (n = 50)
+Missing or incomplete observations dropped: 1
+Dependent variable: Exp
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        832.914     327.292       2.545    0.0143  **
+  Income      -183.420      82.8985     -2.213    0.0318  **
+  Income2       15.8704      5.19077     3.057    0.0037  ***
+
+SSR = 150986, R-squared = 0.655344
+
+# Weighted least squares estimation (Greene, Table 14.4, p.398)
+#   Assumption A : Variance is proportional to Income
+? genr w = 1/Income
+Generated series w (ID 4)
+? wls w Exp 0 Income Income2
+
+Model 2: WLS, using observations 1-51 (n = 50)
+Missing or incomplete observations dropped: 1
+Dependent variable: Exp
+Variable used as weight: w
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        746.356     328.198       2.274    0.0276  **
+  Income      -161.225      84.4833     -1.908    0.0625  *
+  Income2       14.4746      5.37710     2.692    0.0098  ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    18732.07   S.E. of regression   19.96384
+R-squared            0.627374   Adjusted R-squared   0.611518
+F(2, 47)             39.56600   P-value(F)           8.41e-11
+Log-likelihood      -219.0962   Akaike criterion     444.1923
+Schwarz criterion    449.9284   Hannan-Quinn         446.3767
+
+Statistics based on the original data:
+
+Mean dependent var   373.2600   S.D. dependent var   94.55326
+Sum squared resid    151217.8   S.E. of regression   56.72213
+
+#   Assumption B : Variance is proportional to Income^2
+? genr w = 1/Income^2
+Replaced series w (ID 4)
+? wls w Exp 0 Income Income2
+
+Model 3: WLS, using observations 1-51 (n = 50)
+Missing or incomplete observations dropped: 1
+Dependent variable: Exp
+Variable used as weight: w
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        664.584     333.613       1.992    0.0522  *
+  Income      -139.928      87.2069     -1.605    0.1153 
+  Income2       13.1135      5.63709     2.326    0.0244  **
+
+Statistics based on the weighted data:
+
+Sum squared resid    2383.084   S.E. of regression   7.120668
+R-squared            0.598271   Adjusted R-squared   0.581176
+F(2, 47)             34.99712   P-value(F)           4.93e-10
+Log-likelihood      -167.5501   Akaike criterion     341.1002
+Schwarz criterion    346.8363   Hannan-Quinn         343.2846
+
+Statistics based on the original data:
+
+Mean dependent var   373.2600   S.D. dependent var   94.55326
+Sum squared resid    151898.2   S.E. of regression   56.84960
+
+Done

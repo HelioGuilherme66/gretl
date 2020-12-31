@@ -1,0 +1,15 @@
+open mroz87
+smpl LFP==0 --restrict
+eval FAMINC[1]
+smpl full
+smpl LFP==0 --resize
+eval FAMINC[1]
+
+open denmark
+smpl 1980:1 1986:4
+ols LRM 0 LRM(-1) --simple
+
+open denmark
+smpl 1980:1 1986:4 --resize
+ols LRM 0 LRM(-1) --simple
+

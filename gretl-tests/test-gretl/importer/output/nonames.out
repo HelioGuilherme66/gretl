@@ -1,0 +1,25 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run nonames.inp
+ /home/cottrell/stats/test-gretl/importer/nonames.inp
+? open nonames.xls --sheet=3
+Excel 97 +
+rows=5, total cols=2, data cols=2
+check for label strings in first imported column: not found
+it seems there are no variable names
+Listing 3 variables:
+  0) const    1) v1       2) v2     
+
+? print -o
+
+            v1           v2
+
+1           20            1
+2           34            2
+3           45            3
+4           56            2
+5           78            3
+
+Done

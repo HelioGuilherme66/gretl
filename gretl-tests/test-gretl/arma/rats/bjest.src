@@ -1,0 +1,116 @@
+*
+*  BJEST.SRC
+*
+*  @BJEST( options )  series  start  end  resids
+*     series      : Dependent variable.
+*     start  end  : Estimation range. By default, it uses the largest
+*       range possible.
+*
+*  Options:
+*     [PRINT]/NOPRINT Include printed output
+*     DIFFS    =Number of regular differences [0]
+*     SDIFFS   =Number of seasonal differences [0]
+*     AR       =Number of autoregressives[0]
+*     MA       =Number of moving averages[0]
+*     SAR      =Number of seasonal autoregressives[0]
+*     SMA      =Number of seasonal moving averages[0]
+*     TRANS=[NONE]/LOG/ROOT
+*     [CONSTANT]/NOCONSTANT
+*     DEFINE   =Equation to define
+*
+*  Variables defined (other than normal regression variables):
+*    %AIC  Akaike Information Criterion
+*    %SBC  Schwarz Bayesian Criterion
+*
+*  Revision Schedule
+*    08/00 Updated for RATS 5.0
+*    02/03 Improved graphics, more options added
+*
+procedure  bjest  series  start  end  resids
+type series series
+type integer start end
+type series *resids
+*
+option switch print   1
+option switch graph   1
+option int    diffs   0
+option int    sdiffs  0
+option int    sma     0
+option int    sar     0
+option switch const   1
+option int    ar      0
+option  int    ma      0
+option  int    number
+option  choice trans   1  none log root
+option equation *define
+*
+local  int    startl  endl  span  I
+local string hh qstring cstring
+local  series  transfrm resser corrs upper lower
+*
+*  get the seasonal span
+*
+inquire(seasonal) span
+*
+*  get the defined range of the series
+*
+inquire(series=series) startl  endl
+*
+*  if the user specified an end entry, use it
+*
+if %defined(end)
+   compute endl=end
+*
+*  if the user specifed a start entry, use it as the start
+*  of the estimation range. Since we need to do transformations,
+*  we first set startl to include all the lags required, then
+*  adjust it back.
+*
+if %defined(start)
+   compute startl=start-(diffs+ar+span*(sdiffs+sar))
+
+if trans == 1
+   set transfrm startl endl = series
+else if trans == 2
+   set transfrm startl endl = log(series)
+else
+   set transfrm startl endl = sqrt(series)
+
+compute startl = startl+diffs+ar+span*(sdiffs+sar)
+
+boxjenk(ar=ar,diffs=diffs,sdiffs=sdiffs,ma=ma,sma=sma,sar=sar,$
+  const=const,print=print,define=define) transfrm startl endl resser
+compute %aic = log(%rss/%nobs)+2.0*%nreg/%nobs
+compute %sbc = log(%rss/%nobs)+log(%nobs)*%nreg/%nobs
+*
+clear corrs
+corr(number=number,qstats,dfc=ar+ma+sma+sar,print=print) resser / corrs
+disp(store=qstring) 'q=' *.## %cdstat 'p-value' #.##### %signif
+disp(store=cstring) 'aic=' *.### %aic 'sbc=' *.### %sbc
+inquire(series=corrs) * ncorr
+display(store=arimapart)  * '(' @-1 ar  @-1 ',' @-1 diffs  @-1 ',' @-1 ma  @-1 ')'
+display(store=sarimapart) * '(' @-1 sar @-1 ',' @-1 sdiffs @-1 ',' @-1 sma @-1 ')'
+if sar>0.or.sdiffs>0.or.sma>0
+   display(store=hh) 'arima' arimapart 'x' sarimapart
+else
+   display(store=hh) 'arima' arimapart
+
+if %defined(resids)
+   set resids startl endl = resser
+
+if .not.graph
+   return
+
+set upper 1 ncorr = 2.0/sqrt(%nobs)
+set lower 1 ncorr = -2.0/sqrt(%nobs)
+spgraph(window=hh)
+graph(max=1.0,min=-1.0,number=1,hlabel=hh,style=bargraph,$
+  overlay=line,header='residual analysis',ovcount=2,ovsame) 3
+# corrs 2 ncorr
+# upper 2 ncorr 1
+# lower 2 ncorr 1
+grtext(entry=2,y=-.9,align=left,size=16) qstring
+grtext(entry=2,y=-.8,align=left,size=16) cstring
+spgraph(done)
+end bjest
+

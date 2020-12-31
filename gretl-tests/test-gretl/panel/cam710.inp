@@ -1,0 +1,23 @@
+# Partial replication of Table 21.2. p. 710, in Cameron
+# and Trivedi, Microeconometrics (Cambridge, 2005)
+open ziliak.gdt
+
+# individual summaries include a statement of the
+# within and between standard deviations
+summary lnhr
+summary lnwg
+
+# plain pooled OLS
+ols 1 0 2
+# pooled OLS with Arellano-type standard errors
+ols 1 0 2 --robust
+# the "between" model
+panel 1 0 2 --between
+# fixed effects, plain
+panel 1 0 2 
+# fixed effects, robust
+panel 1 0 2 --robust
+# RE-GLS
+panel 1 0 2 --random --matrix-diff
+panel 1 0 2 --random
+

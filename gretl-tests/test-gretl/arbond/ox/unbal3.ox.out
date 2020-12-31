@@ -1,0 +1,66 @@
+
+Ox version 4.1a (Linux) (C) J.A. Doornik, 1994-2007
+DPD package version 1.24, object created on 15-04-2008
+
+
+---- Database information ----
+Sample:    1 - 320 (320 observations)
+Frequency: 1
+Variables: 3
+
+Variable        #obs  #miss    type          min         mean          max      std.dev
+id               320      0  double            1         32.5           64       18.473
+year             320      0  double         1990         1992         1994       1.4142
+y                255     65  double      -22.896       4.0168       43.575       13.995
+Warning: invertgen: singular matrix
+dpd.ox (1517): doEstimation
+
+DPD( 1) Modelling y by 1-step (using unbal3.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dy(-1)               0.807885     0.1382     5.85   0.000
+Constant            0.0696623     0.1301    0.535   0.594
+
+sigma                1.081751  sigma^2              1.170186
+sigma levels        0.7649138
+RSS              72.551539591  TSS               136.8727592
+no. of observations        64  no. of parameters           2
+Using robust standard errors
+
+Transformation used:      first differences
+Level instruments:        Dummies  Gmm("y",2,99)
+
+constant:                 yes  time dummies:               0
+number of individuals      64
+longest time series         1 [1994 - 1994]
+shortest time series        1 (balanced panel)
+
+Wald (joint):    Chi^2(1) =     34.19 [0.000] **
+Wald (dummy):    Chi^2(1) =    0.2867 [0.592]
+Sargan test:     Chi^2(2) =    0.1493 [0.928]
+Warning: invertgen: singular matrix
+dpd.ox (1517): doEstimation
+
+DPD( 2) Modelling y by 1-step (using unbal3.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dy(-1)               0.811339     0.1376     5.90   0.000
+
+sigma                1.076334  sigma^2              1.158495
+sigma levels         0.761083
+RSS              72.985159541  TSS               136.8727592
+no. of observations        64  no. of parameters           1
+Using robust standard errors
+
+Transformation used:      first differences
+Level instruments:        Gmm("y",2,99)
+
+constant:                  no  time dummies:               0
+number of individuals      64
+longest time series         1 [1994 - 1994]
+shortest time series        1 (balanced panel)
+
+Wald (joint):    Chi^2(1) =     34.77 [0.000] **
+Sargan test:     Chi^2(2) =    0.2659 [0.876]

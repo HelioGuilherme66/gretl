@@ -1,0 +1,14 @@
+set echo off
+set messages off
+
+include bsm.inp
+
+open data9-3
+y = reskwh
+# estimate the basic structural model
+V = bsm(y)
+colnames(V, "level slope seasonal irreg")
+V
+# compute the smoothed states
+list X = bsm_smooth(y, V)
+print X -o

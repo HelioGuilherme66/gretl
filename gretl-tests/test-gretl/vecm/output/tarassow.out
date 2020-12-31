@@ -1,0 +1,283 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run tarassow.inp
+ /home/cottrell/stats/test-gretl/vecm/tarassow.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? v1 <- vecm 2 1 LRM LRY IBO
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM       1.0000 
+         (0.0000) 
+LRY     -0.88822 
+        (0.17160) 
+IBO       4.2211 
+        (0.43155) 
+
+alpha (adjustment vectors)
+
+LRM     -0.28457 
+LRY    -0.021288 
+IBO    -0.013625 
+
+Log-likelihood = 437.0504
+Determinant of covariance matrix = 1.3803497e-11
+AIC = -15.7000
+BIC = -14.9193
+HQC = -15.3998
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2.03769      0.523199      3.895    0.0003  ***
+  d_LRM_1    -0.229034     0.145071     -1.579    0.1210 
+  d_LRY_1     0.0208161    0.179959      0.1157   0.9084 
+  d_IBO_1    -0.536240     0.438212     -1.224    0.2270 
+  EC1        -0.284571     0.0733344    -3.880    0.0003  ***
+
+Mean dependent var   0.007757   S.D. dependent var   0.033086
+Sum squared resid    0.037624   S.E. of regression   0.027997
+R-squared            0.339038   Adjusted R-squared   0.283958
+rho                  0.022115   Durbin-Watson        1.925034
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.152980     0.450269      0.3398   0.7355 
+  d_LRM_1     0.266413     0.124849      2.134    0.0380  **
+  d_LRY_1    -0.0175111    0.154875     -0.1131   0.9104 
+  d_IBO_1    -0.168827     0.377129     -0.4477   0.6564 
+  EC1        -0.0212878    0.0631121    -0.3373   0.7374 
+
+Mean dependent var   0.003340   S.D. dependent var   0.025239
+Sum squared resid    0.027866   S.E. of regression   0.024094
+R-squared            0.158763   Adjusted R-squared   0.088659
+rho                 -0.051476   Durbin-Watson        2.066962
+
+Equation 3: d_IBO
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0958397    0.159572      0.6006   0.5509 
+  d_LRM_1     0.00586962   0.0442456     0.1327   0.8950 
+  d_LRY_1     0.140423     0.0548864     2.558    0.0137  **
+  d_IBO_1     0.414124     0.133652      3.099    0.0032  ***
+  EC1        -0.0136253    0.0223665    -0.6092   0.5453 
+
+Mean dependent var  -0.001114   S.D. dependent var   0.009802
+Sum squared resid    0.003500   S.E. of regression   0.008539
+R-squared            0.299541   Adjusted R-squared   0.241169
+rho                  0.113872   Durbin-Watson        1.733036
+
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO
+LRM    0.00070988   0.00033442  -8.3260e-05 
+LRY    0.00033442   0.00052577  -3.5245e-06 
+IBO   -8.3260e-05  -3.5245e-06   6.6034e-05 
+
+determinant = 1.38035e-11
+
+? ecm = $ec
+Generated matrix ecm
+? v2 <- restrict --full
+? b[1] = -1
+? b[3] = 0
+? a[3] = 0
+? end restrict
+Restriction set
+ 1: b[1] = -1
+ 2: b[3] = 0
+ 3: a[3] = 0
+Rank of Jacobian = 3, number of free parameters = 3
+Model is fully identified
+Based on Jacobian, df = 2
+Switching algorithm: 4 iterations
+ -(T/2)log|Omega| = 653.8026, lldiff = 1.40797e-08
+Strong convergence
+
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+Restrictions on beta:
+  b1 = -1
+  b3 = 0
+
+Restrictions on alpha:
+  a3 = 0
+
+Unrestricted loglikelihood (lu) = 437.0504
+Restricted loglikelihood (lr) = 428.19138
+2 * (lu - lr) = 17.718
+P(Chi-square(2) > 17.718) = 0.000142094
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM      -1.0000 
+         (0.0000) 
+LRY       2.4228 
+        (0.46539) 
+IBO       0.0000 
+         (0.0000) 
+
+alpha (adjustment vectors, standard errors in parentheses)
+
+LRM    -0.091937 
+       (0.050105) 
+LRY    -0.092685 
+       (0.038469) 
+IBO       0.0000 
+         (0.0000) 
+
+Determinant of covariance matrix = 1.9283016e-11
+AIC = -15.3657
+BIC = -14.5850
+HQC = -15.0655
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.253148     0.00440033   57.53     6.12e-46 ***
+  d_LRM_1    -0.244015     0.159951     -1.526    0.1337  
+  d_LRY_1     0.288548     0.194930      1.480    0.1453  
+  d_IBO_1    -1.16069      0.449254     -2.584    0.0129   **
+  EC1        -0.0919372    0.0501045    -1.835    0.0727   *
+
+Mean dependent var   0.007757   S.D. dependent var   0.033086
+Sum squared resid    0.046694   S.E. of regression   0.031190
+R-squared            0.179692   Adjusted R-squared   0.111333
+rho                 -0.041818   Durbin-Watson        2.056013
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.248761     0.00321548   77.36     4.76e-52 ***
+  d_LRM_1     0.176113     0.116882      1.507    0.1384  
+  d_LRY_1     0.100087     0.142443      0.7026   0.4857  
+  d_IBO_1    -0.177288     0.328286     -0.5400   0.5917  
+  EC1        -0.0926853    0.0384692    -2.409    0.0199   **
+
+Mean dependent var   0.003340   S.D. dependent var   0.025239
+Sum squared resid    0.024933   S.E. of regression   0.022791
+R-squared            0.247289   Adjusted R-squared   0.184563
+rho                 -0.062638   Durbin-Watson        2.075407
+
+Equation 3: d_IBO
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.00136635   0.00120934   -1.130     0.2642
+  d_LRM_1     0.00972726   0.0439591     0.2213    0.8258
+  d_LRY_1     0.148237     0.0535726     2.767     0.0080 ***
+  d_IBO_1     0.382263     0.123468      3.096     0.0033 ***
+  EC1         0.00000      0.00000      NA        NA     
+
+Mean dependent var  -0.001114   S.D. dependent var   0.009802
+Sum squared resid    0.003527   S.E. of regression   0.008572
+R-squared            0.294125   Adjusted R-squared   0.235303
+rho                  0.122571   Durbin-Watson        1.722776
+
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO
+LRM    0.00088102   0.00029703  -7.4553e-05 
+LRY    0.00029703   0.00047044  -4.6986e-06 
+IBO   -7.4553e-05  -4.6986e-06   6.6544e-05 
+
+determinant = 1.9283e-11
+
+? ecm_r = $ec
+Generated matrix ecm_r
+? se = $stderr
+Generated matrix se
+? se
+se (5 x 3)
+
+   0.0044003    0.0032155    0.0012093 
+     0.15995      0.11688     0.043959 
+     0.19493      0.14244     0.053573 
+     0.44925      0.32829      0.12347 
+    0.050105     0.038469       0.0000 
+
+? ecm = ecm ~ ecm_r
+Replaced matrix ecm
+? ecm
+ecm (53 x 2) [t1 = 3, t2 = 55]
+
+      7.1382       2.6267 
+      7.1162       2.5621 
+      7.0818       2.4798 
+      6.9977       2.4752 
+      7.0280       2.4154 
+      7.0140       2.4796 
+      7.0410       2.6023 
+      7.0756       2.6325 
+      7.1399       2.6144 
+      7.1897       2.5906 
+      7.1768       2.6222 
+      7.1836       2.6163 
+      7.1832       2.6157 
+      7.1735       2.6814 
+      7.2028       2.6415 
+      7.1605       2.6678 
+      7.1769       2.6665 
+      7.1210       2.7660 
+      7.1704       2.7571 
+      7.1007       2.7667 
+      7.1035       2.7960 
+      7.1128       2.8235 
+      7.1387       2.7950 
+      7.1320       2.8588 
+      7.1848       2.7686 
+      7.1790       2.6889 
+      7.1872       2.6425 
+      7.1685       2.6602 
+      7.2079       2.6505 
+      7.2358       2.6504 
+      7.2051       2.6523 
+      7.2174       2.6979 
+      7.2313       2.7496 
+      7.1914       2.8205 
+      7.1697       2.7599 
+      7.0425       2.7156 
+      6.9970       2.6998 
+      7.0555       2.6457 
+      7.0395       2.6930 
+      7.0664       2.6515 
+      7.1098       2.6970 
+      7.1306       2.6733 
+      7.2181       2.5371 
+      7.1173       2.6670 
+      7.0993       2.6178 
+      7.0538       2.6734 
+      7.0621       2.7076 
+      7.0493       2.7169 
+      7.0818       2.6783 
+      7.1096       2.7202 
+      7.1529       2.6604 
+      7.1480       2.6568 
+      7.1491       2.6511 
+
+Done

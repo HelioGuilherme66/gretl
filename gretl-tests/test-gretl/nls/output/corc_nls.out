@@ -1,0 +1,187 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:17
+? run corc_nls.inp
+ /home/cottrell/stats/test-gretl/nls/corc_nls.inp
+? open data3-6
+
+Read datafile /opt/esl/share/gretl/data/data3-6.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 3 variables:
+  0) const    1) Ct       2) Yt     
+
+# initial OLS for comparison
+? ols 1 0 2
+
+Model 1: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -384.105      151.330       -2.538    0.0159   **
+  Yt            0.932738     0.0106966   87.20     1.44e-41 ***
+
+Mean dependent var   12490.89   S.D. dependent var   2940.028
+Sum squared resid     1346750   S.E. of regression   199.0234
+R-squared            0.995548   Adjusted R-squared   0.995417
+F(1, 34)             7603.702   P-value(F)           1.44e-41
+Log-likelihood      -240.6161   Akaike criterion     485.2323
+Schwarz criterion    488.3993   Hannan-Quinn         486.3377
+rho                  0.768301   Durbin-Watson        0.513696
+
+? modtest --autocorr
+
+Breusch-Godfrey test for first-order autocorrelation
+OLS, using observations 1959-1994 (T = 36)
+Dependent variable: uhat
+
+             coefficient     std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const      -53.6291       107.913        -0.4970   0.6225  
+  Yt           0.00458919     0.00764051    0.6006   0.5522  
+  uhat_1       0.780259       0.133137      5.861    1.45e-06 ***
+
+  Unadjusted R-squared = 0.509996
+
+Test statistic: LMF = 34.346429,
+with p-value = P(F(1,33) > 34.3464) = 1.45e-06
+
+Alternative statistic: TR^2 = 18.359867,
+with p-value = P(Chi-square(1) > 18.3599) = 1.83e-05
+
+Ljung-Box Q' = 16.6984,
+with p-value = P(Chi-square(1) > 16.6984) = 4.38e-05
+
+# Cochrane-Orcutt
+? ar1 Ct 0 Yt
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.76830   624035.
+                   2      0.75210   623687.
+                   3      0.75205   623687.
+                   4      0.75205   623687.
+
+Model 2: Cochrane-Orcutt, using observations 1960-1994 (T = 35)
+Dependent variable: Ct
+rho = 0.752047
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -633.312      465.152       -1.362    0.1826  
+  Yt            0.950654     0.0308061   30.86     6.43e-26 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   12622.74   S.D. dependent var   2872.926
+Sum squared resid    623686.8   S.E. of regression   137.4758
+R-squared            0.997793   Adjusted R-squared   0.997726
+F(1, 33)             952.2933   P-value(F)           6.43e-26
+rho                 -0.057260   Durbin-Watson        2.042975
+
+# set-up for NLS
+? lags Ct Yt
+Listing 5 variables:
+  0) const    1) Ct       2) Yt       3) Ct_1     4) Yt_1   
+
+? genr b0 = 0
+Generated scalar b0 = 0
+? genr b1 = 1
+Generated scalar b1 = 1
+? genr r = 0.5
+Generated scalar r = 0.5
+? nls Ct = (1 - r)*b0 + b1*(Yt - r*Yt_1) + r*Ct_1
+? deriv b0 = 1 - r
+? deriv b1 = Yt - r*Yt_1
+? deriv r = -b0 - b1*Yt_1 + Ct_1
+? end nls --verbose
+Using analytical derivatives
+iteration  1: SSR = 16660236
+iteration  2: SSR = 16660232
+iteration  3: SSR = 1601962.9
+iteration  4: SSR = 625033.5
+iteration  5: SSR = 623792.07
+iteration  6: SSR = 623710.53
+iteration  7: SSR = 623691.39
+iteration  8: SSR = 623687.79
+iteration  9: SSR = 623686.99
+iteration 10: SSR = 623686.83
+iteration 11: SSR = 623686.79
+iteration 12: SSR = 623686.78
+iteration 13: SSR = 623686.78
+iteration 14: SSR = 623686.78
+iteration 15: SSR = 623686.78
+iteration 16: SSR = 623686.78
+iteration 17: SSR = 623686.78
+iteration 18: SSR = 623686.78
+iteration 19: SSR = 623686.78
+Tolerance = 1.81899e-12
+
+Convergence achieved after 19 iterations
+
+Model 3: NLS, using observations 1960-1994 (T = 35)
+Ct = (1 - r)*b0 + b1*(Yt - r*Yt_1) + r*Ct_1
+
+              estimate     std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  b0         -633.312      500.704       -1.265    0.2151  
+  b1            0.950654     0.0333416   28.51     2.55e-24 ***
+  r             0.752047     0.129554     5.805    1.91e-06 ***
+
+Mean dependent var   12622.74   S.D. dependent var   2872.926
+Sum squared resid    623686.8   S.E. of regression   139.6073
+R-squared            0.997778   Adjusted R-squared   0.997639
+Log-likelihood      -220.9538   Akaike criterion     447.9076
+Schwarz criterion    452.5737   Hannan-Quinn         449.5184
+rho                 -0.057260   Durbin-Watson        2.042974
+
+? genr essr = $ess
+Generated scalar essr = 623687
+# more general dynamic model
+? ols Ct 0 Yt Yt_1 Ct_1
+
+Model 4: OLS, using observations 1960-1994 (T = 35)
+Dependent variable: Ct
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -122.312      119.199       -1.026    0.3128  
+  Yt            0.763857     0.0950361    8.038    4.47e-09 ***
+  Yt_1         -0.569815     0.145186    -3.925    0.0005   ***
+  Ct_1          0.799533     0.125352     6.378    4.20e-07 ***
+
+Mean dependent var   12622.74   S.D. dependent var   2872.926
+Sum squared resid    546973.0   S.E. of regression   132.8318
+R-squared            0.998051   Adjusted R-squared   0.997862
+F(3, 31)             5291.211   P-value(F)           4.47e-42
+Log-likelihood      -218.6570   Akaike criterion     445.3139
+Schwarz criterion    451.5353   Hannan-Quinn         447.4616
+rho                  0.078012   Durbin's h           0.687970
+
+? genr essu = $ess
+Generated scalar essu = 546973
+? genr df = $df
+Generated scalar df = 31
+? genr Fc = (essr - essu)/(essu / df)
+Generated scalar Fc = 4.3478
+? pvalue F 1 df Fc
+F(1, 31): area to the right of 4.3478 = 0.0453832
+(to the left: 0.954617)
+# long-run solution to dynamic model
+? scalar a = $coeff(const)
+Generated scalar a = -122.312
+? scalar b = $coeff(Yt)
+Generated scalar b = 0.763857
+? scalar c = $coeff(Yt_1)
+Generated scalar c = -0.569815
+? scalar d = $coeff(Ct_1)
+Generated scalar d = 0.799533
+? scalar b0 = a / (1-d)
+Replaced scalar b0 = -610.134
+? scalar b1 = (b+c) / (1-d)
+Replaced scalar b1 = 0.967952
+Done

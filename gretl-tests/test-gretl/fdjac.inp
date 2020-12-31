@@ -1,0 +1,38 @@
+function matrix MPC (matrix *param, matrix *Y)
+  beta = param[2]
+  gamma = param[3]
+  y = Y[1]
+  return beta*gamma*y^(gamma-1)
+end function
+
+# William Greene, Econometric Analysis, 5e, Chapter 9
+set echo off
+set messages off
+open greene5_1.gdt
+
+# Use OLS to initialize the parameters
+ols realcons 0 realdpi --quiet
+scalar a = $coeff[1]
+scalar b = $coeff[2]
+scalar g = 1.0
+
+# Run NLS with analytical derivatives
+nls realcons = a + b * realdpi^g
+  deriv a = 1
+  deriv b = realdpi^g
+  deriv g = b * realdpi^g * log(realdpi)
+end nls
+
+matrix Y = realdpi[2000:4]
+matrix theta = $coeff
+matrix V = $vcv
+mpc = MPC(&theta, &Y)
+string jcall = "MPC(&theta, &Y)"
+matrix Jac = fdjac(theta, jcall)
+Sigma = qform(Jac, V)
+
+printf "\nmpc = %g, std.err = %g\n", mpc, sqrt(Sigma)
+scalar teststat = (mpc-1)/sqrt(Sigma)
+printf "\nTest for MPC = 1: %g (p-value = %g)\n", \
+  teststat, pvalue(n, abs(teststat))
+

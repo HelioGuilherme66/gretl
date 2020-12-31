@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run trimr.inp
+ /home/cottrell/stats/test-gretl/matrix/trimr.inp
+? set seed 5642312
+Pseudo-random number generator seeded with 5642312
+? matrix A = mnormal(10,3)
+Generated matrix A
+? matrix B = trimr(diff(A),1,0)
+Generated matrix B
+? print A B
+A (10 x 3)
+
+    -0.87732      0.33702      0.26469 
+    -0.87254       1.1485      0.28601 
+    -0.16695       1.4702    -0.025704 
+     0.54504      -1.1998      -1.0429 
+   0.0028480      0.99656     0.053581 
+      1.7487      0.97286     -0.55525 
+     0.60373     -0.85181      0.83265 
+     -2.2838       1.1865     -0.85846 
+      1.4015      -1.8344      0.44190 
+      1.0839       1.0978     -0.48642 
+
+B (9 x 3)
+
+   0.0047783      0.81146     0.021314 
+     0.70559      0.32168     -0.31171 
+     0.71199      -2.6700      -1.0172 
+    -0.54219       2.1964       1.0964 
+      1.7459    -0.023699     -0.60883 
+     -1.1450      -1.8247       1.3879 
+     -2.8875       2.0383      -1.6911 
+      3.6852      -3.0209       1.3004 
+    -0.31761       2.9323     -0.92832 
+
+Done

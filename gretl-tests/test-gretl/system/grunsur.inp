@@ -1,0 +1,13 @@
+open grun.txt
+Grunfeld <- system
+  equation ige 0 fge kge
+  equation iwh 0 fwh kwh
+end system
+estimate Grunfeld method=ols
+estimate Grunfeld method=sur
+estimate Grunfeld method=sur --iterate
+restrict Grunfeld
+  b[1,2] - b[2,2] = 0
+  b[1,3] - b[2,3] = 0
+end restrict
+estimate Grunfeld method=sur --iterate

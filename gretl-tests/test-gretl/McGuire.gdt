@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="McGuire" frequency="1" startobs="1" endobs="53" type="cross-section">
+<variables count="56">
+<variable name="DLAND"
+ label="Western Landowner"
+/>
+<variable name="DMERC"
+ label="Merchant"
+/>
+<variable name="DFARM"
+ label="Farmer (JEH)"
+/>
+<variable name="DFARMCO"
+ label="Farmer (corrected book)"
+/>
+<variable name="DDEBT"
+ label="Debtor"
+/>
+<variable name="VSECR"
+ label="Public Securities Owned ($)"
+/>
+<variable name="DSECR"
+ label="Public Creditor (Dummy)"
+/>
+<variable name="VBANK"
+ label="Private Securities Owned ($)"
+/>
+<variable name="DBANK"
+ label="Private Creditor (Dummy)"
+/>
+<variable name="NSLAVE"
+ label="Number of Slaves Owned"
+/>
+<variable name="DSLAVE"
+ label="Slaveowner (Dummy)"
+/>
+<variable name="AGE"
+ label="Age (JEH)"
+/>
+<variable name="AGECO"
+ label="Age (corrected book)"
+/>
+<variable name="DENGL"
+ label="English Ancestry (delegate)"
+/>
+<variable name="REVOFF"
+ label="Officer in War (JEH)"
+/>
+<variable name="REVOFFCO"
+ label="Officer in War (corrected book)"
+/>
+<variable name="CONG"
+ label="Served in Continental Congress"
+/>
+<variable name="SLAVES"
+ label="Slaves per 100 Whites in State"
+/>
+<variable name="PUBCRED"
+ label="Public credit per capita in State ($)"
+/>
+<variable name="WEALTH"
+ label="Wealth in State per Capita Wealtholder ($)"
+/>
+<variable name="DIST"
+ label="Distance to nearest navigable Water (miles)"
+/>
+<variable name="POPW"
+ label="Population in State (Total White Population)"
+/>
+<variable name="ENGLISH"
+ label="Percent English Ancestry (state)"
+/>
+<variable name="PROFIT"
+ label="Appreciation in Public Securities ($)"
+/>
+<variable name="Vote1"
+ label="McGuire votes"
+/>
+<variable name="Vote2"
+/>
+<variable name="Vote3"
+/>
+<variable name="Vote4"
+/>
+<variable name="Vote5"
+/>
+<variable name="Vote6"
+/>
+<variable name="Vote7"
+/>
+<variable name="Vote8"
+/>
+<variable name="Vote9"
+/>
+<variable name="Vote10"
+/>
+<variable name="Vote11"
+/>
+<variable name="Vote12"
+/>
+<variable name="Vote13"
+/>
+<variable name="Vote14"
+/>
+<variable name="Vote15"
+/>
+<variable name="Vote16"
+/>
+<variable name="v1"
+ label="McDonald votes"
+/>
+<variable name="V2"
+/>
+<variable name="V3"
+/>
+<variable name="V4"
+/>
+<variable name="V5"
+/>
+<variable name="V6"
+/>
+<variable name="V7"
+/>
+<variable name="V8"
+/>
+<variable name="V9"
+/>
+<variable name="V10"
+/>
+<variable name="V11"
+/>
+<variable name="V12"
+/>
+<variable name="V13"
+/>
+<variable name="V14"
+/>
+<variable name="V15"
+/>
+<variable name="V16"
+/>
+</variables>
+<observations count="53" labels="false">
+<obs>0 0 0 0 0 125 1 0 0 0 0 32 32 1 1 1 1 0 0.5281690141 206.0 7 142 94.1 500 0 0 0 0 0 0 0 1 1 1 0 1 1 0 1 0 0 0 1 0 1 0 1 NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 1 0 0 0 3500 1 4000 1 0 0 46 46 1 1 0 1 0 0.5281690141 206.0 7 142 94.1 14700 0 0 0 0 0 0 0 1 1 1 0 1 1 0 1 0 NA 0 0 0 1 0 1 1 1 1 0 0 0 1 1 0 </obs>
+<obs>1 1 0 0 0 10000 1 0 0 0 0 43 43 1 0 0 1 0 3.345844504 232.9 1 373 95.0 22500 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 0 0 1 0 1 0 1 1 1 1 1 1 0 0 1 </obs>
+<obs>1 1 0 0 0 0 0 0 0 0 0 49 49 1 0 0 1 0 3.345844504 232.9 0 373 95.0 0 0 1 0 0 0 0 1 1 0 1 1 0 1 0 1 0 1 0 0 1 0 1 0 1 1 1 1 1 1 0 0 NA </obs>
+<obs>0 0 0 0 0 5000 1 3000 1 0 0 32 32 1 0 0 1 0 3.345844504 232.9 1 373 95.0 1300 0 1 1 0 0 1 0 1 1 1 1 1 1 0 1 0 0 1 0 0 0 0 1 1 0 0 0 0 0 1 1 0 </obs>
+<obs>0 0 0 0 0 2200 1 0 0 0 0 42 42 1 0 0 0 0 3.345844504 232.9 85 373 95.0 4950 0 1 1 0 0 1 1 1 1 1 0 0 1 0 1 0 NA NA 1 NA NA 0 1 1 1 1 0 1 1 1 1 0 </obs>
+<obs>0 0 0 0 0 750 1 0 0 0 0 42 42 1 0 0 1 1 2.656652361 135.4 30 233 96.2 3050 1 1 1 1 0 0 1 0 1 0 0 0 0 0 1 0 1 0 0 NA 0 0 0 1 NA 1 0 1 1 0 1 1 </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 60 60 1 1 0 1 1 2.656652361 135.4 0 233 96.2 0 1 0 1 1 0 0 1 0 1 0 0 0 0 0 1 1 1 NA 0 1 0 1 0 1 1 1 1 1 1 0 0 0 </obs>
+<obs>0 1 0 0 1 1000 1 0 0 0 0 66 66 1 0 0 1 1 2.656652361 135.4 0 233 96.2 4000 1 0 1 1 0 0 1 0 1 0 0 0 0 0 1 1 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 375 1 0 0 30 30 0 1 1 1 7 -6.605095541 278.0 0 314 78.2 0 0 1 0 0 0 0 1 1 1 1 0 0 1 0 1 0 1 1 0 0 0 0 1 1 1 1 1 0 0 1 1 0 </obs>
+<obs>1 0 0 0 0 3500 1 0 0 0 0 33 33 0 0 0 1 7 -6.605095541 278.0 117 314 78.2 1050 0 0 1 1 1 1 0 0 0 0 1 1 0 1 0 1 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 49 49 1 0 0 0 7 -6.605095541 278.0 117 314 78.2 0 0 0 1 1 1 1 0 0 0 0 1 1 0 1 0 1 NA NA 0 1 0 0 1 0 1 0 0 0 0 1 1 0 </obs>
+<obs>0 0 0 0 0 5 1 0 0 0 0 42 42 0 1 1 0 7 0.2882352941 340.8 0 170 59.1 5 1 0 0 0 0 0 0 1 1 1 0 1 1 0 1 1 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>1 0 0 0 0 1000 1 0 0 0 0 27 27 0 1 1 0 7 0.2882352941 340.8 0 170 59.1 2600 0 0 0 0 0 0 0 1 1 1 0 1 1 0 1 0 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 64 64 0 1 1 1 7 0.2882352941 340.8 17 170 59.1 0 1 0 0 0 0 0 0 1 1 1 0 1 1 0 1 1 NA NA 0 NA 0 0 0 1 NA 1 0 1 1 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 42 42 0 0 0 0 7 0.2882352941 340.8 0 170 59.1 0 1 0 1 0 1 1 0 0 0 0 1 1 0 1 0 1 1 1 0 NA 0 NA 0 0 1 1 1 1 1 0 1 NA </obs>
+<obs>0 1 0 0 0 6350 1 2800 1 0 0 48 48 1 1 1 1 0 -0.179245283 320.9 0 424 59.0 3750 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 1 1 1 1 0 0 1 0 1 0 0 0 0 0 NA NA </obs>
+<obs>1 1 0 0 0 3300 1 800 1 0 0 46 46 0 1 1 1 0 -0.179245283 320.9 0 424 59.0 2100 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 0 0 0 NA NA 0 1 1 1 1 0 0 0 1 1 0 </obs>
+<obs>1 0 0 0 0 3250 1 0 0 0 0 81 81 1 0 0 1 0 -0.179245283 320.9 0 424 59.0 2000 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 38 38 1 0 0 1 0 -0.179245283 320.9 0 424 59.0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 1 0 0 0 1000 1 800 1 0 0 43 43 1 1 1 1 0 -0.179245283 320.9 0 424 59.0 600 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>1 1 0 0 0 4500 1 52000 1 0 0 53 53 1 0 0 1 0 -0.179245283 320.9 0 424 59.0 2650 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 1 0 1 1 1 1 1 0 1 NA 1 0 0 0 0 0 </obs>
+<obs>0 0 0 0 0 0 0 400 1 0 0 35 35 1 0 0 1 0 -0.179245283 320.9 0 424 59.0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 NA NA NA 0 0 0 0 1 1 1 0 1 1 0 1 0 </obs>
+<obs>1 0 0 0 0 0 0 2000 1 0 0 45 45 0 1 0 1 0 -0.179245283 320.9 0 424 59.0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 0 0 1 0 0 0 0 1 1 0 NA 1 0 1 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 42 42 0 1 1 0 19 -13.30434783 247.8 8 46 86.3 0 1 0 0 1 0 1 0 1 1 1 1 1 1 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 360 1 0 0 0 0 40 40 1 0 0 1 19 -13.30434783 247.8 0 46 86.3 1515 1 0 0 1 0 1 0 1 1 1 1 1 1 0 0 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 1 1 0 10 1 0 0 0 0 35 35 0 0 0 0 19 -13.30434783 247.8 8 46 86.3 15 1 0 0 1 0 1 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 1 0 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 55 55 0 1 1 1 19 -13.30434783 247.8 0 46 86.3 0 1 1 0 0 0 0 0 0 1 1 1 1 1 0 1 0 1 0 1 1 0 0 1 0 1 0 0 0 0 0 1 1 </obs>
+<obs>0 0 0 0 0 50 1 0 0 0 0 54 54 0 0 0 1 19 -13.30434783 247.8 0 46 86.3 175 1 1 0 1 0 1 0 1 1 1 1 1 1 0 1 0 0 1 1 0 0 1 0 1 1 NA 1 1 1 0 1 0 </obs>
+<obs>0 0 0 0 0 90 1 0 0 53 1 57 57 0 0 0 1 49 -0.7224880383 616.4 17 209 84.0 60 0 0 0 1 0 0 1 0 1 0 0 0 0 1 1 0 NA NA 1 1 NA NA 1 0 0 0 0 0 0 1 0 NA </obs>
+<obs>0 0 1 0 0 0 0 0 0 80 1 64 64 1 0 0 1 49 -0.7224880383 616.4 20 209 84.0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 1 0 0 NA NA NA 0 0 0 0 1 1 1 0 1 1 0 1 0 </obs>
+<obs>0 0 0 0 1 1300 1 0 0 6 1 39 39 1 0 0 1 49 -0.7224880383 616.4 0 209 84.0 1550 1 1 1 1 1 1 1 0 0 0 0 0 0 1 0 1 0 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 0 0 34 34 0 0 0 1 49 -0.7224880383 616.4 0 209 84.0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 1 0 0 NA 0 0 0 1 NA 1 0 1 1 0 1 1 </obs>
+<obs>0 0 0 0 0 2150 1 0 0 80 1 28 28 1 1 1 1 49 -0.7224880383 616.4 0 209 84.0 2450 1 1 0 1 1 1 1 0 0 0 1 1 0 1 0 1 0 1 0 0 1 0 0 1 0 1 1 1 1 0 1 0 </obs>
+<obs>0 0 0 0 0 2500 1 0 0 35 1 55 55 0 0 0 0 66 -0.2262443439 453.5 0 442 85.0 4600 0 1 0 0 0 0 1 1 0 0 0 0 0 1 1 0 0 0 0 0 1 1 1 0 1 0 0 0 0 1 0 0 </obs>
+<obs>1 0 0 0 0 0 0 30000 1 300 1 62 62 1 0 0 0 66 -0.2262443439 453.5 4 442 85.0 0 0 0 0 0 1 1 1 0 1 0 0 0 0 1 0 0 0 1 0 0 NA 0 NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 99 1 36 36 1 0 0 1 66 -0.2262443439 453.5 50 442 85.0 0 0 1 0 0 1 0 0 1 0 1 1 1 1 0 1 0 NA NA NA NA NA 0 1 0 0 0 0 0 0 1 0 0 </obs>
+<obs>0 0 0 0 0 6500 1 9000 1 0 0 41 41 0 0 0 0 66 -0.2262443439 453.5 0 442 85.0 14300 0 1 0 0 0 0 1 1 1 1 0 0 1 0 1 0 NA NA NA NA NA 1 1 NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 3450 1 0 0 101 1 34 34 1 0 0 1 66 -0.2262443439 453.5 62 442 85.0 5450 0 0 0 0 0 1 1 1 1 0 0 0 0 1 0 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>1 0 0 0 0 75 1 0 0 80 1 55 55 1 1 1 1 66 -0.2262443439 453.5 0 442 85.0 250 0 0 0 0 0 0 0 1 0 1 1 1 1 0 1 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>1 0 0 0 0 0 0 0 0 80 1 38 38 1 0 0 1 35 -1.736111111 464.6 40 288 83.1 0 1 1 1 1 1 0 1 1 1 1 0 1 1 1 1 0 0 0 0 NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 36 1 31 31 1 1 1 0 35 -1.736111111 464.6 50 288 83.1 0 0 0 1 0 1 0 1 1 1 1 0 0 1 0 1 0 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 0 0 0 0 47 1 47 47 0 1 1 0 35 -1.736111111 464.6 200 288 83.1 0 0 0 1 0 1 0 1 0 0 0 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1 0 0 0 0 1 0 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 71 1 29 29 0 0 0 1 35 -1.736111111 464.6 0 288 83.1 0 1 0 1 0 1 0 1 1 1 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 1 1 1 1 1 0 1 NA </obs>
+<obs>1 0 0 0 0 300 1 0 0 0 0 52 52 0 0 0 1 35 -1.736111111 464.6 8 288 83.1 1400 0 0 1 0 1 0 1 1 1 1 0 1 1 1 1 0 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 143 1 43 43 0 0 0 1 76 8.607142857 2337.7 0 140 82.4 0 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 1 0 1 1 0 0 1 0 1 0 0 0 0 0 1 1 </obs>
+<obs>0 0 0 0 0 0 0 0 0 111 1 30 29 0 1 1 1 76 8.607142857 2337.7 0 140 82.4 0 1 1 0 0 0 0 1 1 1 1 1 0 0 1 1 0 1 0 1 0 1 0 1 1 1 1 0 1 1 0 1 0 </obs>
+<obs>0 0 0 0 0 2500 1 0 0 70 1 41 41 0 1 1 0 76 8.607142857 2337.7 0 140 82.4 7250 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 0 1 1 0 0 1 1 1 1 1 0 0 1 0 1 0 </obs>
+<obs>0 0 0 0 0 0 0 0 0 243 1 48 48 0 0 0 1 76 8.607142857 2337.7 0 140 82.4 0 1 0 1 0 0 0 1 1 1 1 1 0 0 0 1 0 0 0 1 0 1 NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 0 0 0 0 300 1 2250 1 0 0 33 33 0 0 0 1 55 0.3773584906 489.2 20 53 83.1 1300 0 0 0 0 1 0 1 1 1 1 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 1 1 1 1 0 1 0 </obs>
+<obs>0 0 1 1 0 80 1 0 0 0 0 39 39 1 1 1 1 55 0.3773584906 489.2 0 53 83.1 345 0 0 0 0 0 0 1 1 1 1 0 0 0 1 1 0 0 NA 1 0 1 0 1 1 1 1 0 1 1 1 1 0 </obs>
+<obs>0 0 1 0 0 0 0 0 0 80 1 32 32 1 0 0 1 55 0.3773584906 489.2 0 53 83.1 0 0 0 1 0 1 1 0 0 0 0 1 1 0 1 0 1 NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+<obs>0 1 0 0 1 0 0 0 0 0 0 47 47 0 1 1 1 55 0.3773584906 489.2 0 53 83.1 0 0 0 0 0 0 0 1 1 1 1 0 0 1 0 1 0 0 0 1 NA NA NA NA NA NA NA NA NA NA NA NA NA </obs>
+</observations>
+</gretldata>

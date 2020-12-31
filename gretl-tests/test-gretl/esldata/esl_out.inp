@@ -1,0 +1,4 @@
+open data4-10.gdt
+store data4-10esl -t
+open data4-10esl
+print -o

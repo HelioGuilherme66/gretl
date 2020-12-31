@@ -1,0 +1,352 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run bs75d.inp
+ /home/cottrell/stats/test-gretl/system/bs75d.inp
+? open bs75d.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/system/bs75d.gdt
+periodicity: 1, maxobs: 43
+observations range: 1929 to 1971
+
+Listing 7 variables:
+  0) const    1) y1       2) y2       3) lx1      4) lx2    
+  5) lx3      6) y3     
+
+? smpl +1 ;
+Full data range: 1929 - 1971 (n = 43)
+Current sample: 1930 - 1971 (n = 42)
+
+? Drop3 <- system
+? equation y1 0 lx1 lx2 lx3
+? equation y2 0 lx1 lx2 lx3
+? end system
+? estimate "Drop3" method=sur
+
+Equation system, Drop3
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.647212     0.101831     -6.356    1.85e-07 ***
+  lx1         0.272667     0.0374480     7.281    1.03e-08 ***
+  lx2        -0.136984     0.0451679    -3.033    0.0044   ***
+  lx3        -0.0716411    0.0236173    -3.033    0.0043   ***
+
+Mean dependent var   0.591941   S.D. dependent var   0.055409
+Sum squared resid    0.012485   S.E. of regression   0.017242
+R-squared            0.900814   Adjusted R-squared   0.892984
+
+Equation 2: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.28229      0.0898016    14.28     7.44e-17 ***
+  lx1        -0.245811     0.0330241    -7.443    6.23e-09 ***
+  lx2         0.134969     0.0398320     3.388    0.0016   ***
+  lx3         0.0595395    0.0208273     2.859    0.0069   ***
+
+Mean dependent var   0.246292   S.D. dependent var   0.049080
+Sum squared resid    0.009710   S.E. of regression   0.015205
+R-squared            0.901686   Adjusted R-squared   0.893924
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00029727     (-0.549)
+  -0.00014395   0.00023118
+
+log determinant = -16.852
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 12.6632 [0.0004]
+
+? restrict "Drop3"
+? b[1,3] - b[2,2] = 0
+? b[1,2] + b[1,3] + b[1,4] = 0
+? b[2,2] + b[2,3] + b[2,4] = 0
+? end restrict
+Restriction set
+ 1: b[1,3] - b[2,2] = 0
+ 2: b[1,2] + b[1,3] + b[1,4] = 0
+ 3: b[2,2] + b[2,3] + b[2,4] = 0
+? estimate "Drop3" method=sur --iterate
+
+Equation system, Drop3
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 24 iterations
+Log-likelihood = 211.021
+
+Equation 1: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0188116    0.0673362    -0.2794   0.7815  
+  lx1         0.219944     0.0177039    12.42     5.93e-15 ***
+  lx2        -0.147686     0.0166379    -8.876    8.41e-11 ***
+  lx3        -0.0722586    0.0116047    -6.227    2.78e-07 ***
+
+Mean dependent var   0.591941   S.D. dependent var   0.055409
+Sum squared resid    0.031955   S.E. of regression   0.027583
+R-squared            0.748746   Adjusted R-squared   0.728910
+
+Equation 2: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.892660     0.0548571    16.27     1.03e-18 ***
+  lx1        -0.147686     0.0166379    -8.876    8.41e-11 ***
+  lx2         0.0496865    0.0244480     2.032    0.0492   **
+  lx3         0.0979991    0.0124781     7.854    1.78e-09 ***
+
+Mean dependent var   0.246292   S.D. dependent var   0.049080
+Sum squared resid    0.014173   S.E. of regression   0.018370
+R-squared            0.859791   Adjusted R-squared   0.848722
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00076083     (-0.650)
+  -0.00032938   0.00033745
+
+log determinant = -15.7244
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = 211.021
+  Unrestricted log-likelihood = 234.701
+  Chi-square(3) = 47.3594 [0.0000]
+
+/*
+  demonstrate that whatever equation you drop,
+  you get the same results
+*/
+? system name="Drop2"
+? equation y1 0 lx1 lx2 lx3
+? equation y3 0 lx1 lx2 lx3
+? endog y1 y3
+? end system
+? estimate "Drop2" method=sur
+
+Equation system, Drop2
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.647212     0.101831     -6.356    1.85e-07 ***
+  lx1         0.272667     0.0374480     7.281    1.03e-08 ***
+  lx2        -0.136984     0.0451679    -3.033    0.0044   ***
+  lx3        -0.0716411    0.0236173    -3.033    0.0043   ***
+
+Mean dependent var   0.591941   S.D. dependent var   0.055409
+Sum squared resid    0.012485   S.E. of regression   0.017242
+R-squared            0.900814   Adjusted R-squared   0.892984
+
+Equation 2: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y3
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.364921     0.0916048     3.984     0.0003  ***
+  lx1        -0.0268563    0.0336872    -0.7972    0.4303 
+  lx2         0.00201500   0.0406318     0.04959   0.9607 
+  lx3         0.0121015    0.0212455     0.5696    0.5723 
+
+Mean dependent var   0.161767   S.D. dependent var   0.017127
+Sum squared resid    0.010104   S.E. of regression   0.015510
+R-squared            0.159884   Adjusted R-squared   0.093560
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00029727     (-0.573)
+  -0.00015332   0.00024056
+
+log determinant = -16.852
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 13.8068 [0.0002]
+
+? restrict "Drop2"
+? b[1,4] - b[2,2] = 0
+? b[1,2] + b[1,3] + b[1,4] = 0
+? b[2,2] + b[2,3] + b[2,4] = 0
+? end restrict
+Restriction set
+ 1: b[1,4] - b[2,2] = 0
+ 2: b[1,2] + b[1,3] + b[1,4] = 0
+ 3: b[2,2] + b[2,3] + b[2,4] = 0
+? estimate "Drop2" method=sur --iterate
+
+Equation system, Drop2
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 23 iterations
+Log-likelihood = 211.021
+
+Equation 1: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0188116    0.0673362    -0.2794   0.7815  
+  lx1         0.219944     0.0177039    12.42     5.93e-15 ***
+  lx2        -0.147686     0.0166379    -8.876    8.41e-11 ***
+  lx3        -0.0722586    0.0116047    -6.227    2.78e-07 ***
+
+Mean dependent var   0.591941   S.D. dependent var   0.055409
+Sum squared resid    0.031955   S.E. of regression   0.027583
+R-squared            0.748746   Adjusted R-squared   0.728910
+
+Equation 2: SUR, using observations 1930-1971 (T = 42)
+Dependent variable: y3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.126152     0.0579308     2.178    0.0357   **
+  lx1        -0.0722586    0.0116047    -6.227    2.78e-07 ***
+  lx2         0.0979991    0.0124781     7.854    1.78e-09 ***
+  lx3        -0.0257405    0.0106990    -2.406    0.0211   **
+
+Mean dependent var   0.161767   S.D. dependent var   0.017127
+Sum squared resid    0.018460   S.E. of regression   0.020965
+R-squared            0.000187   Adjusted R-squared  -0.078746
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00076083     (-0.746)
+  -0.00043145   0.00043951
+
+log determinant = -15.7244
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = 211.021
+  Unrestricted log-likelihood = 234.701
+  Chi-square(3) = 47.3594 [0.0000]
+
+# check via fiml
+? estimate "Drop2" method=fiml --verbose
+Equation system Drop2
+Endogenous variables: y1 y3
+Exogenous variables: const lx1 lx2 lx3
+*** initial ll = 210.33223
+*** iteration   1: step = 2, ll = 210.8356
+*** iteration   2: step = 2, ll = 210.90904
+*** iteration   3: step = 2, ll = 210.95583
+*** iteration   4: step = 2, ll = 210.9812
+*** iteration   5: step = 2, ll = 210.9976
+*** iteration   6: step = 2, ll = 211.00688
+*** iteration   7: step = 2, ll = 211.01271
+*** iteration   8: step = 2, ll = 211.01609
+*** iteration   9: step = 2, ll = 211.01818
+*** iteration  10: step = 2, ll = 211.01941
+*** iteration  11: step = 2, ll = 211.02015
+*** iteration  12: step = 2, ll = 211.0206
+*** iteration  13: step = 2, ll = 211.02087
+*** iteration  14: step = 2, ll = 211.02103
+*** iteration  15: step = 2, ll = 211.02113
+*** iteration  16: step = 2, ll = 211.02119
+*** iteration  17: step = 2, ll = 211.02122
+*** iteration  18: step = 2, ll = 211.02124
+*** iteration  19: step = 2, ll = 211.02125
+*** iteration  20: step = 2, ll = 211.02126
+*** iteration  21: step = 2, ll = 211.02127
+*** iteration  22: step = 2, ll = 211.02127
+*** iteration  23: step = 2, ll = 211.02127
+*** iteration  24: step = 2, ll = 211.02127
+*** iteration  25: step = 2, ll = 211.02127
+*** iteration  26: step = 2, ll = 211.02127
+*** iteration  27: step = 2, ll = 211.02127
+*** iteration  28: step = 2, ll = 211.02127
+*** iteration  29: step = 2, ll = 211.02127
+*** iteration  30: step = 2, ll = 211.02127
+*** iteration  31: step = 2, ll = 211.02127
+*** iteration  32: step = 2, ll = 211.02127
+*** iteration  33: step = 2, ll = 211.02127
+*** iteration  34: step = 2, ll = 211.02127
+*** iteration  35: step = 2, ll = 211.02127
+*** iteration  36: step = 2, ll = 211.02127
+*** iteration  37: step = 2, ll = 211.02127
+*** iteration  38: step = 2, ll = 211.02127
+*** iteration  39: step = 2, ll = 211.02127
+*** iteration  40: step = 2, ll = 211.02127
+*** iteration  41: step = 2, ll = 211.02127
+*** iteration  42: step = 2, ll = 211.02127
+*** iteration  43: step = 2, ll = 211.02127
+*** iteration  44: step = 2, ll = 211.02127
+*** iteration  45: step = 2, ll = 211.02127
+*** iteration  46: step = 2, ll = 211.02127
+*** iteration  47: step = 2, ll = 211.02127
+*** iteration  48: step = 2, ll = 211.02127
+*** iteration  49: step = 2, ll = 211.02127
+*** iteration  50: step = 2, ll = 211.02127
+*** iteration  51: step = 2, ll = 211.02127
+*** iteration  52: step = 2, ll = 211.02127
+
+Tolerance 1e-12, criterion 5.68434e-13
+
+Gradients at last iteration:
+
+   1.559459e-08   -1.558275e-08    1.625941e-08   -6.766552e-10 
+   4.746604e-08   -6.766552e-10   -9.092634e-09    9.769289e-09 
+
+
+Equation system, Drop2
+Estimator: Full Information Maximum Likelihood
+
+Convergence achieved after 52 iterations
+Log-likelihood = 211.021
+
+Equation 1: FIML, using observations 1930-1971 (T = 42)
+Dependent variable: y1
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.0188115    0.0673362    -0.2794   0.7800  
+  lx1         0.219944     0.0177039    12.42     1.95e-35 ***
+  lx2        -0.147686     0.0166379    -8.876    6.90e-19 ***
+  lx3        -0.0722586    0.0116047    -6.227    4.76e-10 ***
+
+Mean dependent var   0.591941   S.D. dependent var   0.055409
+Sum squared resid    0.031955   S.E. of regression   0.027583
+R-squared            0.776157   Adjusted R-squared   0.758485
+
+Equation 2: FIML, using observations 1930-1971 (T = 42)
+Dependent variable: y3
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.126152     0.0579308     2.178   0.0294   **
+  lx1        -0.0722586    0.0116047    -6.227   4.76e-10 ***
+  lx2         0.0979991    0.0124781     7.854   4.04e-15 ***
+  lx3        -0.0257405    0.0106990    -2.406   0.0161   **
+
+Mean dependent var   0.161767   S.D. dependent var   0.017127
+Sum squared resid    0.018460   S.E. of regression   0.020965
+R-squared            0.000443   Adjusted R-squared  -0.078469
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+   0.00076083     (-0.746)
+  -0.00043145   0.00043951
+
+log determinant = -15.7244
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 21.612 [0.0000]
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = 211.021
+  Unrestricted log-likelihood = 234.701
+  Chi-square(3) = 47.3594 [0.0000]
+
+Done

@@ -1,0 +1,123 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps4-5.inp
+ /opt/esl/share/gretl/scripts/ps4-5.inp
+# PS4.5, for Table 4.5 and Application in Section 4.7
+? open data4-5
+
+Read datafile /opt/esl/share/gretl/data/data4-5.gdt
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+
+Listing 10 variables:
+  0) const    1) wlfp     2) yf       3) ym       4) educ   
+  5) ue       6) mr       7) dr       8) urb      9) wh     
+
+? ols wlfp 0 yf ym educ ue mr dr urb wh
+
+Model 1: OLS, using observations 1-50
+Dependent variable: wlfp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      44.5096       8.97496       4.959    1.28e-05 ***
+  yf          0.987983     0.407583      2.424    0.0198   **
+  ym         -0.174345     0.306207     -0.5694   0.5722  
+  educ        0.285129     0.0931647     3.060    0.0039   ***
+  ue         -1.61058      0.313617     -5.136    7.25e-06 ***
+  mr         -0.0782145    0.173139     -0.4517   0.6538  
+  dr          0.437371     0.258336      1.693    0.0980   *
+  urb        -0.0926339    0.0333355    -2.779    0.0082   ***
+  wh         -0.0874916    0.0398446    -2.196    0.0338   **
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    193.9742   S.E. of regression   2.175104
+R-squared            0.780710   Adjusted R-squared   0.737922
+F(8, 41)             18.24590   P-value(F)           2.90e-11
+Log-likelihood      -104.8395   Akaike criterion     227.6790
+Schwarz criterion    244.8872   Hannan-Quinn         234.2319
+
+Excluding the constant, p-value was highest for variable 6 (mr)
+
+# retrieve relevant statistics for Wald F-test
+? genr ESSU = $ess
+Generated scalar ESSU = 193.974
+? genr DFU = $df
+Generated scalar DFU = 41
+# omit variables one at a time - Model B
+? omit mr
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for mr
+  Test statistic: F(1, 41) = 0.204072, p-value 0.653835
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1-50
+Dependent variable: wlfp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      41.3460       5.55984       7.437    3.47e-09 ***
+  yf          1.06712      0.364515      2.927    0.0055   ***
+  ym         -0.198418     0.298664     -0.6644   0.5101  
+  educ        0.258172     0.0708648     3.643    0.0007   ***
+  ue         -1.59099      0.307647     -5.171    6.09e-06 ***
+  dr          0.391632     0.235404      1.664    0.1036  
+  urb        -0.0876356    0.0311463    -2.814    0.0074   ***
+  wh         -0.0850871    0.0391115    -2.175    0.0353   **
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    194.9397   S.E. of regression   2.154396
+R-squared            0.779619   Adjusted R-squared   0.742888
+F(7, 42)             21.22554   P-value(F)           6.62e-12
+Log-likelihood      -104.9636   Akaike criterion     225.9272
+Schwarz criterion    241.2234   Hannan-Quinn         231.7521
+
+Excluding the constant, p-value was highest for variable 3 (ym)
+
+# Model C
+? omit ym
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for ym
+  Test statistic: F(1, 42) = 0.441363, p-value 0.510097
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1-50
+Dependent variable: wlfp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      41.8336       5.47528       7.640    1.54e-09 ***
+  yf          0.849264     0.158152      5.370    2.99e-06 ***
+  educ        0.249152     0.0690987     3.606    0.0008   ***
+  ue         -1.67758      0.276859     -6.059    3.00e-07 ***
+  dr          0.434104     0.225080      1.929    0.0604   *
+  urb        -0.0942172    0.0293363    -3.212    0.0025   ***
+  wh         -0.0960861    0.0352037    -2.729    0.0092   ***
+
+Mean dependent var   57.47400   S.D. dependent var   4.248784
+Sum squared resid    196.9882   S.E. of regression   2.140355
+R-squared            0.777303   Adjusted R-squared   0.746229
+F(6, 43)             25.01455   P-value(F)           1.55e-12
+Log-likelihood      -105.2249   Akaike criterion     224.4499
+Schwarz criterion    237.8341   Hannan-Quinn         229.5467
+
+# Using this final model as the restricted model retrieve ESSR and DFR
+? genr ESSR = $ess
+Generated scalar ESSR = 196.988
+? genr DFR = $df
+Generated scalar DFR = 43
+# compute number of restrictions
+? genr NR = DFR-DFU
+Generated scalar NR = 2
+# compute F-statistic
+? genr Fc = (ESSR - ESSU)*DFU/(NR*ESSU)
+Generated scalar Fc = 0.318535
+# compute p-value for Fc
+? pvalue F NR DFU Fc
+F(2, 41): area to the right of 0.318535 = 0.728997
+(to the left: 0.271003)
+Done

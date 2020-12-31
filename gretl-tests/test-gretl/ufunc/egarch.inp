@@ -1,0 +1,8 @@
+include gig.gfn
+open b-g.gdt --quiet
+emod = gig_setup(Y,7,const)
+set stopwatch
+gig_estimate(&emod)
+printf "Elapsed: %g seconds\n", $stopwatch
+series h = emod.h
+printf "Sample var = %g, estimated = %g\n", var(Y), mean(h)

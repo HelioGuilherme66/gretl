@@ -1,0 +1,62 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run roc.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/roc.gfn.inp
+? include ./roc/roc.gfn
+ /home/cottrell/stats/test-gretl/testgfn/roc/roc.gfn
+roc 1.01, 2015-07-07 (Peter M. Summers)
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+
+Model 1: Logit, using observations 1-753
+Dependent variable: LFP
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope   
+  ----------------------------------------------------------
+  const       0.523316     0.675893      0.7743             
+  WA         -0.0558658    0.0111462    -5.012    -0.0136657
+  WE          0.202588     0.0372229     5.443     0.0495564
+  KL6        -1.43215      0.191385     -7.483    -0.350328 
+
+Mean dependent var   0.568393   S.D. dependent var   0.495630
+McFadden R-squared   0.094843   Adjusted R-squared   0.087074
+Log-likelihood      -466.0412   Akaike criterion     940.0823
+Schwarz criterion    958.5786   Hannan-Quinn         947.2080
+
+Number of cases 'correctly predicted' = 498 (66.1%)
+f(beta'x) at mean of independent vars = 0.245
+Likelihood ratio test: Chi-square(3) = 97.6641 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  156   169
+         1   86   342
+
+------------------------------------------------------
+                      ROC Analysis                         
+------------------------------------------------------
+Area under curve (std. error) =  0.707 (0.0189)
+95% C.I. = 	 [0.67, 0.744]
+Max correctly predicted = 0.672 at threshold 0.558
+Youden index 	= 0.333
+------------------------------------------------------
+------------------------------------------------------
+                   ROC Comparison                     
+------------------------------------------------------
+Areas under ROC curves and their standard errors: 
+               Area  std. error
+model1       0.7072      0.0189
+model2       0.7158      0.0187
+model3       0.8014      0.0160
+  
+------------------------------------------------------
+Tests of no difference: 
+                       test stat     p-value
+      model1-model2      -1.3231      0.1858
+      model2-model3      -5.5933      0.0000
+      model1-model3      -5.7565      0.0000
+All differences = 0      33.7510      0.0000
+  
+Joint test is chi-square with 2 degrees of freedom

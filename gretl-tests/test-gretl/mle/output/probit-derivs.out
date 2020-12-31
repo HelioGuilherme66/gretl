@@ -1,0 +1,481 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run probit-derivs.inp
+ /home/cottrell/stats/test-gretl/mle/probit-derivs.inp
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+Using analytical derivatives
+Iteration 1: loglikelihood = -474.739120083
+Parameters:       1.2108    -0.26170    0.010833   -0.016806    0.036533  -0.0027140
+              -0.0055020   -0.039864 -0.00015907  1.3915e-05  -0.0026241  -0.0028809
+                0.021127
+Gradients:       -168.11     -84.653     -232.62     -7410.5     -1888.6     -7822.2
+                 -2044.5     -1372.3 -3.9655e+05 -3.3419e+06     -1484.8     -108.96
+                 -651.04 (norm 7.00e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 2: loglikelihood = -471.437337981 (steplength = 6.5536e-12)
+Parameters:       1.2108    -0.26170    0.010833   -0.016806    0.036533  -0.0027140
+              -0.0055020   -0.039864 -0.00016167 -7.9866e-06  -0.0026241  -0.0028809
+                0.021127
+Gradients:        55.327     -31.751      70.001      2168.7      940.20      2321.2
+                  880.44      649.85  1.2017e+05  3.1510e+06      464.87      48.959
+                  1596.3 (norm 4.50e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 3: loglikelihood = -460.878292796 (steplength = 8.192e-10)
+Parameters:       1.2108    -0.26170    0.010833   -0.016808    0.036533  -0.0027161
+              -0.0055024   -0.039864 -0.00026813  4.9283e-07  -0.0026245  -0.0028810
+                0.021128
+Gradients:        76.771     -25.084      104.57      3039.2      1169.6      3250.1
+                  1105.8      651.57  1.8263e+05  3.1445e+06      627.65      55.731
+                  1807.6 (norm 5.01e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 4: loglikelihood = -446.339388993 (steplength = 1.28e-05)
+Parameters:       1.2107    -0.26225    0.010775   -0.025191    0.037162   -0.011083
+              -0.0063410   -0.044009 -6.1614e-05  7.2392e-06  -0.0044123  -0.0030513
+                0.033272
+Gradients:        91.310     -30.619      106.33      4010.7      1292.3      4291.0
+                  1214.1      768.42  1.7731e+05  3.0844e+06      796.41      67.528
+                  1809.9 (norm 5.92e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 5: loglikelihood = -429.642551549 (steplength = 1.28e-05)
+Parameters:       1.2107    -0.26353    0.010729   -0.025941    0.040954   -0.010587
+              -0.0059246   -0.050726 -0.00016132  6.8355e-06  -0.0052114  -0.0032020
+                0.059784
+Gradients:        79.487     -25.097      130.28      3241.8      1145.6      3532.4
+                  1098.3      738.82  1.6867e+05  2.9997e+06      688.10      60.149
+                  961.13 (norm 5.72e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 6: loglikelihood = -419.257783112 (steplength = 0.00032)
+Parameters:       1.2117    -0.27763    0.023119   -0.046620    0.079236   0.0088839
+               0.0012413    -0.10337 -0.00032235  1.6759e-05  -0.0043359  -0.0041247
+                0.056148
+Gradients:        73.556     -27.547      108.28      3135.4      1012.3      3280.0
+                  1004.1      801.18  1.5885e+05  2.8975e+06      644.20      60.174
+                  976.96 (norm 6.77e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 7: loglikelihood = -418.095378243 (steplength = 0.00032)
+Parameters:       1.2120    -0.29331    0.029991   -0.037026    0.082781   0.0023819
+              -0.0096688    -0.11496 -0.00032399  2.0812e-05  -0.0062550  -0.0038080
+                0.054491
+Gradients:        75.245     -22.401      110.41      3103.1      1044.5      3293.4
+                  1062.8      846.96  1.5902e+05  2.8966e+06      669.97      62.533
+                  983.86 (norm 6.72e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 8: loglikelihood = -416.746602246 (steplength = 0.00032)
+Parameters:       1.2131    -0.32283    0.043844   -0.027574    0.097975  -0.0095323
+               -0.010753    -0.11472 -0.00034912  1.9231e-05 -0.00040455  -0.0020867
+                0.053931
+Gradients:        72.980     -23.307      96.470      3048.1      992.02      3295.9
+                  1015.5      822.40  1.5713e+05  2.8744e+06      619.96      59.699
+                  978.09 (norm 6.69e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 9: loglikelihood = -412.966687186 (steplength = 0.0016)
+Parameters:       1.2189    -0.50711     0.10573   -0.038148     0.12868  -0.0016478
+               -0.036272   -0.082894 -0.00030604  1.1844e-05   -0.025482   0.0072122
+                0.057443
+Gradients:        71.729     -7.5710      56.466      3038.5      966.71      3208.0
+                  1034.4      766.98  1.5468e+05  2.8418e+06      689.67      59.334
+                  972.70 (norm 6.79e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 10: loglikelihood = -410.910970540 (steplength = 0.0016)
+Parameters:       1.2243    -0.69043     0.10553   -0.052159     0.10317   0.0071221
+               -0.030846   -0.086995 -0.00025862  1.3747e-05    0.013786    0.017216
+                0.059110
+Gradients:        71.553      9.6289      47.288      3007.5      1002.6      3116.3
+                  1048.8      766.64  1.5092e+05  2.7956e+06      550.52      56.047
+                  955.50 (norm 6.92e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 11: loglikelihood = -409.290111661 (steplength = 0.00032)
+Parameters:       1.2263    -0.74765    0.093955   -0.050056    0.098102   0.0050481
+               -0.016055   -0.090609 -0.00026375  1.3722e-05   0.0088101    0.020192
+                0.057996
+Gradients:        71.255      14.277      54.719      2960.0      992.84      3083.1
+                  1011.3      763.27  1.4855e+05  2.7660e+06      566.96      55.111
+                  949.43 (norm 6.73e+00)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+Iteration 12: loglikelihood = -408.793768441 (steplength = 0.0016)
+Parameters:       1.2320    -0.77818    0.060680   -0.052019     0.11557   0.0049650
+               -0.028392   -0.084777 -0.00023675  1.2174e-05    0.010820    0.021074
+                0.056728
+Gradients:        71.757      15.858      75.638      2967.1      978.92      3088.2
+                  1026.6      757.21  1.4890e+05  2.7662e+06      564.38      55.380
+                  951.26 (norm 6.86e+00)
+
+Iteration 13: loglikelihood = -390.439938686 (steplength = 1)
+Parameters:       4.7675    -0.97979   -0.035910   -0.059330    0.072744   -0.027145
+               -0.024820    -0.14339 -0.00071324  5.1801e-05   -0.019858    -0.14301
+                0.063792
+Gradients:      -0.67095    -0.82431      3.8094      249.38      108.24      262.49
+                  105.19      69.007      15475.  3.6355e+05      62.393      18.637
+                  160.43 (norm 2.64e+00)
+
+Iteration 14: loglikelihood = -389.615561415 (steplength = 0.008)
+Parameters:       4.7860    -0.97662   -0.036955   -0.059938    0.073250   -0.027067
+               -0.026380    -0.14638 -0.00071483  5.2298e-05   -0.021673   -0.065836
+                0.063948
+Gradients:       -1.6076     -1.3293      2.9065      207.33      94.777      219.40
+                  90.969      58.348      13442.  3.2377e+05      55.155      12.444
+                  147.89 (norm 2.53e+00)
+
+Iteration 15: loglikelihood = -383.555501636 (steplength = 0.2)
+Parameters:       3.8154    -0.92564   -0.012188   -0.057237    0.094635   -0.020732
+               -0.019695    -0.14625 -0.00067384  5.3733e-05   -0.017337   -0.064095
+                0.066283
+Gradients:       -5.9887     -1.9719     -4.1825     -98.580     -10.976     -98.471
+                 -18.740     -20.308     -2601.5      24660.     -5.5777      5.6373
+                  34.730 (norm 1.81e+00)
+
+Iteration 16: loglikelihood = -380.093393687 (steplength = 1)
+Parameters:       2.3916    -0.85308    0.024076   -0.056492     0.12501  -0.0090310
+               -0.015754    -0.14766 -0.00057968  5.2867e-05  -0.0071718    0.021074
+                0.069416
+Gradients:       0.28220    -0.18434     0.57236      10.162      4.9256      12.328
+                  4.7882      3.1022      753.10      11507.      2.3011 -0.00088590
+                  9.5474 (norm 5.82e-01)
+
+Iteration 17: loglikelihood = -380.089520670 (steplength = 1)
+Parameters:       2.3864    -0.85662    0.024602   -0.056915     0.12566  -0.0088103
+               -0.015646    -0.14756 -0.00057965  5.2962e-05  -0.0071595    0.017984
+                0.069789
+Gradients:      0.040070   -0.033509    0.046731      1.1332     0.72853      1.4690
+                 0.61777    0.077901      98.425      1083.2     0.31697    0.022982
+                  2.0095 (norm 2.10e-01)
+
+Iteration 18: loglikelihood = -380.089344607 (steplength = 1)
+Parameters:       2.3881    -0.85761    0.024610   -0.057038     0.12583  -0.0087743
+               -0.015642    -0.14769 -0.00057999  5.3002e-05  -0.0071585    0.018082
+                0.069891
+Gradients:     0.0017876   0.0024468  -0.0045464    0.077450    0.020416    0.069270
+               0.0070743   -0.022143      1.3823      13.888    0.021137   0.0022284
+                0.091115 (norm 4.43e-02)
+
+Iteration 19: loglikelihood = -380.089344028 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024602   -0.057039     0.12583  -0.0087761
+               -0.015645    -0.14771 -0.00058004  5.3006e-05  -0.0071567    0.018112
+                0.069895
+Gradients:    9.6502e-05  0.00022579 -0.00056831    0.010084 -0.00015732   0.0074577
+              -0.0018896  -0.0018236    -0.17706      4.2163   0.0026699  0.00017611
+               0.0058975 (norm 1.29e-02)
+
+Iteration 20: loglikelihood = -380.089344020 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057039     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -2.6809e-05 -3.4718e-05 -3.0323e-06 -0.00043254 -0.00044823 -0.00063858
+             -0.00054848 -2.3539e-05   -0.073099     0.43698 -5.8253e-05 -1.7140e-05
+             -0.00043375 (norm 4.72e-03)
+
+Iteration 20: loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -2.6809e-05 -3.4718e-05 -3.0323e-06 -0.00043254 -0.00044823 -0.00063858
+             -0.00054848 -2.3539e-05   -0.073099     0.43698 -5.8253e-05 -1.7140e-05
+             -0.00043375 (norm 4.72e-03)
+
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+In regard to function pllik:
+Warning: log: Numerical result out of range
+
+--- FINAL VALUES: 
+loglikelihood = -380.089344019 (steplength = 1.04858e-14)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -2.6809e-05 -3.4718e-05 -3.0323e-06 -0.00043254 -0.00044823 -0.00063858
+             -0.00054848 -2.3539e-05   -0.073099     0.43698 -5.8253e-05 -1.7140e-05
+             -0.00043375 (norm 4.72e-03)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 121
+Evaluations of gradient: 20
+
+Model 2: ML, using observations 1-753
+llik = pllik(&b, LFP, X)
+Standard errors based on Outer Products matrix
+
+               estimate     std. error       z      p-value 
+  ----------------------------------------------------------
+  b[1]        2.38829       0.611434       3.906    9.38e-05 ***
+  b[2]       -0.857587      0.129974      -6.598    4.16e-11 ***
+  b[3]        0.0246014     0.0456337      0.5391   0.5898  
+  b[4]       -0.0570385     0.0153928     -3.706    0.0002   ***
+  b[5]        0.125833      0.0301963      4.167    3.08e-05 ***
+  b[6]       -0.00877661    0.0144666     -0.6067   0.5441  
+  b[7]       -0.0156455     0.0244114     -0.6409   0.5216  
+  b[8]       -0.147710      0.0225380     -6.554    5.61e-11 ***
+  b[9]       -0.000580049   0.000103189   -5.621    1.90e-08 ***
+  b[10]       5.30072e-05   7.71609e-06    6.870    6.43e-12 ***
+  b[11]      -0.00715608    0.0179002     -0.3998   0.6893  
+  b[12]       0.0181142     0.124881       0.1451   0.8847  
+  b[13]       0.0698947     0.00755492     9.252    2.21e-20 ***
+
+Log-likelihood      -380.0893   Akaike criterion     786.1787
+Schwarz criterion    846.2915   Hannan-Quinn         809.3371
+
+Using analytical derivatives
+Iteration 1: loglikelihood = -382.706259820 (steplength = 1)
+Parameters:       2.1017    -0.72389    0.017687   -0.047773     0.10712  -0.0084351
+               -0.019555    -0.12106 -0.00046893  4.4169e-05  -0.0062918  0.00056051
+                0.060862
+Gradients:       -168.11     -84.653     -232.62     -7410.5     -1888.6     -7822.2
+                 -2044.5     -1372.3 -3.9655e+05 -3.3419e+06     -1484.8     -108.96
+                 -651.04 (norm 1.12e+01)
+
+Iteration 2: loglikelihood = -380.100630910 (steplength = 1)
+Parameters:       2.3675    -0.84916    0.024362   -0.056387     0.12456  -0.0087817
+               -0.015981    -0.14567 -0.00057200  5.2346e-05  -0.0071147    0.016096
+                0.069302
+Gradients:       -11.062     -10.038     -11.984     -522.94     -104.14     -542.80
+                 -116.75     -98.728     -28686. -1.6714e+05     -98.806     -6.1597
+                  35.038 (norm 3.12e+00)
+
+Iteration 3: loglikelihood = -380.089345197 (steplength = 1)
+Parameters:       2.3881    -0.85756    0.024604   -0.057034     0.12582  -0.0087759
+               -0.015644    -0.14768 -0.00057996  5.2996e-05  -0.0071587    0.018110
+                0.069891
+Gradients:      -0.24972    -0.47506    -0.23732     -13.974    -0.95742     -13.989
+                 -1.5478     -3.0232     -800.18      85.824     -2.3080   -0.044710
+                  6.5327 (norm 5.16e-01)
+
+Iteration 4: loglikelihood = -380.089344020 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024602   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -0.00016327 -0.00073699  -0.0013626   -0.030750    0.013344   -0.029917
+               0.0030520  -0.0075640     -1.4142      136.43   0.0024600  0.00015559
+                0.059684 (norm 3.74e-02)
+
+Iteration 5: loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -8.4589e-06  1.7240e-05 -3.0512e-05 -0.00048871 -1.7150e-05 -0.00054951
+             -0.00015955 -6.1655e-05   -0.019071      1.7683  1.0052e-05 -1.4171e-05
+              0.00021451 (norm 3.94e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -1.0668e-07  2.1124e-07 -3.7841e-07 -6.1019e-06 -2.5661e-07 -6.8545e-06
+             -1.9966e-06 -7.7127e-07 -0.00024030    0.021378  9.3912e-08 -1.7600e-07
+              2.5626e-06 (norm 4.37e-04)
+
+
+Convergence achieved after 5 iterations
+
+Model 3: ML, using observations 1-753
+llik = pllik(&b, LFP, X)
+Standard errors based on Outer Products matrix
+
+               estimate     std. error       z      p-value 
+  ----------------------------------------------------------
+  b[1]        2.38829       0.611433       3.906    9.38e-05 ***
+  b[2]       -0.857587      0.129973      -6.598    4.16e-11 ***
+  b[3]        0.0246015     0.0456339      0.5391   0.5898  
+  b[4]       -0.0570385     0.0153931     -3.705    0.0002   ***
+  b[5]        0.125833      0.0301965      4.167    3.08e-05 ***
+  b[6]       -0.00877661    0.0144669     -0.6067   0.5441  
+  b[7]       -0.0156455     0.0244114     -0.6409   0.5216  
+  b[8]       -0.147710      0.0225381     -6.554    5.61e-11 ***
+  b[9]       -0.000580049   0.000103189   -5.621    1.90e-08 ***
+  b[10]       5.30072e-05   7.71608e-06    6.870    6.43e-12 ***
+  b[11]      -0.00715608    0.0179004     -0.3998   0.6893  
+  b[12]       0.0181142     0.124882       0.1451   0.8847  
+  b[13]       0.0698947     0.00755525     9.251    2.22e-20 ***
+
+Log-likelihood      -380.0893   Akaike criterion     786.1787
+Schwarz criterion    846.2915   Hannan-Quinn         809.3371
+
+Using analytical derivatives
+Iteration 1: loglikelihood = -382.640002896 (steplength = 1)
+Parameters:       2.1114    -0.72417    0.017492   -0.047807     0.10697  -0.0084587
+               -0.019424    -0.12222 -0.00047201  4.4528e-05  -0.0062505  0.00057256
+                0.060860
+Gradients:       -168.11     -84.653     -232.62     -7410.5     -1888.6     -7822.2
+                 -2044.5     -1372.3 -3.9655e+05 -3.3419e+06     -1484.8     -108.96
+                 -651.04 (norm 1.12e+01)
+
+Iteration 2: loglikelihood = -380.098985949 (steplength = 1)
+Parameters:       2.3704    -0.84919    0.024320   -0.056406     0.12458  -0.0087955
+               -0.015989    -0.14605 -0.00057303  5.2487e-05  -0.0070814    0.016060
+                0.069321
+Gradients:       -10.814     -9.9466     -11.566     -512.42     -100.87     -531.67
+                 -113.27     -94.940     -28101. -1.6260e+05     -96.447     -5.9427
+                  36.927 (norm 3.09e+00)
+
+Iteration 3: loglikelihood = -380.089344207 (steplength = 1)
+Parameters:       2.3882    -0.85755    0.024601   -0.057035     0.12583  -0.0087768
+               -0.015647    -0.14770 -0.00058002  5.3005e-05  -0.0071557    0.018102
+                0.069892
+Gradients:      -0.21879    -0.47060    -0.17803     -12.546    -0.63714     -12.459
+                 -1.1053     -2.4925     -726.88     -543.96     -2.0549   -0.014413
+                  6.4922 (norm 4.91e-01)
+
+Iteration 4: loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:    0.00026541  -0.0016605  0.00033398  -0.0030325    0.012568   0.0010443
+                0.011139  -0.0019607    -0.37668      23.443   0.0013494  0.00092988
+                0.041926 (norm 2.59e-02)
+
+Iteration 5: loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:    2.1509e-08 -2.7436e-08  1.8864e-08  6.2297e-07  4.5467e-07  7.5508e-07
+              4.3157e-07  7.9365e-08  3.0132e-05  0.00082054  1.6343e-07  3.1738e-08
+              1.0235e-06 (norm 1.59e-04)
+
+
+--- FINAL VALUES: 
+loglikelihood = -380.089344019 (steplength = 1)
+Parameters:       2.3883    -0.85759    0.024601   -0.057038     0.12583  -0.0087766
+               -0.015645    -0.14771 -0.00058005  5.3007e-05  -0.0071561    0.018114
+                0.069895
+Gradients:   -5.1736e-14 -1.4211e-14 -1.7053e-13 -8.0291e-12  1.2808e-12 -1.4637e-12
+              3.8654e-12 -1.3403e-12 -1.0550e-10 -1.0456e-08 -2.3057e-12 -1.0236e-13
+             -1.6378e-12 (norm 3.70e-07)
+
+
+Convergence achieved after 5 iterations
+
+Model 4: ML, using observations 1-753
+llik = pllik(&b, LFP, X)
+Standard errors based on Outer Products matrix
+
+               estimate     std. error       z      p-value 
+  ----------------------------------------------------------
+  b[1]        2.38829       0.611434       3.906    9.38e-05 ***
+  b[2]       -0.857587      0.129974      -6.598    4.16e-11 ***
+  b[3]        0.0246015     0.0456337      0.5391   0.5898  
+  b[4]       -0.0570385     0.0153928     -3.706    0.0002   ***
+  b[5]        0.125833      0.0301963      4.167    3.08e-05 ***
+  b[6]       -0.00877661    0.0144666     -0.6067   0.5441  
+  b[7]       -0.0156455     0.0244114     -0.6409   0.5216  
+  b[8]       -0.147710      0.0225379     -6.554    5.61e-11 ***
+  b[9]       -0.000580049   0.000103189   -5.621    1.90e-08 ***
+  b[10]       5.30072e-05   7.71608e-06    6.870    6.43e-12 ***
+  b[11]      -0.00715608    0.0179002     -0.3998   0.6893  
+  b[12]       0.0181142     0.124881       0.1451   0.8847  
+  b[13]       0.0698947     0.00755492     9.252    2.21e-20 ***
+
+Log-likelihood      -380.0893   Akaike criterion     786.1787
+Schwarz criterion    846.2915   Hannan-Quinn         809.3371
+
+BFGS time:              0.0661206 seconds
+Newton time:            0.0975984 seconds
+Newton + hessian time:  0.0111296 seconds

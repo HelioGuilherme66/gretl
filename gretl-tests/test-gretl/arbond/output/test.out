@@ -1,0 +1,146 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run test.inp
+ /home/cottrell/stats/test-gretl/arbond/test.inp
+? open test.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/test.gdt
+periodicity: 8, maxobs: 40
+observations range: 1:1 to 5:8
+
+Listing 7 variables:
+  0) const      1) codlav     2) year       3) lnwreal    4) x3reg    
+  5) eta        6) eta2     
+
+? panel lnwreal 0 eta eta2
+
+Model 1: Fixed-effects, using 33 observations
+Included 5 cross-sectional units
+Time-series length: minimum 3, maximum 8
+Dependent variable: lnwreal
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      11.7191       8.42856       1.390    0.1762 
+  eta        -0.359531     0.354953     -1.013    0.3204 
+  eta2        0.00404395   0.00373073    1.084    0.2883 
+
+Mean dependent var   3.796653   S.D. dependent var   0.240703
+Sum squared resid    0.595925   S.E. of regression   0.151394
+LSDV R-squared       0.678575   Within R-squared     0.174456
+LSDV F(6, 26)        9.148286   P-value(F)           0.000020
+Log-likelihood       19.40847   Akaike criterion    -24.81693
+Schwarz criterion   -14.34138   Hannan-Quinn        -21.29223
+rho                  0.446650   Durbin-Watson        0.922712
+
+Joint test on named regressors -
+  Test statistic: F(2, 26) = 2.74718
+  with p-value = P(F(2, 26) > 2.74718) = 0.082723
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(4, 26) = 12.987
+  with p-value = P(F(4, 26) > 12.987) = 6.11425e-06
+
+? panel lnwreal 0 eta eta2 --random
+
+Model 2: Random-effects (GLS), using 33 observations
+Included 5 cross-sectional units
+Time-series length: minimum 3, maximum 8
+Dependent variable: lnwreal
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      12.6514       9.08641       1.392    0.1741 
+  eta        -0.392243     0.382927     -1.024    0.3139 
+  eta2        0.00432317   0.00402809    1.073    0.2917 
+
+Mean dependent var   3.796653   S.D. dependent var   0.240703
+Sum squared resid    1.929951   S.E. of regression   0.249512
+Log-likelihood       0.018741   Akaike criterion     5.962517
+Schwarz criterion    10.45204   Hannan-Quinn         7.473105
+
+'Between' variance = 0.0174534
+'Within' variance = 0.0229202
+mean theta = 0.58046
+corr(y,yhat)^2 = 0.00081815
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 22.7388
+  with p-value = 1.8558e-06
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(2) = 8.94164
+  with p-value = 0.011438
+
+? genr dy = diff(lnwreal)
+Generated series dy (ID 7)
+? print year lnwreal dy -o
+
+            year      lnwreal           dy
+
+1:1         1990     3.642792             
+1:2         1991     3.636252    -0.006540
+1:3         1992                          
+1:4         1993     4.497645             
+1:5         1994                          
+1:6         1995                          
+1:7         1996                          
+1:8         1997                          
+2:1         1990     3.416999             
+2:2         1991     3.468375      0.05138
+2:3         1992     3.478184     0.009809
+2:4         1993     3.463482     -0.01470
+2:5         1994     3.411456     -0.05203
+2:6         1995     3.440670      0.02921
+2:7         1996     3.519949      0.07928
+2:8         1997                          
+3:1         1990     3.639465             
+3:2         1991     3.886159    0.2466941
+3:3         1992     3.811943     -0.07422
+3:4         1993     3.777028     -0.03491
+3:5         1994     3.771215    -0.005813
+3:6         1995     3.801037      0.02982
+3:7         1996     3.943625    0.1425884
+3:8         1997     3.989431      0.04581
+4:1         1990     3.710502             
+4:2         1991     3.882647    0.1721449
+4:3         1992     3.908180      0.02553
+4:4         1993     3.891407     -0.01677
+4:5         1994     3.849516     -0.04189
+4:6         1995     3.826207     -0.02331
+4:7         1996     3.856536      0.03033
+4:8         1997     3.887894      0.03136
+5:1         1990     4.067700             
+5:2         1991     4.017314     -0.05039
+5:3         1992     3.866661   -0.1506536
+5:4         1993     3.726807   -0.1398537
+5:5         1994                          
+5:6         1995     4.046721             
+5:7         1996     4.077884      0.03116
+5:8         1997     4.077864   -2.050E-05
+
+? arbond 1 0 ; lnwreal
+
+Model 3: 1-step Arellano-Bond, using 20 observations
+Included 4 cross-sectional units
+Dependent variable: lnwreal
+
+                 coefficient   std. error     z     p-value
+  ---------------------------------------------------------
+  Dlnwreal(-1)    0.383331      0.173097    2.215   0.0268  **
+
+Sum squared resid    0.086254   S.E. of regression   0.067377
+
+Number of instruments = 15
+Test for AR(1) errors: z = 1.17133 [0.2415]
+Test for AR(2) errors: z = -0.99173 [0.3213]
+Sargan over-identification test: Chi-square(14) = 31.7654 [0.0043]
+Wald (joint) test: Chi-square(1) = 4.90423 [0.0268]
+
+# store xxx codlav year lnwreal x3reg eta eta2 --csv
+Done

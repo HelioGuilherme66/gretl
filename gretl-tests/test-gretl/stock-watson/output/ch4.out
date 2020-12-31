@@ -1,0 +1,110 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch4.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch4.inp
+# Stock and Watson
+# Chapter 4: Linear Regression with One Regressor
+#
+? open caschool.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/caschool.gdt
+periodicity: 1, maxobs: 420
+observations range: 1 to 420
+
+Listing 14 variables:
+  0) const       1) enrl_tot    2) teachers    3) calw_pct    4) meal_pct  
+  5) computer    6) testscr     7) comp_stu    8) expn_stu    9) str       
+ 10) avginc     11) el_pct     12) read_scr   13) math_scr  
+
+? set hc_version 1
+#
+# Summary statistics for str and testscr in Table 4.1
+#
+? summary str testscr
+
+                     Mean         Median        Minimum        Maximum
+str                19.640         19.723         14.000         25.800
+testscr            654.16         654.45         605.55         706.75
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+str                1.8918       0.096322      -0.025365        0.60960
+testscr            19.053       0.029127       0.091615       -0.25429
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+str                16.408         22.665         2.2906              0
+testscr            623.10         686.00         26.737              0
+
+#
+# Correlation between str and testscr
+#
+? corr str testscr
+
+corr(str, testscr) = -0.22636275
+Under the null hypothesis of no correlation:
+ t(418) = -4.75133, with two-tailed p-value 0.0000
+
+#
+# Figure 4.2: Scatterplot of Test Score and Student-Teacher Ratio
+# (Here we suppress the least squares fit line)
+#
+? plot1 <- gnuplot testscr str --suppress-fitted
+wrote /home/cottrell/stats/test-gretl/stock-watson/gpttmp01.plt
+#
+# Equation 4.7 and 4.26
+# Here is an example how to use OLS in the program.
+#
+? model_1 <- ols testscr const str --robust
+
+model_1: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       698.933      10.3644      67.44     9.49e-227 ***
+  str          -2.27981     0.519489    -4.389    1.45e-05  ***
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    144315.5   S.E. of regression   18.58097
+R-squared            0.051240   Adjusted R-squared   0.048970
+F(1, 418)            19.25943   P-value(F)           0.000014
+Log-likelihood      -1822.250   Akaike criterion     3648.499
+Schwarz criterion    3656.580   Hannan-Quinn         3651.693
+
+model_1 saved
+#
+# crossplot Figure 4.3 with regression line
+#
+? plot2 <- gnuplot testscr str
+wrote /home/cottrell/stats/test-gretl/stock-watson/gpttmp02.plt
+#
+# Equation 4.33
+# Below a binary variable is defined, = 1 where the student-teacher ratio is
+# less than 20, otherwise = 0
+#
+? genr dsize = (str<20)
+Generated series dsize (ID 14)
+? model_2 <- ols testscr const dsize --robust
+
+model_2: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       649.979       1.32289     491.3     0.0000   ***
+  dsize         7.37241     1.82358       4.043   6.29e-05 ***
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    146504.0   S.E. of regression   18.72133
+R-squared            0.036852   Adjusted R-squared   0.034548
+F(1, 418)            16.34445   P-value(F)           0.000063
+Log-likelihood      -1825.410   Akaike criterion     3654.821
+Schwarz criterion    3662.901   Hannan-Quinn         3658.015
+
+model_2 saved
+#
+# End of Chapter 4
+Done

@@ -1,0 +1,279 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run austral.inp
+ /home/cottrell/stats/test-gretl/vecm/austral.inp
+? open australia
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+? coint2 2 lpau lpus le iau2 ius2 --seasonals
+
+Johansen test:
+Number of equations = 5
+Lag order = 2
+Estimation period: 1972:3 - 1991:1 (T = 75)
+Case 3: Unrestricted constant
+
+Log-likelihood = 1434.34 (including constant term: 1221.5)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.48383     101.38 [0.0000]     49.599 [0.0001]
+   1    0.26749     51.777 [0.0189]     23.346 [0.1624]
+   2    0.21539     28.431 [0.0723]     18.192 [0.1259]
+   3   0.074341     10.239 [0.2675]     5.7937 [0.6449]
+   4   0.057549     4.4453 [0.0350]     4.4453 [0.0350]
+
+Corrected for sample size (df = 61)
+Rank Trace test p-value
+   0     101.38 [0.0001]
+   1     51.777 [0.0302]
+   2     28.431 [0.0861]
+   3     10.239 [0.2816]
+   4     4.4453 [0.0390]
+
+eigenvalue     0.48383      0.26749      0.21539     0.074341     0.057549 
+
+beta (cointegrating vectors)
+lpau           -8.6630       14.998       8.3996      -29.448      -12.435 
+lpus            8.2476      -29.660      -9.4254       48.608       12.597 
+le             -3.2582       11.447      -6.8330      -3.9967       4.3348 
+iau2            101.74       41.532       34.952      -12.218       12.193 
+ius2           -80.866       58.114       17.049      -96.675       17.222 
+
+alpha (adjustment vectors)
+lpau         0.0034479  -0.00089324  -0.00081084  -0.00041023    0.0014362 
+lpus       -0.00045551   -0.0022620  -0.00015678  -0.00094871  -0.00063088 
+le           0.0040719   -0.0082731     0.018963   -0.0014699    0.0051074 
+iau2        -0.0032160   -0.0028613  -0.00063119   0.00022777   0.00071031 
+ius2        0.00091682   -0.0034639  -3.7279e-05   0.00090126   -0.0014224 
+
+renormalized beta
+lpau            1.0000     -0.50567      -1.2293       2.4102     -0.72203 
+lpus          -0.95205       1.0000       1.3794      -3.9784      0.73144 
+le             0.37611     -0.38594       1.0000      0.32711      0.25170 
+iau2           -11.745      -1.4003      -5.1152       1.0000      0.70802 
+ius2            9.3346      -1.9594      -2.4950       7.9124       1.0000 
+
+renormalized alpha
+lpau         -0.029869     0.026493    0.0055404    0.0050123     0.024734 
+lpus         0.0039461     0.067091    0.0010712     0.011591    -0.010865 
+le           -0.035274      0.24538     -0.12957     0.017959     0.087960 
+iau2          0.027860     0.084865    0.0043129   -0.0027830     0.012233 
+ius2        -0.0079423      0.10274   0.00025472    -0.011012    -0.024496 
+
+long-run matrix (alpha * beta')
+                  lpau         lpus           le         iau2         ius2
+lpau         -0.055855     0.060724   -0.0080534      0.30789     -0.28016 
+lpus         0.0044848     0.010750    -0.022281     -0.14187    -0.016444 
+le           -0.020299     0.093114     -0.20953      0.81373     -0.25670 
+iau2         -0.035895     0.084309    -0.015792     -0.46223     0.073237 
+ius2         -0.069061      0.13654    -0.052151    -0.080240     -0.38770 
+
+? vecm 2 2 lpau lpus le iau2 ius2 --seasonals
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1972:3-1991:1 (T = 75)
+Cointegration rank = 2
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+lpau       1.0000       0.0000 
+          (0.0000)     (0.0000) 
+lpus       0.0000       1.0000 
+          (0.0000)     (0.0000) 
+le       0.016739     -0.37747 
+         (0.29790)    (0.18748) 
+iau2      -25.219      -14.153 
+          (3.0076)     (1.8928) 
+ius2       14.403       5.3241 
+          (2.4413)     (1.5364) 
+
+alpha (adjustment vectors)
+
+lpau    -0.043266     0.054930 
+lpus    -0.029980     0.063335 
+le       -0.15936      0.27896 
+iau2    -0.015053     0.058340 
+ius2    -0.059895      0.11030 
+
+Log-likelihood = 1207.2879
+Determinant of covariance matrix = 7.1746835e-21
+AIC = -30.3277
+BIC = -28.1647
+HQC = -29.4640
+
+Equation 1: d_lpau
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -0.0279318    0.0446486    -0.6256    0.5338 
+  d_lpau_1   -0.00344107   0.132499     -0.02597   0.9794 
+  d_lpus_1    0.415849     0.143370      2.901     0.0051  ***
+  d_le_1      0.0245729    0.0224050     1.097     0.2769 
+  d_iau2_1    0.0501574    0.133806      0.3749    0.7090 
+  d_ius2_1    0.0533944    0.109918      0.4858    0.6288 
+  S1         -0.00980194   0.00282180   -3.474     0.0009  ***
+  S2         -0.00633894   0.00273747   -2.316     0.0238  **
+  S3         -0.00738314   0.00267990   -2.755     0.0077  ***
+  EC1        -0.0432663    0.0163334    -2.649     0.0102  **
+  EC2         0.0549305    0.0290311     1.892     0.0631  *
+
+Mean dependent var   0.022502   S.D. dependent var   0.010615
+Sum squared resid    0.004202   S.E. of regression   0.008167
+R-squared            0.496031   Adjusted R-squared   0.408036
+rho                  0.034523   Durbin-Watson        1.879529
+
+Equation 2: d_lpus
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      -0.103403      0.0344585    -3.001    0.0039  ***
+  d_lpau_1    0.135578      0.102259      1.326    0.1897 
+  d_lpus_1    0.322268      0.110649      2.913    0.0050  ***
+  d_le_1      0.00474067    0.0172916     0.2742   0.7849 
+  d_iau2_1    0.108016      0.103267      1.046    0.2996 
+  d_ius2_1    0.293420      0.0848315     3.459    0.0010  ***
+  S1          0.00226855    0.00217778    1.042    0.3015 
+  S2          0.000598207   0.00211270    0.2831   0.7780 
+  S3          0.000691212   0.00206827    0.3342   0.7393 
+  EC1        -0.0299804     0.0126057    -2.378    0.0204  **
+  EC2         0.0633346     0.0224054     2.827    0.0063  ***
+
+Mean dependent var   0.015652   S.D. dependent var   0.009062
+Sum squared resid    0.002503   S.E. of regression   0.006303
+R-squared            0.588135   Adjusted R-squared   0.516223
+rho                 -0.044858   Durbin-Watson        2.028020
+
+Equation 3: d_le
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -0.370889     0.289597     -1.281     0.2050 
+  d_lpau_1   -0.747481     0.859409     -0.8698    0.3877 
+  d_lpus_1   -0.774312     0.929917     -0.8327    0.4082 
+  d_le_1      0.0919147    0.145322      0.6325    0.5294 
+  d_iau2_1    0.0491731    0.867882      0.05666   0.9550 
+  d_ius2_1    0.0162095    0.712943      0.02274   0.9819 
+  S1          0.0162954    0.0183026     0.8903    0.3767 
+  S2          0.00697812   0.0177556     0.3930    0.6956 
+  S3          0.0100209    0.0173822     0.5765    0.5663 
+  EC1        -0.159355     0.105941     -1.504     0.1375 
+  EC2         0.278960     0.188300      1.481     0.1435 
+
+Mean dependent var   0.005726   S.D. dependent var   0.050200
+Sum squared resid    0.176775   S.E. of regression   0.052971
+R-squared            0.052045   Adjusted R-squared  -0.113471
+rho                  0.004336   Durbin-Watson        1.982940
+
+Equation 4: d_iau2
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      -0.140496      0.0399117    -3.520    0.0008  ***
+  d_lpau_1    0.283798      0.118442      2.396    0.0196  **
+  d_lpus_1   -0.338448      0.128159     -2.641    0.0104  **
+  d_le_1     -0.0116973     0.0200280    -0.5840   0.5613 
+  d_iau2_1    0.259338      0.119610      2.168    0.0339  **
+  d_ius2_1    0.0121932     0.0982562     0.1241   0.9016 
+  S1          0.000308387   0.00252242    0.1223   0.9031 
+  S2          0.00318080    0.00244704    1.300    0.1984 
+  S3          0.00128142    0.00239558    0.5349   0.5946 
+  EC1        -0.0150535     0.0146006    -1.031    0.3065 
+  EC2         0.0583401     0.0259511     2.248    0.0281  **
+
+Mean dependent var   0.000773   S.D. dependent var   0.008247
+Sum squared resid    0.003358   S.E. of regression   0.007300
+R-squared            0.332839   Adjusted R-squared   0.216351
+rho                 -0.058954   Durbin-Watson        2.045908
+
+Equation 5: d_ius2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.162383     0.0533005    -3.047    0.0034  ***
+  d_lpau_1   -0.130537     0.158175     -0.8253   0.4123 
+  d_lpus_1   -0.247101     0.171152     -1.444    0.1538 
+  d_le_1     -0.0217765    0.0267466    -0.8142   0.4186 
+  d_iau2_1    0.0234855    0.159734      0.1470   0.8836 
+  d_ius2_1   -0.0628066    0.131218     -0.4786   0.6338 
+  S1          0.00599471   0.00336860    1.780    0.0800  *
+  S2          0.00322292   0.00326793    0.9862   0.3278 
+  S3          0.00597699   0.00319921    1.868    0.0664  *
+  EC1        -0.0598949    0.0194985    -3.072    0.0031  ***
+  EC2         0.110301     0.0346567     3.183    0.0023  ***
+
+Mean dependent var   0.000267   S.D. dependent var   0.010647
+Sum squared resid    0.005988   S.E. of regression   0.009749
+R-squared            0.286104   Adjusted R-squared   0.161455
+rho                  0.021529   Durbin-Watson        1.949974
+
+Cross-equation covariance matrix:
+
+              lpau         lpus           le         iau2         ius2
+lpau    5.6026e-05  -6.0613e-06   9.9400e-05   1.4015e-05  -2.8484e-05 
+lpus   -6.0613e-06   3.3371e-05  -1.7667e-06   9.0528e-06   2.5130e-05 
+le      9.9400e-05  -1.7667e-06    0.0023570   5.3819e-05  -6.4877e-05 
+iau2    1.4015e-05   9.0528e-06   5.3819e-05   4.4768e-05   9.3107e-06 
+ius2   -2.8484e-05   2.5130e-05  -6.4877e-05   9.3107e-06   7.9843e-05 
+
+determinant = 7.17468e-21
+
+? restrict
+? a[2] = 0
+? a[5] = 0
+? end restrict -v
+Restriction set
+ 1: a[2] = 0
+ 2: a[5] = 0
+
+R(alpha) (2 x 5)
+
+  0   1   0   0   0 
+  0   0   0   0   1 
+
+q(alpha) (2 x 1)
+
+  0 
+  0 
+
+eigenvalue 1 = 0.468662
+eigenvalue 2 = 0.215235
+
+Unrestricted loglikelihood (lu) = 1207.2879
+Restricted loglikelihood (lr) = 1203.6175
+2 * (lu - lr) = 7.34068
+P(Chi-square(4) > 7.34068) = 0.118943
+
+beta (cointegrating vectors)
+lpau            7.1899      -7.7563 
+lpus           -5.5768       8.1849 
+le              2.8716       7.5050 
+iau2           -103.85      -33.317 
+ius2            75.790      -14.567 
+
+alpha (adjustment vectors)
+lpau        -0.0037839   0.00064074 
+lpus            0.0000       0.0000 
+le          -0.0050488    -0.019738 
+iau2         0.0031235   0.00046531 
+ius2            0.0000       0.0000 
+
+long-run matrix (alpha * beta')
+                  lpau         lpus           le         iau2         ius2
+lpau         -0.032176     0.026346   -0.0060570      0.37162     -0.29611 
+lpus            0.0000       0.0000       0.0000       0.0000       0.0000 
+le             0.11679     -0.13340     -0.16263       1.1820    -0.095113 
+iau2          0.018849    -0.013611     0.012462     -0.33989      0.22995 
+ius2            0.0000       0.0000       0.0000       0.0000       0.0000 
+
+Done

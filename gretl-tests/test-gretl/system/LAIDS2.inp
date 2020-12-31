@@ -1,0 +1,76 @@
+open AIDS_data_set.gdt
+set echo off
+set messages off
+
+/*
+ Script for LAIDS estimation
+
+ description : estimation of Linear approximation AIDS of two shares : home energy (WLOG) and motorfuel (WCAR)
+ Added three demographic variables : home rented, child dummy, automobile dummy
+ in this version, a sample of 500 hundred observations has been randomly selected out of the full 10 305 dataset 
+*/
+
+### list of three socio-demographic variables
+list socdemo = DSTALOG_2 CHILD AUTOMOBILE
+
+#### SUR estimation of the system with symmetry in price imposed by the restrict command
+LAIDS <- system
+  equation WLOG const lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo  
+  equation WCAR const lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+  instr const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR socdemo
+end system
+
+restrict LAIDS
+  b[1,3] - b[2,2]=0
+end restrict
+
+estimate LAIDS method=sur --iterate
+matrix YH = $yhat
+
+/*
+  post estimation computation of fitted values and elasticities
+
+  Note : elasticities computed at fitted shares using the Chalfant (1987) approximation
+  Income Elasticity :=> ei = 1 + beta[i]/ what[i,h]
+  price elasticity :=> eij = (gamma[i,j]/what[i,h]) + beta[i]*what[j,h]/what[i,h] + delta[i,j]
+  indexes = i,j goods i and j (home energy, motorfuel) h = households (h = 1..500)
+  each household has one personal elasticities which are then summarized by summation/and or agregation (relative weights)
+  here i compute only income elasticity for brievity. 
+*/
+
+### calling results for elasticity computations.
+scalar nbobs=$nobs
+matrix resij=$uhat
+matrix V=$vcv
+
+### I extract the coefficients of each separate equation to compute an estimated coefficients matrix ("coeffaids")
+coeffaids = mshape($coeff,7,2)
+### recalling estimated coefficients as a matrix {equ1 , equ2}
+coeffaids
+### computing fitted values by matrix computation
+list data_aids = 0 lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+matrix datacomp = {data_aids}
+matrix what = datacomp*coeffaids
+
+### what = matrix of fitted values for each equation
+### I intend next to use what[,i] to compute households elasticities by matrix functions
+
+### computing households elasticities using genr == > this code is OK 
+matrix merl = YH
+matrix b = $coeff[{4,11}]
+matrix merl = 1 + meanc(b'./merl) 
+### listing the values of the mean income elasticities
+merl
+
+#### Here is the problematic code = gretl do not want to add those two vectors which are the same size !
+matrix vecun = ones(nbobs,1)
+matrix wloghat = what[,1]
+scalar tmp = coeffaids[4,1]
+matrix erlog = vecun + tmp./wloghat
+matrix wcarhat = what[,2]
+scalar tmp = coeffaids[4,2]
+matrix ercar = vecun + tmp./wcarhat 
+matrix erij = erlog~ercar
+matrix er=meanc(erij)
+er
+

@@ -1,0 +1,44 @@
+function matrix toepmake(matrix c, matrix r)
+  scalar n = rows(c)
+  if n = 1
+	matrix ret = c[1]
+  elif n = 2
+	matrix ret = c ~ (r[2] | c[1] )
+  else
+  	matrix ret = c ~ (r[2:n] | toepmake(c[1:n-1], r[1:n-1]))
+  endif
+  return ret
+end function 
+
+
+function matrix byhand(matrix c, matrix r, matrix y)
+  matrix tmp = toepmake(c,r)
+  set stopwatch
+  loop 1000
+    matrix sol = tmp \ y
+  endloop
+  printf "By hand: %g\n", $stopwatch
+  return sol
+end function
+
+nulldata 3
+set seed 87665435
+set echo off
+set messages off
+
+n = 30
+
+c = mnormal(n,1)
+r = mnormal(1,n)
+r[1] = c[1]
+
+y = mnormal(n,1)
+Int = byhand(c,r,y)
+set stopwatch
+loop 1000
+  Cmp = toepsolv(c,r,y)
+endloop
+printf "Through function: %g\n", $stopwatch
+eval Cmp ~ Int ~ (Cmp-Int)
+
+

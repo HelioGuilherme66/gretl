@@ -1,0 +1,20 @@
+set echo off
+set messages off
+
+string jst = sprintf("{\"STR\": \"42\", \"ARR\": [ 11, 22 ] , \"DARR\": [[\"foo\", 111], [\"bar\", 222]] }")
+print jst
+
+a = jsonget(jst, "$.STR")
+printf "$.STR:\n'%s'\n\n", a
+
+b = jsonget(jst, "$.ARR[0]")
+printf "$.ARR[0]:\n'%s'\n\n", b
+
+c = jsonget(jst, "$.ARR")
+printf "$.ARR:\n'%s'\n\n", c
+
+d = jsonget(jst, "$.DARR[0][1]")
+printf "$.DARR[0][1]:\n'%s'\n\n", d
+
+e = jsonget(jst, "$.DARR[0]")
+printf "$.DARR[0]:\n'%s'\n\n", e

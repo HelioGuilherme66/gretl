@@ -1,0 +1,255 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-19 10:48
+? run ivgmm.inp
+ /home/cottrell/stats/test-gretl/ivreg/ivgmm.inp
+? open data13-1
+
+Read datafile /opt/esl/share/gretl/data/data13-1.gdt
+periodicity: 1, maxobs: 35
+observations range: 1959 to 1993
+
+Listing 13 variables:
+  0) const      1) YEAR       2) GDP        3) CONS       4) INV      
+  5) EXPORTS    6) IMPORTS    7) GOVEXP     8) GOVREC     9) MONYSUP  
+ 10) Pt        11) rt        12) POP      
+
+? series TAXt=100*GOVREC/Pt
+Generated series TAXt (ID 13)
+? series DISPINCM=GDP-TAXt
+Generated series DISPINCM (ID 14)
+? series M=100*MONYSUP/Pt
+Generated series M (ID 15)
+? series Yt=GDP/POP
+Generated series Yt (ID 16)
+? series Ct=CONS/POP
+Generated series Ct (ID 17)
+? series It=INV/POP
+Generated series It (ID 18)
+? series Gt=GOVEXP/POP
+Generated series Gt (ID 19)
+? series Xt=EXPORTS/POP
+Generated series Xt (ID 20)
+? series DYt=DISPINCM/POP
+Generated series DYt (ID 21)
+? series Mt=M/POP
+Generated series Mt (ID 22)
+? lags Yt Ct It Gt Xt DYt Mt rt
+Listing 31 variables:
+  0) const       1) YEAR        2) GDP         3) CONS        4) INV       
+  5) EXPORTS     6) IMPORTS     7) GOVEXP      8) GOVREC      9) MONYSUP   
+ 10) Pt         11) rt         12) POP        13) TAXt       14) DISPINCM  
+ 15) M          16) Yt         17) Ct         18) It         19) Gt        
+ 20) Xt         21) DYt        22) Mt         23) Yt_1       24) Ct_1      
+ 25) It_1       26) Gt_1       27) Xt_1       28) DYt_1      29) Mt_1      
+ 30) rt_1      
+
+? smpl 1960 1993
+Full data range: 1959 - 1993 (n = 35)
+Current sample: 1960 - 1993 (n = 34)
+
+? list X = 0 Ct_1 DYt DYt_1
+Generated list X
+? list Z = 0 Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt
+Generated list Z
+? ols Ct X
+
+Model 1: OLS, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -0.299242    0.280343     -1.067    0.2943  
+  Ct_1         0.878776    0.0822009    10.69     9.45e-12 ***
+  DYt          0.668035    0.0718417     9.299    2.42e-10 ***
+  DYt_1       -0.521648    0.102042     -5.112    1.70e-05 ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.227921   S.E. of regression   0.087163
+R-squared            0.998425   Adjusted R-squared   0.998268
+F(3, 30)             6340.804   P-value(F)           4.06e-42
+Log-likelihood       36.84307   Akaike criterion    -65.68613
+Schwarz criterion   -59.58069   Hannan-Quinn        -63.60400
+rho                  0.256714   Durbin's h           1.705567
+
+? matrix b = $coeff
+Generated matrix b
+? series e = 0
+Generated series e (ID 31)
+? matrix V = I(nelem(Z))
+Generated matrix V
+? gmm e = Ct-(b[1]+b[2]*Ct_1+b[3]*DYt+b[4]*DYt_1)
+? orthog e ; Z
+? weights V
+? params b
+? end gmm -t
+Tolerance = 1.81899e-12
+
+Function evaluations: 55
+Evaluations of gradient: 8
+
+Model 2: 2-step GMM, using observations 1960-1993 (T = 34)
+e = Ct-(b[1]+b[2]*Ct_1+b[3]*DYt+b[4]*DYt_1)
+HAC standard errors, bandwidth 2 (Bartlett kernel)
+
+             estimate    std. error     z      p-value 
+  -----------------------------------------------------
+  b[1]        0.708548   0.274968      2.577   0.0100   ***
+  b[2]        1.15671    0.0816243    14.17    1.38e-45 ***
+  b[3]        0.614892   0.0760877     8.081   6.40e-16 ***
+  b[4]       -0.815016   0.108153     -7.536   4.85e-14 ***
+
+  GMM criterion: Q = 0.143113 (TQ = 4.86584)
+  J test: Chi-square(6) = 4.86584 [0.5611]
+
+? series y1 = b[1]+b[2]*Ct_1+b[3]*DYt+b[4]*DYt_1
+Generated series y1 (ID 32)
+? series u1 = Ct-y1
+Generated series u1 (ID 33)
+? tsls Ct X ; Z
+
+Model 3: TSLS, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.404480    0.299926     -1.349   0.1775  
+  Ct_1         0.852123    0.0868648     9.810   1.02e-22 ***
+  DYt          0.741398    0.0976482     7.593   3.14e-14 ***
+  DYt_1       -0.562068    0.109763     -5.121   3.04e-07 ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.235844   S.E. of regression   0.088665
+R-squared            0.998371   Adjusted R-squared   0.998208
+F(3, 30)             6119.164   P-value(F)           6.91e-42
+rho                  0.220884   Durbin's h           1.493744
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 1.57444
+  with p-value = 0.209564
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 11.0486
+  with p-value = P(Chi-square(6) > 11.0486) = 0.0868874
+
+Weak instrument test - 
+  First-stage F-statistic (7, 24) = 4.36539
+  Critical values for TSLS bias relative to OLS:
+
+     bias       5%      10%      20%      30%
+    value    19.86    11.29     6.73     5.07
+
+  Relative bias may exceed 30%
+
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    31.50    17.38    12.48     9.93
+
+  Maximal size may exceed 25%
+
+? tsls Ct X ; Z --liml
+
+Model 4: LIML, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.536636    0.338583     -1.585   0.1130  
+  Ct_1         0.818652    0.0968119     8.456   2.76e-17 ***
+  DYt          0.833525    0.129752      6.424   1.33e-10 ***
+  DYt_1       -0.612827    0.124584     -4.919   8.70e-07 ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.268235   S.E. of regression   0.094558
+Log-likelihood       3.070798   Akaike criterion     1.858405
+Schwarz criterion    7.963847   Hannan-Quinn         3.940535
+
+Smallest eigenvalue = 1.45307
+LR over-identification test: Chi-square(6) = 12.7052 [0.0480]
+
+Weak instrument test - 
+  First-stage F-statistic (7, 24) = 4.36539
+  Critical values for desired LIML maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value     4.18     3.18     2.73     2.49
+
+  Maximal size is probably less than 10%
+
+? tsls Ct X ; Z --gmm --two-step
+
+Function evaluations: 55
+Evaluations of gradient: 8
+
+Model 5: 2-step GMM, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+HAC standard errors, bandwidth 2 (Bartlett kernel)
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.708548    0.274968      2.577   0.0100   ***
+  Ct_1         1.15671     0.0816243    14.17    1.38e-45 ***
+  DYt          0.614892    0.0760877     8.081   6.40e-16 ***
+  DYt_1       -0.815016    0.108153     -7.536   4.85e-14 ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+
+  GMM criterion: Q = 0.143113 (TQ = 4.86584)
+  J test: Chi-square(6) = 4.86584 [0.5611]
+
+? series u2 = $uhat
+Generated series u2 (ID 34)
+? series y2 = $yhat
+Generated series y2 (ID 35)
+? print u1 u2 y1 y2 -o
+
+               u1           u2           y1           y2
+
+1960     -0.03156     -0.03156      6.73324      6.73324
+1961   -0.1769397   -0.1769398      6.91870      6.91870
+1962   -0.1310042   -0.1310043      7.06418      7.06418
+1963     -0.06789     -0.06789      7.15881      7.15881
+1964   -0.1353568   -0.1353569      7.52088      7.52088
+1965     0.008786     0.008786      7.69568      7.69568
+1966      0.04487      0.04487      7.96184      7.96184
+1967      0.07389      0.07389      8.09069      8.09069
+1968    0.2484412    0.2484410      8.25903      8.25903
+1969    0.1699941    0.1699940      8.56903      8.56903
+1970     -0.02353     -0.02353      8.86762      8.86762
+1971     -0.08543     -0.08543      9.10831      9.10831
+1972    0.1553460    0.1553459      9.27027      9.27027
+1973     -0.05287     -0.05287      9.80564      9.80564
+1974     -0.07185     -0.07185      9.67560      9.67560
+1975     -0.02910     -0.02910      9.74096      9.74096
+1976    0.1037984    0.1037983     10.01981     10.01981
+1977     -0.03601     -0.03601     10.46377     10.46377
+1978     -0.05778     -0.05778     10.80334     10.80334
+1979     -0.01154     -0.01154     10.89066     10.89066
+1980     -0.05661     -0.05661     10.80242     10.80242
+1981     -0.05779     -0.05779     10.82852     10.82852
+1982      0.08246      0.08246     10.70061     10.70061
+1983     -0.01931     -0.01931     11.19866     11.19866
+1984     -0.06714     -0.06715     11.68603     11.68603
+1985    0.2058695    0.2058694     11.81178     11.81178
+1986      0.09911      0.09911     12.23868     12.23868
+1987      0.05773      0.05773     12.51290     12.51290
+1988     -0.05713     -0.05713     12.96378     12.96378
+1989     0.002185     0.002185     13.02957     13.02957
+1990     -0.01130     -0.01130     13.10693     13.10694
+1991   -0.1090265   -0.1090267     13.00564     13.00564
+1992   -4.812E-05   -4.828E-05     13.08145     13.08145
+1993    0.1191039    0.1191038     13.25060     13.25060
+
+Done

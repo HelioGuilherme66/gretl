@@ -1,0 +1,16 @@
+open NumAcc3.dat
+summary
+genr Y1 = Y(-1)
+genr r1 = corr(Y,Y1)
+genr ybar = mean(Y)
+genr ysd = sd(Y)
+genr devY = Y - ybar
+genr devY1 = Y1 - ybar
+genr SSY = sum(devY * devY)
+smpl 2 ;
+genr SSYY1 = sum(devY * devY1)
+genr rnist = SSYY1 / SSY
+printf "ybar  = %.12g\n", ybar
+printf "ysd   = %.12g\n", ysd
+printf "r1    = %.12g\n", r1
+printf "rnist = %.12g\n", rnist

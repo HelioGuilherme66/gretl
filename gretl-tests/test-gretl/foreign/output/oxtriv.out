@@ -1,0 +1,46 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run oxtriv.inp
+ /home/cottrell/stats/test-gretl/foreign/oxtriv.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix m = { dataset }
+Generated matrix m
+? mwrite(m, "/home/cottrell/.gretl/gretl.mat")
+? foreign language=Ox
+?   #include <oxstd.h>
+?   main()
+?   {
+?      decl gmat = gretl_loadmat("gretl.mat");
+?      print(gmat);
+?   }
+? end foreign
+
+Ox Console version 7.09 (Linux_64) (C) J.A. Doornik, 1994-2014
+This version may be used for academic research and teaching only
+
+       199.90       1065.0       3.0000       1.7500
+       228.00       1254.0       3.0000       2.0000
+       235.00       1300.0       3.0000       2.0000
+       285.00       1577.0       4.0000       2.5000
+       239.00       1600.0       3.0000       2.0000
+       293.00       1750.0       4.0000       2.0000
+       285.00       1800.0       4.0000       2.7500
+       365.00       1870.0       4.0000       2.0000
+       295.00       1935.0       4.0000       2.5000
+       290.00       1948.0       4.0000       2.0000
+       385.00       2254.0       4.0000       3.0000
+       505.00       2600.0       3.0000       2.5000
+       425.00       2800.0       4.0000       3.0000
+       415.00       3000.0       4.0000       3.0000
+
+Done

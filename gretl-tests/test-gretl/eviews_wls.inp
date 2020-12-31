@@ -1,0 +1,8 @@
+# see http://faculty.smu.edu/tfomby/eco5350/data/exkeys/5350-EX10-Key.pdf
+open hetero.wf1
+ols SAVE 0 INCOME
+genr w = 1/INCOME
+wls w SAVE 0 INCOME
+
+
+

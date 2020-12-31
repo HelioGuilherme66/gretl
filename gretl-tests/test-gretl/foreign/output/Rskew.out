@@ -1,0 +1,47 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run Rskew.inp
+ /home/cottrell/stats/test-gretl/foreign/Rskew.inp
+? nulldata 200
+periodicity: 1, maxobs: 200
+observations range: 1 to 200
+? set seed 54321
+Pseudo-random number generator seeded with 54321
+? series x = normal()
+Generated series x (ID 2)
+? s = skewness(x)
+Generated scalar s = 0.0111429
+? k = kurtosis(x) + 3
+Generated scalar k = 2.81648
+? matrix Gstats = {s, k}
+Generated matrix Gstats
+s = 0.01114292962, 2.816483792
+? foreign language=R --send-data
+?  library(moments)
+?  s <- skewness(x)
+?  k <- kurtosis(x)
+?  print(sprintf("s=%.10g, k=%.10g\n", s, k))
+?  Rstats = matrix(c(s,k), nrow=1, ncol=2)
+?  gretl.export(Rstats)
+?  rdata <- gretldata
+?  gretl.export(rdata)
+? end foreign
+[1] "s=0.01114292962, k=2.816483792\n"
+wrote /home/cottrell/.gretl/Rstats.mat 
+wrote /home/cottrell/.gretl/rdata.csv 
+? matrix Rstats = mread("Rstats.mat", 1)
+Generated matrix Rstats
+
+gretl:
+ 0.0111429296234   2.81648379168
+
+
+R:
+ 0.0111429296234   2.81648379168
+
+? eval Gstats - Rstats
+ -6.5052e-16   3.5527e-15 
+
+Done

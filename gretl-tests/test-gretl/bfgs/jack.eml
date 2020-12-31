@@ -1,0 +1,63 @@
+From r.lucchetti@univpm.it Sat Jan  4 18:41:44 2014
+Date: Sun, 5 Jan 2014 00:41:39 +0100 (CET)
+From: "Riccardo (Jack) Lucchetti" <r.lucchetti@univpm.it>
+To: Allin Cottrell <cottrell@wfu.edu>
+Subject: Re: bfgs testing
+
+On Sat, 4 Jan 2014, Allin Cottrell wrote:
+
+> Hi Jack,
+>
+> I've now had time to run a fairly large battery of tests on the quadratic 
+> step-length code for BFGS. I pulled as many BFGS-using scripts as I could 
+> find (a total of 102) out of my regression-testing collection.
+
+Thanks! I've been doing the more or less the same.
+
+> The good news is that the new code is mostly stable. [...]
+
+Yes, here too.
+
+> (In GMM there's also a failure on hall.inp if your new GMM weights 
+> normalization is not invoked, but I'm treating that as part of the "package" 
+> so I'm not counting hall as a failure. In gig test3 the symptom is "stopped 
+> after 500 iterations" on stderr, and the gig results do not agree with the 
+> built-in garch results, as they do with the old code.)
+
+The new GMM weighting scheme is, so to speak, orthogonal to the bfgs 
+experiment. I believe that this is something we should have done anyway to 
+enforce invariance of 1-step GMM with respect to scaling. Although there 
+are very reasonable arguments to explain this to anyone not completely 
+illiterate in computer numerics, I find it disturbing that you can get 
+different "convergence" points by changing the scale of a minimization 
+problem. I'm not claiming that my solution is perfect (coz perfect it 
+ain't --- at all), but I consider it a step in the right direction, which 
+we should have taken even if we hadn't touched BFGS.
+
+> The not so good news is that it seems to me the new code is mostly slower 
+> than the old. I'm attaching a gnumeric file with my results. [...]
+
+Your findings are broadly consistent with mine. I only have few remarks to 
+add:
+
+* The only setting in which the new code consistently produced 
+substantial, sizeable gains was random-effects probit.
+
+* Some fine-tuning of the parameters may improve the situation: for 
+example, the present setting of the "safelen" and "incredible" parameters 
+are probably too conservative; I also found that fiddling with STEPFRAC 
+makes some difference, but more testing is necessary.
+
+* It may be nice to see how quadratic approximation works with Newton-like 
+methods, but I haven't tried that yet.
+
+* I suppose we could switch between the two algorithms via a libset 
+variable, so advanced users could have the choice (clearly, the default 
+being the old method, solid and dependable). The same probably goes for 
+GMM auto-scaling.
+
+Unrelated: (a) have you had time to get any work done on the 
+Backus-Naur-isation of hansl? Is there anything I can do to help? (b) I'll 
+try to get some work done tomorrow morning on the hansl primer, which is 
+beginning to look more like something that could be useful to someone; 
+what are your imnpressions?

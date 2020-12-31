@@ -1,0 +1,66 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run kleinsim.inp
+ /home/cottrell/stats/test-gretl/system/kleinsim.inp
+? open klein.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/klein.gdt
+periodicity: 1, maxobs: 23
+observations range: 1919 to 1941
+
+Listing 10 variables:
+  0) const    1) C        2) P        3) Wp       4) I      
+  5) K        6) X        7) Wg       8) G        9) T      
+
+? series W = Wp + Wg
+Generated series W (ID 10)
+? series A = t - obsnum(1931)
+Generated series A (ID 11)
+# list of endogenous variables
+? list endo = C I Wp P W X K
+Generated list endo
+? Klein1 <- system
+? equation C 0 P P(-1) W
+? equation I 0 P P(-1) K(-1)
+? equation Wp 0 X X(-1) A
+? identity P = X - T - Wp
+? identity W = Wp + Wg
+? identity X = C + I + G
+? identity K = K(-1) + I
+? endog endo
+? end system
+# Baseline estimate and forecast
+? estimate Klein1 method=fiml --quiet
+? fcast 1932 1939 --dynamic --quiet
+? matrix F0 = $fcast
+Generated matrix F0
+# Increase government wage payments from 1933
+? series Wgsave = Wg
+Generated series Wgsave (ID 15)
+? Wg = Wgsave + ((t>obsnum(1932))? 0.5 : 0)
+Replaced series Wg (ID 7)
+# print Wgsave Wg -o
+# Generate counter-factual forecast
+? fcast 1932 1939 --dynamic --quiet
+? matrix F1 = $fcast
+Generated matrix F1
+? matrix Fdiff = F1 - F0
+Generated matrix Fdiff
+# attach column names from the "endo" list
+? colnames(Fdiff, endo)
+
+Estimated effects, over 1932-39, of a sustained increase in
+ Wg of 0.5 units, starting in 1933
+
+      C      I     Wp      P      W      X      K
+  0.000  0.000  0.000  0.000  0.000  0.000  0.000
+  0.403 -0.153  0.059  0.191  0.559  0.250 -0.153
+  0.553 -0.036  0.192  0.325  0.692  0.517 -0.190
+  0.686  0.042  0.318  0.410  0.818  0.727 -0.148
+  0.782  0.086  0.410  0.458  0.910  0.868 -0.062
+  0.842  0.106  0.469  0.479  0.969  0.949  0.045
+  0.875  0.110  0.501  0.484  1.001  0.985  0.155
+  0.887  0.103  0.512  0.478  1.012  0.990  0.258
+Done

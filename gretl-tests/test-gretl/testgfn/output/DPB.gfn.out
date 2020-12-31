@@ -1,0 +1,96 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DPB.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DPB.gfn.inp
+? include ./DPB/DPB.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DPB/DPB.gfn
+DPB 1.01, 2015-04-17 (Riccardo "Jack" Lucchetti and Claudia Pigini)
+
+Read datafile /opt/esl/share/gretl/functions/DPB/examples/union_wooldridge.gdt
+periodicity: 8, maxobs: 4360
+observations range: 1:1 to 545:8
+
+Listing 25 variables:
+  0) const      1) nr         2) year       3) black      4) married  
+  5) educ       6) union      7) d81        8) d82        9) d83      
+ 10) d84       11) d85       12) d86       13) d87       14) union80  
+ 15) union_1   16) marravg   17) educu80   18) marr81    19) marr82   
+ 20) marr83    21) marr84    22) marr85    23) marr86    24) marr87   
+
+545 usable units (545 lucky), 0 bad
+Log-likelihood =     -2514.329719
+Log-likelihood =     -1798.044742
+Log-likelihood =     -1705.662686
+Log-likelihood =     -1705.316941
+Log-likelihood =     -1692.062115
+Log-likelihood =     -1685.597882
+Log-likelihood =     -1673.737733
+Log-likelihood =     -1673.512393
+Log-likelihood =     -1670.176603
+Log-likelihood =     -1669.711005
+Log-likelihood =     -1663.291279
+Log-likelihood =     -1661.910628
+Log-likelihood =     -1650.536270
+Log-likelihood =     -1634.308904
+Log-likelihood =     -1619.039518
+Log-likelihood =     -1609.826843
+Log-likelihood =     -1607.940443
+Log-likelihood =     -1607.026028
+Log-likelihood =     -1606.866191
+Log-likelihood =     -1606.865334
+Log-likelihood =     -1606.820479
+Log-likelihood =     -1606.815845
+Log-likelihood =     -1606.815732
+Log-likelihood =     -1606.815690
+Log-likelihood =     -1606.815355
+Log-likelihood =     -1606.815279
+Log-likelihood =     -1606.815094
+Log-likelihood =     -1606.814773
+Log-likelihood =     -1606.814634
+Log-likelihood =     -1606.814595
+Log-likelihood =     -1606.814460
+Log-likelihood =     -1606.814443
+Log-likelihood =     -1606.814404
+Log-likelihood =     -1606.814399
+Function evaluations: 110
+Evaluations of gradient: 34
+
+ 
+Dynamic Probit model
+Dependent variable: union
+Units: 545 (observations: 4360)
+Covariance matrix: Sandwich
+Method: Gaussian quadrature with 12 quadrature points
+
+              coefficient   std. error     z     p-value 
+  -------------------------------------------------------
+  union(-1)    0.893722      0.106401    8.400   4.48e-17 ***
+
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -1.28623      0.493445     -2.607    0.0091  ***
+  married     0.138813     0.0864846     1.605    0.1085 
+  educ       -0.0248645    0.0420687    -0.5910   0.5545 
+
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.524435     0.580090     -0.9041   0.3660 
+  married     0.172376     0.175830      0.9804   0.3269 
+  educ       -0.0379497    0.0487707    -0.7781   0.4365 
+  black       0.133272     0.211337      0.6306   0.5283 
+
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  theta       0.694384     0.0964758     7.197   6.13e-13 ***
+  sigma       1.29527      0.106398     12.17    4.28e-34 ***
+
+  Log-likelihood      -1606.814      AIC       3233.629
+             BIC       3297.431      HQC       3256.146
+
+  Wald test = 3.05527 (2 df); p-value = 0.217049
+

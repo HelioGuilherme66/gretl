@@ -1,0 +1,50 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run HIP.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/HIP.gfn.inp
+? include ./HIP/HIP.gfn
+ /home/cottrell/stats/test-gretl/testgfn/HIP/HIP.gfn
+HIP 0.41, 2015-05-19 (Riccardo "Jack" Lucchetti and Claudia Pigini)
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+Heteroskedastic probit model with endogenous regressors
+ML, using observations 1-753
+Dependent Variable: LFP 
+Instrumented: WE
+Instruments: const, WA, CIT, K618, WMED, WFED 
+Parameter covariance matrix: OPG
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.551806     1.36344      -0.4047   0.6857 
+  WA         -0.0304390    0.0172560    -1.764    0.0777  *
+  CIT        -0.0242783    0.208991     -0.1162   0.9075 
+  K618       -0.0927252    0.0896552    -1.034    0.3010 
+  WE          0.199646     0.101330      1.970    0.0488  **
+
+Variance 
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  HW          0.117934     0.0571808    2.062   0.0392  **
+
+"First-stage" regressions
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       9.68554      0.586171     16.52    2.49e-61 ***
+  WA         -0.0159435    0.0104384    -1.527   0.1267  
+  CIT         0.495907     0.152627      3.249   0.0012   ***
+  K618       -0.136765     0.0612498    -2.233   0.0256   **
+  WMED        0.180089     0.0265972     6.771   1.28e-11 ***
+  WFED        0.168085     0.0253072     6.642   3.10e-11 ***
+
+Log-likelihood       -2069.9119  Akaike criterion    4167.8239
+Schwarz criterion     4232.5608  Hannan-Quinn        4192.7637
+Conditional ll      -494.848818  Cragg-Donald stat.    103.337
+
+Overall test (Wald) = 6.36207 (4 df, p-value = 0.1737)
+Endogeneity test (Wald) = 0.509859 (1 df, p-value = 0.4752)
+Test for overidentifying restrictions (LM) = 9.15786 (1 df, p-value = 0.0025)
+Heteroskedasticity test (Wald) = 4.25379 (1 df, p-value = 0.0392)

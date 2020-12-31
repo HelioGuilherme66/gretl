@@ -1,0 +1,87 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:06
+? run ols-cluster.inp
+ /home/cottrell/stats/test-gretl/cluster/ols-cluster.inp
+? function matrix stata_reorder (matrix se)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? ols 1 0 2 3 --cluster=bedrms
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+Standard errors clustered by 2 values of bedrms
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      121.179        2.82311     42.92     1.34e-13 ***
+  sqft         0.148314     0.0502929    2.949    0.0132   **
+  bedrms     -23.9106      27.1570      -0.8805   0.3974  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16832.79   S.E. of regression   39.11846
+R-squared            0.834673   Adjusted R-squared   0.804613
+Log-likelihood      -69.50933   Akaike criterion     145.0187
+Schwarz criterion    146.9358   Hannan-Quinn         144.8412
+
+? matrix se = $stderr
+Generated matrix se
+? foreign language=stata --send-data
+?   reg price sqft bedrms, vce(cluster bedrms)
+?   matrix vcv = e(V)
+?   gretl_export vcv "vcv.mat"
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(4 vars, 14 obs)
+
+. reg price sqft bedrms, vce(cluster bedrms)
+
+Linear regression                                      Number of obs =      14
+                                                       F(  0,     1) =       .
+                                                       Prob > F      =       .
+                                                       R-squared     =  0.8347
+                                                       Root MSE      =  39.118
+
+                                 (Std. Err. adjusted for 2 clusters in bedrms)
+------------------------------------------------------------------------------
+             |               Robust
+       price |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        sqft |   .1483138   .0502929     2.95   0.208     -.490718    .7873456
+      bedrms |  -23.91061   27.15705    -0.88   0.540    -368.9736    321.1524
+       _cons |   121.1787   2.823108    42.92   0.015     85.30769    157.0497
+------------------------------------------------------------------------------
+
+. matrix vcv = e(V)
+
+. gretl_export vcv "vcv.mat"
+
+. 
+end of do-file
+
+? matrix stata_vcv = mread("/home/cottrell/.gretl/vcv.mat")
+Generated matrix stata_vcv
+? stata_se = stata_reorder(sqrt(diag(stata_vcv)))
+Generated matrix stata_se
+? matrix check = se - stata_se
+Generated matrix check
+? print check
+check (3 x 1)
+
+ -6.1608e-08 
+ -1.0971e-09 
+ -5.8513e-07 
+
+Done

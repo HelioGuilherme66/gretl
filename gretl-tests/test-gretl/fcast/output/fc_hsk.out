@@ -1,0 +1,196 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_hsk.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_hsk.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+# full dataset
+? hsk 1 0 2 3
+
+Model 1: Heteroskedasticity-corrected, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0908342    0.0642589     1.414    0.1639 
+  CATHOL      0.197450     0.0500406     3.946    0.0003  ***
+  PUPIL      -0.00195398   0.00343516   -0.5688   0.5721 
+
+Statistics based on the weighted data:
+
+Sum squared resid    194.1365   S.E. of regression   2.011097
+R-squared            0.322081   Adjusted R-squared   0.293834
+F(2, 48)             11.40244   P-value(F)           0.000089
+Log-likelihood      -106.4526   Akaike criterion     218.9053
+Schwarz criterion    224.7007   Hannan-Quinn         221.1199
+
+Statistics based on the original data:
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.092293   S.E. of regression   0.043849
+
+? series yh1 = $yhat
+Generated series yh1 (ID 10)
+? fcast yh2
+Generated series yh2 (ID 11)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL      0.05834      0.05834
+AK      0.07803      0.07803
+AZ      0.09004      0.09004
+AR      0.06173      0.06173
+CA      0.09069      0.09069
+CO      0.08810      0.08810
+CT    0.1478722    0.1478722
+DE      0.09085      0.09085
+DC      0.09891      0.09891
+FL      0.08096      0.08096
+GA      0.05991      0.05991
+HI      0.08424      0.08424
+ID      0.06427      0.06427
+IL    0.1184056    0.1184056
+IN      0.08096      0.08096
+IA      0.09595      0.09595
+KS      0.08862      0.08862
+KY      0.07455      0.07455
+LA    0.1180254    0.1180254
+ME    0.1097144    0.1097144
+MD      0.09177      0.09177
+MA    0.1664488    0.1664488
+MI    0.1033850    0.1033850
+MN    0.1077078    0.1077078
+MS      0.06121      0.06121
+MO      0.09222      0.09222
+MT      0.09549      0.09549
+NE    0.1038755    0.1038755
+NV      0.08107      0.08107
+NH    0.1195931    0.1195931
+NJ    0.1442300    0.1442300
+NM    0.1060347    0.1060347
+NY    0.1339888    0.1339888
+NC      0.05845      0.05845
+ND    0.1153080    0.1153080
+OH      0.09727      0.09727
+OK      0.06698      0.06698
+OR      0.07949      0.07949
+PA    0.1192716    0.1192716
+RI    0.1901334    0.1901334
+SC      0.06131      0.06131
+SD    0.1001777    0.1001777
+TN      0.05752      0.05752
+TX      0.09600      0.09600
+UT      0.05289      0.05289
+VT    0.1197223    0.1197223
+VA      0.06876      0.06876
+WA      0.07048      0.07048
+WV      0.07177      0.07177
+WI    0.1233963    0.1233963
+WY      0.09046      0.09046
+
+# subsample
+? series yh1 = NA
+Replaced series yh1 (ID 10)
+? smpl 10 40
+Full data range: 1 - 51 (n = 51)
+Current sample: 10 - 40 (n = 31)
+
+? hsk 1 0 2 3
+
+Model 2: Heteroskedasticity-corrected, using observations 10-40 (n = 31)
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0954344    0.0918954     1.039    0.3079 
+  CATHOL      0.184174     0.0560066     3.288    0.0027  ***
+  PUPIL      -0.00209247   0.00506022   -0.4135   0.6824 
+
+Statistics based on the weighted data:
+
+Sum squared resid    116.1112   S.E. of regression   2.036376
+R-squared            0.396848   Adjusted R-squared   0.353765
+F(2, 28)             9.211378   P-value(F)           0.000843
+Log-likelihood      -64.45579   Akaike criterion     134.9116
+Schwarz criterion    139.2135   Hannan-Quinn         136.3139
+
+Statistics based on the original data:
+
+Mean dependent var   0.100194   S.D. dependent var   0.047585
+Sum squared resid    0.044486   S.E. of regression   0.039860
+
+? series yh1 = $yhat
+Replaced series yh1 (ID 10)
+? smpl full
+Full data range: 1 - 51 (n = 51)
+
+? fcast yh2
+Replaced series yh2 (ID 11)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL                   0.05978
+AK                   0.07899
+AZ                   0.08973
+AR                   0.06357
+CA                   0.08909
+CO                   0.08797
+CT                 0.1449402
+DE                   0.09113
+DC                   0.09911
+FL      0.08150      0.08150
+GA      0.06149      0.06149
+HI      0.08318      0.08318
+ID      0.06515      0.06515
+IL    0.1164564    0.1164564
+IN      0.08129      0.08129
+IA      0.09602      0.09602
+KS      0.08921      0.08921
+KY      0.07523      0.07523
+LA    0.1158048    0.1158048
+ME    0.1088623    0.1088623
+MD      0.09169      0.09169
+MA    0.1620789    0.1620789
+MI    0.1019599    0.1019599
+MN    0.1064778    0.1064778
+MS      0.06267      0.06267
+MO      0.09231      0.09231
+MT      0.09557      0.09557
+NE    0.1035239    0.1035239
+NV      0.08082      0.08082
+NH    0.1179688    0.1179688
+NJ    0.1412730    0.1412730
+NM    0.1044854    0.1044854
+NY    0.1315315    0.1315315
+NC      0.06018      0.06018
+ND    0.1141337    0.1141337
+OH      0.09655      0.09655
+OK      0.06862      0.06862
+OR      0.07991      0.07991
+PA    0.1175610    0.1175610
+RI    0.1839822    0.1839822
+SC                   0.06322
+SD                   0.09994
+TN                   0.05899
+TX                   0.09561
+UT                   0.05373
+VT                 0.1184941
+VA                   0.07031
+WA                   0.07092
+WV                   0.07352
+WI                 0.1214084
+WY                   0.09131
+
+Done

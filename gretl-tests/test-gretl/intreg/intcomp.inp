@@ -1,0 +1,21 @@
+# cf. http://www.ats.ucla.edu/stat/stata/dae/intreg.htm
+open intregex.dta -q
+intreg lgpa ugpa 0 write rating read --cluster=read
+matrix gretl_vcv = $vcv
+
+foreign language=stata --send-data
+  intreg lgpa ugpa write rating read, vce(cluster read)
+  matrix vcv = e(V)
+  gretl_export vcv "irvcv.mat"
+end foreign
+
+matrix stata_vcv = mread("@dotdir/irvcv.mat")
+stata_vcv
+gretl_vcv
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch2.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch2.inp
+# Stock and Watson, ch 2, "Bad Day on Wall Street"
+? open djclose.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? genr Returns = 100 * ldiff(djclose)
+Generated series Returns (ID 2)
+# Uncomment next two lines for time-series plot of the returns
+# splot <- gnuplot Returns time -o
+# splot.show
+# Get basic stats on the returns
+? summary Returns
+
+Summary statistics, using the observations 1980-01-02 - 1989-12-29
+for the variable 'Returns' (2527 valid observations)
+
+  Mean                       0.047711
+  Median                     0.054160
+  Minimum                     -25.632
+  Maximum                      9.6662
+  Standard deviation           1.1556
+  C.V.                         24.221
+  Skewness                    -4.3541
+  Ex. kurtosis                 100.70
+  5% percentile               -1.4990
+  95% percentile               1.6810
+  Interquartile range          1.0921
+  Missing obs.                      1
+
+? genr zscore = (min(Returns) - mean(Returns)) / sd(Returns)
+Generated scalar zscore = -22.2214
+? pvalue z zscore
+Standard normal: area to the right of -22.2214 =~ 1
+(to the left: 1.06567e-109)
+(two-tailed value = 2.13134e-109; complement = 1)
+# For comparison, use SW approximation to z-score
+? pvalue z 22.0
+Standard normal: area to the right of 22 = 1.43989e-107
+(two-tailed value = 2.87978e-107; complement = 1)
+Done

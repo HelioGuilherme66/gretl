@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata version="1.3" name="coeffs" frequency="1" startobs="1" endobs="5" type="cross-section">
+<variables count="2">
+<variable name="a"
+/>
+<variable name="b"
+/>
+</variables>
+<observations count="5" labels="false">
+<obs>-2.4733512043116157 10.024850147168433 </obs>
+<obs>-3.3063437699424152 10.029116140294734 </obs>
+<obs>-1.6024005042885276 10.048525959939754 </obs>
+<obs>0.37749121881596825 9.9631984650068794 </obs>
+<obs>-3.7245473061827705 10.067384123128418 </obs>
+</observations>
+</gretldata>

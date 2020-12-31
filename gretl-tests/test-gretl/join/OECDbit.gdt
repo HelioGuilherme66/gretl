@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata version="1.3" name="OECDbit" frequency="1" startobs="1" endobs="15" type="cross-section">
+<description>Data imported from CSV file 'OECDbit.csv', 2014-10-31 14:46
+</description>
+<variables count="5">
+<variable name="Frequency"
+ discrete="true"
+/>
+<variable name="Period"
+ discrete="true"
+/>
+<variable name="Country"
+ discrete="true"
+/>
+<variable name="Value"
+/>
+<variable name="Flags"
+ discrete="true"
+/>
+</variables>
+<observations count="15" labels="false">
+<obs>1 1 1 463876.14812684502 1 </obs>
+<obs>1 1 2 768802.11927846703 1 </obs>
+<obs>1 1 3 414629.791450547 1 </obs>
+<obs>1 1 4 578437.09029188904 NA </obs>
+<obs>1 2 1 465618.97732861398 1 </obs>
+<obs>1 2 2 782484.13812254905 1 </obs>
+<obs>1 2 3 420714.91029015701 1 </obs>
+<obs>1 2 4 572853.47469657799 NA </obs>
+<obs>1 3 1 469104.41925852001 1 </obs>
+<obs>1 3 2 809532.16149448301 1 </obs>
+<obs>1 3 3 426893.67584015598 1 </obs>
+<obs>1 3 4 581252.06661898596 NA </obs>
+<obs>1 4 1 474664.32799261902 1 </obs>
+<obs>1 4 2 817806.13238494797 1 </obs>
+<obs>1 4 3 427221.33841411403 1 </obs>
+</observations>
+<string-tables count="4">
+<valstrings owner="Frequency" count="1">"Quarterly" </valstrings>
+<valstrings owner="Period" count="4">"Q1-1960" "Q2-1960" "Q3-1960" "Q4-1960" </valstrings>
+<valstrings owner="Country" count="4">"France" "Germany" "Italy" "United Kingdom" </valstrings>
+<valstrings owner="Flags" count="1">"E" </valstrings>
+</string-tables>
+</gretldata>

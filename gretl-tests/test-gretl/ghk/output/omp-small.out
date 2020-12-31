@@ -1,0 +1,18 @@
+gretl version 1.9.91cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-05-30 11:00
+? run omp-small.inp
+ /home/cottrell/stats/test-gretl/ghk/omp-small.inp
+nmr = 32
+P (2 x 1)
+
+     0.22424 
+     0.15163 
+
+dP (2 x 7)
+
+    -0.11475     -0.25687     0.037483     0.087342     -0.12571     0.061947    -0.069663 
+    -0.16124     -0.14588     0.066642     0.097067    -0.074671     0.030997     -0.12043 
+
+Done

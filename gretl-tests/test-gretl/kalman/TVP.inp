@@ -1,0 +1,111 @@
+set echo off
+set messages off
+
+function void TV_H (matrix *H, matrix *X)
+    H = X[$kalman_t, ]'
+end function
+
+function void apply_params (matrix theta, scalar *sigma, matrix *Q)
+    n = rows(theta)
+    sigma = theta[1]^2
+    loop for i=1..n-1 -q
+        Q[i,i] = exp(theta[i+1])
+    endloop
+end function
+
+function series ll (series y, list X, matrix theta, matrix b0, matrix V0)
+
+    k = nelem(X)
+    series loglik = NA
+    
+    mY = { y }
+    mX = { X }
+    matrix F = I(k)
+    H = zeros(k,1)
+
+    scalar sigma = 1
+    matrix Q = zeros(k,k)
+    apply_params(theta, &sigma, &Q)
+    
+    kalman
+        obsy mY
+        obsymat H ; TV_H(&H, &mX)
+        obsvar sigma
+        statemat F
+        statevar Q
+        inistate b0
+        inivar V0
+    end kalman --diffuse
+
+    scalar err = kfilter()
+    series loglik = err ? NA : $kalman_llt 
+    return loglik
+end function
+
+function series smpar (scalar i, series y, list X, 
+                       matrix theta, matrix b0, matrix V0)
+                  
+    k = nelem(X)                  
+    series par = NA
+    sigma = theta[1]^2
+    
+    mY = { y }
+    mX = { X }
+    matrix F = I(k)
+    H = zeros(k,1)
+
+    scalar sigma = 1
+    matrix Q = zeros(k,k)
+    apply_params(theta, &sigma, &Q)
+    
+    kalman
+        obsy mY
+        obsymat H ; TV_H(&H, &mX)
+        obsvar sigma
+        statemat F
+        statevar Q
+        inistate b0
+        inivar V0
+    end kalman --diffuse
+
+    F = ksmooth()
+    series par = F[,i]  
+    return par
+end function
+
+open sw_ch14.gdt --quiet
+
+genr INFL = 100*ldiff(PUNEW)
+list t_var_X = const INFL(-1) LHUR # time-varying
+list t_invar_X = LHUR(-1)          # time-invariant
+list X = t_var_X t_invar_X
+
+# initialisation
+
+smpl 1 16
+ols INFL X
+matrix sigma = $sigma
+b0 = $coeff
+V0 = $vcv
+
+# TVP model
+
+smpl full
+smpl +17 ;
+
+# needs as many elements as time-varying params plus one
+# for sigma
+matrix theta = {sigma ; -5; -5; -6} 
+
+mle loglik = ll(INFL, X, theta, b0, V0)
+    params theta
+end mle -v
+
+k = 1
+loop foreach i X --quiet
+    series b$i = smpar(k, INFL, X, theta, b0, V0)
+    k++
+endloop
+
+smpl full
+print b* -o

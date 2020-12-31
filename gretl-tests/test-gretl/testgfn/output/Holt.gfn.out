@@ -1,0 +1,127 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run Holt.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Holt.gfn.inp
+? include ./Holt/Holt.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Holt/Holt.gfn
+Holt 1.0, 2015-10-05 (Ignacio Diaz-Emparanza)
+? open data3-6.gdt
+
+Read datafile /opt/esl/share/gretl/data/data3-6.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 3 variables:
+  0) const    1) Ct       2) Yt     
+
+#Calculate the local linear trend and
+#MSE and MAE for last 3 obs in the sample
+? bundle bHolt=Holt(Ct,0.3,0.1,1,3)
+
+               Ct      Ct_Holt
+
+1959         7876      7671.73
+1960         7926      7962.51
+1961         7954      8241.25
+1962         8220      8436.15
+1963         8434      8645.89
+1964         8817      8850.55
+1965         9257      9107.71
+1966         9674      9424.20
+1967         9854      9778.34
+1968        10313     10082.50
+1969        10593     10440.03
+1970        10717     10778.89
+1971        10975     11051.44
+1972        11508     11317.33
+1973        11950     11669.07
+1974        11756     12056.32
+1975        11899     12260.18
+1976        12446     12434.95
+1977        12846     12721.72
+1978        13258     13046.19
+1979        13417     13403.27
+1980        13216     13701.34
+1981        13245     13835.13
+1982        13270     13919.77
+1983        13829     13967.03
+1984        14415     14163.68
+1985        14954     14484.66
+1986        15409     14885.14
+1987        15740     15317.68
+1988        16211     15732.43
+1989        16430     16178.42
+1990        16532     16563.85
+1991        16249     16863.30
+1992        16520     16969.59
+1993        16810     17260.17
+1994        17152     17550.74
+
+
+Statistics for the quality of predictions:
+
+         Mean Sq. Err. 	 Mean. Abs. Err. 
+         --------------	--------------
+HOLT:    523900.7503 	 723.4083
+
+Number of predictions: 3 (1992-1994) 
+
+#Internally the smoothed series is saved in the bundle as name_Holt
+#to extract it you may execute
+? series Ct_Holt = bHolt.Ct_Holt
+Generated series Ct_Holt (ID 3)
+#forecast 4 observations
+? dataset addobs +4
+Dataset extended by 4 observations
+Full data range: 1959 - 1998 (n = 40)
+
+? bundle bHolt=Holt(Ct,0.3,0.1,2)
+
+               Ct      Ct_Holt
+
+1959         7876      7643.76
+1960         7926      7943.73
+1961         7954      8237.85
+1962         8220      8443.62
+1963         8434      8660.75
+1964         8817      8870.14
+1965         9257      9130.02
+1966         9674      9447.74
+1967         9854      9802.04
+1968        10313     10105.60
+1969        10593     10462.02
+1970        10717     10799.44
+1971        10975     11070.36
+1972        11508     11334.55
+1973        11950     11684.58
+1974        11756     12070.17
+1975        11899     12272.45
+1976        12446     12445.75
+1977        12846     12731.16
+1978        13258     13054.40
+1979        13417     13410.37
+1980        13216     13707.45
+1981        13245     13840.36
+1982        13270     13924.24
+1983        13829     13970.83
+1984        14415     14166.88
+1985        14954     14487.37
+1986        15409     14887.40
+1987        15740     15319.58
+1988        16211     15734.01
+1989        16430     16179.73
+1990        16532     16564.93
+1991        16249     16864.19
+1992        16520     16970.32
+1993        16810     17112.39
+1994        17152     17289.78
+1995                  17512.41
+1996                  17776.38
+1997                  18040.34
+1998                  18304.31
+
+? series Ct_Holtpred = bHolt.Ct_Holt
+Generated series Ct_Holtpred (ID 4)
+Done

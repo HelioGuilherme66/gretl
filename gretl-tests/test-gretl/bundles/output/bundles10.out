@@ -1,0 +1,19 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles10.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles10.inp
+? bundle foo
+? foo["A"] = { 4 }
+? print foo
+bundle foo:
+ A = 4
+
+? foo["B"] = cholesky(foo["A"])
+? print foo
+bundle foo:
+ B = 2
+ A = 4
+
+Done

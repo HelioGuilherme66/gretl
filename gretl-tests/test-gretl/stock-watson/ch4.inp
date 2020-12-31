@@ -1,0 +1,38 @@
+# Stock and Watson 
+# Chapter 4: Linear Regression with One Regressor
+#
+open caschool.gdt
+set hc_version 1
+#
+# Summary statistics for str and testscr in Table 4.1
+#
+summary str testscr
+#
+# Correlation between str and testscr
+#
+corr str testscr
+#
+# Figure 4.2: Scatterplot of Test Score and Student-Teacher Ratio
+# (Here we suppress the least squares fit line)
+# 
+plot1 <- gnuplot testscr str --suppress-fitted
+#
+# Equation 4.7 and 4.26
+# Here is an example how to use OLS in the program.
+#
+model_1 <- ols testscr const str --robust
+#
+# crossplot Figure 4.3 with regression line
+#
+plot2 <- gnuplot testscr str
+#
+# Equation 4.33
+# Below a binary variable is defined, = 1 where the student-teacher ratio is 
+# less than 20, otherwise = 0
+#
+genr dsize = (str<20)
+model_2 <- ols testscr const dsize --robust 
+#
+# End of Chapter 4
+
+

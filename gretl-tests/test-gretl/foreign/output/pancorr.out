@@ -1,0 +1,187 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run pancorr.inp
+ /home/cottrell/stats/test-gretl/foreign/pancorr.inp
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? logs C Q PF
+Listing 10 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+
+? list X = l_Q l_PF LF
+Generated list X
+? panel l_C 0 X --fixed
+
+Model 1: Fixed-effects, using 90 observations
+Included 6 cross-sectional units
+Time-series length = 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.71353     0.229641     42.30     5.47e-57 ***
+  l_Q          0.919285    0.0298901    30.76     1.95e-46 ***
+  l_PF         0.417492    0.0151991    27.47     8.37e-43 ***
+  LF          -1.07040     0.201690     -5.307    9.50e-07 ***
+
+Mean dependent var   13.36561   S.D. dependent var   1.131971
+Sum squared resid    0.292622   S.E. of regression   0.060105
+LSDV R-squared       0.997434   Within R-squared     0.992566
+LSDV F(8, 81)        3935.796   P-value(F)           1.5e-101
+Log-likelihood       130.0862   Akaike criterion    -242.1725
+Schwarz criterion   -219.6742   Hannan-Quinn        -233.0999
+rho                  0.600626   Durbin-Watson        0.688054
+
+Joint test on named regressors -
+  Test statistic: F(3, 81) = 3604.81
+  with p-value = P(F(3, 81) > 3604.81) = 4.40405e-86
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(5, 81) = 57.7321
+  with p-value = P(F(5, 81) > 57.7321) = 2.80693e-25
+
+? series ai = $ahat
+Generated series ai (ID 10)
+? corr ai X
+
+Correlation Coefficients, using the observations 1:01 - 6:15
+5% critical value (two-tailed) = 0.2072 for n = 90
+
+            ai           l_Q          l_PF            LF
+        1.0000       -0.3974       -0.0010       -0.2695  ai
+                      1.0000        0.2890        0.4997  l_Q
+                                    1.0000        0.5988  l_PF
+                                                  1.0000  LF
+
+? matrix b = $coeff[2:]
+Generated matrix b
+? series Xb = {X}*b
+Generated series Xb (ID 11)
+? corr ai Xb
+
+corr(ai, Xb) = -0.34745112
+Under the null hypothesis of no correlation:
+ t(88) = -3.47594, with two-tailed p-value 0.0008
+
+? foreign language=stata --send-data
+?   xtset unit year
+?   xtreg l_c l_q l_pf lf, fe
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(11 vars, 90 obs)
+
+. xtset unit year
+       panel variable:  unit (strongly balanced)
+        time variable:  year, 1970 to 1984
+                delta:  1 unit
+
+. xtreg l_c l_q l_pf lf, fe
+
+Fixed-effects (within) regression               Number of obs      =        90
+Group variable: unit                            Number of groups   =         6
+
+R-sq:  within  = 0.9926                         Obs per group: min =        15
+       between = 0.9856                                        avg =      15.0
+       overall = 0.9873                                        max =        15
+
+                                                F(3,81)            =   3604.80
+corr(u_i, Xb)  = -0.3475                        Prob > F           =    0.0000
+
+------------------------------------------------------------------------------
+         l_c |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         l_q |   .9192846   .0298901    30.76   0.000     .8598126    .9787565
+        l_pf |   .4174918   .0151991    27.47   0.000     .3872503    .4477333
+          lf |  -1.070396     .20169    -5.31   0.000    -1.471696   -.6690963
+       _cons |   9.713528    .229641    42.30   0.000     9.256614    10.17044
+-------------+----------------------------------------------------------------
+     sigma_u |  .13207751
+     sigma_e |  .06010514
+         rho |  .82843656   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0:     F(5, 81) =    57.73               Prob > F = 0.0000
+
+. 
+end of do-file
+
+? foreign language=R --send-data
+?   library("plm")
+?   H <- pdata.frame(gretldata, index = c("unit", "year"))
+?   mfe <- plm(l_C ~ l_Q + l_PF + LF, data=H, model="within")
+?   summary(mfe)
+? end foreign
+Oneway (individual) effect Within Model
+
+Call:
+plm(formula = l_C ~ l_Q + l_PF + LF, data = H, model = "within")
+
+Balanced Panel: n=6, T=15, N=90
+
+Residuals :
+   Min. 1st Qu.  Median 3rd Qu.    Max. 
+-0.1560 -0.0352 -0.0093  0.0349  0.1660 
+
+Coefficients :
+      Estimate Std. Error t-value Pr(>|t|)    
+l_Q   0.919285   0.029890 30.7555  < 2e-16 ***
+l_PF  0.417492   0.015199 27.4682  < 2e-16 ***
+LF   -1.070396   0.201690 -5.3071  9.5e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Total Sum of Squares:    39.361
+Residual Sum of Squares: 0.29262
+R-Squared      :  0.99257 
+      Adj. R-Squared :  0.89331 
+F-statistic: 3604.81 on 3 and 81 DF, p-value: < 2.22e-16
+? panel l_C 0 X --random
+
+Model 2: Random-effects (GLS), using 90 observations
+Included 6 cross-sectional units
+Time-series length = 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.62791     0.210164     45.81     3.40e-62 ***
+  l_Q          0.906681    0.0256249    35.38     4.95e-53 ***
+  l_PF         0.422778    0.0140248    30.15     1.72e-47 ***
+  LF          -1.06450     0.200070     -5.321    8.10e-07 ***
+
+Mean dependent var   13.36561   S.D. dependent var   1.131971
+Sum squared resid    1.495397   S.E. of regression   0.131105
+Log-likelihood       56.67935   Akaike criterion    -105.3587
+Schwarz criterion   -95.35945   Hannan-Quinn        -101.3264
+
+'Between' variance = 0.0155972
+'Within' variance = 0.00361262
+theta used for quasi-demeaning = 0.876685
+corr(y,yhat)^2 = 0.987609
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 334.85
+  with p-value = 8.44102e-75
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(3) = 3.52343
+  with p-value = 0.317735
+
+Done

@@ -1,0 +1,33 @@
+function void arma11_via_kalman(series y)
+    /* parameter initalization */
+    phi = 0
+    theta = 0
+    sigma = 1
+
+    /* Kalman filter setup */
+    matrix H = {1; theta}
+    matrix F = {phi, 0; 1, 0}
+    matrix Q = {sigma^2, 0; 0, 0}
+
+    kalman
+        obsy y
+        obsymat H
+        statemat F
+        statevar Q
+    end kalman
+
+    /* maximum likelihood estimation */
+    mle logl = ERR ? NA : $kalman_llt
+        H[2] = theta
+        F[1,1] = phi
+        Q[1,1] = sigma^2
+        ERR = kfilter()
+        params phi theta sigma
+    end mle -h
+end function
+
+# ------------------------ main ---------------------------
+
+open arma.gdt        # open the "arma" example dataset
+arma11_via_kalman(y) # estimate an arma(1,1) model
+arma 1 1 ; y --nc    # check via native command

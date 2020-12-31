@@ -1,0 +1,90 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:06
+? run mnlogit-cluster.inp
+ /home/cottrell/stats/test-gretl/cluster/mnlogit-cluster.inp
+? open keane.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/keane.gdt
+? smpl (year==87) --restrict
+Full data set: 12723 observations
+Current sample: 1738 observations
+? logit status 0 educ exper expersq black --multinomial --cluster=educ
+
+Model 1: Multinomial Logit, using observations 1-1738 (n = 1717)
+Missing or incomplete observations dropped: 21
+Dependent variable: status
+Standard errors clustered by 13 values of educ
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  status = 2
+  const      10.2779       1.71620       5.989    2.11e-09 ***
+  educ       -0.673631     0.101726     -6.622    3.54e-11 ***
+  exper      -0.106215     0.189147     -0.5615   0.5744  
+  expersq    -0.0125152    0.0239730    -0.5221   0.6016  
+  black       0.813017     0.369462      2.201    0.0278   **
+  status = 3
+  const       5.54380      1.20398       4.605    4.13e-06 ***
+  educ       -0.314657     0.0751874    -4.185    2.85e-05 ***
+  exper       0.848737     0.149055      5.694    1.24e-08 ***
+  expersq    -0.0773003    0.0240876    -3.209    0.0013   ***
+  black       0.311361     0.250234      1.244    0.2134  
+
+Mean dependent var   2.691322   S.D. dependent var   0.573502
+Log-likelihood      -907.8572   Akaike criterion     1835.714
+Schwarz criterion    1890.198   Hannan-Quinn         1855.874
+
+Number of cases 'correctly predicted' = 1366 (79.6%)
+Likelihood ratio test: Chi-square(8) = 583.722 [0.0000]
+
+? foreign language=stata --send-data
+?   mlogit status educ exper expersq black, base(1) vce(cluster educ)
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(18 vars, 1738 obs)
+
+. mlogit status educ exper expersq black, base(1) vce(cluster educ)
+
+Iteration 0:   log pseudolikelihood = -1199.7182  
+Iteration 1:   log pseudolikelihood = -960.26272  
+Iteration 2:   log pseudolikelihood =  -908.7673  
+Iteration 3:   log pseudolikelihood = -907.85992  
+Iteration 4:   log pseudolikelihood = -907.85723  
+Iteration 5:   log pseudolikelihood = -907.85723  
+
+Multinomial logistic regression                   Number of obs   =       1717
+                                                  Wald chi2(8)    =    1653.54
+                                                  Prob > chi2     =     0.0000
+Log pseudolikelihood = -907.85723                 Pseudo R2       =     0.2433
+
+                                  (Std. Err. adjusted for 13 clusters in educ)
+------------------------------------------------------------------------------
+             |               Robust
+      status |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+1            |  (base outcome)
+-------------+----------------------------------------------------------------
+2            |
+        educ |  -.6736313   .1017265    -6.62   0.000    -.8730115    -.474251
+       exper |  -.1062149   .1891472    -0.56   0.574    -.4769365    .2645067
+     expersq |  -.0125152    .023973    -0.52   0.602    -.0595014    .0344711
+       black |   .8130166   .3694621     2.20   0.028     .0888841    1.537149
+       _cons |   10.27787   1.716199     5.99   0.000     6.914187    13.64156
+-------------+----------------------------------------------------------------
+3            |
+        educ |  -.3146573   .0751874    -4.18   0.000    -.4620219   -.1672928
+       exper |   .8487367   .1490553     5.69   0.000     .5565936     1.14088
+     expersq |  -.0773003   .0240876    -3.21   0.001    -.1245112   -.0300895
+       black |   .3113612   .2502337     1.24   0.213    -.1790879    .8018103
+       _cons |   5.543798    1.20398     4.60   0.000     3.184041    7.903555
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+Done

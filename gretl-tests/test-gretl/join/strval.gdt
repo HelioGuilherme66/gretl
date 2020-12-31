@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata version="1.3" name="strval" frequency="1" startobs="1" endobs="10" type="cross-section">
+<description>Data imported from CSV file 'strval.csv', 2014-10-31 14:41
+</description>
+<variables count="2">
+<variable name="pid"
+/>
+<variable name="strval"
+ discrete="true"
+/>
+</variables>
+<observations count="10" labels="false">
+<obs>1 1 </obs>
+<obs>2 2 </obs>
+<obs>3 3 </obs>
+<obs>4 4 </obs>
+<obs>5 5 </obs>
+<obs>6 1 </obs>
+<obs>7 2 </obs>
+<obs>8 3 </obs>
+<obs>9 5 </obs>
+<obs>10 4 </obs>
+</observations>
+<string-tables count="1">
+<valstrings owner="strval" count="5">"AA" "BB" "CC" "EE" "DD" </valstrings>
+</string-tables>
+</gretldata>

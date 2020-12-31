@@ -1,0 +1,156 @@
+gretl version 2015e-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-12-07 11:53
+? run pensions.inp
+ /opt/esl/share/gretl/scripts/misc/pensions.inp
+/*
+  Replicate the results in Wooldridge, Econometric Analysis of
+  Cross Section and Panel Data, section 15.10, using pension-
+  plan data from Papke (AER, 1998).
+  The dependent variable, pctstck (percent stocks), codes the
+  asset allocation responses of "mostly bonds", "mixed" and
+  "mostly stocks" as {0, 50, 100}.
+  The independent variable of interest is "choice", a dummy
+  indicating whether individuals are able to choose their own
+  asset allocations.
+*/
+? open pension.gdt
+
+Read datafile /opt/esl/share/gretl/data/wooldridge/pension.gdt
+periodicity: 1, maxobs: 194
+observations range: 1 to 194
+
+Listing 20 variables:
+  0) const       1) id          2) pyears      3) prftshr     4) choice    
+  5) female      6) married     7) age         8) educ        9) finc25    
+ 10) finc35     11) finc50     12) finc75     13) finc100    14) finc101   
+ 15) wealth89   16) black      17) stckin89   18) irain89    19) pctstck   
+
+# demographic characteristics of participant
+? list DEMOG = age educ female black married
+Generated list DEMOG
+# dummies coding for income level
+? list INCOME = finc25 finc35 finc50 finc75 finc100 finc101
+Generated list INCOME
+# Papke's OLS approach
+? ols pctstck const choice DEMOG INCOME wealth89 prftshr
+
+Model 1: OLS, using observations 1-194
+Dependent variable: pctstck
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      134.116        55.7052       2.408    0.0171  **
+  choice      12.0477        6.29817      1.913    0.0574  *
+  age         -1.62597       0.774825    -2.098    0.0373  **
+  educ         0.753869      1.20739      0.6244   0.5332 
+  female       1.30286       7.16378      0.1819   0.8559 
+  black        3.96739       9.78280      0.4055   0.6856 
+  married      3.30344       7.99762      0.4131   0.6801 
+  finc25     -18.1857       14.1203      -1.288    0.1994 
+  finc35      -3.92537      14.4857      -0.2710   0.7867 
+  finc50      -8.12878      14.3419      -0.5668   0.5716 
+  finc75     -17.5792       16.0777      -1.093    0.2757 
+  finc100     -6.74559      15.7912      -0.4272   0.6698 
+  finc101    -28.3441       17.9049      -1.583    0.1152 
+  wealth89    -0.00269178    0.0124603   -0.2160   0.8292 
+  prftshr     15.8079        7.33268      2.156    0.0324  **
+
+Mean dependent var   48.45361   S.D. dependent var   39.72288
+Sum squared resid    274134.0   S.E. of regression   39.13406
+R-squared            0.099831   Adjusted R-squared   0.029426
+F(14, 179)           1.417963   P-value(F)           0.148569
+Log-likelihood      -978.8650   Akaike criterion     1987.730
+Schwarz criterion    2036.748   Hannan-Quinn         2007.579
+
+Excluding the constant, p-value was highest for variable 5 (female)
+
+# save the OLS choice coefficient
+? choice_ols = $coeff(choice)
+Generated scalar choice_ols = 12.0477
+# estimate ordered probit
+? probit pctstck choice DEMOG INCOME wealth89 prftshr
+
+Function evaluations: 87
+Evaluations of gradient: 23
+
+Model 2: Ordered Probit, using observations 1-194
+Dependent variable: pctstck
+Standard errors based on Hessian
+
+             coefficient    std. error       z      p-value
+  ---------------------------------------------------------
+  choice      0.371171      0.184112       2.016    0.0438  **
+  age        -0.0500516     0.0226064     -2.214    0.0268  **
+  educ        0.0261382     0.0352561      0.7414   0.4585 
+  female      0.0455642     0.206004       0.2212   0.8250 
+  black       0.0933923     0.282040       0.3311   0.7405 
+  married     0.0935981     0.233211       0.4013   0.6882 
+  finc25     -0.578430      0.423162      -1.367    0.1716 
+  finc35     -0.134672      0.430524      -0.3128   0.7544 
+  finc50     -0.262040      0.426594      -0.6143   0.5390 
+  finc75     -0.566231      0.478004      -1.185    0.2362 
+  finc100    -0.227896      0.468595      -0.4863   0.6267 
+  finc101    -0.864111      0.529112      -1.633    0.1024 
+  wealth89   -9.55723e-05   0.000373665   -0.2558   0.7981 
+  prftshr     0.481718      0.216123       2.229    0.0258  **
+
+  cut1       -3.08737       1.62377       -1.901    0.0573  *
+  cut2       -2.05355       1.61861       -1.269    0.2045 
+
+Mean dependent var   48.45361   S.D. dependent var   39.72288
+Log-likelihood      -201.9865   Akaike criterion     435.9730
+Schwarz criterion    488.2587   Hannan-Quinn         457.1450
+
+Number of cases 'correctly predicted' = 86 (44.3%)
+Likelihood ratio test: Chi-square(14) = 20.7676 [0.1077]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.0294522
+  with p-value = 0.985382
+
+? k = $ncoeff
+Generated scalar k = 16
+? matrix b = $coeff[1:k-2]
+Generated matrix b
+? a1 = $coeff[k-1]
+Generated scalar a1 = -3.08737
+? a2 = $coeff[k]
+Generated scalar a2 = -2.05355
+/*
+   Wooldridge illustrates the 'choice' effect in the ordered
+   probit by reference to a single, non-black male aged 60,
+   with 13.5 years of education, income in the range $50K - $75K
+   and wealth of $200K, participating in a plan with profit
+   sharing.
+*/
+? matrix X = {60, 13.5, 0, 0, 0, 0, 0, 0, 1, 0, 0, 200, 1}
+Generated matrix X
+# with 'choice' = 0
+? scalar Xb = (0 ~ X) * b
+Generated scalar Xb = -2.75386
+? P0 = cdf(N, a1 - Xb)
+Generated scalar P0 = 0.369373
+? P50 = cdf(N, a2 - Xb) - P0
+Generated scalar P50 = 0.388759
+? P100 = 1 - cdf(N, a2 - Xb)
+Generated scalar P100 = 0.241869
+? E0 = 50 * P50 + 100 * P100
+Generated scalar E0 = 43.6248
+# with 'choice' = 1
+? Xb = (1 ~ X) * b
+Replaced scalar Xb = -2.38269
+? P0 = cdf(N, a1 - Xb)
+Replaced scalar P0 = 0.240503
+? P50 = cdf(N, a2 - Xb) - P0
+Replaced scalar P50 = 0.38847
+? P100 = 1 - cdf(N, a2 - Xb)
+Replaced scalar P100 = 0.371028
+? E1 = 50 * P50 + 100 * P100
+Generated scalar E1 = 56.5262
+
+With choice, E(y) = 56.53, without E(y) = 43.62
+Estimated choice effect via ML = 12.90 (OLS = 12.05)
+Done

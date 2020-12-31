@@ -1,0 +1,99 @@
+*
+*  CrossCorr
+*  Computes and graphs cross correlations between two series. The graph
+*  is shown as a 2x2 matrix with autocorrelations for the series in
+*  the diagonal slots and the cross correlations in the off-diagonal
+*  with the leads in one corner and lags in the other.
+*
+*  Syntax;
+*  @CrossCorr( options )  series1  series2  start  end
+*
+*  Options:
+*    [GRAPH]/NOGRAPH  Do High-resolution graphs?
+*    NUMBER=number of autocorrelations to compute [depends upon data]
+*    WINDOW=title for graph window
+*
+*  Revision schedule:
+*    03/03 Written by Tom Doan, Estima
+*
+proc CrossCorr series1 series2 start end
+type series series1 series2
+type integer start end
+*
+option switch  graph  1
+option switch  print  0
+option integer number
+option string  window
+*
+local integer nbeg nend I J
+local series corr1 corr2 ccorr ccorr1 ccorr2
+local series upper lower
+local integer numc
+local string header qstring
+
+if .not.%defined(series1).or..not.%defined(series2) {
+   display 'Syntax: @CrossCorr  series1  series2  start end'
+   return
+}
+*
+*  Get the series range to be overridden by the start and end parameters
+*  if the user specifies them.
+*
+inquire(reglist) nbeg>>start nend>>end
+# series1 series2
+compute nobs = (nend-nbeg+1)
+*
+*  Get the number of correlations to compute.
+*
+if %defined(number)
+   compute numc   = number
+else
+   compute numc   = %imin(25,nobs/2)
+
+cross(print=.not.graph.or.print) series1 series2 nbeg nend -numc numc ccorr
+set upper 1 numc+1 = 2.0/sqrt(%nobs)
+set lower 1 numc+1 = -2.0/sqrt(%nobs)
+corr(noprint,number=numc) series1 nbeg nend corr1
+corr(noprint,number=numc) series2 nbeg nend corr2
+set ccorr1 1 numc+1 = ccorr(t+numc)
+set ccorr2 1 numc+1 = ccorr(numc+2-t)
+
+if .not.graph
+   return
+
+*
+* Generates 4 graphs on a 2x2 matrix. The cross correlations are in the top left
+* and bottom right corners. In addition to the cross correlations, a Q test for the
+* included lags is added on the graphs, in the lower right corner (which is unlikely
+* to be hit by any bars).
+*
+spgraph(vfields=2,hfields=2,window=window)
+display(store=header) 'Autocorrelations of' %l(series1)
+graph(max=1.0,min=-1.0,number=0,style=bargraph,overlay=line,ovcount=2,ovsame,header=header) 3
+# corr1 1 numc+1
+# upper 1 numc+1 1
+# lower 1 numc+1 1
+display(store=header) %l(series2) 'leading' %l(series1)
+cross(qstats,noprint) series1 series2 nbeg nend 1 numc
+display(store=qstring) "Q=" *.## %cdstat "P-value" #.###### %signif
+graph(max=1.0,min=-1.0,number=0,style=bargraph,overlay=line,ovcount=2,ovsame,header=header) 3
+# ccorr1 1 numc+1
+# upper 1 numc+1 1
+# lower 1 numc+1 1
+grtext(y=-.9,entry=numc+1,align=right,size=18) qstring
+display(store=header) %l(series1) 'leading' %l(series2)
+cross(qstats,noprint) series2 series1 nbeg nend 1 numc
+display(store=qstring) "Q=" *.## %cdstat "P-value" #.###### %signif
+graph(max=1.0,min=-1.0,number=0,style=bargraph,overlay=line,ovcount=2,ovsame,header=header) 3
+# ccorr2 1 numc+1
+# upper 1 numc+1 1
+# lower 1 numc+1 1
+grtext(y=-.9,entry=numc+1,align=right,size=18) qstring
+display(store=header) 'Autocorrelations of' %l(series2)
+graph(max=1.0,min=-1.0,number=0,style=bargraph,overlay=line,ovcount=2,ovsame,header=header) 3
+# corr2 1 numc+1
+# upper 1 numc+1 1
+# lower 1 numc+1 1
+spgraph(done)
+end
+

@@ -1,0 +1,110 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.0   Copyright 1984-2003
+  Statistics/Data Analysis            Stata Corporation
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set mem 50m
+(51200k)
+
+. set matsize 100
+
+. insheet using "test.csv"
+(7 vars, 40 obs)
+
+. tsset codlav year
+       panel variable:  codlav, 30 to 38
+        time variable:  year, 1990 to 1997
+
+. xtreg lnwreal eta eta2, fe
+
+Fixed-effects (within) regression               Number of obs      =        33
+Group variable (i): codlav                      Number of groups   =         5
+
+R-sq:  within  = 0.1745                         Obs per group: min =         3
+       between = 0.6392                                        avg =       6.6
+       overall = 0.0000                                        max =         8
+
+                                                F(2,26)            =      2.75
+corr(u_i, Xb)  = -0.3272                        Prob > F           =    0.0827
+
+------------------------------------------------------------------------------
+     lnwreal |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         eta |  -.3595306   .3549529    -1.01   0.320    -1.089147    .3700856
+        eta2 |   .0040439   .0037307     1.08   0.288    -.0036247    .0117126
+       _cons |    11.7191    8.42856     1.39   0.176    -5.606057    29.04425
+-------------+----------------------------------------------------------------
+     sigma_u |  .22888909
+     sigma_e |  .15139418
+         rho |  .69565699   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0:     F(4, 26) =    12.99               Prob > F = 0.0000
+
+. xtreg lnwreal eta eta2, re
+
+Random-effects GLS regression                   Number of obs      =        33
+Group variable (i): codlav                      Number of groups   =         5
+
+R-sq:  within  = 0.1702                         Obs per group: min =         3
+       between = 0.7120                                        avg =       6.6
+       overall = 0.0008                                        max =         8
+
+Random effects u_i ~ Gaussian                   Wald chi2(2)       =      3.25
+corr(u_i, X)       = 0 (assumed)                Prob > chi2        =    0.1970
+
+------------------------------------------------------------------------------
+     lnwreal |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         eta |  -.3922434   .3829272    -1.02   0.306    -1.142767    .3582802
+        eta2 |   .0043232   .0040281     1.07   0.283    -.0035717    .0122181
+       _cons |   12.65139   9.086409     1.39   0.164    -5.157646    30.46042
+-------------+----------------------------------------------------------------
+     sigma_u |  .13211138
+     sigma_e |  .15139418
+         rho |   .4322976   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. xtabond lnwreal, rob noc
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =        20
+Group variable (i): codlav                      Number of groups   =         4
+
+                                                Wald chi2(.)       =         .
+
+Time variable (t): year                         Obs per group: min =         3
+                                                               avg =         5
+                                                               max =         6
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+lnwreal      |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lnwreal      |
+          LD |   .3927303   .1683815     2.33   0.020     .0627086     .722752
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =   1.18   Pr > z = 0.2394
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -0.99   Pr > z = 0.3225
+
+. 

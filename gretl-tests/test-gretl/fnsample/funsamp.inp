@@ -1,0 +1,17 @@
+function void funsamp (series y)
+  smpl 1984:1 ;
+  print "in function, should start in 1984:1"  
+  print y
+  smpl full
+  print "after smpl full in function, should start in 1981:1"
+  print y
+end function
+
+open data9-7
+smpl 1981:1 ;
+funsamp(QNC)
+print "after function, in main: should start in 1981:1"
+print QNC
+smpl full
+print "after smpl full in main: should start in 1975:1"
+print QNC

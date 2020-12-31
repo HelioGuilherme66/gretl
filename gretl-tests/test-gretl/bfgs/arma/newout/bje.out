@@ -1,0 +1,100 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run bje.inp
+ /home/allin/stats/test-gretl/bfgs/arma/bje.inp
+# Box and Jenkins (1976) Series E
+? open bje.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/bje.gdt
+periodicity: 1, maxobs: 100
+observations range: 1770 to 1869
+
+Listing 2 variables:
+  0) const    1) e      
+
+# title 'AR(2) with constant';
+#                     TSP         TSP
+#       Box-Jenkins  BJEST         ML
+#  phi1   1.42     1.40757      1.40757
+# (s.e.)  (.07)    (.070592)    (.070436)
+#  phi2   -.73     -.712806     -.712806
+# (s.e.)  (.07)    (.069149)    (.070077)
+# Const. 14.35    14.7098      14.7098
+# (s.e.)          (2.48212)    (2.48737)
+# LogL            -414.617   -414.617
+? arma 2 0 ; e
+
+Function evaluations: 24
+Evaluations of gradient: 14
+
+Model 1: ARMA, using observations 1770-1869 (T = 100)
+Estimated using Kalman filter (exact ML)
+Dependent variable: e
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       48.1913      4.95853        9.719   2.51e-22 ***
+  phi_1        1.40757     0.0704355     19.98    7.63e-89 ***
+  phi_2       -0.712806    0.0700764    -10.17    2.65e-24 ***
+
+Mean dependent var   46.93000   S.D. dependent var   37.36504
+Mean of innovations  0.183417   S.D. of innovations  15.09730
+Log-likelihood      -414.6174   Akaike criterion     837.2348
+Schwarz criterion    847.6555   Hannan-Quinn         841.4523
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           0.9873    -0.6543     1.1844    -0.0931
+    Root  2           0.9873     0.6543     1.1844     0.0931
+  -----------------------------------------------------------
+
+? scalar mu = $coeff[1] * (1 - $coeff[2] - $coeff[3])
+Generated scalar mu = 14.7099
+# title 'AR(3) with constant';
+#       Box-Jenkins  TSP
+#  phi1   1.57     1.55312
+# (s.e.)  (.10)    (.099788)
+#  phi2  -1.02    -1.00175
+# (s.e.)  (.15)    (.156114)
+#  phi3    .21      .206338
+# (s.e.)  (.10)    (.099307)
+# Const. 11.31    11.7374
+# (s.e.)          (2.78818)
+# LogL            -412.495
+? arma 3 0 ; e
+
+Function evaluations: 27
+Evaluations of gradient: 9
+
+Model 2: ARMA, using observations 1770-1869 (T = 100)
+Estimated using Kalman filter (exact ML)
+Dependent variable: e
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       48.4435      6.07043       7.980   1.46e-15 ***
+  phi_1        1.55312     0.0981365    15.83    2.06e-56 ***
+  phi_2       -1.00175     0.154388     -6.488   8.67e-11 ***
+  phi_3        0.206338    0.0989250     2.086   0.0370   **
+
+Mean dependent var   46.93000   S.D. dependent var   37.36504
+Mean of innovations  0.113655   S.D. of innovations  14.77117
+Log-likelihood      -412.4948   Akaike criterion     834.9896
+Schwarz criterion    848.0155   Hannan-Quinn         840.2614
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.7682     0.0000     2.7682     0.0000
+    Root  2           1.0433    -0.8138     1.3232    -0.1054
+    Root  3           1.0433     0.8138     1.3232     0.1054
+  -----------------------------------------------------------
+
+? scalar mu = $coeff[1] * (1 - $coeff[2] - $coeff[3] - $coeff[4])
+Replaced scalar mu = 11.7374
+Done

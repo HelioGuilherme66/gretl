@@ -1,0 +1,41 @@
+# set echo off
+# set messages off
+nulldata 500
+set seed 786513
+
+srv = ((index-1)%5) + 1
+y1 = normal()
+y2 = normal()
+
+x1 = normal()
+x2 = normal()
+
+smpl srv=1 --restrict --replace
+mod <- system
+    equation y1 const x1
+    equation y2 const x2
+end system
+restrict mod
+    b[1,1] - b[2,1] = 0
+end restrict
+estimate mod method=ols
+
+smpl srv=2 --restrict --replace
+mod <- system
+    equation y1 const x1
+    equation y2 const x2
+end system
+restrict mod
+    b[1,1] - b[2,1] = 0
+end restrict
+estimate mod method=ols
+
+smpl srv=3 --restrict --replace
+mod <- system
+    equation y1 const x1
+    equation y2 const x2
+end system
+restrict mod
+    b[1,1] - b[2,1] = 0
+end restrict
+estimate mod method=ols

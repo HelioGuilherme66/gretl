@@ -1,0 +1,9 @@
+# Excercise the correlogram and periodogram code
+open data4-2.gdt
+# Correlogram
+corrgm Ct
+# Sample periodogram
+pergm Ct
+# Bartlett window version
+pergm Ct -o
+

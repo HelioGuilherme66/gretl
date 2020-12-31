@@ -1,0 +1,6 @@
+open ../MFontaine.gdt
+eval values(Rtg)
+probit Rtg const Cap Profit StateDiv LineDiv
+Rtg = (Rtg == 12)? 11 : Rtg
+Rtg -= 1
+probit Rtg const Cap Profit StateDiv LineDiv

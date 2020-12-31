@@ -1,0 +1,30 @@
+open data4-1
+scalar a = 20
+scalar b = 1
+scalar s = 30
+scalar l2pi = log(2 * pi)
+set bfgs_toler 1e-12
+
+mle lt = -.5 * (l2pi + log(s^2) + (1/(s^2)) * (price - a - b * sqft)^2)
+  deriv a = (1/s^2) * (price - a - b*sqft)
+  deriv b = (1/s^2) * sqft * (price - a - b*sqft)
+  deriv s = -(1/s) + (1/s^3) * (price - a - b*sqft)^2
+end mle
+ols price 0 sqft
+
+# ignore sigma
+genr a = 20
+genr b = 1
+
+mle lt = -.5 * (price - a - b * sqft)^2
+  deriv a = price - a - b*sqft
+  deriv b = sqft * (price - a - b*sqft)
+end mle
+
+genr a = 20
+genr b = 1
+mle lt = -.5 * (price - a - b * sqft)^2
+  params a b
+end mle
+
+

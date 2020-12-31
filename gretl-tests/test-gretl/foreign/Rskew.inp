@@ -1,0 +1,22 @@
+nulldata 200
+set seed 54321
+series x = normal()
+s = skewness(x)
+k = kurtosis(x) + 3
+matrix Gstats = {s, k}
+printf "s = %.10g, %.10g\n", s, k
+foreign language=R --send-data
+ library(moments)
+ s <- skewness(x)
+ k <- kurtosis(x)
+ print(sprintf("s=%.10g, k=%.10g\n", s, k))
+ Rstats = matrix(c(s,k), nrow=1, ncol=2)
+ gretl.export(Rstats)
+ rdata <- gretldata
+ gretl.export(rdata)
+end foreign
+matrix Rstats = mread("Rstats.mat", 1)
+printf "\ngretl:\n%16.12g\n", Gstats
+printf "\nR:\n%16.12g\n", Rstats
+eval Gstats - Rstats
+

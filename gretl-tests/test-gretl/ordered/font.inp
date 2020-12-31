@@ -1,0 +1,73 @@
+function matrix op_predict (matrix cut, series zhat)
+  scalar n = $nobs
+  scalar nc = rows(cut)
+  scalar m = nc+4
+  matrix Pmat = zeros(n, m)
+  scalar cdf0 cdf1
+  # fill the probabilities matrix
+  loop i=1..n -q
+    Pmat[i,1] = cnorm(cut[1]-zhat[i])
+    cdf0 = Pmat[i,1]
+    loop j=2..nc --quiet
+      cdf1 = cnorm(cut[j]-zhat[i])
+      Pmat[i,j] = cdf1 - cdf0
+      cdf0 = cdf1
+    endloop
+    Pmat[i,nc+1] = 1 - cdf0
+  endloop
+  # fill the "predictions" columns
+  loop i=1..n -q
+    scalar pmax = 0
+    pmax_bin = 0
+    scalar Xb_bin = 0
+    loop j=1..nc+1 -q
+      if Pmat[i,j] > pmax
+        pmax = Pmat[i,j]
+	pmax_bin = j-1
+      endif
+      if j <= nc && zhat[i] > cut[j]
+	Xb_bin = j
+      endif
+    endloop
+    Pmat[i,nc+2] = pmax_bin
+    Pmat[i,nc+3] = zhat[i]
+    Pmat[i,nc+4] = Xb_bin
+   endloop
+  return Pmat
+end function
+
+function series predict (matrix *X, matrix b)
+  series ret = 0
+  scalar N = rows(X)
+  scalar nx = cols(X)
+  matrix Xb = X*b[1:nx]
+  matrix cuts = b[nx+1:]
+  scalar ncuts = rows(cuts)
+  loop i=1..N -q
+    loop j=1..ncuts -q
+      if Xb[i] > cuts[j] 
+         ret[i] = j
+      endif
+    endloop
+  endloop
+  return ret
+end function
+
+open ../MFontaine.gdt
+Rtg = (Rtg == 12)? 11 : Rtg
+Rtg -= 1
+
+# with four regressors
+probit Rtg const Cap Profit StateDiv LineDiv
+matrix cut = $coeff[5:]
+matrix P = op_predict(cut, $yhat)
+printf "number correct: (1) %d, (2) %d\n", 
+ sumc(P[,12] .= Rtg), sumc(P[,14] .= Rtg)
+
+# drop one regressor
+probit Rtg const Cap Profit LineDiv
+matrix cut = $coeff[4:]
+matrix P = op_predict(cut, $yhat)
+printf "number correct: (1) %d, (2) %d\n", 
+ sumc(P[,12] .= Rtg), sumc(P[,14] .= Rtg)
+print P

@@ -1,0 +1,122 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run anonsys.inp
+ /home/cottrell/stats/test-gretl/system/anonsys.inp
+? function void anonsys(series x, series y)
+? nulldata 50
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+? set seed 987674521
+Pseudo-random number generator seeded with 987674521
+? series x = normal()
+Generated series x (ID 2)
+? series y = normal()
+Generated series y (ID 3)
+? anonsys(x, y)
+
+Equation system, Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-50
+Dependent variable: x
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.167682      0.114091     1.470    0.1480 
+
+Mean dependent var   0.167682   S.D. dependent var   0.806748
+Sum squared resid    31.89126   S.E. of regression   0.806748
+
+Equation 2: OLS, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0585732     0.155771    -0.3760   0.7085 
+
+Mean dependent var  -0.058573   S.D. dependent var   1.101470
+Sum squared resid    59.44855   S.E. of regression   1.101470
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.63783      (0.061)
+     0.053501       1.1890
+
+log determinant = -0.280384
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.188719 [0.6640]
+
+
+Equation system, Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1-50
+Dependent variable: x
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.167682      0.112945     1.485    0.1440 
+
+Mean dependent var   0.167682   S.D. dependent var   0.806748
+Sum squared resid    31.89126   S.E. of regression   0.798640
+
+Equation 2: SUR, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0585732     0.154206    -0.3798   0.7057 
+
+Mean dependent var  -0.058573   S.D. dependent var   1.101470
+Sum squared resid    59.44855   S.E. of regression   1.090399
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.63783      (0.061)
+     0.053501       1.1890
+
+log determinant = -0.280384
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.188719 [0.6640]
+
+Restriction:
+ b[1,1] - b[2,1] = 0
+
+Equation system, Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-50
+Dependent variable: x
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0545545    0.0814801    0.6695    0.5063 
+
+Mean dependent var   0.167682   S.D. dependent var   0.806748
+Sum squared resid    32.53115   S.E. of regression   0.814801
+
+Equation 2: OLS, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0545545     0.110738    0.4926    0.6245 
+
+Mean dependent var  -0.058573   S.D. dependent var   1.101470
+Sum squared resid    60.08845   S.E. of regression   1.107382
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.65062      (0.046)
+     0.040703       1.2018
+
+log determinant = -0.248151
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.105942 [0.7448]
+
+F test for the specified restrictions:
+  F(1,98) = 1.37311 [0.2441]
+
+Done

@@ -1,0 +1,131 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run sysroll.inp
+ /home/cottrell/stats/test-gretl/system/sysroll.inp
+? function matrix mfcast(list lhs, list rhs, int t2)
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? dataset addobs 3
+Dataset extended by 3 observations
+Full data range: 1974:1 - 1988:2 (n = 58)
+
+? list lhs = IBO IDE LRM LRY
+Generated list lhs
+? list rhs = LRM
+Generated list rhs
+? scalar t2 = obsnum(1987:1)
+Generated scalar t2 = 53
+? loop 3 -q
+> matrix fc = mfcast(lhs,rhs,t2)
+> print fc
+> t2++
+> endloop
+
+ For 95% confidence intervals, t(50, 0.025) = 2.009
+
+                  IBO    prediction    std. error        95% interval
+
+  1987:2      0.117333     0.112291     0.021019     0.070073 - 0.154510
+  1987:3      0.118967     0.110818     0.021658     0.067317 - 0.154320
+  1987:4                   0.109337     0.022286     0.064575 - 0.154099
+
+                  IDE    prediction    std. error        95% interval
+
+  1987:2      0.076259     0.073872     0.011438     0.050899 - 0.096846
+  1987:3      0.075163     0.073321     0.011603     0.050015 - 0.096628
+  1987:4                   0.072767     0.011769     0.049129 - 0.096405
+
+                  LRM    prediction    std. error        95% interval
+
+  1987:2     12.039788    12.037302     0.033147    11.970724 - 12.103881
+  1987:3     12.015294    12.046709     0.047019    11.952268 - 12.141149
+  1987:4                  12.056172     0.057761    11.940156 - 12.172188
+
+                  LRY    prediction    std. error        95% interval
+
+  1987:2       6.06373      6.07588      0.03572      6.00414 -  6.14761
+  1987:3       6.05083      6.07997      0.03855      6.00254 -  6.15739
+  1987:4                    6.08408      0.04122      6.00130 -  6.16687
+
+fc (3 x 4) [t1 = 54, t2 = 56]
+
+     0.11229     0.073872       12.037       6.0759 
+     0.11082     0.073321       12.047       6.0800 
+     0.10934     0.072767       12.056       6.0841 
+
+
+ For 95% confidence intervals, t(51, 0.025) = 2.008
+
+                  IBO    prediction    std. error        95% interval
+
+  1987:3      0.118967     0.110907     0.020831     0.069088 - 0.152726
+  1987:4                   0.109399     0.021453     0.066331 - 0.152467
+  1988:1                   0.107880     0.022065     0.063583 - 0.152178
+
+                  IDE    prediction    std. error        95% interval
+
+  1987:3      0.075163     0.073402     0.011334     0.050649 - 0.096156
+  1987:4                   0.072839     0.011494     0.049763 - 0.095915
+  1988:1                   0.072272     0.011655     0.048874 - 0.095670
+
+                  LRM    prediction    std. error        95% interval
+
+  1987:3     12.015294    12.049447     0.032835    11.983528 - 12.115365
+  1987:4                  12.059170     0.046591    11.965635 - 12.152704
+  1988:1                  12.068957     0.057253    11.954018 - 12.183897
+
+                  LRY    prediction    std. error        95% interval
+
+  1987:3       6.05083      6.07990      0.03541      6.00880 -  6.15099
+  1987:4                    6.08409      0.03818      6.00745 -  6.16074
+  1988:1                    6.08832      0.04079      6.00643 -  6.17020
+
+fc (3 x 4) [t1 = 55, t2 = 57]
+
+     0.11091     0.073402       12.049       6.0799 
+     0.10940     0.072839       12.059       6.0841 
+     0.10788     0.072272       12.069       6.0883 
+
+
+ For 95% confidence intervals, t(52, 0.025) = 2.007
+
+                  IBO    prediction    std. error        95% interval
+
+  1987:4                   0.115407    0.0206632    0.0739434 -  0.156871
+  1988:1                   0.114384    0.0212745    0.0716931 -  0.157074
+  1988:2                   0.113361    0.0218667    0.0694828 -  0.157240
+
+                  IDE    prediction    std. error        95% interval
+
+  1987:4                  0.0749779    0.0112306    0.0524419 -  0.0975138
+  1988:1                  0.0745936    0.0113903    0.0517373 -  0.0974499
+  1988:2                  0.0742100    0.0115472    0.0510388 -  0.0973812
+
+                  LRM    prediction    std. error        95% interval
+
+  1987:4                    12.0219    0.0328301      11.9561 -   12.0878
+  1988:1                    12.0286    0.0463895      11.9355 -   12.1216
+  1988:2                    12.0352    0.0567673      11.9213 -   12.1491
+
+                  LRY    prediction    std. error        95% interval
+
+  1987:4                    6.06683    0.0352863      5.99602 -   6.13763
+  1988:1                    6.06966    0.0379724      5.99347 -   6.14586
+  1988:2                    6.07249    0.0404723      5.99128 -   6.15371
+
+fc (3 x 4) [t1 = 56, t2 = 58]
+
+     0.11541     0.074978       12.022       6.0668 
+     0.11438     0.074594       12.029       6.0697 
+     0.11336     0.074210       12.035       6.0725 
+
+Done

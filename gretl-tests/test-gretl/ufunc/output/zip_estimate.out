@@ -1,0 +1,34 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run zip_estimate.inp
+ /home/cottrell/stats/test-gretl/ufunc/zip_estimate.inp
+/*
+  compute the log probabilities for the plain Poisson model
+*/
+? function series ln_poi_prob(series y, list X, matrix beta)
+/*
+  compute the log probabilities for the zero-inflated Poisson model
+*/
+? function series ln_zip_prob(series y, list X, matrix beta, scalar \
+  p0)
+/*
+  do the actual estimation (silently)
+*/
+? function matrix zip_estimate(series y, list X)
+/*
+  user-level function: estimate the model and print out
+  the results
+*/
+? function void zip(series y, list X)
+In regard to function ln_zip_prob:
+Warning: exp: Numerical result out of range
+In regard to function ln_zip_prob:
+Warning: exp: Numerical result out of range
+
+Zero-inflated Poisson model:
+
+     alpha   0.2123   0.0247   8.605   0.000
+     const   0.2038   0.0436   4.677   0.000
+         x   0.4916   0.0319  15.432   0.000

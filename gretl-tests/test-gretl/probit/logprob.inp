@@ -1,0 +1,53 @@
+set echo off
+set messages off
+
+function series P(series y, series ndx, scalar mtype)
+    series ret = NA
+    if mtype == 0   #probit
+        ret = y ? cnorm(ndx) : cnorm(-ndx)
+    elif mtype == 1 #logit
+        e = 1/(1+exp(-ndx))
+        ret = y ? e : 1-e
+    endif
+    return ret
+end function
+
+function matrix score(series y, series ndx, matrix X, scalar mtype)
+    if mtype == 0   #probit
+        series w = y ? invmills(-ndx) : -invmills(ndx)
+    elif mtype == 1 #logit
+        e = 1/(1+exp(-ndx))
+        series w = y - e
+    endif
+    return {w} .* X
+end function
+
+function void neg_hess(matrix *H, series y, series ndx, matrix X, scalar mtype)
+    if mtype == 0   #probit
+        series w = y ? invmills(-ndx) : -invmills(ndx)
+        series p = w * (ndx + w)
+    elif mtype == 1 #logit
+        series p = 1/(1+exp(-ndx))
+        series p = p * (1-p)
+    endif
+    matrix mX = {p} .* X
+    H = mX'X
+end function
+
+function matrix lp(series y, list X, scalar mtype)
+    ols y X --quiet
+    b = $coeff ./ $sigma
+    series ll = NA
+    series ndx = NA
+    matrix H = {}
+    matrix mX = {X}
+
+    set optimizer newton
+    mle ll = ln(P(y, ndx, mtype))
+        series ndx = lincomb(X, b)
+        deriv b = score(y, ndx, mX, mtype)
+        hessian neg_hess(&H, y, ndx, mX, mtype)
+    end mle -r
+
+    return b
+end function

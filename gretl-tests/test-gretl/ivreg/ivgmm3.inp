@@ -1,0 +1,19 @@
+open data13-1.csv -q
+
+list X = 0 Ct_1 DYt DYt_1
+list Z = 0 Ct_1 DYt_1 Gt
+
+tsls Ct X ; Z
+# check that this does not interfere with the following
+# estimators
+scalar b2 = 0
+tsls Ct X ; Z --liml
+tsls Ct X ; Z --gmm
+print b2
+
+series u = $uhat
+u
+
+
+
+

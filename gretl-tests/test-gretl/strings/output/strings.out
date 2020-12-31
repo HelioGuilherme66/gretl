@@ -1,0 +1,36 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strings.inp
+ /home/cottrell/stats/test-gretl/strings/strings.inp
+? function void strfun (void)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? string foo = "egg"
+Generated string foo
+? string blot = getenv("LANG")
+Generated string blot
+? strfun()
+inside strfun, blot = function string
+back in main, blot = en_US.UTF-8
+? foo
+egg
+? eggword = "eggbutty" + 3
+Generated string eggword
+word = 'butty'
+? eggword += "foo"
+Replaced string eggword
+word = 'buttyfoo'
+? myword = strstr(getenv("HOME"), "co")
+Generated string myword
+? myword
+cottrell
+Done

@@ -1,0 +1,164 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps5-1.inp
+ /opt/esl/share/gretl/scripts/ps5-1.inp
+# PS5.1, to verify Example 5.1 and Table 5.1
+? open data4-3
+
+Read datafile /opt/esl/share/gretl/data/data4-3.gdt
+periodicity: 1, maxobs: 23
+observations range: 1963 to 1985
+
+Listing 7 variables:
+  0) const      1) year       2) housing    3) pop        4) gnp      
+  5) unemp      6) intrate  
+
+? ols housing 0 intrate pop gnp
+
+Model 1: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: housing
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1315.75       4930.53       -0.2669   0.7925 
+  intrate     -184.751        58.1043     -3.180    0.0049  ***
+  pop           14.9011       36.5529      0.4077   0.6881 
+  gnp            0.522159      0.973884    0.5362   0.5981 
+
+Mean dependent var   1601.100   S.D. dependent var   345.4715
+Sum squared resid     1478211   S.E. of regression   278.9276
+R-squared            0.437025   Adjusted R-squared   0.348134
+F(3, 19)             4.916420   P-value(F)           0.010775
+Log-likelihood      -159.9503   Akaike criterion     327.9007
+Schwarz criterion    332.4427   Hannan-Quinn         329.0430
+rho                  0.567526   Durbin-Watson        0.831133
+
+Excluding the constant, p-value was highest for variable 3 (pop)
+
+# compute absolute percentage error
+? genr ape3 = 100*abs($uhat)/housing
+Generated series ape3 (ID 7)
+# compute mean percentage error
+? genr mape3 = mean(ape3)
+Generated scalar mape3 = 12.2347
+# Model B
+? omit pop
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for pop
+  Test statistic: F(1, 19) = 0.166186, p-value 0.68808
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: housing
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       687.898      382.682       1.798    0.0874  *
+  intrate    -169.658       43.8383     -3.870    0.0010  ***
+  gnp           0.905395     0.248978    3.636    0.0016  ***
+
+Mean dependent var   1601.100   S.D. dependent var   345.4715
+Sum squared resid     1491140   S.E. of regression   273.0513
+R-squared            0.432101   Adjusted R-squared   0.375311
+F(2, 20)             7.608750   P-value(F)           0.003489
+Log-likelihood      -160.0505   Akaike criterion     326.1010
+Schwarz criterion    329.5075   Hannan-Quinn         326.9577
+rho                  0.565469   Durbin-Watson        0.831697
+
+? genr ape2 = 100*abs($uhat)/housing
+Generated series ape2 (ID 8)
+? genr mape2 = mean(ape2)
+Generated scalar mape2 = 12.537
+# Model A
+? ols housing 0 intrate pop
+
+Model 3: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: housing
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -3812.93      1588.85      -2.400    0.0263  **
+  intrate     -198.398       51.2933    -3.868    0.0010  ***
+  pop           33.8193       9.37444    3.608    0.0018  ***
+
+Mean dependent var   1601.100   S.D. dependent var   345.4715
+Sum squared resid     1500576   S.E. of regression   273.9139
+R-squared            0.428507   Adjusted R-squared   0.371358
+F(2, 20)             7.498023   P-value(F)           0.003716
+Log-likelihood      -160.1230   Akaike criterion     326.2461
+Schwarz criterion    329.6526   Hannan-Quinn         327.1028
+rho                  0.563916   Durbin-Watson        0.845996
+
+? genr ape1 = 100*abs($uhat)/housing
+Generated series ape1 (ID 9)
+? genr mape1 = mean(ape1)
+Generated scalar mape1 = 12.1381
+# Correlation coefficients
+? corr gnp pop intrate
+
+Correlation Coefficients, using the observations 1963 - 1985
+5% critical value (two-tailed) = 0.4132 for n = 23
+
+           gnp           pop       intrate
+        1.0000        0.9904        0.8794  gnp
+                      1.0000        0.9129  pop
+                                    1.0000  intrate
+
+? print mape1 mape2 mape3
+
+          mape1 =  12.138071
+
+          mape2 =  12.536975
+
+          mape3 =  12.234704
+# carry out joint F-test for coefficients of pop and gnp
+? ols housing 0 intrate pop gnp
+
+Model 4: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: housing
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1315.75       4930.53       -0.2669   0.7925 
+  intrate     -184.751        58.1043     -3.180    0.0049  ***
+  pop           14.9011       36.5529      0.4077   0.6881 
+  gnp            0.522159      0.973884    0.5362   0.5981 
+
+Mean dependent var   1601.100   S.D. dependent var   345.4715
+Sum squared resid     1478211   S.E. of regression   278.9276
+R-squared            0.437025   Adjusted R-squared   0.348134
+F(3, 19)             4.916420   P-value(F)           0.010775
+Log-likelihood      -159.9503   Akaike criterion     327.9007
+Schwarz criterion    332.4427   Hannan-Quinn         329.0430
+rho                  0.567526   Durbin-Watson        0.831133
+
+Excluding the constant, p-value was highest for variable 3 (pop)
+
+? omit pop gnp
+Test on Model 4:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    pop, gnp
+  Test statistic: F(2, 19) = 6.4193, p-value 0.00741473
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 5: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: housing
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1872.81       252.412      7.420    2.69e-07 ***
+  intrate      -29.4741      26.2553    -1.123    0.2743  
+
+Mean dependent var   1601.100   S.D. dependent var   345.4715
+Sum squared resid     2477062   S.E. of regression   343.4463
+R-squared            0.056613   Adjusted R-squared   0.011690
+F(1, 21)             1.260221   P-value(F)           0.274281
+Log-likelihood      -165.8871   Akaike criterion     335.7742
+Schwarz criterion    338.0452   Hannan-Quinn         336.3454
+rho                  0.575698   Durbin-Watson        0.849696
+
+Done

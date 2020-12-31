@@ -1,0 +1,114 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run longley_vif.inp
+ /home/cottrell/stats/test-gretl/longley_vif.inp
+# Classic test for ill-conditioned data
+? open longley.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/longley.gdt
+periodicity: 1, maxobs: 16
+observations range: 1947 to 1962
+
+Listing 8 variables:
+  0) const     1) employ    2) prdefl    3) gnp       4) unemp   
+  5) armfrc    6) pop       7) year    
+
+? list XL = 0 2 3 4 5 6 7
+Generated list XL
+? ols 1 XL --vcv
+
+Model 1: OLS, using observations 1947-1962 (T = 16)
+Dependent variable: employ
+
+              coefficient       std. error     t-ratio   p-value
+  --------------------------------------------------------------
+  const        -3.48226e+06   890420           -3.911    0.0036  ***
+  prdefl       15.0619            84.9149       0.1774   0.8631 
+  gnp          -0.0358192          0.0334910   -1.070    0.3127 
+  unemp        -2.02023            0.488400    -4.136    0.0025  ***
+  armfrc       -1.03323            0.214274    -4.822    0.0009  ***
+  pop          -0.0511041          0.226073    -0.2261   0.8262 
+  year       1829.15             455.478        4.016    0.0030  ***
+
+Warning: data matrix close to singularity!
+
+Mean dependent var   65317.00   S.D. dependent var   3511.968
+Sum squared resid    836424.1   S.E. of regression   304.8541
+R-squared            0.995479   Adjusted R-squared   0.992465
+F(6, 9)              330.2853   P-value(F)           4.98e-10
+Log-likelihood      -109.6174   Akaike criterion     233.2349
+Schwarz criterion    238.6430   Hannan-Quinn         233.5118
+rho                 -0.366767   Durbin-Watson        2.559488
+
+Excluding the constant, p-value was highest for variable 2 (prdefl)
+
+Covariance matrix of regression coefficients:
+
+         const        prdefl           gnp         unemp        armfrc
+   7.92848e+11   -1.5495e+07       24337.5        363555        104884  const
+                     7210.54      -1.84687      -23.0172      -6.34671  prdefl
+                                0.00112165     0.0154673    0.00336283  gnp
+                                                0.238534     0.0647338  unemp
+                                                             0.0459134  armfrc
+
+           pop          year
+      -82671.3  -4.05441e+08  const
+       12.6542       7204.91  prdefl
+   -0.00630855      -12.2292  gnp
+    -0.0837222      -183.326  unemp
+   -0.00915133      -53.6167  armfrc
+     0.0511091       39.9694  pop
+                      207461  year
+
+? vif
+
+Variance Inflation Factors
+Minimum possible value = 1.0
+Values > 10.0 may indicate a collinearity problem
+
+      prdefl  135.532
+         gnp 1788.513
+       unemp   33.619
+      armfrc    3.589
+         pop  399.151
+        year  758.981
+
+VIF(j) = 1/(1 - R(j)^2), where R(j) is the multiple correlation coefficient
+between variable j and the other independent variables
+
+Belsley-Kuh-Welsch collinearity diagnostics:
+
+                         --- variance proportions ---
+    lambda      cond     const    prdefl       gnp     unemp    armfrc       pop      year
+     6.861     1.000     0.000     0.000     0.000     0.000     0.000     0.000     0.000
+     0.082     9.142     0.000     0.000     0.000     0.014     0.092     0.000     0.000
+     0.046    12.256     0.000     0.000     0.000     0.001     0.064     0.000     0.000
+     0.011    25.337     0.000     0.000     0.001     0.065     0.427     0.000     0.000
+     0.000   230.424     0.000     0.457     0.016     0.006     0.115     0.010     0.000
+     0.000  1048.080     0.000     0.505     0.328     0.225     0.000     0.831     0.000
+     0.000 43275.044     1.000     0.038     0.655     0.689     0.302     0.160     1.000
+
+  lambda = eigenvalues of X'X, largest to smallest
+  cond   = condition index
+  note: variance proportions columns sum to 1.0
+
+? ols 2 0 3 4 5 6 7 -q
+V2 = 135.532
+? ols 3 0 2 4 5 6 7 -q
+V3 = 1788.51
+? ols 4 0 2 3 5 6 7 -q
+V4 = 33.6189
+? ols 5 0 2 3 4 6 7 -q
+V5 = 3.58893
+? ols 6 0 2 3 4 5 7 -q
+V6 = 399.151
+? ols 7 0 2 3 4 5 6 -q
+V5 = 758.981
+? matrix X = { XL }
+Generated matrix X
+? matrix XTX = X'X
+Generated matrix XTX
+det(XTX) = 1.53631e+33
+Done

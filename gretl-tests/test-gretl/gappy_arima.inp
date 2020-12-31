@@ -1,0 +1,2 @@
+open chomage.gdt
+arima {1 4 5 } 1 1 ; y

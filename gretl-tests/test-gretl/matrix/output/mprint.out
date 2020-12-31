@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mprint.inp
+ /home/cottrell/stats/test-gretl/matrix/mprint.inp
+? set seed 8976453
+Pseudo-random number generator seeded with 8976453
+? matrix a = mnormal(4,3)
+Generated matrix a
+    0.936470    1.545159    0.442903
+    0.266012    0.946116   -1.235978
+    0.369483   -0.671005    0.546595
+    0.412466    0.187529    0.981054
+
+   0.936   1.545   0.443
+   0.266   0.946  -1.236
+   0.369  -0.671   0.547
+   0.412   0.188   0.981
+
+? scalar p = 4
+Generated scalar p = 4
+  0.9365  1.5452  0.4429
+  0.2660  0.9461 -1.2360
+  0.3695 -0.6710  0.5466
+  0.4125  0.1875  0.9811
+
+? scalar w = 10
+Generated scalar w = 10
+    0.9365    1.5452    0.4429
+    0.2660    0.9461   -1.2360
+    0.3695   -0.6710    0.5466
+    0.4125    0.1875    0.9811
+
+   9.364695986250E-01   1.545158854239E+00   4.429033899233E-01
+   2.660122154380E-01   9.461156723622E-01  -1.235977662645E+00
+   3.694830174720E-01  -6.710050945810E-01   5.465948595817E-01
+   4.124661590241E-01   1.875292407247E-01   9.810544542152E-01
+
+  0  1  0
+  0  0 -1
+  0  0  0
+  0  0  0
+
+Done

@@ -1,0 +1,99 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps10-3.inp
+ /opt/esl/share/gretl/scripts/ps10-3.inp
+# PS10.3, for the Breusch-Godfrey LM test for Example 10.4
+? open data10-2
+
+Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+periodicity: 24, maxobs: 744
+observations range: 1:01 to 31:24
+
+Listing 4 variables:
+  0) const       1) day_hour    2) load        3) temp      
+
+? genr load1 = load(-1)
+Generated series load1 (ID 4)
+# Suppress the first observation
+? smpl 1.02 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 1:02 - 31:24 (n = 743)
+
+# Estimate transformed model
+? ols load 0 load1 temp
+
+Model 1: OLS, using observations 1:02-31:24 (T = 743)
+Dependent variable: load
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      405.174       70.4926       5.748    1.32e-08  ***
+  load1        0.915869     0.0143796   63.69     1.48e-302 ***
+  temp        -4.14000      1.26091     -3.283    0.0011    ***
+
+Mean dependent var   2640.847   S.D. dependent var   489.2167
+Sum squared resid    26954627   S.E. of regression   190.8538
+R-squared            0.848216   Adjusted R-squared   0.847805
+F(2, 740)            2067.670   P-value(F)           1.1e-303
+Log-likelihood      -4954.638   Akaike criterion     9915.277
+Schwarz criterion    9929.109   Hannan-Quinn         9920.609
+rho                  0.783199   Durbin-Watson        0.434240
+
+# save residuals
+? genr ut=$uhat
+Generated series ut (ID 5)
+# Generate lag values for ut
+? genr ut1=ut(-1)
+Generated series ut1 (ID 6)
+? genr ut2=ut(-2)
+Generated series ut2 (ID 7)
+? genr ut3=ut(-3)
+Generated series ut3 (ID 8)
+? genr ut4=ut(-4)
+Generated series ut4 (ID 9)
+? genr ut5=ut(-5)
+Generated series ut5 (ID 10)
+? genr ut6=ut(-6)
+Generated series ut6 (ID 11)
+# Suppress the first seven observations
+? smpl 1.08 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 1:08 - 31:24 (n = 737)
+
+# Estimate the auxiliary regression
+? ols ut 0 ut1 ut2 ut3 ut4 ut5 ut6 load1 temp
+
+Model 2: OLS, using observations 1:08-31:24 (T = 737)
+Dependent variable: ut
+
+             coefficient    std. error    t-ratio     p-value 
+  ------------------------------------------------------------
+  const      158.458        65.4146        2.422     0.0157    **
+  ut1          1.29072       0.0376844    34.25      6.79e-154 ***
+  ut2         -0.781436      0.0600857   -13.01      6.39e-35  ***
+  ut3          0.332939      0.0664476     5.011     6.82e-07  ***
+  ut4         -0.00584149    0.0676485    -0.08635   0.9312   
+  ut5         -0.102449      0.0587857    -1.743     0.0818    *
+  ut6         -0.0463401     0.0417832    -1.109     0.2678   
+  load1       -0.0626079     0.0161622    -3.874     0.0001    ***
+  temp         0.164143      0.712610      0.2303    0.8179   
+
+Mean dependent var   0.551841   S.D. dependent var   191.1562
+Sum squared resid     5608718   S.E. of regression   87.77404
+R-squared            0.791451   Adjusted R-squared   0.789159
+F(8, 728)            345.3474   P-value(F)           6.3e-242
+Log-likelihood      -4339.132   Akaike criterion     8696.265
+Schwarz criterion    8737.688   Hannan-Quinn         8712.239
+rho                 -0.001699   Durbin-Watson        2.001791
+
+Excluding the constant, p-value was highest for variable 9 (ut4)
+
+# compute TR-square statistic and its p-value
+? genr LM=$trsq
+Generated scalar LM = 583.299
+? pvalue X 6 LM
+Chi-square(6): area to the right of 583.299 = 9.33007e-123
+(to the left: 1)
+Done

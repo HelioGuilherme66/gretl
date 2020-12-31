@@ -1,0 +1,34 @@
+# Stock and Watson, ch 5
+#
+open caschool.gdt
+#
+# Set the robust standard errors variant
+set hc_version 1
+#  
+#  Chapter 5: Linear Regression with Multiple Regressors
+#
+# Equation 5.9 and 5.31 are identical to Equation 4.7
+#
+eq5_9 <- ols testscr 0 str --robust
+#
+#Equations 5.10 and 5.16
+eq5_10 <- ols testscr 0 str el_pct --robust
+#
+# Equation 5.18
+genr expn = expn_stu / 1000
+eq5_18 <- ols testscr 0 str expn el_pct --robust
+#
+#Figure 5.2
+gnuplot testscr el_pct
+gnuplot testscr meal_pct
+gnuplot testscr calw_pct
+#
+#Table 5.2 with end of chapter regressions
+eq5_2_1 <- ols testscr 0 str -r
+eq5_2_2 <- ols testscr 0 str el_pct -r
+eq5_2_3 <- ols testscr 0 str el_pct meal_pct -r
+eq5_2_4 <- ols testscr 0 str el_pct calw_pct -r
+eq5_2_5 <- ols testscr 0 str el_pct meal_pct calw_pct -r
+#
+#End of Chapter 5
+

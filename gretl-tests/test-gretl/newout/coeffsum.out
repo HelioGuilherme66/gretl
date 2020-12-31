@@ -1,0 +1,48 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run coeffsum.inp
+ /home/cottrell/stats/test-gretl/coeffsum.inp
+? open data4-2.gdt
+
+Read datafile /opt/esl/share/gretl/data/data4-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 6 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL  
+
+? lags Ct Yt
+Listing 8 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL    6) Ct_1      7) Yt_1    
+
+? ols Ct const Yt Ct_1 Yt_1
+
+Model 1: OLS, using observations 1960-1994 (T = 35)
+Dependent variable: Ct
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -28.8793      39.6821      -0.7278   0.4722  
+  Yt           0.506254     0.0561811    9.011    3.62e-10 ***
+  Ct_1         0.827073     0.152855     5.411    6.61e-06 ***
+  Yt_1        -0.379861     0.0889354   -4.271    0.0002   ***
+
+Mean dependent var   2851.680   S.D. dependent var   927.1223
+Sum squared resid    18992.07   S.E. of regression   24.75172
+R-squared            0.999350   Adjusted R-squared   0.999287
+F(3, 31)             15890.54   P-value(F)           1.80e-49
+Log-likelihood      -159.8504   Akaike criterion     327.7007
+Schwarz criterion    333.9221   Hannan-Quinn         329.8483
+rho                  0.126923   Durbin's h           1.758936
+
+? coeffsum Ct_1 Yt_1
+
+Variables: Ct_1 Yt_1 
+   Sum of coefficients = 0.447212
+   Standard error = 0.0898818
+   t(31) = 4.97555 with p-value = 2.30362e-05
+Done

@@ -1,0 +1,17 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strcase.inp
+ /home/cottrell/stats/test-gretl/strings/strcase.inp
+? string s = "AbCdeFFg123"
+Generated string s
+? sl = tolower(s)
+Generated string sl
+? su = toupper(s)
+Generated string su
+? print s sl su
+AbCdeFFg123
+abcdeffg123
+ABCDEFFG123
+Done

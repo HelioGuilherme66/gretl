@@ -1,0 +1,75 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run pcabig.inp
+ /home/cottrell/stats/test-gretl/pcabig.inp
+? open data7-12
+
+Read datafile /opt/esl/share/gretl/data/data7-12.gdt
+periodicity: 1, maxobs: 82
+observations range: 1 to 82
+
+Listing 12 variables:
+  0) const     1) price     2) hatch     3) wbase     4) length  
+  5) width     6) height    7) weight    8) cyl       9) liters  
+ 10) gasmpg   11) trans   
+
+? pca 2 3 4 5 6 7 8 9 10 11 -a
+Principal Components Analysis
+n = 82
+
+Eigenanalysis of the Correlation Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       5.4008       0.5401       0.5401
+    2       2.1727       0.2173       0.7574
+    3       0.6033       0.0603       0.8177
+    4       0.4987       0.0499       0.8675
+    5       0.4615       0.0462       0.9137
+    6       0.3885       0.0388       0.9525
+    7       0.2711       0.0271       0.9797
+    8       0.1047       0.0105       0.9901
+    9       0.0554       0.0055       0.9957
+   10       0.0434       0.0043       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3      PC4      PC5      PC6      PC7
+hatch       -0.159   -0.535   -0.342   -0.155    0.129    0.368    0.602
+wbase        0.297    0.360   -0.208    0.188    0.327   -0.446    0.445
+length       0.398    0.124    0.087    0.123    0.169    0.055    0.241
+width        0.314   -0.192   -0.414   -0.481    0.466   -0.118   -0.477
+height       0.072    0.547    0.151   -0.697   -0.101    0.351    0.205
+weight       0.410   -0.090    0.031    0.118    0.098    0.220    0.158
+cyl          0.345   -0.288    0.169   -0.223   -0.396   -0.276    0.134
+liters       0.349   -0.305    0.215   -0.165   -0.324   -0.236    0.037
+gasmpg      -0.359    0.098   -0.381   -0.256   -0.238   -0.518    0.217
+trans        0.294    0.196   -0.646    0.227   -0.540    0.279   -0.148
+
+               PC8      PC9     PC10
+hatch        0.050    0.090   -0.153
+wbase        0.392   -0.005   -0.214
+length      -0.762    0.364    0.023
+width       -0.027    0.041    0.009
+height       0.078   -0.041   -0.054
+weight       0.023   -0.636    0.567
+cyl          0.290    0.474    0.400
+liters      -0.161   -0.411   -0.596
+gasmpg      -0.381   -0.233    0.284
+trans        0.028    0.061   -0.100
+
+Generated principal component series
+? ols 1 0 6 7 -q
+? ess1 = $ess
+Generated scalar ess1 = 2777.51
+? ols 1 0 PC1 PC2 -q
+? ess2 = $ess
+Generated scalar ess2 = 3038.05
+? ols 1 0 PC1 PC2 PC3 PC4 -q
+? ess3 = $ess
+Generated scalar ess3 = 2952.91
+Using two variables out of 10, SSR = 2777.51
+Using first two PCs, SSR = 3038.05
+Using first four PCs, SSR = 2952.91
+Done

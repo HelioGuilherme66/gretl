@@ -1,0 +1,84 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run harvey2.inp
+ /home/cottrell/stats/test-gretl/gmm/harvey2.inp
+# cf. http://support.sas.com/rnd/app/examples/ets/harvey/sas.htm
+? open harvey.txt
+parsing /home/cottrell/stats/test-gretl/gmm/harvey.txt...
+using delimiter ' '
+   longest line: 95 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 8
+   number of variables: 7
+   number of non-blank lines: 164
+scanning for variable names...
+   line: obs gb cb d1 d10 conrat cinst rinst 
+scanning for row labels and data...
+   first row label "1947.06", last label "1987.12"
+trying to parse row labels as dates...
+   1947: probably a year... month 06?
+   "1947.09": quarterly data pretending to be monthly?
+taking date information from row labels
+
+Listing 8 variables:
+  0) const     1) gb        2) cb        3) d1        4) d10     
+  5) conrat    6) cinst     7) rinst   
+
+? list clags = cinst(-1 to -4)
+Generated list clags
+? list rlags = rinst(-1 to -4)
+Generated list rlags
+? smpl +4 ;
+Full data range: 1947:2 - 1987:4 (n = 163)
+Current sample: 1948:2 - 1987:4 (n = 159)
+
+# data matrix
+? list xlist = gb cb d1 d10
+Generated list xlist
+? matrix X = { xlist } + 1
+Generated matrix X
+# instrument matrix
+? list zlist = const clags rlags
+Generated list zlist
+? matrix Z = { zlist }
+Generated matrix Z
+# weights
+? matrix W = 1000*I(36)
+Generated matrix W
+? scalar alpha = 0.5
+Generated scalar alpha = 0.5
+? scalar beta = 1.0
+Generated scalar beta = 1
+? series m = 0
+Generated series m (ID 16)
+? matrix H = X
+Generated matrix H
+? set hac_kernel parzen
+? set hac_lag 1
+? gmm
+? m = beta * (1+conrat)^(-alpha)
+? H = m .* X - 1
+? orthog H ; Z
+? weights W
+? params alpha beta
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 13
+Evaluations of gradient: 1
+
+Model 1: Iterated GMM, using observations 1948:2-1987:4 (T = 159)
+HAC standard errors, bandwidth 1 (Parzen kernel)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  alpha      0.831862   0.863888       0.9629   0.3356 
+  beta       1.00249    0.00384646   260.6      0.0000  ***
+
+  GMM criterion: Q = 0.21251 (TQ = 33.789)
+  J test: Chi-square(34) = 33.789 [0.4779]
+
+Done

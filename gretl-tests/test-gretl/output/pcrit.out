@@ -1,0 +1,60 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run pcrit.inp
+ /home/cottrell/stats/test-gretl/pcrit.inp
+? nulldata 5
+periodicity: 1, maxobs: 5
+observations range: 1 to 5
+# Poisson
+? genr x = critical(P, 10, 0.001)
+Generated scalar x = 21
+? genr p = pvalue(P, 10, x-1)
+Generated scalar p = 0.00158826
+? genr p = pvalue(P, 10, x)
+Replaced scalar p = 0.000699651
+# Binomial
+? genr x = critical(B, 0.3, 20, 0.001)
+Replaced scalar x = 13
+? genr p = pvalue(B, 0.3, 20, x-1)
+Replaced scalar p = 0.00127888
+? genr p = pvalue(B, 0.3, 20, x)
+Replaced scalar p = 0.000261047
+# Normal
+? genr x = critical(N, 0.08)
+Replaced scalar x = 1.40507
+? genr p = pvalue(N, x)
+Replaced scalar p = 0.08
+? genr p = invcdf(N, 0.08)
+Replaced scalar p = -1.40507
+? genr p = critical(N, 0.92)
+Replaced scalar p = -1.40507
+# t
+? genr x = critical(t, 10, 0.08)
+Replaced scalar x = 1.5179
+? genr p = pvalue(t, 10, x)
+Replaced scalar p = 0.08
+? genr p = invcdf(t, 10, 0.08)
+Replaced scalar p = -1.5179
+? genr p = critical(t, 10, 0.92)
+Replaced scalar p = -1.5179
+# X^2
+? genr x = critical(X, 10, 0.08)
+Replaced scalar x = 16.7535
+? genr p = pvalue(X, 10, x)
+Replaced scalar p = 0.08
+? genr p = invcdf(X, 10, 0.08)
+Replaced scalar p = 4.53505
+? genr p = critical(X, 10, 0.92)
+Replaced scalar p = 4.53505
+# F
+? genr x = critical(F, 2, 20, 0.08)
+Replaced scalar x = 2.87333
+? genr p = pvalue(F, 2, 20, x)
+Replaced scalar p = 0.08
+? genr p = invcdf(F, 2, 20, 0.08)
+Replaced scalar p = 0.0837302
+? genr p = critical(F, 2, 20, 0.92)
+Replaced scalar p = 0.0837302
+Done

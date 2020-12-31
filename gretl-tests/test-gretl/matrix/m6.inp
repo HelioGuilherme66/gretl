@@ -1,0 +1,4 @@
+matrix A = {1,2}
+matrix B = A*A'
+B
+scalar x = A*A'

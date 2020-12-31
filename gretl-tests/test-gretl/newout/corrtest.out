@@ -1,0 +1,64 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run corrtest.inp
+ /home/cottrell/stats/test-gretl/corrtest.inp
+? nulldata 200
+periodicity: 1, maxobs: 200
+observations range: 1 to 200
+# generate x and y with ties
+? set seed 321321375
+Pseudo-random number generator seeded with 321321375
+? genr x = int(100 * uniform())
+Generated series x (ID 2)
+? genr y = int(100 * uniform())
+Generated series y (ID 3)
+? corr x y
+
+corr(x, y) = 0.02229552
+Under the null hypothesis of no correlation:
+ t(198) = 0.313804, with two-tailed p-value 0.7540
+
+? corr x y --spearman
+
+For the variables 'x' and 'y'
+Spearman's rank correlation coefficient (rho) = 0.02379473
+Under the null hypothesis of no correlation:
+ t(198) = 0.334916, with two-tailed p-value 0.7380
+
+? corr x y --kendall
+
+For the variables 'x' and 'y'
+Kendall's tau = 0.01598904
+Under the null hypothesis of no correlation:
+ z-score = 0.331923, with two-tailed p-value 0.7399
+
+# generate x and y (probably) without ties
+? set seed 321321375
+Pseudo-random number generator seeded with 321321375
+? genr x = 10 + normal()
+Replaced series x (ID 2)
+? genr y = 10 + normal()
+Replaced series y (ID 3)
+? corr x y
+
+corr(x, y) = -0.08452936
+Under the null hypothesis of no correlation:
+ t(198) = -1.19371, with two-tailed p-value 0.2340
+
+? corr x y --spearman
+
+For the variables 'x' and 'y'
+Spearman's rank correlation coefficient (rho) = -0.04457361
+Under the null hypothesis of no correlation:
+ z-score = -0.628788, with two-tailed p-value 0.5295
+
+? corr x y --kendall
+
+For the variables 'x' and 'y'
+Kendall's tau = -0.03567839
+Under the null hypothesis of no correlation:
+ z-score = -0.751341, with two-tailed p-value 0.4524
+
+Done

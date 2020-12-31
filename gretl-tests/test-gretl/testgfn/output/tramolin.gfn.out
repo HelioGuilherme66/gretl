@@ -1,0 +1,53 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run tramolin.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/tramolin.gfn.inp
+? include ./tramolin.gfn
+ /home/cottrell/stats/test-gretl/testgfn/tramolin.gfn
+tramolin 1.10, 2014-05-02 (Ignacio Diaz-Emparanza)
+? open data9-3.gdt
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+? series price_c = tramolin(price)
+Listing 4 variables:
+  0) const      10) sername    11) zsername   12) ser_adj   
+
+Generated series price_c (ID 10)
+# The function corrects an outlier (a level shift) in
+# observation 1980.3 of the series 'price'; compare
+# the series below.
+? smpl 1980:1 1983:4
+Full data range: 1972:2 - 1993:4 (n = 87)
+Current sample: 1980:1 - 1983:4 (n = 16)
+
+? print price price_c --byobs
+
+              price      price_c
+
+1980:1        5.893     5.893000
+1980:2        6.909     6.909000
+1980:3        9.082     7.405670
+1980:4        9.370     7.640512
+1981:1        9.644     7.863937
+1981:2        9.501     7.747332
+1981:3        9.470     7.722054
+1981:4        9.254     8.080835
+1982:1       10.617     8.657344
+1982:2       10.940     8.920725
+1982:3       11.129     9.074840
+1982:4       11.001     8.970466
+1983:1       11.952     9.745933
+1983:2       12.235     9.976698
+1983:3       12.065     9.838076
+1983:4       11.823     9.640744
+
+Done

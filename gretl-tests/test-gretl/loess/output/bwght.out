@@ -1,0 +1,20 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-03-11 14:21
+? run bwght.inp
+ /home/cottrell/stats/test-gretl/loess/bwght.inp
+? open bwght.gdt
+
+Read datafile /opt/esl/share/gretl/data/wooldridge/bwght.gdt
+periodicity: 1, maxobs: 1388
+observations range: 1 to 1388
+
+Listing 13 variables:
+  0) const       1) bwght       2) cigtax      3) cigprice    4) faminc    
+  5) fatheduc    6) motheduc    7) parity      8) male        9) white     
+ 10) cigs       11) bwghtlbs   12) packs     
+
+? series yh = loess(bwght, cigs, 1, 0.10)
+Generated series yh (ID 13)
+Done

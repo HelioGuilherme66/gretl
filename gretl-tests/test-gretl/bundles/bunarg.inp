@@ -1,0 +1,16 @@
+function void bunarg (bundle b)
+  matrix tmp = b["M"]
+  print tmp
+  tmp = b["N"]
+  print tmp
+end function
+
+matrix m = I(3)
+bundle b1
+b1["M"] = m
+
+m *= 5
+bundle b2
+b2["N"] = m
+
+bunarg(b1 + b2)

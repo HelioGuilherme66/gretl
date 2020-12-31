@@ -1,0 +1,224 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run brand_cassola.inp
+ /home/cottrell/stats/test-gretl/vecm/brand_cassola.inp
+? open mon_dem_euroland.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/vecm/mon_dem_euroland.gdt
+periodicity: 4, maxobs: 79
+observations range: 1980:1 to 1999:3
+
+Listing 7 variables:
+  0) const    1) y        2) m_p      3) rs       4) rl     
+  5) p        6) m      
+
+? infl = 400*ldiff(p)
+Generated series infl (ID 7)
+? vecm 2 3 m_p infl rl rs y
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1980:4-1999:3 (T = 76)
+Cointegration rank = 3
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+m_p        1.0000       0.0000       0.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+infl       0.0000       1.0000       0.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+rl         0.0000       0.0000       1.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+rs      0.0029036     -0.13272     -0.94694 
+       (0.0012415)   (0.020305)    (0.12154) 
+y         -1.3521      0.67754     -0.34412 
+        (0.029024)    (0.47471)     (2.8414) 
+
+alpha (adjustment vectors)
+
+m_p      -0.13481   0.00035660  -0.00058698 
+infl       1.9260     -0.50277     0.054442 
+rl         1.7408      0.67370    -0.097821 
+rs        -9.5375      0.58527     0.045954 
+y        0.051768    0.0020544    0.0014607 
+
+Log-likelihood = 606.60692
+Determinant of covariance matrix = 8.0322602e-14
+AIC = -14.5160
+BIC = -12.8293
+HQC = -13.8419
+
+Equation 1: d_m_p
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -0.214199      0.0524393     -4.085    0.0001   ***
+  d_m_p_1     0.486745      0.110140       4.419    3.77e-05 ***
+  d_infl_1   -0.000274592   0.00194530    -0.1412   0.8882  
+  d_rl_1     -0.00198711    0.00126269    -1.574    0.1203  
+  d_rs_1     -0.00142620    0.00109278    -1.305    0.1964  
+  d_y_1      -0.0734378     0.0931121     -0.7887   0.4331  
+  EC1        -0.134811      0.0338596     -3.981    0.0002   ***
+  EC2         0.000356598   0.00253974     0.1404   0.8888  
+  EC3        -0.000586975   0.000489474   -1.199    0.2347  
+
+Mean dependent var   0.007803   S.D. dependent var   0.004601
+Sum squared resid    0.000898   S.E. of regression   0.003688
+R-squared            0.434647   Adjusted R-squared   0.357554
+rho                 -0.069379   Durbin-Watson        2.130911
+
+Equation 2: d_infl
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       4.55290      2.89781       1.571     0.1209 
+  d_m_p_1    -1.99478      6.08637      -0.3277    0.7441 
+  d_infl_1   -0.235187     0.107498     -2.188     0.0322  **
+  d_rl_1     -0.00452601   0.0697769    -0.06486   0.9485 
+  d_rs_1      0.148240     0.0603876     2.455     0.0167  **
+  d_y_1      -5.73332      5.14541      -1.114     0.2692 
+  EC1         1.92599      1.87109       1.029     0.3071 
+  EC2        -0.502773     0.140347     -3.582     0.0006  ***
+  EC3         0.0544423    0.0270485     2.013     0.0482  **
+
+Mean dependent var  -0.025122   S.D. dependent var   0.265589
+Sum squared resid    2.740962   S.E. of regression   0.203788
+R-squared            0.481890   Adjusted R-squared   0.411239
+rho                 -0.027829   Durbin-Watson        2.042524
+
+Equation 3: d_rl
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.658353      5.28218      0.1246   0.9012  
+  d_m_p_1    16.7965       11.0943       1.514    0.1348  
+  d_infl_1   -0.230138      0.195949    -1.174    0.2444  
+  d_rl_1      0.623914      0.127191     4.905    6.40e-06 ***
+  d_rs_1     -0.0343647     0.110075    -0.3122   0.7559  
+  d_y_1      12.2726        9.37914      1.309    0.1952  
+  EC1         1.74081       3.41066      0.5104   0.6115  
+  EC2         0.673697      0.255827     2.633    0.0105   **
+  EC3        -0.0978215     0.0493045   -1.984    0.0514   *
+
+Mean dependent var  -0.093262   S.D. dependent var   0.458995
+Sum squared resid    9.107291   S.E. of regression   0.371469
+R-squared            0.423616   Adjusted R-squared   0.345018
+rho                  0.023968   Durbin-Watson        1.910617
+
+Equation 4: d_rs
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -17.2079       6.88222     -2.500    0.0149  **
+  d_m_p_1     27.0594      14.4549       1.872    0.0656  *
+  d_infl_1    -0.259992     0.255305    -1.018    0.3122 
+  d_rl_1       0.316465     0.165718     1.910    0.0605  *
+  d_rs_1       0.278320     0.143419     1.941    0.0566  *
+  d_y_1       -4.35432     12.2202      -0.3563   0.7227 
+  EC1         -9.53749      4.44379     -2.146    0.0355  **
+  EC2          0.585274     0.333320     1.756    0.0837  *
+  EC3          0.0459544    0.0642394    0.7154   0.4769 
+
+Mean dependent var  -0.124122   S.D. dependent var   0.576024
+Sum squared resid    15.46033   S.E. of regression   0.483991
+R-squared            0.378736   Adjusted R-squared   0.294019
+rho                  0.092080   Durbin-Watson        1.808202
+
+Equation 5: d_y
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const      0.0807147     0.0689163     1.171     0.2457 
+  d_m_p_1    0.330788      0.144747      2.285     0.0255  **
+  d_infl_1   0.00442130    0.00255654    1.729     0.0884  *
+  d_rl_1     0.00114516    0.00165945    0.6901    0.4926 
+  d_rs_1     0.000889099   0.00143615    0.6191    0.5380 
+  d_y_1      0.117900      0.122369      0.9635    0.3388 
+  EC1        0.0517684     0.0444987     1.163     0.2489 
+  EC2        0.00205439    0.00333776    0.6155    0.5403 
+  EC3        0.00146075    0.000643273   2.271     0.0264  **
+
+Mean dependent var   0.005271   S.D. dependent var   0.005145
+Sum squared resid    0.001550   S.E. of regression   0.004847
+R-squared            0.219159   Adjusted R-squared   0.112680
+rho                 -0.053333   Durbin-Watson        2.100899
+
+Cross-equation covariance matrix:
+
+               m_p         infl           rl           rs            y
+m_p     1.1810e-05  -0.00032417   0.00039450   0.00026182   1.5978e-06 
+infl   -0.00032417     0.036065   -0.0019141   -0.0017288   0.00011338 
+rl      0.00039450   -0.0019141      0.11983     0.094242   0.00033216 
+rs      0.00026182   -0.0017288     0.094242      0.20343   0.00034070 
+y       1.5978e-06   0.00011338   0.00033216   0.00034070   2.0398e-05 
+
+determinant = 8.03226e-14
+
+? restrict
+? b[1,1] = 1
+? b[1,2] = 0
+? b[1,4] = 0
+? b[2,1] = 0
+? b[2,2] = 1
+? b[2,4] = 0
+? b[2,5] = 0
+? b[3,1] = 0
+? b[3,2] = 0
+? b[3,3] = 1
+? b[3,4] = -1
+? b[3,5] = 0
+? end restrict
+Restriction set
+ 1: b[1,1] = 1
+ 2: b[1,2] = 0
+ 3: b[1,4] = 0
+ 4: b[2,1] = 0
+ 5: b[2,2] = 1
+ 6: b[2,4] = 0
+ 7: b[2,5] = 0
+ 8: b[3,1] = 0
+ 9: b[3,2] = 0
+ 10: b[3,3] = 1
+ 11: b[3,4] = -1
+ 12: b[3,5] = 0
+Rank of Jacobian = 18, number of free parameters = 18
+Model is fully identified
+Based on Jacobian, df = 3
+Switching algorithm: 12 iterations
+ -(T/2)log|Omega| = 1145.1759, lldiff = 1.72126e-06
+Weak convergence
+
+Unrestricted loglikelihood (lu) = 606.60692
+Restricted loglikelihood (lr) = 605.97927
+2 * (lu - lr) = 1.2553
+P(Chi-square(3) > 1.2553) = 0.739774
+
+Cointegrating vectors (standard errors in parentheses)
+
+m_p        1.0000       0.0000       0.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+infl       0.0000       1.0000       0.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+rl      0.0038192     -0.17311       1.0000 
+       (0.0016060)   (0.014955)     (0.0000) 
+rs         0.0000       0.0000      -1.0000 
+          (0.0000)     (0.0000)     (0.0000) 
+y         -1.3341       0.0000       0.0000 
+        (0.031666)     (0.0000)     (0.0000) 
+
+alpha (adjustment vectors) (standard errors in parentheses)
+
+m_p      -0.13492   0.00070449  -4.6841e-05 
+        (0.033405)  (0.0022792) (0.00046889) 
+infl       2.0368     -0.41137   -0.0055758 
+          (1.8845)    (0.12858)   (0.026452) 
+rl         1.6910      0.70711   -0.0021488 
+          (3.3318)    (0.22733)   (0.046768) 
+rs        -9.7150      0.52603      0.13491 
+          (4.3915)    (0.29963)   (0.061642) 
+y        0.051611    0.0035102    0.0016802 
+        (0.043666)  (0.0029793) (0.00061292) 
+
+Done

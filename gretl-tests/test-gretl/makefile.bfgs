@@ -1,0 +1,13 @@
+subdirs = mle sarma stock-watson cluster \
+	ufunc fcast ordered count kalman arma
+	
+envstr = GRETL_BFGS_SLEN_Q=1
+	
+all:
+	for d in $(subdirs) ; do make $(envstr) -C $$d ; done
+
+bfgs.diffs:
+	cat /dev/null > bfgs.diffs
+	for d in $(subdirs) ; do cat $$d/diffs >> bfgs.diffs ; done
+
+

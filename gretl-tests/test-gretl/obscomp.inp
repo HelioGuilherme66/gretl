@@ -1,0 +1,21 @@
+nulldata 10
+setobs 1 1950 --time
+series S1=(t>=obsnum("1955"))
+series S2=(t>=obsnum(1955))
+print S1 S2 -o
+setobs 4 1950:1 --time
+series S1=(t>="1951:4")
+series S2=(t>=1951:4)
+print S1 S2 -o
+setobs 12 1950:01 --time
+series S1=(t>="1950:04")
+series S2=(t>=1950:04)
+series S3=(t>=7)
+print S1 S2 S3 -o
+setobs 5 2008/04/01
+series S1=(t>="08/04/08")
+print S1 -o
+open data4-10
+genr S1 = (obs="CA")
+genr S2 = (obs!="CA")
+print S1 S2 -o

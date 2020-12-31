@@ -1,0 +1,40 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m9.inp
+ /home/cottrell/stats/test-gretl/matrix/m9.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix x = {sqft}
+Generated matrix x
+? x
+x (14 x 1) [t1 = 1, t2 = 14]
+
+  1065 
+  1254 
+  1300 
+  1577 
+  1600 
+  1750 
+  1800 
+  1870 
+  1935 
+  1948 
+  2254 
+  2600 
+  2800 
+  3000 
+
+? scalar k1 = ones(1,14) * x
+Generated scalar k1 = 26753
+? scalar k2 = sum(sqft)
+Generated scalar k2 = 26753
+Done

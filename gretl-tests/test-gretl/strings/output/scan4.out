@@ -1,0 +1,21 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run scan4.inp
+ /home/cottrell/stats/test-gretl/strings/scan4.inp
+? string s = "123.456"
+Generated string s
+? string foo = "double"
+Generated string foo
+? scalar double
+? sscanf(s, "%lf", double)
+? double
+123.456
+? eval sscanf(s, "%lf", double)
+1
+? string fmt = "%lf"
+Generated string fmt
+? eval sscanf(s, fmt, double)
+1
+Done

@@ -1,0 +1,164 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps5-5.inp
+ /opt/esl/share/gretl/scripts/ps5-5.inp
+# PS5.5, for the second application in Section 5.4
+? open data4-6
+
+Read datafile /opt/esl/share/gretl/data/data4-6.gdt
+periodicity: 1, maxobs: 58
+observations range: 1 to 58
+
+Listing 8 variables:
+  0) const       1) povrate     2) urb         3) famsize     4) unemp     
+  5) highschl    6) college     7) medinc    
+
+? corr urb famsize unemp highschl college medinc
+
+Correlation Coefficients, using the observations 1 - 58
+5% critical value (two-tailed) = 0.2586 for n = 58
+
+           urb       famsize         unemp      highschl       college
+        1.0000        0.3503        0.1096        0.2106       -0.3580  urb
+                      1.0000        0.4848       -0.5076       -0.2999  famsize
+                                    1.0000       -0.1087       -0.7566  unemp
+                                                  1.0000       -0.3576  highschl
+                                                                1.0000  college
+
+        medinc
+       -0.0844  urb
+       -0.0349  famsize
+       -0.7144  unemp
+       -0.2803  highschl
+        0.8477  college
+        1.0000  medinc
+
+# Model A -- most general specification
+? ols povrate const urb famsize unemp highschl college medinc
+
+Model 1: OLS, using observations 1-58
+Dependent variable: povrate
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      16.8176       8.50256       1.978     0.0534   *
+  urb        -0.0187350    0.0147573    -1.270     0.2100  
+  famsize     6.09176      1.88107       3.238     0.0021   ***
+  unemp      -0.0117964    0.119457     -0.09875   0.9217  
+  highschl   -0.118552     0.0681004    -1.741     0.0877   *
+  college     0.171106     0.0981654     1.743     0.0874   *
+  medinc     -0.535992     0.0703540    -7.619     5.76e-10 ***
+
+Mean dependent var   9.903448   S.D. dependent var   3.955452
+Sum squared resid    146.0911   S.E. of regression   1.692493
+R-squared            0.836184   Adjusted R-squared   0.816911
+F(6, 51)             43.38745   P-value(F)           2.39e-18
+Log-likelihood      -109.0883   Akaike criterion     232.1765
+Schwarz criterion    246.5996   Hannan-Quinn         237.7946
+
+Excluding the constant, p-value was highest for variable 4 (unemp)
+
+# Model B -- omit unemp with the highest p-value
+? omit unemp
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for unemp
+  Test statistic: F(1, 51) = 0.00975144, p-value 0.921724
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1-58
+Dependent variable: povrate
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      16.5654       8.03250       2.062    0.0442   **
+  urb        -0.0183838    0.0141854    -1.296    0.2007  
+  famsize     6.04961      1.81449       3.334    0.0016   ***
+  highschl   -0.116617     0.0645981    -1.805    0.0768   *
+  college     0.174645     0.0905146     1.929    0.0591   *
+  medinc     -0.534341     0.0676856    -7.894    1.87e-10 ***
+
+Mean dependent var   9.903448   S.D. dependent var   3.955452
+Sum squared resid    146.1190   S.E. of regression   1.676300
+R-squared            0.836153   Adjusted R-squared   0.820398
+F(5, 52)             53.07369   P-value(F)           3.11e-19
+Log-likelihood      -109.0938   Akaike criterion     230.1876
+Schwarz criterion    242.5503   Hannan-Quinn         235.0031
+
+Excluding the constant, p-value was highest for variable 2 (urb)
+
+# Model C after omitting urb
+? omit urb
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for urb
+  Test statistic: F(1, 52) = 1.67953, p-value 0.20071
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1-58
+Dependent variable: povrate
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       19.1721      7.82628       2.450    0.0176   **
+  famsize      5.41400     1.75811       3.079    0.0033   ***
+  highschl    -0.138788    0.0626897    -2.214    0.0312   **
+  college      0.195296    0.0896703     2.178    0.0339   **
+  medinc      -0.552314    0.0666731    -8.284    3.95e-11 ***
+
+Mean dependent var   9.903448   S.D. dependent var   3.955452
+Sum squared resid    150.8385   S.E. of regression   1.687012
+R-squared            0.830861   Adjusted R-squared   0.818095
+F(4, 53)             65.08772   P-value(F)           8.14e-20
+Log-likelihood      -110.0157   Akaike criterion     230.0313
+Schwarz criterion    240.3335   Hannan-Quinn         234.0442
+
+# Model D -- exclude medinc
+? omit medinc
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for medinc
+  Test statistic: F(1, 53) = 68.6232, p-value 3.9491e-11
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 4: OLS, using observations 1-58
+Dependent variable: povrate
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       53.2862      9.98786       5.335    1.93e-06 ***
+  famsize     -3.95943     2.01940      -1.961    0.0551   *
+  highschl    -0.413667    0.0798221    -5.182    3.35e-06 ***
+  college     -0.474450    0.0582053    -8.151    5.63e-11 ***
+
+Mean dependent var   9.903448   S.D. dependent var   3.955452
+Sum squared resid    346.1406   S.E. of regression   2.531800
+R-squared            0.611863   Adjusted R-squared   0.590299
+F(3, 54)             28.37534   P-value(F)           3.76e-11
+Log-likelihood      -134.1041   Akaike criterion     276.2082
+Schwarz criterion    284.4500   Hannan-Quinn         279.4185
+
+# Relate medinc to its determinants and confirm multicollinearity
+? ols medinc 0 famsize unemp highschl college
+
+Model 5: OLS, using observations 1-58
+Dependent variable: medinc
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -44.9132      15.3482      -2.926    0.0050   ***
+  famsize     16.8193       2.66132      6.320    5.59e-08 ***
+  unemp       -0.467658     0.219263    -2.133    0.0376   **
+  highschl     0.364868     0.122213     2.986    0.0043   ***
+  college      0.992094     0.128725     7.707    3.29e-10 ***
+
+Mean dependent var   35.33771   S.D. dependent var   8.264245
+Sum squared resid    589.6206   S.E. of regression   3.335404
+R-squared            0.848542   Adjusted R-squared   0.837111
+F(4, 53)             74.23315   P-value(F)           4.45e-21
+Log-likelihood      -149.5505   Akaike criterion     309.1010
+Schwarz criterion    319.4032   Hannan-Quinn         313.1139
+
+Done

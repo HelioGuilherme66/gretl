@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run kennan.inp
+ /home/cottrell/stats/test-gretl/duration/kennan.inp
+# Estimate Weibull duration model on Kennan strike data
+# Compare W. Greene, "Econometric Analysis", 5e, Chapter 22
+? open kennan
+
+Read datafile /opt/esl/share/gretl/data/misc/kennan.gdt
+periodicity: 1, maxobs: 62
+observations range: 1 to 62
+
+Listing 3 variables:
+  0) const    1) Ti       2) Prod   
+
+? duration Ti 0 Prod
+
+Convergence achieved after 6 iterations
+
+Model 1: Duration (Weibull), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const        3.77977     0.136701     27.65    2.80e-168 ***
+  Prod        -9.33220     2.93756      -3.177   0.0015    ***
+  sigma        0.992204    0.0997181                      
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Chi-square(1)        9.281944   p-value              0.002314
+Log-likelihood      -97.28542   Akaike criterion     200.5708
+Schwarz criterion    206.9522   Hannan-Quinn         203.0763
+
+1/sigma = 1.00786 (0.101291)
+
+? duration Ti 0 Prod --exponential
+
+Convergence achieved after 4 iterations
+
+Model 2: Duration (exponential), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const        3.77651      0.131124    28.80    2.08e-182 ***
+  Prod        -9.33382      2.95990     -3.153   0.0016    ***
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Chi-square(1)        9.925615   p-value              0.001630
+Log-likelihood      -97.28844   Akaike criterion     198.5769
+Schwarz criterion    202.8312   Hannan-Quinn         200.2472
+
+Done

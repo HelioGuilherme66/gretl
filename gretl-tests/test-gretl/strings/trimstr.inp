@@ -1,0 +1,12 @@
+function string trimstr (string s)
+  loop while strncmp(s, " ", 1) == 0 --quiet
+    s = s + 1
+  endloop
+  return s
+end function
+
+string s1 = "     @Gretl is great!"
+s2 = trimstr(s1)
+print s2
+  
+

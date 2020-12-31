@@ -1,0 +1,91 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run bb98.inp
+ /home/cottrell/stats/test-gretl/arbond/bb98.inp
+? open abdata.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? list X = w w(-1) k k(-1)
+Generated list X
+? list Z = w k
+Generated list Z
+# Blundell & Bond (1998), Table 4: 1976-86 GMM-DIF
+? dpanel 1 ; n X const ; GMM(Z,2,99) --time --two-step --dpd
+
+Model 1: 2-step dynamic panel, using 751 observations
+Included 140 cross-sectional units
+Time-series length: minimum 5, maximum 7
+H-matrix as per Ox/DPD
+Dependent variable: n
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  n(-1)       0.678787     0.0890780     7.620    2.53e-14 ***
+  w          -0.719830     0.122141     -5.893    3.78e-09 ***
+  w_1         0.462691     0.113476      4.077    4.55e-05 ***
+  k           0.453905     0.127554      3.559    0.0004   ***
+  k_1        -0.191492     0.104467     -1.833    0.0668   *
+  const       0.00525824   0.0156783     0.3354   0.7373  
+  T4         -0.00238732   0.0174565    -0.1368   0.8912  
+  T5         -0.0258996    0.0187008    -1.385    0.1661  
+  T6         -0.0317157    0.0239383    -1.325    0.1852  
+  T7          0.0226916    0.0268209     0.8460   0.3975  
+  T8          0.0246048    0.0257231     0.9565   0.3388  
+  T9          0.0105050    0.0271835     0.3864   0.6992  
+
+Sum squared resid    12.16884   S.E. of regression   0.128322
+
+Number of instruments = 91
+Test for AR(1) errors: z = -4.46186 [0.0000]
+Test for AR(2) errors: z = -0.168749 [0.8660]
+Sargan over-identification test: Chi-square(79) = 88.7965 [0.2113]
+Wald (joint) test: Chi-square(5) = 249.396 [0.0000]
+Wald (time dummies): Chi-square(6) = 13.3944 [0.0372]
+
+# Blundell & Bond (1998), Table 4: 1976-86 GMM-SYS
+? dpanel 1 ; n X const ; GMM(Z,2,99) GMMlevel(Z,1,1) --time \
+  --two-step --dpd --system
+
+Model 2: 2-step dynamic panel, using 891 observations
+Included 140 cross-sectional units
+Time-series length: minimum 5, maximum 7
+Including equations in levels
+H-matrix as per Ox/DPD
+Dependent variable: n
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  n(-1)       0.872881     0.0452841    19.28     8.60e-83 ***
+  w          -0.779745     0.116560     -6.690    2.24e-11 ***
+  w_1         0.526803     0.162083      3.250    0.0012   ***
+  k           0.470077     0.0798592     5.886    3.95e-09 ***
+  k_1        -0.357608     0.0800305    -4.468    7.88e-06 ***
+  const       0.948489     0.377550      2.512    0.0120   **
+  T3          0.00580177   0.0197099     0.2944   0.7685  
+  T4          0.0188976    0.0227673     0.8300   0.4065  
+  T5          0.00281961   0.0240708     0.1171   0.9068  
+  T6         -0.0200226    0.0274419    -0.7296   0.4656  
+  T7          0.0152802    0.0233063     0.6556   0.5121  
+  T8          0.0317310    0.0234974     1.350    0.1769  
+  T9          0.0224205    0.0310743     0.7215   0.4706  
+
+Sum squared resid    14.30552   S.E. of regression   0.127645
+
+Number of instruments = 113
+Test for AR(1) errors: z = -5.80672 [0.0000]
+Test for AR(2) errors: z = -0.147052 [0.8831]
+Sargan over-identification test: Chi-square(100) = 111.589 [0.2014]
+Wald (joint) test: Chi-square(5) = 3377.7 [0.0000]
+Wald (time dummies): Chi-square(7) = 15.9985 [0.0251]
+
+Done

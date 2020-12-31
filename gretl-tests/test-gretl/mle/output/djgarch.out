@@ -1,0 +1,77 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run djgarch.inp
+ /home/cottrell/stats/test-gretl/mle/djgarch.inp
+? open djclose
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? series y = 100*ldiff(djclose)
+Generated series y (ID 2)
+? scalar mu = 0.0
+Generated scalar mu = 0
+? scalar omega = 1
+Generated scalar omega = 1
+? scalar alpha = 0.4
+Generated scalar alpha = 0.4
+? scalar beta = 0.5
+Generated scalar beta = 0.5
+? mle ll = -0.5*(log(h) + (e^2)/h)
+? series e = y - mu
+? series h = var(y)
+? series h = omega + alpha*(e(-1))^2 + beta*h(-1)
+? params mu omega alpha beta
+? end mle --hessian
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 111
+Evaluations of gradient: 26
+
+Model 1: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(h) + (e^2)/h)
+Standard errors based on Hessian
+
+             estimate    std. error     z      p-value 
+  -----------------------------------------------------
+  mu         0.0701073   0.0184904     3.792   0.0001   ***
+  omega      0.0483072   0.0114144     4.232   2.32e-05 ***
+  alpha      0.0917997   0.0109791     8.361   6.20e-17 ***
+  beta       0.869745    0.0179399    48.48    0.0000   ***
+
+Log-likelihood      -1245.976   Akaike criterion     2499.952
+Schwarz criterion    2523.291   Hannan-Quinn         2508.421
+
+? garch 1 1 ; y
+
+Function evaluations: 75
+Evaluations of gradient: 17
+
+Model 2: GARCH, using observations 1980-01-03:1989-12-29 (T = 2527)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.0700980    0.0185103     3.787   0.0002   ***
+
+  alpha(0)    0.0483241    0.0114159     4.233   2.31e-05 ***
+  alpha(1)    0.0917793    0.0109771     8.361   6.22e-17 ***
+  beta(1)     0.869729     0.0179386    48.48    0.0000   ***
+
+Mean dependent var   0.047711   S.D. dependent var   1.155626
+Log-likelihood      -3568.131   Akaike criterion     7146.262
+Schwarz criterion    7175.436   Hannan-Quinn         7156.848
+
+Unconditional error variance = 1.25546
+Likelihood ratio test for (G)ARCH terms:
+  Chi-square(2) = 765.073 [7.35207e-167]
+
+Done

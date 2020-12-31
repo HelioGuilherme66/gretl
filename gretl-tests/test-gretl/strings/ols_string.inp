@@ -1,0 +1,9 @@
+set echo off
+set messages off
+open data4-10
+outfile "@dotdir/tmp.txt" --write
+ols 1 0 2 3
+outfile --close
+string results = readfile("@dotdir/tmp.txt")
+remove("@dotdir/tmp.txt")
+print results

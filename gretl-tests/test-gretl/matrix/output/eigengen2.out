@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run eigengen2.inp
+ /home/cottrell/stats/test-gretl/matrix/eigengen2.inp
+? set seed 345678
+Pseudo-random number generator seeded with 345678
+? matrix M = mnormal(5,5)
+Generated matrix M
+? print M
+M (5 x 5)
+
+      1.0450     -0.76413     -0.50395      -1.8981       1.4067 
+   -0.075871      0.72762     -0.19043     -0.55002      0.16516 
+      2.1164     -0.15442       1.5114    -0.091636      -1.5977 
+    -0.34059     -0.31096      0.41560      0.34034       1.2066 
+     0.18341     -0.49592     0.018705      -1.2975      0.88735 
+
+? matrix V = {}
+Generated matrix V
+? evals = eigengen(M, &V)
+Generated matrix evals
+? matrix mod = sqrt(evals[,1].^2 + evals[,2].^2)
+Generated matrix mod
+? evals ~= mod
+Replaced matrix evals
+? colnames(evals, "real imag mod")
+? print evals
+evals (5 x 3)
+
+        real         imag          mod 
+      1.6311       1.1174       1.9771 
+      1.6311      -1.1174       1.9771 
+     0.16548       1.0372       1.0504 
+     0.16548      -1.0372       1.0504 
+     0.91844       0.0000      0.91844 
+
+? print V
+V (5 x 5)
+
+    -0.10038     -0.54520     -0.47163    -0.027939    -0.076855 
+    0.061775     -0.15765     -0.10859     -0.11511     -0.92904 
+    -0.75664       0.0000      0.48092     -0.11302    -0.089873 
+    -0.16774      0.15266     -0.50564       0.0000      0.34448 
+   -0.072610     -0.18656     -0.25350     -0.43330    -0.065124 
+
+Done

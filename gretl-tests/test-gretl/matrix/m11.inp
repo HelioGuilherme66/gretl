@@ -1,0 +1,3 @@
+matrix A = I(3) * 2
+scalar x = det(A)
+scalar x = det(transp(A))

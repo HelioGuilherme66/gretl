@@ -1,0 +1,21 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run readfile2.inp
+ /home/cottrell/stats/test-gretl/strings/readfile2.inp
+? sprintf fname "%s/QNC.rts", $x12adir
+Generated string fname
+? string foo = readfile(fname)
+Generated string foo
+? string baz = readfile("/home/cottrell/.gretl/x12arima/QNC.rts")
+Generated string baz
+Operator	Factor	Root	Real	Imaginary	Modulus	Frequency
+--------	------	----	----	---------	-------	---------
+AR	Nonseasonal	01	+0.115456473640303E+01	+0.000000000000000E+00	+0.115456473640303E+01	+0.000000000000000E+00
+AR	Nonseasonal	02	+0.873310389952882E+01	+0.000000000000000E+00	+0.873310389952882E+01	+0.000000000000000E+00
+MA	Nonseasonal	01	+0.185985077050044E+01	+0.000000000000000E+00	+0.185985077050044E+01	+0.000000000000000E+00
+
+? eval foo == baz
+1
+Done

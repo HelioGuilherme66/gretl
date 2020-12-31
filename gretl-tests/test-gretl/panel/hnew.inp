@@ -1,0 +1,46 @@
+open baltagi_Gasoline
+genr unitdum
+
+# first do pooled OLS plus the "hausman" routine
+ols gas 0 y rp car
+hausman 
+
+panel gas 0 y rp car --random-effects
+matrix B = $coeff[2:]
+matrix VB = $vcv[2:,2:]
+# fixed effects
+panel gas 0 y rp car --fixed-effects --quiet
+matrix b = $coeff[2:]
+matrix Vb = $vcv[2:,2:]
+matrix Vdiff = Vb-VB
+print Vdiff
+matrix M = inv(Vb-VB)
+print M
+# evaluate the "matrix diff" Hausman test
+H = (b-B)'*M*(b-B)
+
+scalar theta = 0.892307
+
+loop foreach i gas y rp car -q
+  ols $i du_* -q
+  genr $iq = $uhat
+  genr $ip = $yhat
+  genr $itilde = $i - theta*$ip 
+endloop
+
+# First Hausman variant
+ols gastilde 0 ytilde rptilde cartilde -q
+add yq rpq carq -q
+scalar H = $test*3
+
+# Second variant
+ols gastilde 0 ytilde rptilde cartilde -q
+genr u = $uhat
+ols u 0 ytilde rptilde cartilde yq rpq carq
+genr TR2 = $trsq
+
+# Regression method
+panel gas 0 y rp car --random-effects
+panel gas 0 y rp car --random-effects --matrix-diff
+
+

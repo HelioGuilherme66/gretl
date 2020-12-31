@@ -1,0 +1,16 @@
+matrix A = {1,2,3;4,5,6}'
+A
+matrix B = vec(A)
+B
+
+matrix C = {1,2,3;2,4,5;3,5,6}
+C
+matrix D = vech(C)
+D
+matrix E = unvech(D)
+E
+matrix F = C - E
+F
+
+
+

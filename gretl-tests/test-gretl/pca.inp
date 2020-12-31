@@ -1,0 +1,5 @@
+open pca.gdt
+summary
+corr
+pca -o
+labels

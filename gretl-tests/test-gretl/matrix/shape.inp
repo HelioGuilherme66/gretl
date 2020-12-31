@@ -1,0 +1,7 @@
+set seed 327
+matrix a = mnormal(2,3)
+a
+matrix b = mshape(a,3,1)
+b
+matrix b = mshape(a,5,2)
+b

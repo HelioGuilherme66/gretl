@@ -1,0 +1,20 @@
+nulldata 50
+set seed 547
+genr x = 100 * uniform()
+# open a "progressive" loop, to be repeated 100 times
+loop 5 --progressive --quiet
+   genr u = 10 * normal()
+   # construct the dependent variable
+   genr y = 10*x + u
+   # run OLS regression
+   ols y const x
+   # grab the coefficient estimates and R-squared
+   genr a = $coeff(const)
+   genr b = $coeff(x)
+   genr r2 = $rsq
+   # arrange for printing of stats on these
+   print a b r2
+   # and save the coefficients to file
+   store coeffs.gdt a b
+endloop
+# now one could open coeffs.gdt and examine the distribution

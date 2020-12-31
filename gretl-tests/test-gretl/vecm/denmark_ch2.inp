@@ -1,0 +1,29 @@
+# Replicate results in Johansen, chapter 2, tables
+# 2.1 to 2.4, for Danish data
+
+set echo off
+set messages off
+
+open denmark.gdt -q
+
+vecm 2 4 LRM LRY IBO IDE --seasonals --quiet
+
+matrix G = transp($coeff[2:5,])
+matrix D = transp($coeff[6:8,]) ~ transp($coeff[1,])
+matrix P = transp($coeff[9:12,])
+
+colnames(P, "m y ib id")
+colnames(G, "d_m d_y d_ib d_id")
+colnames(D, "s1 s2 s3 c")
+
+# tables 2.1, 2.2 and 2.3
+printf "Pi:\n%8.3f\n", P
+printf "Gamma:\n%8.3f\n", G
+printf "D:\n%8.3f\n", D
+
+# table 2.4
+# matrix S = $sigma
+matrix s = (100 * sqrt(diag($sigma)))'
+printf "100 * sigma:\n%8.2f\n", s
+matrix E = $uhat
+printf "correlations:\n%8.2f\n", mcorr(E)

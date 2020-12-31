@@ -1,0 +1,36 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps7-2.inp
+ /opt/esl/share/gretl/scripts/ps7-2.inp
+# PS7.2, for Example 7.1
+? open data7-2
+
+Read datafile /opt/esl/share/gretl/data/data7-2.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 10 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) GENDER      6) RACE        7) CLERICAL    8) MAINT       9) CRAFTS    
+
+? ols WAGE const GENDER EXPER
+
+Model 1: OLS, using observations 1-49
+Dependent variable: WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1366.27       160.090      8.534    4.88e-11 ***
+  GENDER       525.632      168.808      3.114    0.0032   ***
+  EXPER         19.8071      13.6056     1.456    0.1522  
+
+Mean dependent var   1820.204   S.D. dependent var   648.2687
+Sum squared resid    15516720   S.E. of regression   580.7926
+R-squared            0.230784   Adjusted R-squared   0.197339
+F(2, 46)             6.900557   P-value(F)           0.002394
+Log-likelihood      -379.8354   Akaike criterion     765.6708
+Schwarz criterion    771.3462   Hannan-Quinn         767.8241
+
+Done

@@ -1,0 +1,5 @@
+matrix A = ones(4,4)
+loop for (i=0; i<4; i++) --quiet
+   A[i+1,] = A[i+1,] * (i+1)
+endloop
+A

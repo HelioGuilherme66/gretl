@@ -1,0 +1,41 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run levlin2.inp
+ /home/cottrell/stats/test-gretl/levlin2.inp
+? open sheston91.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/sheston91.gdt
+periodicity: 26, maxobs: 3250
+observations range: 1:01 to 125:26
+
+Listing 9 variables:
+  0) const      1) year       2) pop        3) rgdppc     4) savrat   
+  5) country    6) com        7) opec       8) name     
+
+? smpl (country < 11) --restrict
+Full data range: 1:01 - 125:26 (n = 3250)
+Current sample: 1:01 - 10:26 (n = 260)
+
+? levinlin 2 rgdppc
+
+Levin-Lin-Chu pooled ADF test for rgdppc
+test with constant including 2 lags of (1-L)rgdppc
+Bartlett truncation at 9 lags
+N,T = (10,26), using 230 observations
+
+coefficient    t-ratio      z-score
+    0.00174      0.084      2.81554 [0.9976]
+
+? levinlin {2,2,2,3,3,3,4,4,4,4} rgdppc
+
+Levin-Lin-Chu pooled ADF test for rgdppc
+test with constant including 3.10 lags of (1-L)rgdppc (average)
+Bartlett truncation at 8 lags
+N,T = (10,26), using 219 observations
+
+coefficient    t-ratio      z-score
+   0.014218      0.635      3.60264 [0.9998]
+
+Done

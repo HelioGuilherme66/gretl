@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run Percentage_data.inp
+ /home/cottrell/stats/test-gretl/importer/Percentage_data.inp
+? open Percentage_data.xls --sheet="1933"
+Excel 97 +
+rows=37, total cols=5, data cols=5
+found label strings in first imported column
+   first row label "Baker", last label "Yamhill"
+Listing 5 variables:
+  0) const                1) Repeal_18th_Yes      2) Repeal_18th_No     
+  3) Repeal_Prohib_Yes    4) Repeal_Prohib_No   
+
+? print -o
+
+             Repeal_18th_Yes    Repeal_18th_No Repeal_Prohib_Yes  Repeal_Prohib_No
+
+     Baker              2052               925              2159               903
+    Benton              1864              2143              1908              2187
+ Clackamas              7175              4059              7738              3984
+   Clatsop              3151              1136              3314              1143
+  Columbia              2348              1201              2408              1159
+      Coos              3213              1745              3384              1677
+     Crook               487               338               530               310
+     Curry               536               264               596               230
+ Deschutes              1656               753              1748               729
+   Douglas              2619              2609              2756              2574
+   Gilliam               424               225               463               212
+     Grant               680               409               728               374
+    Harney               680               183               713               170
+Hood River              1066               878              1088               900
+   Jackson              3702              2759              3949              2801
+ Jefferson               254               232               277               246
+ Josephine              1612              1186              1639              1136
+   Klamath              2988              1064              3334              1030
+      Lake               698               231               752               236
+      Lane              6283              5555              6732              5708
+   Lincoln              1380               821              1479               810
+      Linn              2876              3577              3115              3578
+   Malheur               963               767              1027               716
+    Marion              9347              5921              9614              5925
+    Morrow               499               455               556               417
+ Multnomah             59853             19466             61428             19614
+      Polk              2122              1899              2277              1853
+   Sherman               368               303               381               298
+ Tillamook              1534              1149              1718              1156
+  Umatilla              2550              2051              2766              2038
+     Union              1939              1294              2007              1319
+   Wallowa               753               638               772               625
+     Wasco              1654              1000              1756              1008
+Washington              4173              2538              4498              2581
+   Wheeler               308               196               322               187
+   Yamhill              2906              2884              3112              2911
+
+Done

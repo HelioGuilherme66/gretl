@@ -1,0 +1,102 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run scalevar.inp
+ /home/cottrell/stats/test-gretl/scalevar.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? ols 1 0 2
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+? modtest --white
+
+White's test for heteroskedasticity
+OLS, using observations 1-14
+Dependent variable: uhat^2
+
+               coefficient      std. error     t-ratio    p-value
+  ---------------------------------------------------------------
+  const      -3105.45          7049.97         -0.4405    0.6681 
+  sqft           2.60612          7.23399       0.3603    0.7255 
+  sq_sqft       -0.000143731      0.00175022   -0.08212   0.9360 
+
+  Unadjusted R-squared = 0.263367
+
+Test statistic: TR^2 = 3.687134,
+with p-value = P(Chi-square(2) > 3.687134) = 0.158252
+
+? genr psmall = price/1000000
+Generated series psmall (ID 5)
+? ols psmall 0 2
+
+Model 2: OLS, using observations 1-14
+Dependent variable: psmall
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      5.23509e-05   3.72855e-05    1.404    0.1857  
+  sqft       1.38750e-07   1.87329e-08    7.407    8.20e-06 ***
+
+Mean dependent var   0.000317   S.D. dependent var   0.000088
+Sum squared resid    1.83e-08   S.E. of regression   0.000039
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood       123.3329   Akaike criterion    -242.6659
+Schwarz criterion   -241.3878   Hannan-Quinn        -242.7842
+
+? modtest --white
+
+White's test for heteroskedasticity
+OLS, using observations 1-14
+Dependent variable: uhat^2
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const      -3.10545e-09   7.04997e-09   -0.4405    0.6681 
+  sqft        2.60612e-12   7.23399e-12    0.3603    0.7255 
+  sq_sqft     0.00000       0.00000       -0.08212   0.9360 
+
+  Unadjusted R-squared = 0.263367
+
+Test statistic: TR^2 = 3.687134,
+with p-value = P(Chi-square(2) > 3.687134) = 0.158252
+
+? genr test = 3 * price
+Generated series test (ID 6)
+? ols price 0 test
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      -1.09383e-12    0.00000       NA        NA   
+  test        0.333333       0.00000       NA        NA   
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    0.000000   S.E. of regression   0.000000
+R-squared            1.000000   Adjusted R-squared   1.000000
+
+Done

@@ -1,0 +1,17 @@
+set echo off
+set messages off
+
+scalar m = 2
+scalar n = 3
+scalar r = 32
+
+matrix A = ones(n,m) * -1.96
+matrix B = ones(n,m) * 1.96
+matrix C = I(m)
+matrix U = halton(m,r)
+matrix dP
+printf "P = \n%g\n", ghk(C, A, B, U, &dP)
+print dP
+
+eval 0.95^2
+eval 0.95 * dnorm(1.96)

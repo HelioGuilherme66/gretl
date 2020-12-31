@@ -1,0 +1,39 @@
+set messages off
+set echo off
+
+x = 2
+matrix X = x
+matrix Y = x * ones(1,3)
+s = seq(1,3)
+M = mshape(seq(1,6),2,3)
+
+# Problem 1
+a = x + s
+b = X .+ s
+c = Y .+ s
+d = x + M
+e = X .+ M
+f = Y .+ M
+
+a
+b
+c
+d
+e
+f
+
+# Problem 2
+p = x * s
+P = X .* s
+Q = Y .* s
+
+p
+P
+Q
+
+# Problem 3
+P = X .^ s
+Q = Y .^ s
+
+P
+Q

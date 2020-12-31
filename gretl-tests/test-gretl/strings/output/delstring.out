@@ -1,0 +1,22 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run delstring.inp
+ /home/cottrell/stats/test-gretl/strings/delstring.inp
+? nulldata 4
+periodicity: 1, maxobs: 4
+observations range: 1 to 4
+? string s1 = "foo"
+Generated string s1
+? string s2 = "bar"
+Generated string s2
+? string s3 = "baz"
+Generated string s3
+? delete s2
+Deleted s2
+? s1
+foo
+? s3
+baz
+Done
