@@ -1,0 +1,27 @@
+proc ACF2PACF corr pcorr
+type series corr *pcorr
+*
+local symm s
+local rect a
+*
+local integer m i j startl endl
+local real y
+*
+inquire(series=corr) startl endl
+compute m=endl-1
+dim s(m,m)
+ewise s(i,j)=corr(1+%iabs(i-j))
+compute a=inv(%decomp(s))
+set pcorr 1 m+1 = 0.0
+*
+compute pcorr(1)=1.0,pcorr(2)=corr(2)
+*
+do i=2,m
+   compute y=0.0
+   do j=1,i
+      compute y=y+a(i,j)*corr(j+1)
+   end do j
+   compute pcorr(i+1)=y*a(i,i)
+end do i
+end
+

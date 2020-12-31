@@ -1,0 +1,165 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-7.inp
+ /opt/esl/share/gretl/scripts/ps6-7.inp
+# PS6.7 for Example 6.5
+? open data6-4
+
+Read datafile /opt/esl/share/gretl/data/data6-4.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 5 variables:
+  0) const    1) WAGE     2) EDUC     3) EXPER    4) AGE    
+
+? logs WAGE
+Listing 6 variables:
+  0) const     1) WAGE      2) EDUC      3) EXPER     4) AGE     
+  5) l_WAGE  
+
+? square EDUC EXPER AGE
+Listing 9 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) l_WAGE      6) sq_EDUC     7) sq_EXPER    8) sq_AGE    
+
+? ols l_WAGE const EDUC EXPER AGE sq_EDUC sq_EXPER sq_AGE
+
+Model 1: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       7.32932       0.809178       9.058     1.98e-11 ***
+  EDUC       -0.0930409     0.0863849     -1.077     0.2876  
+  EXPER       0.0138633     0.0244844      0.5662    0.5743  
+  AGE        -0.000426069   0.0338212     -0.01260   0.9900  
+  sq_EDUC     0.0115248     0.00627372     1.837     0.0733   *
+  sq_EXPER    0.000429261   0.00111872     0.3837    0.7031  
+  sq_AGE      2.11475e-05   0.000381367    0.05545   0.9560  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.907844   S.E. of regression   0.263124
+R-squared            0.380615   Adjusted R-squared   0.292131
+F(6, 42)             4.301529   P-value(F)           0.001816
+Log-likelihood      -0.329981   Akaike criterion     14.65996
+Schwarz criterion    27.90271   Hannan-Quinn         19.68424
+
+Log-likelihood for WAGE = -365.623
+
+Excluding the constant, p-value was highest for variable 4 (AGE)
+
+? omit AGE
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for AGE
+  Test statistic: F(1, 42) = 0.000158702, p-value 0.990008
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       7.31985       0.295150      24.80     4.20e-27 ***
+  EDUC       -0.0928707     0.0843241     -1.101    0.2769  
+  EXPER       0.0138864     0.0241304      0.5755   0.5680  
+  sq_EDUC     0.0115115     0.00611219     1.883    0.0664   *
+  sq_EXPER    0.000427626   0.00109817     0.3894   0.6989  
+  sq_AGE      1.63777e-05   4.50968e-05    0.3632   0.7183  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.907855   S.E. of regression   0.260047
+R-squared            0.380612   Adjusted R-squared   0.308591
+F(5, 43)             5.284683   P-value(F)           0.000718
+Log-likelihood      -0.330074   Akaike criterion     12.66015
+Schwarz criterion    24.01107   Hannan-Quinn         16.96667
+
+Log-likelihood for WAGE = -365.623
+
+Excluding the constant, p-value was highest for variable 8 (sq_AGE)
+
+? omit sq_AGE
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for sq_AGE
+  Test statistic: F(1, 43) = 0.13189, p-value 0.718259
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient    std. error   t-ratio   p-value 
+  ---------------------------------------------------------
+  const       7.33001       0.290909     25.20     8.87e-28 ***
+  EDUC       -0.0882585     0.0825358    -1.069    0.2907  
+  EXPER       0.0148466     0.0237473     0.6252   0.5351  
+  sq_EDUC     0.0111537     0.00597248    1.868    0.0685   *
+  sq_EXPER    0.000424207   0.00108724    0.3902   0.6983  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.916774   S.E. of regression   0.257469
+R-squared            0.378713   Adjusted R-squared   0.322232
+F(4, 44)             6.705173   P-value(F)           0.000264
+Log-likelihood      -0.405106   Akaike criterion     10.81021
+Schwarz criterion    20.26931   Hannan-Quinn         14.39898
+
+Log-likelihood for WAGE = -365.698
+
+Excluding the constant, p-value was highest for variable 7 (sq_EXPER)
+
+? omit sq_EXPER
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for sq_EXPER
+  Test statistic: F(1, 44) = 0.15223, p-value 0.698295
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.28680      0.266457     27.35     1.12e-29 ***
+  EDUC       -0.0859429    0.0815430    -1.054    0.2975  
+  EXPER       0.0237915    0.00613388    3.879    0.0003   ***
+  sq_EDUC     0.0111344    0.00591575    1.882    0.0663   *
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.926865   S.E. of regression   0.255032
+R-squared            0.376563   Adjusted R-squared   0.335001
+F(3, 45)             9.060174   P-value(F)           0.000083
+Log-likelihood      -0.489724   Akaike criterion     8.979448
+Schwarz criterion    16.54673   Hannan-Quinn         11.85046
+
+Log-likelihood for WAGE = -365.782
+
+Excluding the constant, p-value was highest for variable 2 (EDUC)
+
+? omit EDUC
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for EDUC
+  Test statistic: F(1, 45) = 1.11083, p-value 0.297528
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      7.02337       0.0924574    75.96     5.32e-50 ***
+  EXPER      0.0236809     0.00614037    3.857    0.0004   ***
+  sq_EDUC    0.00502251    0.00117100    4.289    9.11e-05 ***
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.999115   S.E. of regression   0.255339
+R-squared            0.361174   Adjusted R-squared   0.333398
+F(2, 46)             13.00352   P-value(F)           0.000033
+Log-likelihood      -1.087164   Akaike criterion     8.174328
+Schwarz criterion    13.84979   Hannan-Quinn         10.32759
+
+Log-likelihood for WAGE = -366.38
+
+Done

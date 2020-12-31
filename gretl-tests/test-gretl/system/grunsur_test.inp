@@ -1,0 +1,9 @@
+open grun.txt
+system method=SUR
+  equation ige 0 fge kge
+  equation iwh 0 fwh kwh
+end system
+system method=SUR
+  equation ige 0 fge kge
+  equation iwh 0 fwh kwh
+end system --iterate --verbose

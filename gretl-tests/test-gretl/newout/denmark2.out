@@ -1,0 +1,269 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run denmark2.inp
+ /home/cottrell/stats/test-gretl/denmark2.inp
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? genr dummy
+Periodic dummy variables generated.
+# reproduce results form J.'s book (pp. 25-29)
+# this is ok
+? var 2 LRM LRY IBO IDE ; const dq1 dq2 dq3
+
+VAR system, lag order 2
+OLS estimates, observations 1974:3-1987:3 (T = 53)
+Log-likelihood = 678.64385
+Determinant of covariance matrix = 8.8749845e-17
+AIC = -23.7979
+BIC = -22.0135
+HQC = -23.1117
+Portmanteau test: LB(13) = 197.625, df = 176 [0.1264]
+
+Equation 1: LRM
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       1.61089      0.547109      2.944     0.0053   ***
+  LRM_1       1.01423      0.201655      5.030     1.02e-05 ***
+  LRM_2      -0.194958     0.176615     -1.104     0.2761  
+  LRY_1       0.0137526    0.166549      0.08257   0.9346  
+  LRY_2       0.0960157    0.157827      0.6084    0.5463  
+  IBO_1      -1.18015      0.393173     -3.002     0.0046   ***
+  IBO_2       0.138489     0.436917      0.3170    0.7529  
+  IDE_1       0.176409     0.598347      0.2948    0.7696  
+  IDE_2       0.461713     0.576711      0.8006    0.4280  
+  dq1        -0.0559173    0.0105633    -5.294     4.34e-06 ***
+  dq2        -0.0164579    0.00942639   -1.746     0.0883   *
+  dq3        -0.0394795    0.00896104   -4.406     7.40e-05 ***
+
+Mean dependent var   11.75954   S.D. dependent var   0.152837
+Sum squared resid    0.019213   S.E. of regression   0.021648
+R-squared            0.984182   Adjusted R-squared   0.979939
+F(11, 41)            231.9129   P-value(F)           3.02e-33
+rho                 -0.044855   Durbin-Watson        2.071973
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(2, 41) =   42.803 [0.0000]
+All lags of LRY              F(2, 41) =  0.47760 [0.6237]
+All lags of IBO              F(2, 41) =   6.7126 [0.0030]
+All lags of IDE              F(2, 41) =   1.1377 [0.3305]
+All vars, lag 2              F(4, 41) =  0.93514 [0.4532]
+
+Equation 2: LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.382265     0.560677     -0.6818   0.4992 
+  LRM_1       0.689838     0.206656      3.338    0.0018  ***
+  LRM_2      -0.504019     0.180994     -2.785    0.0081  ***
+  LRY_1       0.646384     0.170679      3.787    0.0005  ***
+  LRY_2       0.0445609    0.161741      0.2755   0.7843 
+  IBO_1       0.280519     0.402923      0.6962   0.4902 
+  IBO_2       0.377122     0.447752      0.8423   0.4045 
+  IDE_1      -0.587402     0.613185     -0.9580   0.3437 
+  IDE_2      -0.0602769    0.591012     -0.1020   0.9193 
+  dq1        -0.0251214    0.0108253    -2.321    0.0254  **
+  dq2         0.00733870   0.00966016    0.7597   0.4518 
+  dq3        -0.0113687    0.00918326   -1.238    0.2228 
+
+Mean dependent var   5.954790   S.D. dependent var   0.072985
+Sum squared resid    0.020178   S.E. of regression   0.022184
+R-squared            0.927153   Adjusted R-squared   0.907609
+F(11, 41)            47.43884   P-value(F)           9.24e-20
+rho                  0.004637   Durbin-Watson        1.962760
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(2, 41) =   5.6895 [0.0066]
+All lags of LRY              F(2, 41) =   16.914 [0.0000]
+All lags of IBO              F(2, 41) =   1.6571 [0.2032]
+All lags of IDE              F(2, 41) =   1.1365 [0.3308]
+All vars, lag 2              F(4, 41) =   3.3790 [0.0177]
+
+Equation 3: IBO
+
+             coefficient    std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const      -0.0671938     0.217670     -0.3087    0.7591  
+  LRM_1       0.0654218     0.0802292     0.8154    0.4195  
+  LRM_2      -0.0509340     0.0702669    -0.7249    0.4727  
+  LRY_1       0.117927      0.0662621     1.780     0.0825   *
+  LRY_2      -0.135637      0.0627923    -2.160     0.0367   **
+  IBO_1       1.38257       0.156425      8.839     4.83e-11 ***
+  IBO_2      -0.300986      0.173829     -1.732     0.0909   *
+  IDE_1       0.0858928     0.238055      0.3608    0.7201  
+  IDE_2      -0.253248      0.229447     -1.104     0.2761  
+  dq1        -6.88958e-05   0.00420266   -0.01639   0.9870  
+  dq2         0.00739947    0.00375033    1.973     0.0553   *
+  dq3         0.00482686    0.00356519    1.354     0.1832  
+
+Mean dependent var   0.155979   S.D. dependent var   0.031239
+Sum squared resid    0.003041   S.E. of regression   0.008613
+R-squared            0.940068   Adjusted R-squared   0.923989
+F(11, 41)            58.46461   P-value(F)           1.80e-21
+rho                  0.164639   Durbin-Watson        1.640559
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(2, 41) =  0.33262 [0.7190]
+All lags of LRY              F(2, 41) =   2.3792 [0.1053]
+All lags of IBO              F(2, 41) =   52.302 [0.0000]
+All lags of IDE              F(2, 41) =  0.81667 [0.4490]
+All vars, lag 2              F(4, 41) =   3.6647 [0.0122]
+
+Equation 4: IDE
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      -0.0692162    0.138044     -0.5014    0.6188  
+  LRM_1       0.0650007    0.0508806     1.278     0.2086  
+  LRM_2      -0.0686780    0.0445625    -1.541     0.1310  
+  LRY_1      -0.00160614   0.0420228    -0.03822   0.9697  
+  LRY_2       0.0217442    0.0398222     0.5460    0.5880  
+  IBO_1       0.370309     0.0992034     3.733     0.0006   ***
+  IBO_2      -0.227189     0.110241     -2.061     0.0457   **
+  IDE_1       0.950624     0.150972      6.297     1.64e-07 ***
+  IDE_2      -0.264860     0.145513     -1.820     0.0760   *
+  dq1        -0.00418900   0.00266529   -1.572     0.1237  
+  dq2        -0.00108693   0.00237842   -0.4570    0.6501  
+  dq3        -0.00273040   0.00226101   -1.208     0.2341  
+
+Mean dependent var   0.090263   S.D. dependent var   0.014380
+Sum squared resid    0.001223   S.E. of regression   0.005462
+R-squared            0.886239   Adjusted R-squared   0.855717
+F(11, 41)            29.03673   P-value(F)           7.09e-16
+rho                 -0.039959   Durbin-Watson        2.069829
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(2, 41) =   1.2171 [0.3066]
+All lags of LRY              F(2, 41) =  0.28578 [0.7529]
+All lags of IBO              F(2, 41) =   7.0633 [0.0023]
+All lags of IDE              F(2, 41) =   27.916 [0.0000]
+All vars, lag 2              F(4, 41) =   3.1155 [0.0251]
+
+For the system as a whole:
+
+  Null hypothesis: the longest lag is 1
+  Alternative hypothesis: the longest lag is 2
+  Likelihood ratio test: Chi-square(16) = 44.4784 [0.0002]
+
+  Comparison of information criteria:
+  Lag order 2: AIC = -23.7979, BIC = -22.0135, HQC = -23.1117
+  Lag order 1: AIC = -23.5624, BIC = -22.3728, HQC = -23.1050
+
+# reproduce results form J.'s book (p. 113)
+? coint2 2 LRM LRY IBO IDE --rc --seasonals --verbose
+
+Johansen test:
+Number of equations = 4
+Lag order = 2
+Estimation period: 1974:3 - 1987:3 (T = 53)
+
+Coefficients, VAR in differences (7 x 4)
+
+     0.45614      0.49822     0.036303     0.034633 
+    -0.14649     -0.14162      0.14447     0.018050 
+    -0.73773     0.086189      0.38659      0.36129 
+    -0.24998     -0.40980      0.15798      0.15390 
+   -0.068010    -0.021232   0.00072720   -0.0033995 
+  -0.0094107    0.0041184    0.0068716   -0.0021301 
+   -0.042834    -0.012016    0.0048416   -0.0026118 
+
+Coefficients, eqns in lagged levels (7 x 5)
+
+      149.86       75.206       1.3819      0.95116       12.586 
+     -24.528      -11.872     -0.29399     -0.25878      -2.0982 
+      39.246       19.422      0.43671     -0.14533       3.1015 
+      168.74       86.207       2.1657       1.6780       14.170 
+     -5.0734      -2.5610    -0.051371    -0.033273     -0.42970 
+      2.8566       1.4360     0.020828     0.017538      0.23766 
+     -1.4678     -0.73517    -0.013549   -0.0083170     -0.12429 
+
+Sample variance-covariance matrices for residuals
+
+ VAR system in first differences (S00)
+
+  0.00047987  0.00017524 -7.5229e-05 -4.2072e-05
+  0.00017524  0.00045059 -6.6304e-06 -2.0351e-05
+ -7.5229e-05 -6.6304e-06  6.1568e-05  1.1929e-05
+ -4.2072e-05 -2.0351e-05  1.1929e-05  2.9252e-05
+
+ System with levels as dependent variable (S11)
+
+      126.43      64.065      1.7395     0.99226      10.769
+      64.065      32.465     0.88200     0.50299      5.4571
+      1.7395     0.88200    0.024681    0.013941     0.14844
+     0.99226     0.50299    0.013941   0.0079498    0.084622
+      10.769      5.4571     0.14844    0.084622     0.91741
+
+ Cross-products (S01)
+
+    0.050707    0.025575  0.00060109  0.00038206   0.0043316
+ -0.00081338 -0.00058464  1.8259e-05 -1.5028e-05 -4.7733e-05
+   -0.017963  -0.0091167 -0.00026187 -0.00015419  -0.0015359
+  -0.0045432  -0.0022647 -5.5107e-05 -4.9006e-05 -0.00038699
+
+Case 2: Restricted constant
+
+Log-likelihood = 829.051 (including constant term: 678.644)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.43317     49.144 [0.1284]     30.087 [0.0286]
+   1    0.17758     19.057 [0.7812]     10.362 [0.8017]
+   2    0.11279     8.6950 [0.7645]     6.3427 [0.7483]
+   3   0.043411     2.3522 [0.7088]     2.3522 [0.7076]
+
+Corrected for sample size (df = 41)
+Rank Trace test p-value
+   0     49.144 [0.2018]
+   1     19.057 [0.8197]
+   2     8.6950 [0.7816]
+   3     2.3522 [0.7095]
+
+eigenvalue     0.43317      0.17758      0.11279     0.043411 
+
+beta (cointegrating vectors)
+LRM             21.974      -14.656       7.9465      -1.0245 
+LRY            -22.698       20.051      -25.641       1.9298 
+IBO             114.42      -3.5611       4.2775      -24.997 
+IDE            -92.640      -100.26      -44.877       14.648 
+const          -133.16       62.593       62.749       2.3187 
+
+alpha (adjustment vectors)
+LRM         -0.0096912   0.00032853    0.0044058   -0.0019804 
+LRY          0.0052344   -0.0013476    0.0062843   -0.0010821 
+IBO          0.0010548   0.00072298   0.00043797    0.0015361 
+IDE          0.0013384    0.0020626  -0.00035380   4.6536e-05 
+
+renormalized beta
+LRM             1.0000     -0.73094       1.8578    -0.069940 
+LRY            -1.0329       1.0000      -5.9943      0.13174 
+IBO             5.2069     -0.17761       1.0000      -1.7065 
+IDE            -4.2159      -5.0004      -10.491       1.0000 
+const          -6.0599       3.1217       14.670      0.15829 
+
+renormalized alpha
+LRM           -0.21295    0.0065874     0.018846    -0.029009 
+LRY            0.11502    -0.027020     0.026881    -0.015852 
+IBO           0.023177     0.014496    0.0018734     0.022501 
+IDE           0.029411     0.041357   -0.0015134   0.00068168 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.18073      0.10977      -1.0417      0.63812       1.5829 
+LRY            0.18582     -0.30905      0.65764     -0.64768     -0.38955 
+IBO           0.014488    -0.017710     0.081582     -0.16735    -0.064154 
+IDE         -0.0036773     0.020138      0.14312     -0.31424    -0.071218 
+
+Done

@@ -1,0 +1,34 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run ustemp.inp
+ /home/cottrell/stats/test-gretl/importer/ustemp.inp
+? open USTemperature.csv
+parsing /home/cottrell/stats/test-gretl/importer/USTemperature.csv...
+using delimiter '	'
+   longest line: 100 characters
+   first field: 'Date'
+   seems to be observation label
+   number of columns = 2
+   number of variables: 1
+   number of non-blank lines: 1434
+scanning for variable names...
+   line: Date	US48Temp
+scanning for row labels and data...
+   first row label "01/01/1895", last label "01/05/2014"
+trying to parse row labels as dates...
+Trying date order DDMMYYYY
+Could be 1895-01-01 - 2014-05-01
+Observations: 1433; days in sample: 43585
+Probably monthly data
+   1895: probably a year... month 01?
+taking date information from row labels
+
+Listing 2 variables:
+  0) const       1) US48Temp  
+
+? smpl
+Full data range: 1895:01 - 2014:05 (n = 1433)
+
+Done

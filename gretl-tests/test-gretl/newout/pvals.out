@@ -1,0 +1,80 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run pvals.inp
+ /home/cottrell/stats/test-gretl/pvals.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+# t distribution
+? pvalue t 100 -9.7
+t(100): area to the right of -9.7 =~ 1
+(to the left: 2.25155e-16)
+(two-tailed value = 4.50309e-16; complement = 1)
+? pvalue t 100 -9.8
+t(100): area to the right of -9.8 =~ 1
+(to the left: 1.35896e-16)
+(two-tailed value = 2.71793e-16; complement = 1)
+? pvalue t 100 -9.9
+t(100): area to the right of -9.9 =~ 1
+(to the left: 8.20226e-17)
+(two-tailed value = 1.64045e-16; complement = 1)
+? pvalue t 100 -10.0
+t(100): area to the right of -10 =~ 1
+(to the left: 4.95084e-17)
+(two-tailed value = 9.90169e-17; complement = 1)
+? pvalue t 100 -10.1
+t(100): area to the right of -10.1 =~ 1
+(to the left: 2.98859e-17)
+(two-tailed value = 5.97717e-17; complement = 1)
+? pvalue t 100 -10.2
+t(100): area to the right of -10.2 =~ 1
+(to the left: 1.80432e-17)
+(two-tailed value = 3.60864e-17; complement = 1)
+? pvalue t 30 2.5
+t(30): area to the right of 2.5 = 0.00905782
+(two-tailed value = 0.0181156; complement = 0.981884)
+# chi-square distribution
+? pvalue X 5 0.0001
+Chi-square(5): area to the right of 0.0001 =~ 1
+(to the left: 5.31904e-12)
+? pvalue X 5 0.001
+Chi-square(5): area to the right of 0.001 =~ 1
+(to the left: 1.68149e-09)
+? pvalue X 50 0.999
+Chi-square(50): area to the right of 0.999 =~ 1
+(to the left: 1.15939e-33)
+? pvalue X 50 0.99
+Chi-square(50): area to the right of 0.99 =~ 1
+(to the left: 9.28647e-34)
+? pvalue X 50 0.9
+Chi-square(50): area to the right of 0.9 =~ 1
+(to the left: 8.94977e-35)
+? pvalue X 100 0.999
+Chi-square(100): area to the right of 0.999 =~ 1
+(to the left: 1.70233e-80)
+? pvalue X 100 0.99
+Chi-square(100): area to the right of 0.99 =~ 1
+(to the left: 1.08754e-80)
+? pvalue X 100 0.9
+Chi-square(100): area to the right of 0.9 =~ 1
+(to the left: 9.68204e-83)
+# funky tests
+? genr x = pvalue(X,5,.0001)
+Generated scalar x = 1
+? genr y = 1 - x
+Generated scalar y = 5.31908e-12
+? genr x = pvalue(X,5,.001)
+Replaced scalar x = 1
+? genr y = 1 - x
+Replaced scalar y = 1.68149e-09
+? genr x = pvalue(X,50,.999)
+Replaced scalar x = 1
+? genr y = 1 - x
+Replaced scalar y = 0
+? genr x = pvalue(X,50,.99)
+Replaced scalar x = 1
+? genr x = pvalue(X,50,.9)
+Replaced scalar x = 1
+Done

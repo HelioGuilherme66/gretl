@@ -1,0 +1,4 @@
+open nomissdata.csv -q
+setobs ind year --panel
+dpanel {2} ; y --dpdstyle
+dpanel {1, 3} ; y --dpdstyle

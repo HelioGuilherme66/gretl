@@ -1,0 +1,13 @@
+nulldata 500
+setobs 12 1950:01
+set seed 43337
+genr eps = normal()
+genr time
+genr u = eps + .4 * eps(-1)
+genr y = 0.1*time + u
+arma 0 1 ; y time 
+
+
+
+
+

@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run project.inp
+ /home/cottrell/stats/test-gretl/matrix/project.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = { sqft, const }
+Generated matrix X
+? matrix y = price
+Generated matrix y
+? matrix b = inv(X'*X) * X'*y
+Generated matrix b
+? matrix F = X*b
+Generated matrix F
+# create projection matrix
+? matrix P = X*inv(X'*X)*X'
+Generated matrix P
+? matrix F1 = P*y
+Generated matrix F1
+# this matrix is idempotent...
+? matrix F2 = P*F1
+Generated matrix F2
+? series s0 = F
+Generated series s0 (ID 5)
+? series s1 = F1
+Generated series s1 (ID 6)
+? series s2 = F2
+Generated series s2 (ID 7)
+? print s0 s1 s2 --byobs
+
+             s0           s1           s2
+
+ 1     200.1200     200.1200     200.1200
+ 2     226.3438     226.3438     226.3438
+ 3     232.7263     232.7263     232.7263
+ 4     271.1602     271.1602     271.1602
+ 5     274.3514     274.3514     274.3514
+ 6     295.1640     295.1640     295.1640
+ 7     302.1015     302.1015     302.1015
+ 8     311.8140     311.8140     311.8140
+ 9     320.8328     320.8328     320.8328
+10     322.6365     322.6365     322.6365
+11     365.0941     365.0941     365.0941
+12     413.1017     413.1017     413.1017
+13     440.8518     440.8518     440.8518
+14     468.6019     468.6019     468.6019
+
+Done

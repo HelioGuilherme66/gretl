@@ -1,0 +1,42 @@
+(*
+File Name:     PiDigits.dat
+
+File Format:   ASCII
+               Header          : lines  1 to   60     (=   60)
+               Certified Values: lines 41 to   43     (=    3)
+               Data            : lines 61 to 5060     (= 5000)
+
+Dataset Name:  PiDigits
+
+Description:   This is a constructed/fabricated data set
+               to test accuracy in summary statistic calculations.
+               The numbers are the first 5000 digits of the
+               mathematical constant pi (= 3.1415926535897932384...).
+
+Stat Category: Univariate
+
+Reference:     Mathematics of Computation.
+               January 1962, page 76.
+
+Data:          Constructed Variable
+               -->    1 Response           : y = pi digits
+               -->    0 Predictors
+               --> 5000 Observations
+
+Model:         Lower Level of Difficulty
+               -->    2 Parameters         : mu, sigma
+               -->    1 Response  Variable : y
+               -->    0 Predictor Variables
+
+               y    = mu + e
+
+Sample Mean                                ybar:  4.53480000000000
+Sample Standard Deviation (denom. = n-1)      s:  2.86733906028871
+Sample Autocorrelation Coefficient (lag 1) r(1): -0.00355099287237972
+
+Number of Observations:                           5000
+*)
+Y ;
+1 1 5000
+BYOBS
+

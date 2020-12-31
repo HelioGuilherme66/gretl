@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run Mavro.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/Mavro.inp
+? open Mavro.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/Mavro.hdr
+periodicity: 1, maxobs: 50,
+observations range: 1-50
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/Mavro.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+              Summary Statistics, using the observations 1 - 50
+                 for the variable 'Y' (50 valid observations)
+
+  Mean                     2.0019    
+  Median                   2.0018    
+  Minimum                  2.0013    
+  Maximum                  2.0027    
+  Standard deviation       0.00042912
+  C.V.                     0.00021436
+  Skewness                 0.62542   
+  Ex. kurtosis            -0.85838   
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = 0.954329
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = 2.00186
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 0.000429123
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 9.0232e-06
+? smpl 2
+Full data range: 1 - 50 (n = 50)
+Current sample:  2 - 50 (n = 49)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = 8.46366e-06
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = 0.937989
+ybar  = 2.001856
+ysd   = 0.000429123454003
+r1    = 0.954329421408
+rnist = 0.937989183438
+Done

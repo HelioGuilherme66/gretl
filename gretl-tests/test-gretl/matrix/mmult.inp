@@ -1,0 +1,15 @@
+set seed 1234
+matrix A = mnormal(6,6)
+matrix B = muniform(6,6)
+C = A*B
+C
+C = A'B
+C
+C = A*B'
+C
+C = A*A'
+C
+C = A'A
+C
+
+

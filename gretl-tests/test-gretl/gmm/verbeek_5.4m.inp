@@ -1,0 +1,31 @@
+open pricing.gdt
+set force_hc on
+
+matrix R = zeros($nobs, 11)
+R[,1] = 1 + rf
+loop j=1..10 --quiet
+  R[,j+1] = rf - r$j
+endloop
+
+scalar delta=0.5
+scalar gamma=0.5
+
+matrix E = {delta * cons^(-gamma)} .* R
+matrix V0 = I(11)
+
+gmm 
+    E = {delta * cons^(-gamma)} .* R
+    E[,1] -= 1
+    orthog E ; const
+    weights V0
+    params delta gamma
+end gmm
+
+gmm 
+    E = {delta * cons^(-gamma)} .* R
+    E[,1] -= 1
+    orthog E ; const
+    weights V0
+    params delta gamma
+end gmm --iterate
+

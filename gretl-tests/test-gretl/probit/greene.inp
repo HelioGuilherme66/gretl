@@ -1,0 +1,19 @@
+# logit and probit examples from William Greene
+
+open greene19_1.gdt
+logit GRADE 0 GPA TUCE PSI -o
+logit GRADE 0 GPA TUCE PSI -or
+probit GRADE 0 GPA TUCE PSI -o
+probit GRADE 0 GPA TUCE PSI -or
+
+GRADE[16] = NA
+logit GRADE 0 GPA TUCE PSI
+probit GRADE 0 GPA TUCE PSI
+
+open greene22_2.gdt
+genr Ydum = Y > 0
+probit Ydum 0 Z2 Z3 Z5 Z7 Z8
+probit Ydum 0 Z2 Z3 Z5 Z7 Z8 -r
+
+
+

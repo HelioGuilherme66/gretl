@@ -1,0 +1,149 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps4-2.inp
+ /opt/esl/share/gretl/scripts/ps4-2.inp
+# PS4.2, to verify Examples 4.9, 4.10, and 4.11, Sec. 4.4
+? open data4-2
+
+Read datafile /opt/esl/share/gretl/data/data4-2.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 6 variables:
+  0) const     1) YEAR      2) Ct        3) Yt        4) WAGES   
+  5) PRDEFL  
+
+? genr Wt=WAGES*100/PRDEFL
+Generated series Wt (ID 6)
+# compute aggregate profits
+? genr Pt=Yt-Wt
+Generated series Pt (ID 7)
+? ols Ct 0 Wt Pt
+
+Model 1: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -222.158      19.5527      -11.36    6.03e-13 ***
+  Wt            0.693262    0.0326064    21.26    7.83e-21 ***
+  Pt            0.735916    0.0488218    15.07    2.34e-16 ***
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    38976.50   S.E. of regression   34.36722
+R-squared            0.998754   Adjusted R-squared   0.998679
+F(2, 33)             13230.34   P-value(F)           1.18e-48
+Log-likelihood      -176.8513   Akaike criterion     359.7026
+Schwarz criterion    364.4532   Hannan-Quinn         361.3607
+rho                  0.494451   Durbin-Watson        0.969426
+
+# retrieve ESS for unrestricted model
+? genr ESSU = $ess
+Generated scalar ESSU = 38976.5
+# retrieve d.f. for unrestricted model
+? genr DFU = $df
+Generated scalar DFU = 33
+# Use this and previous regression to calculate F in Example 4.8
+? ols Ct 0 Yt
+
+Model 2: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -221.425      19.2949       -11.48    3.07e-13 ***
+  Yt            0.710290    0.00431991   164.4     6.55e-51 ***
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    39304.51   S.E. of regression   34.00022
+R-squared            0.998744   Adjusted R-squared   0.998707
+F(1, 34)             27034.71   P-value(F)           6.55e-51
+Log-likelihood      -177.0022   Akaike criterion     358.0043
+Schwarz criterion    361.1713   Hannan-Quinn         359.1097
+rho                  0.506688   Durbin-Watson        0.938149
+
+# retrieve ESS for restricted model
+? genr ESSR = $ess
+Generated scalar ESSR = 39304.5
+# retrieve d.f. for restricted model
+? genr DFR = $df
+Generated scalar DFR = 34
+# compute number of restrictions
+? genr NR = DFR - DFU
+Generated scalar NR = 1
+# compute F-statistic for Example 4.9
+? genr Fc = (ESSR - ESSU)*DFU/(NR*ESSU)
+Generated scalar Fc = 0.277722
+? pvalue F NR DFU Fc
+F(1, 33): area to the right of 0.277722 = 0.601723
+(to the left: 0.398277)
+# This is for Example 4.10 -- see t-stat on Pt
+? ols Ct 0 Yt Pt
+
+Model 3: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient    std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const      -222.158       19.5527      -11.36     6.03e-13 ***
+  Yt            0.693262     0.0326064    21.26     7.83e-21 ***
+  Pt            0.0426543    0.0809388     0.5270   0.6017  
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    38976.50   S.E. of regression   34.36722
+R-squared            0.998754   Adjusted R-squared   0.998679
+F(2, 33)             13230.34   P-value(F)           1.18e-48
+Log-likelihood      -176.8513   Akaike criterion     359.7026
+Schwarz criterion    364.4532   Hannan-Quinn         361.3607
+rho                  0.494451   Durbin-Watson        0.969426
+
+# Example 4.11: -o shows variances and covariances
+? ols Ct 0 Wt Pt -o
+
+Model 4: OLS, using observations 1959-1994 (T = 36)
+Dependent variable: Ct
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -222.158      19.5527      -11.36    6.03e-13 ***
+  Wt            0.693262    0.0326064    21.26    7.83e-21 ***
+  Pt            0.735916    0.0488218    15.07    2.34e-16 ***
+
+Mean dependent var   2811.178   S.D. dependent var   945.5435
+Sum squared resid    38976.50   S.E. of regression   34.36722
+R-squared            0.998754   Adjusted R-squared   0.998679
+F(2, 33)             13230.34   P-value(F)           1.18e-48
+Log-likelihood      -176.8513   Akaike criterion     359.7026
+Schwarz criterion    364.4532   Hannan-Quinn         361.3607
+rho                  0.494451   Durbin-Watson        0.969426
+
+Covariance matrix of regression coefficients:
+
+         const            Wt            Pt
+       382.308    -0.0364456     -0.149065  const
+                  0.00106317   -0.00155217  Wt
+                                0.00238357  Pt
+
+# retrieve coefficient estimates
+? genr b1 = $coeff(Wt)
+Generated scalar b1 = 0.693262
+? genr b2 = $coeff(Pt)
+Generated scalar b2 = 0.735916
+# generate difference in estimated slopes
+? genr bdiff = b1-b2
+Generated scalar bdiff = -0.0426543
+# retrieve coefficient variances and covariance
+? genr tmp = $vcv(Wt,Wt) + $vcv(Pt,Pt) - (2*$vcv(Wt,Pt))
+Generated scalar tmp = 0.00655109
+? genr den = sqrt(tmp)
+Generated scalar den = 0.0809388
+? genr tdf = $df
+Generated scalar tdf = 33
+? genr tc = abs(bdiff/den)
+Generated scalar tc = 0.526994
+? pvalue t tdf tc
+t(33): area to the right of 0.526994 = 0.300861
+(two-tailed value = 0.601723; complement = 0.398277)
+Done

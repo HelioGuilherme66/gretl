@@ -1,0 +1,89 @@
+/*
+  compute the log probabilities for the plain Poisson model
+*/
+function series ln_poi_prob(series y, list X, matrix beta)
+    series xb = lincomb(X, beta)
+    series ret = -exp(xb) + y*xb - lngamma(y+1)
+    return ret
+end function  
+
+/*
+  compute the log probabilities for the zero-inflated Poisson model
+*/
+function series ln_zip_prob(series y, list X, matrix beta, scalar p0)
+    # check if the probability is in [0,1]; otherwise, return NA
+    if (p0>1) || (p0<0)
+        series ret = NA
+    else
+        series ret = ln_poi_prob(y, X, beta) + ln(1-p0)
+        series ret = (y=0) ? ln(p0 + exp(ret)) : ret
+    endif
+    return ret
+end function  
+
+/*
+  do the actual estimation (silently)
+*/
+function matrix zip_estimate(series y, list X)
+    # initialize alpha to a "sensible" value: half the frequency
+    # of zeros in the sample
+    scalar alpha = mean(y=0)/2
+    # initialize the coeffs (we assume the first explanatory 
+    # variable is the constant here)
+    matrix coef = zeros(nelem(X), 1)
+    coef[1] = mean(y) / (1-alpha)
+    # do the actual ML estimation
+    mle ll = ln_zip_prob(y, X, coef, alpha)
+        params alpha coef
+    end mle --hessian --quiet
+    matrix ret = $coeff ~ $vcv
+    return ret
+end function
+
+/*
+  user-level function: estimate the model and print out
+  the results
+*/
+function void zip(series y, list X)
+    matrix ret = zip_estimate(y, X)
+    matrix coef = ret[,1]
+    matrix vcv = ret[,2:cols(ret)]
+
+    printf "\nZero-inflated Poisson model:\n\n"
+    scalar c = coef[1]
+    scalar se = sqrt(vcv[1,1])
+    scalar zs = c/se
+    scalar pv = 2*pvalue(n, zs) 
+    printf "     alpha%9.4f%9.4f%8.3f%8.3f\n", c, se, zs, pv
+
+    string s
+    k = 2
+    loop foreach i X -q
+        sprintf s "$i"
+        scalar c = coef[k]
+        scalar se = sqrt(vcv[k,k])
+        scalar zs = c/se
+        scalar pv = 2*pvalue(n, zs) 
+        printf "%10s%9.4f%9.4f%8.3f%8.3f\n", s, c, se, zs, pv
+        k++
+    endloop
+end function
+
+set echo off
+set messages off
+
+# include the user-written functions
+# include zip_est.inp
+
+# generate the artificial data
+nulldata 1000
+set seed 732237
+scalar truep = 0.2
+scalar b0 = 0.2
+scalar b1 = 0.5
+series x = normal()
+series y = (uniform()<truep) ? 0 : randgen(P, exp(b0 + b1*x))
+list X = const x
+
+# estimate the zero-inflated Poisson model
+zip(y, X)

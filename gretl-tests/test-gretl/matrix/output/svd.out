@@ -1,0 +1,67 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run svd.inp
+ /home/cottrell/stats/test-gretl/matrix/svd.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = {const, sqft, bedrms, baths}
+Generated matrix X
+? X = X'X
+Replaced matrix X
+? matrix U
+? matrix V
+? matrix S = svd(X, &U, &V)
+Generated matrix S
+? U
+U (4 x 4)
+
+ -0.00048236      0.25263     0.078579     -0.96437 
+     -1.0000   -0.0021532  -0.00043410  -9.9238e-05 
+  -0.0017885      0.89923     -0.38699      0.20403 
+  -0.0011846      0.35716      0.91873      0.16842 
+
+? S
+S (1 x 4)
+
+  5.5463e+07       14.169      0.87104      0.19968 
+
+? V
+V (4 x 4)
+
+ -0.00048236      -1.0000   -0.0017885   -0.0011846 
+     0.25263   -0.0021532      0.89923      0.35716 
+    0.078579  -0.00043410     -0.38699      0.91873 
+    -0.96437  -9.9238e-05      0.20403      0.16842 
+
+? matrix B = I(cols(U))
+Generated matrix B
+? B[diag] = S
+Modified matrix B
+? matrix A = U*B*V
+Generated matrix A
+? A
+A (4 x 4)
+
+      14.000       26753.       51.000       33.000 
+      26753.   5.5463e+07       99193.       65700. 
+      51.000       99193.       189.00       121.75 
+      33.000       65700.       121.75       80.375 
+
+? X
+X (4 x 4)
+
+      14.000       26753.       51.000       33.000 
+      26753.   5.5463e+07       99193.       65700. 
+      51.000       99193.       189.00       121.75 
+      33.000       65700.       121.75       80.375 
+
+Done

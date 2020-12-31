@@ -1,0 +1,112 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run greene22_2.inp
+ /opt/esl/share/gretl/scripts/greene22_2.inp
+# Fair's extra-marital affairs data
+? open greene22_2.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene22_2.gdt
+periodicity: 1, maxobs: 601
+observations range: 1 to 601
+
+Listing 10 variables:
+  0) const    1) Y        2) Z1       3) Z2       4) Z3     
+  5) Z4       6) Z5       7) Z6       8) Z7       9) Z8     
+
+# initial OLS
+? ols Y 0 Z2 Z3 Z5 Z7 Z8
+
+Model 1: OLS, using observations 1-601
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       5.60816      0.796599      7.040    5.31e-12 ***
+  Z2         -0.0503473    0.0221058    -2.278    0.0231   **
+  Z3          0.161852     0.0368969     4.387    1.36e-05 ***
+  Z5         -0.476324     0.111308     -4.279    2.18e-05 ***
+  Z7          0.106006     0.0711007     1.491    0.1365  
+  Z8         -0.712242     0.118289     -6.021    3.03e-09 ***
+
+Mean dependent var   1.455907   S.D. dependent var   3.298758
+Sum squared resid    5671.094   S.E. of regression   3.087272
+R-squared            0.131410   Adjusted R-squared   0.124111
+F(5, 595)            18.00368   P-value(F)           1.20e-16
+Log-likelihood      -1527.267   Akaike criterion     3066.534
+Schwarz criterion    3092.926   Hannan-Quinn         3076.807
+
+Excluding the constant, p-value was highest for variable 8 (Z7)
+
+# Tobit version
+? tobit Y 0 Z2 Z3 Z5 Z7 Z8
+Gradient within tolerance (1e-07)
+Convergence achieved after 8 iterations
+
+Model 2: Tobit, using observations 1-601
+Dependent variable: Y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        8.17420     2.74145       2.982   0.0029   ***
+  Z2          -0.179333    0.0790932    -2.267   0.0234   **
+  Z3           0.554142    0.134518      4.119   3.80e-05 ***
+  Z5          -1.68622     0.403752     -4.176   2.96e-05 ***
+  Z7           0.326053    0.254425      1.282   0.2000  
+  Z8          -2.28497     0.407828     -5.603   2.11e-08 ***
+
+Chi-square(5)        67.70738   p-value              3.07e-13
+Log-likelihood      -705.5762   Akaike criterion     1425.152
+Schwarz criterion    1455.943   Hannan-Quinn         1437.138
+
+sigma = 8.24708 (0.553364)
+Left-censored observations: 451
+Right-censored observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 4.31149
+  with p-value = 0.115817
+
+# Probit version with dummified dependent variable
+? series Ydum = Y > 0
+Generated series Ydum (ID 10)
+? probit Ydum 0 Z2 Z3 Z5 Z7 Z8
+
+Model 3: Probit, using observations 1-601
+Dependent variable: Ydum
+Standard errors based on Hessian
+
+             coefficient   std. error     z         slope   
+  ----------------------------------------------------------
+  const       0.976665     0.361048      2.705              
+  Z2         -0.0220238    0.0101774    -2.164   -0.00669530
+  Z3          0.0599008    0.0170860     3.506    0.0182101 
+  Z5         -0.183646     0.0514932    -3.566   -0.0558291 
+  Z7          0.0375131    0.0328446     1.142    0.0114041 
+  Z8         -0.272982     0.0524733    -5.202   -0.0829876 
+
+Mean dependent var   0.249584   S.D. dependent var   0.433133
+McFadden R-squared   0.090003   Adjusted R-squared   0.072235
+Log-likelihood      -307.2955   Akaike criterion     626.5909
+Schwarz criterion    652.9825   Hannan-Quinn         636.8638
+
+Number of cases 'correctly predicted' = 457 (76.0%)
+f(beta'x) at mean of independent vars = 0.304
+Likelihood ratio test: Chi-square(5) = 60.7861 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  437    14
+         1  130    20
+
+Excluding the constant, p-value was highest for variable 8 (Z7)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.90639
+  with p-value = 0.233822
+
+Done

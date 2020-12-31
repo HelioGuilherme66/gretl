@@ -1,0 +1,345 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run tobit_mfx.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/tobit_mfx.gfn.inp
+? include ./tobit_mfx.gfn
+ /home/cottrell/stats/test-gretl/testgfn/tobit_mfx.gfn
+tobit_mfx 0.2, 2015-07-26 (Oleh Komashko)
+# for script to run
+# an user should install sample
+# data for  Introductory Econometrics by J. M. Wooldridge
+? open wooldridge/affairs.gdt -q
+Read datafile /opt/esl/share/gretl/data/wooldridge/affairs.gdt
+? list X = const male age yrsmarr relig occup ratemarr
+Generated list X
+## Marginal effects at means of the dasta
+# for Tobit I
+? bundle b1 = tobit_mfx(naffairs,X)
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+? tobit_mfx_print(&b1)
+
+Censored regression marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs*|naffairs > 0.0) = 1.1219
+
+                dp/dx        s.e.           z        pval        xbar
+    male      0.24561     0.24359      1.0083     0.31330     0.47587
+     age    -0.045320    0.018718     -2.4213    0.015467      32.488
+ yrsmarr      0.13431    0.031484      4.2660  1.9898e-05      8.1777
+   relig     -0.39501    0.093155     -4.2404  2.2314e-05      3.1165
+   occup     0.045929    0.066144     0.69437     0.48745      4.1947
+ratemarr     -0.53297    0.094673     -5.6295  1.8068e-08      3.9318
+
+# for orbitrary left censoring
+? bundle b2 = tobit_mfx(naffairs,X,1)
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2left (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+? tobit_mfx_print(&b2)
+
+Censored regression marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs*|naffairs > 1.0) = 1.7729
+
+                dp/dx        s.e.           z        pval        xbar
+    male     0.041683     0.19760     0.21094     0.83293     0.47587
+     age    -0.033734    0.015298     -2.2051    0.027448      32.488
+ yrsmarr      0.12192    0.026425      4.6137  3.9548e-06      8.1777
+   relig     -0.37315    0.079117     -4.7164  2.4004e-06      3.1165
+   occup     0.085038    0.055989      1.5188     0.12880      4.1947
+ratemarr     -0.43663    0.079087     -5.5209  3.3719e-08      3.9318
+
+# for arbitrary right censoring
+? bundle b3 = tobit_mfx(naffairs,X,NA,4)
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2right (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+? tobit_mfx_print(&b3)
+
+Censored regression marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs*|naffairs < 4.0) = 0.8125
+
+                dp/dx        s.e.           z        pval        xbar
+    male     0.059948     0.14252     0.42062     0.67403     0.47587
+     age    -0.026734    0.010927     -2.4467    0.014419      32.488
+ yrsmarr     0.079975    0.018112      4.4156  1.0072e-05      8.1777
+   relig     -0.23678    0.054104     -4.3764  1.2063e-05      3.1165
+   occup     0.051098    0.038313      1.3337     0.18230      4.1947
+ratemarr     -0.35755    0.057806     -6.1854  6.1947e-10      3.9318
+
+# for double censoring
+? bundle b4= tobit_mfx(naffairs,X,0,4)
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical result out of range
+In regard to function ln_tob_prob2both (package tobit_mfx):
+Warning: log: Numerical argument out of domain
+? tobit_mfx_print(&b4)
+
+Censored regression marginal effects
+(evaluated at means of regressors)
+
+note: dp/dx based on discrete change for male
+
+E(naffairs*|0.0 < naffairs < 4.0) = 0.6509
+
+                dp/dx        s.e.           z        pval        xbar
+    male      0.13313     0.12564      1.0596     0.28931     0.47587
+     age    -0.023656   0.0096892     -2.4415    0.014628      32.488
+ yrsmarr     0.068032    0.016231      4.1916  2.7698e-05      8.1777
+   relig     -0.19922    0.048129     -4.1394  3.4826e-05      3.1165
+   occup     0.023528    0.033695     0.69826     0.48502      4.1947
+ratemarr     -0.27116    0.048690     -5.5692  2.5594e-08      3.9318
+
+# tobit_dp_dx gives me at arbitrary point
+? tobit naffairs X
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 8 iterations
+
+Model 1: Tobit, using observations 1-601
+Dependent variable: naffairs
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        8.54185     2.77065       3.083    0.0020   ***
+  male         1.04923     1.04015       1.009    0.3131  
+  age         -0.194510    0.0806590    -2.412    0.0159   **
+  yrsmarr      0.576462    0.136695      4.217    2.47e-05 ***
+  relig       -1.69535     0.404142     -4.195    2.73e-05 ***
+  occup        0.197128    0.284833      0.6921   0.4889  
+  ratemarr    -2.28742     0.408349     -5.602    2.12e-08 ***
+
+Chi-square(6)        68.09300   p-value              1.01e-12
+Log-likelihood      -705.0630   Akaike criterion     1426.126
+Schwarz criterion    1461.315   Hannan-Quinn         1439.823
+
+sigma = 8.24974 (0.553654)
+Left-censored observations: 451
+Right-censored observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.59134
+  with p-value = 0.166016
+
+? matrix Xm = {X}
+Generated matrix Xm
+# means of the data, but age is set to 30
+? means = meanc(Xm)
+Generated matrix means
+? means[3] = 30
+Modified matrix means
+? eval tobit_dp_dx($coeff,X,means,$sigma)
+     0.26486    -0.048883      0.14487     -0.42606     0.049541     -0.57486 
+
+Done

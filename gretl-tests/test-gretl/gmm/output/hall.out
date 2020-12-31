@@ -1,0 +1,420 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run hall.inp
+ /home/cottrell/stats/test-gretl/gmm/hall.inp
+? open hall.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/hall.gdt
+periodicity: 12, maxobs: 467
+observations range: 1959:02 to 1997:12
+
+Listing 4 variables:
+  0) const      1) consrat    2) ewr        3) vwr      
+
+? scalar g = 0.5
+Generated scalar g = 0.5
+? scalar d = 0.5
+Generated scalar d = 0.5
+? series e = 0
+Generated series e (ID 4)
+? set hac_lag 7
+? set bfgs_maxgrad 2.0
+? set bfgs_richardson on
+# Tables 3.1 (p. 62) & 3.5 (p. 87)
+? list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+Generated list inst
+? matrix V = 100000*I(nelem(inst))
+Generated matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 116
+Evaluations of gradient: 21
+
+Model 1: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 7 (Bartlett kernel)
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -3.14462    5.89265      -0.5337   0.5936 
+  d           0.999215   0.0103617    96.43     0.0000  ***
+
+  GMM criterion: Q = 0.0128481 (TQ = 5.97437)
+
+Warning: norm of gradient = 1.97158
+? matrix Z = { inst }
+Generated matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 21
+Evaluations of gradient: 6
+
+Model 2: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 7 (Bartlett kernel)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.398197   2.13372        0.1866   0.8520 
+  d          0.993180   0.00454361   218.6      0.0000  ***
+
+  GMM criterion: Q = 6.58898e-05 (TQ = 0.0306388)
+
+# Tables 3.2 (p. 63) & 3.6 (p. 88)
+? list inst = const consrat(-1) consrat(-2) vwr(-1) vwr(-2)
+Replaced list inst
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 112
+Evaluations of gradient: 20
+
+Model 3: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 7 (Bartlett kernel)
+
+             estimate    std. error      z       p-value
+  ------------------------------------------------------
+  g          -1.87155    4.55917       -0.4105   0.6814 
+  d           0.998543   0.00844732   118.2      0.0000  ***
+
+  GMM criterion: Q = 0.000727579 (TQ = 0.338324)
+
+Warning: norm of gradient = 1.07652
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 21
+Evaluations of gradient: 6
+
+Model 4: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+HAC standard errors, bandwidth 7 (Bartlett kernel)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.698299   1.69887        0.4110   0.6810 
+  d          0.994171   0.00352317   282.2      0.0000  ***
+
+  GMM criterion: Q = 6.20717e-06 (TQ = 0.00288633)
+
+# Tables 3.7 (p. 92)
+? set force_hc on
+? list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+Replaced list inst
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 87
+Evaluations of gradient: 13
+
+Model 5: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -3.14458    6.84434      -0.4594   0.6459 
+  d           0.999215   0.0121044    82.55     0.0000  ***
+
+  GMM criterion: Q = 0.0128481 (TQ = 5.97437)
+
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 22
+Evaluations of gradient: 6
+
+Model 6: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.398197   2.26336        0.1759   0.8603 
+  d          0.993180   0.00439332   226.1      0.0000  ***
+
+  GMM criterion: Q = 6.58898e-05 (TQ = 0.0306388)
+
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --two-step
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 6
+
+Model 7: 2-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate    std. error      z       p-value
+  ------------------------------------------------------
+  g          -0.327520   2.21915       -0.1476   0.8827 
+  d           0.991840   0.00424613   233.6      0.0000  ***
+
+  GMM criterion: Q = 0.025381 (TQ = 11.8022)
+  J test: Chi-square(3) = 11.8022 [0.0081]
+
+Warning: norm of gradient = 1.71011
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --two-step
+Tolerance = 1.81899e-12
+
+Function evaluations: 73
+Evaluations of gradient: 6
+
+Model 8: 2-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate    std. error      z       p-value
+  ------------------------------------------------------
+  g          -0.316762   2.21507       -0.1430   0.8863 
+  d           0.991638   0.00423933   233.9      0.0000  ***
+
+  GMM criterion: Q = 0.0250443 (TQ = 11.6456)
+  J test: Chi-square(3) = 11.6456 [0.0087]
+
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 13
+Evaluations of gradient: 1
+
+Model 9: Iterated GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate    std. error      z       p-value
+  ------------------------------------------------------
+  g          -0.344314   2.21526       -0.1554   0.8765 
+  d           0.991566   0.00423726   234.0      0.0000  ***
+
+  GMM criterion: Q = 0.0253984 (TQ = 11.8103)
+  J test: Chi-square(3) = 11.8103 [0.0081]
+
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*ewr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 13
+Evaluations of gradient: 1
+
+Model 10: Iterated GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*ewr*consrat^(g-1) - 1
+
+             estimate    std. error      z       p-value
+  ------------------------------------------------------
+  g          -0.344320   2.21388       -0.1555   0.8764 
+  d           0.991566   0.00423513   234.1      0.0000  ***
+
+  GMM criterion: Q = 0.0253984 (TQ = 11.8103)
+  J test: Chi-square(3) = 11.8103 [0.0081]
+
+? list inst = const consrat(-1) consrat(-2) vwr(-1) vwr(-2)
+Replaced list inst
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 116
+Evaluations of gradient: 20
+
+Model 11: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate    std. error      z      p-value
+  -----------------------------------------------------
+  g          -1.87155    5.84000      -0.3205   0.7486 
+  d           0.998543   0.0106269    93.96     0.0000  ***
+
+  GMM criterion: Q = 0.000727579 (TQ = 0.338324)
+
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 21
+Evaluations of gradient: 6
+
+Model 12: 1-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.698299   1.86678        0.3741   0.7084 
+  d          0.994171   0.00376101   264.3      0.0000  ***
+
+  GMM criterion: Q = 6.20717e-06 (TQ = 0.00288633)
+
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --two-step
+Tolerance = 1.81899e-12
+
+Function evaluations: 33
+Evaluations of gradient: 6
+
+Model 13: 2-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.706210   1.83023        0.3859   0.6996 
+  d          0.993514   0.00354874   280.0      0.0000  ***
+
+  GMM criterion: Q = 0.00392993 (TQ = 1.82742)
+  J test: Chi-square(3) = 1.82742 [0.6090]
+
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --two-step
+Tolerance = 1.81899e-12
+
+Function evaluations: 38
+Evaluations of gradient: 6
+
+Model 14: 2-step GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.666434   1.82778        0.3646   0.7154 
+  d          0.993595   0.00354432   280.3      0.0000  ***
+
+  GMM criterion: Q = 0.00375759 (TQ = 1.74728)
+  J test: Chi-square(3) = 1.74728 [0.6265]
+
+? matrix V = 100000*I(nelem(inst))
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 14
+Evaluations of gradient: 1
+
+Model 15: Iterated GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.666627   1.82759        0.3648   0.7153 
+  d          0.993592   0.00354436   280.3      0.0000  ***
+
+  GMM criterion: Q = 0.00375913 (TQ = 1.748)
+  J test: Chi-square(3) = 1.748 [0.6263]
+
+? matrix Z = { inst }
+Replaced matrix Z
+? matrix V = $nobs*inv(Z'Z)
+Replaced matrix V
+? gmm e = d*vwr*consrat^(g-1) - 1
+? orthog e ; inst
+? weights V
+? params g d
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 14
+Evaluations of gradient: 1
+
+Model 16: Iterated GMM, using observations 1959:04-1997:12 (T = 465)
+e = d*vwr*consrat^(g-1) - 1
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  g          0.666627   1.82781        0.3647   0.7153 
+  d          0.993592   0.00354470   280.3      0.0000  ***
+
+  GMM criterion: Q = 0.00375913 (TQ = 1.748)
+  J test: Chi-square(3) = 1.748 [0.6263]
+
+Done

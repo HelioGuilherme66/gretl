@@ -1,0 +1,22 @@
+open kmenta.gdt
+
+Kmenta1 <- system method=tsls
+  equation Q 0 P D
+  equation Q 0 P F A
+  endog Q P
+end system
+restrict Kmenta1
+  b[1,3] - b[2,4] = 0
+  -b[1,2] + b[2,2] = 0.5
+end restrict
+estimate Kmenta1
+
+Kmenta2 <- system method=tsls
+  equation Q 0 P D ; 0 D F A
+  equation Q 0 P F A ; 0 D F A
+end system
+restrict Kmenta2
+  b[1,3] - b[2,4] = 0
+  -b[1,2] + b[2,2] = 0.5
+end restrict
+estimate Kmenta2

@@ -1,0 +1,56 @@
+=== /home/cottrell/stats/test-gretl/join ===
+diff -rbB output/auxname.out newout/auxname.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/IBMbit.out newout/IBMbit.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/monthly.out newout/monthly.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/nomatch.out newout/nomatch.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/OECDbit.out newout/OECDbit.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/oldtest.out newout/oldtest.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/plain.out newout/plain.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/spaces.out newout/spaces.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/strjoin.out newout/strjoin.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/strtab.out newout/strtab.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10
+diff -rbB output/syntax.out newout/syntax.out
+4c4
+< Current session: 2014-11-07 15:16
+---
+> Current session: 2014-11-25 13:10

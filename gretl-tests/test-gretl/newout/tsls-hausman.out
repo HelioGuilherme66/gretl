@@ -1,0 +1,64 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run tsls-hausman.inp
+ /home/cottrell/stats/test-gretl/tsls-hausman.inp
+? open mroz87.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+? list X = const WA
+Generated list X
+? list Z = WMED WFED
+Generated list Z
+# 1st stage
+? ols WE X Z --quiet
+? series u = $uhat
+Generated series u (ID 20)
+# 2nd stage
+? ols WW X WE u --quiet --no-df-corr
+? omit u --chi-square --quiet
+
+  Null hypothesis: the regression parameter is zero for u
+  Wald test: Chi-square(1) = 2.93324, p-value 0.086773
+  (LR test: Chi-square(1) = 2.92754, p-value 0.0870798)
+
+# tsls
+? tsls WW X WE ; X Z
+
+Model 1: TSLS, using observations 1-753
+Dependent variable: WW
+Instrumented: WE 
+Instruments: const WA WMED WFED 
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1.15846      1.54008      -0.7522   0.4522 
+  WA         -0.00368090   0.0144203    -0.2553   0.7986 
+  WE          0.300289     0.103120      2.912    0.0037  ***
+
+Mean dependent var   2.374565   S.D. dependent var   3.241829
+Sum squared resid    7192.105   S.E. of regression   3.096688
+R-squared            0.101077   Adjusted R-squared   0.098680
+F(2, 750)            4.732081   P-value(F)           0.009073
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 2.93324
+  with p-value = 0.086773
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 0.0527033
+  with p-value = P(Chi-square(1) > 0.0527033) = 0.818424
+
+Weak instrument test - 
+  First-stage F-statistic (2, 749) = 114.414
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    19.93    11.59     8.75     7.25
+
+  Maximal size is probably less than 10%
+
+Done

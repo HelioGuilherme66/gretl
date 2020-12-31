@@ -1,0 +1,60 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run armagen4.inp
+ /home/allin/stats/test-gretl/bfgs/arma/armagen4.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 5
+Pseudo-random number generator seeded with 5
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + 0.4*eps(-1) - 0.15*eps(-2)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7*y(-1) -0.3*y(-2) + u
+Replaced series y (ID 4)
+? smpl 1950:03
+Full data range: 1950:01 - 2001:12 (n = 624)
+Current sample: 1950:03 - 2001:12 (n = 622)
+
+? arma 2 2 ; y
+
+Function evaluations: 44
+Evaluations of gradient: 13
+
+Model 1: ARMA, using observations 1950:03-2001:12 (T = 622)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const        0.117175    0.0909720     1.288    0.1977 
+  phi_1        0.386671    0.241048      1.604    0.1087 
+  phi_2       -0.176763    0.109511     -1.614    0.1065 
+  theta_1      0.741669    0.243381      3.047    0.0023  ***
+  theta_2      0.164786    0.169968      0.9695   0.3323 
+
+Mean dependent var   0.120957   S.D. dependent var   1.479639
+Mean of innovations -0.000918   S.D. of innovations  0.941953
+Log-likelihood      -846.0680   Akaike criterion     1704.136
+Schwarz criterion    1730.734   Hannan-Quinn         1714.473
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0938    -2.1121     2.3785    -0.1740
+    Root  2           1.0938     2.1121     2.3785     0.1740
+  MA
+    Root  1          -2.2504    -1.0021     2.4634    -0.4333
+    Root  2          -2.2504     1.0021     2.4634     0.4333
+  -----------------------------------------------------------
+
+Done

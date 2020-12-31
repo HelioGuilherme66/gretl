@@ -1,0 +1,24 @@
+open data9-7
+# sample periodogram
+pergm QNC
+matrix m = pergm(QNC)
+m
+# Bartlett window
+pergm QNC 12 --bartlett
+matrix m = pergm(QNC, 12)
+m
+
+# subsampled
+smpl +10 ;
+matrix x = { QNC }
+pergm QNC
+m = pergm(x)
+m
+
+# vector of arbitrary length
+set seed 786543
+m = mnormal(30,1)
+eval pergm(m)
+
+
+

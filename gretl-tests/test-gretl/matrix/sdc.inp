@@ -1,0 +1,7 @@
+open data4-1
+matrix X = {dataset}
+matrix SML = sdc(X)
+matrix SDF = sdc(X, $nobs - 1)
+SML
+SDF
+summary 

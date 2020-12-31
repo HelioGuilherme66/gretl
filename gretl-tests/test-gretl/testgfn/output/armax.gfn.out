@@ -1,0 +1,95 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:36
+? run armax.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/armax.gfn.inp
+? include ./armax.gfn
+ /home/cottrell/stats/test-gretl/testgfn/armax.gfn
+armax 0.92, 2014-09-04 (Yi-Nung Yang)
+? open djclose
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? series r=ldiff(djclose)*100
+Generated series r (ID 2)
+? list xlist = const
+Generated list xlist
+? myM=armax(3,3,r,xlist)
+===============================================
+ Information Criteria of ARMAX(p,q) for r
+-----------------------------------------------
+ p, q          AIC           BIC           HQC
+-----------------------------------------------
+ 0, 0    7903.3359     7909.1707*    7905.4531*
+ 0, 1    7906.2290     7923.7334     7912.5804 
+ 0, 2    7899.5489     7922.8881     7908.0175 
+ 0, 3    7901.4515     7930.6255     7912.0373 
+ 1, 0    7906.3525     7923.8569     7912.7039 
+ 1, 1    7899.1656     7922.5048     7907.6342 
+ 1, 2    7898.8169     7927.9908     7909.4026 
+ 1, 3    7900.0834     7935.0921     7912.7863 
+ 2, 0    7900.3372     7923.6763     7908.8058 
+ 2, 1    7901.0574     7930.2313     7911.6431 
+ 2, 2    7898.2068     7933.2155     7910.9097 
+ 2, 3    7900.0189     7940.8624     7914.8390 
+ 3, 0    7901.9417     7931.1156     7912.5274 
+ 3, 1    7903.0573     7938.0660     7915.7602 
+ 3, 2    7899.9679     7940.8114     7914.7879 
+ 3, 3    7897.3038*    7943.9821     7914.2410 
+===============================================
+* indicates best models.
+'9999.9999' suggests failures to estimate the models.
+Generated matrix myM
+? myMatrix = armax(4, 0, r, null, 1, 1, 1, 1, 0)
+===============================================
+ Information Criteria of ARMAX(p,q) for r
+-----------------------------------------------
+ p, q          AIC           BIC           HQC
+-----------------------------------------------
+ 0, 0    7903.3359     7909.1707*    7905.4531*
+ 1, 0    7906.3525     7923.8569     7912.7039 
+ 2, 0    7900.3372     7923.6763     7908.8058 
+ 3, 0    7901.9417     7931.1156     7912.5274 
+ 4, 0    7897.1519*    7932.1606     7909.8548 
+===============================================
+* indicates best models.
+'9999.9999' suggests failures to estimate the models.
+
+Function evaluations: 41
+Evaluations of gradient: 9
+
+Model 6: ARMA, using observations 1980-01-03:1989-12-29 (T = 2527)
+Estimated using Kalman filter (exact ML)
+Dependent variable: r
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       0.0475922    0.0207832     2.290    0.0220  **
+  phi_1       0.0195080    0.0199818     0.9763   0.3289 
+  phi_2      -0.0589513    0.0198436    -2.971    0.0030  ***
+  phi_3      -0.0114727    0.0189950    -0.6040   0.5459 
+  phi_4      -0.0518189    0.0198467    -2.611    0.0090  ***
+
+Mean dependent var   0.047711   S.D. dependent var   1.155626
+Mean of innovations  0.000079   S.D. of innovations  1.151699
+Log-likelihood      -3942.576   Akaike criterion     7897.152
+Schwarz criterion    7932.161   Hannan-Quinn         7909.855
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3298    -1.5452     2.0386    -0.1369
+    Root  2           1.3298     1.5452     2.0386     0.1369
+    Root  3          -1.4405    -1.6027     2.1549    -0.3665
+    Root  4          -1.4405     1.6027     2.1549     0.3665
+  -----------------------------------------------------------
+
+Generated matrix myMatrix
+Done

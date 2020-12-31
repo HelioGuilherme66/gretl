@@ -1,0 +1,9 @@
+open australia
+
+coint2 2 lpau lpus le iau2 ius2 --seasonals
+vecm 2 2 lpau lpus le iau2 ius2 --seasonals
+restrict
+  a[2] = 0
+  a[5] = 0
+end restrict -v
+

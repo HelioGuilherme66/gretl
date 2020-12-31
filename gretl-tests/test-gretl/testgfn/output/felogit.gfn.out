@@ -1,0 +1,81 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run felogit.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/felogit.gfn.inp
+? include ./felogit.gfn
+ /home/cottrell/stats/test-gretl/testgfn/felogit.gfn
+felogit 1.5, 2014-05-02 (Riccardo "Jack" Lucchetti)
+? open http://www.stata-press.com/data/r9/union.dta
+Stata file version 8
+endianness: little
+number of variables = 10
+number of observations = 26200
+length of varnames = 32
+Max length of labels = 81
+dataset label: 'NLS Women 14-24 in 1968'
+timestamp: '27 Oct 2004 13:51'
+variable 1: int type
+variable 2: byte type
+variable 3: byte type
+variable 4: byte type
+variable 5: byte type
+variable 6: byte type
+variable 7: byte type
+variable 8: byte type
+variable 9: byte type
+variable 10: byte type
+variable 1: name = 'idcode'
+variable 2: name = 'year'
+variable 3: name = 'age'
+variable 4: name = 'grade'
+variable 5: name = 'not_smsa'
+variable 6: name = 'south'
+variable 7: name = 'union'
+variable 8: name = 't0'
+variable 9: name = 'southXt'
+variable 10: name = 'black'
+variable 1: label = 'NLS id'
+variable 2: label = 'interview year'
+variable 3: label = 'age in current year'
+variable 4: label = 'current grade completed'
+variable 5: label = '1 if not SMSA'
+variable 6: label = '1 if south'
+variable 7: label = '1 if union'
+variable 10: label = 'race black'
+Listing 11 variables:
+  0) const       1) idcode      2) year        3) age         4) grade     
+  5) not_smsa    6) south       7) union       8) t0          9) southXt   
+ 10) black     
+
+? setobs idcode year --panel-vars
+Full data range: 1:01 - 4434:12 (n = 53208)
+
+? list X = year age grade not_smsa south
+Generated list X
+? set stopwatch
+? bundle model = felogit(union, X)
+
+Fixed effects logit: 1690 units (out of 4434)
+                     12035 observations (out of 26200)
+                     Tmin = 2, Tmax = 12
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  year       -0.0594931    0.0968147    -0.6145    0.5389  
+  age         0.0760241    0.0960884     0.7912    0.4288  
+  grade       0.0857788    0.0418723     2.049     0.0405   **
+  not_smsa    0.00968441   0.112819      0.08584   0.9316  
+  south      -0.747661     0.125150     -5.974     2.31e-09 ***
+
+  Log-likelihood      -4515.950      AIC       9041.900
+             BIC       9078.878      HQC       9054.302
+
+  Wald test = 66.5931 (5 df); p-value = 5.23449e-13
+
+? scalar et = $stopwatch
+Generated scalar et = 2.08641
+#felogit_print(&model)
+Elapsed time = 2.08641 seconds
+Done

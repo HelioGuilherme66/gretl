@@ -1,0 +1,51 @@
+function matrix local_level (series y)
+    /* starting values */
+    matrix s1 = {1}
+    matrix s2 = {1}
+
+    /* Kalman filter set-up */
+    kalman
+       obsy y
+       obsymat 1
+       statemat 1
+       statevar s2
+       obsvar s1
+    end kalman --diffuse
+
+    /* ML estimation */
+    mle ll = ERR ? NA : $kalman_llt
+        ERR = kfilter()
+        params s1 s2
+    end mle
+
+    matrix ret = s1 ~ s2
+    return ret
+end function
+
+function series loclev_sm (series y, scalar s1, scalar s2)
+    /* return the smoothed estimate of \mu_t */
+    kalman
+       obsy y
+       obsymat 1
+       statemat 1
+       statevar s2
+       obsvar s1
+    end kalman --diffuse
+    series ret = ksmooth()
+    return ret
+end function
+
+/* -------------------- main script -------------------- */
+
+nulldata 200
+set seed 202020
+setobs 1 1 --special
+true_s1 = 0.25
+true_s2 = 0.5
+v = normal() * sqrt(true_s1)
+w = normal() * sqrt(true_s2)
+mu = 2 + cum(w)
+y = mu + v
+
+matrix Vars = local_level(y)           # estimate the variances
+muhat = loclev_sm(y, Vars[1], Vars[2]) # compute the smoothed state

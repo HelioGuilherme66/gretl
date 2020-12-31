@@ -1,0 +1,109 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run mahal.inp
+ /home/cottrell/stats/test-gretl/mahal.inp
+? open data7-12
+
+Read datafile /opt/esl/share/gretl/data/data7-12.gdt
+periodicity: 1, maxobs: 82
+observations range: 1 to 82
+
+Listing 12 variables:
+  0) const     1) price     2) hatch     3) wbase     4) length  
+  5) width     6) height    7) weight    8) cyl       9) liters  
+ 10) gasmpg   11) trans   
+
+? mahal wbase length width height
+Mahalanobis distances from the centroid
+using the variables:
+ wbase
+ length
+ width
+ height
+
+       1  2.065709
+       2  0.512223
+       3  0.512223
+       4  2.059665
+       5  1.580357
+       6  0.657824
+       7  0.657824
+       8  1.580357
+       9  1.580357
+      10  1.207448
+      11  1.133538
+      12  1.133538
+      13  1.251412
+      14  1.251412
+      15  1.251412
+      16  1.319777
+      17  1.319777
+      18  1.400232
+      19  0.823966
+      20  0.758133
+      21  2.801659
+      22  2.679362
+      23  2.562008
+      24  2.814303
+      25  1.241935
+      26  1.241935
+      27  2.837809
+      28  1.041368
+      29  1.041368
+      30  1.041368
+      31  1.956045
+      32  2.011319
+      33  5.542714
+      34  5.542714
+      35  2.168643
+      36  2.168643
+      37  0.740914
+      38  0.964222
+      39  3.981277
+      40  4.026402
+      41  1.524694
+      42  1.524694
+      43  3.692908
+      44  3.692908
+      45  1.136594
+      46  1.136594
+      47  1.022981
+      48  1.022981
+      49  2.405910
+      50  2.405910
+      51  2.523039
+      52  0.793115
+      53  0.793115
+      54  1.201199
+      55  1.041317
+      56  1.041317
+      57  1.325538
+      58  1.383346
+      59  1.691129
+      60  1.691129
+      61  1.756150
+      62  1.756150
+      63  2.581620
+      64  2.581620
+      65  2.581620
+      66  2.581620
+      67  0.651300
+      68  0.651300
+      69  1.725412
+      70  1.725412
+      71  1.402154
+      72  1.402154
+      73  0.744361
+      74  0.744361
+      75  0.744361
+      76  1.726014
+      77  1.726014
+      78  1.726014
+      79  1.703500
+      80  1.703500
+      81  1.703500
+      82  1.829563
+
+Done

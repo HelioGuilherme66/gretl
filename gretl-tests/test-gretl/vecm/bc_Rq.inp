@@ -1,0 +1,39 @@
+set echo off
+set messages off
+
+open brand_cassola.gdt
+
+# adjust the data
+m_p = m_p*100
+y = y*100
+infl = infl/4
+rs = rs/4
+rl = rl/4
+
+vecm 2 3 m_p infl rl rs y -q
+
+# Apply beta restriction using R, q method
+
+matrix vR = zeros(12, 15)
+vR[1,1] = 1
+vR[2,2] = 1
+vR[3,4] = 1
+vR[4,6] = 1
+vR[5,7] = 1
+vR[6,9] = 1
+vR[7,10] = 1
+vR[8,11] = 1
+vR[9,12] = 1
+vR[10,13] = 1
+vR[11,14] = 1
+vR[12,15] = 1
+
+matrix vq = {1,0,0,0,1,0,0,0,0,1,-1,0}'
+
+restrict --full
+ R = vR
+ q = vq
+end restrict
+
+
+

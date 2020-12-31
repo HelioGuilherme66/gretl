@@ -1,0 +1,19 @@
+open data4-10
+set seed 456731
+genr wt = uniform()
+genr wt = wt * wt
+# full dataset
+wls wt 1 0 2 3
+series yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+# subsample
+series yh1 = NA
+smpl 10 40
+wls wt 1 0 2 3
+series yh1 = $yhat
+smpl full
+fcast yh2
+print yh1 yh2 --byobs
+
+

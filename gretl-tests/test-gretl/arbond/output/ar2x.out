@@ -1,0 +1,138 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run ar2x.inp
+ /home/cottrell/stats/test-gretl/arbond/ar2x.inp
+? open fakedata2.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/fakedata2.gdt
+periodicity: 7, maxobs: 70
+observations range: 1:1 to 10:7
+
+Listing 5 variables:
+  0) const    1) y        2) x        3) unit     4) year   
+
+? genr Dx = diff(x)
+Generated series Dx (ID 5)
+? arbond 1 0 ; y Dx
+
+Model 1: 1-step Arellano-Bond, using 50 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  Dy(-1)      0.512285     0.0149002    34.38   4.84e-259 ***
+  Dx          0.409665     0.0310989    13.17   1.26e-39  ***
+
+Sum squared resid    0.757304   S.E. of regression   0.125607
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.56488 [0.1176]
+Test for AR(2) errors: z = -1.73492 [0.0828]
+Sargan over-identification test: Chi-square(14) = 20.8702 [0.1050]
+Wald (joint) test: Chi-square(2) = 1370.56 [0.0000]
+
+? dpanel 1 ; y x
+
+Model 2: 1-step dynamic panel, using 50 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  y(-1)       0.512285     0.0149002    34.38   4.84e-259 ***
+  x           0.409665     0.0310989    13.17   1.26e-39  ***
+
+Sum squared resid    0.757304   S.E. of regression   0.125607
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.56488 [0.1176]
+Test for AR(2) errors: z = -1.73492 [0.0828]
+Sargan over-identification test: Chi-square(14) = 20.8702 [0.1050]
+Wald (joint) test: Chi-square(2) = 1370.56 [0.0000]
+
+? arbond 2 0 ; y Dx
+
+Model 3: 1-step Arellano-Bond, using 40 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Dy(-1)      0.456699     0.179716      2.541    0.0110   **
+  Dy(-2)      0.0220164    0.0980989     0.2244   0.8224  
+  Dx          0.400041     0.0320583    12.48     9.78e-36 ***
+
+Sum squared resid    0.583603   S.E. of regression   0.125591
+
+Number of instruments = 15
+Test for AR(1) errors: z = -1.41077 [0.1583]
+Test for AR(2) errors: z = -1.08723 [0.2769]
+Sargan over-identification test: Chi-square(12) = 20.7215 [0.0546]
+Wald (joint) test: Chi-square(3) = 361.664 [0.0000]
+
+? dpanel 2 ; y x
+
+Model 4: 1-step dynamic panel, using 40 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  y(-1)       0.456699     0.179716      2.541    0.0110   **
+  y(-2)       0.0220164    0.0980989     0.2244   0.8224  
+  x           0.400041     0.0320583    12.48     9.78e-36 ***
+
+Sum squared resid    0.583603   S.E. of regression   0.125591
+
+Number of instruments = 15
+Test for AR(1) errors: z = -1.41077 [0.1583]
+Test for AR(2) errors: z = -1.08723 [0.2769]
+Sargan over-identification test: Chi-square(12) = 20.7215 [0.0546]
+Wald (joint) test: Chi-square(3) = 361.664 [0.0000]
+
+? arbond 2 0 ; y Dx Dx(-1)
+
+Model 5: 1-step Arellano-Bond, using 40 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  Dy(-1)      0.286485     0.278141     1.030    0.3030  
+  Dy(-2)      0.104319     0.160611     0.6495   0.5160  
+  Dx          0.383378     0.0455960    8.408    4.16e-17 ***
+  Dx_1        0.0312760    0.150914     0.2072   0.8358  
+
+Sum squared resid    0.548548   S.E. of regression   0.123440
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.51662 [0.1294]
+Test for AR(2) errors: z = -1.45088 [0.1468]
+Sargan over-identification test: Chi-square(12) = 22.8888 [0.0287]
+Wald (joint) test: Chi-square(4) = 361.704 [0.0000]
+
+? dpanel 2 ; y x x(-1)
+
+Model 6: 1-step dynamic panel, using 40 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  y(-1)       0.286485     0.278141     1.030    0.3030  
+  y(-2)       0.104319     0.160611     0.6495   0.5160  
+  x           0.383378     0.0455960    8.408    4.16e-17 ***
+  x_1         0.0312760    0.150914     0.2072   0.8358  
+
+Sum squared resid    0.548548   S.E. of regression   0.123440
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.51662 [0.1294]
+Test for AR(2) errors: z = -1.45088 [0.1468]
+Sargan over-identification test: Chi-square(12) = 22.8888 [0.0287]
+Wald (joint) test: Chi-square(4) = 361.704 [0.0000]
+
+Done

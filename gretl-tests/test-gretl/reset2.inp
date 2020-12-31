@@ -1,0 +1,7 @@
+open data4-10
+ols 1 0 2
+reset
+reset --squares-only
+reset --cubes-only
+series yh2 = $yhat^2
+ols 1 0 2 yh2

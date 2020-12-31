@@ -1,0 +1,18 @@
+set echo off
+set messages off
+
+nulldata 200
+set seed 732237
+
+SMALL = 1.0e-5
+x = normal()
+z = normal()
+y = uniform() < cdf(n, x+z)
+
+loop 9
+    SMALL /= 10
+    resc_x = SMALL * x
+    resc_z = SMALL * z
+    printf "SMALL = %g\n", SMALL
+    probit y 0 resc_x resc_z
+endloop

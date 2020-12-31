@@ -1,0 +1,41 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run BreitungCandelonTest.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/BreitungCandelonTest.gfn.inp
+? include ./BreitungCandelonTest.gfn
+ /home/cottrell/stats/test-gretl/testgfn/BreitungCandelonTest.gfn
+BreitungCandelonTest 1.5.1, 2015-07-01 (Sven Schreiber)
+# test case:
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? smpl 1975:1 1987:3
+Full data range: 1974:1 - 1987:3 (n = 55)
+Current sample: 1975:1 - 1987:3 (n = 51)
+
+? list conditioning = IBO
+Generated list conditioning
+#list conditioning = null
+? lagorder = 4
+Generated scalar lagorder = 4
+? points = 50
+Generated scalar points = 50
+? siglevel = 0.05
+Generated scalar siglevel = 0.05
+? matrix BC1 = \
+  BreitungCandelonTest(LRM,LRY,conditioning,lagorder,points,siglevel)
+Chosen lag order: 4
+Sample size (including lags, T+p): 51; from obs 1975:1 to obs 1987:3.
+The columns in the return matrix (if any) hold
+(1) frequencies, (2) test statistics,
+(3) critical value (repeated) at 0.050 level.
+Generated matrix BC1
+Done

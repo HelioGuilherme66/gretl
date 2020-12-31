@@ -1,0 +1,33 @@
+open recid.gdt -q
+
+set echo off
+set messages off
+
+list X = workprg priors tserved felon alcohol drugs \
+ black married educ age
+
+duration durat 0 X ; cens --quiet --medians
+series wpred = $yhat
+
+duration durat 0 X ; cens --expon --quiet --medians
+series expred = $yhat
+
+duration durat 0 X ; cens --loglog --quiet --medians
+series llpred = $yhat
+
+duration durat 0 X ; cens --lognorm --quiet --medians
+series lnpred = $yhat
+
+# The following median predictions basically agree with
+# Stata 10 streg (in some cases they differ at the 6th
+# digit)
+
+smpl 1 10
+print wpred expred llpred lnpred -o
+
+
+
+
+
+
+

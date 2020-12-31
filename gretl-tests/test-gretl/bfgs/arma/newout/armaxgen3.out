@@ -1,0 +1,71 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run armaxgen3.inp
+ /home/allin/stats/test-gretl/bfgs/arma/armaxgen3.inp
+? nulldata 800
+periodicity: 1, maxobs: 800
+observations range: 1 to 800
+? setobs 12 1920:01
+Full data range: 1920:01 - 1986:08 (n = 800)
+
+? set seed 43377
+Pseudo-random number generator seeded with 43377
+? series x1 = uniform()
+Generated series x1 (ID 2)
+? series x2 = uniform()
+Generated series x2 (ID 3)
+? series eps = normal()
+Generated series eps (ID 4)
+? series u = eps + .4 * eps(-1)
+Generated series u (ID 5)
+? series y = 0
+Generated series y (ID 6)
+? y = 10 + .3 * y(-1) + 10 * x1 + 10 * x2 + u
+Replaced series y (ID 6)
+? smpl 1940:01 ;
+Full data range: 1920:01 - 1986:08 (n = 800)
+Current sample: 1940:01 - 1986:08 (n = 560)
+
+? arma 1 1 ; y 0 x1 x2 --vcv
+
+Function evaluations: 43
+Evaluations of gradient: 17
+
+Model 1: ARMAX, using observations 1940:01-1986:08 (T = 560)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       20.3997      0.174606     116.8     0.0000   ***
+  phi_1        0.199892    0.0573443      3.486   0.0005   ***
+  theta_1      0.627480    0.0501910     12.50    7.29e-36 ***
+  x1           8.34181     0.148803      56.06    0.0000   ***
+  x2           8.07176     0.161558      49.96    0.0000   ***
+
+Mean dependent var   28.63060   S.D. dependent var   4.408011
+Mean of innovations -0.000024   S.D. of innovations  1.468445
+Log-likelihood      -1010.149   Akaike criterion     2032.297
+Schwarz criterion    2058.265   Hannan-Quinn         2042.437
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           5.0027     0.0000     5.0027     0.0000
+  MA
+    Root  1          -1.5937     0.0000     1.5937     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const         phi_1       theta_1            x1            x2
+     0.0304874   3.10714e-05    0.00223588     -0.013321    -0.0156904  const
+                  0.00328837   -0.00184848  -7.24291e-05   4.64223e-05  phi_1
+                                0.00251914   -0.00207195    -0.0023855  theta_1
+                                               0.0221423    0.00472631  x1
+                                                             0.0261008  x2
+
+Done

@@ -1,0 +1,143 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run oxdpd.inp
+ /home/cottrell/stats/test-gretl/foreign/oxdpd.inp
+? open abdata.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+# Take first differences of the independent variables
+? genr Dw = diff(w)
+Generated series Dw (ID 12)
+? genr Dk = diff(k)
+Generated series Dk (ID 13)
+? genr Dys = diff(ys)
+Generated series Dys (ID 14)
+# 1-step GMM estimation
+? arbond 2 ; n Dw Dw(-1) Dk Dys Dys(-1) 0 --time-dummies
+
+Model 1: 1-step Arellano-Bond, using 611 observations
+Included 140 cross-sectional units
+Dependent variable: n
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Dn(-1)      0.534614     0.166449      3.212    0.0013   ***
+  Dn(-2)     -0.0750692    0.0679789    -1.104    0.2695  
+  Dw         -0.591573     0.167884     -3.524    0.0004   ***
+  Dw_1        0.291510     0.141058      2.067    0.0388   **
+  Dk          0.358502     0.0538284     6.660    2.74e-11 ***
+  Dys         0.597199     0.171933      3.473    0.0005   ***
+  Dys_1      -0.611705     0.211796     -2.888    0.0039   ***
+  const       0.00542720   0.00971406    0.5587   0.5764  
+  T5          0.00560768   0.0153778     0.3647   0.7154  
+  T6         -0.0383049    0.0174452    -2.196    0.0281   **
+  T7         -0.0277852    0.0179081    -1.552    0.1208  
+  T8         -0.00685022   0.0220553    -0.3106   0.7561  
+  T9          0.00631375   0.0197130     0.3203   0.7488  
+
+Sum squared resid    8.219380   S.E. of regression   0.117238
+
+Number of instruments = 38
+Test for AR(1) errors: z = -2.49337 [0.0127]
+Test for AR(2) errors: z = -0.359446 [0.7193]
+Sargan over-identification test: Chi-square(25) = 73.8581 [0.0000]
+Wald (joint) test: Chi-square(7) = 219.623 [0.0000]
+Wald (time dummies): Chi-square(5) = 11.4258 [0.0436]
+
+? matrix parm = $coeff
+Generated matrix parm
+# compare with Ox
+? set csv_na .NaN
+? store abdata.csv
+wrote abdata.csv
+? foreign language=Ox
+? #include <oxstd.h>
+? #import <packages/dpd/dpd>
+? main ()
+? {
+?     decl dpd = new DPD();
+?     dpd.Load("abdata.csv");
+?     dpd.SetYear("YEAR");
+?     dpd.Select(Y_VAR, {"n", 0, 2});
+?     dpd.Select(X_VAR, {"w", 0, 1, "k", 0, 0, "ys", 0, 1});
+?     dpd.Select(I_VAR, {"w", 0, 1, "k", 0, 0, "ys", 0, 1});
+?     dpd.Gmm("n", 2, 99);  // GMM-type instrument
+?     dpd.SetDummies(D_CONSTANT + D_TIME);
+?     dpd.SetTest(2, 2); // Sargan, AR 1-2 tests
+?     dpd.Estimate();    // 1-step estimation
+?     decl parm = dpd.GetPar();
+?     gretl_export(parm, "oxparm.mat");
+?     delete dpd;
+? }
+? end foreign
+
+Ox Console version 7.09 (Linux_64) (C) J.A. Doornik, 1994-2014
+This version may be used for academic research and teaching only
+DPD package version 1.24, object created on  4-02-2016
+
+DPD( 1) Modelling n by 1-step
+        The dataset is: abdata.csv
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dn(-1)               0.534614     0.1664     3.21   0.001
+Dn(-2)             -0.0750692    0.06798    -1.10   0.270
+Dw                  -0.591573     0.1679    -3.52   0.000
+Dw(-1)               0.291510     0.1411     2.07   0.039
+Dk                   0.358502    0.05383     6.66   0.000
+Dys                  0.597199     0.1719     3.47   0.001
+Dys(-1)             -0.611705     0.2118    -2.89   0.004
+Constant           0.00542720   0.009714    0.559   0.577
+T1980              0.00560768    0.01538    0.365   0.715
+T1981              -0.0383049    0.01745    -2.20   0.028
+T1982              -0.0277852    0.01791    -1.55   0.121
+T1983             -0.00685022    0.02206   -0.311   0.756
+T1984              0.00631375    0.01971    0.320   0.749
+
+sigma               0.1172381  sigma^2            0.01374478
+sigma levels       0.08289989
+RSS              8.2193799368  TSS                12.5999784
+no. of observations       611  no. of parameters          13
+Using robust standard errors
+
+Transformation used:      first differences
+Transformed instruments:  w  w(-1)  k  ys  ys(-1)
+Level instruments:        Dummies  Gmm("n",2,99)
+
+constant:                 yes  time dummies:               5
+number of individuals     140 (derived from year)
+longest time series         6 [1979 - 1984]
+shortest time series        4 (unbalanced panel)
+
+Sargan test:    Chi^2(25) =     73.86 [0.000] **
+AR(1) test:        N(0,1) =    -2.493 [0.013] *
+AR(2) test:        N(0,1) =   -0.3594 [0.719]
+
+? matrix oxparm = mread("/home/cottrell/.gretl/oxparm.mat")
+Generated matrix oxparm
+? eval abs((parm - oxparm) ./ oxparm)
+  5.0090e-13 
+  9.9495e-13 
+  6.6436e-14 
+  5.5757e-13 
+  8.4079e-14 
+  6.5067e-15 
+  2.4883e-13 
+  2.0616e-14 
+  1.0318e-12 
+  4.0052e-13 
+  2.7596e-13 
+  2.6468e-12 
+  1.3646e-12 
+
+Done

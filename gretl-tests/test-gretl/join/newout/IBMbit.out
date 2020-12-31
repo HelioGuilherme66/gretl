@@ -1,0 +1,30 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-25 13:10
+? run IBMbit.inp
+ /home/cottrell/stats/test-gretl/join/IBMbit.inp
+? nulldata 8
+periodicity: 1, maxobs: 8
+observations range: 1 to 8
+? setobs 5 2013-07-29
+Full data range: 2013-07-29 - 2013-08-07 (n = 8)
+
+? join IBMbit.csv Close
+Data appended OK
+? join IBMbit.csv Close2 --data=Close --tkey="Date,%Y-%m-%d"
+Data appended OK
+? print -o
+
+                  index        Close       Close2
+
+2013-07-29            1                          
+2013-07-30            2                          
+2013-07-31            3       195.04       195.04
+2013-08-01            4       195.81       195.81
+2013-08-02            5       195.16       195.16
+2013-08-05            6                          
+2013-08-06            7                          
+2013-08-07            8                          
+
+Done

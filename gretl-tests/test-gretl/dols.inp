@@ -1,0 +1,32 @@
+function scalar dols (scalar order, series lhvar, series rhvar, scalar *se)
+
+  printf "\n*** function dols, order = %g\n", order
+
+  scalar bw = order
+  diff rhvar
+  ols lhvar const rhvar d_rhvar(+bw to -bw) --quiet
+
+  scalar b = $coeff(rhvar)
+  scalar se = $stderr(rhvar)
+  scalar ssq = $ess
+  series u = $uhat
+
+  scalar corrfac = 0
+  series tmp = u
+  scalar lmin = -order
+
+  loop i=-order..order
+    tmp = u * u($i)
+    corrfac += sum(tmp) * (1 - $i/(order+1))
+  endloop
+
+  corrfac = sqrt(corrfac/ssq)
+  se = se * corrfac
+
+  printf "b = %g, se = %g \n", b, se 
+  
+  return b
+
+end function
+
+

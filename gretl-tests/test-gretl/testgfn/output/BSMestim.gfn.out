@@ -1,0 +1,349 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run BSMestim.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/BSMestim.gfn.inp
+? include ./BSMestim.gfn
+ /home/cottrell/stats/test-gretl/testgfn/BSMestim.gfn
+BSMestim 1.1, 2009-08-22 (Ignacio Diaz-Emparanza)
+? open data9-3.gdt
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+? list listavar = BSMestim(reskwh)
+Function evaluations: 3
+Evaluations of gradient: 1
+In regard to function BSMestim (package BSMestim):
+Warning: norm of gradient = 2.56985
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+In regard to function BSM (package BSMestim):
+Warning: exp: Numerical result out of range
+Function evaluations: 54
+Evaluations of gradient: 19
+In regard to function BSMestim (package BSMestim):
+Warning: exp: Numerical result out of range
+
+Basic Structural Model estimation:
+-----------------------------------------
+    sigma*=		 Var(eps)=5.997458E+02
+    q1= 0.66588,	 Var(eta)=3.993589E+02
+    q2= 0.00000,	 Var(xi)=0.000000E+00
+    q3= 0.08233,	 Var(omega)=4.937919E+01
+------------------------------------------
+ 
+Generated list listavar
+? print reskwh listavar -o
+
+             reskwh reskwh_trend reskwh_slope  reskwh_seas   reskwh_irr
+
+1972:2      586.608      660.596     8.560380     -63.9265    -10.06161
+1972:3      625.797      675.856     8.560380     -50.4398      0.38040
+1972:4      704.154      690.863     8.560380      15.4147     -2.12412
+1973:1      817.206      707.285     8.560380      98.1232     11.79790
+1973:2      667.642      715.850     8.560380     -62.2382     14.02983
+1973:3      661.827      715.074     8.560380     -51.5059     -1.74066
+1973:4      732.839      715.456     8.560380      16.7671      0.61599
+1974:1      796.876      715.428     8.560380      96.3322    -14.88429
+1974:2      655.335      725.311     8.560380     -62.0320     -7.94435
+1974:3      692.599      740.485     8.560380     -51.0795      3.19389
+1974:4      768.172      753.531     8.560380      16.6493     -2.00850
+1975:1      877.881      767.915     8.560380      96.3888     13.57703
+1975:2      722.124      773.258     8.560380     -61.4802     10.34575
+1975:3      697.671      771.713     8.560380     -51.9985    -22.04315
+1975:4      804.178      784.845     8.560380      18.2431      1.08989
+1976:1      880.008      797.252     8.560380      94.8962    -12.13982
+1976:2      763.618      817.742     8.560380     -63.3290      9.20508
+1976:3      790.428      832.103     8.560380     -48.3462      6.67147
+1976:4      860.741      842.021     8.560380      16.8430      1.87689
+1977:1      946.673      850.690     8.560380      96.2502     -0.26692
+1977:2      793.593      859.536     8.560380     -67.1438      1.20074
+1977:3      820.803      867.583     8.560380     -44.8800     -1.89986
+1977:4      876.286      876.895     8.560380      15.6611    -16.26989
+1978:1      993.199      897.040     8.560380      97.9015     -1.74298
+1978:2      842.539      918.347     8.560380     -71.3348     -4.47297
+1978:3      893.369      942.632     8.560380     -42.3417     -6.92081
+1978:4      998.721      971.525     8.560380      16.8585     10.33785
+1979:1     1135.091      993.534     8.560380      98.1321     43.42482
+1979:2      901.289      986.628     8.560380     -75.5025     -9.83632
+1979:3      942.471      986.271     8.560380     -38.1809     -5.61946
+1979:4     1024.852      989.657     8.560380      19.3590     15.83629
+1980:1     1068.690      982.497     8.560380      91.2533     -5.06029
+1980:2      914.884      978.707     8.560380     -74.9378     11.11493
+1980:3      930.812      967.516     8.560380     -32.6007     -4.10286
+1980:4      969.382      959.056     8.560380      18.3725     -8.04673
+1981:1     1028.968      955.955     8.560380      87.4267    -14.41373
+1981:2      883.718      962.452     8.560380     -76.9579     -1.77581
+1981:3      958.449      970.131     8.560380     -26.0923     14.41050
+1981:4      980.453      968.214     8.560380      17.1865     -4.94777
+1982:1     1062.744      969.592     8.560380      85.1649      7.98682
+1982:2      887.136      965.652     8.560380     -78.6858      0.16966
+1982:3      933.269      961.599     8.560380     -22.5104     -5.81950
+1982:4      978.160      961.421     8.560380      18.6593     -1.92016
+1983:1     1020.435      962.521     8.560380      81.1945    -23.28084
+1983:2      917.487      979.124     8.560380     -80.2632     18.62603
+1983:3      975.387      983.324     8.560380     -18.1144     10.17720
+1983:4      998.109      980.747     8.560380      18.0524     -0.69081
+1984:1     1015.545      978.631     8.560380      82.4331    -45.51884
+1984:2      919.639     1006.824     8.560380     -85.9865     -1.19854
+1984:3     1040.188     1035.816     8.560380     -13.9175     18.29004
+1984:4     1082.732     1052.628     8.560380      14.6494     15.45468
+1985:1     1164.663     1059.149     8.560380      91.0117     14.50186
+1985:2      945.277     1056.014     8.560380     -93.7544    -16.98308
+1985:3     1062.046     1064.188     8.560380     -11.5587      9.41656
+1985:4     1079.565     1066.092     8.560380      11.4013      2.07213
+1986:1     1137.534     1066.615     8.560380      97.0764    -26.15753
+1986:2      992.370     1084.557     8.560380     -96.7564      4.56986
+1986:3     1087.314     1099.455     8.560380     -11.9781     -0.16278
+1986:4     1107.644     1114.462     8.560380       6.4338    -13.25150
+1987:1     1263.671     1138.292     8.560380     107.9953     17.38329
+1987:2     1054.402     1150.548     8.560380    -102.6779      6.53196
+1987:3     1107.669     1158.454     8.560380     -13.0855    -37.69942
+1987:4     1214.441     1191.463     8.560380       5.0661     17.91157
+1988:1     1335.147     1212.546     8.560380     115.4985      7.10289
+1988:2     1122.214     1228.898     8.560380    -111.3477      4.66341
+1988:3     1238.305     1242.146     8.560380      -5.9726      2.13183
+1988:4     1233.677     1253.974     8.560380      -1.7701    -18.52654
+1989:1     1432.962     1278.138     8.560380     123.6907     31.13335
+1989:2     1156.211     1281.571     8.560380    -120.0252     -5.33501
+1989:3     1276.944     1288.557     8.560380      -0.3521    -11.26085
+1989:4     1279.626     1303.041     8.560380      -2.8167    -20.59827
+1990:1     1485.453     1331.241     8.560380     124.7917     29.42021
+1990:2     1206.455     1339.851     8.560380    -126.1879     -7.20791
+1990:3     1394.055     1353.260     8.560380       4.9876     35.80724
+1990:4     1336.979     1342.826     8.560380       1.0236     -6.87077
+1991:1     1455.121     1336.967     8.560380     118.7588     -0.60509
+1991:2     1210.595     1331.511     8.560380    -125.7934      4.87702
+1991:3     1261.056     1322.808     8.560380       3.2718    -65.02367
+1991:4     1407.925     1357.402     8.560380       8.8936     41.62902
+1992:1     1446.215     1364.277     8.560380     112.6613    -30.72329
+1992:2     1255.008     1391.610     8.560380    -131.6053     -4.99621
+1992:3     1504.511     1422.269     8.560380      16.0923     66.14971
+1992:4     1405.336     1408.881     8.560380       2.0255     -5.57022
+1993:1     1512.306     1399.202     8.560380     114.6391     -1.53464
+1993:2     1241.345     1390.544     8.560380    -133.6778    -15.52136
+1993:3     1405.036     1392.222     8.560380      17.1501     -4.33632
+1993:4     1392.183     1396.788     8.560380       1.3946     -5.99937
+
+Done

@@ -1,0 +1,71 @@
+set echo off
+set messages off
+
+function void TV_H (bundle *b, matrix *X)
+    b.obsymat = X[b.t,]'
+end function
+
+function void apply_params (bundle *b, matrix *theta)
+    b.obsvar = {theta[1]^2}
+    b.statevar[diag] = exp(theta[2:]) | {0}
+end function
+
+function bundle my_ksetup (series y, list X, matrix b0, matrix V0)
+    k = nelem(X)
+    mY = {y}
+    mX = {X}
+    matrix F = I(k)
+    H = zeros(k,1)
+    matrix Q = zeros(k,k)
+    
+    bundle b = ksetup(mY, H, F, Q)
+    b.obsvar = {1}
+    b.inistate = b0
+    b.inivar = V0
+    b.diffuse = 1
+    
+    return b
+end function
+
+open sw_ch14.gdt --quiet
+
+genr INFL = 100*ldiff(PUNEW)
+list t_var_X = const INFL(-1) LHUR # time-varying
+list t_invar_X = LHUR(-1)          # time-invariant
+list X = t_var_X t_invar_X
+
+# initialization
+
+smpl 1 16
+ols INFL X
+scalar sigma = $sigma
+b0 = $coeff
+V0 = $vcv
+
+# TVP model
+
+smpl full
+smpl +17 ;
+
+# needs as many elements as time-varying params plus one
+# for sigma
+matrix theta = {sigma; -5; -5; -6}
+matrix mX = {X}
+
+bundle kb = my_ksetup(INFL, X, b0, V0)
+kb.obsymat_call = "TV_H(&kb, &mX)"
+
+mle loglik = ERR ? NA : kb.llt
+    apply_params(&kb, &theta)
+    ERR = kfilter(kb)
+    params theta
+end mle -v
+
+ksmooth(kb)
+matrix S = kb.state
+loop foreach i X --quiet
+    series b$i = kb.state[,i]
+endloop
+
+smpl full
+print b* -o

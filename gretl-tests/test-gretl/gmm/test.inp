@@ -1,0 +1,10 @@
+open data9-7
+
+set hac_prewhiten on
+set hac_kernel qs
+set qs_bandwidth 2.5
+
+tsls QNC 0 PRICE INCOME ; 0 INCOME PRIME --robust
+genr u = $uhat
+ols u u(-1)
+

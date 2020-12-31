@@ -1,0 +1,529 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run SETAR.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/SETAR.gfn.inp
+? include ./SETAR.gfn
+ /home/cottrell/stats/test-gretl/testgfn/SETAR.gfn
+SETAR 1.2, 2011-06-27 (Federico Lampis, Ignacio Díaz-Emparanza)
+#================================================================
+#   SETAR fucntion for gretl by Federico Lampis
+#   Carlos III University of Madrid, Spain
+#   flampis@emp.uc3m.es
+#================================================================
+#
+# CONTROL PARAMETERS (can be modified if desired!)
+#  scalar conf1=.95   			# Confidence Level for Confidence Regions
+#  scalar conf2=.8   	 		# Confidence Level for first step of two-step
+#  scalar trim=0.15             # Percentage of sample to trim from ends for test,
+#  scalar rep=1000              # Number of bootstrap replications for linearity test
+#
+#==============================================================
+#
+#			FUNCTION ARGUMENTS
+# VARIABLE              = Dependent variable of the SETAR model.
+#
+# AUTOREGRESSIVE ORDER  = Autoregressive order of the SETAR model, the 2 regimes have the same order.
+#
+# DELAY    		        = Delay of the Threshold Parameter Y_(t-d), fixing this parameter you are choosing
+#              		      which lag of the Dependent variable you want to use to estimate the model.
+#
+# LAGS INCLUDED         = Lags of dependent variable included in the SETAR estimation; if this box is empty
+#				          all the lags from 1 to p are included, otherwise you must specify which lags include,
+#                         e.g. writing {1, 3, 5} you include the lags 1,3,5 of dependent variable.
+#
+# HETEROSKEDASTICITY
+# CORRECTION            = The SETAR model is estimated under the hypothesis the error term is a Martingale Difference and
+#                         the confidence intervals are computed with the white heteroskedasticity correction. Otherwise
+#                         the hypotesis of homoskedasticity is assumed and e_t is iid(0, sigma^2).
+#
+# LINEARITY TEST        = Marking this box a linearity test under the null hypothesis of none threshold in the the
+#					      autoregressive model is performed. The number of replication is 1000. In case the box
+#                         "Heteroskedasticity correction" is marked the test if carried assuming heteroskedasticity
+#  					      error term.
+#
+# the data used by Tong can be found at http://eom.springer.de/c/c110040.htm
+? open http://ricardo.ecn.wfu.edu/pub/gretldata/lynx.gdt
+
+Read datafile /home/cottrell/.gretl/lynx.gdt
+periodicity: 1, maxobs: 114
+observations range: 1821 to 1934
+
+Listing 2 variables:
+  0) const    1) lynx   
+
+? series y=log10(lynx)
+Generated series y (ID 2)
+#OPTION A
+# Estimation of SETAR model with p=2 and d=2. All lags are included in the estimation,
+# the hypothesis of homoskedasticity is assumed and the linear test is NOT performed.
+? example = SETAR(y, 2, 2, null, 0, 0)
+				Linear AR MODEL
+			OLS Standard Errors Reported
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const        1.05760     0.121911       8.675   4.13e-18  ***
+  Y-1          1.38424     0.0638948     21.66    4.45e-104 ***
+  Y-2         -0.747776    0.0639485    -11.69    1.38e-31  ***
+
+  Observations = 112
+  Freedom Degrees = 109
+  Sum Squared Errors = 5.78258
+  Residual Variance = 0.0530512
+  F-test p-value = 3.0754e-43
+  R-squared = 0.834056
+  AIC Inf.Criteria = -322.888
+  BIC Inf.Criteria = -314.732
+  Heteroskedasticity Test (P-Value) = 0.0405246
+
+
+*****************************************************************************************
+			Threshold Autoregressive Model Estimate
+			OLS Standard Errors Reported
+-------------------------------------------------------------------------------------------
+Dependent Variable	 Y              	 Sum Squared Errors	 4.3482
+Threshold Variable	 Y-2            	 Residual Variance	 0.0410
+Threshold Estimate	 3.3101	 		 Joint R-Squared	 0.8752
+0.95 Conf.Interval  	 [2.6117; 3.3860]	 AIC Inf.Criterion	 -347.72
+Heterosk_Test (pv)	 0.3452	                 BIC Inf.Criterion	 -336.07
+
+*****************************************************************************************
+Regime1: Y-2 <= 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.588437    0.144652      4.068   4.74e-05 ***
+  Y-1          1.26428     0.0658690    19.19    4.17e-82 ***
+  Y-2         -0.428429    0.0782145    -5.478   4.31e-08 ***
+
+  Observations = 78
+  Freedom Degrees = 75
+  Sum Squared Errors = 2.62725
+  Residual Variance = 0.03503
+  F-test p-value = 7.73738e-37
+  R-squared = 0.8911
+  AIC Inf.Criteria = -255.421
+  BIC Inf.Criteria = -248.351
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	    0.30492	    0.94640 
+Y-1            	    1.13518	    1.39848 
+Y-2            	   -0.62106	   -0.27513 
+ 
+*****************************************************************************************
+Regime1: Y-2 > 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.16569      0.884837     1.317   0.1877  
+  Y-1          1.59925      0.109989    14.54    6.75e-48 ***
+  Y-2         -1.01158      0.267500    -3.782   0.0002   ***
+
+  Observations = 34
+  Freedom Degrees = 31
+  Sum Squared Errors = 1.72094
+  Residual Variance = 0.0555142
+  F-test p-value = 6.94892e-13
+  R-squared = 0.835711
+  AIC Inf.Criteria = -92.298
+  BIC Inf.Criteria = -87.7189
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	   -1.68395	    3.46191 
+Y-1            	    1.33684	    1.88132 
+Y-2            	   -1.71281	   -0.17648 
+Generated list example
+#OPTION B
+# Estimation of SETAR model with p=2 and d=2. All lags are included in the estimation,
+# the hypothesis of heteroskedasticity is assumed and the linear test is NOT performed.
+? example = SETAR(y, 2, 2, null, 1, 0)
+				Linear AR MODEL
+			Heteroskedasticity Correction Used
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        1.05760     0.124651       8.484   2.17e-17 ***
+  Y-1          1.38424     0.0723675     19.13    1.48e-81 ***
+  Y-2         -0.747776    0.0710869    -10.52    7.05e-26 ***
+
+  Observations = 112
+  Freedom Degrees = 109
+  Sum Squared Errors = 5.78258
+  Residual Variance = 0.0530512
+  F-test p-value = 3.0754e-43
+  R-squared = 0.834056
+  AIC Inf.Criteria = -322.888
+  BIC Inf.Criteria = -314.732
+  Heteroskedasticity Test (P-Value) = 0.0405246
+
+
+*****************************************************************************************
+			Threshold Autoregressive Model Estimate
+			Heteroskedasticity Correction Used
+-------------------------------------------------------------------------------------------
+Dependent Variable	 Y              	 Sum Squared Errors	 4.3482
+Threshold Variable	 Y-2            	 Residual Variance	 0.0410
+Threshold Estimate	 3.3101	 		 Joint R-Squared	 0.8752
+0.95 Conf.Interval  	 [2.6117; 3.3860]	 AIC Inf.Criterion	 -347.72
+Heterosk_Test (pv)	 0.3452	                 BIC Inf.Criterion	 -336.07
+
+*****************************************************************************************
+Regime1: Y-2 <= 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.588437    0.116363      5.057   4.26e-07 ***
+  Y-1          1.26428     0.0700299    18.05    7.42e-73 ***
+  Y-2         -0.428429    0.0801304    -5.347   8.96e-08 ***
+
+  Observations = 78
+  Freedom Degrees = 75
+  Sum Squared Errors = 2.62725
+  Residual Variance = 0.03503
+  F-test p-value = 7.73738e-37
+  R-squared = 0.8911
+  AIC Inf.Criteria = -255.421
+  BIC Inf.Criteria = -248.351
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	    0.14161	    0.99768 
+Y-1            	    1.08246	    1.63189 
+Y-2            	   -0.88703	   -0.14052 
+ 
+*****************************************************************************************
+Regime1: Y-2 > 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.16569      0.914769     1.274   0.2026  
+  Y-1          1.59925      0.102476    15.61    6.61e-55 ***
+  Y-2         -1.01158      0.302023    -3.349   0.0008   ***
+
+  Observations = 34
+  Freedom Degrees = 31
+  Sum Squared Errors = 1.72094
+  Residual Variance = 0.0555142
+  F-test p-value = 6.94892e-13
+  R-squared = 0.835711
+  AIC Inf.Criteria = -92.298
+  BIC Inf.Criteria = -87.7189
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	   -1.30827	    3.83254 
+Y-1            	    1.23915	    1.83927 
+Y-2            	   -1.71050	   -0.22079 
+Replaced list example
+#OPTION C
+# Estimation of SETAR model with p=2 and d=2. All lags are included in the estimation,
+# the hypothesis of homoskedasticity is assumed and the linear test is performed.
+? example = SETAR(y, 2, 2, null, 0, 1)
+				Linear AR MODEL
+			OLS Standard Errors Reported
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const        1.05760     0.121911       8.675   4.13e-18  ***
+  Y-1          1.38424     0.0638948     21.66    4.45e-104 ***
+  Y-2         -0.747776    0.0639485    -11.69    1.38e-31  ***
+
+  Observations = 112
+  Freedom Degrees = 109
+  Sum Squared Errors = 5.78258
+  Residual Variance = 0.0530512
+  F-test p-value = 3.0754e-43
+  R-squared = 0.834056
+  AIC Inf.Criteria = -322.888
+  BIC Inf.Criteria = -314.732
+  Heteroskedasticity Test (P-Value) = 0.0405246
+
+
+*****************************************************************************************
+			Threshold Autoregressive Model Estimate
+			OLS Standard Errors Reported
+-------------------------------------------------------------------------------------------
+Dependent Variable	 Y              	 Sum Squared Errors	 4.3482
+Threshold Variable	 Y-2            	 Residual Variance	 0.0410
+Threshold Estimate	 3.3101	 		 Joint R-Squared	 0.8752
+0.95 Conf.Interval  	 [2.6117; 3.3860]	 AIC Inf.Criterion	 -347.72
+Heterosk_Test (pv)	 0.3452	                 BIC Inf.Criterion	 -336.07
+
+*****************************************************************************************
+Regime1: Y-2 <= 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.588437    0.144652      4.068   4.74e-05 ***
+  Y-1          1.26428     0.0658690    19.19    4.17e-82 ***
+  Y-2         -0.428429    0.0782145    -5.478   4.31e-08 ***
+
+  Observations = 78
+  Freedom Degrees = 75
+  Sum Squared Errors = 2.62725
+  Residual Variance = 0.03503
+  F-test p-value = 7.73738e-37
+  R-squared = 0.8911
+  AIC Inf.Criteria = -255.421
+  BIC Inf.Criteria = -248.351
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	    0.30492	    0.94640 
+Y-1            	    1.13518	    1.39848 
+Y-2            	   -0.62106	   -0.27513 
+ 
+*****************************************************************************************
+Regime1: Y-2 > 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.16569      0.884837     1.317   0.1877  
+  Y-1          1.59925      0.109989    14.54    6.75e-48 ***
+  Y-2         -1.01158      0.267500    -3.782   0.0002   ***
+
+  Observations = 34
+  Freedom Degrees = 31
+  Sum Squared Errors = 1.72094
+  Residual Variance = 0.0555142
+  F-test p-value = 6.94892e-13
+  R-squared = 0.835711
+  AIC Inf.Criteria = -92.298
+  BIC Inf.Criteria = -87.7189
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	   -1.68395	    3.46191 
+Y-1            	    1.33684	    1.88132 
+Y-2            	   -1.71281	   -0.17648 
+                                        
+*****************************************************************************************
+	   Test of Null of No Threshold Against Alternative of Threshold
+	   		Under Maintained Assumption of Homoskedastic Errors
+*****************************************************************************************
+
+Number of Bootstrap Replications		1000
+Trimming Percentage				0.15
+Threshold Estimate				3.3101
+LM-test for no threshold			36.947
+Bootstrap P-Value				0
+Replaced list example
+#OPTION D
+# Estimation of SETAR model with p=2 and d=2. All lags are included in the estimation,
+# the hypothesis of heteroskedasticity is assumed and the linear test is performed.
+? example = SETAR(y, 2, 2, null, 1, 1)
+				Linear AR MODEL
+			Heteroskedasticity Correction Used
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        1.05760     0.124651       8.484   2.17e-17 ***
+  Y-1          1.38424     0.0723675     19.13    1.48e-81 ***
+  Y-2         -0.747776    0.0710869    -10.52    7.05e-26 ***
+
+  Observations = 112
+  Freedom Degrees = 109
+  Sum Squared Errors = 5.78258
+  Residual Variance = 0.0530512
+  F-test p-value = 3.0754e-43
+  R-squared = 0.834056
+  AIC Inf.Criteria = -322.888
+  BIC Inf.Criteria = -314.732
+  Heteroskedasticity Test (P-Value) = 0.0405246
+
+
+*****************************************************************************************
+			Threshold Autoregressive Model Estimate
+			Heteroskedasticity Correction Used
+-------------------------------------------------------------------------------------------
+Dependent Variable	 Y              	 Sum Squared Errors	 4.3482
+Threshold Variable	 Y-2            	 Residual Variance	 0.0410
+Threshold Estimate	 3.3101	 		 Joint R-Squared	 0.8752
+0.95 Conf.Interval  	 [2.6117; 3.3860]	 AIC Inf.Criterion	 -347.72
+Heterosk_Test (pv)	 0.3452	                 BIC Inf.Criterion	 -336.07
+
+*****************************************************************************************
+Regime1: Y-2 <= 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        0.588437    0.116363      5.057   4.26e-07 ***
+  Y-1          1.26428     0.0700299    18.05    7.42e-73 ***
+  Y-2         -0.428429    0.0801304    -5.347   8.96e-08 ***
+
+  Observations = 78
+  Freedom Degrees = 75
+  Sum Squared Errors = 2.62725
+  Residual Variance = 0.03503
+  F-test p-value = 7.73738e-37
+  R-squared = 0.8911
+  AIC Inf.Criteria = -255.421
+  BIC Inf.Criteria = -248.351
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	    0.14161	    0.99768 
+Y-1            	    1.08246	    1.63189 
+Y-2            	   -0.88703	   -0.14052 
+ 
+*****************************************************************************************
+Regime1: Y-2 > 3.3101
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.16569      0.914769     1.274   0.2026  
+  Y-1          1.59925      0.102476    15.61    6.61e-55 ***
+  Y-2         -1.01158      0.302023    -3.349   0.0008   ***
+
+  Observations = 34
+  Freedom Degrees = 31
+  Sum Squared Errors = 1.72094
+  Residual Variance = 0.0555142
+  F-test p-value = 6.94892e-13
+  R-squared = 0.835711
+  AIC Inf.Criteria = -92.298
+  BIC Inf.Criteria = -87.7189
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	   -1.30827	    3.83254 
+Y-1            	    1.23915	    1.83927 
+Y-2            	   -1.71050	   -0.22079 
+                                        
+*****************************************************************************************
+	   Test of Null of No Threshold Against Alternative of Threshold
+   		Allowing Heteroskedastic Errors (White Corrected)
+*****************************************************************************************
+
+Number of Bootstrap Replications		1000
+Trimming Percentage				0.15
+Threshold Estimate				3.3261
+LM-test for no threshold			21.844
+Bootstrap P-Value				0.001
+Replaced list example
+#If you want estimate the SETAR model using not all the lags from 1 to p, create a
+# matrix with the lags you want to include:
+? matrix included={2}
+Generated matrix included = {2}
+#After that the estimation is performed as before for the options A, B, C, D.
+#E.g. for the case C execute this command:
+? example = SETAR(y, 2, 2, &included, 0, 1)
+				Linear AR MODEL
+			OLS Standard Errors Reported
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       1.90700      0.264687     7.205   5.82e-13 ***
+  Y-2         0.347148     0.0898384    3.864   0.0001   ***
+
+  Observations = 112
+  Freedom Degrees = 110
+  Sum Squared Errors = 30.6818
+  Residual Variance = 0.278925
+  F-test p-value = 0.000188879
+  R-squared = 0.119518
+  AIC Inf.Criteria = -139.003
+  BIC Inf.Criteria = -133.566
+  Heteroskedasticity Test (P-Value) = 0.236784
+
+
+*****************************************************************************************
+			Threshold Autoregressive Model Estimate
+			OLS Standard Errors Reported
+-------------------------------------------------------------------------------------------
+Dependent Variable	 Y              	 Sum Squared Errors	 27.2467
+Threshold Variable	 Y-2            	 Residual Variance	 0.2523
+Threshold Estimate	 3.2243	 		 Joint R-Squared	 0.2181
+0.95 Conf.Interval  	 [2.7185; 3.3860]	 AIC Inf.Criterion	 -144.26
+Heterosk_Test (pv)	 0.2728	                 BIC Inf.Criterion	 -132.47
+
+*****************************************************************************************
+Regime1: Y-2 <= 3.2243
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       0.949347      0.365825    2.595   0.0095   ***
+  Y-2         0.746507      0.139401    5.355   8.55e-08 ***
+
+  Observations = 75
+  Freedom Degrees = 73
+  Sum Squared Errors = 15.7218
+  Residual Variance = 0.215367
+  F-test p-value = 1.6103e-07
+  R-squared = 0.315153
+  AIC Inf.Criteria = -111.156
+  BIC Inf.Criteria = -106.521
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	    0.11371	    2.27618 
+Y-2            	    0.18302	    1.07846 
+ 
+*****************************************************************************************
+Regime1: Y-2 > 3.2243
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const       1.28902       1.94075     0.6642   0.5066 
+  Y-2         0.478813      0.553008    0.8658   0.3866 
+
+  Observations = 37
+  Freedom Degrees = 35
+  Sum Squared Errors = 11.5249
+  Residual Variance = 0.329284
+  F-test p-value = 0.453602
+  R-squared = 0.0161455
+  AIC Inf.Criteria = -37.1009
+  BIC Inf.Criteria = -33.8791
+
+ 
+0.95 Confidence Regions for Paramhrs:
+
+Variable             Low              High
+--------------------------------------------
+const          	   -5.22072	    7.42017 
+Y-2            	   -1.27080	    2.30120 
+                                        
+*****************************************************************************************
+	   Test of Null of No Threshold Against Alternative of Threshold
+	   		Under Maintained Assumption of Homoskedastic Errors
+*****************************************************************************************
+
+Number of Bootstrap Replications		1000
+Trimming Percentage				0.15
+Threshold Estimate				3.2243
+LM-test for no threshold			14.12
+Bootstrap P-Value				0.036
+Replaced list example
+Done

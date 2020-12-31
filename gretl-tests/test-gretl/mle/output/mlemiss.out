@@ -1,0 +1,75 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run mlemiss.inp
+ /home/cottrell/stats/test-gretl/mle/mlemiss.inp
+? open poisson.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/poisson.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 4 variables:
+  0) const    1) x1       2) x2       3) y      
+
+? x1[1] = NA
+Modified series x1 (ID 1)
+? poisson y 0 x1 x2
+
+Convergence achieved after 6 iterations
+
+Model 1: Poisson, using observations 2-100 (n = 99)
+Dependent variable: y
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const       1.10828      0.0866696    12.79    1.93e-37  ***
+  x1          0.931065     0.120300      7.740   9.98e-15  ***
+  x2          0.959221     0.0367472    26.10    3.35e-150 ***
+
+Mean dependent var   8.505051   S.D. dependent var   10.69462
+Sum squared resid    1373.917   S.E. of regression   3.783072
+McFadden R-squared   0.648343   Adjusted R-squared   0.643681
+Log-likelihood      -226.3046   Akaike criterion     458.6092
+Schwarz criterion    466.3945   Hannan-Quinn         461.7591
+
+Overdispersion test: Chi-square(1) = 3.1907 [0.0741]
+
+? scalar lmean = ln(mean(y))
+Generated scalar lmean = 2.1318
+? scalar smart = 0
+Generated scalar smart = 0
+? scalar b0 = lmean
+Generated scalar b0 = 2.1318
+? scalar b1 = 0.0
+Generated scalar b1 = 0
+? scalar b2 = 0.0
+Generated scalar b2 = 0
+? set bfgs_toler 1e-16
+? mle lt = -exp(b0+b1*x1+b2*x2) + y*(b0+b1*x1+b2*x2)
+? genr eXb = exp(b0+b1*x1+b2*x2)
+? deriv b0 = y - eXb
+? deriv b1 = (y - eXb)*x1
+? deriv b2 = (y - eXb)*x2
+? end mle --hessian
+Using analytical derivatives
+Tolerance = 1e-16
+
+Function evaluations: 83
+Evaluations of gradient: 16
+
+Model 2: ML, using observations 2-100 (n = 99)
+lt = -exp(b0+b1*x1+b2*x2) + y*(b0+b1*x1+b2*x2)
+Standard errors based on Hessian
+
+             estimate   std. error     z       p-value 
+  -----------------------------------------------------
+  b0         1.10828    0.0866696    12.79    1.93e-37  ***
+  b1         0.931065   0.120300      7.740   9.98e-15  ***
+  b2         0.959221   0.0367472    26.10    3.35e-150 ***
+
+Log-likelihood       1377.669   Akaike criterion    -2749.338
+Schwarz criterion   -2741.553   Hannan-Quinn        -2746.188
+
+Done

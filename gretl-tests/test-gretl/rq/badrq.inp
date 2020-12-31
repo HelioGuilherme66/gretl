@@ -1,0 +1,6 @@
+open data4-1
+matrix tau = {.25,.5,.75}
+# quantreg tau 1 0 2 3 4 --robust
+# quantreg .25 1 0 2 3 4 --robust
+matrix tau = {.1,.2,.3,.4,.5,.6,.7,.8,.9}
+quantreg .1 1 0 2 3 4 --intervals

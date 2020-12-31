@@ -1,0 +1,12 @@
+nulldata 100
+setobs 12 1959:1
+
+string label = "1960:1"
+string two_labels = "1960:1 1970:1"
+
+t1 = obsnum(1960:1)
+print t1
+t2 = obsnum(label)
+print t2
+t3 = obsnum(strsplit(two_labels,1))
+print t3

@@ -1,0 +1,22 @@
+open ./wage.gdt
+genr eta2 = (eta/10)^2
+
+summary lnw eta eta2
+
+# make sure the panel apparatus works ok
+panel lnw 0 sesso eta eta2
+panel lnw 0 sesso eta eta2 --random
+
+# Anderson-Hsiao
+dw = diff(lnw)
+# deta = const
+deta2 = diff(eta2)
+ols dw(-1) 0 lnw(-2) deta2 -q
+genr dwlf = $yhat
+ols dw 0 dwlf deta2 
+# this ought to work, but doesn't
+tsls dw 0 dw(-1) deta2 ; lnw(-2) 0 deta2 
+
+discrete sesso
+summary sesso 
+freq sesso

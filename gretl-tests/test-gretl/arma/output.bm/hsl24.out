@@ -1,0 +1,55 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run hsl24.inp
+ /home/cottrell/stats/test-gretl/arma/hsl24.inp
+# NAM series C - Pankratz series 24, Housing Sales
+# apparently over the sample 65:1,74:12  (skip final 12 months).
+#         NAM ML1   NAM ML2     TSP
+# theta    .200      .216     .201153
+# (s.e.)  (.086)    (.083)   (.092315)
+# THETA    .967     1.000    1.000000
+# (s.e.)  (.724)    (57.3)   (.127450)
+# LogL   -295.760  -295.745  -295.730
+? open hsl24
+
+Read datafile /home/cottrell/stats/test-gretl/arma/hsl24.gdt
+periodicity: 12, maxobs: 132,
+observations range: 1965:01-1975:12
+
+Listing 2 variables:
+  0) const    1) hsl24  
+
+? smpl ; 1974:12
+Full data range: 1965:01 - 1975:12 (n = 132)
+Current sample: 1965:01 - 1974:12 (n = 120)
+
+? arima 0 1 1 ; 0 1 1 ; hsl24 --nc
+Function evaluations: 29
+Evaluations of gradient: 10
+
+Model 1: ARIMA, using observations 1966:02-1974:12 (T = 107)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) hsl24
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  theta_1     -0.201153    0.0870432    -2.311    0.0208   **
+  Theta_1     -1.00000     0.138103     -7.241    4.45e-13 ***
+
+Mean dependent var  -0.084112   S.D. dependent var   4.874116
+Mean of innovations -0.149676   S.D. of innovations  3.373930
+Log-likelihood      -295.7303   Akaike criterion     597.4606
+Schwarz criterion    605.4791   Hannan-Quinn         600.7112
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           4.9713     0.0000     4.9713     0.0000
+  MA (seasonal)
+    Root  1           1.0000     0.0000     1.0000     0.0000
+  -----------------------------------------------------------
+
+Done

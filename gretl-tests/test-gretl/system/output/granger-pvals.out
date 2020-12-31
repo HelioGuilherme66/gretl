@@ -1,0 +1,140 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run granger-pvals.inp
+ /home/cottrell/stats/test-gretl/system/granger-pvals.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? series Y = INCOME
+Generated series Y (ID 12)
+? series X = PRIME
+Generated series X (ID 13)
+? series Z = UNEMP
+Generated series Z (ID 14)
+? ols Y const Y(-1) X(-1) Z(-1)
+
+Model 1: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.231023     0.305673      0.7558   0.4528  
+  Y_1         0.985053     0.0225631    43.66     1.28e-46 ***
+  X_1        -0.00815078   0.00445579   -1.829    0.0724   *
+  Z_1         0.00800986   0.0140624     0.5696   0.5711  
+
+Mean dependent var   10.54575   S.D. dependent var   0.829460
+Sum squared resid    0.820470   S.E. of regression   0.117925
+R-squared            0.980766   Adjusted R-squared   0.979788
+F(3, 59)             1002.804   P-value(F)           1.48e-50
+Log-likelihood       47.34878   Akaike criterion    -86.69755
+Schwarz criterion   -78.12501   Hannan-Quinn        -83.32593
+rho                 -0.189098   Durbin's h          -1.525582
+
+Excluding the constant, p-value was highest for variable 17 (Z_1)
+
+? restrict
+? b[3] = 0
+? end restrict
+Restriction:
+ b[X_1] = 0
+
+Test statistic: F(1, 59) = 3.34617, with p-value = 0.0724161
+
+Restricted estimates:
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      0.212544      0.311422      0.6825    0.4976  
+  Y_1        0.981748      0.0229262    42.82      1.10e-46 ***
+  X_1        0.00000       0.00000      NA        NA       
+  Z_1        0.00317239    0.0140789     0.2253    0.8225  
+
+  Standard error of the regression = 0.120208
+? pv1 = $pvalue
+Generated scalar pv1 = 0.0724161
+? sys <- system
+? equation Y const Y(-1) X(-1) Z(-1)
+? equation X const Y(-1) X(-1) Z(-1)
+? equation Z const Y(-1) X(-1) Z(-1)
+? end system
+? restrict sys
+? b[1,3] = 0
+? end restrict
+Restriction:
+ b[1,3] = 0
+? estimate sys method=ols
+
+Equation system, sys
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      0.212544      0.314050      0.6768    0.5012  
+  Y_1        0.981748      0.0231196    42.46      6.25e-46 ***
+  X_1        0.00000       0.00000      NA        NA       
+  Z_1        0.00317239    0.0141977     0.2234    0.8240  
+
+Mean dependent var   10.54575   S.D. dependent var   0.829460
+Sum squared resid    0.867003   S.E. of regression   0.121223
+R-squared            0.979675   Adjusted R-squared   0.978641
+
+Equation 2: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: X
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        6.91883     3.32023       2.084    0.0415   **
+  Y_1         -0.351967    0.245081     -1.436    0.1562  
+  X_1          0.944322    0.0483989    19.51     2.05e-27 ***
+  Z_1         -0.371403    0.152746     -2.432    0.0181   **
+
+Mean dependent var   10.71413   S.D. dependent var   3.419751
+Sum squared resid    96.80185   S.E. of regression   1.280902
+R-squared            0.866493   Adjusted R-squared   0.859705
+
+Equation 3: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: Z
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.417535     0.736462      0.5669   0.5729  
+  Y_1        -0.0498310    0.0543616    -0.9167   0.3631  
+  X_1         0.0628472    0.0107354     5.854    2.25e-07 ***
+  Z_1         0.913075     0.0338806    26.95     7.38e-35 ***
+
+Mean dependent var   6.984127   S.D. dependent var   1.356372
+Sum squared resid    4.762650   S.E. of regression   0.284118
+R-squared            0.958246   Adjusted R-squared   0.956123
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+     0.013762      (0.063)     (-0.267)
+    0.0091437       1.5365     (-0.298)
+   -0.0086106     -0.10161     0.075598
+
+log determinant = -6.60598
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 10.3379 [0.0159]
+
+F test for the specified restrictions:
+  F(1,59) = 3.34617 [0.0724]
+
+? pv2 = $pvalue
+Generated scalar pv2 = 0.0724161
+pv1 - pv2 = -1.55015e-14
+Done

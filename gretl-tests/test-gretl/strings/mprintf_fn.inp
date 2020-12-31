@@ -1,0 +1,8 @@
+set seed 123763
+
+matrix M = muniform(6,2)
+matrix C = mcorr(M)
+
+printf("C:\n%8.3f\n", C)
+printf("C:\n%8.3f\n", mcorr(M))
+

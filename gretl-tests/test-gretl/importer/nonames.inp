@@ -1,0 +1,2 @@
+open nonames.xls --sheet=3
+print -o

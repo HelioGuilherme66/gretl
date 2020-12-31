@@ -1,0 +1,87 @@
+# add x to the individuals file
+ open people.csv --quiet
+ join hholds.csv xh --ikey=hid
+ print pid hid xh --byobs
+ printf "-----------------------------------------------------------------\n\n"
+
+# add wage to the individuals file (with a different name)
+ open people.csv -q
+ join jobs.csv y --ikey=pid --okey=KEY --data=income 
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add wage to the individuals file (with a different, already existing name)
+ open people.csv -q
+ series y = 12345
+ print -o
+ join jobs.csv y --ikey=pid --okey=KEY --data=income 
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add wage to the individuals file (after subsampling)
+ open people.csv -q
+ series y = 12345
+ smpl age==40 --restrict --replace
+ join jobs.csv y --ikey=pid --okey=KEY --data=income 
+ smpl full
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add wage to the individual file (only for self-employed)
+ open people.csv -q
+ join jobs.csv sempl_y --ikey=pid --okey=KEY --data=income --filter="selfemp==1"
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add size to the households file
+ open hholds.csv -q
+ join people.csv N --ikey=hid --aggr=count
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add average and min age to the households file
+ open hholds.csv -q
+ join people.csv avgage --ikey=hid --data=age --aggr=avg
+ join people.csv minage --ikey=hid --data=age --aggr=min
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add no of self-employed to the households file (solution 1: suboptimal
+# because of resulting NAs which really are zeros))
+ open jobs.csv -q
+ join people.csv hid --ikey=KEY --okey=pid --data=hid
+ store tmp.csv KEY hid selfemp --csv
+ open hholds.csv -q
+ join tmp.csv no_sempl --ikey=hid --data=selfemp --aggr=sum
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# add no of self-employed to the households file (solution 2)
+ open people.csv -q
+ join jobs.csv selfemp --ikey=pid --okey=KEY
+ series foo = misszero(selfemp)
+ store tmp.csv pid hid foo xp --csv
+ open hholds.csv -q
+ join tmp.csv no_sempl --ikey=hid --data=foo --aggr=sum
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# filter test (sum xp for the youngsters, then for women)
+ open hholds.csv -q
+ join people.csv young_xp --ikey=hid --filter="age<40" --data=xp --aggr=sum
+ join people.csv female_xp --ikey=hid --filter="gender==\"F\"" --data=xp --aggr=sum
+ print hid young_xp female_xp -o
+ printf "-----------------------------------------------------------------\n\n"
+
+# filter test (sum xp for the individuals for whom gender==str2)
+open hholds.csv -q
+join people.csv foo --ikey=hid --filter="gender==str2" --data=xp --aggr=sum
+ print -o
+ printf "-----------------------------------------------------------------\n\n"
+ 
+# test use of string keys
+ open hholds.csv -q
+ join countries.csv GDP --ikey=country
+ print hid country GDP -o
+ printf "-----------------------------------------------------------------\n\n"
+

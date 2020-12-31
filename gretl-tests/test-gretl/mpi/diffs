@@ -1,0 +1,26 @@
+=== /home/cottrell/stats/test-gretl/mpi ===
+output/bcast-test.out vs newout/bcast-test.out:
+5,6c5
+< gretlcli-mpi 1.9.15cvs
+< rank 2: x = 3.14159
+---
+> gretlmpi 1.10.0cvs
+7a7
+> rank 2: x = 3.14159
+output/reduce-mat-test.out vs newout/reduce-mat-test.out:
+5c5
+< gretlcli-mpi 1.9.15cvs
+---
+> gretlmpi 1.10.0cvs
+output/reduce-test.out vs newout/reduce-test.out:
+5c5
+< gretlcli-mpi 1.9.15cvs
+---
+> gretlmpi 1.10.0cvs
+output/send-recv-test.out vs newout/send-recv-test.out:
+5,6d4
+< gretlcli-mpi 1.9.15cvs
+< Done
+14a13,14
+> gretlmpi 1.10.0cvs
+> Done

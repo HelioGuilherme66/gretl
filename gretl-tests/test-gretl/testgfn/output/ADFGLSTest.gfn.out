@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:36
+? run ADFGLSTest.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/ADFGLSTest.gfn.inp
+? include ./ADFGLSTest.gfn
+ /home/cottrell/stats/test-gretl/testgfn/ADFGLSTest.gfn
+ADFGLSTest 0.055, 2015-04-12 (Oleh Komashko)
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? ADFGLSTest(LRM)
+
+Augmented Dickey-Fuller (GLS) test for Y
+including 2 lags of (1-L)Y
+(max was 10, criterion modified AIC)
+sample size 52
+unit-root null hypothesis: a = 1
+
+  test with constant 
+  model: (1-L)y = b0 + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.0315361
+  test statistic: tau = -1.04754
+  asymptotic p-value 0.2665
+  1st-order autocorrelation coeff. for e: 0.030
+  lagged differences: F(2, 49) = 6.968 [0.0022]
+
+  Interpolated           10%      5%    2.5%      1%
+  critical values:     -1.94   -2.25   -2.53   -2.87
+
+  Estimated p-value = 0.4719
+
+? ADFGLSTest(LRM,1)
+
+Augmented Dickey-Fuller (GLS) test for Y
+including 2 lags of (1-L)Y
+(max was 10, criterion modified AIC)
+sample size 52
+unit-root null hypothesis: a = 1
+
+  with constant and trend 
+  model: (1-L)y = b0 + b1*t + (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.0659515
+  test statistic: tau = -1.74438
+
+                     10%     5%     2.5%     1%
+  Critical values: -2.74   -3.03   -3.29   -3.58
+  1st-order autocorrelation coeff. for e: 0.035
+  lagged differences: F(2, 49) = 6.549 [0.0030]
+
+  Interpolated
+  critical values: -2.86   -3.16   -3.43   -3.77
+
+  Estimated p-value = 0.6199
+
+Done

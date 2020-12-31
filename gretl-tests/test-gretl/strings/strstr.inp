@@ -1,0 +1,8 @@
+nulldata 10
+string foo = "Help it's a string"
+string boo = strstr(foo, "a")
+print "@boo"
+boo
+string s1 = "egg"
+string s1 += "nogg"
+s1

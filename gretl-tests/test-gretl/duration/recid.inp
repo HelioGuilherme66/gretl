@@ -1,0 +1,33 @@
+# see http://data.princeton.edu/pop509a/recid1.html
+
+open recid.gdt -q
+list X = workprg priors tserved felon alcohol drugs \
+ black married educ age
+
+duration durat 0 X ; cens
+series wpred = $yhat
+series wres = $uhat
+
+duration durat 0 X ; cens --expon
+series expred = $yhat
+series exres = $uhat
+
+duration durat 0 X ; cens --loglog
+series llpred = $yhat
+series llres = $uhat
+
+duration durat 0 X ; cens --lognorm
+series lnpred = $yhat
+series lnres = $uhat
+
+smpl 1 10
+print durat wpred wres -o
+print durat expred exres -o
+print durat llpred llres -o
+print durat lnpred lnres -o
+
+
+
+
+
+

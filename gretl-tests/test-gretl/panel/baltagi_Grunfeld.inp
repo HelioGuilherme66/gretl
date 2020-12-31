@@ -1,0 +1,23 @@
+open baltagi_Grunfeld
+
+genr unitdum
+
+ols INV 0 F C
+hausman 
+
+scalar theta = 0.86122
+
+loop foreach i INV F C
+  ols $i du_* -q
+  genr $iq = $uhat
+  genr $ip = $yhat
+  genr $itilde = $i - theta*$ip 
+end loop
+
+ols INVtilde 0 Ftilde Ctilde -q
+add Fq Cq -q
+scalar H = $test*2
+
+panel INV 0 F C
+panel INV 0 F C --random-effects
+

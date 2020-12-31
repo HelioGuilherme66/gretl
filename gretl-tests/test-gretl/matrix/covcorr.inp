@@ -1,0 +1,9 @@
+open data4-1
+list X = 2 3 4
+corr X
+matrix M = { X }
+matrix V = mcov(M)
+V
+matrix C = mcorr(M)
+C
+

@@ -1,0 +1,6 @@
+open abdata.gdt
+
+genr dummy
+list dlist = dummy_4 dummy_5 dummy_6 dummy_7 dummy_8 dummy_9
+pooled n 0 n(-1 to -2) w(0 to -1) k(0 to -2) ys(0 to -2) dlist
+quit

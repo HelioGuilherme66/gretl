@@ -1,0 +1,67 @@
+set echo off
+set messages off
+
+function series rec_ols (series y, list X, matrix *coef, matrix *vcv)
+    matrix my = { y }
+    matrix mX = { X }
+    k = cols(mX)
+    T = rows(my)
+    series ess = NA
+    matrix coef = zeros(T, k)
+    matrix vcv = zeros(T, k*(k+1)/2)
+
+    dep = my[1:k]
+    ind = mX[1:k,]
+    C = invpd(ind'ind)
+    xy = dep'ind 
+
+    b = xy*C        
+
+    scalar ssy = dep'dep    
+    scalar esst = 0
+    scalar df = 0
+    start = k+1    
+    loop for i=start..T --quiet
+        xt = mX[i,]
+        scalar yt = my[i]
+        xy += xt.*yt
+        scalar ssy += yt*yt
+	df++
+
+        scalar gain = 1/sqrt(1+qform(xt,C))
+        matrix tmp = gain*C*xt'
+        C -= tmp*tmp'
+        b = xy*C 
+	esst = ssy - xy*b'
+	s2 = esst/df
+
+        ess[i] = esst
+        coef[i,] = b
+	vcv[i,] = s2*vech(C)'
+    endloop
+
+    return ess
+end function
+
+set seed 893477
+nulldata 10
+setobs 1 1 --special
+
+x1 = normal()
+x2 = normal()
+y = x1 - x2 + normal()
+list reg = const x1 x2
+
+matrix vcv
+matrix coef
+rss = rec_ols(y, reg, &coef, &vcv)
+
+print coef
+print vcv
+print rss -o
+
+smpl 1 5
+ols y reg --simple
+smpl full
+ols y reg --simple
+

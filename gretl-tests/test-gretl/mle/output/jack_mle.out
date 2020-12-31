@@ -1,0 +1,73 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run jack_mle.inp
+ /home/cottrell/stats/test-gretl/mle/jack_mle.inp
+? open poisson.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/poisson.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 4 variables:
+  0) const    1) x1       2) x2       3) y      
+
+? poisson y 0 x1 x2
+
+Convergence achieved after 6 iterations
+
+Model 1: Poisson, using observations 1-100
+Dependent variable: y
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const       1.09590      0.0864277    12.68    7.64e-37  ***
+  x1          0.940641     0.120287      7.820   5.28e-15  ***
+  x2          0.963364     0.0366943    26.25    6.47e-152 ***
+
+Mean dependent var   8.430000   S.D. dependent var   10.66691
+Sum squared resid    1376.939   S.E. of regression   3.767658
+McFadden R-squared   0.648507   Adjusted R-squared   0.643891
+Log-likelihood      -228.4242   Akaike criterion     462.8484
+Schwarz criterion    470.6640   Hannan-Quinn         466.0115
+
+Overdispersion test: Chi-square(1) = 3.223 [0.0726]
+
+? scalar lmean = ln(mean(y))
+Generated scalar lmean = 2.1318
+? scalar smart = 0
+Generated scalar smart = 0
+? scalar b0 = lmean
+Generated scalar b0 = 2.1318
+? scalar b1 = 0.0
+Generated scalar b1 = 0
+? scalar b2 = 0.0
+Generated scalar b2 = 0
+? set bfgs_toler 1e-16
+? mle lt = -exp(b0+b1*x1+b2*x2) + y*(b0+b1*x1+b2*x2)
+? genr eXb = exp(b0+b1*x1+b2*x2)
+? deriv b0 = y - eXb
+? deriv b1 = (y - eXb)*x1
+? deriv b2 = (y - eXb)*x2
+? end mle
+Using analytical derivatives
+Tolerance = 1e-16
+
+Function evaluations: 47
+Evaluations of gradient: 14
+
+Model 2: ML, using observations 1-100
+lt = -exp(b0+b1*x1+b2*x2) + y*(b0+b1*x1+b2*x2)
+Standard errors based on Outer Products matrix
+
+             estimate   std. error     z      p-value 
+  ----------------------------------------------------
+  b0         1.09590    0.0659376    16.62   4.97e-62  ***
+  b1         0.940641   0.0871899    10.79   3.90e-27  ***
+  b2         0.963364   0.0305087    31.58   7.71e-219 ***
+
+Log-likelihood       1375.549   Akaike criterion    -2745.099
+Schwarz criterion   -2737.283   Hannan-Quinn        -2741.936
+
+Done

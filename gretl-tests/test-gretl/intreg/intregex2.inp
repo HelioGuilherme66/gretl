@@ -1,0 +1,9 @@
+# cf. http://www.ats.ucla.edu/stat/stata/dae/intreg2.htm
+open intregex2.dta
+intreg lgpa ugpa 0 write rating read
+intreg lgpa ugpa 0 write rating read --robust
+fcast irfc
+print lgpa ugpa irfc --byobs
+
+
+

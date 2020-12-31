@@ -1,0 +1,125 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run gregory_hansen.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/gregory_hansen.gfn.inp
+? include ./gregory_hansen.gfn
+ /home/cottrell/stats/test-gretl/testgfn/gregory_hansen.gfn
+gregory_hansen 0.6, 2014-11-08 (Artur Tarassow)
+#################
+#	 EXAMPLE: "Residual-based tests for cointegration in models with regime shifts"
+#    by Allan W. Gregory and Bruce E. Hansen	#
+#################
+   first row label "1959Q1", last label "1990Q4"
+trying to parse row labels as dates...
+   1959: probably a year... quarter 1?
+Listing 5 variables:
+  0) const    1) xx1      2) xx2      3) xx3      4) xx4    
+
+******** ADF Test ***********
+t-statistic = -4.778
+AR lag = 4
+break point (ADF) = 0.66
+Critical values (ADF): 
+CV 0.01 = -5.970 
+CV 0.025 = -5.730 
+CV 0.05 = -5.500 
+CV 0.10 = -5.230
+
+******** Phillips Test ********
+Zt =            -4.180
+breakpoint (Zt) =  0.69
+Critical values (Zt): 
+CV 0.01 = -5.970 
+CV 0.025 = -5.730 
+CV 0.05 = -5.500 
+CV 0.10 = -5.230
+
+Za =              -31.558
+breakpoint(Za) = 0.69
+Critical values (Za): 
+CV 0.01 = -68.210 
+CV 0.025 = -63.280 
+CV 0.05 = -58.330 
+CV 0.10 = -52.850
+
+
+Step 1: cointegrating regression
+
+Cointegrating regression - 
+OLS, using observations 1960:1-1990:4 (T = 124)
+Dependent variable: md
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      14.5290       0.899205       16.16    5.37e-32 ***
+  ynr        -1.55596      0.129585      -12.01    2.37e-22 ***
+  sr          0.00146597   4.99869e-05    29.33    7.91e-57 ***
+
+Mean dependent var   5.720782   S.D. dependent var   0.568723
+Sum squared resid    0.313437   S.E. of regression   0.050896
+R-squared            0.992122   Adjusted R-squared   0.991991
+Log-likelihood       194.8389   Akaike criterion    -383.6777
+Schwarz criterion   -375.2169   Hannan-Quinn        -380.2407
+rho                  0.907387   Durbin-Watson        0.186993
+
+Step 2: testing for a unit root in uhat
+
+Augmented Dickey-Fuller test for uhat
+including one lag of (1-L)uhat
+(max was 6, criterion AIC)
+sample size 122
+unit-root null hypothesis: a = 1
+
+  model: (1-L)y = (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.110659
+  test statistic: tau_c(3) = -2.84301
+  asymptotic p-value 0.31
+  1st-order autocorrelation coeff. for e: 0.010
+
+There is evidence for a cointegrating relationship if:
+(a) The unit-root hypothesis is not rejected for the individual variables, and
+(b) the unit-root hypothesis is rejected for the residuals (uhat) from the 
+    cointegrating regression.
+
+
+Step 1: cointegrating regression
+
+Cointegrating regression - 
+OLS, using observations 1960:1-1990:4 (T = 124)
+Dependent variable: md
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      14.9080        0.780721       19.10    3.54e-38 ***
+  ynr        -1.53197       0.112252      -13.65    3.57e-26 ***
+  sr          0.000951201   9.09320e-05    10.46    1.35e-18 ***
+  time        0.00912523    0.00141768      6.437   2.62e-09 ***
+
+Mean dependent var   5.720782   S.D. dependent var   0.568723
+Sum squared resid    0.232993   S.E. of regression   0.044064
+R-squared            0.994144   Adjusted R-squared   0.993997
+Log-likelihood       213.2274   Akaike criterion    -418.4547
+Schwarz criterion   -407.1736   Hannan-Quinn        -413.8720
+rho                  0.920514   Durbin-Watson        0.158039
+
+Step 2: testing for a unit root in uhat
+
+Augmented Dickey-Fuller test for uhat
+including one lag of (1-L)uhat
+(max was 6, criterion AIC)
+sample size 122
+unit-root null hypothesis: a = 1
+
+  model: (1-L)y = (a-1)*y(-1) + ... + e
+  estimated value of (a - 1): -0.093559
+  test statistic: tau_ct(3) = -2.64256
+  asymptotic p-value 0.6231
+  1st-order autocorrelation coeff. for e: -0.009
+
+There is evidence for a cointegrating relationship if:
+(a) The unit-root hypothesis is not rejected for the individual variables, and
+(b) the unit-root hypothesis is rejected for the residuals (uhat) from the 
+    cointegrating regression.
+

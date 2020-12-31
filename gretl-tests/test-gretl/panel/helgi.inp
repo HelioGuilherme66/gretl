@@ -1,0 +1,23 @@
+open helgi.gdt -q
+# y[1:02] = NA
+# x[2:06] = NA
+panel y 0 x --random --nerlove
+
+panel y 0 x --fixed --quiet
+s2eps = $ess / $T
+matrix a = pshrink($ahat)
+a = a .- meanc(a)
+s2v = a'a / 2
+wi2 = 10*s2v + s2eps
+theta = 1 - sqrt(s2eps)/sqrt(wi2)
+
+y_ = y - theta*pmean(y)
+c_ = const - theta
+x_ = x - theta*pmean(x)
+ols y_ c_ x_
+
+
+
+
+
+

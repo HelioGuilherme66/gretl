@@ -1,0 +1,47 @@
+set echo off
+set messages off
+
+function matrix dols(series y, list X, scalar order)
+    scalar k = nelem(X)
+    list extra = null
+    list dX = diff(X)
+    loop foreach i dX --quiet
+        loop for j=1..order --quiet
+            extra += $i(-j)
+            extra += $i(+j)
+        endloop
+    endloop
+
+    ols y X dX extra --robust --quiet
+    b = {1} | -$coeff[1:k]
+    bs = $coeff[1:k] ~ $stderr[1:k]
+    vn = varname(X)
+
+    printf "\n-------------- DOLS ESTIMATION --------------\n"
+    modprint bs vn
+    
+    return b
+end function
+
+open hamilton.gdt --quiet
+
+# log of US price level
+genr p = 100*(log(PZUNEW)-log(PZUNEW[1973:01]))
+
+# log of exchange rate
+genr s = -100*(log(EXRITL)-log(EXRITL[1973:01]))
+
+# log of Italian price level
+genr pf = 100*(log(PC6IT)-log(PC6IT[1973:01]))
+
+# Set the sample period used by Hamilton
+smpl 1974:2 ;
+
+# Estimate VECM: lag order 12, cointegration rank 1
+Hamilton <- vecm 12 1 p s pf --quiet
+
+# Estimate cointegration relationship via DOLS
+list X = s pf
+beta_dols = dols(p, X, 12)
+print beta_dols
+

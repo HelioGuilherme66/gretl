@@ -1,0 +1,78 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run fe_fstats.inp
+ /home/cottrell/stats/test-gretl/panel/fe_fstats.inp
+? open abdata.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? panel WAGE 0 EMP CAP
+
+Model 1: Fixed-effects, using 1031 observations
+Included 140 cross-sectional units
+Time-series length: minimum 7, maximum 9
+Dependent variable: WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       24.7050      0.265155     93.17     0.0000   ***
+  EMP         -0.147088    0.0335803    -4.380    1.33e-05 ***
+  CAP          0.149377    0.0701510     2.129    0.0335   **
+
+Mean dependent var   23.91880   S.D. dependent var   5.648418
+Sum squared resid    4309.240   S.E. of regression   2.201656
+LSDV R-squared       0.868868   Within R-squared     0.021391
+LSDV F(141, 889)     41.77596   P-value(F)           0.000000
+Log-likelihood      -2200.210   Akaike criterion     4684.421
+Schwarz criterion    5385.657   Hannan-Quinn         4950.544
+rho                  0.367727   Durbin-Watson        0.928223
+
+Joint test on named regressors -
+  Test statistic: F(2, 889) = 9.71607
+  with p-value = P(F(2, 889) > 9.71607) = 6.69605e-05
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(139, 889) = 40.3668
+  with p-value = P(F(139, 889) > 40.3668) = 7.28982e-303
+
+? panel WAGE 0 EMP CAP --robust
+
+Model 2: Fixed-effects, using 1031 observations
+Included 140 cross-sectional units
+Time-series length: minimum 7, maximum 9
+Dependent variable: WAGE
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       24.7050      0.450949     54.78     5.48e-96 ***
+  EMP         -0.147088    0.0742213    -1.982    0.0495   **
+  CAP          0.149377    0.0868328     1.720    0.0876   *
+
+Mean dependent var   23.91880   S.D. dependent var   5.648418
+Sum squared resid    4309.240   S.E. of regression   2.201656
+LSDV R-squared       0.868868   Within R-squared     0.021391
+Log-likelihood      -2200.210   Akaike criterion     4684.421
+Schwarz criterion    5385.657   Hannan-Quinn         4950.544
+rho                  0.367727   Durbin-Watson        0.928223
+
+Joint test on named regressors -
+  Test statistic: F(2, 139) = 2.04048
+  with p-value = P(F(2, 139) > 2.04048) = 0.133841
+
+Robust test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: Welch F(139, 298.3) = 181.497
+  with p-value = P(F(139, 298.3) > 181.497) = 1.24254e-231
+
+Done

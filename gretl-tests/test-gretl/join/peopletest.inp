@@ -1,0 +1,5 @@
+open people.csv
+series s = gender==str2
+print gender str2 s -o
+print gender
+print str2 --numeric

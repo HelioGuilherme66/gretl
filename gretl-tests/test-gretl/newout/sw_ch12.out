@@ -1,0 +1,182 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run sw_ch12.inp
+ /opt/esl/share/gretl/scripts/misc/sw_ch12.inp
+# Reproduce some of the time-series material in Stock and Watson,
+# "Introduction to Econometrics", 1e, chapter 12
+? open sw_ch12.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/sw_ch12.gdt
+periodicity: 4, maxobs: 164
+observations range: 1959:1 to 1999:4
+
+Listing 7 variables:
+  0) const     1) GDP_JP    2) LHUR      3) PUNEW     4) FYGM3   
+  5) EXRUK     6) FYFF    
+
+# S & W use White's standard errors in this chapter,
+# not HAC.
+? set force_hc on
+? set hc_version 1
+# generate inflation rate
+? series infl = 400 * log(PUNEW/PUNEW(-1))
+Generated series infl (ID 7)
+? diff infl
+Listing 9 variables:
+  0) const     1) GDP_JP    2) LHUR      3) PUNEW     4) FYGM3   
+  5) EXRUK     6) FYFF      7) infl      8) d_infl  
+
+? lags d_infl LHUR
+Listing 17 variables:
+  0) const       1) GDP_JP      2) LHUR        3) PUNEW       4) FYGM3     
+  5) EXRUK       6) FYFF        7) infl        8) d_infl      9) d_infl_1  
+ 10) d_infl_2   11) d_infl_3   12) d_infl_4   13) LHUR_1     14) LHUR_2    
+ 15) LHUR_3     16) LHUR_4    
+
+? smpl 1962:1 1999:4
+Full data range: 1959:1 - 1999:4 (n = 164)
+Current sample: 1962:1 - 1999:4 (n = 152)
+
+# equation 12.7
+? ols d_infl 0 d_infl_1 --robust
+
+Model 1: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0188173     0.135066     0.1393   0.8894 
+  d_infl_1   -0.210960      0.105981    -1.991    0.0483  **
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    414.3174   S.E. of regression   1.661962
+R-squared            0.044592   Adjusted R-squared   0.038223
+F(1, 150)            3.962239   P-value(F)           0.048349
+Log-likelihood      -291.8878   Akaike criterion     587.7756
+Schwarz criterion    593.8234   Hannan-Quinn         590.2324
+rho                 -0.076325   Durbin-Watson        2.150951
+
+# equation 12.13
+? ols d_infl 0 d_infl(-1 to -4) --robust
+
+Model 2: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0237541    0.123922      0.1917   0.8483 
+  d_infl_1   -0.207871     0.0992291    -2.095    0.0379  **
+  d_infl_2   -0.316133     0.0869215    -3.637    0.0004  ***
+  d_infl_3    0.193969     0.0847129     2.290    0.0235  **
+  d_infl_4   -0.0356630    0.0994417    -0.3586   0.7204 
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    343.7395   S.E. of regression   1.529171
+R-squared            0.207344   Adjusted R-squared   0.185775
+F(4, 147)            6.786165   P-value(F)           0.000049
+Log-likelihood      -277.6949   Akaike criterion     565.3899
+Schwarz criterion    580.5093   Hannan-Quinn         571.5319
+rho                  0.001392   Durbin-Watson        1.989650
+
+Excluding the constant, p-value was highest for variable 12 (d_infl_4)
+
+# F-test following 12.13
+? omit d_infl_2 d_infl_3 d_infl_4 --test-only
+Test on Model 2:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    d_infl_2, d_infl_3, d_infl_4
+  Test statistic: Robust F(3, 147) = 6.42957, p-value 0.000402869
+
+# equation 12.16
+? ols d_infl 0 d_infl(-1 to -4) LHUR_1 --robust
+
+Model 3: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.41742      0.547644      2.588    0.0106   **
+  d_infl_1   -0.264521     0.0933247    -2.834    0.0052   ***
+  d_infl_2   -0.395535     0.0975740    -4.054    8.17e-05 ***
+  d_infl_3    0.113409     0.0847247     1.339    0.1828  
+  d_infl_4   -0.0924331    0.0959189    -0.9637   0.3368  
+  LHUR_1     -0.231258     0.0990689    -2.334    0.0209   **
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    329.1391   S.E. of regression   1.501458
+R-squared            0.241012   Adjusted R-squared   0.215019
+F(5, 146)            6.193464   P-value(F)           0.000031
+Log-likelihood      -274.3963   Akaike criterion     560.7925
+Schwarz criterion    578.9358   Hannan-Quinn         568.1629
+rho                  0.014105   Durbin-Watson        1.965664
+
+Excluding the constant, p-value was highest for variable 12 (d_infl_4)
+
+# equation 12.17
+? ols d_infl 0 d_infl(-1 to -4) LHUR(-1 to -4) --robust
+
+Model 4: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.31784      0.470406      2.801    0.0058   ***
+  d_infl_1   -0.363005     0.0926343    -3.919    0.0001   ***
+  d_infl_2   -0.343201     0.100822     -3.404    0.0009   ***
+  d_infl_3    0.0724664    0.0848746     0.8538   0.3946  
+  d_infl_4   -0.0345864    0.0868339    -0.3983   0.6910  
+  LHUR_1     -2.68340      0.472365     -5.681    7.24e-08 ***
+  LHUR_2      3.43224      0.889193      3.860    0.0002   ***
+  LHUR_3     -1.03966      0.890172     -1.168    0.2448  
+  LHUR_4      0.0719850    0.442068      0.1628   0.8709  
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    268.7935   S.E. of regression   1.371012
+R-squared            0.380168   Adjusted R-squared   0.345492
+F(8, 143)            7.986428   P-value(F)           7.27e-09
+Log-likelihood      -259.0034   Akaike criterion     536.0069
+Schwarz criterion    563.2218   Hannan-Quinn         547.0625
+rho                 -0.002972   Durbin-Watson        2.005690
+
+Excluding the constant, p-value was highest for variable 16 (LHUR_4)
+
+# ADF regression, equation 12.34
+? series infl_1 = infl(-1)
+Generated series infl_1 (ID 17)
+? ols d_infl 0 infl_1 d_infl(-1 to -4)
+
+Model 5: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const       0.531310     0.229906      2.311     0.0222  **
+  infl_1     -0.112568     0.0432619    -2.602     0.0102  **
+  d_infl_1   -0.139985     0.0849924    -1.647     0.1017 
+  d_infl_2   -0.249835     0.0849456    -2.941     0.0038  ***
+  d_infl_3    0.235007     0.0824636     2.850     0.0050  ***
+  d_infl_4    0.00664826   0.0821312     0.08095   0.9356 
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    328.5058   S.E. of regression   1.500013
+R-squared            0.242472   Adjusted R-squared   0.216530
+F(5, 146)            9.346445   P-value(F)           9.61e-08
+Log-likelihood      -274.2499   Akaike criterion     560.4997
+Schwarz criterion    578.6430   Hannan-Quinn         567.8702
+rho                  0.002808   Durbin-Watson        1.990310
+
+Excluding the constant, p-value was highest for variable 12 (d_infl_4)
+
+? scalar adft = $coeff(infl_1) / $stderr(infl_1)
+Generated scalar adft = -2.60201
+? print adft
+
+           adft = -2.6020071
+Done

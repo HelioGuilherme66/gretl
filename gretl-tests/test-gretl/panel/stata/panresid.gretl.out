@@ -1,0 +1,216 @@
+gretl version 2015e-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-12-18 10:57
+? run panresid.inp
+ /home/cottrell/stats/test-gretl/panel/stata/panresid.inp
+? open nlswork.dta
+Stata file version 8
+endianness: little
+number of variables = 21
+number of observations = 28534
+length of varnames = 32
+Max length of labels = 81
+dataset label: 'National Longitudinal Survey.  Young Women 14-26 years of age in 1968'
+timestamp: ' 7 Dec 2004 17:02'
+variable 1: int type
+variable 2: byte type
+variable 3: byte type
+variable 4: byte type
+variable 5: byte type
+variable 6: byte type
+variable 7: byte type
+variable 8: byte type
+variable 9: byte type
+variable 10: byte type
+variable 11: byte type
+variable 12: byte type
+variable 13: byte type
+variable 14: byte type
+variable 15: byte type
+variable 16: byte type
+variable 17: float type
+variable 18: float type
+variable 19: int type
+variable 20: int type
+variable 21: float type
+variable 1: name = 'idcode'
+variable 2: name = 'year'
+variable 3: name = 'birth_yr'
+variable 4: name = 'age'
+variable 5: name = 'race'
+variable 6: name = 'msp'
+variable 7: name = 'nev_mar'
+variable 8: name = 'grade'
+variable 9: name = 'collgrad'
+variable 10: name = 'not_smsa'
+variable 11: name = 'c_city'
+variable 12: name = 'south'
+variable 13: name = 'ind_code'
+variable 14: name = 'occ_code'
+variable 15: name = 'union'
+variable 16: name = 'wks_ue'
+variable 17: name = 'ttl_exp'
+variable 18: name = 'tenure'
+variable 19: name = 'hours'
+variable 20: name = 'wks_work'
+variable 21: name = 'ln_wage'
+variable 1: label = 'NLS id'
+variable 2: label = 'interview year'
+variable 3: label = 'birth year'
+variable 4: label = 'age in current year'
+variable 5: label = '1=white, 2=black, 3=other'
+variable 6: label = '1 if married, spouse present'
+variable 7: label = '1 if never yet married'
+variable 8: label = 'current grade completed'
+variable 9: label = '1 if college graduate'
+variable 10: label = '1 if not SMSA'
+variable 11: label = '1 if central city'
+variable 12: label = '1 if south'
+variable 13: label = 'industry of employment'
+variable 14: label = 'occupation'
+variable 15: label = '1 if union'
+variable 16: label = 'weeks unemployed last year'
+variable 17: label = 'total work experience'
+variable 18: label = 'job tenure, in years'
+variable 19: label = 'usual hours worked'
+variable 20: label = 'weeks worked last year'
+variable 21: label = 'ln(wage/GNP deflator)'
+Listing 22 variables:
+  0) const       1) idcode      2) year        3) birth_yr    4) age       
+  5) race        6) msp         7) nev_mar     8) grade       9) collgrad  
+ 10) not_smsa   11) c_city     12) south      13) ind_code   14) occ_code  
+ 15) union      16) wks_ue     17) ttl_exp    18) tenure     19) hours     
+ 20) wks_work   21) ln_wage   
+
+? setobs idcode year --panel-vars
+Full data range: 1:01 - 4711:15 (n = 70665)
+
+? genr age2 = age^2
+Generated series age2 (ID 22)
+? genr ttl_exp2 = ttl_exp^2
+Generated series ttl_exp2 (ID 23)
+? genr tenure2 = tenure^2
+Generated series tenure2 (ID 24)
+? genr black = (race == 2)
+Generated series black (ID 25)
+# fixed effects
+? panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south
+
+Model 1: Fixed-effects, using 28091 observations
+Included 4697 cross-sectional units
+Time-series length: minimum 1, maximum 15
+Dependent variable: ln_wage
+Omitted due to exact collinearity: grade black
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       1.03732       0.0485546      21.36    2.63e-100 ***
+  age         0.0359987     0.00338640     10.63    2.47e-26  ***
+  age2       -0.000722994   5.32582e-05   -13.58    8.09e-42  ***
+  ttl_exp     0.0334668     0.00296535     11.29    1.83e-29  ***
+  ttl_exp2    0.000216266   0.000127737     1.693   0.0905    *
+  tenure      0.0357539     0.00184869     19.34    1.09e-82  ***
+  tenure2    -0.00197010    0.000124991   -15.76    1.10e-55  ***
+  not_smsa   -0.0890108     0.00953159     -9.339   1.06e-20  ***
+  south      -0.0606309     0.0109319      -5.546   2.95e-08  ***
+
+Mean dependent var   1.677103   S.D. dependent var   0.477842
+Sum squared resid    1976.122   S.E. of regression   0.290689
+LSDV R-squared       0.691898   Within R-squared     0.172674
+LSDV F(4704, 23386)  11.16444   P-value(F)           0.000000
+Log-likelihood      -2578.253   Akaike criterion     14566.51
+Schwarz criterion    53350.78   Hannan-Quinn         27049.95
+rho                  0.196174   Durbin-Watson        1.252452
+
+Joint test on named regressors -
+  Test statistic: F(8, 23386) = 610.122
+  with p-value = P(F(8, 23386) > 610.122) = 0
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(4696, 23386) = 5.12965
+  with p-value = P(F(4696, 23386) > 5.12965) = 0
+
+? series uhat_fe = $uhat
+Generated series uhat_fe (ID 26)
+? series ue_fe = $uhat + $ahat - $coeff[1]
+Generated series ue_fe (ID 27)
+# random effects
+? panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south \
+  --random
+
+Model 2: Random-effects (GLS), using 28091 observations
+Included 4697 cross-sectional units
+Time-series length: minimum 1, maximum 15
+Dependent variable: ln_wage
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       0.238721      0.0494690       4.826   1.40e-06  ***
+  grade       0.0646499     0.00178116     36.30    6.07e-282 ***
+  age         0.0368059     0.00311952     11.80    4.73e-32  ***
+  age2       -0.000713315   4.99928e-05   -14.27    4.99e-46  ***
+  ttl_exp     0.0290208     0.00242195     11.98    5.29e-33  ***
+  ttl_exp2    0.000304866   0.000116244     2.623   0.0087    ***
+  tenure      0.0392519     0.00175545     22.36    8.77e-110 ***
+  tenure2    -0.00200353    0.000119286   -16.80    5.30e-63  ***
+  black      -0.0530530     0.00999259     -5.309   1.11e-07  ***
+  not_smsa   -0.130825      0.00717512    -18.23    7.52e-74  ***
+  south      -0.0868922     0.00730321    -11.90    1.46e-32  ***
+
+Mean dependent var   1.677103   S.D. dependent var   0.477842
+Sum squared resid    4039.897   S.E. of regression   0.379297
+Log-likelihood      -12621.95   Akaike criterion     25265.89
+Schwarz criterion    25356.57   Hannan-Quinn         25295.08
+
+'Within' variance = 0.0845002
+'Between' variance = 0.0921799
+corr(y,yhat)^2 = 0.370769
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 14780
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(8) = 151.726
+  with p-value = 8.55715e-29
+
+? series uhat_re = $uhat
+Generated series uhat_re (ID 28)
+? series e_re = $uhat
+Generated series e_re (ID 29)
+? e_re -= pmean(e_re)
+Replaced series e_re (ID 29)
+? smpl ok(uhat_fe) --restrict
+Full data set: 70665 observations
+Current sample: 28091 observations
+? summary uhat_fe ue_fe e_re uhat_re --simple
+
+                     Mean        Minimum        Maximum      Std. Dev.
+uhat_fe        4.5203e-14        -1.9181         3.0278        0.26524
+ue_fe          9.0763e-14        -1.7818         3.5660        0.41499
+e_re           1.9860e-19        -1.9044         3.0306        0.26546
+uhat_re         0.0058431        -2.0595         3.7861        0.37919
+
+? smpl 1 10
+Full data set: 70665 observations
+Current sample: 1 - 10 (n = 10)
+? print uhat_fe ue_fe e_re uhat_re -o
+
+        uhat_fe        ue_fe         e_re      uhat_re
+
+ 1   -0.4252672     -0.03931   -0.4230968      0.02330
+ 2   -0.8636433   -0.4776832   -0.8618235   -0.4154257
+ 3   -0.3718130      0.01415   -0.3700116      0.07639
+ 4   -0.1617081    0.2242520   -0.1579905    0.2884072
+ 5   -0.1922358    0.1937242   -0.1894315    0.2569663
+ 6   -0.2713343    0.1146258   -0.2717979    0.1745999
+ 7    0.4883661    0.8743262    0.4917722    0.9381699
+ 8    0.4451077    0.8310678    0.4450880    0.8914857
+ 9    0.3695945    0.7555546    0.3694232    0.8158210
+10    0.4782679    0.8642279    0.4772135    0.9236112
+
+Done

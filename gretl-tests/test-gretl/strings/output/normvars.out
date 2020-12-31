@@ -1,0 +1,34 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run normvars.inp
+ /home/cottrell/stats/test-gretl/strings/normvars.inp
+? nulldata 20
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+? set seed 5671
+Pseudo-random number generator seeded with 5671
+? string sname = null
+Generated string sname
+? loop i=1..10 -q
+> sprintf sname "norm%d", i
+> series @sname = normal()
+> endloop
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+Replaced string sname
+? varlist
+Listing 12 variables:
+  0) const     1) index     2) norm1     3) norm2     4) norm3   
+  5) norm4     6) norm5     7) norm6     8) norm7     9) norm8   
+ 10) norm9    11) norm10  
+
+Done

@@ -1,0 +1,22 @@
+function strfun (void)
+   string blot = "function string"
+   print "inside strfun, blot = @blot"
+end function
+
+open data4-1
+string foo = "egg"
+string blot = getenv("LANG")
+strfun()
+print "back in main, blot = @blot"
+foo
+
+eggword = "eggbutty" + 3
+printf("word = '%s'\n", eggword)
+eggword += "foo"
+printf("word = '%s'\n", eggword)
+
+myword = strstr(getenv("HOME"), "co")
+myword
+
+
+

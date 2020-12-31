@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run matstrings.inp
+ /home/cottrell/stats/test-gretl/matrix/matstrings.inp
+? set seed 897673
+Pseudo-random number generator seeded with 897673
+? matrix M = mnormal(4,3)
+Generated matrix M
+? string s = "foo bar baz"
+Generated string s
+? eval colnames(M, s)
+0
+? M
+M (4 x 3)
+
+         foo          bar          baz 
+     0.46278      -1.4252      0.47354 
+    -0.14757      0.39058       1.2151 
+     0.53987     -0.36091     0.034396 
+     -1.5303      0.46475      -1.6109 
+
+? delete M
+Deleted M
+Done

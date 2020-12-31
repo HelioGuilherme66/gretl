@@ -1,0 +1,11 @@
+printf "'%10s''%10s'\n", " ", "foo"
+string s
+sprintf s "\"quote %d", 1
+printf "s = '%s'\n", s
+s = sprintf("\"quote %d", 1)
+printf "s = '%s'\n", s
+
+sprintf s "\nquote %d", 1
+printf "s = '%s'\n", s
+s = sprintf("\nquote %d", 1)
+printf "s = '%s'\n", s

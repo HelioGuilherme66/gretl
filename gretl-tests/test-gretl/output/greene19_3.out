@@ -1,0 +1,104 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run greene19_3.inp
+ /opt/esl/share/gretl/scripts/greene19_3.inp
+# Replicate the Poisson analysis of McCullagh and Nelder's
+# ship damage data, from chapter 19 of Greene's Econometric Analysis,
+# 4th edition
+? open mccullagh.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/mccullagh.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 15 variables:
+  0) const     1) Type      2) TA        3) TB        4) TC      
+  5) TD        6) TE        7) T6064     8) T6569     9) T7074   
+ 10) T7579    11) O6074    12) O7579    13) Months   14) Acc     
+
+? poisson Acc const TB TC TD TE T6569 T7074 T7579 O7579 ; Months
+
+Convergence achieved after 6 iterations
+
+Model 1: Poisson, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const      -6.40288       0.217523    -29.44     1.93e-190 ***
+  TB         -0.544711      0.177613     -3.067    0.0022    ***
+  TC         -0.688764      0.329036     -2.093    0.0363    **
+  TD         -0.0743091     0.290558     -0.2557   0.7981   
+  TE          0.320529      0.235752      1.360    0.1740   
+  T6569       0.695845      0.149656      4.650    3.33e-06  ***
+  T7074       0.817455      0.169838      4.813    1.49e-06  ***
+  T7579       0.444971      0.233239      1.908    0.0564    *
+  O7579       0.383859      0.118260      3.246    0.0012    ***
+
+  log(Months) 1.0        
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Sum squared resid    221.8344   S.E. of regression   2.978821
+McFadden R-squared   0.439672   Adjusted R-squared   0.365961
+Log-likelihood      -68.41456   Akaike criterion     154.8291
+Schwarz criterion    168.5664   Hannan-Quinn         159.5139
+
+Overdispersion test: Chi-square(1) = 3.04372 [0.0811]
+
+? poisson Acc const T6569 T7074 T7579 O7579 ; Months
+
+Convergence achieved after 5 iterations
+
+Model 2: Poisson, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       -6.94695      0.126943    -54.73    0.0000   ***
+  T6569        0.753617     0.148766      5.066   4.07e-07 ***
+  T7074        1.05034      0.157562      6.666   2.63e-11 ***
+  T7579        0.699899     0.220302      3.177   0.0015   ***
+  O7579        0.387245     0.118102      3.279   0.0010   ***
+
+  log(Months)  1.0       
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Sum squared resid    466.6081   S.E. of regression   4.011226
+McFadden R-squared   0.343137   Adjusted R-squared   0.302186
+Log-likelihood      -80.20123   Akaike criterion     170.4025
+Schwarz criterion    178.0343   Hannan-Quinn         173.0051
+
+Overdispersion test: Chi-square(1) = 1.44407 [0.2295]
+
+? poisson Acc const TB TC TD TE O7579 ; Months
+
+Convergence achieved after 6 iterations
+
+Model 3: Poisson, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const       -5.79997      0.178420    -32.51     8.35e-232 ***
+  TB          -0.743727     0.169148     -4.397    1.10e-05  ***
+  TC          -0.754868     0.327639     -2.304    0.0212    **
+  TD          -0.184323     0.287553     -0.6410   0.5215   
+  TE           0.384193     0.234790      1.636    0.1018   
+  O7579        0.500099     0.111565      4.483    7.37e-06  ***
+
+  log(Months)  1.0       
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Sum squared resid    1417.969   S.E. of regression   7.116302
+McFadden R-squared   0.311082   Adjusted R-squared   0.261941
+Log-likelihood      -84.11515   Akaike criterion     180.2303
+Schwarz criterion    189.3885   Hannan-Quinn         183.3535
+
+Overdispersion test: Chi-square(1) = 3.62444 [0.0569]
+
+Done

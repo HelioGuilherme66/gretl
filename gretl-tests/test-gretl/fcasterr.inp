@@ -1,0 +1,4 @@
+open data4-2.gdt
+smpl 1959 1985
+ols 2 0 3
+fcast 1959 1994

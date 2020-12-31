@@ -1,0 +1,116 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run hecktest.inp
+ /home/cottrell/stats/test-gretl/ufunc/hecktest.inp
+? open mroz87.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+periodicity: 1, maxobs: 753
+observations range: 1 to 753
+
+Listing 20 variables:
+  0) const     1) LFP       2) WHRS      3) KL6       4) K618    
+  5) WA        6) WE        7) WW        8) RPWG      9) HHRS    
+ 10) HA       11) HE       12) HW       13) FAMINC   14) MTR     
+ 15) WMED     16) WFED     17) UN       18) CIT      19) AX      
+
+? set seed 897654
+Pseudo-random number generator seeded with 897654
+? include user_heckit.inp
+ /home/cottrell/stats/test-gretl/ufunc/user_heckit.inp
+? genr EXP2 = AX^2
+Generated series EXP2 (ID 20)
+? genr WA2 = WA^2
+Generated series WA2 (ID 21)
+? genr KIDS = (KL6+K618)>0
+Generated series KIDS (ID 22)
+? list X = const AX EXP2 WE CIT
+Generated list X
+? list Z = const WA WA2 FAMINC KIDS WE
+Generated list Z
+? smpl 250 --random
+Full data set: 753 observations
+Current sample: 250 observations
+? user_heckit(WW,X,LFP,Z)
+
+Model 1: Probit, using observations 1-250
+Dependent variable: sel
+Standard errors based on Hessian
+
+             coefficient    std. error      z         slope    
+  -------------------------------------------------------------
+  const      -6.24132       2.61721       -2.385               
+  WA          0.264861      0.123120       2.151    0.104914   
+  WA2        -0.00343895    0.00146792    -2.343   -0.00136221 
+  FAMINC      1.76469e-05   8.25538e-06    2.138    6.99012e-06
+  KIDS       -0.236734      0.223030      -1.061   -0.0930151  
+  WE          0.103401      0.0427632      2.418    0.0409583  
+
+Mean dependent var   0.544000   S.D. dependent var   0.499059
+McFadden R-squared   0.068457   Adjusted R-squared   0.033637
+Log-likelihood      -160.5212   Akaike criterion     333.0425
+Schwarz criterion    354.1712   Hannan-Quinn         341.5462
+
+Number of cases 'correctly predicted' = 160 (64.0%)
+f(beta'x) at mean of independent vars = 0.396
+Likelihood ratio test: Chi-square(5) = 23.5926 [0.0003]
+
+           Predicted
+              0     1
+  Actual 0   54    60
+         1   30   106
+
+Excluding the constant, p-value was highest for variable 22 (KIDS)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.0809866
+  with p-value = 0.960316
+
+
+Heckman's two-step estimation:
+
+using 136 observations out of 250
+136 censored observations (54.40%)
+
+       Variable    Coefficient    Std.Error  z-stat  p-val
+
+          const        1.96530      4.30440   0.457  0.648 
+             AX       -0.14486      0.11702  -1.238  0.216 
+           EXP2        0.00596      0.00337   1.767  0.077 *
+             WE        0.36621      0.22341   1.639  0.101 
+            CIT        1.15262      0.61402   1.877  0.060 *
+
+         lambda       -3.56680      2.22496  -1.603  0.109 
+
+            rho =   -0.8451544
+          sigma =    4.2202936
+
+? smpl LFP --dummy
+Full data set: 753 observations
+Current sample: 136 observations
+? ols WW X
+
+Model 1: OLS, using observations 1-136
+Dependent variable: WW
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -3.98381      2.00112      -1.991    0.0486   **
+  AX         -0.100833     0.119146     -0.8463   0.3989  
+  EXP2        0.00416710   0.00336258    1.239    0.2175  
+  WE          0.618977     0.137615      4.498    1.50e-05 ***
+  CIT         1.39493      0.615308      2.267    0.0250   **
+
+Mean dependent var   4.515386   S.D. dependent var   3.635603
+Sum squared resid    1461.650   S.E. of regression   3.340305
+R-squared            0.180863   Adjusted R-squared   0.155851
+F(4, 131)            7.231088   P-value(F)           0.000027
+Log-likelihood      -354.4530   Akaike criterion     718.9059
+Schwarz criterion    733.4692   Hannan-Quinn         724.8241
+
+Excluding the constant, p-value was highest for variable 19 (AX)
+
+Done

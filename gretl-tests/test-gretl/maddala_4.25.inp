@@ -1,0 +1,21 @@
+# Replicate regressions in Maddala, 2e, p. 174
+open Table_3.11.gdt
+logs X L1 K1
+# Equation 4.24
+ols l_X const l_L1 l_K1
+genr RRSS = $ess
+smpl 1929 1948
+# Equation 4.25
+ols l_X const l_L1 l_K1
+genr rss1 = $ess
+smpl 1949 1967
+# Equation 4.26
+ols l_X const l_L1 l_K1
+genr rss2 = $ess
+genr URSS = rss1 + rss2
+genr Fc = ((RRSS - URSS) / 3) / (URSS / 33)
+pvalue F 3 33 Fc
+smpl 1929 1967
+ols l_X const l_L1 l_K1
+leverage
+

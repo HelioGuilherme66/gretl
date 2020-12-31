@@ -1,0 +1,16 @@
+nulldata 624
+setobs 12 1950:01
+set seed 5
+genr eps = normal()
+genr u = eps + 0.4*eps(-1) - 0.15*eps(-2)
+series y = 0
+genr y = 0.7*y(-1) -0.3*y(-2) + u
+smpl 1950:03 ;
+arma 2 2 ; y -x
+arma 2 2 ; y
+arma 2 2 ; y --conditional
+smpl 1950:05 ;
+arma 2 2 ; y -x
+arma 2 2 ; y 
+arma 2 2 ; y --conditional
+

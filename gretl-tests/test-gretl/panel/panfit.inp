@@ -1,0 +1,10 @@
+open greene14_1
+logs C Q PF
+panel l_C 0 l_Q l_PF LF
+genr yh = $yhat
+genr uh = $uhat
+genr ah = $ahat
+print l_C yh uh ah --by
+genr unitdum
+ols l_C 0 l_Q l_PF LF du_2 du_3 du_4 du_5 du_6
+omit du_2 du_3 du_4 du_5 du_6 --test-only

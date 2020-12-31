@@ -1,0 +1,121 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run gmm3.inp
+ /home/cottrell/stats/test-gretl/gmm/gmm3.inp
+? function series mrate (series cons, scalar discrat, scalar riskad)
+? open pricing.gdt
+
+Read datafile /opt/esl/share/gretl/data/verbeek/pricing.gdt
+periodicity: 12, maxobs: 418
+observations range: 1959:02 to 1993:11
+
+Listing 13 variables:
+  0) const    1) r1       2) r2       3) r3       4) r4     
+  5) r5       6) r6       7) r7       8) r8       9) r9     
+ 10) r10     11) rf      12) cons   
+
+? loop i=1..10 --quiet
+> genr ex$i = r$i - rf
+> endloop
+? series gf = 1 + rf
+Generated series gf (ID 23)
+? list exlist = ex*
+Generated list exlist
+? matrix A = { exlist }
+Generated matrix A
+? matrix exr = A
+Generated matrix exr
+? scalar d = 0.5
+Generated scalar d = 0.5
+? scalar g = 10
+Generated scalar g = 10
+? matrix V = I(11)
+Generated matrix V
+? series m = mrate(cons,d,g)
+Generated series m (ID 24)
+? series oc1 = m * gf - 1
+Generated series oc1 (ID 25)
+/*
+  first step
+*/
+? gmm
+? series m = mrate(cons,d,g)
+? series oc1 = m * gf - 1
+? orthog m ; exlist
+? orthog oc1 ; const
+? weights V
+? params d g
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 112
+Evaluations of gradient: 38
+
+Model 1: 1-step GMM, using observations 1959:02-1993:11 (T = 418)
+HAC standard errors, bandwidth 5 (Bartlett kernel)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  d           0.699606    0.143540    4.874   1.09e-06 ***
+  g          91.4099     38.8075      2.355   0.0185   **
+
+  GMM criterion: Q = 4.46296e-06 (TQ = 0.00186552)
+
+/*
+  two step --- asymptotically, this is efficient
+*/
+? gmm
+? series m = mrate(cons,d,g)
+? series oc1 = m * gf - 1
+? orthog m ; exlist
+? orthog oc1 ; const
+? weights V
+? params d g
+? end gmm --two-step
+Tolerance = 1.81899e-12
+
+Function evaluations: 40
+Evaluations of gradient: 11
+
+Model 2: 2-step GMM, using observations 1959:02-1993:11 (T = 418)
+HAC standard errors, bandwidth 5 (Bartlett kernel)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  d           0.808160    0.113542    7.118   1.10e-12 ***
+  g          68.2767     32.9505      2.072   0.0383   **
+
+  GMM criterion: Q = 0.0132633 (TQ = 5.54407)
+  J test: Chi-square(9) = 5.54407 [0.7845]
+
+/*
+  iteration --- asymptotically unncessary, but it is
+  sometimes suggested it improves small-sample properties
+*/
+? gmm
+? series m = mrate(cons,d,g)
+? series oc1 = m * gf - 1
+? orthog m ; exlist
+? orthog oc1 ; const
+? weights V
+? params d g
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 11
+Evaluations of gradient: 1
+
+Model 3: Iterated GMM, using observations 1959:02-1993:11 (T = 418)
+HAC standard errors, bandwidth 5 (Bartlett kernel)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  d           0.836036    0.112194    7.452   9.21e-14 ***
+  g          58.3473     33.7316      1.730   0.0837   *
+
+  GMM criterion: Q = 0.0156188 (TQ = 6.52867)
+  J test: Chi-square(9) = 6.52867 [0.6861]
+
+Done

@@ -1,0 +1,42 @@
+Test rig for function packages on gretl server
+Allin Cottrell, 2015-02-22
+
+1. First use
+2. Subsequent uses
+3. Requirements and details
+
+1. First use
+
+On first use, do "make baseline". This downloads all the current
+packages, extracts their sample scripts, runs the scripts using
+gretlcli, and puts the output into a subdirectory named "output".
+
+2. Subsequent uses
+
+After making the baseline output record, subsequently just do
+"make". This re-runs all the scripts and produces a file named "diffs"
+showing differences in output with respect to the baseline.
+
+You can do "rm gfn.stamp" to force a re-download of the gfn files
+before "make"; otherwise the already-downloaded files are used.
+
+3. Requirements and details
+
+To run this you need bash, GNU make, gcc, current CVS gretl installed
+from the source (with headers and pkgconfig files in place), and wget
+for non-interactive downloading.
+
+The "baseline" target involves using wget to grab all the relevant
+files. Then the C program get_sample_script (which links against
+libgretl) is invoked to pull the sample scripts out of the package
+files. (It also handles unzipping, for packages in zip format.)  Some
+diagnostics for non-conforming sample scripts are printed at this
+step (and errors with "include" are fixed).
+
+get_sample_script consults blacklist.txt (if it's present) to exclude
+zero or more packages from testing. Right now the only blacklisted
+package is Artur Tarrassow's Threshold_Panel, on the grounds that the
+sample script takes far too long to run.  I, or somebody, needs to get
+Artur to come up with a faster sample version.
+
+

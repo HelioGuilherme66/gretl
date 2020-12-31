@@ -1,0 +1,42 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run pmbb.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/pmbb.gfn.inp
+? include ./pmbb.gfn
+ /home/cottrell/stats/test-gretl/testgfn/pmbb.gfn
+pmbb 1.6, 2013-01-18 (Giuseppe Vittucci)
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? logs C Q PF LF
+Listing 11 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+ 10) l_LF   
+
+? list X = l_Q l_PF l_LF
+Generated list X
+? bundle bb = pmbb(l_C,X,3,1000)
+
+Panel Moving Blocks Bootstrap (MBB) for linear regression models with fixed effects
+Bootstrap standard errors and symmetric bootstrap percentile-t confidence intervals
+For references see: Goncalves, 2011
+
+  Bootstrap replications: 1000
+  Average block size: 3
+  				s.e.			1% CI			5% CI			10% CI
+  ---------------------------------------------------------------------------------------------------------------------
+  l_Q		0.9187035777	0.2239380101	-1.3122409   3.149648   -0.12484875  1.9622559    0.1462284  1.6911788
+  l_PF		0.4158083766	0.1737834045	-5.0811357  5.9127525   -1.5770251  2.4086418   -0.97404123   1.805658
+  l_LF		-0.552730394	1.064631154	-26.010969  24.905509   -12.638945  11.533484   -8.4360298   7.330569
+
+Done

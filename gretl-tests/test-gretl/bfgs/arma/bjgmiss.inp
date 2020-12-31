@@ -1,0 +1,18 @@
+open bjg.gdt
+genr lg = log(g)
+
+# full data
+arima 0 1 1 ; 0 1 1 ; lg --nc
+
+# missing data
+genr idx = t - 1
+genr month = idx % 12 + 1
+genr year = int(1949 + idx / 12)
+# print idx year month -o
+lg = (year > 1954 && month < 12)? NA : lg
+# print lg -o
+arima 0 1 1 ; 0 1 1 ; lg --nc
+
+
+
+

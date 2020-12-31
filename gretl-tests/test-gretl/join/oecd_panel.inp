@@ -1,0 +1,18 @@
+# in quarterly_gdp.csv we have GDP for four countries for the
+# time range Q1-1960 to Q2-2013 (214 quarters, 856 rows)
+
+nulldata 856
+setobs 214 1.1 --stacked-time-series
+sprintf cstrs "France Germany Italy \"United Kingdom\""
+setobs country cstrs --panel-groups
+setobs 4 1960:1 --panel-time
+series quarter = $obsdate
+join quarterly_gdp.csv GDP --data=Value \
+ --ikey=country,quarter --okey=Country,Period \
+ --timecols=Period --timecol-fmt="Q%q-%Y"
+
+delete index
+setinfo GDP --desc="Real GDP in US dollars at PPP"
+setinfo quarter --desc="first day of quarter, YYYYMMDD"
+setinfo country --desc="1 = France, 2 = Germany, 3 = Italy, 4 = UK"
+store qgdp_panel.gdt

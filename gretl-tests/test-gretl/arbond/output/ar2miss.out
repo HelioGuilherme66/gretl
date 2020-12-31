@@ -1,0 +1,58 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run ar2miss.inp
+ /home/cottrell/stats/test-gretl/arbond/ar2miss.inp
+? open fakemiss.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/fakemiss.gdt
+periodicity: 7, maxobs: 70
+observations range: 1:1 to 10:7
+
+Listing 5 variables:
+  0) const    1) y        2) x        3) unit     4) year   
+
+? arbond 2 0 ; y
+
+Model 1: 1-step Arellano-Bond, using 38 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  Dy(-1)      0.220620      0.206749    1.067    0.2859 
+  Dy(-2)      0.105213      0.113278    0.9288   0.3530 
+
+Sum squared resid    1.358614   S.E. of regression   0.194266
+
+Number of instruments = 14
+Test for AR(1) errors: z = -1.84906 [0.0644]
+Test for AR(2) errors: z = -1.62294 [0.1046]
+Sargan over-identification test: Chi-square(12) = 19.2152 [0.0835]
+Wald (joint) test: Chi-square(2) = 76.1934 [0.0000]
+
+? genr Dx = diff(x)
+Generated series Dx (ID 5)
+? arbond 2 0 ; y Dx Dx(-1)
+
+Model 2: 1-step Arellano-Bond, using 38 observations
+Included 10 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Dy(-1)      0.465838     0.275989      1.688    0.0914   *
+  Dy(-2)      0.0225944    0.159786      0.1414   0.8876  
+  Dx          0.396529     0.0544674     7.280    3.34e-13 ***
+  Dx_1       -0.0282986    0.147212     -0.1922   0.8476  
+
+Sum squared resid    0.592229   S.E. of regression   0.131979
+
+Number of instruments = 16
+Test for AR(1) errors: z = -1.28508 [0.1988]
+Test for AR(2) errors: z = -1.11362 [0.2654]
+Sargan over-identification test: Chi-square(12) = 14.6838 [0.2592]
+Wald (joint) test: Chi-square(4) = 467.609 [0.0000]
+
+Done

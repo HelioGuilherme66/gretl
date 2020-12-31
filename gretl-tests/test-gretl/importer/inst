@@ -1,0 +1,1 @@
+cd ~/src/build/plugin && ./install_plugin gnumeric_import

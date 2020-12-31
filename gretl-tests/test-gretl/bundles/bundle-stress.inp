@@ -1,0 +1,31 @@
+/* Test 1: add a named matrix to a bundle in pointer mode; 
+   then delete the external matrix; then retrieve the
+   bundled matrix. What should happen is that when the external 
+   matrix is deleted it is dropped from the stack of user-vars 
+   but the underlying matrix is preserved, since gretl detects 
+   that it is also present in a bundle.
+*/
+bundle b
+matrix m = I(3)
+b["m"] = &m # note: don't copy in
+delete m
+eval isnull("m")
+matrix m2 = b["m"]
+print m2
+
+clear
+
+/* Test 2: add a named matrix to a bundle in pointer mode; 
+   then delete the bundled matrix; then try printing the
+   external matrix. What should happen is that when the bundled 
+   matrix is deleted it is dropped from the bundle contents 
+   but the underlying matrix is preserved, since gretl detects 
+   that it is also "owned" by a user-var.
+*/
+
+bundle b
+matrix m = I(3)
+b["m"] = &m # note: don't copy in
+delete b["m"]
+eval inbundle(b, "m")
+print m

@@ -1,0 +1,23 @@
+set echo off
+set messages off
+
+open skipper_arima_test.gdt --quiet
+arma 2 2 ; x --nc
+
+# using gretl's "fcast" command
+
+dataset addobs 10
+fcast --out-of-sample
+
+# by hand
+
+matrix phi   = $coeff[1:2]
+matrix theta = 1 | $coeff[3:4]
+scalar s     = $sigma
+
+series e = 0
+e[1001] = 1
+woldrep = filter(e, theta, phi)
+ferr = s * sqrt(cum(woldrep^2))
+smpl 1001 1010
+print woldrep ferr -o

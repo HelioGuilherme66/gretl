@@ -1,0 +1,17 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run brackets.inp
+ /home/cottrell/stats/test-gretl/brackets.inp
+? eval (3-2)*4
+4
+? eval 3-2*4
+-5
+? eval (2^3)^2
+64
+? eval 2^3^2
+512
+? eval 4^3^2
+262144
+Done

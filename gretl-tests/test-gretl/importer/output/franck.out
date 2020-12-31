@@ -1,0 +1,173 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run franck.inp
+ /home/cottrell/stats/test-gretl/importer/franck.inp
+? open franck.xls --sheet="regression_ready"
+Excel 97 +
+rows=147, total cols=31, data cols=31
+found label strings in first imported column
+Warning: there were missing values
+Listing 31 variables:
+  0) const            1) Populat          2) drivpop          3) lndrivpo       
+  4) urbpop           5) area             6) roadleng         7) gdp00          
+  8) sq_gdp00         9) cu_gdp00        10) lngdp00         11) gdpcap00       
+ 12) gdpspli         13) gdp2            14) POP90           15) cgdp90         
+ 16) gdp90           17) growth          18) dum1            19) dum2           
+ 20) dum3            21) pascars         22) busses          23) lorries        
+ 24) tractors        25) twowheel        26) Pascarkm        27) Buskm          
+ 28) Lorrieskm       29) Twowheelerskm   30) Tonkm          
+
+? print 1 30 -o
+
+                     Populat        Tonkm
+
+        Albania         3401      1830.00
+        Algeria        30416             
+         Angola        10979             
+Antigua and Bar           69             
+      Argentina        37032             
+        Armenia         3802      75.0000
+      Australia        19153             
+        Austria         8121      16100.0
+     Azerbaijan         8081      5534.00
+        Bahamas          303             
+     Bangladesh       124300             
+Barbados - Barb          267             
+        Belgium        10263      17487.0
+         Belize          250             
+          Benin         6169             
+        Bolivia         8329             
+       Botswana         1653             
+         Brazil       167724             
+       Bulgaria         8149      168.000
+   Burkina Faso        10683             
+        Burundi         6483             
+       Cambodia        12574      412.000
+       Cameroon        14439             
+         Canada        30689      87522.0
+     Cape Verde          435             
+Central African         3245             
+           Chad         8322             
+          China      1259090       633040
+       Colombia        42321             
+Congo (Democrat        58318             
+Congo (Republic         2998             
+  Cote d'Ivoire        16398             
+        Croatia         4381      7413.00
+         Cyprus          669             
+ Czech Republic        10267      45059.0
+        Denmark         5349      11810.0
+       Dominica           72             
+Dominican Repub         8396             
+        Ecuador        12299      4646.00
+          Egypt        63976             
+    El Salvador         6276             
+Equatorial Guin          523             
+        Estonia         1366      4387.00
+           Fiji          806             
+        Finland         5181      29000.0
+         France        59040       245400
+          Gabon         1206             
+         Gambia         1393             
+        Georgia         4946      543.000
+        Germany        82260       226982
+          Ghana        18412             
+         Greece        10554      13909.0
+      Guatemala        11385             
+         Guinea         9246             
+  Guinea-Bissau         1388             
+         Guyana          772             
+          Haiti         7959             
+       Honduras         6369             
+      Hong Kong         6665             
+        Hungary        10024      11200.0
+        Iceland          283             
+          India      1014825             
+      Indonesia       208437             
+           Iran        63664             
+        Ireland         3787      5900.00
+         Israel         6369             
+        Jamaica         2605             
+          Japan       126843       313072
+         Jordan         5039             
+          Kenya        29208             
+  Korea (south)        47008      74504.0
+     Kyrgyzstan         4908      875.000
+            Lao         5218             
+         Latvia         2366      6160.00
+        Lebanon         3777             
+        Lesotho         2144             
+      Lithuania         3693      10709.0
+     Madagascar        17500             
+         Malawi        10475             
+       Malaysia        23495             
+       Maldives          271             
+           Mali        10400             
+          Malta          385             
+     Mauritania         2645             
+      Mauritius         1187             
+         Mexico       100249       197958
+        Morocco        28705      2952.00
+     Mozambique        17691             
+        Namibia         1817       145044
+          Nepal        22904             
+    Netherlands        15987      32700.0
+    New Zealand         3858             
+      Nicaragua         4957             
+          Niger        11360             
+        Nigeria       115224             
+         Norway         4491      13287.0
+       Pakistan       137510       111323
+         Panama         2856             
+Papua New Guine         5100             
+       Paraguay         5356             
+           Peru        25939             
+    Philippines        76348             
+         Poland        38644      74403.0
+       Portugal         9490      14200.0
+        Romania        22430      25350.0
+         Ruanda         7954             
+Saint Kitts and           40             
+    Saint Lucia          156             
+Saint Vincent a          112             
+          Samoa          171             
+Sao Tome and Pr          127             
+   Saudi Arabia        20847             
+        Senegal         9524             
+     Seychelles           81             
+   Sierra Leone         4944             
+      Singapore         4018             
+       Slovakia         5403      22437.0
+       Slovenia         1990      4611.00
+   South Africa        43686             
+          Spain        39470       114011
+      Sri Lanka        19359             
+       Suriname          464             
+      Swaziland          938             
+         Sweden         8883      39609.0
+    Switzerland         7209      24500.0
+Syrian Arab Rep        16320             
+     Tajikistan         6250             
+       Thailand        61770             
+The FYR of Mace         2031             
+           Togo         3928             
+Trinidad and To         1290             
+        Tunisia         9564             
+         Turkey        64337       150912
+   Turkmenistan         5285             
+         Uganda        22972             
+United Arab Emi         2938             
+ United Kingdom        58058       150700
+United Republic        29984             
+  United States       274634      1534430
+        Uruguay         3322             
+     Uzbekistan        24650             
+      Venezuela        24311             
+       Viet Nam        77686             
+          Yemen        18261             
+         Zambia         9337             
+       Zimbabwe        12960             
+
+Done

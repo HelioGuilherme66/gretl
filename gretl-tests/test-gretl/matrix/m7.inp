@@ -1,0 +1,6 @@
+matrix A = I(2)
+matrix B = I(2)
+scalar k = 3
+matrix C = diag(A*B) * k
+C
+

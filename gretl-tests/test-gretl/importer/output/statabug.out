@@ -1,0 +1,40 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run statabug.inp
+ /home/cottrell/stats/test-gretl/importer/statabug.inp
+? open boo_old.dta
+Stata file version 8
+endianness: little
+number of variables = 2
+number of observations = 10
+length of varnames = 32
+Max length of labels = 81
+dataset label: ''
+timestamp: ' 8 Oct 2012 14:50'
+variable 1: string type
+variable 2: float type
+variable 1: name = 'data'
+variable 2: name = 'y1'
+String code table written to
+ /home/cottrell/stats/test-gretl/importer/string_table.txt
+Listing 3 variables:
+  0) const    1) data1    2) y1     
+
+? print -o
+
+          data1           y1
+
+ 1    9/30/2011     -0.02498
+ 2    9/29/2011      0.02179
+ 3    9/28/2011    -0.002558
+ 4    9/27/2011     -0.02736
+ 5    9/26/2011      0.02030
+ 6    9/23/2011    -0.007557
+ 7    9/22/2011     -0.02096
+ 8    9/21/2011    -0.006127
+ 9    9/20/2011      0.01746
+10    9/19/2011     0.007538
+
+Done

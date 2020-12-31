@@ -1,0 +1,16 @@
+function void matrix_misszero (matrix *m)
+  loop j=1..cols(m) -q
+    loop i=1..rows(m) -q
+      if !ok(m[i,j])
+        m[i,j] = 0
+      endif
+    endloop
+  endloop  
+end function
+
+matrix m = 3*I(2)
+m[2,2] = 0/0
+print m
+matrix_misszero(&m)
+print m
+

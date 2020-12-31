@@ -1,0 +1,21 @@
+# series in bundles
+
+open data4-1 -q
+
+bundle b
+b["y"] = price
+b["y2"] = 2*price
+
+series y = b["y"]
+series y2 = b["y2"]
+
+print price y y2 --byobs
+
+catch scalar x = b["x"]
+if $error
+  print "Couldn't get x"
+endif
+
+
+
+

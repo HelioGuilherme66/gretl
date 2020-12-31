@@ -1,0 +1,37 @@
+Ordered probit
+
+Wooldridge, Econometric Analysis of Cross Section and Panel
+Data, p. 506: "As with multinomial logit, for ordered
+responses we can compute the percent correctly predicted, for
+each outsome as well as overall: our prediction for $y$ is
+simply the outcome with the highest probability."
+
+Motivation
+==========
+
+Practitioners using the ordered probit estimator are likely 
+to be interested in the question: how well does the model
+predict? Moreover, in assessing variant models for the same
+dependent variable, they are likely to wish to ask: which
+model predicts better? Now, the simplest case of comparison 
+of models for the same dependent variable is that in which 
+one model is a sub-model of the other, or in other words the 
+more parsimonious model is obtained by removing one or more 
+regressors from the less parsimonious one. If the practitioner
+is at all savvy, he or she will... (hmm)
+
+op_predict.inp: contains a function for generating a matrix
+ containing various magnitudes arguably relevant to the 
+ "predictions" of an ordered probit model
+ 
+discover.inp: script for searching the space of ordered
+ probit results (on artificial data) that reveal potentially
+ interesting discrepancies.
+ 
+op_test.inp: rig for obtaining detailed results for a case
+ considered "interesting" following a run of discover.inp
+
+Results so far (with the caveat that I don't know how general
+these are).
+
+

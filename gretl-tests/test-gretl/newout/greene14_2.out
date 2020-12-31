@@ -1,0 +1,111 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run greene14_2.inp
+ /opt/esl/share/gretl/scripts/greene14_2.inp
+# replicate Example 14.2 (SUR system) from Greene's 5th edition
+? open greene13_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene13_1.gdt
+periodicity: 1, maxobs: 20
+observations range: 1935 to 1954
+
+Listing 16 variables:
+  0) const    1) I_GM     2) F_GM     3) C_GM     4) I_CH   
+  5) F_CH     6) C_CH     7) I_GE     8) F_GE     9) C_GE   
+ 10) I_WE    11) F_WE    12) C_WE    13) I_US    14) F_US   
+ 15) C_US   
+
+? system method=sur
+? equation I_GM const F_GM C_GM
+? equation I_CH const F_CH C_CH
+? equation I_GE const F_GE C_GE
+? equation I_WE const F_WE C_WE
+? equation I_US const F_US C_US
+? end system
+
+Equation system, Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1935-1954 (T = 20)
+Dependent variable: I_GM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -162.364      89.4592      -1.815    0.0872   *
+  F_GM          0.120493    0.0216291    5.571    3.38e-05 ***
+  C_GM          0.382746    0.0327680   11.68     1.52e-09 ***
+
+Mean dependent var   608.0200   S.D. dependent var   309.5746
+Sum squared resid    144320.9   S.E. of regression   84.94730
+R-squared            0.921330   Adjusted R-squared   0.912075
+
+Equation 2: SUR, using observations 1935-1954 (T = 20)
+Dependent variable: I_CH
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       0.504304     11.5128       0.04380   0.9656  
+  F_CH        0.0695456     0.0168975    4.116     0.0007   ***
+  C_CH        0.308545      0.0258636   11.93      1.10e-09 ***
+
+Mean dependent var   86.12350   S.D. dependent var   42.72556
+Sum squared resid    3056.985   S.E. of regression   12.36322
+R-squared            0.913130   Adjusted R-squared   0.902910
+
+Equation 3: SUR, using observations 1935-1954 (T = 20)
+Dependent variable: I_GE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -22.4389      25.5186      -0.8793   0.3915  
+  F_GE         0.0372914    0.0122631    3.041    0.0074   ***
+  C_GE         0.130783     0.0220497    5.931    1.64e-05 ***
+
+Mean dependent var   102.2900   S.D. dependent var   48.58450
+Sum squared resid    14009.12   S.E. of regression   26.46612
+R-squared            0.690334   Adjusted R-squared   0.653903
+
+Equation 4: SUR, using observations 1935-1954 (T = 20)
+Dependent variable: I_WE
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1.08888      6.25880      0.1740    0.8639 
+  F_WE        0.0570091    0.0113623    5.017     0.0001  ***
+  C_WE        0.0415065    0.0412016    1.007     0.3279 
+
+Mean dependent var   42.89150   S.D. dependent var   19.11019
+Sum squared resid    1898.249   S.E. of regression   9.742302
+R-squared            0.734122   Adjusted R-squared   0.702842
+
+Equation 5: SUR, using observations 1935-1954 (T = 20)
+Dependent variable: I_US
+
+             coefficient   std. error    t-ratio   p-value
+  --------------------------------------------------------
+  const       85.4233      111.877       0.7635    0.4556 
+  F_US         0.101478      0.0547837   1.852     0.0814  *
+  C_US         0.399991      0.127795    3.130     0.0061  ***
+
+Mean dependent var   405.4600   S.D. dependent var   129.3519
+Sum squared resid    183763.0   S.E. of regression   95.85484
+R-squared            0.431241   Adjusted R-squared   0.364328
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       7216.0     (-0.299)      (0.269)      (0.157)     (-0.330)
+      -313.70       152.85      (0.006)      (0.138)      (0.384)
+       605.34       2.0474       700.46      (0.777)      (0.483)
+       129.89       16.661       200.32       94.912      (0.699)
+      -2686.5       455.09       1224.4       652.72       9188.2
+
+log determinant = 31.7546
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(10) = 35.7379 [0.0001]
+
+Hansen-Sargan over-identification test:
+  Chi-square(40) = 57.0566 [0.0392]
+
+Done

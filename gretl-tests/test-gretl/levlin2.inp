@@ -1,0 +1,5 @@
+open sheston91.gdt
+smpl (country < 11) --restrict
+levinlin 2 rgdppc
+levinlin {2,2,2,3,3,3,4,4,4,4} rgdppc
+

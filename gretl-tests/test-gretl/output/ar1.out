@@ -1,0 +1,195 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ar1.inp
+ /home/cottrell/stats/test-gretl/ar1.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ar1 1 0 2 3
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.41891   3.86017e+06
+                   2      0.42286   3.86009e+06
+                   3      0.42300   3.86009e+06
+                   4      0.42301   3.86009e+06
+
+Model 1: Cochrane-Orcutt, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: QNC
+rho = 0.423008
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1085.06      1168.00      -0.9290   0.3566 
+  PRICE        -25.6809       7.80095   -3.292    0.0017  ***
+  INCOME       573.148      172.336      3.326    0.0015  ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
+Sum squared resid     3860092   S.E. of regression   253.6432
+R-squared            0.420390   Adjusted R-squared   0.401070
+F(2, 60)             5.702023   P-value(F)           0.005406
+rho                 -0.051064   Durbin-Watson        2.075037
+
+? ar1 1 0 2 3 --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99  1.33934e+07    -0.90  1.22167e+07    -0.80  1.10002e+07
+ -0.70  9.87940e+06    -0.60  8.85428e+06    -0.50  7.92483e+06
+ -0.40  7.09107e+06    -0.30  6.35297e+06    -0.20  5.71053e+06
+ -0.10  5.16372e+06     0.00  4.71252e+06     0.10  4.35689e+06
+  0.20  4.09676e+06     0.30  3.93205e+06     0.40  3.86261e+06
+  0.50  3.88823e+06     0.60  4.00859e+06     0.70  4.22322e+06
+  0.80  4.53110e+06     0.90  4.92827e+06     0.99  5.41766e+06   
+
+ESS is minimized for rho = 0.42
+
+  ESS
+1.33934e+07  |o                             |                              
+             |                              |                              
+             |                              |                              
+1.18049e+07  +  o                           |                              
+             |                              |                              
+             |     o                        |                              
+             |                              |                              
+             |        o                     |                              
+ 9.1575e+06  +                              |                              
+             |           o                  |                              
+             |                              |                              
+             |              o               |                              
+             |                 o            |                              
+6.51005e+06  +                              |                              
+             |                    o         |                              
+             |                       o      |                              
+             |                          o   |                          o  o
+             |                              o                       o      
+3.86261e+06  +                              |  o  o  o  o  o  o  o         
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1      0.42000   3.86013e+06
+                   2      0.42290   3.86009e+06
+                   3      0.42300   3.86009e+06
+                   4      0.42301   3.86009e+06
+
+Model 2: Hildreth-Lu, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: QNC
+rho = 0.423008
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1085.06      1168.00      -0.9290   0.3566 
+  PRICE        -25.6809       7.80095   -3.292    0.0017  ***
+  INCOME       573.148      172.337      3.326    0.0015  ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
+Sum squared resid     3860092   S.E. of regression   253.6432
+R-squared            0.420390   Adjusted R-squared   0.401070
+F(2, 60)             5.702022   P-value(F)           0.005406
+rho                 -0.051064   Durbin-Watson        2.075037
+
+? ar1 1 0 2 3 --hilu --no-corc
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99  1.33934e+07    -0.90  1.22167e+07    -0.80  1.10002e+07
+ -0.70  9.87940e+06    -0.60  8.85428e+06    -0.50  7.92483e+06
+ -0.40  7.09107e+06    -0.30  6.35297e+06    -0.20  5.71053e+06
+ -0.10  5.16372e+06     0.00  4.71252e+06     0.10  4.35689e+06
+  0.20  4.09676e+06     0.30  3.93205e+06     0.40  3.86261e+06
+  0.50  3.88823e+06     0.60  4.00859e+06     0.70  4.22322e+06
+  0.80  4.53110e+06     0.90  4.92827e+06     0.99  5.41766e+06   
+
+ESS is minimized for rho = 0.42
+
+  ESS
+1.33934e+07  |o                             |                              
+             |                              |                              
+             |                              |                              
+1.18049e+07  +  o                           |                              
+             |                              |                              
+             |     o                        |                              
+             |                              |                              
+             |        o                     |                              
+ 9.1575e+06  +                              |                              
+             |           o                  |                              
+             |                              |                              
+             |              o               |                              
+             |                 o            |                              
+6.51005e+06  +                              |                              
+             |                    o         |                              
+             |                       o      |                              
+             |                          o   |                          o  o
+             |                              o                       o      
+3.86261e+06  +                              |  o  o  o  o  o  o  o         
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Model 3: Hildreth-Lu, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: QNC
+rho = 0.42
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1088.78      1163.58      -0.9357   0.3532 
+  PRICE        -25.6821       7.77073   -3.305    0.0016  ***
+  INCOME       573.508      171.707      3.340    0.0014  ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
+Sum squared resid     3860135   S.E. of regression   253.6446
+R-squared            0.420348   Adjusted R-squared   0.401026
+F(2, 60)             5.748634   P-value(F)           0.005198
+rho                 -0.047917   Durbin-Watson        2.068586
+
+? ar1 1 0 2 3 --pwe
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.41891   4.10460e+06
+                   2      0.42214   4.10387e+06
+                   3      0.42220   4.10386e+06
+                   4      0.42220   4.10386e+06
+                   5      0.42220   4.10386e+06
+
+Model 4: Prais-Winsten, using observations 1975:1-1990:4 (T = 64)
+Dependent variable: QNC
+rho = 0.422202
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1407.61      1181.17      -1.192    0.2380 
+  PRICE        -24.1883       7.93030   -3.050    0.0034  ***
+  INCOME       588.187      175.884      3.344    0.0014  ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Sum squared resid     4103860   S.E. of regression   259.3769
+R-squared            0.412566   Adjusted R-squared   0.393305
+F(2, 61)             4.306698   P-value(F)           0.017800
+rho                 -0.028256   Durbin-Watson        1.984232
+
+Done

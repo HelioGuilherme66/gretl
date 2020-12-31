@@ -1,0 +1,341 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps9-10.inp
+ /opt/esl/share/gretl/scripts/ps9-10.inp
+? open data9-3
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+# Model A
+? ols 2 0 3
+
+Model 1: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: reskwh
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       76.2392      39.8822       1.912    0.0593   *
+  nocust       1.28383      0.0520762   24.65     1.73e-40 ***
+
+Mean dependent var   1035.081   S.D. dependent var   233.6049
+Sum squared resid    575833.1   S.E. of regression   82.30739
+R-squared            0.877303   Adjusted R-squared   0.875859
+F(1, 85)             607.7629   P-value(F)           1.73e-40
+Log-likelihood      -506.1461   Akaike criterion     1016.292
+Schwarz criterion    1021.224   Hannan-Quinn         1018.278
+rho                 -0.143448   Durbin-Watson        2.274660
+
+# Model B
+? add 4 6 7 8
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    price, incm, cdd, hdd
+  Test statistic: F(4, 81) = 58.6265, p-value 3.77258e-23
+  Adding variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: reskwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -467.327       105.137       -4.445    2.77e-05 ***
+  nocust        2.16565       0.239693     9.035    6.77e-14 ***
+  price       -12.0005        2.37206     -5.059    2.58e-06 ***
+  incm         -0.0288421     0.0100260   -2.877    0.0051   ***
+  cdd           0.294863      0.0308091    9.571    5.93e-15 ***
+  hdd           0.379334      0.0267640   14.17     1.21e-23 ***
+
+Mean dependent var   1035.081   S.D. dependent var   233.6049
+Sum squared resid    147834.0   S.E. of regression   42.72131
+R-squared            0.968500   Adjusted R-squared   0.966555
+F(5, 81)             498.0841   P-value(F)           2.94e-59
+Log-likelihood      -446.9979   Akaike criterion     905.9958
+Schwarz criterion    920.7913   Hannan-Quinn         911.9535
+rho                  0.053406   Durbin-Watson        1.874479
+
+# save residuals as ut
+? genr ut = $uhat
+Generated series ut (ID 10)
+# Model C
+? omit 7 8
+Test on Model 2:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    cdd, hdd
+  Test statistic: F(2, 81) = 102.902, p-value 5.7737e-23
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 3: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: reskwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -277.075       193.248       -1.434    0.1554  
+  nocust        2.17406       0.445365     4.882    5.03e-06 ***
+  price       -11.2628        4.37096     -2.577    0.0117   **
+  incm         -0.0307035     0.0186347   -1.648    0.1032  
+
+Mean dependent var   1035.081   S.D. dependent var   233.6049
+Sum squared resid    523448.7   S.E. of regression   79.41417
+R-squared            0.888465   Adjusted R-squared   0.884433
+F(3, 83)             220.3866   P-value(F)           2.03e-39
+Log-likelihood      -501.9971   Akaike criterion     1011.994
+Schwarz criterion    1021.858   Hannan-Quinn         1015.966
+rho                 -0.251130   Durbin-Watson        2.494278
+
+Excluding the constant, p-value was highest for variable 6 (incm)
+
+# autocorrelation test on Model C
+? modtest -a
+
+Breusch-Godfrey test for autocorrelation up to order 4
+OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: uhat
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      35.1138       124.965        0.2810   0.7795  
+  nocust     -0.0800208      0.288018    -0.2778   0.7819  
+  price      -0.393749       2.82318     -0.1395   0.8894  
+  incm        0.00401044     0.0120458    0.3329   0.7401  
+  uhat_1     -0.145863       0.0859178   -1.698    0.0935   *
+  uhat_2     -0.143835       0.0857356   -1.678    0.0974   *
+  uhat_3     -0.185421       0.0856506   -2.165    0.0334   **
+  uhat_4      0.672952       0.0884760    7.606    5.08e-11 ***
+
+  Unadjusted R-squared = 0.604493
+
+Test statistic: LMF = 30.185864,
+with p-value = P(F(4,79) > 30.1859) = 3.04e-15
+
+Alternative statistic: TR^2 = 52.590862,
+with p-value = P(Chi-square(4) > 52.5909) = 1.04e-10
+
+Ljung-Box Q' = 65.1291,
+with p-value = P(Chi-square(4) > 65.1291) = 2.42e-13
+
+# correlogram of ut
+? corrgm ut
+
+
+Correlogram
+
+  ut
+   0.605071  |           o                                                 
+             |                                                             
+             |                          o                                  
+   0.444003  +                                                             
+             |                                                             
+             |                                         o                   
+             |                                                             
+             |                                                        o    
+   0.175555  +                                                             
+             |                                                             
+             |                                                             
+        0.0  |o------------------------------------------------------------
+             |       o                                     o               
+ -0.0928918  +               o      o       o                     o       o
+             |                                     o                       
+             |                                                             
+             |                                                             
+             |   o                                                         
+  -0.361339  +                  o              o              o            
+             |+---------+---------+---------+---------+---------+---------+
+              1                            lag                            17
+
+
+Autocorrelation function for ut
+***, **, * indicate significance at the 1%, 5%, 10% levels
+using standard error 1/T^0.5
+
+  LAG      ACF          PACF         Q-stat. [p-value]
+
+    1   0.0523        0.0523          0.2463  [0.620]
+    2  -0.2932  ***  -0.2968 ***      8.0796  [0.018]
+    3  -0.0173        0.0199          8.1073  [0.044]
+    4   0.6051  ***   0.5697 ***     42.2615  [0.000]
+    5  -0.0462       -0.1995 *       42.4632  [0.000]
+    6  -0.3613  ***  -0.1570         54.9444  [0.000]
+    7  -0.0576       -0.0109         55.2658  [0.000]
+    8   0.5197  ***   0.2135 **      81.7337  [0.000]
+    9  -0.0922       -0.1463         82.5775  [0.000]
+   10  -0.3407  ***  -0.0119         94.2488  [0.000]
+   11  -0.1312       -0.1578         96.0024  [0.000]
+   12   0.3830  ***  -0.0198        111.1446  [0.000]
+   13  -0.0270        0.1095        111.2212  [0.000]
+   14  -0.3179  ***  -0.0642        121.9387  [0.000]
+   15  -0.0692        0.0616        122.4539  [0.000]
+   16   0.2736  **   -0.1556        130.6176  [0.000]
+   17  -0.0471       -0.0403        130.8625  [0.000]
+
+# estimate by corc
+? ar1 2 0 3 4 6 7 8
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.05341   147346.
+                   2      0.05578   147346.
+                   3      0.05587   147346.
+                   4      0.05587   147346.
+
+Model 4: Cochrane-Orcutt, using observations 1972:3-1993:4 (T = 86)
+Dependent variable: reskwh
+rho = 0.0558746
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -475.909       118.721       -4.009    0.0001   ***
+  nocust        2.18205       0.267963     8.143    4.24e-12 ***
+  price       -11.9874        2.51925     -4.758    8.53e-06 ***
+  incm         -0.0295003     0.0111845   -2.638    0.0100   **
+  cdd           0.295465      0.0304066    9.717    3.45e-15 ***
+  hdd           0.381465      0.0265158   14.39     6.73e-24 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   1040.296   S.D. dependent var   229.8250
+Sum squared resid    147345.6   S.E. of regression   42.91643
+R-squared            0.967183   Adjusted R-squared   0.965132
+F(5, 80)             426.1535   P-value(F)           4.15e-56
+rho                  0.017288   Durbin-Watson        1.947593
+
+# estimate by hilu
+? ar1 2 0 3 4 6 7 8 --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99      302215.    -0.90      276472.    -0.80      250642.
+ -0.70      227726.    -0.60      207719.    -0.50      190608.
+ -0.40      176376.    -0.30      165001.    -0.20      156458.
+ -0.10      150724.     0.00      147780.     0.10      147616.
+  0.20      150237.     0.30      155654.     0.40      163879.
+  0.50      174916.     0.60      188722.     0.70      205136.
+  0.80      223617.     0.90      242979.     0.99      261540.   
+
+ESS is minimized for rho = 0.06
+
+  ESS
+     302215  |o                             |                              
+             |                              |                              
+             |                              |                              
+     276448  +  o                           |                              
+             |                              |                              
+             |                              |                             o
+             |                              |                              
+             |     o                        |                          o   
+     233504  +                              |                              
+             |        o                     |                              
+             |                              |                       o      
+             |                              |                              
+             |           o                  |                    o         
+     190560  +              o               |                              
+             |                              |                 o            
+             |                 o            |              o               
+             |                    o         |                              
+             |                       o      |           o                  
+     147616  +                          o   o  o  o  o                     
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1      0.06000   147348.
+                   2      0.05604   147346.
+                   3      0.05588   147346.
+                   4      0.05588   147346.
+
+Model 5: Hildreth-Lu, using observations 1972:3-1993:4 (T = 86)
+Dependent variable: reskwh
+rho = 0.055875
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -475.909       118.722       -4.009    0.0001   ***
+  nocust        2.18205       0.267963     8.143    4.24e-12 ***
+  price       -11.9874        2.51925     -4.758    8.53e-06 ***
+  incm         -0.0295003     0.0111845   -2.638    0.0100   **
+  cdd           0.295465      0.0304066    9.717    3.45e-15 ***
+  hdd           0.381465      0.0265158   14.39     6.73e-24 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   1040.296   S.D. dependent var   229.8250
+Sum squared resid    147345.6   S.E. of regression   42.91643
+R-squared            0.967183   Adjusted R-squared   0.965132
+F(5, 80)             426.1532   P-value(F)           4.15e-56
+rho                  0.017287   Durbin-Watson        1.947594
+
+# general order ar
+? ar 1 3 4 ; 2 0 3 4 6 7 8
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1         74157.705096 
+                  2         65602.535996        11.536
+                  3         63966.521285         2.494
+                  4         63875.246918         0.143
+                  5         63872.513154         0.004
+
+Model 6: AR, using observations 1973:2-1993:4 (T = 83)
+Dependent variable: reskwh
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const      -184.505        258.967       -0.7125   0.4783  
+  nocust        1.64875        0.447449     3.685    0.0004   ***
+  price       -12.4483         3.80367     -3.273    0.0016   ***
+  incm         -0.00684681     0.0166432   -0.4114   0.6819  
+  cdd           0.320638       0.0299211   10.72     3.96e-17 ***
+  hdd           0.238783       0.0267893    8.913    1.30e-13 ***
+
+  u_1          -0.0328475      0.0656094   -0.5007   0.6180  
+  u_3          -0.0221699      0.0651154   -0.3405   0.7344  
+  u_4           0.890393       0.0509799   17.47     5.03e-29 ***
+
+Sum of AR coefficients = 0.835376
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   202.6773   S.D. dependent var   63.20804
+Sum squared resid    63872.51   S.E. of regression   28.80127
+R-squared            0.984624   Adjusted R-squared   0.983626
+F(5, 77)             63.58874   P-value(F)           6.33e-26
+rho                  0.171613   Durbin-Watson        1.574013
+
+Excluding the constant, p-value was highest for variable 6 (incm)
+
+# obtain forecasts
+? fcast 1989.1 1990.4 yf
+Generated series yf (ID 11)
+# set sample range
+? smpl 1989.1 1990.4
+Full data range: 1972:2 - 1993:4 (n = 87)
+Current sample: 1989:1 - 1990:4 (n = 8)
+
+# print forecasts
+? print 2 yf
+
+reskwh:
+Current sample:  1989:1 - 1990:4 (n = 8)
+
+1432.96  1156.21  1276.94  1279.63  1485.45  1206.45  1394.06  1336.98  
+
+yf:
+Current sample:  1989:1 - 1990:4 (n = 8)
+
+1425.96  1187.77  1295.94  1286.29  1452.39  1205.59  1370.40  1329.09  
+
+Done

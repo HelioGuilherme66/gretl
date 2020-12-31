@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run qr.inp
+ /home/cottrell/stats/test-gretl/matrix/qr.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = { const, sqft }
+Generated matrix X
+? matrix R
+? matrix Q = qrdecomp(X, &R)
+Generated matrix Q
+? Q
+Q (14 x 2) [t1 = 1, t2 = 14]
+
+    -0.26726     -0.40608 
+    -0.26726     -0.31536 
+    -0.26726     -0.29327 
+    -0.26726     -0.16030 
+    -0.26726     -0.14926 
+    -0.26726    -0.077253 
+    -0.26726    -0.053251 
+    -0.26726    -0.019648 
+    -0.26726     0.011555 
+    -0.26726     0.017796 
+    -0.26726      0.16469 
+    -0.26726      0.33079 
+    -0.26726      0.42680 
+    -0.26726      0.52280 
+
+? R
+R (2 x 2)
+
+     -3.7417      -7150.0 
+      0.0000       2083.1 
+
+Done

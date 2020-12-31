@@ -1,0 +1,108 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run re_chisq.inp
+ /home/cottrell/stats/test-gretl/panel/re_chisq.inp
+? open baltagi_Gasoline
+
+Read datafile /home/cottrell/stats/test-gretl/panel/baltagi_Gasoline.gdt
+periodicity: 19, maxobs: 342
+observations range: 1:01 to 18:19
+
+Listing 6 variables:
+  0) const    1) YEAR     2) gas      3) y        4) rp     
+  5) car    
+
+? genr time
+Generated series time (ID 6)
+? list X = y rp car
+Generated list X
+? panel gas 0 X --random-effects --time-dummies
+
+Model 1: Random-effects (GLS), using 342 observations
+Included 18 cross-sectional units
+Time-series length = 19
+Dependent variable: gas
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      -0.253081     0.332126      -0.7620   0.4466  
+  y           0.203648     0.0727805      2.798    0.0055   ***
+  rp         -0.287121     0.0417471     -6.878    3.20e-11 ***
+  car        -0.606100     0.0247098    -24.53     1.71e-75 ***
+  dt_2        0.0313801    0.0293203      1.070    0.2853  
+  dt_3        0.0289211    0.0296274      0.9762   0.3297  
+  dt_4        0.0408119    0.0302179      1.351    0.1778  
+  dt_5        0.0727434    0.0311083      2.338    0.0200   **
+  dt_6        0.0865781    0.0317800      2.724    0.0068   ***
+  dt_7        0.124155     0.0326286      3.805    0.0002   ***
+  dt_8        0.149924     0.0334927      4.476    1.06e-05 ***
+  dt_9        0.175379     0.0344833      5.086    6.24e-07 ***
+  dt_10       0.177925     0.0362236      4.912    1.44e-06 ***
+  dt_11       0.201222     0.0378132      5.321    1.94e-07 ***
+  dt_12       0.225522     0.0388917      5.799    1.60e-08 ***
+  dt_13       0.245353     0.0405896      6.045    4.16e-09 ***
+  dt_14       0.272253     0.0428529      6.353    7.24e-10 ***
+  dt_15       0.240432     0.0416678      5.770    1.87e-08 ***
+  dt_16       0.276336     0.0415643      6.648    1.28e-10 ***
+  dt_17       0.278795     0.0429400      6.493    3.22e-10 ***
+  dt_18       0.289351     0.0438426      6.600    1.71e-10 ***
+  dt_19       0.297254     0.0453677      6.552    2.27e-10 ***
+
+Mean dependent var   4.296242   S.D. dependent var   0.548907
+Sum squared resid    45.48918   S.E. of regression   0.376445
+Log-likelihood      -140.3125   Akaike criterion     324.6250
+Schwarz criterion    408.9908   Hannan-Quinn         358.2340
+
+'Between' variance = 0.0383395
+'Within' variance = 0.00659063
+theta used for quasi-demeaning = 0.905309
+corr(y,yhat)^2 = 0.621175
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(3) = 1171.35
+  with p-value = 1.20606e-253
+
+Wald test for joint significance of time dummies
+  Asymptotic test statistic: Chi-square(18) = 73.938
+  with p-value = 9.63504e-09
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1492.58
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(21) = 58.8487
+  with p-value = 1.90459e-05
+
+# test on named regressors
+? restrict
+? b2 = 0
+? b3 = 0
+? b4 = 0
+? end restrict
+Restriction set
+ 1: b[y] = 0
+ 2: b[rp] = 0
+ 3: b[car] = 0
+
+Test statistic: chi^2(3) = 1171.35, with p-value = 1.20606e-253
+
+# test on time dummies
+? scalar k = $ncoeff - 4
+Generated scalar k = 18
+? matrix qd = zeros(k, 1)
+Generated matrix qd
+? matrix Rd = zeros(k,4) ~ I(k)
+Generated matrix Rd
+? restrict
+? R = Rd
+? q = qd
+? end restrict
+
+Test statistic: chi^2(18) = 73.938, with p-value = 9.63504e-09
+
+Done

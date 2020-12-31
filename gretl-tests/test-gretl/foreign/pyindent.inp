@@ -1,0 +1,15 @@
+function void pytest (void)
+  foreign language=python
+    s = 'Hello'
+    if s[0] == 'H':
+      print("Got H")
+      if s[1] == 'e':
+        print("and got e")
+      else:
+        print("but not e")
+    else:
+      print("Not H")
+  end foreign
+end function
+
+pytest()

@@ -1,0 +1,36 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run plot_scatter_label.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/plot_scatter_label.gfn.inp
+? include ./plot_scatter_label.gfn
+ /home/cottrell/stats/test-gretl/testgfn/plot_scatter_label.gfn
+plot_scatter_label 0.1, 2015-11-28 (Artur Tarassow)
+# Load
+? open mrw.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/misc/mrw.gdt
+? smpl 1 3
+Full data range: 1 - 121 (n = 121)
+Current sample: 1 - 3 (n = 3)
+
+? strings C = array(3)
+? C[1] = "Algeria"
+? C[2] = "Angola"
+? C[3] = "Benin"
+? string GP = AddLabel(gdpgrow,school, C)
+Generated string GP
+# Actual Plot
+? list lplot = gdpgrow school
+Generated list lplot
+? plot lplot
+? literal set term png font 'Helvetica,12' lw 1
+? literal set nokey
+? literal set title ''
+? literal set xrange[0:]
+? literal set linetype 1 lc rgb 'blue' pt 7 ps 1
+? literal set label 1 'Algeria' at 4.5000-0.1, 4.8000-0.2 centre font ',10' ; \
+  set label 2 'Angola' at 1.8000-0.1, 0.8000-0.2 centre font ',10' ; set label \
+  3 'Benin' at 1.8000-0.1, 2.2000-0.2 centre font ',10' ;
+? end plot --output=display
+Done

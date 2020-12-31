@@ -1,0 +1,3 @@
+open data3-6
+append annual.txt
+print -o

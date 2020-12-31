@@ -1,0 +1,22 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run longley-julia.inp
+ /home/cottrell/stats/test-gretl/foreign/longley-julia.inp
+Read datafile /opt/esl/share/gretl/data/misc/longley.gdt
+
+Log-relative errors, Longley coefficients:
+
+       gretl       julia
+      12.228      8.0224
+      10.920      7.5300
+      11.797      7.5697
+      12.528      8.1421
+      13.169      8.3801
+      11.770      7.2368
+      12.235      8.0333
+
+Column means
+      12.092      7.8449
+

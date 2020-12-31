@@ -1,0 +1,52 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run reset.inp
+ /home/cottrell/stats/test-gretl/reset.inp
+# test for Ramsey's RESET
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? ols price const sqft bedrms
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      121.179       80.1778       1.511    0.1589  
+  sqft         0.148314     0.0212080    6.993    2.29e-05 ***
+  bedrms     -23.9106      24.6419      -0.9703   0.3527  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16832.79   S.E. of regression   39.11846
+R-squared            0.834673   Adjusted R-squared   0.804613
+F(2, 11)             27.76736   P-value(F)           0.000050
+Log-likelihood      -69.50933   Akaike criterion     145.0187
+Schwarz criterion    146.9358   Hannan-Quinn         144.8412
+
+? reset
+
+Auxiliary regression for RESET specification test
+OLS, using observations 1-14
+Dependent variable: price
+
+              coefficient      std. error     t-ratio   p-value
+  -------------------------------------------------------------
+  const      -158.605         210.774         -0.7525   0.4710 
+  sqft         -1.62627         1.47432       -1.103    0.2986 
+  bedrms      260.298         249.310          1.044    0.3237 
+  yhat^2        0.0392928       0.0304401      1.291    0.2289 
+  yhat^3       -4.10305e-05     3.01825e-05   -1.359    0.2071 
+
+Test statistic: F = 1.376909,
+with p-value = P(F(2,9) > 1.37691) = 0.301
+
+Done

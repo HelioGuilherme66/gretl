@@ -1,0 +1,25 @@
+nulldata 10
+
+string foo = "x = 10.5, k = 30, gobble_futz"
+scalar x
+scalar k
+
+string s 
+sscanf(foo, "x = %f, k = %d, %16[^_]", &x, &k, s)
+print x k
+printf "s = %s\n", s
+
+scalar y
+sscanf("0.123456", "%3g%3g", &x, &y)
+print x y
+
+sscanf("123456", "%3d%3d", &x, &y)
+print x y
+
+string s = "Operator	Factor	Root"
+string w1 = null
+string w2 = null
+sscanf(s, "%s\t%s", w1, w2)
+w1
+w2
+

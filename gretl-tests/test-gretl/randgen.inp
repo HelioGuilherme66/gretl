@@ -1,0 +1,30 @@
+nulldata 20
+set echo off
+set messages off
+
+set seed 7864133
+series u = randgen(u, 0, 1)
+series n = randgen(N, 0, 3)
+series s = randgen(t, 10)
+series X = randgen(X, 5)
+series F = randgen(F, 2, 80)
+series g = randgen(G, 1, 1.5)
+series B = randgen(B, 0.5, 100)
+series p = randgen(P, 10)
+print -o
+
+set seed 7864133
+matrix uvec = mrandgen(u, 0, 1, 20, 1)
+matrix nvec = mrandgen(N, 0, 3, 20, 1)
+matrix svec = mrandgen(t, 10, 20, 1)
+matrix Xvec = mrandgen(X, 5, 20, 1)
+matrix Fvec = mrandgen(F, 2, 80, 20, 1)
+matrix gvec = mrandgen(G, 1, 1.5, 20, 1)
+matrix Bvec = mrandgen(B, 0.5, 100, 20, 1)
+matrix pvec = mrandgen(P, 10, 20, 1)
+matrix M = uvec ~ nvec ~ svec ~ Xvec
+print M
+matrix M = Fvec ~ gvec ~ Bvec ~ pvec
+print M
+
+

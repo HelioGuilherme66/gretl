@@ -1,0 +1,5 @@
+nulldata 10
+setobs 5 2008-04-01
+series S1=(t>="08-04-08")
+print S1 -o
+

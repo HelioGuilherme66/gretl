@@ -1,0 +1,27 @@
+set echo off
+set messages off
+
+open Exemplo.gdt -q
+
+# Monthly, October start, native and x12a
+smpl 2004:10 2011:10
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m
+fcast 2011:11 2011:11
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m --x-12-arima
+fcast 2011:11 2011:11
+
+# Monthly, January start, native and x12a
+smpl 2004:01 2011:01
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m
+fcast 2011:02 2011:02
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m --x-12-arima
+fcast 2011:02 2011:02
+
+# Fake quarterly!
+smpl full
+setobs 4 1960:1
+smpl 2009:4 2034:1
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m
+fcast 2034:2 2034:2
+arima 0 0 1 ; 1 0 0 ; ipc_dive_m --x-12-arima
+fcast 2034:2 2034:2

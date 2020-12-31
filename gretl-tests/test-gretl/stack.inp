@@ -1,0 +1,9 @@
+open data4-1
+genr bimp = price
+genr bomp = sqft
+genr bump = bedrms
+genr foo = stack(price..bedrms)
+genr bimp = stack(bimp, bomp, bump)
+ls
+labels
+print -o

@@ -1,0 +1,18 @@
+open griliches.gdt
+
+loop i=66..71 -q
+  genr dum$i = (YEAR=$i)
+end loop
+
+list X = S EXPR TENURE
+list X2 = RNS SMSA dum*
+list Z = MED KWW AGE MRT
+
+tsls LW const IQ X X2 ; const X X2 Z
+tsls LW const IQ X X2 ; const X X2 Z --liml
+tsls LW const IQ X X2 ; const X X2 Z --gmm
+
+
+
+
+

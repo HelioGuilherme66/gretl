@@ -1,0 +1,18 @@
+open engel.gdt
+
+# Basic version: estimation via Frisch-Newton
+quantreg 0.5 1 0 2
+quantreg 0.25 1 0 2
+quantreg 0.5 1 0 2 --robust
+quantreg 0.25 1 0 2 --robust
+
+
+# Showing 95% confidence intervals, using Barrodale-Roberts
+# assuming iid errors, using Student t
+quantreg 0.25 1 0 2 --intervals
+# iid errors, using Normal
+quantreg 0.25 1 0 2 --intervals --no-df-corr
+# non-iid errors
+quantreg 0.25 1 0 2 --intervals --robust
+
+

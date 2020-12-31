@@ -1,0 +1,14 @@
+open denmark.gdt
+
+set echo off
+set seed 7851023
+matrix m
+
+set stopwatch
+loop 20
+  vecm 2 1 LRM LRY IBO IDE --rc --seasonals --silent
+  m = irf(1,3,0.15)
+endloop
+printf "elapsed: %g secs\n", $stopwatch
+print m
+

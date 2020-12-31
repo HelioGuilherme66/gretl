@@ -1,0 +1,28 @@
+procedure uforecast fcst start end
+type series *fcst
+type integer start end
+*
+option switch   static
+option equation equation
+option series   *stderrs
+*
+if static {
+   steps 1 end-start+1 start
+   # equation fcst
+   if %defined(stderrs)
+      set stderrs start end = 1.0 ;*%eqnvariance(equation) (??? doesn't exist)
+}
+else {
+   forecast 1 end-start+1 start
+   # equation fcst
+   if %defined(stderrs) {
+      errors 1 end-start+1
+      # equation stderrs start
+   }
+}
+end
+
+
+
+
+

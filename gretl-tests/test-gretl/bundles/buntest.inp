@@ -1,0 +1,6 @@
+bundle b 
+b["str"] = "throgmorton"
+eval inbundle(b, "str")
+eval typestr(inbundle(b, "str"))
+eval inbundle(b, "x")
+eval typestr(inbundle(b, "x"))

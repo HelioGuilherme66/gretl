@@ -1,0 +1,102 @@
+open data9-3.gdt
+
+foreign language=R --send-data
+    y <- gretldata[, "reskwh"]
+    bsm <- StructTS(y, type="BSM", fixed = c(840,0,NA,1))
+    Ru <- bsm$residuals
+    gretl.export(Ru)
+    Ryhat <- bsm$fitted
+    gretl.export(Ryhat)
+    Rll <- as.matrix(bsm$loglik)
+    gretl.export(Rll)
+    RF <- as.matrix(bsm$model0$T)
+    gretl.export(RF)
+    Rinis <- as.matrix(bsm$model0$a)
+    gretl.export(Rinis)
+    RP0 <- as.matrix(bsm$model0$P)
+    gretl.export(RP0)
+    vars <- as.matrix(bsm$coef)
+    gretl.export(vars)
+end foreign
+
+R_F = mread("@dotdir/RF.mat")
+R_inis = mread("@dotdir/Rinis.mat")
+R_P0 = mread("@dotdir/RP0.mat")
+R_coeff = mread("@dotdir/vars.mat")
+R_ll = mread("@dotdir/Rll.mat")
+
+matrix smat = sqrt(R_coeff)
+printf "R: std devs =\n%.15g\n", smat
+printf "R: P0 =\n%12.9g\n", R_P0
+printf "R: a' =\n%.9g\n", R_inis'
+R_inis
+
+append "@dotdir/Ru.csv"
+append "@dotdir/Ryhat.csv"
+Re = reskwh - level - sea
+
+series e
+series v
+
+scalar s = $pd
+scalar T = $nobs 
+scalar r = cols(R_F)
+matrix H = { 1; 0; 1 } | zeros(s-2,1)
+
+matrix Q = zeros(s+1,s+1)
+Q[1,1] = R_coeff[1]
+Q[2,2] = R_coeff[2]
+Q[3,3] = R_coeff[3]
+scalar R = R_coeff[4]
+
+kalman
+    obsy reskwh
+    obsymat H
+    obsvar R
+    statemat R_F
+    statevar Q
+    inistate R_inis
+    inivar R_P0
+end kalman 
+
+matrix me
+matrix mv 
+ERR = kfilter(&me, &mv)
+series e = me
+series v = mv
+u = e/sqrt(v)
+
+sprintf s_lev "%.15g", sqrt(840)
+sprintf s_sea "%.15g", sqrt(R_coeff[3])
+matrix y = {reskwh}
+mwrite(y, "@dotdir/reskwh.mat")
+
+foreign language=ox
+#include <oxstd.h>
+#include <packages/ssfpack/ssfpack.h>
+
+main()
+{
+    decl myt, mbsm, mphi, momega, msigma, mkf;
+    decl P0, a;
+
+    mbsm = GetSsfStsm(
+       <CMP_IRREG,      1, 0, 0;
+        CMP_LEVEL,      @s_lev, 0, 0;
+        CMP_SEAS_DUMMY, @s_sea, 4, 0;
+        CMP_SLOPE,      0, 0, 0>,
+       &mphi, &momega, &msigma);
+
+    P0 = gretl_loadmat("RP0.mat");
+    a = gretl_loadmat("Rinis.mat");
+    msigma = P0 | a';
+
+    myt = gretl_loadmat("reskwh.mat")';
+    mkf = KalmanFil(myt, mphi, momega, msigma);
+    gretl_export(mkf[0][]', "oxresid.mat");
+}
+end foreign
+
+series Oxe = mread("@dotdir/oxresid.mat")
+
+print Re e Oxe Ru u -o

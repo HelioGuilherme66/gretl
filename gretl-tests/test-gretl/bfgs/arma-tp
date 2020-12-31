@@ -1,0 +1,13 @@
+arma
+
+                     output newout  newer
+BFGS gradient evals:    804    764    772
+BFGS function evals:   2323   2394   2115
+
+old: real 4.34, 4.40
+new: real 4.38, 4.36
+
+revised
+
+old: 4.72, 4.42, 4.36
+new: 4.46, 4.45, 4.47

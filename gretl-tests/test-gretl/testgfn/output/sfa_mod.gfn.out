@@ -1,0 +1,162 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run sfa_mod.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/sfa_mod.gfn.inp
+? include ./sfa_mod.gfn
+ /home/cottrell/stats/test-gretl/testgfn/sfa_mod.gfn
+sfa_mod 0.91, 2009-08-22 (Gordon Hughes)
+# Sample script to demonstrate use of function sfa_mod
+# Estimation of basic stochastic frontier
+# Use Greene dataset 9-1
+? open greene9_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene9_1.gdt
+periodicity: 1, maxobs: 25
+observations range: 1 to 25
+
+Listing 5 variables:
+  0) const      1) valadd     2) capital    3) labor      4) nfirm    
+
+? series ln_vadd = ln(valadd)
+Generated series ln_vadd (ID 5)
+? series ln_cap = ln(capital)
+Generated series ln_cap (ID 6)
+? series ln_lab = ln(labor)
+Generated series ln_lab (ID 7)
+? list xlist = const ln_cap ln_lab
+Generated list xlist
+# Some models have problems with convergence, so adjust tolerance
+? set bfgs_toler 0.0001
+# Estimate Exponential Model
+# Ignore warning message - results correspond to Greene's results
+? matrix sfa_coeff1 = sfa_mod(ln_vadd, xlist, "E", "P")
+
+Stochastic Frontier Analysis : Normal-Exponential
+Production function specification
+Warning: The supplied derivatives may be incorrect, or perhaps
+the data are ill-conditioned for this function.
+1 out of 25 gradients looked suspicious.
+
+hello for result
+
+
+                 Variable       Coeff          SE   z-ratio   P-value
+
+Coefficients of cost/production function
+                    const     2.06937     0.29087     7.115     0.000
+                   ln_cap     0.26257     0.12053     2.179     0.029
+                   ln_lab     0.77029     0.13848     5.562     0.000
+
+Parameters of the error distributions
+   Inefficiency - sigma_u     0.13517     0.07214     1.874     0.061
+   Random error - sigma_v     0.17139     0.05423     3.161     0.002
+
+   Log-Likelihood =      2.860
+   Akaike Information Criterion (AIC) =      4.279
+   Schwarz's Bayesian Criterion (BIC) =     10.373
+         Hannan-Quinn Criterion (HQC) =      5.969
+
+
+Generated matrix sfa_coeff1
+? print sfa_coeff1
+sfa_coeff1 (5 x 7)
+
+      2.0694     0.084603     0.021200    -0.033600     0.014062    -0.012856       2.8605 
+     0.26257     0.021200     0.014526    -0.015559    0.0018048   -0.0022835       4.2790 
+     0.77029    -0.033600    -0.015559     0.019178   -0.0036404    0.0041211       10.373 
+     0.13517     0.014062    0.0018048   -0.0036404    0.0052035   -0.0029709       5.9693 
+     0.17139    -0.012856   -0.0022835    0.0041211   -0.0029709    0.0029406       0.0000 
+
+# Use coefficients from Exponential Model to estimate Half-Normal Model
+? matrix start2 = zeros(5,1)
+Generated matrix start2
+? matrix start2[1:5,1] = sfa_coeff1[1:5,1]
+Modified matrix start2
+? matrix sfa_coeff2 = sfa_mod(ln_vadd, xlist, "H", "P", &start2)
+
+Stochastic Frontier Analysis : Normal-Half Normal
+Production function specification
+
+
+                 Variable       Coeff          SE   z-ratio   P-value
+
+Coefficients of cost/production function
+                    const     2.08145     0.42022     4.953     0.000
+                   ln_cap     0.25851     0.14339     1.803     0.071
+                   ln_lab     0.78022     0.16942     4.605     0.000
+
+Parameters of the error distributions
+   Inefficiency - sigma_u     0.22155     0.17382     1.275     0.202
+   Random error - sigma_v     0.17516     0.08930     1.961     0.050
+
+   Log-Likelihood =      2.470
+   Akaike Information Criterion (AIC) =      5.061
+   Schwarz's Bayesian Criterion (BIC) =     11.155
+         Hannan-Quinn Criterion (HQC) =      6.751
+
+
+Generated matrix sfa_coeff2
+# Estimate Truncated Normal Model
+? matrix sfa_coeff3 = sfa_mod(ln_vadd, xlist, "T", "P")
+
+Stochastic Frontier Analysis : Normal-Truncated Normal
+Production function specification
+
+
+                 Variable       Coeff          SE   z-ratio   P-value
+
+Coefficients of cost/production function
+                    const     2.06900     0.58669     3.527     0.000
+                   ln_cap     0.26284     0.12830     2.049     0.040
+                   ln_lab     0.77138     0.15049     5.126     0.000
+
+Parameters of the error distributions
+    Truncated normal - mu    -3.59065   282.17338     0.013     0.990
+   Inefficiency - sigma_u     0.73679    25.77046     0.029     0.977
+   Random error - sigma_v     0.17095     0.11723     1.458     0.145
+
+   Log-Likelihood =      2.820
+   Akaike Information Criterion (AIC) =      6.360
+   Schwarz's Bayesian Criterion (BIC) =     13.674
+         Hannan-Quinn Criterion (HQC) =      8.389
+
+
+Generated matrix sfa_coeff3
+? print ln_vadd --byobs
+
+        ln_vadd
+
+AL     4.837456
+CA     8.071370
+CT     6.537662
+FL     4.030623
+GA     5.718773
+IL     6.583448
+IN     6.899893
+IA     3.577836
+KS     6.203577
+KY     4.827898
+LA     4.294943
+ME     3.383271
+MD     6.028910
+MA     5.486994
+MI     8.313743
+MO     6.480175
+NJ     6.502959
+NY     6.846337
+OH     7.385168
+PA     6.425807
+TX     6.267984
+VA     5.161317
+WA     6.456688
+WV     3.122365
+WI     5.857107
+
+# Generate efficiency residuals for Exponential Model
+# series upred = sfa_eff(ln_vadd, xlist, sfa_coeff1, "E", "P")
+# Generate technical efficiencies for Exponential Model
+# series tech_eff = sfa_eff(ln_vadd, xlist, sfa_coeff1, "E", "P", "T")
+# print ln_vadd upred tech_eff --byobs
+Done

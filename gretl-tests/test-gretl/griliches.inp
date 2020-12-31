@@ -1,0 +1,25 @@
+open griliches
+
+loop i=66..71
+  genr dum$i = (YEAR=$i)
+endloop
+
+dum73 = (YEAR==73)
+
+list h1 = RNS SMSA dum66 dum67 dum68 dum69 dum70 dum71
+list h2 = RNS SMSA dum*
+
+ols LW const S EXPR TENURE h1
+ols LW const S IQ EXPR TENURE h1
+tsls LW const S IQ EXPR TENURE h1 ; const S EXPR TENURE h1 MED KWW AGE MRT
+tsls LW const S IQ EXPR TENURE h1 ; const EXPR TENURE h1 MED KWW AGE MRT
+
+ols LW const S EXPR TENURE h2
+ols LW const S IQ EXPR TENURE h2
+tsls LW const S IQ EXPR TENURE h2 ; const S EXPR TENURE h2 MED KWW AGE MRT
+tsls LW const S IQ EXPR TENURE h2 ; const EXPR TENURE h2 MED KWW AGE MRT
+
+
+
+
+

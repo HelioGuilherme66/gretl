@@ -1,0 +1,116 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run 1970data.inp
+ /home/cottrell/stats/test-gretl/importer/1970data.inp
+? open 1970data.xls
+Excel 97 +
+rows=76, total cols=112, data cols=106
+found label strings in first imported column
+Warning: there were missing values
+Listing 106 variables:
+  0) const       1) TCH70_00    2) PCTCOV70    3) UCOUNTY     4) TRCTCD1   
+  5) TRCTCD2     6) TRCTPOP7    7) SMPPRS7     8) SHRWHT7     9) SHRBLK7   
+ 10) SHRHSP7    11) SPLANG7    12) ADULT7     13) OLD7       14) PERS15P7  
+ 15) FFH7D      16) FFH7       17) NONFAM7    18) WNONFAM7   19) BNONFAM7  
+ 20) WRCNTY7    21) SMHSE7     22) AGGRMS7    23) BDTOT07    24) BDTOT17   
+ 25) BDTOT27    26) BDTOT37    27) BDTOT47    28) BDTOT57    29) TTUNIT17  
+ 30) TTUNIT27   31) TTUNIT37   32) TTUNIT47   33) TTUNIT57   34) TTUNITM7  
+ 35) BLTTO707   36) BLTTO687   37) BLTTO647   38) BLTTO597   39) BLTTO497  
+ 40) BLTTO397   41) RNTOCC7    42) OWNOCC7    43) SPRNTOC7   44) SPOWNOC7  
+ 45) PRSOCU7    46) PRSRNTU7   47) YRMVT597   48) YRMVT707   49) YRMVT687  
+ 50) YRMVT677   51) YRMVT667   52) YRMVT647   53) AVHHIN7N   54) AVHHIN7   
+ 55) PERS5177   56) YTHPOP7    57) PERS647    58) PERS65P7   59) TOTHSUN7  
+ 60) SMPHSU7    61) OCCHU7     62) VACHU7     63) VACRT7     64) VACFS7    
+ 65) VACOCC7    66) VACOTH7    67) VACNTOC7   68) POVRAT7N   69) POVRAT7D  
+ 70) POVRAT7    71) WELFAR7D   72) WELFARE7   73) FAVINC7N   74) FAVINC7D  
+ 75) FAVINC7    76) FALT17     77) FALT27     78) FALT37     79) FALT47    
+ 80) FALT57     81) FALT67     82) FALT77     83) FALT87     84) FALT97    
+ 85) FALT107    86) FALT127    87) FALT157    88) FALT257    89) FALT507   
+ 90) FALTMX7    91) NUMHHS7    92) EDUC87     93) EDUC117    94) EDUC127   
+ 95) EDUC157    96) EDUC167    97) EDUCPP7    98) HSDROP7N   99) HSDROP7D  
+100) HSDROP7   101) EMPMT7    102) MNOPRT7N  103) MNOPRT7D  104) FNOPRT7N  
+105) FNOPRT7D  
+
+? print 1 105 -o
+
+                TCH70_00     FNOPRT7D
+
+37067000100            0           44
+37067000200            0          876
+37067000301            0         1519
+37067000302            4         1188
+37067000400            4         1502
+37067000500            4         1648
+37067000600            4         1422
+37067000700            0         1005
+37067000801            4         1077
+37067000802            4         1371
+37067000900            4         1990
+37067001000            4         2139
+37067001100            0         1311
+37067001200            4         1170
+37067001300            0         1440
+37067001400            0         1090
+37067001500            0         1549
+37067001601            4         1305
+37067001602            4         1601
+37067001700            0         1450
+37067001800            0         1557
+37067001901            4          762
+37067001902            4         1075
+37067002001            0         1145
+37067002002            0          889
+37067002100            4         1355
+37067002200            4         2645
+37067002501            0         1163
+37067002502            0         1260
+37067002601            0         1064
+37067002603            4         1361
+37067002604            4          816
+37067002701            3          637
+37067002702            3          634
+37067002703            3          627
+37067002801            4          888
+37067002804            4          940
+37067002805            4         1163
+37067002806            4          606
+37067002807            4         1145
+37067002901            0         1263
+37067002902            0         1828
+37067003001            4          989
+37067003002            4          741
+37067003101            4         1014
+37067003103            4          362
+37067003104            4          664
+37067003201            4          895
+37067003202            4          788
+37067003303            4         1018
+37067003305            4         1123
+37067003306            4          782
+37067003307            4          459
+37067003308            4          713
+37067003401            4         1321
+37067003402            4          672
+37067003500            4         1290
+37067003600            4         1237
+37067003700            4         1334
+37067003802            0         1327
+37067003803            4          839
+37067003804            4          558
+37067003903            3          829
+37067003904            3          770
+37067003905            3          637
+37067003906            3          771
+37067003907            3         1106
+37067004004            4          632
+37067004005            4          639
+37067004006            3          633
+37067004007            3          575
+37067004008            3          813
+37067004009            3          474
+37067004101            4          986
+37067004102            4          545
+
+Done

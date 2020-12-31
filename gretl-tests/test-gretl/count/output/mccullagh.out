@@ -1,0 +1,62 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run mccullagh.inp
+ /home/cottrell/stats/test-gretl/count/mccullagh.inp
+? open mccullagh.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/mccullagh.gdt
+? poisson Acc 0 TB TC TD TE O7579 ; Months
+
+Convergence achieved after 6 iterations
+
+Model 1: Poisson, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const       -5.79997      0.178420    -32.51     8.35e-232 ***
+  TB          -0.743727     0.169148     -4.397    1.10e-05  ***
+  TC          -0.754868     0.327639     -2.304    0.0212    **
+  TD          -0.184323     0.287553     -0.6410   0.5215   
+  TE           0.384193     0.234790      1.636    0.1018   
+  O7579        0.500099     0.111565      4.483    7.37e-06  ***
+
+  log(Months)  1.0       
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Sum squared resid    1417.969   S.E. of regression   7.116302
+McFadden R-squared   0.311082   Adjusted R-squared   0.261941
+Log-likelihood      -84.11515   Akaike criterion     180.2303
+Schwarz criterion    189.3885   Hannan-Quinn         183.3535
+
+Overdispersion test: Chi-square(1) = 3.62444 [0.0569]
+
+? negbin Acc 0 TB TC TD TE O7579 ; Months
+
+Function evaluations: 72
+Evaluations of gradient: 25
+
+Model 2: Negative Binomial, using observations 1-40 (n = 34)
+Missing or incomplete observations dropped: 6
+Dependent variable: Acc
+Standard errors based on Hessian
+
+             coefficient   std. error      z        p-value 
+  ----------------------------------------------------------
+  const      -5.70281      0.250823     -22.74     1.96e-114 ***
+  TB         -0.687799     0.250659      -2.744    0.0061    ***
+  TC         -0.692259     0.383063      -1.807    0.0707    *
+  TD         -0.131910     0.359471      -0.3670   0.7137   
+  TE          0.467643     0.315145       1.484    0.1378   
+  O7579       0.332328     0.196702       1.690    0.0911    *
+  alpha       0.0916586    0.0577566      1.587    0.1125   
+
+  log(Months) 1.0        
+
+Mean dependent var   10.47059   S.D. dependent var   15.73499
+Log-likelihood      -76.54903   Akaike criterion     167.0981
+Schwarz criterion    177.7826   Hannan-Quinn         170.7418
+
+Done

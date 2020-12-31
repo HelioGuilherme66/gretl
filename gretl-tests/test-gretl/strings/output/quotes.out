@@ -1,0 +1,23 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run quotes.inp
+ /home/cottrell/stats/test-gretl/strings/quotes.inp
+'          ''       foo'
+? string s
+? sprintf s "\"quote %d", 1
+Replaced string s
+s = '"quote 1'
+? s = sprintf("\"quote %d", 1)
+Replaced string s
+s = '"quote 1'
+? sprintf s "\nquote %d", 1
+Replaced string s
+s = '
+quote 1'
+? s = sprintf("\nquote %d", 1)
+Replaced string s
+s = '
+quote 1'
+Done

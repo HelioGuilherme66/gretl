@@ -1,0 +1,31 @@
+open penngrow.txt
+setobs 6 1:1 --stacked-time-series
+genr Y1 = Y(-1)
+# print -o country year X Y Y1
+
+# Fixed effects
+panel Y 0 Y1 X
+# Random effects
+panel Y 0 Y1 X -u
+# Pooled OLS
+ols Y 0 Y1 X
+# Country means / Between
+panel Y 0 Y1 X -b
+# Anderson-Hsiao, using Y(-2) as instr
+diff Y X Y1
+ols d_Y1 0 Y(-2) d_X
+genr DY1 = $yhat
+ols d_Y DY1 d_X
+genr yh = $coeff(DY1) * d_Y1 + $coeff(d_X) * d_X
+genr uh = d_Y - yh
+genr s = sqrt(sum(uh*uh)/374)
+genr se_1 = $stderr(DY1) * s/$sigma
+genr se_2 = $stderr(d_X) * s/$sigma
+# Anderson-Hsiao, via 2SLS, using Y(-2) as instrument
+tsls d_Y d_Y(-1) d_X ; 0 d_X Y(-2)
+# Anderson-Hsiao, using d_Y(-2) as instrument
+tsls d_Y d_Y(-1) d_X ; 0 d_X d_Y(-2)
+
+
+
+

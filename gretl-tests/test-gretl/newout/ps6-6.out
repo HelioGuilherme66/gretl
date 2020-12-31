@@ -1,0 +1,296 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps6-6.inp
+ /opt/esl/share/gretl/scripts/ps6-6.inp
+#  PS6.6 for Application Section 6.7
+? open data3-3
+
+Read datafile /opt/esl/share/gretl/data/data3-3.gdt
+periodicity: 1, maxobs: 34
+observations range: 1960 to 1993
+
+Listing 4 variables:
+  0) const      1) YEAR       2) PATENTS    3) R_D      
+
+? ols PATENTS 0 R_D
+
+Model 1: OLS, using observations 1960-1993 (T = 34)
+Dependent variable: PATENTS
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       34.5711      6.35787       5.438    5.56e-06 ***
+  R_D          0.791935    0.0567036    13.97     3.64e-15 ***
+
+Mean dependent var   119.2382   S.D. dependent var   29.30583
+Sum squared resid    3994.300   S.E. of regression   11.17237
+R-squared            0.859065   Adjusted R-squared   0.854661
+F(1, 32)             195.0551   P-value(F)           3.64e-15
+Log-likelihood      -129.2704   Akaike criterion     262.5408
+Schwarz criterion    265.5935   Hannan-Quinn         263.5818
+rho                  0.945182   Durbin-Watson        0.233951
+
+# generate lagged variables
+? genr R_D1 = R_D(-1)
+Generated series R_D1 (ID 4)
+? genr R_D2 = R_D(-2)
+Generated series R_D2 (ID 5)
+? genr R_D3 = R_D(-3)
+Generated series R_D3 (ID 6)
+? genr R_D4 = R_D(-4)
+Generated series R_D4 (ID 7)
+# print them to see that missing observations are denoted by -999
+? print R_D R_D1 R_D2 R_D3 R_D4
+
+R_D:
+Full data range: 1960 - 1993 (n = 34)
+
+57.9400  60.5900  64.4400  70.6600  76.8300  80.0000  84.8200  86.8400  
+88.8100  88.2800  85.2900  83.1800  85.0700  86.7200  85.4500  83.4100  
+87.4400  90.1100  94.5000  99.2800  103.640  108.770  113.960  121.720  
+133.330  144.780  148.390  150.900  154.360  157.190  161.860  164.540  
+166.700  165.200  
+
+R_D1:
+Full data range: 1960 - 1993 (n = 33)
+
+     NA  57.9400  60.5900  64.4400  70.6600  76.8300  80.0000  84.8200  
+86.8400  88.8100  88.2800  85.2900  83.1800  85.0700  86.7200  85.4500  
+83.4100  87.4400  90.1100  94.5000  99.2800  103.640  108.770  113.960  
+121.720  133.330  144.780  148.390  150.900  154.360  157.190  161.860  
+164.540  166.700  
+
+R_D2:
+Full data range: 1960 - 1993 (n = 32)
+
+     NA       NA  57.9400  60.5900  64.4400  70.6600  76.8300  80.0000  
+84.8200  86.8400  88.8100  88.2800  85.2900  83.1800  85.0700  86.7200  
+85.4500  83.4100  87.4400  90.1100  94.5000  99.2800  103.640  108.770  
+113.960  121.720  133.330  144.780  148.390  150.900  154.360  157.190  
+161.860  164.540  
+
+R_D3:
+Full data range: 1960 - 1993 (n = 31)
+
+     NA       NA       NA  57.9400  60.5900  64.4400  70.6600  76.8300  
+80.0000  84.8200  86.8400  88.8100  88.2800  85.2900  83.1800  85.0700  
+86.7200  85.4500  83.4100  87.4400  90.1100  94.5000  99.2800  103.640  
+108.770  113.960  121.720  133.330  144.780  148.390  150.900  154.360  
+157.190  161.860  
+
+R_D4:
+Full data range: 1960 - 1993 (n = 30)
+
+     NA       NA       NA       NA  57.9400  60.5900  64.4400  70.6600  
+76.8300  80.0000  84.8200  86.8400  88.8100  88.2800  85.2900  83.1800  
+85.0700  86.7200  85.4500  83.4100  87.4400  90.1100  94.5000  99.2800  
+103.640  108.770  113.960  121.720  133.330  144.780  148.390  150.900  
+154.360  157.190  
+
+# generate square terms
+? square R_D R_D1 R_D2 R_D3 R_D4
+Listing 13 variables:
+  0) const      1) YEAR       2) PATENTS    3) R_D        4) R_D1     
+  5) R_D2       6) R_D3       7) R_D4       8) sq_R_D     9) sq_R_D1  
+ 10) sq_R_D2   11) sq_R_D3   12) sq_R_D4  
+
+# reset sample range because lagged variables are undefined for the
+# period 1960-63
+? smpl 1964 1993
+Full data range: 1960 - 1993 (n = 34)
+Current sample: 1964 - 1993 (n = 30)
+
+# estimate the most general urestricted model
+? ols PATENTS const R_D R_D1 R_D2 R_D3 R_D4 sq_R_D sq_R_D1 sq_R_D2 \
+  sq_R_D3 sq_R_D4
+
+Model 2: OLS, using observations 1964-1993 (T = 30)
+Dependent variable: PATENTS
+
+             coefficient    std. error     t-ratio     p-value
+  ------------------------------------------------------------
+  const      85.3526        22.1027        3.862       0.0011  ***
+  R_D        -0.0476812      1.12511      -0.04238     0.9666 
+  R_D1        0.603316       2.05619       0.2934      0.7724 
+  R_D2        0.000179397    2.18503       8.210e-05   0.9999 
+  R_D3       -0.586882       2.05219      -0.2860      0.7780 
+  R_D4       -0.183709       1.09938      -0.1671      0.8691 
+  sq_R_D     -0.000732587    0.00489771   -0.1496      0.8827 
+  sq_R_D1    -0.00175375     0.00890019   -0.1970      0.8459 
+  sq_R_D2     0.00173631     0.00982210    0.1768      0.8616 
+  sq_R_D3    -0.000756426    0.00923801   -0.08188     0.9356 
+  sq_R_D4     0.00714386     0.00508520    1.405       0.1762 
+
+Mean dependent var   123.3300   S.D. dependent var   28.79514
+Sum squared resid    223.3789   S.E. of regression   3.428817
+R-squared            0.990710   Adjusted R-squared   0.985821
+F(10, 19)            202.6257   P-value(F)           4.08e-17
+Log-likelihood      -72.68324   Akaike criterion     167.3665
+Schwarz criterion    182.7796   Hannan-Quinn         172.2973
+rho                  0.101051   Durbin-Watson        1.797425
+
+Excluding the constant, p-value was highest for variable 5 (R_D2)
+
+# omit variables with p-values above 0.9
+? omit 3 5 11
+Test on Model 2:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    R_D, R_D2, sq_R_D3
+  Test statistic: F(3, 19) = 0.00695718, p-value 0.999173
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 3: OLS, using observations 1964-1993 (T = 30)
+Dependent variable: PATENTS
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      84.8409        19.0579        4.452    0.0002  ***
+  R_D1        0.604292       0.635069      0.9515   0.3517 
+  R_D3       -0.735232       0.523331     -1.405    0.1740 
+  R_D4       -0.0744638      0.513419     -0.1450   0.8860 
+  sq_R_D     -0.000949134    0.00115128   -0.8244   0.4186 
+  sq_R_D1    -0.00169303     0.00341377   -0.4959   0.6249 
+  sq_R_D2     0.00162815     0.00253810    0.6415   0.5278 
+  sq_R_D4     0.00660987     0.00196462    3.364    0.0028  ***
+
+Mean dependent var   123.3300   S.D. dependent var   28.79514
+Sum squared resid    223.6243   S.E. of regression   3.188219
+R-squared            0.990700   Adjusted R-squared   0.987741
+F(7, 22)             334.7991   P-value(F)           7.67e-21
+Log-likelihood      -72.69970   Akaike criterion     161.3994
+Schwarz criterion    172.6090   Hannan-Quinn         164.9854
+rho                  0.094485   Durbin-Watson        1.810383
+
+Excluding the constant, p-value was highest for variable 7 (R_D4)
+
+# omit variables with p-values above 0.5
+? omit 7 9 10
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    R_D4, sq_R_D1, sq_R_D2
+  Test statistic: F(3, 22) = 0.324242, p-value 0.807788
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1964-1993 (T = 30)
+Dependent variable: PATENTS
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      82.8545       12.0355         6.884    3.24e-07 ***
+  R_D1        0.477055      0.327782       1.455    0.1580  
+  R_D3       -0.637010      0.238843      -2.667    0.0132   **
+  sq_R_D     -0.00114637    0.000999965   -1.146    0.2625  
+  sq_R_D4     0.00651885    0.000678426    9.609    7.13e-10 ***
+
+Mean dependent var   123.3300   S.D. dependent var   28.79514
+Sum squared resid    233.5118   S.E. of regression   3.056218
+R-squared            0.990289   Adjusted R-squared   0.988735
+F(4, 25)             637.3376   P-value(F)           9.28e-25
+Log-likelihood      -73.34868   Akaike criterion     156.6974
+Schwarz criterion    163.7034   Hannan-Quinn         158.9386
+rho                  0.077923   Durbin-Watson        1.843677
+
+Excluding the constant, p-value was highest for variable 8 (sq_R_D)
+
+# omit one at a time
+? omit 8
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for sq_R_D
+  Test statistic: F(1, 25) = 1.31426, p-value 0.262479
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1964-1993 (T = 30)
+Dependent variable: PATENTS
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      94.2474       6.83005       13.80     1.79e-13 ***
+  R_D1        0.120004     0.102788       1.167    0.2536  
+  R_D3       -0.481437     0.197731      -2.435    0.0221   **
+  sq_R_D4     0.00614607   0.000599009   10.26     1.24e-10 ***
+
+Mean dependent var   123.3300   S.D. dependent var   28.79514
+Sum squared resid    245.7876   S.E. of regression   3.074633
+R-squared            0.989778   Adjusted R-squared   0.988599
+F(3, 26)             839.2019   P-value(F)           5.54e-26
+Log-likelihood      -74.11721   Akaike criterion     156.2344
+Schwarz criterion    161.8392   Hannan-Quinn         158.0274
+rho                  0.131734   Durbin-Watson        1.728149
+
+Excluding the constant, p-value was highest for variable 4 (R_D1)
+
+? omit 4
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for R_D1
+  Test statistic: F(1, 26) = 1.36302, p-value 0.253611
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1964-1993 (T = 30)
+Dependent variable: PATENTS
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      91.3464       6.40463       14.26     4.33e-14 ***
+  R_D3       -0.295068     0.117463      -2.512    0.0183   **
+  sq_R_D4     0.00585565   0.000548564   10.67     3.44e-11 ***
+
+Mean dependent var   123.3300   S.D. dependent var   28.79514
+Sum squared resid    258.6727   S.E. of regression   3.095233
+R-squared            0.989242   Adjusted R-squared   0.988446
+F(2, 27)             1241.430   P-value(F)           2.68e-27
+Log-likelihood      -74.88365   Akaike criterion     155.7673
+Schwarz criterion    159.9709   Hannan-Quinn         157.1121
+rho                  0.165750   Durbin-Watson        1.665191
+
+# compute predicted values
+? genr pred = PATENTS - $uhat
+Generated series pred (ID 13)
+# save residuals
+? genr error = $uhat
+Generated series error (ID 14)
+# compute absolute % error
+? genr abspcerr = 100*abs(error)/PATENTS
+Generated series abspcerr (ID 15)
+# print values as in a table with the -o flag
+? print -o R_D PATENTS pred error abspcerr
+
+              R_D      PATENTS         pred        error     abspcerr
+
+1964        76.83         93.2      93.1259     0.074083     0.079488
+1965        80.00        100.4      93.8292     6.570807     6.544629
+1966        84.82         93.5      94.8126    -1.312580     1.403829
+1967        86.84         93.0      97.9126    -4.912644     5.282413
+1968        88.81         98.7     102.3060    -3.605998     3.653494
+1969        88.28        104.4     103.7949     0.605085     0.579583
+1970        85.29        109.4     107.8508     1.549204     1.416092
+1971        83.18        111.1     109.3000     1.800022     1.620182
+1972        85.07        105.3     111.4826    -6.182597     5.871412
+1973        86.72        109.6     111.8153    -2.215251     2.021214
+1974        85.45        107.4     109.3989    -1.998912     1.861185
+1975        83.41        108.0     106.7597     1.240283     1.148410
+1976        87.44        110.0     108.1349     1.865092     1.695538
+1977        90.11        109.0     110.1694    -1.169448     1.072888
+1978        94.50        109.3     109.4910    -0.191014     0.174761
+1979        99.28        108.9     106.2848     2.615230     2.401497
+1980       103.64        113.0     109.5287     3.471297     3.071944
+1981       108.77        114.5     111.0093     3.490723     3.048666
+1982       113.96        118.4     114.3445     4.055506     3.425258
+1983       121.72        112.4     118.4819    -6.081902     5.410945
+1984       133.33        120.6     122.1489    -1.548881     1.284313
+1985       144.78        127.1     126.9982     0.101834     0.080121
+1986       148.39        133.0     131.4774     1.522611     1.144820
+1987       150.90        139.8     138.7609     1.039085     0.743265
+1988       154.36        151.9     152.7217    -0.821732     0.540969
+1989       157.19        166.3     170.3030    -4.003030     2.407114
+1990       161.86        176.7     175.7597     0.940300     0.532145
+1991       164.54        178.4     179.1376    -0.737635     0.413472
+1992       166.70        187.2     184.4873     2.712672     1.449077
+1993       165.20        189.4     188.2722     1.127791     0.595455
+
+Done

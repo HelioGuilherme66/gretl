@@ -1,0 +1,1 @@
+scalar y = isnull(x) ? 0 : x

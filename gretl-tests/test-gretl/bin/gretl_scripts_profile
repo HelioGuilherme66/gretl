@@ -1,0 +1,23 @@
+#!/bin/sh
+
+. `dirname $0`/sitevars
+
+export LD_PROFILE=libgretl-1.0.so.1
+
+rm -f ${PROFILE}
+rm -f prof.out
+
+for f in $(cat short.list | awk '{ print $1 }') ; do
+   echo $f
+   ${CLI} -b $f >/dev/null
+   if ! sprof -p ${LIBGRETL} \
+        ${PROFILE} > prof.out
+   then
+       echo "Failed, stopping"
+       exit 1
+   fi
+done 
+
+rm ${PROFILE}
+
+cat fails

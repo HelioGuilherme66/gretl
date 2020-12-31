@@ -1,0 +1,21 @@
+open baltagi_Gasoline
+genr unitdum
+
+ols gas 0 y rp car
+hausman 
+
+panel gas 0 y rp car --random-effects
+
+scalar theta = 0.892307
+
+loop foreach i gas y rp car
+  ols $i du_* -q
+  genr $iq = $uhat
+  genr $ip = $yhat
+  genr $itilde = $i - theta*$ip 
+end loop
+
+ols gastilde 0 ytilde rptilde cartilde -q
+add yq rpq carq -q
+scalar H = $test*3
+

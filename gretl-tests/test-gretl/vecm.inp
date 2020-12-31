@@ -1,0 +1,9 @@
+open xtab.gdt
+setobs 4 1960:1
+list xlist = X1 X2 X3 X4
+vecm 3 1 xlist --nc
+vecm 3 1 xlist --rc
+vecm 3 1 xlist 
+vecm 3 1 xlist --crt
+vecm 3 1 xlist --ct
+

@@ -1,0 +1,9 @@
+string s = "uno due tre"
+z = strsplit(s, 1)
+printf("1 z='%s'\n", z)
+z = strsplit(s, 2)
+printf("2 z='%s'\n", z)
+z = strsplit(s, 3)
+printf("3 z='%s'\n", z)
+z = strsplit(s, 6)
+printf("6 z='%s'\n", z)

@@ -1,0 +1,56 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run delta_method.inp
+ /home/cottrell/stats/test-gretl/delta_method.inp
+? function matrix MPC(matrix *param, matrix *Y)
+# William Greene, Econometric Analysis, 5e, Chapter 9
+
+Read datafile /opt/esl/share/gretl/data/greene/greene5_1.gdt
+periodicity: 4, maxobs: 204
+observations range: 1950:1 to 2000:4
+
+Listing 13 variables:
+  0) const       1) realgdp     2) realcons    3) realinvs    4) realgovt  
+  5) realdpi     6) cpi_u       7) M1          8) tbilrate    9) unemp     
+ 10) pop        11) infl       12) realint   
+
+Using analytical derivatives
+Warning: The supplied derivatives may be incorrect, or perhaps
+the data are ill-conditioned for this function.
+1 out of 204 gradients looked suspicious.
+
+Tolerance = 1.81899e-12
+Convergence achieved after 43 iterations
+
+Model 1: NLS, using observations 1950:1-2000:4 (T = 204)
+realcons = a + b * (realdpi^g)
+
+              estimate    std. error   t-ratio    p-value 
+  --------------------------------------------------------
+  a          458.799      22.5014       20.39    7.94e-51  ***
+  b            0.100852    0.0109104     9.244   3.52e-17  ***
+  g            1.24483     0.0120549   103.3     4.04e-176 ***
+
+Mean dependent var   2999.436   S.D. dependent var   1459.707
+Sum squared resid    504403.2   S.E. of regression   50.09460
+R-squared            0.998834   Adjusted R-squared   0.998822
+Log-likelihood      -1086.391   Akaike criterion     2178.781
+Schwarz criterion    2188.736   Hannan-Quinn         2182.808
+rho                  0.854982   Durbin-Watson        0.295995
+
+GNR: R-squared = 8.88178e-16, max |t| = 4.54166e-07
+Convergence seems to be reasonably complete
+
+In regard to function MPC:
+Warning: "silly=1"
+ obsolete use of "=" as Boolean test: please use "=="
+
+Warning: "silly=1"
+ obsolete use of "=" as Boolean test: please use "=="
+
+
+mpc = 1.08264, std.err = 0.00864513
+
+Test for MPC = 1: 9.55918 (p-value = 5.93486e-22)

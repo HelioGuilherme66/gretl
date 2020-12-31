@@ -1,0 +1,67 @@
+# Hall, Generalized Method of Moments (Oxford), Table 3.5,
+# page 87: replicate the SE standard-error estimates based
+# on the Hansen-Singleton model.  These entries in the table
+# use pre-whitening. 
+
+function void I_gmm (series ewr, series consrat, scalar g, scalar d, list inst)
+   matrix V = 100000*I(nelem(inst))
+   series e = 0
+   gmm e = d*ewr*consrat^(g-1) - 1
+     orthog e ; inst
+     weights V
+     params g d
+  end gmm  
+end function 
+
+function void Z_gmm (series ewr, series consrat, scalar g, scalar d, list inst, matrix *Z)
+   matrix V = $nobs*inv(Z'Z)
+   series e = 0
+   gmm e = d*ewr*consrat^(g-1) - 1
+     orthog e ; inst
+     weights V
+     params g d
+   end gmm
+end function
+
+open hall.gdt
+
+scalar g = 0.5
+scalar d = 0.5
+series e = 0
+
+list inst = const consrat(-1) consrat(-2) ewr(-1) ewr(-2)
+scalar ninst = nelem(inst)
+
+set hac_prewhiten on
+
+# SE(B,1)
+set hac_kernel bartlett
+I_gmm(ewr, consrat, g, d, inst)
+
+# SE(P,4)
+set hac_kernel parzen
+I_gmm(ewr, consrat, g, d, inst)
+
+# SE(Q,2.2)
+set hac_kernel qs
+I_gmm(ewr, consrat, g, d, inst)
+
+matrix Z = { inst }
+
+# SE(B,0)
+set hac_kernel bartlett
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+# SE(P,1)
+set hac_kernel parzen
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+# SE(QS,2.49)
+set hac_kernel QS
+Z_gmm(ewr, consrat, g, d, inst, &Z)
+
+
+
+
+
+

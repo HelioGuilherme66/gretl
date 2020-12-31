@@ -1,0 +1,13 @@
+open xtab.gdt
+list Xlist = X1 X2 X3 X4
+setobs 4 1980:1 --time-series
+# case 1, no constant
+coint2 3 Xlist --nc
+# case 2, restricted const
+coint2 3 Xlist --rc
+# case 3 (unrestricted constant: default)
+coint2 3 Xlist
+# case 4 (restricted trend)
+coint2 3 Xlist --crt
+# case 5 (unrestricted trend)
+coint2 3 Xlist --ct

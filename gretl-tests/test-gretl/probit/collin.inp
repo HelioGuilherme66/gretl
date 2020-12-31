@@ -1,0 +1,6 @@
+open greene19_1.gdt
+series x = GPA + TUCE
+logit GRADE 0 GPA TUCE PSI x
+
+
+

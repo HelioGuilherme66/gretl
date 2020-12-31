@@ -1,0 +1,20 @@
+nulldata 100
+set seed 333
+
+series x = normal()
+series y = uniform()
+series s = (y > 0.5)
+ls
+
+list l = 1 2 3
+
+smpl s --restrict
+
+matrix X = { l }
+X
+scalar r = rows(X)
+
+matrix X1 = X
+scalar same = (X=X1)
+
+

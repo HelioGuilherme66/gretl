@@ -1,0 +1,30 @@
+nulldata 50
+set seed 3472913
+
+series y1 = normal()
+series x1 = normal()
+
+fake <- system
+  equation y1 0 x1
+end system
+
+string methods = "ols tsls sur 3sls liml fiml"
+matrix B = {}
+matrix S = {}
+
+loop foreach i @methods -q
+  estimate fake method=$i --no-df-corr
+  B ~= $coeff
+  S ~= $stderr
+endloop
+
+colnames(B, methods)
+colnames(S, methods)
+
+print B S
+
+
+
+
+
+

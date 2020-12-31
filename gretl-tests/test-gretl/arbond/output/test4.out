@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run test4.inp
+ /home/cottrell/stats/test-gretl/arbond/test4.inp
+? open test4.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/test4.gdt
+periodicity: 13, maxobs: 1404
+observations range: 501:01 to 608:13
+
+Listing 7 variables:
+  0) const      1) codlav     2) year       3) lnwreal    4) eta      
+  5) eta2       6) area     
+
+? diff eta eta2
+Listing 9 variables:
+  0) const      1) codlav     2) year       3) lnwreal    4) eta      
+  5) eta2       6) area       7) d_eta      8) d_eta2   
+
+? arbond 1 0 ; lnwreal d_eta d_eta2
+
+Model 1: 1-step Arellano-Bond, using 568 observations
+Included 84 cross-sectional units
+Dependent variable: lnwreal
+
+                 coefficient    std. error       z      p-value
+  -------------------------------------------------------------
+  Dlnwreal(-1)   -0.0671364     0.119248      -0.5630   0.5734 
+  d_eta          -0.0171607     0.0313756     -0.5469   0.5844 
+  d_eta2          0.000387087   0.000357151    1.084    0.2784 
+
+Sum squared resid    20.73603   S.E. of regression   0.191575
+
+Number of instruments = 68
+Test for AR(1) errors: z = -1.07098 [0.2842]
+Test for AR(2) errors: z = -1.46548 [0.1428]
+Sargan over-identification test: Chi-square(65) = 94.7044 [0.0095]
+Wald (joint) test: Chi-square(3) = 14.1336 [0.0027]
+
+? dpanel 1 ; lnwreal eta eta2
+
+Model 2: 1-step dynamic panel, using 578 observations
+Included 85 cross-sectional units
+Time-series length: minimum 1, maximum 11
+Dependent variable: lnwreal
+
+                coefficient    std. error       z      p-value
+  ------------------------------------------------------------
+  lnwreal(-1)    0.0181577     0.156873       0.1157   0.9079 
+  eta           -0.0152971     0.0311893     -0.4905   0.6238 
+  eta2           0.000336161   0.000347103    0.9685   0.3328 
+
+Sum squared resid    24.69860   S.E. of regression   0.207254
+
+Number of instruments = 68
+Test for AR(1) errors: z = -1.22636 [0.2201]
+Test for AR(2) errors: z = -0.93029 [0.3522]
+Sargan over-identification test: Chi-square(65) = 95.6589 [0.0080]
+Wald (joint) test: Chi-square(3) = 17.2894 [0.0006]
+
+Done

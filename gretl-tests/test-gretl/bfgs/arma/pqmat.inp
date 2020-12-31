@@ -1,0 +1,7 @@
+set seed 324568
+nulldata 40
+x = normal()
+p = { 1 }
+q = { 2, 3 }
+arma p q ; x
+arma 1 {2 3} ; x

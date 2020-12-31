@@ -1,0 +1,2 @@
+open tobit_data.txt
+tobit y 0 x1 x2 x3 --vcv --verbose

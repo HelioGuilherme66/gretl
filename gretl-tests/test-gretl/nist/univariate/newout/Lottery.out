@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run Lottery.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/Lottery.inp
+? open Lottery.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/Lottery.hdr
+periodicity: 1, maxobs: 218,
+observations range: 1-218
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/Lottery.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+              Summary Statistics, using the observations 1 - 218
+                for the variable 'Y' (218 valid observations)
+
+  Mean                   518.96      
+  Median                 522.50      
+  Minimum                  4.0000    
+  Maximum                999.00      
+  Standard deviation     291.70      
+  C.V.                     0.56209   
+  Skewness                -0.092688  
+  Ex. kurtosis            -1.1928    
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = -0.122001
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = 518.959
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 291.7
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 1.84643e+07
+? smpl 2
+Full data range: 1 - 218 (n = 218)
+Current sample:  2 - 218 (n = 217)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = -2.23323e+06
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = -0.120949
+ybar  = 518.958715596
+ysd   = 291.699727471
+r1    = -0.122000988773
+rnist = -0.120948622967
+Done

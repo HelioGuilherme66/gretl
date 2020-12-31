@@ -1,0 +1,138 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.0   Copyright 1984-2003
+  Statistics/Data Analysis            Stata Corporation
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set mem 50m
+(51200k)
+
+. set matsize 100
+
+. insheet using "test_few.csv"
+(6 vars, 278 obs)
+
+. tsset codlav year
+       panel variable:  codlav, 151 to 199
+        time variable:  year, 1985 to 1997, but with gaps
+
+. xtreg lnwreal eta eta2, fe
+
+Fixed-effects (within) regression               Number of obs      =       278
+Group variable (i): codlav                      Number of groups   =        37
+
+R-sq:  within  = 0.0682                         Obs per group: min =         1
+       between = 0.1147                                        avg =       7.5
+       overall = 0.1295                                        max =        13
+
+                                                F(2,239)           =      8.74
+corr(u_i, Xb)  = 0.1425                         Prob > F           =    0.0002
+
+------------------------------------------------------------------------------
+     lnwreal |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         eta |    .001286   .0209072     0.06   0.951    -.0398999    .0424718
+        eta2 |    .000122   .0002387     0.51   0.610    -.0003482    .0005921
+       _cons |   3.249144   .4550993     7.14   0.000     2.352626    4.145662
+-------------+----------------------------------------------------------------
+     sigma_u |  .34064781
+     sigma_e |  .14417098
+         rho |  .84808999   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+F test that all u_i=0:     F(36, 239) =    36.35             Prob > F = 0.0000
+
+. xtreg lnwreal eta eta2, re
+
+Random-effects GLS regression                   Number of obs      =       278
+Group variable (i): codlav                      Number of groups   =        37
+
+R-sq:  within  = 0.0679                         Obs per group: min =         1
+       between = 0.1203                                        avg =       7.5
+       overall = 0.1334                                        max =        13
+
+Random effects u_i ~ Gaussian                   Wald chi2(2)       =     22.08
+corr(u_i, X)       = 0 (assumed)                Prob > chi2        =    0.0000
+
+------------------------------------------------------------------------------
+     lnwreal |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         eta |   .0070819   .0204625     0.35   0.729    -.0330238    .0471876
+        eta2 |   .0000631   .0002325     0.27   0.786    -.0003926    .0005188
+       _cons |   3.079682   .4485285     6.87   0.000     2.200583    3.958782
+-------------+----------------------------------------------------------------
+     sigma_u |  .32844909
+     sigma_e |  .14417098
+         rho |   .8384532   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. xtabond lnwreal, rob noc
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =       202
+Group variable (i): codlav                      Number of groups   =        31
+
+                                                Wald chi2(.)       =         .
+
+Time variable (t): year                         Obs per group: min =         1
+                                                               avg =  6.516129
+                                                               max =        11
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+lnwreal      |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lnwreal      |
+          LD |   .1984695   .2494666     0.80   0.426    -.2904762    .6874151
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -2.69   Pr > z = 0.0072
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =   0.81   Pr > z = 0.4172
+
+. xtabond lnwreal eta eta2, rob noc
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =       202
+Group variable (i): codlav                      Number of groups   =        31
+
+                                                Wald chi2(.)       =         .
+
+Time variable (t): year                         Obs per group: min =         1
+                                                               avg =  6.516129
+                                                               max =        11
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+lnwreal      |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lnwreal      |
+          LD |   .0691919    .166357     0.42   0.677    -.2568618    .3952455
+eta          |
+          D1 |  -.0215835   .0557889    -0.39   0.699    -.1309277    .0877607
+eta2         |
+          D1 |   .0004646   .0006767     0.69   0.492    -.0008618     .001791
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -2.30   Pr > z = 0.0215
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -0.05   Pr > z = 0.9587
+
+. 

@@ -1,0 +1,6 @@
+open fakedata.gdt
+arbond 1 ; y
+arbond 2 0 ; y
+arbond 1 3 ; y
+arbond 1 0 ; y --two-step
+

@@ -1,0 +1,112 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run bweight.inp
+ /home/cottrell/stats/test-gretl/rq/bweight.inp
+? open birth.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/rq/birth.gdt
+periodicity: 1, maxobs: 198377
+observations range: 1 to 198377
+
+Listing 18 variables:
+  0) const        1) id           2) weight       3) black      
+  4) married      5) boy          6) tri2         7) tri3       
+  8) novisit      9) ed_hs       10) ed_smcol    11) ed_col     
+ 12) mom_age     13) smoke       14) cigsper     15) m_wtgain   
+ 16) mom_age2    17) m_wtgain2  
+
+? list xlist = boy married black mom_age mom_age2 ed_hs ed_smcol ed_col novisit \
+  tri2 tri3 smoke m_wtgain m_wtgain2
+Generated list xlist
+? set stopwatch
+? ols weight 0 xlist
+
+Model 1: OLS, using observations 1-198377
+Dependent variable: weight
+
+              coefficient    std. error    t-ratio    p-value 
+  ------------------------------------------------------------
+  const       2451.64        27.8088        88.16    0.0000    ***
+  boy          108.755        2.41848       44.97    0.0000    ***
+  married       60.5916       3.25068       18.64    1.78e-77  ***
+  black       -197.525        3.57384      -55.27    0.0000    ***
+  mom_age       36.0138       1.99584       18.04    9.98e-73  ***
+  mom_age2      -0.542187     0.0345761    -15.68    2.20e-55  ***
+  ed_hs         16.0179       3.75589        4.265   2.00e-05  ***
+  ed_smcol      32.5100       4.18451        7.769   7.94e-15  ***
+  ed_col        38.1907       4.50528        8.477   2.33e-17  ***
+  novisit     -184.951       13.5870       -13.61    3.53e-42  ***
+  tri2          11.9510       3.77222        3.168   0.0015    ***
+  tri3          30.6900       8.30619        3.695   0.0002    ***
+  smoke       -209.791        3.73084      -56.23    0.0000    ***
+  m_wtgain      10.2021       0.303093      33.66    1.12e-247 ***
+  m_wtgain2     -0.0188747    0.00425196    -4.439   9.04e-06  ***
+
+Mean dependent var   3369.481   S.D. dependent var   570.3202
+Sum squared resid    5.74e+10   S.E. of regression   538.0945
+R-squared            0.109879   Adjusted R-squared   0.109816
+F(14, 198362)        1749.027   P-value(F)           0.000000
+Log-likelihood       -1528879   Akaike criterion      3057787
+Schwarz criterion     3057940   Hannan-Quinn          3057832
+
+ols time = 0.0561832
+# Frisch-Newton, one tau value
+? quantreg .05 weight 0 xlist
+
+Model 2: Quantile estimates, using observations 1-198377
+Dependent variable: weight
+tau = 0.05
+Asymptotic standard errors assuming IID errors
+
+              coefficient   std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const        896.650      79.6609       11.26    2.21e-29  ***
+  boy           46.6631      6.92797       6.735   1.64e-11  ***
+  married       97.3266      9.31187      10.45    1.46e-25  ***
+  black       -318.462      10.2376      -31.11    6.27e-212 ***
+  mom_age       51.1342      5.71727       8.944   3.79e-19  ***
+  mom_age2      -0.912882    0.0990467    -9.217   3.09e-20  ***
+  ed_hs         19.9340     10.7591        1.853   0.0639    *
+  ed_smcol      38.9032     11.9869        3.245   0.0012    ***
+  ed_col        80.9029     12.9058        6.269   3.65e-10  ***
+  novisit     -505.627      38.9213      -12.99    1.43e-38  ***
+  tri2          45.3350     10.8059        4.195   2.73e-05  ***
+  tri3         144.239      23.7939        6.062   1.35e-09  ***
+  smoke       -230.760      10.6873      -21.59    2.82e-103 ***
+  m_wtgain      39.9775      0.868240     46.04    0.0000    ***
+  m_wtgain2     -0.343969    0.0121802   -28.24    4.20e-175 ***
+
+Median depend. var   3402.000   S.D. dependent var   570.3202
+Sum absolute resid   1.85e+08   Sum squared resid    2.19e+11
+Log-likelihood       -1634940   Akaike criterion      3269910
+Schwarz criterion     3270063   Hannan-Quinn          3269955
+
+F-N time = 11.2518
+? scalar crit = qnorm(.95)
+Generated scalar crit = 1.64485
+? matrix ci = $coeff - crit * $stderr
+Generated matrix ci
+? ci = ci~($coeff + crit * $stderr)
+Replaced matrix ci
+? ci
+ci (15 x 2)
+
+      765.62       1027.7 
+      35.268       58.059 
+      82.010       112.64 
+     -335.30      -301.62 
+      41.730       60.538 
+     -1.0758     -0.74996 
+      2.2368       37.631 
+      19.186       58.620 
+      59.675       102.13 
+     -569.65      -441.61 
+      27.561       63.109 
+      105.10       183.38 
+     -248.34      -213.18 
+      38.549       41.406 
+    -0.36400     -0.32393 
+
+Done

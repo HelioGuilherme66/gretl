@@ -1,0 +1,312 @@
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run 1970data.inp
+<  /home/cottrell/stats/test-esl/importer/1970data.inp
+< ? open 1970data.xls
+< Excel 97 +
+< rows=76, total cols=112, data cols=106
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open 1970data.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run blaise.inp
+<  /home/cottrell/stats/test-esl/importer/blaise.inp
+< ? open blaise.xls
+< Excel 97 +
+< rows=763, total cols=3, data cols=2
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open blaise.gnumeric
+11d8
+< Warning: there were missing values
+18a16
+> Warning: there were missing values
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run DailyNASDAQ.inp
+<  /home/cottrell/stats/test-esl/importer/DailyNASDAQ.inp
+< ? open DailyNASDAQ.xls
+< Excel 97 +
+< rows=71, total cols=2, data cols=1
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open DailyNASDAQ.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run EURODATA.inp
+<  /home/cottrell/stats/test-esl/importer/EURODATA.inp
+< ? open EURODATA.xls
+< Excel 95
+< rows=144, total cols=3, data cols=3
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open EURODATA.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run foobar2.inp
+<  /home/cottrell/stats/test-esl/importer/foobar2.inp
+< ? open foobar2.xls
+< Excel 97 +
+< rows=5, total cols=3, data cols=3
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open foobar2.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run foobar.inp
+<  /home/cottrell/stats/test-esl/importer/foobar.inp
+< ? open foobar.xls --coloffset=1
+< Excel 97 +
+< rows=5, total cols=4, data cols=4
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open foobar.gnumeric --coloffset=1
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run g2.inp
+<  /home/cottrell/stats/test-esl/importer/g2.inp
+< ? open g2.xls
+< Excel 97 +
+< rows=66, total cols=7, data cols=7
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open g2.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run grenard.inp
+<  /home/cottrell/stats/test-esl/importer/grenard.inp
+< ? open grenard.xls
+< Excel 97 +
+< rows=65, total cols=12, data cols=12
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open grenard.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run Growth2.inp
+<  /home/cottrell/stats/test-esl/importer/Growth2.inp
+< ? open Growth2.xls --coloffset=2
+< Excel 97 +
+< rows=66, total cols=10, data cols=8
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open Growth2.gnumeric --coloffset=2
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run HDIsmall.inp
+<  /home/cottrell/stats/test-esl/importer/HDIsmall.inp
+< ? open HDIsmall.xls
+< Excel 97 +
+< rows=26, total cols=5, data cols=5
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open HDIsmall.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run HDI.inp
+<  /home/cottrell/stats/test-esl/importer/HDI.inp
+< ? open HDI.xls
+< Excel 97 +
+< rows=361, total cols=8, data cols=8
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open HDI.gnumeric
+32c30
+< Cote d'I       0.41900      0.44800      0.45300      0.45000      0.43600
+---
+> Côte d'       0.41900      0.44800      0.45300      0.45000      0.43600
+77c75
+< Cote d'I                   67.32762     68.65496     68.77774     68.24677
+---
+> Côte d'                   67.32762     68.65496     68.77774     68.24677
+122c120
+< Cote d'I       0.00000      0.00000      0.00000      0.00000      0.00000
+---
+> Côte d'       0.00000      0.00000      0.00000      0.00000      0.00000
+167c165
+< Cote d'I      27.25770                               39.71343     16.42485
+---
+> Côte d'      27.25770                               39.71343     16.42485
+212c210
+< Cote d'I                                             18.43185     18.81907
+---
+> Côte d'                                             18.43185     18.81907
+257c255
+< Cote d'I                                                          58.33260
+---
+> Côte d'                                                          58.33260
+302c300
+< Cote d'I       1.00000      1.00000      1.00000      1.00000      1.00000
+---
+> Côte d'       1.00000      1.00000      1.00000      1.00000      1.00000
+347c345
+< Cote d'I       1.00000      1.00000      1.00000      1.00000      1.00000
+---
+> Côte d'       1.00000      1.00000      1.00000      1.00000      1.00000
+395c393
+< Cote d'I       0.43200      0.43200
+---
+> Côte d'       0.43200      0.43200
+440c438
+< Cote d'I      65.66101     65.30407
+---
+> Côte d'      65.66101     65.30407
+485c483
+< Cote d'I       0.00000      0.00000
+---
+> Côte d'       0.00000      0.00000
+530c528
+< Cote d'I       4.56896      2.98960
+---
+> Côte d'       4.56896      2.98960
+575c573
+< Cote d'I      14.63099     14.77500
+---
+> Côte d'      14.63099     14.77500
+620c618
+< Cote d'I      38.82418     40.68327
+---
+> Côte d'      38.82418     40.68327
+665c663
+< Cote d'I       1.00000      1.00000
+---
+> Côte d'       1.00000      1.00000
+710c708
+< Cote d'I       1.00000      1.00000
+---
+> Côte d'       1.00000      1.00000
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run nohead.inp
+<  /home/cottrell/stats/test-esl/importer/nohead.inp
+< ? open nohead.xls --rowoffset=2
+< Excel 97 +
+< rows=10, total cols=4, data cols=3
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open nohead.gnumeric --rowoffset=2
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run nonames.inp
+<  /home/cottrell/stats/test-esl/importer/nonames.inp
+< ? open nonames.xls --sheet=3
+< Excel 97 +
+< rows=5, total cols=2, data cols=2
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open nonames.gnumeric --sheet=3
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run Percentage_data.inp
+<  /home/cottrell/stats/test-esl/importer/Percentage_data.inp
+< ? open Percentage_data.xls --sheet="1933"
+< Excel 97 +
+< rows=37, total cols=5, data cols=5
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open Percentage_data.gnumeric --sheet="1933"
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run Qdata.inp
+<  /home/cottrell/stats/test-esl/importer/Qdata.inp
+< ? open Qdata.xls --coloffset=1
+< Excel 97 +
+< rows=5, total cols=4, data cols=3
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open Qdata.gnumeric --coloffset=1
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run stocks.inp
+<  /home/cottrell/stats/test-esl/importer/stocks.inp
+< ? open stocks.xls
+< Excel 97 +
+< rows=3762, total cols=16, data cols=15
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open stocks.gnumeric
+11d8
+< Warning: there were missing values
+17a15
+> Warning: there were missing values
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run testasukamura.inp
+<  /home/cottrell/stats/test-esl/importer/testasukamura.inp
+< ? open testasukamura.xls
+< Excel 97 +
+< rows=292, total cols=14, data cols=14
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open testasukamura.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run thesisdat.inp
+<  /home/cottrell/stats/test-esl/importer/thesisdat.inp
+< ? open thesisdat.xls
+< Excel 97 +
+< rows=183, total cols=19, data cols=19
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open thesisdat.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run year4.inp
+<  /home/cottrell/stats/test-esl/importer/year4.inp
+< ? open year4.xls
+< Excel 97 +
+< rows=6, total cols=2, data cols=2
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open year4.gnumeric
+4,9c4,7
+< Current session: 2008/05/30 10:56
+< ? run yr.inp
+<  /home/cottrell/stats/test-esl/importer/yr.inp
+< ? open yr.xls
+< Excel 97 +
+< rows=4, total cols=2, data cols=2
+---
+> Current session: 2008/05/30 11:17
+> ? run gtmp.inp
+>  /home/cottrell/stats/test-esl/importer/gtmp.inp
+> ? open yr.gnumeric

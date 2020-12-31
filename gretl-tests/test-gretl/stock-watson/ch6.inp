@@ -1,0 +1,40 @@
+# Stock and Watson, ch 6
+# California schools data
+# 
+open caschool.gdt
+set hc_version 1
+
+# quadratic (6.2)
+genr inc2 = avginc^2
+ols testscr 0 avginc inc2 --robust
+
+# cubic (6.11)
+genr inc3 = avginc^3
+ols testscr 0 avginc inc2 inc3  --robust
+
+# linear-log (6.18)
+genr loginc = ln(avginc)
+ols testscr 0 loginc --robust
+
+# log-log (6.23)
+genr logtst = ln(testscr)
+ols logtst 0 loginc --robust
+
+# log-linear (6.24)
+ols logtst 0 avginc --robust
+
+# dummies and interaction (6.30)
+genr HiSTR = (str >= 20)
+genr HiEL = (el_pct >= 10)
+genr inter = HiSTR * HiEL
+ols testscr 0 HiEL HiSTR inter --robust
+
+# interaction again (6.34)
+genr str_el = str * HiEL
+ols testscr 0 str HiEL str_el --robust
+
+# and again (6.37)
+genr str_pcel = str * el_pct
+ols testscr 0 str el_pct str_pcel --robust
+
+

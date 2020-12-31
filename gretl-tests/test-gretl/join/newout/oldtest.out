@@ -1,0 +1,22 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-25 13:10
+? run oldtest.inp
+ /home/cottrell/stats/test-gretl/join/oldtest.inp
+? open hholds.csv --quiet
+Read datafile /home/cottrell/stats/test-gretl/join/hholds.csv
+? join people2.csv oldest_xp --ikey=hid --data=income --aggr=max(age)
+Data appended OK
+? print -o
+
+           hid      country           xh    oldest_xp
+
+1            1           US            1         6000
+2            6           IT           12             
+3            3           UK            6          500
+4            4           IT            8             
+5            2           US            4         8900
+6            5           IT           10             
+
+Done

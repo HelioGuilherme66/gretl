@@ -1,0 +1,115 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run pca2.inp
+ /home/cottrell/stats/test-gretl/pca2.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+# do PCA using raw variables
+? pca 2 3 4
+Principal Components Analysis
+
+Eigenanalysis of the Correlation Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       1.5960       0.5320       0.5320
+    2       0.8551       0.2850       0.8170
+    3       0.5489       0.1830       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3
+CATHOL       0.624   -0.374    0.686
+PUPIL       -0.642    0.254    0.723
+WHITE        0.445    0.892    0.081
+
+? pca 2 3 4 -c
+Principal Components Analysis
+
+Eigenanalysis of the Covariance Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       5.2600       0.9938       0.9938
+    2       0.0190       0.0036       0.9974
+    3       0.0139       0.0026       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3
+CATHOL       0.026    0.332    0.943
+PUPIL       -1.000    0.022    0.020
+WHITE        0.014    0.943   -0.332
+
+# standardize the variables
+? genr sC = (CATHOL-mean(CATHOL)) / sd(CATHOL)
+Generated series sC (ID 11)
+? genr sP = (PUPIL-mean(PUPIL)) / sd(PUPIL)
+Generated series sP (ID 12)
+? genr sW = (WHITE-mean(WHITE)) / sd(WHITE)
+Generated series sW (ID 13)
+# show correlation and covariance matrices of standardized vars
+? matrix M = { sC, sP, sW }
+Generated matrix M
+? matrix V = mcorr(M)
+Generated matrix V
+? V
+V (3 x 3)
+
+      1.0000     -0.44873      0.18892 
+    -0.44873       1.0000     -0.22979 
+     0.18892     -0.22979       1.0000 
+
+? matrix V = mcov(M)
+Replaced matrix V
+? V
+V (3 x 3)
+
+      1.0000     -0.44873      0.18892 
+    -0.44873       1.0000     -0.22979 
+     0.18892     -0.22979       1.0000 
+
+# do PCA using standardized vars
+? pca sC sP sW
+Principal Components Analysis
+
+Eigenanalysis of the Correlation Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       1.5960       0.5320       0.5320
+    2       0.8551       0.2850       0.8170
+    3       0.5489       0.1830       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3
+sC           0.624   -0.374    0.686
+sP          -0.642    0.254    0.723
+sW           0.445    0.892    0.081
+
+? pca sC sP sW -c
+Principal Components Analysis
+
+Eigenanalysis of the Covariance Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       1.5960       0.5320       0.5320
+    2       0.8551       0.2850       0.8170
+    3       0.5489       0.1830       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3
+sC           0.624   -0.374    0.686
+sP          -0.642    0.254    0.723
+sW           0.445    0.892    0.081
+
+Done

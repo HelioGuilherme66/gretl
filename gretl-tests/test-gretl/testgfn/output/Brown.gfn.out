@@ -1,0 +1,69 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run Brown.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Brown.gfn.inp
+? include ./Brown.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Brown.gfn
+Brown 1.5, 2015-02-18 (Ignacio Diaz-Emparanza)
+# sample function call for Brown
+? open data3-6.gdt
+
+Read datafile /opt/esl/share/gretl/data/data3-6.gdt
+periodicity: 1, maxobs: 36
+observations range: 1959 to 1994
+
+Listing 3 variables:
+  0) const    1) Ct       2) Yt     
+
+? dataset addobs +4
+Dataset extended by 4 observations
+Full data range: 1959 - 1998 (n = 40)
+
+? bundle bbrown=Brown(Ct,0.7)
+
+               Ct    Ct_linear      Ct_quad
+
+1959         7876                          
+1960         7926      7876.00      7876.00
+1961         7954      7946.00      7933.61
+1962         8220      7981.70      7958.99
+1963         8434      8343.74      8258.15
+1964         8817      8615.29      8466.44
+1965         9257      9087.10      8860.95
+1966         9674      9613.21      9303.13
+1967         9854     10069.82      9703.79
+1968        10313     10168.96      9834.00
+1969        10593     10666.15     10324.78
+1970        10717     10929.86     10591.36
+1971        10975     10962.13     10684.00
+1972        11508     11206.12     10962.59
+1973        11950     11861.03     11551.90
+1974        11756     12365.79     11987.02
+1975        11899     11935.88     11679.08
+1976        12446     12009.25     11854.55
+1977        12846     12727.63     12498.77
+1978        13258     13214.29     12893.46
+1979        13417     13654.42     13284.24
+1980        13216     13722.39     13392.18
+1981        13245     13297.47     13126.66
+1982        13270     13259.90     13196.74
+1983        13829     13284.22     13255.70
+1984        14415     14062.04     13908.01
+1985        14954     14838.25     14508.74
+1986        15409     15455.32     15011.85
+1987        15740     15902.21     15425.33
+1988        16211     16164.16     15721.73
+1989        16430     16639.30     16210.59
+1990        16532     16778.79     16401.73
+1991        16249     16763.24     16482.17
+1992        16520     16252.33     16150.28
+1993        16810     16584.12     16517.01
+1994        17152     16988.56     16851.22
+1995                  17416.27     17196.47
+1996                  17695.24     17322.55
+1997                  17974.22     17530.57
+1998                  18253.19     17820.53
+
+Done

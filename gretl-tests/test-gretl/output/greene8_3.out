@@ -1,0 +1,357 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run greene8_3.inp
+ /opt/esl/share/gretl/scripts/greene8_3.inp
+? open greene8_3.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene8_3.gdt
+periodicity: 1, maxobs: 41
+observations range: 1909 to 1949
+
+Listing 5 variables:
+  0) const    1) year     2) q        3) k        4) A      
+
+? series q_A = q/A
+Generated series q_A (ID 5)
+? series kinv = -1.0/k
+Generated series kinv (ID 6)
+? logs q_A k
+Listing 9 variables:
+  0) const    1) year     2) q        3) k        4) A      
+  5) q_A      6) kinv     7) l_q_A    8) l_k    
+
+? ols q_A const l_k
+
+Model 1: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.451275     0.00961760    46.92    6.32e-36 ***
+  l_k         0.239850     0.00993728    24.14    4.67e-25 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.002413   S.E. of regression   0.007865
+R-squared            0.937255   Adjusted R-squared   0.935646
+F(1, 39)             582.5659   P-value(F)           4.67e-25
+Log-likelihood       141.5065   Akaike criterion    -279.0129
+Schwarz criterion   -275.5858   Hannan-Quinn        -277.7650
+rho                  0.767812   Durbin-Watson        0.515286
+
+? ols q_A const kinv
+
+Model 2: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.922133     0.00941345    97.96    2.79e-48 ***
+  kinv        0.623604     0.0242113     25.76    4.29e-26 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.002135   S.E. of regression   0.007399
+R-squared            0.944477   Adjusted R-squared   0.943053
+F(1, 39)             663.4064   P-value(F)           4.29e-26
+Log-likelihood       144.0130   Akaike criterion    -284.0260
+Schwarz criterion   -280.5989   Hannan-Quinn        -282.7780
+rho                  0.704896   Durbin-Watson        0.619895
+
+? ols l_q_A const l_k
+
+Model 3: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -0.724309    0.0145389    -49.82    6.34e-37 ***
+  l_k          0.354037    0.0150222     23.57    1.12e-24 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.005513   S.E. of regression   0.011890
+R-squared            0.934391   Adjusted R-squared   0.932709
+F(1, 39)             555.4320   P-value(F)           1.12e-24
+Log-likelihood       124.5638   Akaike criterion    -245.1277
+Schwarz criterion   -241.7005   Hannan-Quinn        -243.8797
+rho                  0.794539   Durbin-Watson        0.462507
+
+Log-likelihood for q_A = 140.327
+
+? ols l_q_A const kinv
+
+Model 4: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0286712    0.0138694    -2.067    0.0454   **
+  kinv        0.922078     0.0356719    25.85     3.76e-26 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.004634   S.E. of regression   0.010901
+R-squared            0.944850   Adjusted R-squared   0.943436
+F(1, 39)             668.1619   P-value(F)           3.76e-26
+Log-likelihood       128.1237   Akaike criterion    -252.2474
+Schwarz criterion   -248.8203   Hannan-Quinn        -250.9995
+rho                  0.733272   Durbin-Watson        0.573122
+
+Log-likelihood for q_A = 143.887
+
+? gnuplot q_A k
+wrote /home/cottrell/stats/test-gretl/gpttmp01.plt
+? series dum = year > 1942
+Generated series dum (ID 9)
+? ols q_A const l_k dum
+
+Model 5: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.446765     0.00425992   104.9     2.05e-48 ***
+  l_k         0.241284     0.00438772    54.99    7.83e-38 ***
+  dum         0.0183558    0.00144140    12.73    2.76e-15 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.000458   S.E. of regression   0.003472
+R-squared            0.988089   Adjusted R-squared   0.987462
+F(2, 38)             1576.147   P-value(F)           2.77e-37
+Log-likelihood       175.5693   Akaike criterion    -345.1386
+Schwarz criterion   -339.9979   Hannan-Quinn        -343.2666
+rho                 -0.048738   Durbin-Watson        2.089934
+
+? ols q_A const kinv dum
+
+Model 6: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.919314     0.00507174   181.3     2.00e-57 ***
+  kinv        0.623488     0.0130236     47.87    1.41e-35 ***
+  dum         0.0162508    0.00165187     9.838   5.37e-12 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.000602   S.E. of regression   0.003980
+R-squared            0.984346   Adjusted R-squared   0.983522
+F(2, 38)             1194.755   P-value(F)           4.99e-35
+Log-likelihood       169.9677   Akaike criterion    -333.9355
+Schwarz criterion   -328.7948   Hannan-Quinn        -332.0635
+rho                  0.104570   Durbin-Watson        1.723838
+
+? ols l_q_A const l_k dum
+
+Model 7: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.731162     0.00629315   -116.2    4.24e-50 ***
+  l_k         0.356215     0.00648195     54.95   8.02e-38 ***
+  dum         0.0278944    0.00212936     13.10   1.15e-15 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.001000   S.E. of regression   0.005129
+R-squared            0.988106   Adjusted R-squared   0.987480
+F(2, 38)             1578.398   P-value(F)           2.70e-37
+Log-likelihood       159.5706   Akaike criterion    -313.1412
+Schwarz criterion   -308.0005   Hannan-Quinn        -311.2692
+rho                  0.022543   Durbin-Watson        1.954517
+
+Log-likelihood for q_A = 175.334
+
+? ols l_q_A const kinv dum
+
+Model 8: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0329713    0.00675600   -4.880    1.93e-05 ***
+  kinv        0.921901     0.0173487    53.14     2.83e-37 ***
+  dum         0.0247866    0.00220043   11.26     1.13e-13 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.001068   S.E. of regression   0.005302
+R-squared            0.987290   Adjusted R-squared   0.986621
+F(2, 38)             1475.898   P-value(F)           9.52e-37
+Log-likelihood       158.2111   Akaike criterion    -310.4222
+Schwarz criterion   -305.2814   Hannan-Quinn        -308.5502
+rho                  0.014530   Durbin-Watson        1.921181
+
+Log-likelihood for q_A = 173.974
+
+? ols q_A const l_k
+
+Model 9: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.451275     0.00961760    46.92    6.32e-36 ***
+  l_k         0.239850     0.00993728    24.14    4.67e-25 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.002413   S.E. of regression   0.007865
+R-squared            0.937255   Adjusted R-squared   0.935646
+F(1, 39)             582.5659   P-value(F)           4.67e-25
+Log-likelihood       141.5065   Akaike criterion    -279.0129
+Schwarz criterion   -275.5858   Hannan-Quinn        -277.7650
+rho                  0.767812   Durbin-Watson        0.515286
+
+? chow 1943
+
+Augmented regression for Chow test
+OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       0.446675     0.00433306   103.1      4.08e-47 ***
+  l_k         0.241377     0.00446345    54.08     8.06e-37 ***
+  splitdum    0.0284114    0.0452340      0.6281   0.5338  
+  sd_l_k     -0.0105516    0.0474406     -0.2224   0.8252  
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.000457   S.E. of regression   0.003516
+R-squared            0.988105   Adjusted R-squared   0.987140
+F(3, 37)             1024.497   P-value(F)           1.22e-35
+Log-likelihood       175.5967   Akaike criterion    -343.1934
+Schwarz criterion   -336.3391   Hannan-Quinn        -340.6974
+rho                 -0.048964   Durbin-Watson        2.089699
+
+Chow test for structural break at observation 1943
+  F(2, 37) = 79.0835 with p-value 0.0000
+
+? ols q_A const kinv
+
+Model 10: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.922133     0.00941345    97.96    2.79e-48 ***
+  kinv        0.623604     0.0242113     25.76    4.29e-26 ***
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.002135   S.E. of regression   0.007399
+R-squared            0.944477   Adjusted R-squared   0.943053
+F(1, 39)             663.4064   P-value(F)           4.29e-26
+Log-likelihood       144.0130   Akaike criterion    -284.0260
+Schwarz criterion   -280.5989   Hannan-Quinn        -282.7780
+rho                  0.704896   Durbin-Watson        0.619895
+
+? chow 1943
+
+Augmented regression for Chow test
+OLS, using observations 1909-1949 (T = 41)
+Dependent variable: q_A
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       0.919404     0.00515986   178.2      6.85e-56 ***
+  kinv        0.623722     0.0132510     47.07     1.28e-34 ***
+  splitdum    0.00606041   0.0543459      0.1115   0.9118  
+  sd_kinv    -0.0264159    0.140810      -0.1876   0.8522  
+
+Mean dependent var   0.681508   S.D. dependent var   0.031004
+Sum squared resid    0.000601   S.E. of regression   0.004031
+R-squared            0.984361   Adjusted R-squared   0.983093
+F(3, 37)             776.2923   P-value(F)           1.92e-33
+Log-likelihood       169.9872   Akaike criterion    -331.9745
+Schwarz criterion   -325.1202   Hannan-Quinn        -329.4785
+rho                  0.103898   Durbin-Watson        1.724235
+
+Chow test for structural break at observation 1943
+  F(2, 37) = 47.1808 with p-value 0.0000
+
+? ols l_q_A const l_k
+
+Model 11: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -0.724309    0.0145389    -49.82    6.34e-37 ***
+  l_k          0.354037    0.0150222     23.57    1.12e-24 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.005513   S.E. of regression   0.011890
+R-squared            0.934391   Adjusted R-squared   0.932709
+F(1, 39)             555.4320   P-value(F)           1.12e-24
+Log-likelihood       124.5638   Akaike criterion    -245.1277
+Schwarz criterion   -241.7005   Hannan-Quinn        -243.8797
+rho                  0.794539   Durbin-Watson        0.462507
+
+Log-likelihood for q_A = 140.327
+
+? chow 1943
+
+Augmented regression for Chow test
+OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error    t-ratio    p-value 
+  ----------------------------------------------------------
+  const      -0.731368     0.00639516   -114.4      8.87e-49 ***
+  l_k         0.356430     0.00658759     54.11     7.91e-37 ***
+  splitdum    0.0509656    0.0667608       0.7634   0.4501  
+  sd_l_k     -0.0242092    0.0700175      -0.3458   0.7315  
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.000996   S.E. of regression   0.005189
+R-squared            0.988144   Adjusted R-squared   0.987183
+F(3, 37)             1027.924   P-value(F)           1.15e-35
+Log-likelihood       159.6367   Akaike criterion    -311.2735
+Schwarz criterion   -304.4192   Hannan-Quinn        -308.7775
+rho                  0.022713   Durbin-Watson        1.953913
+
+Chow test for structural break at observation 1943
+  F(2, 37) = 83.8752 with p-value 0.0000
+
+? ols l_q_A const kinv
+
+Model 12: OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.0286712    0.0138694    -2.067    0.0454   **
+  kinv        0.922078     0.0356719    25.85     3.76e-26 ***
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.004634   S.E. of regression   0.010901
+R-squared            0.944850   Adjusted R-squared   0.943436
+F(1, 39)             668.1619   P-value(F)           3.76e-26
+Log-likelihood       128.1237   Akaike criterion    -252.2474
+Schwarz criterion   -248.8203   Hannan-Quinn        -250.9995
+rho                  0.733272   Durbin-Watson        0.573122
+
+Log-likelihood for q_A = 143.887
+
+? chow 1943
+
+Augmented regression for Chow test
+OLS, using observations 1909-1949 (T = 41)
+Dependent variable: l_q_A
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const      -0.0327569     0.00686626   -4.771      2.86e-05 ***
+  kinv        0.922457      0.0176332    52.31       2.71e-36 ***
+  splitdum    0.000583528   0.0723185     0.008069   0.9936  
+  sd_kinv    -0.0627399     0.187377     -0.3348     0.7396  
+
+Mean dependent var  -0.384467   S.D. dependent var   0.045835
+Sum squared resid    0.001065   S.E. of regression   0.005365
+R-squared            0.987328   Adjusted R-squared   0.986301
+F(3, 37)             960.9791   P-value(F)           3.93e-35
+Log-likelihood       158.2731   Akaike criterion    -308.5462
+Schwarz criterion   -301.6919   Hannan-Quinn        -306.0503
+rho                  0.013252   Durbin-Watson        1.922335
+
+Chow test for structural break at observation 1943
+  F(2, 37) = 62.0173 with p-value 0.0000
+
+Done

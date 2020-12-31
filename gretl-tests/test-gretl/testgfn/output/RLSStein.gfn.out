@@ -1,0 +1,67 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run RLSStein.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/RLSStein.gfn.inp
+? include ./RLSStein.gfn
+ /home/cottrell/stats/test-gretl/testgfn/RLSStein.gfn
+RLSStein 0.92, 2013-07-09 (Lee C. Adkins)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? series sqft = sqft/1000
+Replaced series sqft (ID 2)
+? square sqft bedrms
+Listing 7 variables:
+  0) const        1) price        2) sqft         3) bedrms     
+  4) baths        5) sq_sqft      6) sq_bedrms  
+
+? list xlist = const sqft sq_sqft bedrms baths
+Generated list xlist
+? matrix Rmat = zeros(4,1)~I(4)
+Generated matrix Rmat
+? matrix r = { 350 ; -50 ; 0 ; 0}
+Generated matrix r
+? Stein = RLSStein(price, xlist, Rmat, r, 1, 1, 200)
+Stein-Rule Estimation of a linear regression
+using observations 1-14
+Mean Square Error of Prediction Loss
+Dependent Variable y 
+ 
+Unrestricted OLS
+
+             coefficient   std. error      z       p-value
+  --------------------------------------------------------
+  const       -14.8037      138.026     -0.1073    0.9146 
+  sqft        367.990       163.896      2.245     0.0248  **
+  sq_sqft     -51.1936       38.6554    -1.324     0.1854 
+  bedrms      -43.7401       30.9703    -1.412     0.1579 
+  baths        -3.71536      42.1948    -0.08805   0.9298 
+
+Restricted LS
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const      -153.252       10.5320     -14.55    5.75e-48 ***
+  sqft        350.000        0.00000     NA      NA       
+  sq_sqft     -50.0000       0.00000     NA      NA       
+  bedrms        0.00000      0.00000     NA      NA       
+  baths         0.00000      0.00000     NA      NA       
+
+Stein-Rule estimates
+              Stein        SE
+  const   -84.0725  120.2449
+   sqft   358.9891  124.6187
+sq_sqft   -50.5964   30.0425
+ bedrms   -21.8559   25.1514
+  baths    -1.8565   31.7467
+
+a=0.3636, c=0.4091, shrinkage is 0.5003 and F=0.8177
+Done

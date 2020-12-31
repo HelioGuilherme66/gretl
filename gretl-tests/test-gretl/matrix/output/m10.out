@@ -1,0 +1,43 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m10.inp
+ /home/cottrell/stats/test-gretl/matrix/m10.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? series s1 = sqft * sqft
+Generated series s1 (ID 5)
+? matrix x = {sqft}
+Generated matrix x
+? x = x .^ 2
+Replaced matrix x
+? series s2 = x
+Generated series s2 (ID 6)
+? print s1 s2 -o
+
+             s1           s2
+
+ 1      1134225      1134225
+ 2      1572516      1572516
+ 3      1690000      1690000
+ 4      2486929      2486929
+ 5      2560000      2560000
+ 6      3062500      3062500
+ 7      3240000      3240000
+ 8      3496900      3496900
+ 9      3744225      3744225
+10      3794704      3794704
+11      5080516      5080516
+12      6760000      6760000
+13      7840000      7840000
+14      9000000      9000000
+
+Done

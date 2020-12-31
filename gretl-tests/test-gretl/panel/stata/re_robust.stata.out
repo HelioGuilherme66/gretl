@@ -1,0 +1,65 @@
+
+. insheet using baltagi_Gasoline.csv
+(6 vars, 342 obs)
+
+. iis unit
+
+. tis year
+
+. xtreg gas y rp car, re sa theta
+
+Random-effects GLS regression                   Number of obs      =       342
+Group variable: unit                            Number of groups   =        18
+
+R-sq:  within  = 0.8363                         Obs per group: min =        19
+       between = 0.7099                                        avg =      19.0
+       overall = 0.7309                                        max =        19
+
+                                                Wald chi2(3)       =   1642.20
+corr(u_i, X)   = 0 (assumed)                    Prob > chi2        =    0.0000
+theta          = .89230675
+
+------------------------------------------------------------------------------
+         gas |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+           y |   .5549858   .0591282     9.39   0.000     .4390967    .6708749
+          rp |  -.4203893   .0399781   -10.52   0.000     -.498745   -.3420336
+         car |  -.6068402    .025515   -23.78   0.000    -.6568487   -.5568316
+       _cons |   1.996699    .184326    10.83   0.000     1.635427    2.357971
+-------------+----------------------------------------------------------------
+     sigma_u |  .19554468
+     sigma_e |  .09233034
+         rho |  .81769856   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. xtreg gas y rp car, re sa theta vce(cluster unit)
+
+Random-effects GLS regression                   Number of obs      =       342
+Group variable: unit                            Number of groups   =        18
+
+R-sq:  within  = 0.8363                         Obs per group: min =        19
+       between = 0.7099                                        avg =      19.0
+       overall = 0.7309                                        max =        19
+
+                                                Wald chi2(3)       =     50.17
+corr(u_i, X)   = 0 (assumed)                    Prob > chi2        =    0.0000
+theta          = .89230675
+
+                                  (Std. Err. adjusted for 18 clusters in unit)
+------------------------------------------------------------------------------
+             |               Robust
+         gas |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+           y |   .5549858   .1223712     4.54   0.000     .3151427     .794829
+          rp |  -.4203893    .120924    -3.48   0.001    -.6573959   -.1833826
+         car |  -.6068402   .0909742    -6.67   0.000    -.7851463    -.428534
+       _cons |   1.996699   .5256147     3.80   0.000     .9665132    3.026885
+-------------+----------------------------------------------------------------
+     sigma_u |  .19554468
+     sigma_e |  .09233034
+         rho |  .81769856   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. 
+. 
+. 

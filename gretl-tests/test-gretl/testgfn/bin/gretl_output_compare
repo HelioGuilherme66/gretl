@@ -1,0 +1,20 @@
+#!/bin/sh
+
+for f in newout/*.out ; do
+  orig=output/`basename $f`
+  if [ -f $orig ] ; then
+    cat $f | grep -v 'Current sess' | grep -v 'gretl versi' > tmp1
+    cat $orig | grep -v 'Current sess' | grep -v 'gretl versi' > tmp0
+    DIFF=`diff -bB tmp0 tmp1`
+    if [ "x$DIFF" != "x" ] ; then
+       echo "$orig vs $f:"
+       echo "$DIFF"
+    fi
+    rm -f tmp0 tmp1
+  else
+    echo "$f: not in orig output"
+  fi
+done
+
+
+  

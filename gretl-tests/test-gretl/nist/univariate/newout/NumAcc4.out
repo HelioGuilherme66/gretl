@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run NumAcc4.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/NumAcc4.inp
+? open NumAcc4.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/NumAcc4.hdr
+periodicity: 1, maxobs: 1001,
+observations range: 1-1001
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/NumAcc4.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+             Summary Statistics, using the observations 1 - 1001
+                for the variable 'Y' (1001 valid observations)
+
+  Mean                     1.0000E+07
+  Median                   1.0000E+07
+  Minimum                  1.0000E+07
+  Maximum                  1.0000E+07
+  Standard deviation       0.10000   
+  C.V.                     1.0000E-08
+  Skewness                 2.7954E-08
+  Ex. kurtosis            -1.9990    
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = -0.9995
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = 1e+07
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 0.1
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 10
+? smpl 2
+Full data range: 1 - 1001 (n = 1001)
+Current sample:  2 - 1001 (n = 1000)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = -9.99
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = -0.999
+ybar  = 10000000.2
+ysd   = 0.100000000559
+r1    = -0.999500375179
+rnist = -0.999
+Done

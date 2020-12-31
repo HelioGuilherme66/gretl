@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-06 11:16
+? run loclev.inp
+ /home/cottrell/stats/test-gretl/kalman/loclev.inp
+? function matrix local_level (series y)
+? function series loclev_sm (series y, scalar s1, scalar s2)
+/* -------------------- main script -------------------- */
+? nulldata 200
+periodicity: 1, maxobs: 200
+observations range: 1 to 200
+? set seed 202020
+Pseudo-random number generator seeded with 202020
+? setobs 1 1 --special
+Full data range: 1 - 200 (n = 200)
+
+? true_s1 = 0.25
+Generated scalar true_s1 = 0.25
+? true_s2 = 0.5
+Generated scalar true_s2 = 0.5
+? v = normal() * sqrt(true_s1)
+Generated series v (ID 2)
+? w = normal() * sqrt(true_s2)
+Generated series w (ID 3)
+? mu = 2 + cum(w)
+Generated series mu (ID 4)
+? y = mu + v
+Generated series y (ID 5)
+? matrix Vars = local_level(y)
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 145
+Evaluations of gradient: 29
+
+Model 1: ML, using observations 1-200
+ll = ERR ? NA : $kalman_llt
+Standard errors based on Outer Products matrix
+
+               estimate     std. error      z       p-value 
+  ----------------------------------------------------------
+  s1[1]      -0.000838292   0.0562939    -0.01489   0.9881  
+  s2[1]       0.797724      0.145247      5.492     3.97e-08 ***
+
+Log-likelihood      -268.6513   Akaike criterion     541.3027
+Schwarz criterion    547.8993   Hannan-Quinn         543.9722
+
+Generated matrix Vars
+? muhat = loclev_sm(y, Vars[1], Vars[2])
+Generated series muhat (ID 6)
+Done

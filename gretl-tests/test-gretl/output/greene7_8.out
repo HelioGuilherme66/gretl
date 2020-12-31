@@ -1,0 +1,120 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run greene7_8.inp
+ /opt/esl/share/gretl/scripts/greene7_8.inp
+? open greene7_8.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene7_8.gdt
+periodicity: 1, maxobs: 36
+observations range: 1960 to 1995
+
+Listing 11 variables:
+  0) const    1) G        2) Pg       3) Y        4) Pnc    
+  5) Puc      6) Ppt      7) Pd       8) Pn       9) Ps     
+ 10) Pop    
+
+? series Gpop = G/Pop
+Generated series Gpop (ID 11)
+? logs Gpop Y Pg Pnc Puc
+Listing 17 variables:
+  0) const     1) G         2) Pg        3) Y         4) Pnc     
+  5) Puc       6) Ppt       7) Pd        8) Pn        9) Ps      
+ 10) Pop      11) Gpop     12) l_Gpop   13) l_Y      14) l_Pg    
+ 15) l_Pnc    16) l_Puc   
+
+? genr time
+Generated series time (ID 17)
+? series year = time + 1959
+Generated series year (ID 18)
+? smpl 1960 1995
+Full data range: 1960 - 1995 (n = 36)
+
+? ols l_Gpop const l_Y l_Pg l_Pnc l_Puc year
+
+Model 1: OLS, using observations 1960-1995 (T = 36)
+Dependent variable: l_Gpop
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      20.0666       10.1146        1.984    0.0565   *
+  l_Y         1.95463       0.192854     10.14     3.34e-11 ***
+  l_Pg       -0.115530      0.0334795    -3.451    0.0017   ***
+  l_Pnc       0.205282      0.152019      1.350    0.1870  
+  l_Puc      -0.129274      0.0714118    -1.810    0.0803   *
+  year       -0.0191181     0.00595652   -3.210    0.0032   ***
+
+Mean dependent var  -0.003709   S.D. dependent var   0.151691
+Sum squared resid    0.025188   S.E. of regression   0.028976
+R-squared            0.968725   Adjusted R-squared   0.963512
+F(5, 30)             185.8440   P-value(F)           1.26e-21
+Log-likelihood       79.68669   Akaike criterion    -147.3734
+Schwarz criterion   -137.8723   Hannan-Quinn        -144.0572
+rho                  0.605607   Durbin-Watson        0.778643
+
+Log-likelihood for Gpop = 79.8202
+
+Excluding the constant, p-value was highest for variable 15 (l_Pnc)
+
+? smpl 1960 1973
+Full data range: 1960 - 1995 (n = 36)
+Current sample: 1960 - 1973 (n = 14)
+
+? ols l_Gpop const l_Y l_Pg l_Pnc l_Puc year
+
+Model 2: OLS, using observations 1960-1973 (T = 14)
+Dependent variable: l_Gpop
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -55.7863      18.0499      -3.091    0.0149  **
+  l_Y          0.423995     0.351778     1.205    0.2625 
+  l_Pg         0.0945467    0.150511     0.6282   0.5474 
+  l_Pnc        0.583896     0.131493     4.441    0.0022  ***
+  l_Puc       -0.334619     0.0923265   -3.624    0.0067  ***
+  year         0.0263665    0.0106903    2.466    0.0389  **
+
+Mean dependent var  -0.138297   S.D. dependent var   0.159715
+Sum squared resid    0.000652   S.E. of regression   0.009030
+R-squared            0.998033   Adjusted R-squared   0.996804
+F(5, 8)              811.8469   P-value(F)           1.35e-10
+Log-likelihood       49.95362   Akaike criterion    -87.90723
+Schwarz criterion   -84.07289   Hannan-Quinn        -88.26217
+rho                 -0.255955   Durbin-Watson        2.391035
+
+Log-likelihood for Gpop = 51.8898
+
+Excluding the constant, p-value was highest for variable 14 (l_Pg)
+
+? smpl 1974 1995
+Full data range: 1960 - 1995 (n = 36)
+Current sample: 1974 - 1995 (n = 22)
+
+? ols l_Gpop const l_Y l_Pg l_Pnc l_Puc year
+
+Model 3: OLS, using observations 1974-1995 (T = 22)
+Dependent variable: l_Gpop
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      15.8412       6.83936       2.316    0.0341   **
+  l_Y         1.01408      0.285686      3.550    0.0027   ***
+  l_Pg       -0.242374     0.0400297    -6.055    1.67e-05 ***
+  l_Pnc       0.330168     0.181117      1.823    0.0871   *
+  l_Puc      -0.0553742    0.0507739    -1.091    0.2916  
+  year       -0.0126170    0.00377356   -3.344    0.0041   ***
+
+Mean dependent var   0.081938   S.D. dependent var   0.052899
+Sum squared resid    0.004662   S.E. of regression   0.017070
+R-squared            0.920662   Adjusted R-squared   0.895869
+F(5, 16)             37.13387   P-value(F)           2.97e-08
+Log-likelihood       61.83585   Akaike criterion    -111.6717
+Schwarz criterion   -105.1254   Hannan-Quinn        -110.1296
+rho                  0.205977   Durbin-Watson        1.422049
+
+Log-likelihood for Gpop = 60.0332
+
+Excluding the constant, p-value was highest for variable 16 (l_Puc)
+
+Done

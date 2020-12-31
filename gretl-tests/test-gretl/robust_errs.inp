@@ -1,0 +1,21 @@
+# test omit/add F-tests for case of robust standard errors
+open data4-10
+ols 1 0 2 3 4 
+coeffsum 3 4
+omit 2 3 4
+ols 1 0 2 3 4 --jackknife
+coeffsum 3 4
+omit 2 3 4
+ols 1 0 2 3 4 --robust
+coeffsum 3 4
+omit 2 3 4
+# now the reverse operation
+ols 1 0 
+add 2 3 4
+ols 1 0 --jackknife
+add 2 3 4
+ols 1 0 --robust
+add 2 3 4
+
+
+

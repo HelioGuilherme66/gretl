@@ -1,0 +1,30 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run normalize.inp
+ /home/cottrell/stats/test-gretl/ufunc/normalize.inp
+? function void normalize_list (matrix *x)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? list Xl = 2 3 0 4
+Generated list Xl
+? list Xl print
+PRICE INCOME const PRIME 
+? matrix x = Xl
+Generated matrix x
+? normalize_list(&x)
+? list Xl = x
+Replaced list Xl
+? list Xl print
+const INCOME PRICE PRIME 
+Done

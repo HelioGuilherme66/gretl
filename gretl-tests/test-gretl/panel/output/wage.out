@@ -1,0 +1,204 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run wage.inp
+ /home/cottrell/stats/test-gretl/panel/wage.inp
+? open ./wage.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/panel/wage.gdt
+periodicity: 13, maxobs: 57161
+observations range: 1:01 to 4397:13
+
+Listing 7 variables:
+  0) const     1) year      2) codlav    3) sesso     4) eta     
+  5) x3reg     6) lnw     
+
+? genr eta2 = (eta/10)^2
+Generated series eta2 (ID 7)
+? summary lnw eta eta2
+
+                     Mean         Median        Minimum        Maximum
+lnw                3.4453         3.4156        -4.0859         8.8599
+eta                37.456         37.000         14.000         73.000
+eta2               15.220         13.690         1.9600         53.290
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+lnw               0.42538        0.12347        0.60560         12.857
+eta                10.913        0.29135       0.096377       -0.87419
+eta2               8.3844        0.55088        0.57857       -0.40424
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+lnw                2.8471         4.1590        0.40931          27983
+eta                21.000         55.000         18.000          27918
+eta2               4.4100         30.250         13.320          27918
+
+# make sure the panel apparatus works ok
+? panel lnw 0 sesso eta eta2
+
+Model 1: Fixed-effects, using 29177 observations
+Included 4395 cross-sectional units
+Time-series length: minimum 1, maximum 13
+Dependent variable: lnw
+Omitted due to exact collinearity: sesso
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       2.26072      0.0311067     72.68    0.0000    ***
+  eta         0.0464238    0.00164798    28.17    6.96e-172 ***
+  eta2       -0.0363946    0.00215516   -16.89    1.27e-63  ***
+
+Mean dependent var   3.445265   S.D. dependent var   0.425382
+Sum squared resid    1148.583   S.E. of regression   0.215293
+LSDV R-squared       0.782440   Within R-squared     0.091874
+LSDV F(4396, 24780)  20.27293   P-value(F)           0.000000
+Log-likelihood       5791.268   Akaike criterion    -2788.536
+Schwarz criterion    33623.62   Hannan-Quinn         8910.217
+rho                  0.259928   Durbin-Watson        1.196243
+
+Joint test on named regressors -
+  Test statistic: F(2, 24780) = 1253.48
+  with p-value = P(F(2, 24780) > 1253.48) = 0
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(4393, 24780) = 14.6119
+  with p-value = P(F(4393, 24780) > 14.6119) = 0
+
+? panel lnw 0 sesso eta eta2 --random
+
+Model 2: Random-effects (GLS), using 29177 observations
+Included 4395 cross-sectional units
+Time-series length: minimum 1, maximum 13
+Dependent variable: lnw
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       2.56603      0.0319210     80.39    0.0000    ***
+  sesso      -0.232104     0.0118379    -19.61    4.77e-85  ***
+  eta         0.0484564    0.00147794    32.79    1.47e-231 ***
+  eta2       -0.0433387    0.00192753   -22.48    5.23e-111 ***
+
+Mean dependent var   3.445265   S.D. dependent var   0.425382
+Sum squared resid    4215.983   S.E. of regression   0.380147
+Log-likelihood      -13178.95   Akaike criterion     26365.90
+Schwarz criterion    26399.02   Hannan-Quinn         26376.54
+
+'Between' variance = 0.121088
+'Within' variance = 0.0463512
+mean theta = 0.714849
+corr(y,yhat)^2 = 0.209098
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(3) = 3645.69
+  with p-value = 0
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 42403.9
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(2) = 169.591
+  with p-value = 1.49177e-37
+
+# Anderson-Hsiao
+? dw = diff(lnw)
+Generated series dw (ID 8)
+# deta = const
+? deta2 = diff(eta2)
+Generated series deta2 (ID 9)
+? ols dw(-1) 0 lnw(-2) deta2 -q
+? genr dwlf = $yhat
+Generated series dwlf (ID 12)
+? ols dw 0 dwlf deta2
+
+Model 4: Pooled OLS, using 19542 observations
+Included 3219 cross-sectional units
+Time-series length: minimum 1, maximum 11
+Dependent variable: dw
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0349993    0.00647689    5.404    6.60e-08 ***
+  dwlf        0.158855     0.0357293     4.446    8.79e-06 ***
+  deta2      -0.0154046    0.00792426   -1.944    0.0519   *
+
+Mean dependent var   0.026217   S.D. dependent var   0.227111
+Sum squared resid    1006.403   S.E. of regression   0.226952
+R-squared            0.001497   Adjusted R-squared   0.001394
+F(2, 19539)          14.64317   P-value(F)           4.42e-07
+Log-likelihood       1253.685   Akaike criterion    -2501.370
+Schwarz criterion   -2477.729   Hannan-Quinn        -2493.626
+rho                 -0.360262   Durbin-Watson        2.098783
+
+# this ought to work, but doesn't
+? tsls dw 0 dw(-1) deta2 ; lnw(-2) 0 deta2
+
+Model 5: TSLS, using 19542 observations
+Dependent variable: dw
+Instrumented: dw_1 
+Instruments: lnw_2 const deta2 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.0349760    0.00681850    5.130   2.90e-07 ***
+  dw_1        0.158304     0.0374735     4.224   2.40e-05 ***
+  deta2      -0.0153084    0.00834542   -1.834   0.0666   *
+
+Mean dependent var   0.026217   S.D. dependent var   0.227111
+Sum squared resid    1114.771   S.E. of regression   0.238859
+R-squared            0.095544   Adjusted R-squared   0.095452
+F(2, 19539)          13.21969   P-value(F)           1.83e-06
+Log-likelihood      -148741.1   Akaike criterion     297488.2
+Schwarz criterion    297511.8   Hannan-Quinn         297495.9
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 254.461
+  with p-value = 2.76617e-57
+
+Weak instrument test - 
+  First-stage F-statistic (1, 19584) = 1080.1
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    16.38     8.96     6.66     5.53
+
+  Maximal size is probably less than 10%
+
+? discrete sesso
+? summary sesso
+
+Summary statistics, using the observations 1:01 - 4397:13
+for the variable 'sesso' (29242 valid observations)
+
+  Mean                         1.3093
+  Median                       1.0000
+  Minimum                      1.0000
+  Maximum                      2.0000
+  Standard deviation          0.46223
+  C.V.                        0.35303
+  Skewness                    0.82492
+  Ex. kurtosis                -1.3195
+  5% percentile                1.0000
+  95% percentile               2.0000
+  Interquartile range          1.0000
+  Missing obs.                  27919
+
+  Within s.d.                  0.0000
+  Between s.d.                0.46964
+? freq sesso
+
+Frequency distribution for sesso, obs 1-57161
+
+          frequency    rel.     cum.
+
+   1       20196     69.07%   69.07% ************************
+   2        9046     30.93%  100.00% ***********
+
+Missing observations = 27919 (48.84%)
+
+Done

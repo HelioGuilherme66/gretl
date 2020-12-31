@@ -1,0 +1,146 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run mrw_qr.inp
+ /opt/esl/share/gretl/scripts/misc/mrw_qr.inp
+# Replicate Table V in Mankiw, Romer and Weil, QJE 1992,
+# plus the quantile regressions in R. Ram, "Parametric
+# variability in cross-country growth regressions: An
+# application of quantile-regression methodology",
+# Economics Letters 99 (2008) pp. 387-9.
+? open mrw.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/mrw.gdt
+periodicity: 1, maxobs: 121
+observations range: 1 to 121
+
+Listing 10 variables:
+  0) const       1) nonoil      2) intermed    3) OECD        4) gdp60     
+  5) gdp85       6) gdpgrow     7) popgrow     8) inv         9) school    
+
+? series ly60 = log(gdp60)
+Generated series ly60 (ID 10)
+? series dlny = log(gdp85) - ly60
+Generated series dlny (ID 11)
+? series ngd = 0.05 + (popgrow/100)
+Generated series ngd (ID 12)
+? series lngd = log(ngd)
+Generated series lngd (ID 13)
+? series linv = log(inv/100)
+Generated series linv (ID 14)
+? series lschool = log(school/100)
+Generated series lschool (ID 15)
+Warning: log: Numerical result out of range
+# set sample to non-oil producing countries
+? smpl nonoil --dummy
+Full data set: 121 observations
+Current sample: 98 observations
+# OLS, as per M, R & W
+? ols dlny const ly60 linv lngd lschool
+
+Model 1: OLS, using observations 1-98
+Dependent variable: dlny
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        3.02152     0.827476      3.651    0.0004   ***
+  ly60        -0.288374    0.0615821    -4.683    9.62e-06 ***
+  linv         0.523737    0.0868652     6.029    3.30e-08 ***
+  lngd        -0.505657    0.288608     -1.752    0.0831   *
+  lschool      0.231117    0.0594613     3.887    0.0002   ***
+
+Mean dependent var   0.449989   S.D. dependent var   0.446392
+Sum squared resid    9.945544   S.E. of regression   0.327019
+R-squared            0.485455   Adjusted R-squared   0.463324
+F(4, 93)             21.93552   P-value(F)           8.99e-13
+Log-likelihood      -26.95167   Akaike criterion     63.90335
+Schwarz criterion    76.82818   Hannan-Quinn         69.13118
+
+Log-likelihood for gdp85 = -71.0506
+
+# Top quartile
+? quantreg 0.75 dlny const ly60 linv lngd lschool
+
+Model 2: Quantile estimates, using observations 1-98
+Dependent variable: dlny
+tau = 0.75
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        4.81965     0.903940      5.332    6.78e-07 ***
+  ly60        -0.416050    0.0672726    -6.185    1.65e-08 ***
+  linv         0.572902    0.0948920     6.037    3.18e-08 ***
+  lngd        -0.392633    0.315277     -1.245    0.2161  
+  lschool      0.300133    0.0649559     4.621    1.23e-05 ***
+
+Median depend. var   0.449674   S.D. dependent var   0.446392
+Sum absolute resid   28.68028   Sum squared resid    15.15373
+Log-likelihood      -28.58619   Akaike criterion     67.17238
+Schwarz criterion    80.09721   Hannan-Quinn         72.40021
+
+# Bottom quartile
+? quantreg 0.25 dlny const ly60 linv lngd lschool
+
+Model 3: Quantile estimates, using observations 1-98
+Dependent variable: dlny
+tau = 0.25
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        1.03145      1.43444      0.7191   0.4739 
+  ly60        -0.215809     0.106753    -2.022    0.0461  **
+  linv         0.434448     0.150582     2.885    0.0049  ***
+  lngd        -0.904551     0.500306    -1.808    0.0738  *
+  lschool      0.224300     0.103077     2.176    0.0321  **
+
+Median depend. var   0.449674   S.D. dependent var   0.446392
+Sum absolute resid   29.58403   Sum squared resid    14.47312
+Log-likelihood      -37.56797   Akaike criterion     85.13594
+Schwarz criterion    98.06078   Hannan-Quinn         90.36377
+
+# Top quartile (robust)
+? quantreg 0.75 dlny const ly60 linv lngd lschool --robust
+
+Model 4: Quantile estimates, using observations 1-98
+Dependent variable: dlny
+tau = 0.75
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        4.81965     0.857538      5.620    1.98e-07 ***
+  ly60        -0.416050    0.0677202    -6.144    1.98e-08 ***
+  linv         0.572902    0.0974148     5.881    6.35e-08 ***
+  lngd        -0.392633    0.288292     -1.362    0.1765  
+  lschool      0.300133    0.0598949     5.011    2.57e-06 ***
+
+Median depend. var   0.449674   S.D. dependent var   0.446392
+Sum absolute resid   28.68028   Sum squared resid    15.15373
+Log-likelihood      -28.58619   Akaike criterion     67.17238
+Schwarz criterion    80.09721   Hannan-Quinn         72.40021
+
+# Bottom quartile (robust)
+? quantreg 0.25 dlny const ly60 linv lngd lschool --robust
+
+Model 5: Quantile estimates, using observations 1-98
+Dependent variable: dlny
+tau = 0.25
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        1.03145     1.11149       0.9280   0.3558 
+  ly60        -0.215809    0.0746450    -2.891    0.0048  ***
+  linv         0.434448    0.138210      3.143    0.0022  ***
+  lngd        -0.904551    0.300503     -3.010    0.0034  ***
+  lschool      0.224300    0.104379      2.149    0.0342  **
+
+Median depend. var   0.449674   S.D. dependent var   0.446392
+Sum absolute resid   29.58403   Sum squared resid    14.47312
+Log-likelihood      -37.56797   Akaike criterion     85.13594
+Schwarz criterion    98.06078   Hannan-Quinn         90.36377
+
+Done

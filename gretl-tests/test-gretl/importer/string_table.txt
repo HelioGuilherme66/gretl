@@ -1,0 +1,16 @@
+boo_old.dta
+
+One or more non-numeric variables were found.
+These variables have been given numeric codes as follows.
+
+String code table for variable 1 (data1):
+  1 = '9/30/2011'
+  2 = '9/29/2011'
+  3 = '9/28/2011'
+  4 = '9/27/2011'
+  5 = '9/26/2011'
+  6 = '9/23/2011'
+  7 = '9/22/2011'
+  8 = '9/21/2011'
+  9 = '9/20/2011'
+ 10 = '9/19/2011'

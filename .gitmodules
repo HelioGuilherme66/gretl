@@ -1,0 +1,3 @@
+[submodule "gretl-git"]
+    path = gretl-git
+    url = git://git.code.sf.net/p/gretl/git

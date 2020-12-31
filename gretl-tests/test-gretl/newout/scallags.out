@@ -1,0 +1,102 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run scallags.inp
+ /home/cottrell/stats/test-gretl/scallags.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? scalar a = 1
+Generated scalar a = 1
+? ls
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? print a
+
+              a =  1.0000000
+? arma 1 a ; 1 --conditional
+
+Function evaluations: 28
+Evaluations of gradient: 10
+
+Model 1: ARMA, using observations 1974:2-1987:3 (T = 54)
+Estimated using BHHH method (conditional ML)
+Dependent variable: LRM
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const       0.0451197    0.391278      0.1153   0.9082   
+  phi_1       0.996760     0.0333263    29.91     1.50e-196 ***
+  theta_1     0.0301985    0.172789      0.1748   0.8613   
+
+Mean dependent var   11.75666   S.D. dependent var   0.152858
+Mean of innovations  0.000023   S.D. of innovations  0.032804
+Log-likelihood       107.9065   Akaike criterion    -207.8130
+Schwarz criterion   -199.8571   Hannan-Quinn        -204.7447
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0033     0.0000     1.0033     0.0000
+  MA
+    Root  1         -33.1142     0.0000    33.1142     0.5000
+  -----------------------------------------------------------
+
+? var a 1 2 ; const
+
+VAR system, lag order 1
+OLS estimates, observations 1974:2-1987:3 (T = 54)
+Log-likelihood = 241.83086
+Determinant of covariance matrix = 4.4178054e-07
+AIC = -8.7345
+BIC = -8.5135
+HQC = -8.6492
+Portmanteau test: LB(13) = 95.8804, df = 48 [0.0000]
+
+Equation 1: LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        0.224848    0.380301      0.5912   0.5570  
+  LRM_1        1.07673     0.0602493    17.87     1.32e-23 ***
+  LRY_1       -0.188104    0.124803     -1.507    0.1379  
+
+Mean dependent var   11.75666   S.D. dependent var   0.152858
+Sum squared resid    0.055720   S.E. of regression   0.033054
+R-squared            0.955005   Adjusted R-squared   0.953241
+F(2, 51)             541.2320   P-value(F)           4.53e-35
+rho                 -0.017190   Durbin-Watson        1.992294
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(1, 51) =   319.38 [0.0000]
+All lags of LRY              F(1, 51) =   2.2717 [0.1379]
+
+Equation 2: LRY
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.158308     0.275316     0.5750    0.5678  
+  LRM_1       0.120279     0.0436170    2.758     0.0081   ***
+  LRY_1       0.736360     0.0903499    8.150     8.47e-11 ***
+
+Mean dependent var   5.953290   S.D. dependent var   0.073128
+Sum squared resid    0.029203   S.E. of regression   0.023929
+R-squared            0.896966   Adjusted R-squared   0.892926
+F(2, 51)             221.9923   P-value(F)           6.78e-26
+rho                  0.235415   Durbin-Watson        1.488807
+
+F-tests of zero restrictions:
+
+All lags of LRM              F(1, 51) =   7.6044 [0.0081]
+All lags of LRY              F(1, 51) =   66.424 [0.0000]
+
+Done

@@ -1,0 +1,2 @@
+open grenard.xls
+print EXCh DEFICIT -o

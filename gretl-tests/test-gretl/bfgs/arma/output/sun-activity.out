@@ -1,0 +1,80 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run sun-activity.inp
+ /home/allin/stats/test-gretl/bfgs/arma/sun-activity.inp
+? open sun-activity.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/sun-activity.gdt
+periodicity: 1, maxobs: 309
+observations range: 1700 to 2008
+
+Listing 2 variables:
+  0) const          1) sunactivity  
+
+? arima 9 0 0 ; sunactivity
+
+Function evaluations: 63
+Evaluations of gradient: 18
+
+Model 1: ARMA, using observations 1700-2008 (T = 309)
+Estimated using Kalman filter (exact ML)
+Dependent variable: sunactivity
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      48.3249       6.87335       7.031    2.05e-12 ***
+  phi_1       1.16071      0.0550891    21.07     1.51e-98 ***
+  phi_2      -0.395382     0.0859555    -4.600    4.23e-06 ***
+  phi_3      -0.166341     0.0887695    -1.874    0.0610   *
+  phi_4       0.150446     0.0891518     1.688    0.0915   *
+  phi_5      -0.0943925    0.0895577    -1.054    0.2919  
+  phi_6       0.00906257   0.0899222     0.1008   0.9197  
+  phi_7       0.0520532    0.0902034     0.5771   0.5639  
+  phi_8      -0.0858438    0.0872213    -0.9842   0.3250  
+  phi_9       0.252392     0.0557649     4.526    6.01e-06 ***
+
+Mean dependent var   49.75210   S.D. dependent var   40.45259
+Mean of innovations  0.159780   S.D. of innovations  14.85883
+Log-likelihood      -1274.311   Akaike criterion     2570.623
+Schwarz criterion    2611.689   Hannan-Quinn         2587.041
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0490     0.0000     1.0490     0.0000
+    Root  2           0.8485    -0.5759     1.0255    -0.0949
+    Root  3           0.8485     0.5759     1.0255     0.0949
+    Root  4          -1.1772    -0.4453     1.2586    -0.4424
+    Root  5          -1.1772     0.4453     1.2586     0.4424
+    Root  6           0.4205    -1.0894     1.1677    -0.1914
+    Root  7           0.4205     1.0894     1.1677     0.1914
+    Root  8          -0.4463    -1.2098     1.2895    -0.3062
+    Root  9          -0.4463     1.2098     1.2895     0.3062
+  -----------------------------------------------------------
+
+? fcast 1709 1720 gretl_fc --dynamic
+Generated series gretl_fc (ID 2)
+? smpl 1709 1719
+Full data range: 1700 - 2008 (n = 309)
+Current sample: 1709 - 1719 (n = 11)
+
+? print sunactivity gretl_fc --byobs
+
+      sunactivity     gretl_fc
+
+1709            8     11.23055
+1710            3     13.23749
+1711            0     19.66433
+1712            0     27.00403
+1713            2     33.57889
+1714           11     44.90813
+1715           27     47.95894
+1716           47     45.09373
+1717           63     36.50681
+1718           60     28.78843
+1719           39     23.48740
+
+Done

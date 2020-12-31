@@ -1,0 +1,17 @@
+gig
+
+                     output newout
+BFGS gradient evals:     62     63
+BFGS function evals:    291    317
+
+tp old: 65.17, 64.91
+tp new: 72.45, 72.12
+
+dell old: 54.45, 55.02
+dell new: 60.52, 61.25
+newer: 58.90, 
+
+new seems to fail test3.inp ("stopped after 500 iterations" on stderr,
+ and the results do not agree with native garch)
+
+newer: fails on example4 

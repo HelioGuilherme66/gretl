@@ -1,0 +1,54 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run garch.inp
+ /opt/esl/share/gretl/scripts/misc/garch.inp
+# Replicate GARCH model from T. Bollerslev and E. Ghysels,
+# "Periodic Autoregressive Conditional Heteroscedasticity",
+# Journal of Business and Economic Statistics, 14 (1996),
+# pp. 139-151.  'Y' is the daily nominal return on the
+# Deutschemark/Sterling exchange rate.
+? open b-g.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/b-g.gdt
+periodicity: 5, maxobs: 1974
+observations range: 1 to 1974
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? garch 1 1 ; Y --vcv
+
+Function evaluations: 70
+Evaluations of gradient: 16
+
+Model 1: GARCH, using observations 1-1974
+Dependent variable: Y
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const      -0.00619040   0.00846212   -0.7315   0.4644   
+
+  alpha(0)    0.0107614    0.00285271    3.772    0.0002    ***
+  alpha(1)    0.153134     0.0265228     5.774    7.76e-09  ***
+  beta(1)     0.805974     0.0335527    24.02     1.67e-127 ***
+
+Mean dependent var  -0.016427   S.D. dependent var   0.470244
+Log-likelihood      -1106.608   Akaike criterion     2223.216
+Schwarz criterion    2251.155   Hannan-Quinn         2233.481
+
+Unconditional error variance = 0.263165
+Likelihood ratio test for (G)ARCH terms:
+  Chi-square(2) = 408.977 [1.55508e-89]
+
+Covariance matrix of regression coefficients:
+
+         const      alpha(0)      alpha(1)       beta(1)
+   7.16075e-05   1.14154e-06   1.39917e-05  -1.66451e-05  const
+                 8.13796e-06   5.25932e-05  -8.65728e-05  alpha(0)
+                               7.03461e-04  -8.10722e-04  alpha(1)
+                                              0.00112578  beta(1)
+
+Done

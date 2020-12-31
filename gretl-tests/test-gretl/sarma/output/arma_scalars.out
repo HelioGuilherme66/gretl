@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:09
+? run arma_scalars.inp
+ /home/cottrell/stats/test-gretl/sarma/arma_scalars.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? scalar b0 = 199
+Generated scalar b0 = 199
+? scalar phi1 = -20
+Generated scalar phi1 = -20
+? scalar Phi1 = -40
+Generated scalar Phi1 = -40
+? arma 1 1 ; 1 0 ; QNC
+
+Function evaluations: 37
+Evaluations of gradient: 14
+
+Model 1: ARMA, using observations 1975:1-1990:4 (T = 64)
+Estimated using Kalman filter (exact ML)
+Dependent variable: QNC
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      2390.09       187.364       12.76    2.87e-37 ***
+  phi_1         0.806880     0.126010     6.403   1.52e-10 ***
+  Phi_1         0.585771     0.0985010    5.947   2.73e-09 ***
+  theta_1      -0.373859     0.197215    -1.896   0.0580   *
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Mean of innovations  11.93754   S.D. of innovations  210.7183
+Log-likelihood      -434.6026   Akaike criterion     879.2051
+Schwarz criterion    889.9996   Hannan-Quinn         883.4576
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2393     0.0000     1.2393     0.0000
+  AR (seasonal)
+    Root  1           1.7072     0.0000     1.7072     0.0000
+  MA
+    Root  1           2.6748     0.0000     2.6748     0.0000
+  -----------------------------------------------------------
+
+? print b0 phi1 Phi1
+
+             b0 =  199.00000
+
+           phi1 = -20.000000
+
+           Phi1 = -40.000000
+Done

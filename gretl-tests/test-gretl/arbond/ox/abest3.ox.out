@@ -1,0 +1,43 @@
+
+Ox version 4.04 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.24, object created on 19-10-2006
+
+DPD( 1) Modelling n by 1-step (using abdata.in7)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dn(-1)             0.00866684     0.1898   0.0457   0.964
+Dn(-2)              0.0227111    0.05211    0.436   0.663
+Dw                  -0.558230     0.1539    -3.63   0.000
+Dw(-1)            -0.00276285     0.1256  -0.0220   0.982
+Dk                   0.406832    0.05801     7.01   0.000
+Dys                  0.556363     0.1646     3.38   0.001
+Dys(-1)             -0.184410     0.1650    -1.12   0.264
+Constant           0.00332615   0.008646    0.385   0.701
+T1980              0.00948079    0.01448    0.655   0.513
+T1981              -0.0275832    0.02012    -1.37   0.171
+T1982              -0.0343184    0.01712    -2.01   0.045
+T1983              -0.0209769    0.01840    -1.14   0.255
+T1984             -0.00342257    0.01834   -0.187   0.852
+
+sigma               0.1127436  sigma^2            0.01271111
+sigma levels       0.07972174
+RSS              7.6012447811  TSS              12.599978399
+no. of observations       611  no. of parameters          13
+Using robust standard errors
+
+Transformation used:      first differences
+Transformed instruments:  w  w(-1)  k  ys  ys(-1)
+Level instruments:        Dummies  Gmm("n",2,3)
+
+constant:                 yes  time dummies:               5
+number of individuals     140 (derived from year)
+longest time series         6 [1979 - 1984]
+shortest time series        4 (unbalanced panel)
+
+Wald (joint):    Chi^2(7) =     112.3 [0.000] **
+Wald (dummy):    Chi^2(6) =     8.820 [0.184]
+Wald (time):     Chi^2(6) =     8.820 [0.184]
+Sargan test:    Chi^2(10) =     29.02 [0.001] **
+AR(1) test:        N(0,1) =    0.5142 [0.607]
+AR(2) test:        N(0,1) =    -1.238 [0.216]

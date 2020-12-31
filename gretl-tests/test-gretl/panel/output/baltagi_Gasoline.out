@@ -1,0 +1,162 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run baltagi_Gasoline.inp
+ /home/cottrell/stats/test-gretl/panel/baltagi_Gasoline.inp
+? open baltagi_Gasoline
+
+Read datafile /home/cottrell/stats/test-gretl/panel/baltagi_Gasoline.gdt
+periodicity: 19, maxobs: 342
+observations range: 1:01 to 18:19
+
+Listing 6 variables:
+  0) const    1) YEAR     2) gas      3) y        4) rp     
+  5) car    
+
+? genr unitdum
+Panel dummy variables generated.
+? ols gas 0 y rp car
+
+Model 1: Pooled OLS, using 342 observations
+Included 18 cross-sectional units
+Time-series length = 19
+Dependent variable: gas
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        2.39133     0.116934      20.45    4.58e-61  ***
+  y            0.889962    0.0358058     24.86    2.74e-78  ***
+  rp          -0.891798    0.0303147    -29.42    3.20e-95  ***
+  car         -0.763373    0.0186083    -41.02    2.67e-133 ***
+
+Mean dependent var   4.296242   S.D. dependent var   0.548907
+Sum squared resid    14.90436   S.E. of regression   0.209990
+R-squared            0.854935   Adjusted R-squared   0.853648
+F(3, 338)            663.9993   P-value(F)           2.7e-141
+Log-likelihood       50.49289   Akaike criterion    -92.98578
+Schwarz criterion   -77.64654   Hannan-Quinn        -86.87504
+rho                  0.922517   Durbin-Watson        0.130628
+
+? hausman
+      Diagnostics: assuming a balanced panel with 18 cross-sectional units
+                         observed over 19 periods
+
+Fixed effects estimator
+allows for differing intercepts by cross-sectional unit
+slope standard errors in parentheses, p-values in brackets
+
+       const:         2.4027       (0.22531)       [0.00000]
+           y:        0.66225      (0.073386)       [0.00000]
+          rp:        -0.3217      (0.044099)       [0.00000]
+         car:       -0.64048      (0.029679)       [0.00000]
+
+18 group means were subtracted from the data
+
+Residual variance: 2.73649/(342 - 21) = 0.00852489
+Joint significance of differing group means:
+ F(17, 321) = 83.9608 with p-value 4.73576e-107
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the fixed effects alternative.)
+
+
+Breusch-Pagan test statistic:
+ LM = 1465.55 with p-value = prob(chi-square(1) > 1465.55) = 0
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the random effects alternative.)
+
+Variance estimators:
+ between = 0.0382377
+ within = 0.00852489
+theta used for quasi-demeaning = 0.892307
+
+                         Random effects estimator
+           allows for a unit-specific component to the error term
+           (standard errors in parentheses, p-values in brackets)
+
+          const:         1.9967       (0.18433)       [0.00000]
+              y:        0.55499      (0.059128)       [0.00000]
+             rp:       -0.42039      (0.039978)       [0.00000]
+            car:       -0.60684      (0.025515)       [0.00000]
+
+Hausman test statistic:
+ H = 27.0487 with p-value = prob(chi-square(3) > 27.0487) = 5.75061e-06
+(A low p-value counts against the null hypothesis that the random effects
+model is consistent, in favor of the fixed effects model.)
+? panel gas 0 y rp car --random-effects
+
+Model 2: Random-effects (GLS), using 342 observations
+Included 18 cross-sectional units
+Time-series length = 19
+Dependent variable: gas
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        1.99670     0.184326      10.83    1.14e-23 ***
+  y            0.554986    0.0591282      9.386   9.42e-19 ***
+  rp          -0.420389    0.0399781    -10.52    1.46e-22 ***
+  car         -0.606840    0.0255150    -23.78    3.63e-74 ***
+
+Mean dependent var   4.296242   S.D. dependent var   0.548907
+Sum squared resid    27.64625   S.E. of regression   0.285574
+Log-likelihood      -55.15718   Akaike criterion     118.3144
+Schwarz criterion    133.6536   Hannan-Quinn         124.4251
+
+'Between' variance = 0.0382377
+'Within' variance = 0.00852489
+theta used for quasi-demeaning = 0.892307
+corr(y,yhat)^2 = 0.730921
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(3) = 1642.2
+  with p-value = 0
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1465.55
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(3) = 27.0487
+  with p-value = 5.75061e-06
+
+? scalar theta = 0.892307
+Generated scalar theta = 0.892307
+? loop foreach i gas y rp car
+> ols $i du_* -q
+> genr $iq = $uhat
+> genr $ip = $yhat
+> genr $itilde = $i - theta*$ip
+> end loop
+Warning: "end loop": obsolete construction; please use "endloop"
+? ols gas du_* -q
+? genr gasq = $uhat
+? genr gasp = $yhat
+? genr gastilde = gas - theta*gasp
+? ols y du_* -q
+? genr yq = $uhat
+? genr yp = $yhat
+? genr ytilde = y - theta*yp
+? ols rp du_* -q
+? genr rpq = $uhat
+? genr rpp = $yhat
+? genr rptilde = rp - theta*rpp
+? ols car du_* -q
+? genr carq = $uhat
+? genr carp = $yhat
+? genr cartilde = car - theta*carp
+
+Number of iterations: 4
+
+? ols gastilde 0 ytilde rptilde cartilde -q
+? add yq rpq carq -q
+Test on Model 7:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    yq, rpq, carq
+  Test statistic: F(3, 335) = 8.83165, p-value 1.19209e-05
+
+? scalar H = $test*3
+Generated scalar H = 26.495
+Done

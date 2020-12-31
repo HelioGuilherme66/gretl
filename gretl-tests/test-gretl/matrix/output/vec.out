@@ -1,0 +1,67 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run vec.inp
+ /home/cottrell/stats/test-gretl/matrix/vec.inp
+? matrix A = {1,2,3;4,5,6}'
+Generated matrix A
+? A
+A (3 x 2)
+
+  1   4 
+  2   5 
+  3   6 
+
+? matrix B = vec(A)
+Generated matrix B
+? B
+B (6 x 1)
+
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+
+? matrix C = {1,2,3;2,4,5;3,5,6}
+Generated matrix C
+? C
+C (3 x 3)
+
+  1   2   3 
+  2   4   5 
+  3   5   6 
+
+? matrix D = vech(C)
+Generated matrix D
+? D
+D (6 x 1)
+
+  1 
+  2 
+  3 
+  4 
+  5 
+  6 
+
+? matrix E = unvech(D)
+Generated matrix E
+? E
+E (3 x 3)
+
+  1   2   3 
+  2   4   5 
+  3   5   6 
+
+? matrix F = C - E
+Generated matrix F
+? F
+F (3 x 3)
+
+  0   0   0 
+  0   0   0 
+  0   0   0 
+
+Done

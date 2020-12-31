@@ -1,0 +1,6 @@
+open wagepan.gdt
+setobs 8 1.1 --stacked-time-series
+list varying = expersq married union
+list tdum = d8*
+panel lwage 0 varying tdum
+panel lwage 0 educ black hisp exper varying tdum --random

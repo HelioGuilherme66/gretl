@@ -1,0 +1,710 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps11-1.inp
+ /opt/esl/share/gretl/scripts/ps11-1.inp
+? include criteria.gfn
+ /opt/esl/share/gretl/functions/criteria.gfn
+criteria 1.0, 2010-02-21 (Allin Cottrell)
+# PS11.1 for fitting time trends in calwage
+? open data10-5.gdt
+
+Read datafile /opt/esl/share/gretl/data/data10-5.gdt
+periodicity: 1, maxobs: 35
+observations range: 1960 to 1994
+
+Listing 4 variables:
+  0) const      1) year       2) calwage    3) uswage   
+
+? genr time
+Generated series time (ID 4)
+# create the square of time
+? genr tsq = time*time
+Generated series tsq (ID 5)
+# create the cube of time
+? genr t3 = tsq*time
+Generated series t3 (ID 6)
+# create inverse of time
+? genr invt = 1/time
+Generated series invt (ID 7)
+# generate log of time
+? genr l_time = log(time)
+Generated series l_time (ID 8)
+# generate log of calwage
+? logs calwage
+Listing 10 variables:
+  0) const        1) year         2) calwage      3) uswage     
+  4) time         5) tsq          6) t3           7) invt       
+  8) l_time       9) l_calwage  
+
+? textplot calwage time
+
+  calwage
+      12.44  |                                                            o
+             |                                                        o o  
+             |                                                    o o      
+    10.8033  +                                                   o         
+             |                                             o o o           
+             |                                          o o                
+             |                                      o o                    
+             |                                                             
+    8.07556  +                                     o                       
+             |                                   o                         
+             |                                 o                           
+             |                                                             
+             |                              oo                             
+    5.34778  +                            o                                
+             |                          o                                  
+             |                      o o                                    
+             |                 o o o                                       
+             |            o oo                                             
+       2.62  +oo o o oo o                                                  
+             |+---------+---------+---------+---------+---------+---------+
+              1                           time                            35
+
+
+# set sample range to 1960-1989 and save 1990-1994 for predictions
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# Note that the OLS estimates exhibit serial correlation
+? ols calwage 0 time
+
+Model 1: OLS, using observations 1960-1989 (T = 30)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.890253     0.282688      3.149    0.0039   ***
+  time        0.329769     0.0159235    20.71     1.62e-18 ***
+
+Mean dependent var   6.001667   S.D. dependent var   2.996354
+Sum squared resid    15.95635   S.E. of regression   0.754897
+R-squared            0.938716   Adjusted R-squared   0.936527
+F(1, 28)             428.8871   P-value(F)           1.62e-18
+Log-likelihood      -33.09804   Akaike criterion     70.19609
+Schwarz criterion    72.99848   Hannan-Quinn         71.09260
+rho                  0.903554   Durbin-Watson        0.077237
+
+# linear Model A
+? ar1 calwage 0 time
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.90355   0.710904
+                   2      0.90397   0.710858
+                   3      0.90433   0.710822
+                   4      0.90465   0.710794
+                   5      0.90494   0.710772
+                   6      0.90519   0.710754
+                   7      0.90541   0.710740
+                   8      0.90561   0.710729
+                   9      0.90578   0.710720
+                  10      0.90594   0.710713
+                  11      0.90608   0.710708
+                  12      0.90620   0.710703
+                  13      0.90631   0.710699
+                  14      0.90641   0.710697
+                  15      0.90650   0.710694
+                  16      0.90658   0.710692
+                  17      0.90665   0.710691
+                  18      0.90672   0.710690
+                  19      0.90677   0.710689
+                  20      0.90683   0.710688
+                  21      0.90687   0.710687
+                  22      0.90691   0.710687
+                  23      0.90695   0.710686
+                  24      0.90698   0.710686
+                  25      0.90701   0.710686
+                  26      0.90704   0.710685
+                  27      0.90707   0.710685
+                  28      0.90709   0.710685
+                  29      0.90711   0.710685
+                  30      0.90712   0.710685
+                  31      0.90714   0.710685
+                  32      0.90715   0.710685
+                  33      0.90717   0.710685
+                  34      0.90718   0.710685
+                  35      0.90719   0.710685
+                  36      0.90720   0.710685
+
+Model 2: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.907199
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -3.07758     1.05152      -2.927    0.0069   ***
+  time         0.468450    0.0388021    12.07     2.16e-12 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    0.710685   S.E. of regression   0.162239
+R-squared            0.997141   Adjusted R-squared   0.997035
+F(1, 27)             145.7522   P-value(F)           2.16e-12
+rho                  0.621407   Durbin-Watson        0.740241
+
+# obtain one-step-ahead predicted values
+? fcast 1990 1994 yhata --static
+Generated series yhata (ID 10)
+# reset sample range
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+# regress actual against predicted
+? ols calwage 0 yhata
+
+Model 3: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2.87691      1.04264       2.759    0.0702  *
+  yhata       0.747968     0.0847514     8.825    0.0031  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.023569   S.E. of regression   0.088636
+R-squared            0.962912   Adjusted R-squared   0.950549
+F(1, 3)              77.88828   P-value(F)           0.003066
+Log-likelihood       6.298480   Akaike criterion    -8.596961
+Schwarz criterion   -9.378085   Hannan-Quinn        -10.69342
+rho                  0.000421   Durbin-Watson        1.445471
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhata = calwage - yhata
+Generated series uhata (ID 11)
+? genr mapea = mean(100*abs(uhata)/calwage)
+Generated scalar mapea = 1.81082
+? genr essa = sum(uhata*uhata)
+Generated scalar essa = 0.338211
+? criteria(essa, 5, 2)
+Using ess = 0.338211, 5 observations, 2 coefficients
+
+AIC = 4.72177
+BIC = 3.94065
+HQC = 2.62531
+
+# reset sample range to beginning
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# quadratic Model B
+? ar1 calwage 0 time tsq
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.97367   0.637083
+                   2      0.97367   0.637083
+
+Model 4: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.973666
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      -203.495       73.4643      -2.770    0.0102  **
+  time          5.34904      1.87584      2.852    0.0084  ***
+  tsq          -0.0426961    0.0176615   -2.417    0.0229  **
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    0.637082   S.E. of regression   0.156535
+R-squared            0.997438   Adjusted R-squared   0.997241
+F(2, 26)             22.49789   P-value(F)           2.13e-06
+rho                  0.538652   Durbin-Watson        0.878974
+
+# obtain predicted value
+? fcast 1990 1994 yhatb --static
+Generated series yhatb (ID 12)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhatb
+
+Model 5: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1.81819      1.04996       1.732    0.1818 
+  yhatb       0.849264     0.0869113     9.772    0.0023  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.019358   S.E. of regression   0.080328
+R-squared            0.969538   Adjusted R-squared   0.959384
+F(1, 3)              95.48453   P-value(F)           0.002277
+Log-likelihood       6.790557   Akaike criterion    -9.581113
+Schwarz criterion   -10.36224   Hannan-Quinn        -11.67757
+rho                 -0.015089   Durbin-Watson        1.485149
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhatb = calwage - yhatb
+Generated series uhatb (ID 13)
+? genr mapeb = mean(100*abs(uhatb)/calwage)
+Generated scalar mapeb = 0.609946
+? genr essb = sum(uhatb*uhatb)
+Generated scalar essb = 0.0387828
+? criteria(essb, 5, 2)
+Using ess = 0.0387828, 5 observations, 2 coefficients
+
+AIC = -6.10669
+BIC = -6.88782
+HQC = -8.20315
+
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# cubic Model C
+? ar1 calwage 0 time tsq t3 --loose
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.82961   0.394404
+                   2      0.82997   0.394404
+
+Model 6: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.829966
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      12.8811       2.74292        4.696    8.19e-05 ***
+  time       -1.59246      0.391849      -4.064    0.0004   ***
+  tsq         0.0962299    0.0189261      5.085    3.00e-05 ***
+  t3         -0.00150038   0.000300086   -5.000    3.73e-05 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    0.394341   S.E. of regression   0.125593
+R-squared            0.998413   Adjusted R-squared   0.998223
+F(3, 25)             211.3059   P-value(F)           6.99e-18
+rho                  0.355078   Durbin-Watson        1.258251
+
+# obtain predicted value
+? fcast 1990 1994 yhatc --static
+Generated series yhatc (ID 14)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhatc
+
+Model 7: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       -6.29552     0.921463     -6.832    0.0064  ***
+  yhatc        1.58200     0.0793508    19.94     0.0003  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.004760   S.E. of regression   0.039835
+R-squared            0.992509   Adjusted R-squared   0.990012
+F(1, 3)              397.4730   P-value(F)           0.000276
+Log-likelihood       10.29742   Akaike criterion    -16.59485
+Schwarz criterion   -17.37597   Hannan-Quinn        -18.69131
+rho                 -0.404100   Durbin-Watson        2.526543
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhatc = calwage - yhatc
+Generated series uhatc (ID 15)
+? genr mapec = mean(100*abs(uhatc)/calwage)
+Generated scalar mapec = 3.79436
+? genr essc = sum(uhatc*uhatc)
+Generated scalar essc = 1.15574
+? criteria(essc, 5, 2)
+Using ess = 1.15574, 5 observations, 2 coefficients
+
+AIC = 10.8659
+BIC = 10.0848
+HQC = 8.76944
+
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# linear-log Model D
+? ar1 calwage 0 l_time --loose
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.90565   4.33831
+                   2      0.93848   2.38266
+                   3      0.94875   1.96649
+                   4      0.95527   1.74500
+                   5      0.95993   1.60551
+                   6      0.96349   1.50909
+                   7      0.96632   1.43827
+                   8      0.96864   1.38393
+                   9      0.97059   1.34088
+                  10      0.97225   1.30587
+                  11      0.97369   1.27683
+                  12      0.97496   1.25233
+                  13      0.97608   1.23137
+                  14      0.97708   1.21322
+                  15      0.97799   1.21322
+
+Model 8: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.977987
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       27.0815       3.08949      8.766    2.21e-09 ***
+  l_time      -1.01224      0.324693    -3.118    0.0043   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    1.197337   S.E. of regression   0.210584
+R-squared            0.996045   Adjusted R-squared   0.995899
+F(1, 27)             9.718952   P-value(F)           0.004299
+rho                  0.695770   Durbin-Watson        0.554649
+
+# obtain predicted value
+? fcast 1990 1994 yhatd --static
+Generated series yhatd (ID 16)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhatd
+
+Model 9: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2.44865      1.03411       2.368    0.0987  *
+  yhatd       0.799040     0.0858067     9.312    0.0026  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.021250   S.E. of regression   0.084162
+R-squared            0.966561   Adjusted R-squared   0.955414
+F(1, 3)              86.71524   P-value(F)           0.002622
+Log-likelihood       6.557410   Akaike criterion    -9.114819
+Schwarz criterion   -9.895943   Hannan-Quinn        -11.21128
+rho                 -0.009435   Durbin-Watson        1.469374
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhatd = calwage - yhatd
+Generated series uhatd (ID 17)
+? genr maped = mean(100*abs(uhatd)/calwage)
+Generated scalar maped = 0.849997
+? genr essd = sum(uhatd*uhatd)
+Generated scalar essd = 0.0641252
+? criteria(essd, 5, 2)
+Using ess = 0.0641252, 5 observations, 2 coefficients
+
+AIC = -3.59239
+BIC = -4.37351
+HQC = -5.68885
+
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# reciprocal Model E
+? ar1 calwage 0 invt --loose
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.96453   1.72407
+                   2      0.96917   1.60864
+                   3      0.97251   1.53116
+                   4      0.97507   1.47519
+                   5      0.97710   1.43266
+                   6      0.97877   1.39912
+                   7      0.98016   1.37193
+                   8      0.98135   1.34937
+                   9      0.98239   1.33034
+                  10      0.98329   1.33034
+
+Model 10: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.98329
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       25.0955       2.58996      9.690    2.78e-10 ***
+  invt         0.887321     0.449555     1.974    0.0587   *
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    1.314026   S.E. of regression   0.220607
+R-squared            0.996014   Adjusted R-squared   0.995867
+F(1, 27)             3.895797   P-value(F)           0.058721
+rho                  0.739570   Durbin-Watson        0.508379
+
+# obtain predicted value
+? fcast 1990 1994 yhate --static
+Generated series yhate (ID 18)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhate
+
+Model 11: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       2.49840      1.02882       2.428    0.0935  *
+  yhate       0.795313     0.0854109     9.312    0.0026  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.021252   S.E. of regression   0.084167
+R-squared            0.966557   Adjusted R-squared   0.955410
+F(1, 3)              86.70617   P-value(F)           0.002622
+Log-likelihood       6.557157   Akaike criterion    -9.114314
+Schwarz criterion   -9.895438   Hannan-Quinn        -11.21077
+rho                 -0.009504   Durbin-Watson        1.469520
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhate = calwage - yhate
+Generated series uhate (ID 19)
+? genr mapee = mean(100*abs(uhate)/calwage)
+Generated scalar mapee = 0.875656
+? genr esse = sum(uhate*uhate)
+Generated scalar esse = 0.0678803
+? criteria(esse, 5, 2)
+Using ess = 0.0678803, 5 observations, 2 coefficients
+
+AIC = -3.30785
+BIC = -4.08897
+HQC = -5.40431
+
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# log-linear Model F
+? ar1 l_calwage 0 time
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.90220   0.0158488
+                   2      0.90249   0.0158487
+                   3      0.90271   0.0158486
+                   4      0.90286   0.0158486
+                   5      0.90297   0.0158486
+                   6      0.90305   0.0158486
+                   7      0.90311   0.0158486
+                   8      0.90315   0.0158486
+                   9      0.90318   0.0158486
+                  10      0.90320   0.0158486
+
+Model 12: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: l_calwage
+rho = 0.903203
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.629393     0.148196      4.247    0.0002   ***
+  time        0.0604170    0.00555523   10.88     2.28e-11 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   1.693535   S.D. dependent var   0.497121
+Sum squared resid    0.015849   S.E. of regression   0.024228
+R-squared            0.997710   Adjusted R-squared   0.997625
+F(1, 27)             118.2808   P-value(F)           2.28e-11
+rho                  0.772544   Durbin-Watson        0.480749
+
+# obtain predicted value
+? fcast 1990 1994 yhatf --static
+Generated series yhatf (ID 20)
+? smpl 1960 1994
+Full data range: 1960 - 1994 (n = 35)
+
+# retrieve sigma squared from model E for bias correction
+? genr sgmasq = $ess/$df
+Generated scalar sgmasq = 0.000586985
+? genr yhatf = exp(yhatf+(sgmasq/2))
+Replaced series yhatf (ID 20)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhatf
+
+Model 13: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       3.84751      0.980855      3.923    0.0295  **
+  yhatf       0.648994     0.0773296     8.393    0.0035  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.025961   S.E. of regression   0.093025
+R-squared            0.959148   Adjusted R-squared   0.945530
+F(1, 3)              70.43525   P-value(F)           0.003548
+Log-likelihood       6.056818   Akaike criterion    -8.113636
+Schwarz criterion   -8.894760   Hannan-Quinn        -10.21010
+rho                  0.003696   Durbin-Watson        1.436840
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhatf = calwage - yhatf
+Generated series uhatf (ID 21)
+? genr mapef= mean(100*abs(uhatf)/calwage)
+Generated scalar mapef = 4.93818
+? genr essf = sum(uhatf*uhatf)
+Generated scalar essf = 2.00825
+? criteria(essf, 5, 2)
+Using ess = 2.00825, 5 observations, 2 coefficients
+
+AIC = 13.6285
+BIC = 12.8474
+HQC = 11.5321
+
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# double-log Model G
+? ar1 l_calwage 0 l_time
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.84842   0.157391
+                   2      0.84219   0.155434
+                   3      0.74726   0.0315325
+                   4      0.73278   0.0267239
+                   5      0.72480   0.0254214
+                   6      0.72047   0.0250627
+                   7      0.71816   0.0249642
+                   8      0.71694   0.0249373
+                   9      0.71630   0.0249300
+                  10      0.71596   0.0249280
+                  11      0.71579   0.0249274
+                  12      0.71569   0.0249273
+                  13      0.71565   0.0249272
+                  14      0.71562   0.0249272
+                  15      0.71561   0.0249272
+                  16      0.71560   0.0249272
+                  17      0.71560   0.0249272
+
+Model 14: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: l_calwage
+rho = 0.715599
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1.41459     0.132978     -10.64    3.71e-11 ***
+  l_time       1.12697     0.0458230     24.59    5.08e-20 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   1.693535   S.D. dependent var   0.497121
+Sum squared resid    0.024927   S.E. of regression   0.030385
+R-squared            0.996456   Adjusted R-squared   0.996324
+F(1, 27)             604.8627   P-value(F)           5.08e-20
+rho                  0.552857   Durbin-Watson        0.711863
+
+# obtain predicted value
+? fcast 1990 1994 yhatg --static
+Generated series yhatg (ID 22)
+? smpl 1960 1994
+Full data range: 1960 - 1994 (n = 35)
+
+# retrieve sigma squared for model G
+? genr sgmasq = $ess/$df
+Replaced scalar sgmasq = 0.00092323
+# predict levels from model G
+? genr yhatg = exp(yhatg+(sgmasq/2))
+Replaced series yhatg (ID 22)
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+# reset sample range and regress actual against predicted calwage
+? ols calwage 0 yhatg
+
+Model 15: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       3.29598      1.07707       3.060    0.0550  *
+  yhatg       0.712640     0.0873926     8.154    0.0039  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.027433   S.E. of regression   0.095625
+R-squared            0.956832   Adjusted R-squared   0.942442
+F(1, 3)              66.49521   P-value(F)           0.003857
+Log-likelihood       5.918953   Akaike criterion    -7.837905
+Schwarz criterion   -8.619029   Hannan-Quinn        -9.934365
+rho                  0.009321   Durbin-Watson        1.424830
+
+# compute prediction error, error sum of squares, and selection criteria
+? genr uhatg = calwage - yhatg
+Generated series uhatg (ID 23)
+? genr mapeg = mean(100*abs(uhatg)/calwage)
+Generated scalar mapeg = 1.98314
+? genr essg = sum(uhatg*uhatg)
+Generated scalar essg = 0.421075
+? criteria(essg, 5, 2)
+Using ess = 0.421075, 5 observations, 2 coefficients
+
+AIC = 5.81747
+BIC = 5.03635
+HQC = 3.72101
+
+? print -o calwage yhata yhatb yhatc yhatd yhate yhatf yhatg
+
+          calwage        yhata        yhatb        yhatc        yhatd
+
+1990        11.48     11.61137     11.46577     11.25749     11.40151
+1991        11.87     11.94514     11.76422     11.45177     11.71478
+1992        12.19     12.34242     12.12859     11.68042     12.09648
+1993        12.38     12.67620     12.42255     11.82572     12.40968
+1994        12.44     12.89204     12.58768     11.83633     12.59571
+
+            yhate        yhatf        yhatg
+
+1990     11.39241     11.89251     11.60562
+1991     11.70710     12.27164     11.95388
+1992     12.09062     12.72175     12.35471
+1993     12.40531     13.10754     12.70379
+1994     12.59217     13.36989     12.95603
+
+? print mapea mapeb mapec maped mapee mapef mapeg
+
+          mapea =  1.8108183
+
+          mapeb =  0.60994574
+
+          mapec =  3.7943610
+
+          maped =  0.84999674
+
+          mapee =  0.87565609
+
+          mapef =  4.9381757
+
+          mapeg =  1.9831399
+Done

@@ -1,0 +1,23 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run lbox.inp
+ /home/cottrell/stats/test-gretl/lbox.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? scalar order = 4
+Generated scalar order = 4
+? scalar LB = ljungbox(diff(PRIME), order)
+Generated scalar LB = 1.29267
+Q'(4) = 1.29267 [0.863]
+Done

@@ -1,0 +1,26 @@
+open poisson.gdt
+
+poisson y 0 x1 x2
+
+scalar lmean = ln(mean(y))
+scalar smart = 0
+
+if smart=1
+	scalar b0 = $coeff(const)
+	scalar b1 = $coeff(x1)
+	scalar b2 = $coeff(x2)
+else
+	scalar b0 = lmean
+	scalar b1 = 0.0
+	scalar b2 = 0.0
+endif
+
+set bfgs_toler 1e-16
+
+mle lt = -exp(b0+b1*x1+b2*x2) + y*(b0+b1*x1+b2*x2)
+  genr eXb = exp(b0+b1*x1+b2*x2)
+  deriv b0 = y - eXb
+  deriv b1 = (y - eXb)*x1  
+  deriv b2 = (y - eXb)*x2  
+end mle
+

@@ -1,0 +1,301 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run kmenta_full.inp
+ /home/cottrell/stats/test-gretl/system/kmenta_full.inp
+? open kmenta.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/kmenta.gdt
+periodicity: 1, maxobs: 20
+observations range: 1922 to 1941
+
+Listing 6 variables:
+  0) const    1) Q        2) P        3) D        4) F      
+  5) A      
+
+? Kmenta <- system
+? equation Q 0 P D
+? equation Q 0 P F A
+? endog Q P
+? end system
+? estimate Kmenta method=ols
+
+Equation system, Kmenta
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       99.8954      7.51936      13.29     2.09e-10 ***
+  P           -0.316299    0.0906774    -3.488    0.0028   ***
+  D            0.334636    0.0454218     7.367    1.10e-06 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    63.33165   S.E. of regression   1.930127
+R-squared            0.763789   Adjusted R-squared   0.735999
+
+Equation 2: OLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       58.2754      11.4629       5.084    0.0001   ***
+  P            0.160367     0.0948839    1.690    0.1104  
+  F            0.248133     0.0461879    5.372    6.23e-05 ***
+  A            0.248302     0.0975178    2.546    0.0216   **
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    92.55106   S.E. of regression   2.405087
+R-squared            0.654807   Adjusted R-squared   0.590084
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.1666      (0.891)
+       3.4114       4.6276
+
+log determinant = 1.10383
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 15.884 [0.0001]
+
+? estimate Kmenta method=tsls
+
+Equation system, Kmenta
+Estimator: Two-Stage Least Squares
+
+Equation 1: TSLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       94.6333      7.92084      11.95    6.70e-33 ***
+  P           -0.243557    0.0964843    -2.524   0.0116   **
+  D            0.313992    0.0469437     6.689   2.25e-11 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    65.72909   S.E. of regression   1.966321
+R-squared            0.756137   Adjusted R-squared   0.727447
+
+Equation 2: TSLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       49.5324      12.0105      4.124   3.72e-05 ***
+  P            0.240076     0.0999339   2.402   0.0163   **
+  F            0.255606     0.0472501   5.410   6.32e-08 ***
+  A            0.252924     0.0996551   2.538   0.0111   **
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    96.63324   S.E. of regression   2.457555
+R-squared            0.642458   Adjusted R-squared   0.575418
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.2865      (0.902)
+       3.5932       4.8317
+
+log determinant = 1.08778
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 16.2621 [0.0001]
+
+? estimate Kmenta method=3sls
+
+Equation system, Kmenta
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       94.6333      7.30265      12.96    2.10e-38 ***
+  P           -0.243557    0.0889541    -2.738   0.0062   ***
+  D            0.313992    0.0432799     7.255   4.02e-13 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    65.72909   S.E. of regression   1.812858
+R-squared            0.756137   Adjusted R-squared   0.727447
+
+Equation 2: 3SLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       52.1176      10.6378      4.899   9.62e-07 ***
+  P            0.228932     0.0891504   2.568   0.0102   **
+  F            0.228978     0.0393493   5.819   5.92e-09 ***
+  A            0.357907     0.0651943   5.490   4.02e-08 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    107.2162   S.E. of regression   2.315342
+R-squared            0.603306   Adjusted R-squared   0.528925
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.2865      (0.979)
+       4.1108       5.3608
+
+log determinant = -0.329671
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 19.1836 [0.0000]
+
+Hansen-Sargan over-identification test:
+  Chi-square(1) = 2.98312 [0.0841]
+
+? restrict Kmenta
+? b[1,3] - b[2,4] = 0
+? -b[1,2] + b[2,2] = 0.5
+? end restrict
+Restriction set
+ 1: b[1,3] - b[2,4] = 0
+ 2: -b[1,2] + b[2,2] = 0.5
+? estimate Kmenta method=ols
+
+Equation system, Kmenta
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      101.482       5.43580      18.67     3.15e-13 ***
+  P           -0.316799    0.0555195    -5.706    2.07e-05 ***
+  D            0.318885    0.0351676     9.068    3.94e-08 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    64.00342   S.E. of regression   1.885668
+R-squared            0.763144   Adjusted R-squared   0.749986
+
+Equation 2: OLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       54.1494      8.38968       6.454    5.94e-06 ***
+  P            0.183201    0.0698985     2.621    0.0179   **
+  F            0.259528    0.0433938     5.981    1.49e-05 ***
+  A            0.318885    0.0442757     7.202    1.48e-06 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    95.81309   S.E. of regression   2.374040
+R-squared            0.647162   Adjusted R-squared   0.605652
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.2002      (0.938)
+       3.6743       4.7907
+
+log determinant = 0.604407
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 17.6125 [0.0000]
+
+F test for the specified restrictions:
+  F(2,33) = 0.362094 [0.6989]
+
+? estimate Kmenta method=tsls
+
+Equation system, Kmenta
+Estimator: Two-Stage Least Squares
+
+Equation 1: TSLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       95.7059      5.64647      16.95    1.93e-64 ***
+  P           -0.243279    0.0583553    -4.169   3.06e-05 ***
+  D            0.302710    0.0358845     8.436   3.29e-17 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    66.08117   S.E. of regression   1.916031
+R-squared            0.758419   Adjusted R-squared   0.744997
+
+Equation 2: TSLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       46.5637      8.78870      5.298   1.17e-07 ***
+  P            0.256721    0.0738566    3.476   0.0005   ***
+  F            0.263690    0.0443382    5.947   2.73e-09 ***
+  A            0.302710    0.0454167    6.665   2.64e-11 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    99.97063   S.E. of regression   2.425000
+R-squared            0.637420   Adjusted R-squared   0.594764
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.3041      (0.919)
+       3.7345       4.9985
+
+log determinant = 0.943463
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 16.8891 [0.0000]
+
+F test for the specified restrictions:
+  F(2,33) = 0.172542 [0.8423]
+
+? estimate Kmenta method=3sls
+
+Equation system, Kmenta
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       94.1703      7.31537      12.87    6.39e-38 ***
+  P           -0.249448    0.0811547    -3.074   0.0021   ***
+  D            0.324781    0.0208625    15.57    1.21e-54 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    65.57749   S.E. of regression   1.810766
+R-squared            0.755449   Adjusted R-squared   0.726678
+
+Equation 2: 3SLS, using observations 1922-1941 (T = 20)
+Dependent variable: Q
+Instruments: const D F A 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       50.0853      7.55025       6.634   3.28e-11 ***
+  P            0.250552    0.0811547     3.087   0.0020   ***
+  F            0.231231    0.0212483    10.88    1.40e-27 ***
+  A            0.324781    0.0208625    15.57    1.21e-54 ***
+
+Mean dependent var   100.8982   S.D. dependent var   3.756498
+Sum squared resid    104.6073   S.E. of regression   2.286999
+R-squared            0.611954   Adjusted R-squared   0.539196
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       3.2789      (0.965)
+       3.9953       5.2304
+
+log determinant = 0.171952
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 18.615 [0.0000]
+
+F test for the specified restrictions:
+  F(2,33) = 0.811196 [0.4530]
+
+Done

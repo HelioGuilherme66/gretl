@@ -1,0 +1,52 @@
+set seed 564532853
+nulldata 75
+scalar B = 1000
+scalar alpha = .05
+matrix T1 = zeros(4,1)
+matrix T2 = zeros(4,1)
+scalar pv
+string opt1 = "-qw"
+string opt2 = "-qd"
+string opt3 = "-qj"
+string opt4 = "-ql"
+
+loop B --quiet
+  xn = normal()
+  xu = uniform()
+  loop i=1..4 --quiet
+    string opt = (i=1)? opt1 : (i=2)? opt2 : (i=3)? opt3 : opt4
+    normtest xn @opt
+    pv = $pvalue  
+    if pv < alpha
+      T1[i] += 1
+    endif
+    normtest xu @opt
+    pv = $pvalue  
+    if pv > alpha
+      T2[i] += 1
+    endif
+  endloop
+endloop      
+
+printf "B = %d, alpha = %g, n = %d\n", B, alpha, $nobs
+print "Shapiro-Wilk:"
+printf " Rejections for normal      %4d (%.1f%%)\n", 
+   T1[1], 100*T1[1]/B
+printf " Non-rejections for uniform %4d (%.1f%%)\n", 
+   T2[1], 100*T2[1]/B
+print "Doornik-Hansen:"
+printf " Rejections for normal      %4d (%.1f%%)\n", 
+   T1[2], 100*T1[2]/B
+printf " Non-rejections for uniform %4d (%.1f%%)\n", 
+   T2[2], 100*T2[2]/B
+print "Jarque-Bera:"
+printf " Rejections for normal      %4d (%.1f%%)\n", 
+   T1[3], 100*T1[3]/B
+printf " Non-rejections for uniform %4d (%.1f%%)\n", 
+   T2[3], 100*T2[3]/B
+print "Lilliefors:"
+printf " Rejections for normal      %4d (%.1f%%)\n", 
+   T1[4], 100*T1[4]/B
+printf " Non-rejections for uniform %4d (%.1f%%)\n", 
+   T2[4], 100*T2[4]/B
+

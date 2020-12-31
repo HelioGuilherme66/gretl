@@ -1,0 +1,51 @@
+nulldata 7
+
+# create an empty matrix
+a = {}
+
+# rows() and cols() functions
+printf "rows = %d, cols = %d\n", rows(a), cols(a)
+
+# concatenation
+matrix b = I(3) | a
+b
+
+# transposition
+b = a'
+
+# functions that should return NA
+printf "det(empty) = %g\n", det(a)
+printf "ldet(empty) = %g\n", ldet(a)
+printf "tr(empty) = %g\n", tr(a)
+printf "onenorm(empty) = %g\n", onenorm(a)
+printf "infnorm(empty) = %g\n", infnorm(a)
+printf "rcond(empty) = %g\n", rcond(a)
+
+# functions that should return 0
+printf "rank(empty) = %g\n", rank(a)
+
+# functions that should return an empty matrix
+
+a = I(0)
+printf "I():\t\trows = %d, cols = %d\n", rows(a), cols(a)
+a = zeros(0,0)
+printf "zeros():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = ones(0,0)
+printf "ones():\t\trows = %d, cols = %d\n", rows(a), cols(a)
+a = mnormal(0,0)
+printf "mnormal():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = muniform(0,0)
+printf "muniform()\trows = %d, cols = %d\n", rows(a), cols(a)
+a = diag(a)
+printf "diag():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = vec(a)
+printf "vec():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = vech(a)
+printf "vech():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = unvech(a)
+printf "unvech():\trows = %d, cols = %d\n", rows(a), cols(a)
+a = nullspace(I(3))
+printf "nullspace():\trows = %d, cols = %d\n", rows(a), cols(a)
+
+
+

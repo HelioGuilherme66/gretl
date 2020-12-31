@@ -1,0 +1,14 @@
+nulldata 10
+
+! echo "1 2 3 4" > mat.txt
+! echo "5 6 7 8" >> mat.txt
+string mat = readfile("mat.txt")
+printf "mat (string form) = \n%s", mat
+matrix m
+sscanf(mat, "%m", &m)
+print m
+
+scalar x
+sscanf("14.56", "%g", &x)
+print x
+

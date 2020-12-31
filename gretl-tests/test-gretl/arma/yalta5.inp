@@ -1,0 +1,29 @@
+open yalta5.csv
+setobs 5 1 --time-series
+genr y = Data
+dataset addobs 5
+
+# conditional ML
+arma 1 0 0 ; 1 1 0 ; y -c
+scalar l1 = $lnl
+printf "%.9E\n", l1
+fcast 37 41 fc
+arma 1 0 0 ; 1 1 0 ; y -cx
+scalar l2 = $lnl
+printf "%.9E\n", l2
+fcast 37 41 fcx
+
+# exact ML
+arma 1 0 0 ; 1 1 0 ; y 
+scalar l1 = $lnl
+printf "%.9E\n", l1
+fcast 37 41 f
+arma 1 0 0 ; 1 1 0 ; y -x
+scalar l2 = $lnl
+printf "%.9E\n", l2
+fcast 37 41 fx
+print y fc fcx f fx -o
+
+
+
+

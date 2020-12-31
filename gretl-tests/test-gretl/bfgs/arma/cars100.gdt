@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="cars100" frequency="1" startobs="1970" endobs="2010" type="time-series">
+<variables count="3">
+<variable name="Cars100"
+/>
+<variable name="DIFF1_Ca"
+/>
+<variable name="DIFF2_Ca"
+/>
+</variables>
+<observations count="41" labels="false">
+<obs>2.580 NA NA </obs>
+<obs>2.989 0.409 NA </obs>
+<obs>3.417 0.428 0.019 </obs>
+<obs>3.891 0.474 0.046 </obs>
+<obs>4.205 0.314 -0.160 </obs>
+<obs>4.847 0.642 0.328 </obs>
+<obs>5.566 0.719 0.077 </obs>
+<obs>6.693 1.127 0.408 </obs>
+<obs>7.740 1.047 -0.080 </obs>
+<obs>8.621 0.881 -0.166 </obs>
+<obs>8.906 0.285 -0.596 </obs>
+<obs>9.535 0.629 0.344 </obs>
+<obs>10.172 0.637 0.008 </obs>
+<obs>10.862 0.690 0.053 </obs>
+<obs>11.578 0.716 0.026 </obs>
+<obs>12.677 1.099 0.383 </obs>
+<obs>13.580 0.903 -0.196 </obs>
+<obs>14.253 0.673 -0.230 </obs>
+<obs>14.938 0.685 0.012 </obs>
+<obs>15.872 0.934 0.249 </obs>
+<obs>17.082 1.210 0.276 </obs>
+<obs>17.411 0.329 -0.881 </obs>
+<obs>17.829 0.418 0.089 </obs>
+<obs>18.989 1.160 0.742 </obs>
+<obs>19.985 0.996 -0.164 </obs>
+<obs>21.090 1.105 0.109 </obs>
+<obs>22.189 1.099 -0.006 </obs>
+<obs>23.488 1.299 0.200 </obs>
+<obs>24.902 1.414 0.115 </obs>
+<obs>27.034 2.132 0.718 </obs>
+<obs>29.304 2.270 0.138 </obs>
+<obs>31.275 1.971 -0.299 </obs>
+<obs>33.237 1.962 -0.009 </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+<obs>NA NA NA </obs>
+</observations>
+</gretldata>

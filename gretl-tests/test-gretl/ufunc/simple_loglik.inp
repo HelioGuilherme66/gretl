@@ -1,0 +1,40 @@
+function series f1(matrix c, series x)
+  scalar a = c[1]
+  scalar p = c[2]
+  scalar tmp = p * ln(a) - lngamma(p)
+  series ret = (p-1) * ln(x) + tmp
+  return ret
+end function 
+
+function series f2(matrix c, series x)
+  scalar a = c[1]
+
+  if 1
+    series tmp = -a * x
+    series ret = tmp
+  else
+    series ret = -a * x
+  endif
+
+  return ret
+end function 
+   
+function series logl(matrix c, series x)
+  series ll1 = f1(c, x)
+  series ll2 = f2(c, x)
+  ret = ll1 + ll2
+  return ret
+end function
+ 
+nulldata 100
+set seed 238957
+x = -ln(uniform())
+matrix c = {1, 1}
+ll = logl(c,x)
+
+mle ll = logl(c,x)
+  params c
+end mle -v
+
+summary x
+

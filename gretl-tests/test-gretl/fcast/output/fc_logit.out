@@ -1,0 +1,161 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_logit.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_logit.inp
+? open greene19_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene19_1.gdt
+periodicity: 1, maxobs: 32
+observations range: 1 to 32
+
+Listing 5 variables:
+  0) const    1) GPA      2) TUCE     3) PSI      4) GRADE  
+
+? logit GRADE 0 GPA TUCE PSI
+
+Model 1: Logit, using observations 1-32
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -13.0213       4.93132     -2.641             
+  GPA          2.82611      1.26294      2.238    0.533859 
+  TUCE         0.0951577    0.141554     0.6722   0.0179755
+  PSI          2.37869      1.06456      2.234    0.456498 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.374038   Adjusted R-squared   0.179786
+Log-likelihood      -12.88963   Akaike criterion     33.77927
+Schwarz criterion    39.64221   Hannan-Quinn         35.72267
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.189
+Likelihood ratio test: Chi-square(3) = 15.4042 [0.0015]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+? genr yh1 = $yhat
+Generated series yh1 (ID 5)
+? fcast yh2
+Generated series yh2 (ID 6)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+ 1      0.02658      0.02658
+ 2      0.05950      0.05950
+ 3    0.1872599    0.1872599
+ 4      0.02590      0.02590
+ 5    0.5698930    0.5698930
+ 6      0.03486      0.03486
+ 7      0.02650      0.02650
+ 8      0.05156      0.05156
+ 9    0.1111267    0.1111267
+10    0.6935113    0.6935113
+11      0.02447      0.02447
+12    0.1899974    0.1899974
+13    0.3222396    0.3222396
+14    0.1932112    0.1932112
+15    0.3609899    0.3609899
+16      0.03018      0.03018
+17      0.05363      0.05363
+18      0.03859      0.03859
+19    0.5898725    0.5898725
+20    0.6607858    0.6607858
+21      0.06138      0.06138
+22    0.9048473    0.9048473
+23    0.2417724    0.2417724
+24    0.8520909    0.8520909
+25    0.8382905    0.8382905
+26    0.4811330    0.4811330
+27    0.6354206    0.6354206
+28    0.3072187    0.3072187
+29    0.8417041    0.8417041
+30    0.9453403    0.9453403
+31    0.5291172    0.5291172
+32    0.1110308    0.1110308
+
+? probit GRADE 0 GPA TUCE PSI
+
+Model 2: Probit, using observations 1-32
+Dependent variable: GRADE
+Standard errors based on Hessian
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -7.45232      2.54247      -2.931             
+  GPA         1.62581      0.693882      2.343    0.533347 
+  TUCE        0.0517289    0.0838903     0.6166   0.0169697
+  PSI         1.42633      0.595038      2.397    0.464426 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.377478   Adjusted R-squared   0.183225
+Log-likelihood      -12.81880   Akaike criterion     33.63761
+Schwarz criterion    39.50055   Hannan-Quinn         35.58101
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.328
+Likelihood ratio test: Chi-square(3) = 15.5459 [0.0014]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.61059
+  with p-value = 0.164426
+
+? genr yh1 = $yhat
+Replaced series yh1 (ID 5)
+? fcast yh2
+Replaced series yh2 (ID 6)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+ 1      0.01817      0.01817
+ 2      0.05308      0.05308
+ 3    0.1899263    0.1899263
+ 4      0.01857      0.01857
+ 5    0.5545749    0.5545749
+ 6      0.02723      0.02723
+ 7      0.01850      0.01850
+ 8      0.04457      0.04457
+ 9    0.1088081    0.1088081
+10    0.6631207    0.6631207
+11      0.01610      0.01610
+12    0.1935566    0.1935566
+13    0.3233282    0.3233282
+14    0.1951826    0.1951826
+15    0.3563406    0.3563406
+16      0.02197      0.02197
+17      0.04569      0.04569
+18      0.03085      0.03085
+19    0.5934023    0.5934023
+20    0.6571863    0.6571863
+21      0.06193      0.06193
+22    0.9045388    0.9045388
+23    0.2731908    0.2731908
+24    0.8474501    0.8474501
+25    0.8341947    0.8341947
+26    0.4887260    0.4887260
+27    0.6424073    0.6424073
+28    0.3286732    0.3286732
+29    0.8400169    0.8400169
+30    0.9522446    0.9522446
+31    0.5399595    0.5399595
+32    0.1235440    0.1235440
+
+Done

@@ -1,0 +1,89 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run abest2.inp
+ /home/cottrell/stats/test-gretl/arbond/abest2.inp
+? open abdata.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arbond/abdata.gdt
+periodicity: 9, maxobs: 1260
+observations range: 1:1 to 140:9
+
+Listing 12 variables:
+  0) const       1) IND         2) YEAR        3) EMP         4) WAGE      
+  5) CAP         6) INDOUTPT    7) n           8) w           9) k         
+ 10) ys         11) unit      
+
+? genr Dw = diff(w)
+Generated series Dw (ID 12)
+? genr Dk = diff(k)
+Generated series Dk (ID 13)
+? genr Dys = diff(ys)
+Generated series Dys (ID 14)
+? arbond 2 0 ; n Dw Dw(-1) Dk Dys Dys(-1) 0 --two-step --time-dummies
+
+Model 1: 2-step Arellano-Bond, using 611 observations
+Included 140 cross-sectional units
+Dependent variable: n
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  Dn(-1)      0.474151     0.185398      2.557    0.0105   **
+  Dn(-2)     -0.0529675    0.0517491    -1.024    0.3061  
+  Dw         -0.513205     0.145565     -3.526    0.0004   ***
+  Dw_1        0.224640     0.141950      1.583    0.1135  
+  Dk          0.292723     0.0626271     4.674    2.95e-06 ***
+  Dys         0.609775     0.156263      3.902    9.53e-05 ***
+  Dys_1      -0.446373     0.217302     -2.054    0.0400   **
+  const       0.0105090    0.00990188    1.061    0.2885  
+  T5          0.00363321   0.0158636     0.2290   0.8188  
+  T6         -0.0509621    0.0178990    -2.847    0.0044   ***
+  T7         -0.0321490    0.0207490    -1.549    0.1213  
+  T8         -0.0123558    0.0190406    -0.6489   0.5164  
+  T9         -0.0207295    0.0171041    -1.212    0.2255  
+
+Sum squared resid    8.080436   S.E. of regression   0.116243
+
+Number of instruments = 38
+Test for AR(1) errors: z = -1.53845 [0.1239]
+Test for AR(2) errors: z = -0.279682 [0.7797]
+Sargan over-identification test: Chi-square(25) = 30.1125 [0.2201]
+Wald (joint) test: Chi-square(7) = 142.035 [0.0000]
+Wald (time dummies): Chi-square(5) = 16.9227 [0.0046]
+
+? dpanel 2 ; n w w(-1) k ys ys(-1) 0 --two-step --time-dummies \
+  --dpdstyle
+
+Model 2: 2-step dynamic panel, using 611 observations
+Included 140 cross-sectional units
+Time-series length: minimum 4, maximum 6
+H-matrix as per Ox/DPD
+Dependent variable: n
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  n(-1)       0.474151     0.185398      2.557    0.0105   **
+  n(-2)      -0.0529675    0.0517491    -1.024    0.3061  
+  w          -0.513205     0.145565     -3.526    0.0004   ***
+  w_1         0.224640     0.141950      1.583    0.1135  
+  k           0.292723     0.0626271     4.674    2.95e-06 ***
+  ys          0.609775     0.156263      3.902    9.53e-05 ***
+  ys_1       -0.446373     0.217302     -2.054    0.0400   **
+  const       0.0105090    0.00990188    1.061    0.2885  
+  T5          0.00363321   0.0158636     0.2290   0.8188  
+  T6         -0.0509621    0.0178990    -2.847    0.0044   ***
+  T7         -0.0321490    0.0207490    -1.549    0.1213  
+  T8         -0.0123558    0.0190406    -0.6489   0.5164  
+  T9         -0.0207295    0.0171041    -1.212    0.2255  
+
+Sum squared resid    8.080436   S.E. of regression   0.116243
+
+Number of instruments = 38
+Test for AR(1) errors: z = -1.53845 [0.1239]
+Test for AR(2) errors: z = -0.279682 [0.7797]
+Sargan over-identification test: Chi-square(25) = 30.1125 [0.2201]
+Wald (joint) test: Chi-square(7) = 142.035 [0.0000]
+Wald (time dummies): Chi-square(5) = 16.9227 [0.0046]
+
+Done

@@ -1,0 +1,107 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run Canova_Hansen.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Canova_Hansen.gfn.inp
+? include ./Canova_Hansen/Canova_Hansen.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Canova_Hansen/Canova_Hansen.gfn
+Canova_Hansen 1.2, 2015-03-13 (Ignacio Diaz-Emparanza, Mª Paz Moral)
+? open data9-9.gdt
+
+Read datafile /opt/esl/share/gretl/data/data9-9.gdt
+periodicity: 4, maxobs: 60
+observations range: 1976:1 to 1990:4
+
+Listing 7 variables:
+  0) const      1) nocars     2) pop        3) Y          4) price    
+  5) primert    6) unemp    
+
+? list X_list = null
+Generated list X_list
+? bundle CH=Canova_Hansen(nocars, 0, 0,0, 1, X_list,0)
+ 
+Canova-Hansen tests of seasonal stability for nocars
+---------------------------------------------------
+ 
+Regressors in the auxiliary regression: 
+Dummies
+ 
+Degrees of freedom (T-k) = 56, lag order = 3
+ 
+Statistic       p-value       season      
+------------------------------------------
+L1 = 0.3736    	0.09574 *        1      
+L2 = 0.2828    	0.17375          2      
+L3 = 0.1594    	0.41287          3      
+L4 = 0.6104    	0.01307 **       4      
+
+Model 1: OLS, using observations 1976:1-1990:4 (T = 60)
+Dependent variable: nocars
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  Du_1         1855.19      76.4090      24.28    2.07e-31 ***
+  Du_2         2084.80      76.4090      27.28    4.98e-34 ***
+  Du_3         1868.15      76.4090      24.45    1.45e-31 ***
+  Du_4         1768.48      76.4090      23.14    2.38e-30 ***
+
+Mean dependent var   1894.157   S.D. dependent var   311.3456
+Sum squared resid     4904205   S.E. of regression   295.9309
+R-squared            0.142506   Adjusted R-squared   0.096569
+F(3, 56)             3.102198   P-value(F)           0.033788
+Log-likelihood      -424.4741   Akaike criterion     856.9482
+Schwarz criterion    865.3255   Hannan-Quinn         860.2250
+rho                  0.731785   Durbin-Watson        0.532472
+
+
+? bundle CH=Canova_Hansen(nocars, 0, 1,0, 1, X_list,0)
+ 
+Canova-Hansen tests of seasonal stability for nocars
+---------------------------------------------------
+ 
+Regressors in the auxiliary regression: 
+Trigonometric terms
+ 
+Degrees of freedom (T-k) = 56, lag order = 3
+ 
+   Statistic    p-value     Ang. Frequency     Period     
+--------------------------------------------------------
+L_1 = 	0.4652 	0.21921        +-pi/2     	4          
+L_pi= 	0.4320 	0.05608 *        pi     	2         
+------------------------------------------------------
+L_f = 	0.8475 	0.07636 *          Joint test
+------------------------------------------------------
+ 
+
+Model 1: OLS, using observations 1976:1-1990:4 (T = 60)
+Dependent variable: nocars
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      1894.16        38.2045     49.58     5.88e-48 ***
+  cos1       -158.161       54.0293     -2.927    0.0049   ***
+  sin1         -6.48090     54.0293     -0.1200   0.9050  
+  cospit       32.4866      38.2045      0.8503   0.3988  
+
+Mean dependent var   1894.157   S.D. dependent var   311.3456
+Sum squared resid     4904205   S.E. of regression   295.9309
+R-squared            0.142506   Adjusted R-squared   0.096569
+F(3, 56)             3.102198   P-value(F)           0.033788
+Log-likelihood      -424.4741   Akaike criterion     856.9482
+Schwarz criterion    865.3255   Hannan-Quinn         860.2250
+rho                  0.731785   Durbin-Watson        0.532472
+
+Excluding the constant, p-value was highest for variable 13 (sin1)
+
+
+? matrix MCH=CH["SCH"]
+Generated matrix MCH
+? MCH
+MCH (3 x 2)
+
+     0.46517      0.21921 
+     0.43204     0.056082 
+     0.84750     0.076364 
+
+Done

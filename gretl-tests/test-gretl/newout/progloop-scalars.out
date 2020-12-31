@@ -1,0 +1,36 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run progloop-scalars.inp
+ /home/cottrell/stats/test-gretl/progloop-scalars.inp
+? nulldata 100
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+? set seed 89760143
+Pseudo-random number generator seeded with 89760143
+? loop 10 --progressive --quiet
+> series x = normal()
+> scalar acbedacipously = mean(x)
+> scalar bluggerwork = sd(x)
+> print acbedacipously bluggerwork
+> endloop
+Statistics for 10 repetitions
+
+                         mean       std. dev
+ acbedacipously    0.00305877       0.112908
+    bluggerwork      0.980480      0.0804290
+
+? loop 10 --progressive --quiet
+> series x = normal()
+> scalar a = mean(x)
+> scalar b = sd(x)
+> print a b
+> endloop
+Statistics for 10 repetitions
+
+                  mean       std. dev
+       a     0.0138806      0.0915592
+       b      0.939322      0.0571307
+
+Done

@@ -1,0 +1,23 @@
+open data9-7
+
+matrix y = QNC
+matrix X = { const, PRICE, INCOME }
+matrix Z = { const, INCOME, PRIME }
+matrix b = { -1000, -20, 500 }'
+matrix e = y - X*b
+matrix W = inv(Z'Z)
+
+set hac_prewhiten on
+set hac_kernel qs
+set qs_bandwidth 2.5
+
+gmm e = y - X*b
+  orthog e ; Z
+  params b
+  weights W
+end gmm 
+
+tsls QNC 0 PRICE INCOME ; 0 INCOME PRIME --robust
+
+# set hac_prewhiten off
+# tsls QNC 0 PRICE INCOME ; 0 INCOME PRIME --robust

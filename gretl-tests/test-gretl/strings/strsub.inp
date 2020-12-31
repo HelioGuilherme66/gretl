@@ -1,0 +1,3 @@
+string S = "wally dug, smelly dug, dug up"
+S = strsub(S, "dug", "fruddle")
+printf "S = '%s'\n", S

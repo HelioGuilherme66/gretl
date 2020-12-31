@@ -1,0 +1,7 @@
+open summarywt.csv --quiet
+list X = nord SEX PARENT ANASC VOTOEDU ANNOEDU
+summary X --weights=pesofit
+
+foreign language=stata --send-data
+    summa nord sex parent anasc votoedu annoedu [aw=pesofit]
+end foreign	

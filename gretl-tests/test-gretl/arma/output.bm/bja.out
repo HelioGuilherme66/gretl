@@ -1,0 +1,96 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run bja.inp
+ /home/cottrell/stats/test-gretl/arma/bja.inp
+# Box and Jenkins, series A
+? open bja.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arma/bja.gdt
+periodicity: 1, maxobs: 197,
+observations range: 1-197
+
+Listing 3 variables:
+  0) const    1) a        2) time   
+
+# title 'ARMA(1,1)  with constant';
+#        Box-Jenkins      TSP         Gauss3.2.35
+#         p.239          BJEST           ARIMA
+#   phi1    .92      .908431139718     .90865841
+#  (s.e.)  (.04)    (.052728072366)   (.04453284)
+#  theta1   .58      .575377620976     .57577387
+#          (.08)    (.114871723925)   (.08675614)
+#  const.  1.45     1.56264378438     1.55876992
+#                   (.899650952956)
+#   LogL            -50.7451081747    -50.745092
+? arma 1 1 ; a
+Function evaluations: 50
+Evaluations of gradient: 14
+
+Model 1: ARMA, using observations 1-197
+Estimated using Kalman filter (exact ML)
+Dependent variable: a
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       17.0653      0.0992216    172.0     0.0000   ***
+  phi_1        0.908685    0.0532102     17.08    2.19e-65 ***
+  theta_1     -0.575841    0.115607      -4.981   6.32e-07 ***
+
+Mean dependent var   17.06244   S.D. dependent var   0.399247
+Mean of innovations  0.003793   S.D. of innovations  0.312533
+Log-likelihood      -50.74509   Akaike criterion     109.4902
+Schwarz criterion    122.6230   Hannan-Quinn         114.8064
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.1005     0.0000     1.1005     0.0000
+  MA
+    Root  1           1.7366     0.0000     1.7366     0.0000
+  -----------------------------------------------------------
+
+? scalar mu = $coeff[1] * (1 - $coeff[2])
+Generated scalar mu = 1.55832
+# title 'MA(1)  --  actually  ARIMA(0,1,1)';
+#       Box-Jenkins     Sun TSP           Sun TSP     Sun Gauss3.2.35
+#        p.239          BJEST          ML handcoded       ARIMA
+# theta1   .70      .699384288280     .699384288268     .69936608
+# (s.e.)  (.05)    (.064510270332)   (.064510601821)   (.05180149)
+# 1/sigma                            3.15077477970
+#                                    (.159144490869)
+#  LogL            -53.5086974317    -53.50869743172  -53.508690
+#                                         PC TSP
+#                                      ML handcoded
+# theta1                              .699384265781
+# (s.e.)                             (.064510580156)
+# 1/sigma                            3.15077489354
+#                                    (.159144496613)
+#  LogL                              -53.50869031940
+? arima 0 1 1 ; a --nc
+Function evaluations: 26
+Evaluations of gradient: 9
+
+Model 2: ARIMA, using observations 2-197 (T = 196)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) a
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  theta_1     -0.699384    0.0645104    -10.84    2.19e-27 ***
+
+Mean dependent var   0.002041   S.D. dependent var   0.370303
+Mean of innovations  0.010962   S.D. of innovations  0.317382
+Log-likelihood      -53.50869   Akaike criterion     111.0174
+Schwarz criterion    117.5736   Hannan-Quinn         113.6717
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           1.4298     0.0000     1.4298     0.0000
+  -----------------------------------------------------------
+
+Done

@@ -1,0 +1,21 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run split.inp
+ /home/cottrell/stats/test-gretl/strings/split.inp
+? string s = "uno due tre"
+Generated string s
+? z = strsplit(s, 1)
+Generated string z
+1 z='uno'
+? z = strsplit(s, 2)
+Replaced string z
+2 z='due'
+? z = strsplit(s, 3)
+Replaced string z
+3 z='tre'
+? z = strsplit(s, 6)
+Replaced string z
+6 z=''
+Done

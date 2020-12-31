@@ -1,0 +1,22 @@
+# modification of bundle (pointer) by user function
+
+function void fill_out_bundle (bundle *b)
+  b["mat"] = I(3)
+  b["str"] = "foo"
+  b["x"] = 32
+end function
+
+bundle my_bundle 
+fill_out_bundle(&my_bundle)
+matrix foo = my_bundle["mat"]
+foo
+string s = my_bundle["str"]
+s
+x = my_bundle["x"]
+delete my_bundle
+
+
+
+
+
+

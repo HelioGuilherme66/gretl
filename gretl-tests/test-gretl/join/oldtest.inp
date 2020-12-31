@@ -1,0 +1,3 @@
+open hholds.csv --quiet
+join people2.csv oldest_xp --ikey=hid --data=income --aggr=max(age)
+print -o

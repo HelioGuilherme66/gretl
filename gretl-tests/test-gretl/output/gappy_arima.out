@@ -1,0 +1,51 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run gappy_arima.inp
+ /home/cottrell/stats/test-gretl/gappy_arima.inp
+? open chomage.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/chomage.gdt
+periodicity: 4, maxobs: 66
+observations range: 1980:1 to 1996:2
+
+Listing 2 variables:
+  0) const    1) y      
+
+? arima {1 4 5 } 1 1 ; y
+
+Function evaluations: 33
+Evaluations of gradient: 12
+
+Model 1: ARIMA, using observations 1980:2-1996:2 (T = 65)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L) y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0686058    0.0505457     1.357    0.1747  
+  phi_1       0.678322     0.0995367     6.815    9.44e-12 ***
+  phi_4       0.773950     0.0619050    12.50     7.26e-36 ***
+  phi_5      -0.738433     0.0989985    -7.459    8.72e-14 ***
+  theta_1     0.151626     0.205537      0.7377   0.4607  
+
+Mean dependent var   0.063554   S.D. dependent var   0.220540
+Mean of innovations -0.000368   S.D. of innovations  0.101429
+Log-likelihood       53.36079   Akaike criterion    -94.72159
+Schwarz criterion   -81.67526   Hannan-Quinn        -89.57398
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -0.0413     1.0286     1.0294     0.2564
+    Root  2          -0.0413    -1.0286     1.0294    -0.2564
+    Root  3           1.0782     0.2884     1.1161     0.0416
+    Root  4           1.0782    -0.2884     1.1161    -0.0416
+    Root  5          -1.0258     0.0000     1.0258     0.5000
+  MA
+    Root  1          -6.5952     0.0000     6.5952     0.5000
+  -----------------------------------------------------------
+
+Done

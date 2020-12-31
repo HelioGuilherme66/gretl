@@ -1,0 +1,3 @@
+open fake3.gdt
+genr Dx = diff(x)
+arbond 1 0 ; y Dx

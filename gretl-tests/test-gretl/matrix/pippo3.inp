@@ -1,0 +1,17 @@
+function matrix pippo(scalar T, matrix G)
+  scalar k = rows(G)
+  matrix E = mnormal(T,k)
+  E = E*G
+  return E
+end function
+
+nulldata 30
+set seed 111
+scalar T = $nobs
+scalar k = 2
+
+matrix AAA = { 1, 0.5 ; 0.5, 4 }
+AAA
+
+matrix Z = pippo(T, AAA)
+Z

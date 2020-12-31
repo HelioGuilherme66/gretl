@@ -1,0 +1,69 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run fe_stats.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/fe_stats.gfn.inp
+? include ./fe_stats.gfn
+ /home/cottrell/stats/test-gretl/testgfn/fe_stats.gfn
+fe_stats 0.5, 2015-03-22 (Allin Cottrell)
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? logs C Q PF
+Listing 10 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+
+? panel l_C 0 l_Q l_PF LF --fixed
+
+Model 1: Fixed-effects, using 90 observations
+Included 6 cross-sectional units
+Time-series length = 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.71353     0.229641     42.30     5.47e-57 ***
+  l_Q          0.919285    0.0298901    30.76     1.95e-46 ***
+  l_PF         0.417492    0.0151991    27.47     8.37e-43 ***
+  LF          -1.07040     0.201690     -5.307    9.50e-07 ***
+
+Mean dependent var   13.36561   S.D. dependent var   1.131971
+Sum squared resid    0.292622   S.E. of regression   0.060105
+LSDV R-squared       0.997434   Within R-squared     0.992566
+LSDV F(8, 81)        3935.796   P-value(F)           1.5e-101
+Log-likelihood       130.0862   Akaike criterion    -242.1725
+Schwarz criterion   -219.6742   Hannan-Quinn        -233.0999
+rho                  0.600626   Durbin-Watson        0.688054
+
+Joint test on named regressors -
+  Test statistic: F(3, 81) = 3604.81
+  with p-value = P(F(3, 81) > 3604.81) = 4.40405e-86
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(5, 81) = 57.7321
+  with p-value = P(F(5, 81) > 57.7321) = 2.80693e-25
+
+? matrix A = fe_stats($ahat, $xlist, $vcv, $sigma)
+Generated matrix A
+? print A
+A (6 x 3)
+
+         a_i    s.e.(a_i)            z 
+      9.7059      0.19312       50.258 
+      9.6647      0.19898       48.571 
+      9.4970      0.22496       42.217 
+      9.8905      0.24176       40.910 
+      9.7300      0.26094       37.288 
+      9.7930      0.26366       37.142 
+
+Done

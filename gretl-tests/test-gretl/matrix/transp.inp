@@ -1,0 +1,6 @@
+matrix m1 = {1,2,3}
+matrix m2 = {4,5,6}
+matrix p1 = m1'm2
+p1
+matrix p2 = m1'*m2
+p2

@@ -1,0 +1,13 @@
+set seed 1278654
+scalar T = 20	# rows of original matrix
+scalar R = 20	# resampled rows: you choose
+matrix A = mnormal(T,2)
+set seed 3456543
+matrix S = resample(seq(1,R)')
+matrix B = A[S,]
+print A B 
+set seed 3456543
+matrix C = resample(A)
+print C
+matrix Test = B - C
+print Test

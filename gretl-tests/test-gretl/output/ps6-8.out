@@ -1,0 +1,148 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-8.inp
+ /opt/esl/share/gretl/scripts/ps6-8.inp
+? include criteria.gfn
+ /opt/esl/share/gretl/functions/criteria.gfn
+criteria 1.0, 2010-02-21 (Allin Cottrell)
+#  PS6.8 for Example 6.6
+? open data6-4
+
+Read datafile /opt/esl/share/gretl/data/data6-4.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 5 variables:
+  0) const    1) WAGE     2) EDUC     3) EXPER    4) AGE    
+
+? logs WAGE
+Listing 6 variables:
+  0) const     1) WAGE      2) EDUC      3) EXPER     4) AGE     
+  5) l_WAGE  
+
+# generate square of education
+? square EDUC
+Listing 7 variables:
+  0) const      1) WAGE       2) EDUC       3) EXPER      4) AGE      
+  5) l_WAGE     6) sq_EDUC  
+
+# estimate linear model
+? ols WAGE 0 sq_EDUC EXPER
+
+Model 1: OLS, using observations 1-49
+Dependent variable: WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       936.932      191.014       4.905    1.21e-05 ***
+  sq_EDUC      11.2207       2.41924     4.638    2.93e-05 ***
+  EXPER        43.7472      12.6858      3.449    0.0012   ***
+
+Mean dependent var   1820.204   S.D. dependent var   648.2687
+Sum squared resid    12800861   S.E. of regression   527.5221
+R-squared            0.365418   Adjusted R-squared   0.337827
+F(2, 46)             13.24433   P-value(F)           0.000029
+Log-likelihood      -375.1215   Akaike criterion     756.2429
+Schwarz criterion    761.9184   Hannan-Quinn         758.3962
+
+# estimate log-linear model
+? ols l_WAGE 0 sq_EDUC EXPER
+
+Model 2: OLS, using observations 1-49
+Dependent variable: l_WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      7.02337       0.0924574    75.96     5.32e-50 ***
+  sq_EDUC    0.00502251    0.00117100    4.289    9.11e-05 ***
+  EXPER      0.0236809     0.00614037    3.857    0.0004   ***
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    2.999115   S.E. of regression   0.255339
+R-squared            0.361174   Adjusted R-squared   0.333398
+F(2, 46)             13.00352   P-value(F)           0.000033
+Log-likelihood      -1.087164   Akaike criterion     8.174328
+Schwarz criterion    13.84979   Hannan-Quinn         10.32759
+
+Log-likelihood for WAGE = -366.38
+
+# save fitted log values
+? genr lwhat = l_WAGE - $uhat
+Generated series lwhat (ID 7)
+# save ess for bias correction
+? genr sgmasq=$ess/$df
+Generated scalar sgmasq = 0.0651982
+# generate adjusted fitted value
+? genr what = exp(lwhat+(sgmasq/2))
+Generated series what (ID 8)
+# compute error in new fitted value
+? genr error = WAGE -what
+Generated series error (ID 9)
+# compute new ess
+? genr ess = sum(error*error)
+Generated scalar ess = 1.27746e+07
+# learn about the "criteria" function
+? help criteria
+Function: criteria
+Package: criteria 1.0 (2010-02-21)
+Author: Allin Cottrell
+
+Parameters: 
+ ess (scalar)
+ n (scalar)
+ k (scalar)
+
+Return value: matrix
+
+Help text:
+Computes the Akaike Information Criterion (AIC), Schwarz's Bayesian
+Information Criterion (BIC) and the Hannan-Quinn criterion (HQC), 
+given ess (error sum of squares), the number of observations (n), 
+and the number of coefficients (k).
+
+The AIC is computed as in Akaike's original (1974) formulation, 
+namely AIC = -2L + 2k, where L denotes the maximized log-likelihood. 
+
+The BIC is computed as BIC = -2L + k log n.
+
+The HQC is computed as HQC = -2L + 2k log log n.
+
+A row vector containing the three criteria is available for
+assignment on return.
+
+Sample script:
+
+# Demonstrate that the criteria() function produces the
+# same results as gretl does for a given model.
+open data4-10
+ols 1 0 2 3 4
+matrix cr = criteria($ess, $T, $ncoeff)
+# printing cr is somewhat redundant, but this is just an
+# illustration
+print cr
+
+# compute selection criteria
+? criteria(ess, 49, 3)
+Using ess = 1.27746e+07, 49 observations, 3 coefficients
+
+AIC = 756.142
+BIC = 761.818
+HQC = 758.296
+
+# compute correlation between observed WAGES and adjusted predictions
+? corr WAGE what
+
+corr(WAGE, what) = 0.60791253
+Under the null hypothesis of no correlation:
+ t(47) = 5.24889, with two-tailed p-value 0.0000
+
+? genr c1 = corr(WAGE,what)
+Generated scalar c1 = 0.607913
+? genr rsq = c1*c1
+Generated scalar rsq = 0.369558
+? print rsq
+
+            rsq =  0.36955764
+Done

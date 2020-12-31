@@ -1,0 +1,95 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.0   Copyright 1984-2003
+  Statistics/Data Analysis            Stata Corporation
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set matsize 200
+
+. insheet using "unbal3.csv"
+(3 vars, 320 obs)
+
+. tsset id year
+       panel variable:  id, 1 to 64
+        time variable:  year, 1990 to 1994
+
+. xtabond y
+note: the residuals and the L(1) residuals have no obs in common
+      The AR(1) is trivially zero 
+note: the residuals and the L(2) residuals have no obs in common
+      The AR(2) is trivially zero 
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =        64
+Group variable (i): id                          Number of groups   =        64
+
+                                                Wald chi2(1)       =     31.70
+
+Time variable (t): year                         Obs per group: min =         1
+                                                               avg =         1
+                                                               max =         1
+
+One-step results
+------------------------------------------------------------------------------
+y            |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+y            |
+          LD |    .807885   .1434871     5.63   0.000     .5266555    1.089114
+_cons        |   .0696624    .135855     0.51   0.608    -.1966086    .3359333
+------------------------------------------------------------------------------
+Sargan test of over-identifying restrictions:     
+         chi2(1) =     0.15       Prob > chi2 = 0.6992
+
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =      .   Pr > z =      .
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =      .   Pr > z =      .
+
+. xtabond y , noconstant
+note: the residuals and the L(1) residuals have no obs in common
+      The AR(1) is trivially zero 
+note: the residuals and the L(2) residuals have no obs in common
+      The AR(2) is trivially zero 
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =        64
+Group variable (i): id                          Number of groups   =        64
+
+                                                Wald chi2(.)       =         .
+
+Time variable (t): year                         Obs per group: min =         1
+                                                               avg =         1
+                                                               max =         1
+
+One-step results
+------------------------------------------------------------------------------
+y            |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+y            |
+          LD |    .811339   .1424125     5.70   0.000     .5322158    1.090462
+------------------------------------------------------------------------------
+Sargan test of over-identifying restrictions:     
+         chi2(1) =     0.27       Prob > chi2 = 0.6061
+
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =      .   Pr > z =      .
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =      .   Pr > z =      .
+
+. 

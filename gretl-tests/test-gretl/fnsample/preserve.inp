@@ -1,0 +1,8 @@
+scalar T = 10
+matrix m = I(2)
+nulldata 20 --preserve
+print T
+print m
+open data4-1 --preserve --quiet
+print T
+print m

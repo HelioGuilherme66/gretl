@@ -1,0 +1,12 @@
+open data4-1
+matrix m = { dataset }
+mwrite(m, "@dotdir/gretl.mat")
+
+foreign language=Ox 
+  #include <oxstd.h>
+  main()
+  {
+     decl gmat = gretl_loadmat("gretl.mat");
+     print(gmat);
+  }
+end foreign

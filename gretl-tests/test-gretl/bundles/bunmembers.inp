@@ -1,0 +1,7 @@
+open data9-7
+bundle b
+b.mat = {1,2;3,4}
+b.ser = QNC
+matrix m = b.mat[1,]
+m
+series x = b.ser

@@ -1,0 +1,54 @@
+/* The function here takes as arguments a vector of cut-points
+   and a series of X\hat{\beta} from an ordered probit model.
+   The latter is available as $yhat after ordered probit
+   estimation, and the former can be formed by taking a
+   submatrix of $coeff.
+   
+   The returned matrix has m + 3 columns, where m is the 
+   number of ordered outcomes in the data. The first m columns
+   hold the estimated probabilities of each of the m outcomes, 
+   at each observation, and the final three columns hold, 
+   respectively, the (zero-based) outcome with the highest
+   probability; the value of X\hat{\beta}; and the outcome "bin"
+   (again, zero-based) into which X\hat{\beta} falls, given
+   the cut-points. The last two columns are just for comparison.
+*/
+
+function matrix op_predict (matrix cut, series Xb)
+  scalar n = $nobs
+  scalar nc = rows(cut)
+  scalar m = nc + 4
+  matrix Pmat = zeros(n, m)
+  scalar cdf0 cdf1
+  # fill the probabilities matrix
+  loop i=1..n -q
+    Pmat[i,1] = cnorm(cut[1]-Xb[i])
+    cdf0 = Pmat[i,1]
+    loop j=2..nc --quiet
+      cdf1 = cnorm(cut[j]-Xb[i])
+      Pmat[i,j] = cdf1 - cdf0
+      cdf0 = cdf1
+    endloop
+    Pmat[i,nc+1] = 1 - cdf0
+  endloop
+  # fill the trailing "predictions" columns
+  loop i=1..n -q
+    scalar pmax = 0
+    pmax_bin = 0
+    scalar Xb_bin = 0
+    scalar Ey = 0
+    loop j=1..nc+1 -q
+      if Pmat[i,j] > pmax
+        pmax = Pmat[i,j]
+	pmax_bin = j-1
+      endif
+      if j <= nc && Xb[i] > cut[j]
+	Xb_bin = j
+      endif
+    endloop
+    Pmat[i,nc+2] = pmax_bin
+    Pmat[i,nc+3] = Xb[i]
+    Pmat[i,nc+4] = Xb_bin
+   endloop
+  return Pmat
+end function

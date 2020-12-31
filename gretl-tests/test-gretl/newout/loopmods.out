@@ -1,0 +1,122 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run loopmods.inp
+ /home/cottrell/stats/test-gretl/loopmods.inp
+# script to replicate Example 11.3 in Greene
+? open greene11_3.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene11_3.gdt
+periodicity: 1, maxobs: 36
+observations range: 1950 to 1985
+
+Listing 3 variables:
+  0) const    1) Y        2) C      
+
+# run initial OLS
+? ols C 0 Y
+
+Model 1: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       11.3737      9.62946        1.181   0.2457  
+  Y            0.898329    0.00584839   153.6     6.61e-50 ***
+
+Mean dependent var   1409.806   S.D. dependent var   489.0210
+Sum squared resid    12044.20   S.E. of regression   18.82130
+R-squared            0.998561   Adjusted R-squared   0.998519
+F(1, 34)             23593.84   P-value(F)           6.61e-50
+Log-likelihood      -155.7125   Akaike criterion     315.4251
+Schwarz criterion    318.5921   Hannan-Quinn         316.5305
+rho                  0.590733   Durbin-Watson        0.843063
+
+? genr essbak = $ess
+Generated scalar essbak = 12044.2
+? genr essdiff = 1
+Generated scalar essdiff = 1
+? genr b = $coeff(Y)
+Generated scalar b = 0.898329
+? genr g = 1
+Generated scalar g = 1
+# iterate OLS till the error sum of squares converges
+? loop 3 --quiet
+>    # form the linearized variables
+> genr C0 = C + g * b * Y^g * log(Y)
+> genr x1 = Y^g
+> genr x2 = b * Y^g * log(Y)
+>    # run OLS
+> ols C0 0 x1 x2 --print-final --no-df-corr --vcv
+> genr b = $coeff(x1)
+> genr g = $coeff(x2)
+> genr ess = $ess
+> genr essdiff = abs(ess - essbak)/essbak
+> genr essbak = ess
+> ols C0 0 x1 --print-final
+> endloop
+
+Model 2: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C0
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const      187.358       39.6723       4.723   2.33e-06  ***
+  x1           0.246765     0.0869846    2.837   0.0046    ***
+  x2           1.15644      0.0427352   27.06    2.87e-161 ***
+
+Mean dependent var   11037.66   S.D. dependent var   4722.512
+Sum squared resid    8424.494   S.E. of regression   15.29751
+R-squared            0.999989   Adjusted R-squared   0.999989
+Chi-square(2)         3335556   p-value              0.000000
+Log-likelihood      -149.2786   Akaike criterion     304.5572
+Schwarz criterion    309.3078   Hannan-Quinn         306.2153
+rho                  0.371345   Durbin-Watson        1.229853
+
+Covariance matrix of regression coefficients:
+
+         const            x1            x2
+       1573.89      -3.40555        1.6688  const
+                  0.00756633   -0.00371681  x1
+                                 0.0018263  x2
+
+
+Model 3: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C0
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -869.351      33.2798       -26.12    4.37e-24 ***
+  x1            2.60031     0.00676874   384.2     1.96e-63 ***
+
+Mean dependent var   11037.66   S.D. dependent var   4722.512
+Sum squared resid    179787.3   S.E. of regression   72.71769
+R-squared            0.999770   Adjusted R-squared   0.999763
+F(1, 34)             147582.2   P-value(F)           1.96e-63
+Log-likelihood      -204.3700   Akaike criterion     412.7400
+Schwarz criterion    415.9070   Hannan-Quinn         413.8453
+rho                  0.995653   Durbin-Watson        0.096975
+
+? omit x1
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for x1
+  Test statistic: F(1, 34) = 147582, p-value 1.96298e-63
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 4: OLS, using observations 1950-1985 (T = 36)
+Dependent variable: C0
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        11037.7      787.085      14.02    6.26e-16 ***
+
+Mean dependent var   11037.66   S.D. dependent var   4722.512
+Sum squared resid    7.81e+08   S.E. of regression   4722.512
+R-squared            0.000000   Adjusted R-squared   0.000000
+Log-likelihood      -355.1382   Akaike criterion     712.2763
+Schwarz criterion    713.8599   Hannan-Quinn         712.8290
+rho                  0.998248   Durbin-Watson        0.012008
+
+Done

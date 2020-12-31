@@ -1,0 +1,115 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ects_nls.inp
+ /opt/esl/share/gretl/scripts/misc/ects_nls.inp
+# Replicate illustrative NLS model from Russell Davidson
+# This example is associated with his econometrics program
+# ECTS; see http://russell.vcharite.univ-mrs.fr/ects4/
+? open ects_nls.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/ects_nls.gdt
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+
+Listing 4 variables:
+  0) const    1) y        2) x1       3) x2     
+
+? ols y 0 x1 x2 --vcv
+
+Model 1: OLS, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -22.3283      23.5556      -0.9479   0.3480  
+  x1           3.19528      0.326582     9.784    6.45e-13 ***
+  x2           0.604578     0.461992     1.309    0.1970  
+
+Mean dependent var   407.0616   S.D. dependent var   188.7951
+Sum squared resid    157832.1   S.E. of regression   57.94938
+R-squared            0.909631   Adjusted R-squared   0.905786
+F(2, 47)             236.5458   P-value(F)           2.93e-25
+Log-likelihood      -272.3785   Akaike criterion     550.7571
+Schwarz criterion    556.4931   Hannan-Quinn         552.9414
+
+Covariance matrix of regression coefficients:
+
+         const            x1            x2
+       554.866      -5.78724       4.01597  const
+                    0.106656     -0.130424  x1
+                                  0.213437  x2
+
+? scalar alpha = $coeff[1]
+Generated scalar alpha = -22.3283
+? scalar beta = $coeff[2]
+Generated scalar beta = 3.19528
+? scalar a0 = alpha
+Generated scalar a0 = -22.3283
+? scalar b0 = beta
+Generated scalar b0 = 3.19528
+# with analytical derivatives
+? nls y = alpha + beta*x1 + (1/beta)*x2
+? deriv alpha = 1
+? deriv beta = x1 - x2/(beta*beta)
+? end nls --vcv
+Using analytical derivatives
+Tolerance = 1.81899e-12
+
+Convergence achieved after 5 iterations
+
+Model 2: NLS, using observations 1-50
+y = alpha + beta*x1 + (1/beta)*x2
+
+             estimate    std. error   t-ratio   p-value 
+  ------------------------------------------------------
+  alpha      -27.6919    22.0199      -1.258    0.2146  
+  beta         3.38034    0.172369    19.61     1.47e-24 ***
+
+Mean dependent var   407.0616   S.D. dependent var   188.7951
+Sum squared resid    159333.6   S.E. of regression   57.61466
+R-squared            0.908772   Adjusted R-squared   0.906871
+Log-likelihood      -272.6152   Akaike criterion     549.2305
+Schwarz criterion    553.0545   Hannan-Quinn         550.6867
+
+Covariance matrix of regression coefficients:
+
+         alpha          beta
+       484.874      -3.52614  alpha
+                    0.029711  beta
+
+# with numerical derivatives
+? alpha = a0
+Replaced scalar alpha = -22.3283
+? beta = b0
+Replaced scalar beta = 3.19528
+? nls y = alpha + beta*x1 + (1/beta)*x2
+? params alpha beta
+? end nls --vcv
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Convergence achieved after 10 iterations
+
+Model 3: NLS, using observations 1-50
+y = alpha + beta*x1 + (1/beta)*x2
+
+             estimate    std. error   t-ratio   p-value 
+  ------------------------------------------------------
+  alpha      -27.6919    22.0199      -1.258    0.2146  
+  beta         3.38034    0.172369    19.61     1.47e-24 ***
+
+Mean dependent var   407.0616   S.D. dependent var   188.7951
+Sum squared resid    159333.6   S.E. of regression   57.61466
+R-squared            0.908772   Adjusted R-squared   0.906871
+Log-likelihood      -272.6152   Akaike criterion     549.2305
+Schwarz criterion    553.0545   Hannan-Quinn         550.6867
+
+Covariance matrix of regression coefficients:
+
+         alpha          beta
+       484.875      -3.52614  alpha
+                    0.029711  beta
+
+Done

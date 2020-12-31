@@ -1,0 +1,13 @@
+function list make_cubes (list xlist)
+  list retlist = null
+  loop foreach i xlist --quiet
+     series $i3 = xlist.$i^3
+     list retlist = retlist $i3
+   endloop
+   return retlist
+end function
+
+open data4-1
+list xlist = 3 4
+cubelist = make_cubes(xlist)
+print xlist cubelist --byobs

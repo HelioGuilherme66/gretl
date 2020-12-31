@@ -1,0 +1,5 @@
+nulldata 8
+setobs 5 2013-07-29
+join IBMbit.csv Close
+join IBMbit.csv Close2 --data=Close --tkey="Date,%Y-%m-%d"
+print -o

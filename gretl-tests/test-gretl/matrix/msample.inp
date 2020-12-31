@@ -1,0 +1,9 @@
+open data4-1
+matrix x = {sqft}
+series s1 = x
+smpl 3 12
+series s2 = x
+matrix m = ones(10,1)
+series s3 = m
+smpl full 
+print sqft s1 s2 s3 -o

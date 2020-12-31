@@ -1,0 +1,2 @@
+open EURODATA.xls
+print -o

@@ -1,0 +1,306 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps10-5b.inp
+ /opt/esl/share/gretl/scripts/ps10-5b.inp
+# PS10.5b, for the AR(24) estimation in Application Section 10.6
+? open data10-2
+
+Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+periodicity: 24, maxobs: 744
+observations range: 1:01 to 31:24
+
+Listing 4 variables:
+  0) const       1) day_hour    2) load        3) temp      
+
+? genr load1 = load(-1)
+Generated series load1 (ID 4)
+# suppress the first observation
+? smpl 1.02 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 1:02 - 31:24 (n = 743)
+
+# Estimate model with AR(24) using Generalized CORC
+? ar 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 ; \
+  load 0 load1 temp
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1       2263907.457621 
+                  2       2260384.268718         0.156
+                  3       2257407.584488         0.132
+                  4       2254941.094051         0.109
+                  5       2253201.673002         0.077
+                  6       2252199.938111         0.044
+                  7       2251729.717055         0.021
+                  8       2251543.874982         0.008
+                  9       2251479.034418         0.003
+
+Model 1: AR, using observations 2:02-31:24 (T = 719)
+Dependent variable: load
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      264.877       41.7135        6.350    3.89e-10 ***
+  load1        0.935298     0.0105886    88.33     0.0000   ***
+  temp        -2.11501      0.365766     -5.782    1.11e-08 ***
+
+  u_1          0.666968     0.0366204    18.21     6.85e-61 ***
+  u_2         -0.493593     0.0440867   -11.20     7.25e-27 ***
+  u_3          0.0244662    0.0478462     0.5114   0.6093  
+  u_4          0.0164189    0.0476018     0.3449   0.7303  
+  u_5         -0.166232     0.0475897    -3.493    0.0005   ***
+  u_6         -0.0511017    0.0479493    -1.066    0.2869  
+  u_7         -0.103119     0.0480648    -2.145    0.0323   **
+  u_8         -0.0466378    0.0479945    -0.9717   0.3315  
+  u_9         -0.154847     0.0480374    -3.223    0.0013   ***
+  u_10         0.0321026    0.0481393     0.6669   0.5051  
+  u_11        -0.0248207    0.0476197    -0.5212   0.6024  
+  u_12        -0.263475     0.0472530    -5.576    3.53e-08 ***
+  u_13         0.160429     0.0473205     3.390    0.0007   ***
+  u_14        -0.188121     0.0476631    -3.947    8.72e-05 ***
+  u_15        -0.128499     0.0481796    -2.667    0.0078   ***
+  u_16         0.0249833    0.0481220     0.5192   0.6038  
+  u_17        -0.138976     0.0481164    -2.888    0.0040   ***
+  u_18        -0.0527800    0.0482676    -1.093    0.2746  
+  u_19        -0.0612190    0.0482738    -1.268    0.2052  
+  u_20        -0.0182533    0.0478839    -0.3812   0.7032  
+  u_21        -0.133750     0.0478725    -2.794    0.0054   ***
+  u_22        -0.0646588    0.0481231    -1.344    0.1795  
+  u_23         0.154605     0.0444394     3.479    0.0005   ***
+  u_24         0.261230     0.0366256     7.132    2.48e-12 ***
+
+Sum of AR coefficients = -0.748879
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   4630.657   S.D. dependent var   305.0294
+Sum squared resid     2251479   S.E. of regression   56.07605
+R-squared            0.986966   Adjusted R-squared   0.986930
+F(2, 716)            10264.41   P-value(F)           0.000000
+rho                  0.072886   Durbin-Watson        1.766764
+
+# eliminate all insignificant AR terms with p-value > 0.5
+? ar 1 2 5 6 7 8 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 \
+  temp
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1       2285696.557417 
+                  2       2260859.633200         1.087
+                  3       2256487.183898         0.193
+                  4       2256131.495193         0.016
+                  5       2256111.029413         0.001
+
+Model 2: AR, using observations 2:02-31:24 (T = 719)
+Dependent variable: load
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      244.358       38.6251         6.326   4.47e-10 ***
+  load1        0.940787     0.00979492    96.05    0.0000   ***
+  temp        -1.98021      0.337697      -5.864   6.97e-09 ***
+
+  u_1          0.644252     0.0296605     21.72    2.17e-80 ***
+  u_2         -0.475291     0.0286809    -16.57    2.71e-52 ***
+  u_5         -0.154848     0.0314683     -4.921   1.08e-06 ***
+  u_6         -0.0685467    0.0406152     -1.688   0.0919   *
+  u_7         -0.114934     0.0466778     -2.462   0.0140   **
+  u_8         -0.0472110    0.0397243     -1.188   0.2351  
+  u_9         -0.159015     0.0321535     -4.946   9.51e-07 ***
+  u_12        -0.293671     0.0324898     -9.039   1.52e-18 ***
+  u_13         0.156849     0.0405261      3.870   0.0001   ***
+  u_14        -0.190652     0.0436266     -4.370   1.43e-05 ***
+  u_15        -0.133014     0.0307923     -4.320   1.79e-05 ***
+  u_17        -0.129706     0.0338453     -3.832   0.0001   ***
+  u_18        -0.0623801    0.0404887     -1.541   0.1238  
+  u_19        -0.0870616    0.0323829     -2.689   0.0073   ***
+  u_21        -0.157198     0.0334068     -4.706   3.05e-06 ***
+  u_22        -0.0745995    0.0422384     -1.766   0.0778   *
+  u_23         0.158637     0.0421152      3.767   0.0002   ***
+  u_24         0.249144     0.0357879      6.962   7.74e-12 ***
+
+Sum of AR coefficients = -0.939248
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   5134.742   S.D. dependent var   334.2351
+Sum squared resid     2256111   S.E. of regression   56.13371
+R-squared            0.986940   Adjusted R-squared   0.986903
+F(2, 716)            12369.73   P-value(F)           0.000000
+rho                  0.086134   Durbin-Watson        1.742922
+
+# eliminate insignificant AR terms one at a time
+? ar 1 2 5 6 7 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 temp
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1       2290915.671915 
+                  2       2265412.823486         1.113
+                  3       2261010.670979         0.194
+                  4       2260664.893275         0.015
+                  5       2260645.723870         0.001
+
+Model 3: AR, using observations 2:02-31:24 (T = 719)
+Dependent variable: load
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      242.962       38.4687         6.316   4.77e-10 ***
+  load1        0.941140     0.00975464    96.48    0.0000   ***
+  temp        -1.96983      0.336267      -5.858   7.20e-09 ***
+
+  u_1          0.644688     0.0296618     21.73    1.72e-80 ***
+  u_2         -0.477081     0.0286686    -16.64    1.15e-52 ***
+  u_5         -0.164074     0.0305845     -5.365   1.10e-07 ***
+  u_6         -0.0449313    0.0354365     -1.268   0.2052  
+  u_7         -0.157789     0.0299080     -5.276   1.76e-07 ***
+  u_9         -0.183315     0.0250750     -7.311   7.26e-13 ***
+  u_12        -0.292273     0.0324733     -9.000   2.08e-18 ***
+  u_13         0.152864     0.0403873      3.785   0.0002   ***
+  u_14        -0.188301     0.0435816     -4.321   1.78e-05 ***
+  u_15        -0.133971     0.0307911     -4.351   1.56e-05 ***
+  u_17        -0.129931     0.0338575     -3.838   0.0001   ***
+  u_18        -0.0623512    0.0404934     -1.540   0.1241  
+  u_19        -0.0915821    0.0321887     -2.845   0.0046   ***
+  u_21        -0.152086     0.0331090     -4.594   5.17e-06 ***
+  u_22        -0.0846597    0.0413922     -2.045   0.0412   **
+  u_23         0.165887     0.0416602      3.982   7.55e-05 ***
+  u_24         0.246791     0.0357521      6.903   1.14e-11 ***
+
+Sum of AR coefficients = -0.952116
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   5168.814   S.D. dependent var   336.2258
+Sum squared resid     2260646   S.E. of regression   56.19009
+R-squared            0.986913   Adjusted R-squared   0.986877
+F(2, 716)            12495.96   P-value(F)           0.000000
+rho                  0.083408   Durbin-Watson        1.747835
+
+? ar 1 2 5 7 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 temp
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1       2296287.731020 
+                  2       2270544.490682         1.121
+                  3       2266173.812564         0.192
+                  4       2265837.410052         0.015
+                  5       2265819.111837         0.001
+
+Model 4: AR, using observations 2:02-31:24 (T = 719)
+Dependent variable: load
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      242.333       38.4691         6.299   5.27e-10 ***
+  load1        0.941285     0.00975458    96.50    0.0000   ***
+  temp        -1.96430      0.336303      -5.841   7.94e-09 ***
+
+  u_1          0.641200     0.0295462     21.70    2.50e-80 ***
+  u_2         -0.473825     0.0285589    -16.59    2.05e-52 ***
+  u_5         -0.188717     0.0237196     -7.956   7.11e-15 ***
+  u_7         -0.184790     0.0210885     -8.763   1.42e-17 ***
+  u_9         -0.178362     0.0247656     -7.202   1.53e-12 ***
+  u_12        -0.294554     0.0324469     -9.078   1.10e-18 ***
+  u_13         0.155153     0.0403628      3.844   0.0001   ***
+  u_14        -0.190035     0.0435806     -4.361   1.49e-05 ***
+  u_15        -0.130457     0.0306741     -4.253   2.39e-05 ***
+  u_17        -0.140323     0.0328904     -4.266   2.26e-05 ***
+  u_18        -0.0447947    0.0380661     -1.177   0.2397  
+  u_19        -0.103517     0.0308163     -3.359   0.0008   ***
+  u_21        -0.148718     0.0330098     -4.505   7.76e-06 ***
+  u_22        -0.0861248    0.0413914     -2.081   0.0378   **
+  u_23         0.165858     0.0416758      3.980   7.62e-05 ***
+  u_24         0.248617     0.0357360      6.957   7.97e-12 ***
+
+Sum of AR coefficients = -0.953390
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   5172.185   S.D. dependent var   336.5509
+Sum squared resid     2265819   S.E. of regression   56.25435
+R-squared            0.986884   Adjusted R-squared   0.986847
+F(2, 716)            12491.43   P-value(F)           0.000000
+rho                  0.086392   Durbin-Watson        1.741627
+
+? ar 1 2 5 7 9 12 13 14 15 17 19 21 22 23 24 ; load 0 load1 temp
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1       2300374.928667 
+                  2       2274992.528327         1.103
+                  3       2270643.970614         0.191
+                  4       2270303.594864         0.015
+                  5       2270284.742748         0.001
+
+Model 5: AR, using observations 2:02-31:24 (T = 719)
+Dependent variable: load
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      242.858       38.6414         6.285   5.75e-10 ***
+  load1        0.941112     0.00979861    96.05    0.0000   ***
+  temp        -1.96573      0.337860      -5.818   9.03e-09 ***
+
+  u_1          0.639993     0.0295380     21.67    3.72e-80 ***
+  u_2         -0.471191     0.0284858    -16.54    3.63e-52 ***
+  u_5         -0.188463     0.0237205     -7.945   7.70e-15 ***
+  u_7         -0.185485     0.0210799     -8.799   1.06e-17 ***
+  u_9         -0.175912     0.0246915     -7.124   2.59e-12 ***
+  u_12        -0.293947     0.0324498     -9.059   1.29e-18 ***
+  u_13         0.159655     0.0401923      3.972   7.85e-05 ***
+  u_14        -0.201212     0.0425191     -4.732   2.68e-06 ***
+  u_15        -0.117657     0.0287138     -4.098   4.66e-05 ***
+  u_17        -0.166394     0.0241872     -6.879   1.33e-11 ***
+  u_19        -0.130410     0.0205659     -6.341   4.08e-10 ***
+  u_21        -0.135075     0.0309587     -4.363   1.47e-05 ***
+  u_22        -0.0986464    0.0400105     -2.466   0.0139   **
+  u_23         0.171313     0.0414385      4.134   3.99e-05 ***
+  u_24         0.249257     0.0357428      6.974   7.13e-12 ***
+
+Sum of AR coefficients = -0.944176
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   5147.789   S.D. dependent var   335.1697
+Sum squared resid     2270285   S.E. of regression   56.30976
+R-squared            0.986858   Adjusted R-squared   0.986821
+F(2, 716)            12361.10   P-value(F)           0.000000
+rho                  0.086721   Durbin-Watson        1.740244
+
+# generate forecasts after incorporating the error structure
+? fcast 2.02 31.24 yf
+Generated series yf (ID 5)
+# Compute forecast error statistics
+? genr abserror=abs($uhat)
+Generated series abserror (ID 6)
+? genr abspcter=100*abserror/load
+Generated series abspcter (ID 7)
+# Flag observations with percent error > 5
+? genr five =abspcter>5
+Generated series five (ID 8)
+? genr sumfive = sum(five)
+Generated scalar sumfive = 24
+# Flag observations with percent error > 10
+? genr ten = abspcter>10
+Generated series ten (ID 9)
+? genr sumten = sum(ten)
+Generated scalar sumten = 1
+# Compute mean absolute percent error
+? genr mape = mean(abspcter)
+Generated scalar mape = 1.48602
+? print sumfive sumten mape
+
+        sumfive =  24.000000
+
+         sumten =  1.0000000
+
+           mape =  1.4860182
+Done

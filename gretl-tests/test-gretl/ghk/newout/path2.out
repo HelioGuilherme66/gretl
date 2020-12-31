@@ -1,0 +1,18 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:12
+? run path2.inp
+ /home/cottrell/stats/test-gretl/ghk/path2.inp
+? matrix A = {0.563, -0.47, -$huge }
+Generated matrix A
+? matrix B = {$huge, $huge, 0.67393 }
+Generated matrix B
+? matrix C = { 1, 0, 0; -0.91263, 0.16711, 0 ; 0.16580, 0.37015, 0.83550 }
+Generated matrix C
+? m = rows(C)
+Generated scalar m = 3
+? matrix U = halton(m,16)
+Generated matrix U
+P = 0.00764288
+Done

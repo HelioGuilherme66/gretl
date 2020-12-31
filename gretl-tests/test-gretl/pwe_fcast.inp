@@ -1,0 +1,25 @@
+open data9-7
+ar1 QNC 0 PRICE INCOME --pwe
+# get the fitted values according to gretl
+fcast fit1
+# The "uhats" here are the estimated innovations
+genr e = $uhat
+# Work on reconstructing the error process...
+genr u = 0 * const
+# Get the estimated autocorrelation coeff.  This was wrong
+# until I just fixed it: gretl was giving the autocorrelation 
+# coeff for the _innovations_ as "rho(1)".
+genr r1 = $rho(1)
+# Special Prais-Winsten treatment of first observation
+genr u[1] = e[1] / sqrt(1.0 - r1^2)
+# Generate the full error process
+genr u = r1 * u(-1) + e
+# Generate the systematic part of the fit
+genr sysfit = $coeff(0) + $coeff(PRICE)*PRICE + $coeff(INCOME)*INCOME
+# Form full one-step ahead forecasts: systematic component plus the
+# predictable portion of the error term
+genr fit2 = sysfit + r1 * u(-1)
+# Compare the two "fitted" series
+print -o QNC fit1 fit2 
+
+

@@ -1,0 +1,27 @@
+# Seasonal ARMA test script
+nulldata 620
+setobs 4 1920:1
+set seed 3711113
+scalar phi_1 = 0.5
+scalar phi_2 = -0.2
+scalar phi_3 = 0.3
+scalar phi_4 = -0.1
+scalar Phi_1 = 0.1
+scalar theta_1 = 0.2
+scalar Theta_1 = 0.2
+genr eps = normal()
+# Artificial error process
+genr u = eps + theta_1*eps(-1) + Theta_1*eps(-4) \
+  + theta_1*Theta_1*eps(-5)
+series y = 0
+# Artificial seasonal series
+genr y = phi_1*y(-1) + phi_2*y(-2) + phi_3*y(-3) + \
+  (phi_4+Phi_1)*y(-4) - phi_1*Phi_1*y(-5) - phi_2*Phi_1*y(-6) - \
+  phi_3*Phi_1*y(-7) - phi_4*Phi_1*y(-8) + u
+scalar phisum = phi_1 + phi_2 + phi_3 + phi_4 
+scalar phiprod = phisum * Phi_1
+genr y = y + 500 / (1 - phisum - Phi_1 + phiprod)
+smpl +20 ;
+# Kalman
+arma 4 1 ; 1 1 ; y
+

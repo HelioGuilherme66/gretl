@@ -1,0 +1,8 @@
+function void foo (series a, scalar b[1:2:1], bool c[1], list d[null])
+  print a
+end function
+
+open data4-1
+foo(sqft, 1, 0, null)
+foo(sqft)
+

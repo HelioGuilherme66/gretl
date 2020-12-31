@@ -1,0 +1,13 @@
+open data9-7
+
+arima 0 1 0 ; QNC 0
+series dy = diff(QNC)
+ols dy 0
+
+arima 0 1 0 ; 0 1 0 ; QNC 0
+series Dy = sdiff(dy)
+ols Dy 0
+
+
+
+

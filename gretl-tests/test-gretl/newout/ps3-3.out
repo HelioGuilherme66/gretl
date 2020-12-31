@@ -1,0 +1,122 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps3-3.inp
+ /opt/esl/share/gretl/scripts/ps3-3.inp
+# PS3.3, for Annotated output in Table 3.3, Section 3.7
+? open data3-2
+
+Read datafile /opt/esl/share/gretl/data/data3-2.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 3 variables:
+  0) const      1) exphlth    2) income   
+
+? textplot exphlth income
+
+  exphlth
+     94.178  |                                                            o
+             |                                                             
+             |                                                             
+     78.648  +                                                             
+             |                                                             
+             |                                                             
+             |                                       o                     
+             |                                                             
+    52.7647  +                                                             
+             |                             o                               
+             |                        o                                    
+             |                     o                                       
+             |                  o   o                                      
+    26.8813  +                o                                            
+             |            o    o                                           
+             |          oo                                                 
+             |     o ooo                                                   
+             |  oooo                                                       
+      0.998  +ooo                                                          
+             |+---------+---------+---------+---------+---------+---------+
+              9.3                        income                           683.5
+
+
+? ols exphlth const income
+
+Model 1: OLS, using observations 1-51
+Dependent variable: exphlth
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.325608     0.319742      1.018    0.3135  
+  income      0.142099     0.00196623   72.27     1.90e-51 ***
+
+Mean dependent var   15.26494   S.D. dependent var   17.88771
+Sum squared resid    148.6985   S.E. of regression   1.742029
+R-squared            0.990705   Adjusted R-squared   0.990516
+F(1, 49)             5222.924   P-value(F)           1.90e-51
+Log-likelihood      -99.65329   Akaike criterion     203.3066
+Schwarz criterion    207.1702   Hannan-Quinn         204.7830
+
+# copy residuals from uhat to ut
+? genr ut=$uhat
+Generated series ut (ID 3)
+# copy predicted value from yhat to yt
+? genr yt=$yhat
+Generated series yt (ID 4)
+? print -o exphlth yt ut
+
+        exphlth           yt           ut
+
+WY        0.998      1.64713    -0.649128
+VT        1.499      1.91712    -0.418116
+DC        4.285      2.75550     1.529501
+AK        1.573      2.28657    -0.713573
+ND        2.021      1.87449     0.146514
+DE        2.260      2.49972    -0.239721
+SD        1.953      2.14447    -0.191474
+MT        2.103      2.40025    -0.297252
+RI        3.428      3.33811     0.089895
+ID        2.277      3.06812    -0.791117
+NH        3.452      3.89229    -0.440291
+HI        3.485      4.21912    -0.734118
+ME        3.433      3.63651    -0.203513
+NV        3.747      4.81593    -1.068934
+NE        4.400      4.83014    -0.430144
+NM        3.878      4.07702    -0.199019
+WV        5.197      4.50332     0.693684
+UT        4.118      4.58858    -0.470576
+AR        6.111      5.83905     0.271954
+KS        6.903      7.47318    -0.570184
+MS        6.187      5.85326     0.333744
+IA        7.341      7.65791    -0.316912
+OR        7.999      8.70944    -0.710444
+OK        8.041      8.14105    -0.100049
+CT       12.216     13.44134    -1.225338
+CO       10.066     11.21039    -1.144385
+SC        9.029      9.02206     0.006938
+KY       10.384      9.43415     0.949851
+AZ       10.635     10.45726     0.177739
+AL       12.060     10.49989     1.560109
+LA       13.014     10.45726     2.556739
+MN       14.194     13.81080     0.383204
+MD       15.154     17.16433    -2.010330
+WI       14.502     14.52129    -0.019290
+TN       16.203     13.66870     2.534303
+MO       15.949     14.87654     1.072463
+WA       15.129     16.59593    -1.466934
+IN       16.401     15.89965     0.501350
+MA       23.421     21.19994     2.221061
+VA       16.682     20.24788    -3.565877
+GA       20.104     19.21055     0.893445
+NC       18.241     18.77005    -0.529048
+NJ       25.741     30.33690    -4.595900
+MI       27.136     27.99227    -0.856268
+OH       33.456     31.28896     2.167037
+IL       34.747     37.78288    -3.035884
+PA       41.521     36.70293     4.818068
+FL       44.811     40.59644     4.214558
+TX       49.816     49.34974     0.466264
+NY       67.033     64.35538     2.677618
+CA       94.178     97.45022    -3.272221
+
+Done

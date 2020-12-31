@@ -1,0 +1,182 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run maddala_4.25.inp
+ /home/cottrell/stats/test-gretl/maddala_4.25.inp
+# Replicate regressions in Maddala, 2e, p. 174
+? open Table_3.11.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/Table_3.11.gdt
+periodicity: 1, maxobs: 39
+observations range: 1929 to 1967
+
+Listing 6 variables:
+  0) const    1) X        2) L1       3) L2       4) K1     
+  5) K2     
+
+? logs X L1 K1
+Listing 9 variables:
+  0) const    1) X        2) L1       3) L2       4) K1     
+  5) K2       6) l_X      7) l_L1     8) l_K1   
+
+# Equation 4.24
+? ols l_X const l_L1 l_K1
+
+Model 1: OLS, using observations 1929-1967 (T = 39)
+Dependent variable: l_X
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -3.93771     0.236999     -16.61    1.83e-18 ***
+  l_L1         1.45079     0.0832284     17.43    3.93e-19 ***
+  l_K1         0.383808    0.0480178      7.993   1.71e-09 ***
+
+Mean dependent var   5.687449   S.D. dependent var   0.460959
+Sum squared resid    0.043382   S.E. of regression   0.034714
+R-squared            0.994627   Adjusted R-squared   0.994329
+F(2, 36)             3332.181   P-value(F)           1.39e-41
+Log-likelihood       77.28607   Akaike criterion    -148.5721
+Schwarz criterion   -143.5815   Hannan-Quinn        -146.7815
+rho                  0.570532   Durbin-Watson        0.858080
+
+Log-likelihood for X = -144.524
+
+? genr RRSS = $ess
+Generated scalar RRSS = 0.0433823
+? smpl 1929 1948
+Full data range: 1929 - 1967 (n = 39)
+Current sample: 1929 - 1948 (n = 20)
+
+# Equation 4.25
+? ols l_X const l_L1 l_K1
+
+Model 2: OLS, using observations 1929-1948 (T = 20)
+Dependent variable: l_X
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       -4.05757      0.357220    -11.36     2.32e-09 ***
+  l_L1         1.61671      0.208966      7.737    5.74e-07 ***
+  l_K1         0.219670     0.229949      0.9553   0.3528  
+
+Mean dependent var   5.311471   S.D. dependent var   0.278669
+Sum squared resid    0.035555   S.E. of regression   0.045732
+R-squared            0.975903   Adjusted R-squared   0.973068
+F(2, 17)             344.2376   P-value(F)           1.76e-14
+Log-likelihood       34.94539   Akaike criterion    -63.89077
+Schwarz criterion   -60.90358   Hannan-Quinn        -63.30764
+rho                  0.552644   Durbin-Watson        0.901670
+
+Log-likelihood for X = -71.284
+
+? genr rss1 = $ess
+Generated scalar rss1 = 0.0355547
+? smpl 1949 1967
+Full data range: 1929 - 1967 (n = 39)
+Current sample: 1949 - 1967 (n = 19)
+
+# Equation 4.26
+? ols l_X const l_L1 l_K1
+
+Model 3: OLS, using observations 1949-1967 (T = 19)
+Dependent variable: l_X
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -2.49807     0.531216     -4.703    0.0002   ***
+  l_L1         1.00899     0.144030      7.005    2.97e-06 ***
+  l_K1         0.579087    0.0552482    10.48     1.42e-08 ***
+
+Mean dependent var   6.083215   S.D. dependent var   0.210254
+Sum squared resid    0.003357   S.E. of regression   0.014484
+R-squared            0.995782   Adjusted R-squared   0.995254
+F(2, 16)             1888.472   P-value(F)           1.00e-19
+Log-likelihood       55.13206   Akaike criterion    -104.2641
+Schwarz criterion   -101.4308   Hannan-Quinn        -103.7846
+rho                  0.361281   Durbin-Watson        1.248064
+
+Log-likelihood for X = -60.449
+
+? genr rss2 = $ess
+Generated scalar rss2 = 0.00335665
+? genr URSS = rss1 + rss2
+Generated scalar URSS = 0.0389113
+? genr Fc = ((RRSS - URSS) / 3) / (URSS / 33)
+Generated scalar Fc = 1.26392
+? pvalue F 3 33 Fc
+F(3, 33): area to the right of 1.26392 = 0.302745
+(to the left: 0.697255)
+? smpl 1929 1967
+Full data range: 1929 - 1967 (n = 39)
+
+? ols l_X const l_L1 l_K1
+
+Model 4: OLS, using observations 1929-1967 (T = 39)
+Dependent variable: l_X
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -3.93771     0.236999     -16.61    1.83e-18 ***
+  l_L1         1.45079     0.0832284     17.43    3.93e-19 ***
+  l_K1         0.383808    0.0480178      7.993   1.71e-09 ***
+
+Mean dependent var   5.687449   S.D. dependent var   0.460959
+Sum squared resid    0.043382   S.E. of regression   0.034714
+R-squared            0.994627   Adjusted R-squared   0.994329
+F(2, 36)             3332.181   P-value(F)           1.39e-41
+Log-likelihood       77.28607   Akaike criterion    -148.5721
+Schwarz criterion   -143.5815   Hannan-Quinn        -146.7815
+rho                  0.570532   Durbin-Watson        0.858080
+
+Log-likelihood for X = -144.524
+
+? leverage
+                residual        leverage       influence        DFFITS
+                    u          0<=h<=1         u*h/(1-h)
+
+    1929      -0.012717          0.049      -0.00064918         -0.084
+    1930      -0.042922          0.070       -0.0032142         -0.354
+    1931      -0.039913          0.092       -0.0040667         -0.388
+    1932      -0.012966          0.201*      -0.0032603         -0.207
+    1933      -0.030424          0.185*      -0.0069185         -0.463
+    1934      -0.019924          0.120       -0.0027259         -0.224
+    1935     -0.0079474          0.089      -0.00077563         -0.074
+    1936       0.010398          0.064       0.00070807          0.080
+    1937     -0.0025697          0.065       -0.0001776         -0.020
+    1938       0.045466          0.067        0.0032811          0.369
+    1939       0.049349          0.058        0.0030169          0.368
+    1940       0.043727          0.049         0.002232          0.295
+    1941       0.018394          0.046       0.00088046          0.117
+    1942      -0.017386          0.050      -0.00091265         -0.117
+    1943      0.0012534          0.044       5.7997e-05          0.008
+    1944       0.065858          0.048        0.0033401          0.456
+    1945        0.11109          0.050        0.0058133          0.885
+    1946       0.013431          0.143        0.0022428          0.169
+    1947      -0.065904          0.136        -0.010402         -0.851
+    1948      -0.059036          0.111       -0.0073638         -0.659
+    1949      -0.020556          0.064       -0.0014108         -0.159
+    1950      0.0011954          0.055       7.0051e-05          0.008
+    1951      -0.026797          0.056        -0.001594         -0.193
+    1952      -0.032365          0.050       -0.0017111         -0.220
+    1953      -0.023757          0.044       -0.0010856         -0.149
+    1954       0.011042          0.032       0.00036828          0.058
+    1955       0.014802          0.037       0.00057332          0.085
+    1956       -0.01515          0.042      -0.00066511         -0.092
+    1957     -0.0099502          0.046      -0.00048073         -0.064
+    1958       0.014315          0.056       0.00085174          0.102
+    1959       0.000349          0.059       2.1801e-05          0.003
+    1960      -0.013896          0.064      -0.00095493         -0.107
+    1961      0.0037809          0.079       0.00032247          0.033
+    1962        0.01215          0.084        0.0011195          0.110
+    1963       0.025059          0.084        0.0022881          0.226
+    1964       0.023108          0.094         0.002407          0.224
+    1965        0.01854          0.097        0.0019944          0.183
+    1966     0.00058422          0.104       6.7488e-05          0.006
+    1967      -0.029713          0.116       -0.0038848         -0.328
+
+('*' indicates a leverage point)
+
+Cross-validation criterion = 0.0508777
+
+Done

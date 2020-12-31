@@ -1,0 +1,43 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run polroots.inp
+ /home/cottrell/stats/test-gretl/matrix/polroots.inp
+# examples worked using Mathematica. See
+# http://www.sosmath.com/algebra/factor/fac03/fac03.html
+? matrix a = {.00787276, -.180591, -.360995, 9.15636, -25.7634, 14.6196, \
+  10.1887, -8.35979, -.843121, 1}
+Generated matrix a
+? matrix r = sort(polroots(a))
+Generated matrix r
+? r
+r (9 x 1)
+
+     -2.4519 
+     -1.9021 
+    -0.12541 
+    0.043487 
+     0.26742 
+     0.32100 
+      1.1867 
+      1.5765 
+      1.9275 
+
+? matrix b = {-7.04077, -9.09217, -1.25657, -9.74332, -5.89566, -4.62701, \
+  -6.34354, -7.11665 }
+Generated matrix b
+? matrix r = polroots(b)
+Replaced matrix r
+? r
+r (7 x 2)
+
+    -0.62759       0.0000 
+     0.11914      -1.0212 
+     0.11914       1.0212 
+     0.73979      0.69247 
+     0.73979     -0.69247 
+    -0.99082     -0.68610 
+    -0.99082      0.68610 
+
+Done

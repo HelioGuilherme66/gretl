@@ -1,0 +1,21 @@
+revised quad code of 2013-01-06:
+
+with GRETL_BFGS_SLEN_Q=1 GMM_NORMALIZE_2=1 :
+
+CKLS.inp failed
+hall.inp failed
+HS_HAC.inp failed
+HS_SE.inp failed
+
+just GRETL_BFGS_SLEN_Q=1 :
+
+CKLS.inp failed
+
+just GRETL_BFGS_SLEN_Q=1, excluding CKLS.inp :
+
+real 3.21, 3.20, 3.22
+
+totals for 'newout':
+ BFGS gradient evals 2640
+ BFGS function evals 9526
+ 

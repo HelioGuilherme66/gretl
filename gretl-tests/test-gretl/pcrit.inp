@@ -1,0 +1,37 @@
+nulldata 5
+
+# Poisson 
+genr x = critical(P, 10, 0.001)
+genr p = pvalue(P, 10, x-1)
+genr p = pvalue(P, 10, x)
+
+# Binomial
+genr x = critical(B, 0.3, 20, 0.001)
+genr p = pvalue(B, 0.3, 20, x-1)
+genr p = pvalue(B, 0.3, 20, x)
+
+# Normal
+genr x = critical(N, 0.08)
+genr p = pvalue(N, x)
+genr p = invcdf(N, 0.08)
+genr p = critical(N, 0.92)
+
+# t
+genr x = critical(t, 10, 0.08)
+genr p = pvalue(t, 10, x)
+genr p = invcdf(t, 10, 0.08)
+genr p = critical(t, 10, 0.92)
+
+# X^2
+genr x = critical(X, 10, 0.08)
+genr p = pvalue(X, 10, x)
+genr p = invcdf(X, 10, 0.08)
+genr p = critical(X, 10, 0.92)
+
+# F
+genr x = critical(F, 2, 20, 0.08)
+genr p = pvalue(F, 2, 20, x)
+genr p = invcdf(F, 2, 20, 0.08)
+genr p = critical(F, 2, 20, 0.92)
+
+

@@ -1,0 +1,77 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run verbeek_5.4m.inp
+ /home/cottrell/stats/test-gretl/gmm/verbeek_5.4m.inp
+? open pricing.gdt
+
+Read datafile /opt/esl/share/gretl/data/verbeek/pricing.gdt
+periodicity: 12, maxobs: 418
+observations range: 1959:02 to 1993:11
+
+Listing 13 variables:
+  0) const    1) r1       2) r2       3) r3       4) r4     
+  5) r5       6) r6       7) r7       8) r8       9) r9     
+ 10) r10     11) rf      12) cons   
+
+? set force_hc on
+? matrix R = zeros($nobs, 11)
+Generated matrix R
+? R[,1] = 1 + rf
+Modified matrix R
+? loop j=1..10 --quiet
+> R[,j+1] = rf - r$j
+> endloop
+? scalar delta=0.5
+Generated scalar delta = 0.5
+? scalar gamma=0.5
+Generated scalar gamma = 0.5
+? matrix E = {delta * cons^(-gamma)} .* R
+Generated matrix E
+? matrix V0 = I(11)
+Generated matrix V0
+? gmm
+? E = {delta * cons^(-gamma)} .* R
+? E[,1] -= 1
+? orthog E ; const
+? weights V0
+? params delta gamma
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 102
+Evaluations of gradient: 36
+
+Model 1: 1-step GMM, using observations 1959:02-1993:11 (T = 418)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  delta       0.699606    0.143567    4.873   1.10e-06 ***
+  gamma      91.4099     38.1187      2.398   0.0165   **
+
+  GMM criterion: Q = 4.46296e-06 (TQ = 0.00186552)
+
+? gmm
+? E = {delta * cons^(-gamma)} .* R
+? E[,1] -= 1
+? orthog E ; const
+? weights V0
+? params delta gamma
+? end gmm --iterate
+Tolerance = 1.81899e-12
+
+Function evaluations: 12
+Evaluations of gradient: 1
+
+Model 2: Iterated GMM, using observations 1959:02-1993:11 (T = 418)
+
+             estimate    std. error     z     p-value 
+  ----------------------------------------------------
+  delta       0.827341    0.116157    7.123   1.06e-12 ***
+  gamma      57.3990     34.2203      1.677   0.0935   *
+
+  GMM criterion: Q = 0.0135999 (TQ = 5.68478)
+  J test: Chi-square(9) = 5.68478 [0.7710]
+
+Done

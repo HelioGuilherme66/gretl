@@ -1,0 +1,66 @@
+*
+* RegCorrs performs an autocorrelation analysis on a series of residuals, similar
+* to those typically done after estimating an ARIMA model
+*
+*  @RegCorrs( options )  resids
+*     resids    : Series of residuals
+*
+*  Options:
+*     PRINT/[NOPRINT] Include printed output from the correlations
+*     [GRAPH]/NOGRAPH Graph the correlations
+*     NUMBER=number of autocorrelations to compute [depends upon number of data points]
+*     METHOD=YULE/[BURG]
+*     WINDOW=title of graph window
+*
+*  Variables defined:
+*
+*    %AIC  Akaike Information Criterion
+*    %SBC  Schwarz Bayesian Criterion
+*
+*  Revision Schedule:
+*    02/03 Written by Estima
+*
+procedure RegCorrs resids
+type series resids
+*
+option switch  print     0
+option switch  graph     1
+option integer number
+option choice  method    2   yule burg
+option string  window
+*
+local string qstring cstring
+local integer ncorr
+local series corrs upper lower
+*
+declare real %aic %sbc
+*
+if .not.%defined(resids) {
+   disp 'Syntax: %RegCorrs( options)  series of residuals'
+   return
+}
+compute %aic = log(%rss/%nobs)+2.0*%nreg/%nobs
+compute %sbc = log(%rss/%nobs)+log(%nobs)*%nreg/%nobs
+*
+corr(number=number,qstats,print=print,method=method) resids / corrs
+disp(store=qstring) 'Q=' *.## %cdstat 'P-value' #.##### %signif
+disp(store=cstring) 'AIC=' *.### %aic 'SBC=' *.### %sbc
+inquire(series=corrs) * ncorr
+
+if .not.graph
+   return
+
+set upper 1 ncorr = 2.0/sqrt(%nobs)
+set lower 1 ncorr = -2.0/sqrt(%nobs)
+spgraph(window=window)
+graph(max=1.0,min=-1.0,number=1,style=bargraph,$
+  overlay=line,header='Residual Analysis',ovcount=2,ovsame) 3
+# corrs 2 ncorr
+# upper 2 ncorr 1
+# lower 2 ncorr 1
+grtext(entry=2,y=-.9,align=left,size=16) qstring
+grtext(entry=2,y=-.8,align=left,size=16) cstring
+spgraph(done)
+end RegCorrs
+
+

@@ -1,0 +1,109 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:40
+? run append5.inp
+ /home/cottrell/stats/test-gretl/append/append5.inp
+? nulldata 25
+periodicity: 1, maxobs: 25
+observations range: 1 to 25
+? setobs 5 1:1 --stacked-time-series
+Full data range: 1:1 - 5:5 (n = 25)
+
+? append ambiguous.txt
+parsing /home/cottrell/stats/test-gretl/append/ambiguous.txt...
+using delimiter ' '
+   longest line: 2 characters
+   first field: 'x'
+   number of columns = 1
+   number of variables: 1
+   number of non-blank lines: 6
+scanning for variable names...
+   line: x
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 3 variables:
+  0) const    1) index    2) x      
+
+? print -o
+
+           index            x
+
+1:1            1            1
+1:2            2            1
+1:3            3            1
+1:4            4            1
+1:5            5            1
+2:1            6            2
+2:2            7            2
+2:3            8            2
+2:4            9            2
+2:5           10            2
+3:1           11            3
+3:2           12            3
+3:3           13            3
+3:4           14            3
+3:5           15            3
+4:1           16            4
+4:2           17            4
+4:3           18            4
+4:4           19            4
+4:5           20            4
+5:1           21            5
+5:2           22            5
+5:3           23            5
+5:4           24            5
+5:5           25            5
+
+? delete x
+Deleted x
+? append ambiguous.txt -t
+parsing /home/cottrell/stats/test-gretl/append/ambiguous.txt...
+using delimiter ' '
+   longest line: 2 characters
+   first field: 'x'
+   number of columns = 1
+   number of variables: 1
+   number of non-blank lines: 6
+scanning for variable names...
+   line: x
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 3 variables:
+  0) const    1) index    2) x      
+
+? print -o
+
+           index            x
+
+1:1            1            1
+1:2            2            2
+1:3            3            3
+1:4            4            4
+1:5            5            5
+2:1            6            1
+2:2            7            2
+2:3            8            3
+2:4            9            4
+2:5           10            5
+3:1           11            1
+3:2           12            2
+3:3           13            3
+3:4           14            4
+3:5           15            5
+4:1           16            1
+4:2           17            2
+4:3           18            3
+4:4           19            4
+4:5           20            5
+5:1           21            1
+5:2           22            2
+5:3           23            3
+5:4           24            4
+5:5           25            5
+
+Done

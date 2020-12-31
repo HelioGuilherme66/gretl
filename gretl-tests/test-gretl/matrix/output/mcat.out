@@ -1,0 +1,28 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mcat.inp
+ /home/cottrell/stats/test-gretl/matrix/mcat.inp
+? a = { 2, 3 }
+Generated matrix a
+? b = { 10, 11, 12 }
+Generated matrix b
+? c = a ~ b
+Generated matrix c
+? a
+a (1 x 2)
+
+  2   3 
+
+? b
+b (1 x 3)
+
+  10   11   12 
+
+? c
+c (1 x 5)
+
+   2    3   10   11   12 
+
+Done

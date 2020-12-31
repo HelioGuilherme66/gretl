@@ -1,0 +1,127 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps11-2.inp
+ /opt/esl/share/gretl/scripts/ps11-2.inp
+# PS11.2 for evaluating Model B - Table 11.2
+? open data10-5.gdt
+
+Read datafile /opt/esl/share/gretl/data/data10-5.gdt
+periodicity: 1, maxobs: 35
+observations range: 1960 to 1994
+
+Listing 4 variables:
+  0) const      1) year       2) calwage    3) uswage   
+
+? genr time
+Generated series time (ID 4)
+# create square of time
+? genr tsq = time*time
+Generated series tsq (ID 5)
+? smpl 1960 1989
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1960 - 1989 (n = 30)
+
+# quadratic Model B
+? ar1 calwage 0 time tsq
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.97367   0.637083
+                   2      0.97367   0.637083
+
+Model 1: Cochrane-Orcutt, using observations 1961-1989 (T = 29)
+Dependent variable: calwage
+rho = 0.973666
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const      -203.495       73.4643      -2.770    0.0102  **
+  time          5.34904      1.87584      2.852    0.0084  ***
+  tsq          -0.0426961    0.0176615   -2.417    0.0229  **
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
+Sum squared resid    0.637082   S.E. of regression   0.156535
+R-squared            0.997438   Adjusted R-squared   0.997241
+F(2, 26)             22.49789   P-value(F)           2.13e-06
+rho                  0.538652   Durbin-Watson        0.878974
+
+# obtain one-step ahead forecasts
+? fcast 1960 1994 yhatb --static
+Generated series yhatb (ID 6)
+# reset sample range and regress actual against predicted calwage
+? smpl 1990 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1990 - 1994 (n = 5)
+
+? ols calwage 0 yhatb
+
+Model 2: OLS, using observations 1990-1994 (T = 5)
+Dependent variable: calwage
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       1.81819      1.04996       1.732    0.1818 
+  yhatb       0.849264     0.0869113     9.772    0.0023  ***
+
+Mean dependent var   12.07200   S.D. dependent var   0.398585
+Sum squared resid    0.019358   S.E. of regression   0.080328
+R-squared            0.969538   Adjusted R-squared   0.959384
+F(1, 3)              95.48453   P-value(F)           0.002277
+Log-likelihood       6.790557   Akaike criterion    -9.581113
+Schwarz criterion   -10.36224   Hannan-Quinn        -11.67757
+rho                 -0.015089   Durbin-Watson        1.485149
+
+# compute absolute percentage error
+? smpl 1961 1994
+Full data range: 1960 - 1994 (n = 35)
+Current sample: 1961 - 1994 (n = 34)
+
+? genr yf = int(100*yhatb+0.5)/100
+Generated series yf (ID 7)
+? genr ape = int(100*((100*abs(calwage-yhatb)/calwage)+0.5))/100
+Generated series ape (ID 8)
+? print calwage yf ape --byobs
+
+          calwage           yf          ape
+
+1961         2.72         2.55         6.64
+1962         2.79         2.70         3.64
+1963         2.88         2.82         2.57
+1964         2.96         2.96         0.65
+1965         3.05         3.08         1.44
+1966         3.16         3.21         2.06
+1967         3.29         3.36         2.55
+1968         3.44         3.52         2.90
+1969         3.62         3.71         2.84
+1970         3.80         3.91         3.51
+1971         4.02         4.12         3.02
+1972         4.25         4.37         3.21
+1973         4.44         4.62         4.47
+1974         4.76         4.83         1.90
+1975         5.22         5.16         1.62
+1976         5.59         5.63         1.21
+1977         6.00         6.01         0.63
+1978         6.43         6.42         0.59
+1979         7.03         6.86         2.97
+1980         7.70         7.45         3.72
+1981         8.56         8.11         5.71
+1982         9.24         8.96         3.54
+1983         9.52         9.63         1.60
+1984         9.77         9.90         1.83
+1985        10.12        10.14         0.73
+1986        10.36        10.48         1.68
+1987        10.75        10.71         0.84
+1988        10.80        11.09         3.14
+1989        11.16        11.13         0.80
+1990        11.48        11.47         0.62
+1991        11.87        11.76         1.39
+1992        12.19        12.13         1.00
+1993        12.38        12.42         0.84
+1994        12.44        12.59         1.68
+
+Done

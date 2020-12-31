@@ -1,0 +1,127 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run MK.inp
+ /home/cottrell/stats/test-gretl/MK.inp
+# Test of forecasts/fitted values for Prais-Winsten,
+# with error process u(t) = rho(1)*u(t-1) + e
+# and with missing values at start of dataset
+? open MK.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/MK.gdt
+periodicity: 1, maxobs: 250
+observations range: 1 to 250
+
+Listing 8 variables:
+  0) const      1) outz       2) outz_4     3) outz_5     4) outz_6   
+  5) outz_7     6) pw         7) compare  
+
+? ar1 outz outz_4 outz_5 outz_6 outz_7 --pwe
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.67401   23635.3
+                   2      0.74478   23129.8
+                   3      0.75034   23111.0
+                   4      0.75072   23109.8
+                   5      0.75075   23109.7
+                   6      0.75075   23109.7
+                   7      0.75075   23109.7
+
+Model 1: Prais-Winsten, using observations 32-250 (T = 219)
+Dependent variable: outz
+rho = 0.750753
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  outz_4     -0.348557     0.0609999    -5.714    3.65e-08 ***
+  outz_5     -0.0548264    0.0611393    -0.8967   0.3709  
+  outz_6     -0.0646484    0.0614343    -1.052    0.2938  
+  outz_7      0.0859857    0.0612139     1.405    0.1616  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.151376   S.D. dependent var   15.46446
+Sum squared resid    23109.68   S.E. of regression   10.36759
+R-squared            0.557876   Adjusted R-squared   0.551707
+F(4, 215)            9.800961   P-value(F)           2.66e-07
+rho                  0.056384   Durbin-Watson        1.848169
+
+P-value was highest for variable 3 (outz_5)
+
+# get the fitted values according to gretl
+? fcast fit1
+Generated series fit1 (ID 8)
+# The "uhats" here are the estimated innovations
+? series e = $uhat
+Generated series e (ID 9)
+# Work on reconstructing the error process...
+# First get the estimated autocorrelation coeff.
+? scalar r1 = $rho(1)
+Generated scalar r1 = 0.750753
+# Prais-Winsten treatment of first obs...
+? genr u = e / sqrt(1.0 - r1^2)
+Generated series u (ID 10)
+# Generate the full error process recursively
+? genr u = r1 * u(-1) + e
+Replaced series u (ID 10)
+# Generate the systematic part of the fit
+? genr sysfit = $coeff(outz_4)*outz_4 + $coeff(outz_5)*outz_5 + \
+  $coeff(outz_6)*outz_6 + $coeff(outz_7)*outz_7
+Generated series sysfit (ID 11)
+# Form full one-step ahead forecasts: systematic
+# component plus predictable portion of the error term
+? series fit2 = sysfit + r1 * u(-1)
+Generated series fit2 (ID 12)
+# Compare the two "fitted" series
+? series fitdiff = fit1 - fit2
+Generated series fitdiff (ID 13)
+? summary fitdiff
+
+Summary statistics, using the observations 1 - 250
+for the variable 'fitdiff' (218 valid observations)
+
+  Mean                     8.4285e-17
+  Median                       0.0000
+  Minimum                 -1.4211e-14
+  Maximum                  7.1054e-15
+  Standard deviation       2.4441e-15
+  C.V.                             NA
+  Skewness                    -1.3753
+  Ex. kurtosis                 10.108
+  5% percentile           -3.5527e-15
+  95% percentile           3.5527e-15
+  Interquartile range      1.8041e-15
+  Missing obs.                     32
+
+? smpl 32 50
+Full data range: 1 - 250 (n = 250)
+Current sample: 32 - 50 (n = 19)
+
+? print -o outz fit1 fit2
+
+                   outz         fit1         fit2
+
+1997/05/23     51.88608     22.00384             
+1997/05/23      7.77625     21.91780     21.91780
+1997/05/23      3.69662     -1.80036     -1.80036
+1997/05/23    -13.03266     -9.73999     -9.73999
+1997/05/23    -13.34523    -11.44535    -11.44535
+1997/05/23    -23.88956     -0.27281     -0.27281
+1997/05/23     -6.74414    -14.08076    -14.08076
+1997/05/23      5.95532      3.50542      3.50542
+1997/05/23      6.37744      4.03648      4.03648
+1997/05/23     12.68306     10.65562     10.65562
+1997/05/23     12.59018      5.25257      5.25257
+1997/05/23     16.97900      5.58850      5.58850
+1997/05/23     15.59419      9.56227      9.56227
+1997/05/23     10.61243      9.10088      9.10088
+1997/05/23      5.73931      7.28915      7.28915
+1997/05/23     12.94315      1.17055      1.17055
+1997/05/23     17.79854      8.79255      8.79255
+1997/05/23     18.20152     13.36509     13.36509
+1997/05/27     -7.73299     14.96460     14.96460
+
+Done

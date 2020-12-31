@@ -1,0 +1,209 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run sigtest.inp
+ /home/cottrell/stats/test-gretl/intreg/sigtest.inp
+? set seed 56432674
+Pseudo-random number generator seeded with 56432674
+? nulldata 150
+periodicity: 1, maxobs: 150
+observations range: 1 to 150
+? loop for i=1..5
+> x = normal()
+> ystar = 1 + 2*x + 2*normal()
+> list X = const x
+> hi = ystar + uniform()
+> lo = ystar - uniform()
+> intreg lo hi const x
+> printf "%g\n", $sigma
+> endloop
+loop: i = 1
+
+? x = normal()
+? ystar = 1 + 2*x + 2*normal()
+? list X = const x
+? hi = ystar + uniform()
+? lo = ystar - uniform()
+? intreg lo hi const x
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 3 iterations
+
+Model 1: Interval estimates, using observations 1-150
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.01883      0.154118     6.611   3.82e-11 ***
+  x            1.53430      0.140715    10.90    1.11e-27 ***
+
+Chi-square(1)        118.8881   p-value              1.11e-27
+Log-likelihood      -307.0123   Akaike criterion     620.0246
+Schwarz criterion    629.0565   Hannan-Quinn         623.6940
+
+sigma = 1.8573 (0.111003)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 150
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.922003
+  with p-value = 0.630652
+
+1.8573
+loop: i = 2
+
+? x = normal()
+? ystar = 1 + 2*x + 2*normal()
+? list X = const x
+? hi = ystar + uniform()
+? lo = ystar - uniform()
+? intreg lo hi const x
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 3 iterations
+
+Model 2: Interval estimates, using observations 1-150
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.997480      0.151563     6.581   4.66e-11 ***
+  x           2.03960       0.143841    14.18    1.23e-45 ***
+
+Chi-square(1)        201.0580   p-value              1.23e-45
+Log-likelihood      -326.3999   Akaike criterion     658.7997
+Schwarz criterion    667.8316   Hannan-Quinn         662.4691
+
+sigma = 1.82868 (0.108752)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 150
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 1.03509
+  with p-value = 0.595982
+
+1.82868
+loop: i = 3
+
+? x = normal()
+? ystar = 1 + 2*x + 2*normal()
+? list X = const x
+? hi = ystar + uniform()
+? lo = ystar - uniform()
+? intreg lo hi const x
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 3 iterations
+
+Model 3: Interval estimates, using observations 1-150
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.935503      0.169196     5.529   3.22e-08 ***
+  x           1.96380       0.174087    11.28    1.64e-29 ***
+
+Chi-square(1)        127.2511   p-value              1.64e-29
+Log-likelihood      -340.7452   Akaike criterion     687.4903
+Schwarz criterion    696.5222   Hannan-Quinn         691.1597
+
+sigma = 2.03617 (0.120208)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 150
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 2.22246
+  with p-value = 0.329154
+
+2.03617
+loop: i = 4
+
+? x = normal()
+? ystar = 1 + 2*x + 2*normal()
+? list X = const x
+? hi = ystar + uniform()
+? lo = ystar - uniform()
+? intreg lo hi const x
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 3 iterations
+
+Model 4: Interval estimates, using observations 1-150
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.02804      0.175963     5.842   5.15e-09 ***
+  x            2.36283      0.188771    12.52    6.03e-36 ***
+
+Chi-square(1)        156.6731   p-value              6.03e-36
+Log-likelihood      -346.2123   Akaike criterion     698.4246
+Schwarz criterion    707.4565   Hannan-Quinn         702.0940
+
+sigma = 2.13197 (0.125905)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 150
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.12805
+  with p-value = 0.209292
+
+2.13197
+loop: i = 5
+
+? x = normal()
+? ystar = 1 + 2*x + 2*normal()
+? list X = const x
+? hi = ystar + uniform()
+? lo = ystar - uniform()
+? intreg lo hi const x
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 3 iterations
+
+Model 5: Interval estimates, using observations 1-150
+Lower limit: lo, Upper limit: hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.11216      0.162161     6.858   6.97e-12 ***
+  x            2.17085      0.165795    13.09    3.58e-39 ***
+
+Chi-square(1)        171.4426   p-value              3.58e-39
+Log-likelihood      -332.8250   Akaike criterion     671.6501
+Schwarz criterion    680.6820   Hannan-Quinn         675.3195
+
+sigma = 1.95525 (0.115386)
+Left-unbounded observations: 0
+Right-unbounded observations: 0
+Bounded observations: 150
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 27.9944
+  with p-value = 8.33867e-07
+
+1.95525
+
+Number of iterations: 5
+
+Done

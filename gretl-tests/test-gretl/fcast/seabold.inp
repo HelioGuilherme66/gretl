@@ -1,0 +1,33 @@
+open skipper_arima_test.gdt -q
+setobs 1 1 --time-series
+scalar sdx = sd(x)
+scalar p = 2
+scalar q = 2
+arma p q ; x --nc
+matrix g_b = $coeff
+dataset addobs 10
+fcast --out-of-sample --quiet
+matrix g_serr = $fcerr
+foreign language=R --send-data
+  x <- gretldata[,"x"]
+  p <- 2
+  q <- 2
+  mod <- arima(x, order=c(p,0,q), include.mean=FALSE)
+  mod
+  coeff <- as.matrix(mod$coef)
+  gretl.export(coeff)
+  ma_rep <- ARMAtoMA(mod$coef[1:p],mod$coef[(p+1):(p+q)], lag.max=9)
+  ma_rep <- c(1, ma_rep)
+  serr <- as.matrix(sqrt(mod$sigma2 * cumsum(ma_rep^2)))
+  gretl.export(serr)
+end foreign
+
+matrix R_b = mread("@dotdir/coeff.mat")
+matrix R_serr = mread("@dotdir/serr.mat")
+matrix b = g_b ~ R_b
+matrix serr = g_serr ~ R_serr
+colnames(b, "gretl R")
+colnames(serr, "gretl R")
+printf "\n%13.7f\n", b 
+printf "\n%13.7f\n", serr
+

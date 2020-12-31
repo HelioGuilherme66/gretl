@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="bje" frequency="1" startobs="1770" endobs="1869" type="time-series">
+<description>Series E from
+Box and Jenkins, Time Series Analysis: Forecasting and Control
+(San Franciso, Holden-Day, 1976), p. 530
+</description>
+<variables count="1">
+<variable name="e"
+ label="Wolfer sunspot numbers"
+/>
+</variables>
+<observations count="100" labels="false">
+<obs>101 </obs>
+<obs>82 </obs>
+<obs>66 </obs>
+<obs>35 </obs>
+<obs>31 </obs>
+<obs>7 </obs>
+<obs>20 </obs>
+<obs>92 </obs>
+<obs>154 </obs>
+<obs>125 </obs>
+<obs>85 </obs>
+<obs>68 </obs>
+<obs>38 </obs>
+<obs>23 </obs>
+<obs>10 </obs>
+<obs>24 </obs>
+<obs>83 </obs>
+<obs>132 </obs>
+<obs>131 </obs>
+<obs>118 </obs>
+<obs>90 </obs>
+<obs>67 </obs>
+<obs>60 </obs>
+<obs>47 </obs>
+<obs>41 </obs>
+<obs>21 </obs>
+<obs>16 </obs>
+<obs>6 </obs>
+<obs>4 </obs>
+<obs>7 </obs>
+<obs>14 </obs>
+<obs>34 </obs>
+<obs>45 </obs>
+<obs>43 </obs>
+<obs>48 </obs>
+<obs>42 </obs>
+<obs>28 </obs>
+<obs>10 </obs>
+<obs>8 </obs>
+<obs>2 </obs>
+<obs>0 </obs>
+<obs>1 </obs>
+<obs>5 </obs>
+<obs>12 </obs>
+<obs>14 </obs>
+<obs>35 </obs>
+<obs>46 </obs>
+<obs>41 </obs>
+<obs>30 </obs>
+<obs>24 </obs>
+<obs>16 </obs>
+<obs>7 </obs>
+<obs>4 </obs>
+<obs>2 </obs>
+<obs>8 </obs>
+<obs>17 </obs>
+<obs>36 </obs>
+<obs>50 </obs>
+<obs>62 </obs>
+<obs>67 </obs>
+<obs>71 </obs>
+<obs>48 </obs>
+<obs>28 </obs>
+<obs>8 </obs>
+<obs>13 </obs>
+<obs>57 </obs>
+<obs>122 </obs>
+<obs>138 </obs>
+<obs>103 </obs>
+<obs>86 </obs>
+<obs>63 </obs>
+<obs>37 </obs>
+<obs>24 </obs>
+<obs>11 </obs>
+<obs>15 </obs>
+<obs>40 </obs>
+<obs>62 </obs>
+<obs>98 </obs>
+<obs>124 </obs>
+<obs>96 </obs>
+<obs>66 </obs>
+<obs>64 </obs>
+<obs>54 </obs>
+<obs>39 </obs>
+<obs>21 </obs>
+<obs>7 </obs>
+<obs>4 </obs>
+<obs>23 </obs>
+<obs>55 </obs>
+<obs>94 </obs>
+<obs>96 </obs>
+<obs>77 </obs>
+<obs>59 </obs>
+<obs>44 </obs>
+<obs>47 </obs>
+<obs>30 </obs>
+<obs>16 </obs>
+<obs>7 </obs>
+<obs>37 </obs>
+<obs>74 </obs>
+</observations>
+</gretldata>

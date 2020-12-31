@@ -1,0 +1,3 @@
+open hholds.csv -q
+join people.gdt ypid --ikey=hid --data=pid --aggr="min(age)"
+print -o

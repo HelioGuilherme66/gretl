@@ -1,0 +1,49 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run dotcomp.inp
+ /home/cottrell/stats/test-gretl/matrix/dotcomp.inp
+? matrix m1 = {1,2,3;4,5,6}
+Generated matrix m1
+? matrix m2 = {2,2,2;6,5,4}
+Generated matrix m2
+? m1
+m1 (2 x 3)
+
+  1   2   3 
+  4   5   6 
+
+? m2
+m2 (2 x 3)
+
+  2   2   2 
+  6   5   4 
+
+? eval m1 == m2
+0
+? eval m1 .= m2
+  0   1   0 
+  0   1   0 
+
+? eval m1 > m2
+0
+? eval m1 .> m2
+  0   0   1 
+  0   0   1 
+
+? eval m1 .>= m2
+  0   1   1 
+  0   1   1 
+
+? eval m1 < m2
+0
+? eval m1 .< m2
+  1   0   0 
+  1   0   0 
+
+? eval m1 .<= m2
+  1   1   0 
+  1   1   0 
+
+Done

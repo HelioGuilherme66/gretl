@@ -1,0 +1,5 @@
+open pindata.xlsx
+open test1.xlsx --sheet="foozle"
+print -o
+open test2.xlsx --sheet=2
+print -o

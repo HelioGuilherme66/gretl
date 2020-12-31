@@ -1,0 +1,103 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run Box_Cox_Value.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Box_Cox_Value.gfn.inp
+? include ./Box_Cox_Value.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Box_Cox_Value.gfn
+Box_Cox_Value 1.01, 2014-05-13 (Pedro Isaac Chávez López)
+? open AWM.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/AWM.gdt
+periodicity: 4, maxobs: 116
+observations range: 1970:1 to 1998:4
+
+Listing 131 variables:
+  0) const             1) CAN               2) COMPR           
+  3) D1                4) D743              5) D841            
+  6) D872              7) D894              8) EEN             
+  9) EEN_DIS          10) EER              11) FDD             
+ 12) GCD              13) GCN              14) GCN_DIS         
+ 15) GCN_YEN          16) GCR              17) GCR_YER         
+ 18) GDN              19) GDN_DIS          20) GDN_DIS_YEN     
+ 21) GDN_YEN          22) GEN              23) GEN_YEN         
+ 24) GIN              25) GIN_OTHER        26) GIN_OTHER_YEN   
+ 27) GIN_YEN          28) GIX              29) GLN             
+ 30) GLN_DIS          31) GLN_DIS_YEN      32) GLN_YEN         
+ 33) GLN_YEN_TARGET   34) GON              35) GPN             
+ 36) GPN_YEN          37) GRN              38) GRN_YEN         
+ 39) GSN              40) GSN_YEN          41) GYN             
+ 42) GYN_YEN          43) HICP             44) I77Q4I78Q1      
+ 45) I81Q1            46) I82Q1            47) I84Q2           
+ 48) I92Q4            49) I98Q1            50) INFQ            
+ 51) INFT             52) INN              53) INN_YEN         
+ 54) ITD              55) ITN              56) ITR             
+ 57) KSR              58) LFN              59) LNN             
+ 60) LNT              61) LPROD            62) LSL             
+ 63) LSR              64) LTN              65) M3N             
+ 66) M3R              67) MTD              68) MTN             
+ 69) MTR              70) NFA              71) NFN             
+ 72) NFN_YEN          73) OGN              74) OGN_YEN         
+ 75) PCD              76) PCN              77) PCR             
+ 78) PYN              79) PYN_DIS          80) PYN_DIS_YEN     
+ 81) PYR              82) SCD              83) SCN             
+ 84) SCR              85) SSN              86) SSN_YEN         
+ 87) STN              88) STRQ             89) TBN             
+ 90) TBR              91) TDN              92) TDN_YEN         
+ 93) TDN_YEN_DIS      94) TFT              95) TIME            
+ 96) TIN              97) TIN_YEN          98) TRN             
+ 99) TRN_FIRMS       100) TRN_FIRMS_YEN   101) TRN_OTHER       
+102) TRN_OTHER_YEN   103) TRN_YEN         104) TRN_YEN_DIS     
+105) ULC             106) ULT             107) UNN             
+108) URT             109) URX             110) WIN             
+111) WLN             112) WRN             113) XTD             
+114) XTN             115) XTR             116) YED             
+117) YEN             118) YEN_DIS         119) YER             
+120) YER_DIS         121) YET             122) YFD             
+123) YFN             124) YGA             125) YIN             
+126) YIN_DIS         127) YWD             128) YWDX            
+129) YWR             130) YWRX            
+
+? series TRIAL = Box_Cox_Value(CAN,30,2,1,1,1,1)
+------------------------------------------
+BOX-COX TRANSFORMATION
+Shows best lambda1 value according to  
+minimum skewness criterion                
+------------------------------------------
+The lambda1 value is 2
+ and the corresponding skewness is 0
+wrote /home/cottrell/stats/test-gretl/testgfn/gpttmp01.plt
+wrote /home/cottrell/stats/test-gretl/testgfn/gpttmp02.plt
+Generated series TRIAL (ID 131)
+#------------------------------------------------
+# "3" accounts for the interval of the lambda value [-3,3];
+# "2"  chooses the accurate option ((2)=0.01) for the lambda value;
+# "1"  chooses the original data series to be transformed;
+# "1"  the last three options indicate to generate the 3 plots
+# (gunplot and the QQplots);
+? print TRIAL
+
+Full data range: 1970:1 - 1998:4 (n = 112)
+
+1.20349e+08  1.39360e+08  1.47280e+08  1.36118e+08  1.30907e+08  1.38189e+08  
+1.61232e+08  1.48029e+08  1.45783e+08  1.52019e+08  1.44353e+08  1.44929e+08  
+1.42622e+08  1.44888e+08  1.32865e+08  1.32417e+08  1.06599e+08  7.82474e+07  
+7.81003e+07  1.15271e+08  1.39731e+08  1.32533e+08  1.15414e+08  1.03094e+08  
+1.16250e+08  8.81866e+07  8.07770e+07  8.22364e+07  1.05195e+08  1.00840e+08  
+1.22633e+08  1.50705e+08  1.86557e+08  1.91403e+08  1.86863e+08  2.10038e+08  
+2.08211e+08  1.54732e+08  1.09613e+08  6.81971e+07  5.33086e+07  3.71612e+07  
+1.60453e+07  2.84522e+07  1.01713e+07  3.15867e+07  3.01466e+07  6.62303e+07  
+3.44222e+07  3.66400e+07  2.37117e+07  5.16541e+07  6.56146e+07  9.41139e+07  
+9.18737e+07  1.16755e+08  1.37231e+08  1.16483e+08  1.68950e+08  2.21355e+08  
+1.09555e+08  2.25562e+08  2.62228e+08  3.31420e+08  3.43031e+08  4.08672e+08  
+5.30415e+08  4.81971e+08  3.43960e+08  3.23783e+08  3.07051e+08  2.84884e+08  
+2.27212e+08  3.61707e+08  2.24606e+08  2.72920e+08  2.51592e+08  2.86422e+08  
+2.60900e+08  1.93816e+08  2.27532e+08  1.37567e+08  1.41896e+08  6.77639e+07  
+0.00000  295429.  3.12701e+06  5.42761e+06  105165.  3.32929e+06  920986.  
+2.40255e+07  3.62124e+07  1.14249e+08  1.89567e+08  2.49782e+08  1.15807e+08  
+1.35675e+08  1.11059e+08  9.47971e+07  2.32473e+08  2.80478e+08  2.33190e+08  
+2.89254e+08  3.24058e+08  3.78074e+08  4.87732e+08  4.05574e+08  6.08970e+08  
+6.57108e+08  6.13672e+08  6.57387e+08       NA       NA       NA       NA  
+
+Done

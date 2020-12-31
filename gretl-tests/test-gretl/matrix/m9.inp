@@ -1,0 +1,5 @@
+open data4-1
+matrix x = {sqft}
+x
+scalar k1 = ones(1,14) * x
+scalar k2 = sum(sqft)

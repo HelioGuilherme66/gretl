@@ -1,0 +1,118 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps8-2.inp
+ /opt/esl/share/gretl/scripts/ps8-2.inp
+# PS8.2, for Example 8.3
+? open data3-11
+
+Read datafile /opt/esl/share/gretl/data/data3-11.gdt
+periodicity: 1, maxobs: 222
+observations range: 1 to 222
+
+Listing 3 variables:
+  0) const     1) SALARY    2) YEARS   
+
+? genr LNSALARY=ln(SALARY)
+Generated series LNSALARY (ID 3)
+? genr YRS2 = YEARS*YEARS
+Generated series YRS2 (ID 4)
+? ols LNSALARY const YEARS YRS2
+
+Model 1: OLS, using observations 1-222
+Dependent variable: LNSALARY
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       3.80937       0.0413383     92.15     3.79e-177 ***
+  YEARS       0.0438528     0.00482873     9.082    6.43e-17  ***
+  YRS2       -0.000627348   0.000120861   -5.191    4.77e-07  ***
+
+Mean dependent var   4.325410   S.D. dependent var   0.302511
+Sum squared resid    9.380504   S.E. of regression   0.206962
+R-squared            0.536179   Adjusted R-squared   0.531943
+F(2, 219)            126.5823   P-value(F)           2.92e-37
+Log-likelihood       36.20452   Akaike criterion    -66.40903
+Schwarz criterion   -56.20100   Hannan-Quinn        -62.28766
+
+# save absolute uhat, uhat squared, and its log
+? genr usq = $uhat*$uhat
+Generated series usq (ID 5)
+? genr absuhat = abs($uhat)
+Generated series absuhat (ID 6)
+? genr lnusq = ln(usq)
+Generated series lnusq (ID 7)
+# Breusch-Pagan test
+? ols usq const YEARS YRS2
+
+Model 2: OLS, using observations 1-222
+Dependent variable: usq
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -0.0110860     0.0134726     -0.8229   0.4115 
+  YEARS       0.00608369    0.00157374     3.866    0.0001  ***
+  YRS2       -0.000128833   3.93899e-05   -3.271    0.0012  ***
+
+Mean dependent var   0.042255   S.D. dependent var   0.069804
+Sum squared resid    0.996378   S.E. of regression   0.067451
+R-squared            0.074714   Adjusted R-squared   0.066264
+F(2, 219)            8.841813   P-value(F)           0.000203
+Log-likelihood       285.0957   Akaike criterion    -564.1913
+Schwarz criterion   -553.9833   Hannan-Quinn        -560.0699
+
+? genr LM1=$nrsq
+Generated scalar LM1 = 16.5866
+? pvalue X 2 LM1
+Chi-square(2): area to the right of 16.5866 = 0.000250194
+(to the left: 0.99975)
+# Glesjer test
+? ols absuhat const YEARS YRS2
+
+Model 3: OLS, using observations 1-222
+Dependent variable: absuhat
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       0.0312025     0.0240727      1.296    0.1963  
+  YEARS       0.0143923     0.00281193     5.118    6.74e-07 ***
+  YRS2       -0.000297525   7.03814e-05   -4.227    3.47e-05 ***
+
+Mean dependent var   0.160558   S.D. dependent var   0.128647
+Sum squared resid    3.181048   S.E. of regression   0.120521
+R-squared            0.130283   Adjusted R-squared   0.122340
+F(2, 219)            16.40300   P-value(F)           2.30e-07
+Log-likelihood       156.2424   Akaike criterion    -306.4849
+Schwarz criterion   -296.2768   Hannan-Quinn        -302.3635
+
+? genr LM2=$nrsq
+Generated scalar LM2 = 28.9228
+? pvalue X 2 LM2
+Chi-square(2): area to the right of 28.9228 = 5.24198e-07
+(to the left: 0.999999)
+# Harvey-Godfrey test
+? ols lnusq const YEARS YRS2
+
+Model 4: OLS, using observations 1-222
+Dependent variable: lnusq
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -6.56266      0.359239     -18.27    6.50e-46 ***
+  YEARS       0.235562     0.0419628      5.614   5.96e-08 ***
+  YRS2       -0.00477648   0.00105031    -4.548   8.98e-06 ***
+
+Mean dependent var  -4.404772   S.D. dependent var   1.952342
+Sum squared resid    708.4163   S.E. of regression   1.798549
+R-squared            0.159023   Adjusted R-squared   0.151342
+F(2, 219)            20.70563   P-value(F)           5.81e-09
+Log-likelihood      -443.8037   Akaike criterion     893.6074
+Schwarz criterion    903.8154   Hannan-Quinn         897.7288
+
+? genr LM3=$nrsq
+Generated scalar LM3 = 35.303
+? pvalue X 2 LM3
+Chi-square(2): area to the right of 35.303 = 2.158e-08
+(to the left: 1)
+Done

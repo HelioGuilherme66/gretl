@@ -1,0 +1,60 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.0   Copyright 1984-2003
+  Statistics/Data Analysis            Stata Corporation
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set matsize 300
+
+. insheet using "unbalanced.csv"
+(5 vars, 20 obs)
+
+. tsset id year
+       panel variable:  id, 1 to 4
+        time variable:  year, 1990 to 1994
+
+. xtabond y x, noconst robust
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =        10
+Group variable (i): id                          Number of groups   =         4
+
+                                                Wald chi2(.)       =         .
+
+Time variable (t): year                         Obs per group: min =         1
+                                                               avg =       2.5
+                                                               max =         3
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+y            |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+y            |
+          LD |   .3481022   .1170611     2.97   0.003     .1186667    .5775378
+x            |
+          D1 |  -.2560307   .4834986    -0.53   0.596    -1.203671    .6916092
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -0.91   Pr > z = 0.3612
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -0.99   Pr > z = 0.3217
+
+. 

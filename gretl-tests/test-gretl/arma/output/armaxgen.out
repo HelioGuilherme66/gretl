@@ -1,0 +1,113 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run armaxgen.inp
+ /home/cottrell/stats/test-gretl/arma/armaxgen.inp
+? nulldata 500
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+? setobs 12 1950:01
+Full data range: 1950:01 - 1991:08 (n = 500)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr x = uniform()
+Generated series x (ID 3)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 4)
+? genr y = 10.0 + 3.0*x + u
+Generated series y (ID 5)
+? arma 0 1 ; y 0 x --x-12-arima
+
+Model 1: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       10.1358      0.101119     100.2    0.0000   ***
+  theta_1      0.426113    0.0404050     10.55   5.30e-26 ***
+  x            2.84830     0.146856      19.40   8.49e-84 ***
+
+Mean dependent var   11.61330   S.D. dependent var   1.401313
+Mean of innovations  0.001113   S.D. of innovations  1.042231
+Log-likelihood      -728.7910   Akaike criterion     1465.582
+Schwarz criterion    1482.432   Hannan-Quinn         1472.195
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.3468     0.0000     2.3468     0.5000
+  -----------------------------------------------------------
+
+? arma 0 1 ; y 0 x --vcv
+
+Function evaluations: 40
+Evaluations of gradient: 13
+
+Model 2: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       10.1358      0.101120     100.2    0.0000   ***
+  theta_1      0.426119    0.0421323     10.11   4.80e-24 ***
+  x            2.84830     0.146858      19.39   8.52e-84 ***
+
+Mean dependent var   11.61330   S.D. dependent var   1.401313
+Mean of innovations  0.000694   S.D. of innovations  1.042231
+Log-likelihood      -728.7910   Akaike criterion     1465.582
+Schwarz criterion    1482.432   Hannan-Quinn         1472.195
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.3468     0.0000     2.3468     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const       theta_1             x
+     0.0102253  -2.47627e-05    -0.0111875  const
+                  0.00177513   3.38899e-05  theta_1
+                                 0.0215673  x
+
+? arma 0 1 ; y 0 x --vcv --conditional
+
+Function evaluations: 18
+Evaluations of gradient: 9
+
+Model 3: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       10.1354      0.101264     100.1    0.0000   ***
+  theta_1      0.424846    0.0396678     10.71   9.13e-27 ***
+  x            2.84749     0.146284      19.47   2.15e-84 ***
+
+Mean dependent var   11.61330   S.D. dependent var   1.401313
+Mean of innovations  0.001350   S.D. of innovations  1.042592
+Log-likelihood      -728.8638   Akaike criterion     1465.728
+Schwarz criterion    1482.578   Hannan-Quinn         1472.340
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.3538     0.0000     2.3538     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const       theta_1             x
+     0.0102544   7.11118e-05    -0.0110931  const
+                  0.00157353   4.62727e-04  theta_1
+                                 0.0213989  x
+
+Done

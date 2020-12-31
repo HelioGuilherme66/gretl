@@ -1,0 +1,11 @@
+open patents.gdt
+
+list Industries = aerosp chemist computer machines vehicles
+list Countries = japan us
+
+poisson p91 0 lr91 Industries Countries
+poisson p91 0 lr91 Industries Countries --robust
+
+negbin p91 0 lr91 Industries Countries --model1
+negbin p91 0 lr91 Industries Countries
+

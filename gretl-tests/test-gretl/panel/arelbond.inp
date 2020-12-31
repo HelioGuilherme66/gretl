@@ -1,0 +1,20 @@
+open abdata.gdt
+
+genr dummy
+list dlist = dummy_4 dummy_5 dummy_6 dummy_7 dummy_8 dummy_9
+ols n 0 n(-1 to -2) w(0 to -1) k(0 to -2) ys(0 to -2) dlist
+hausman
+
+panel n 0 n(-1 to -2) w(0 to -1) k(0 to -2) ys(0 to -2) dlist --robust
+
+# Anderson-Hsiao dynamic estimator
+
+diff n w k ys dummy_*
+list dlist = d_dummy_5 d_dummy_6 d_dummy_7 d_dummy_8 d_dummy_9
+tsls d_n d_n(-1) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) dlist ; \
+	d_n(-3) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) dlist --robust
+
+list dlist = d_dummy_4 dlist
+tsls d_n d_n(-1) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) dlist ; \
+	n(-3) d_n(-2) d_w(0 to -1) d_k(0 to -2) d_ys(0 to -2) dlist --robust
+ 

@@ -1,0 +1,8 @@
+open summby.txt
+summary xvar
+summary xvar yvar
+summary xvar --by=svar
+summary xvar --by=svar --simple
+summary xvar yvar --by=svar
+summary xvar yvar --by=svar --simple
+

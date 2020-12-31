@@ -1,0 +1,88 @@
+function void printstars (scalar *pv)
+   scalar k = (pv<0.01)? 3 : (pv<0.05)? 2 : (pv<0.1)? 1 : 0
+   printf "%.*s\n", k, "***"
+end function
+
+function void user_heckit(series y, const list X, series sel, const list Z)
+
+  scalar totalT = $nobs
+  scalar selT = sum(sel)
+
+  # do first stage
+  probit sel Z 
+  matrix Q = $vcv
+  genr mills = $uhat
+
+/*
+    there is a discrepancy here: Greene's textbook uses 
+    genr deltas = mills*(mills - index)
+    whereas the following formula gives compatibility w/Stata;
+    results on Greene's textbook coincide
+*/
+
+  genr delta = mills*(mills + qnorm($yhat))
+  scalar m_delta = mean(delta * zeromiss(sel))
+
+  #
+  # 2nd stage
+  #
+
+  smpl sel --restrict
+
+  ols y X mills --quiet
+  scalar actT = $T
+
+  matrix beta = $coeff
+  scalar s2e = $ess/actT + m_delta*($coeff(mills)^2)
+  scalar rho = $coeff(mills)/sqrt(s2e)
+  if (abs(rho)>1)
+    rho = rho/abs(rho)
+  endif
+  scalar rho2 = rho^2
+
+  #
+  # compute adjusted covariance matrix
+  #
+
+  matrix w = { delta }
+  matrix X1 = { X, mills }
+  matrix Z1 = { Z }
+  matrix Xw = w .* X1
+
+  matrix XX = X1'*X1
+  matrix XXi = inv(XX)
+  matrix XXw = X1'*Xw
+  matrix XwZ = Xw'*Z1
+  matrix Q = XX - rho2 *( XXw - qform(XwZ, Q) )
+  matrix V = s2e * qform(XXi, Q)
+
+  #
+  # print results
+  #
+
+  matrix se = sqrt(diag(V))
+  matrix beta = beta
+  scalar k = 1
+  printf "\nHeckman's two-step estimation:\n\n"
+  printf "using %d observations out of %d\n", actT, totalT
+  printf "%d censored observations (%5.2f%%)\n", selT, 100*selT/totalT
+  if (selT>actT) 
+    scalar pct = 100*((selT-actT)/totalT)
+    printf "%d observations with missing values (%5.2f%%)\n", selT-actT, pct
+  endif
+
+  printf "\n       Variable    Coefficient    Std.Error  z-stat  p-val\n\n" 
+  loop foreach i X --quiet
+    scalar tmp = beta[k]/se[k]
+    scalar pv = 2*(1-cnorm(abs(tmp)))
+    printf "%15s%15.5f %12.5f %7.3f %6.3f ", "$i", beta[k], se[k], tmp, pv
+    printstars(&pv)
+    k += 1
+  endloop 
+  scalar tmp = beta[k]/se[k]
+  scalar pv = 2*(1-cnorm(abs(tmp)))
+  printf "\n         lambda%15.5f %12.5f %7.3f %6.3f ", beta[k], se[k], tmp, pv
+  printstars(&pv)
+  printf "\n            rho = %12.7f\n          sigma = %12.7f\n\n", rho, sqrt(s2e)
+  
+end function

@@ -1,0 +1,134 @@
+gretl version 1.8.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2010-02-02 14:40
+? run armaxgen3.inp
+ /home/cottrell/stats/test-gretl/arma/armaxgen3.inp
+? nulldata 800
+periodicity: 1, maxobs: 800,
+observations range: 1-800
+? setobs 12 1920:01
+Full data range: 1920:01 - 1986:08 (n = 800)
+
+? set seed 43377
+Pseudo-random number generator seeded with 43377
+? series x1 = uniform()
+Generated series x1 (ID 2)
+? series x2 = uniform()
+Generated series x2 (ID 3)
+? series eps = normal()
+Generated series eps (ID 4)
+? series u = eps + .4 * eps(-1)
+Generated series u (ID 5)
+? series y = 0
+Generated series y (ID 6)
+? y = 10 + .3 * y(-1) + 10 * x1 + 10 * x2 + u
+Replaced series y (ID 6)
+? smpl 1940:01 ;
+Full data range: 1920:01 - 1986:08 (n = 800)
+Current sample: 1940:01 - 1986:08 (n = 560)
+
+? arma 1 1 ; y 0 x1 x2 --x-12-arima
+
+Model 1: ARMAX, using observations 1940:01-1986:08 (T = 560)
+Estimated using X-12-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       20.3269      0.174623     116.4     0.0000   ***
+  phi_1        0.381431    0.0539318      7.072   1.52e-12 ***
+  theta_1      0.476508    0.0512670      9.295   1.48e-20 ***
+  x1           8.23717     0.152620      53.97    0.0000   ***
+  x2           8.12556     0.149688      54.28    0.0000   ***
+
+Mean dependent var   28.45199   S.D. dependent var   4.415374
+Mean of innovations  0.002370   S.D. of innovations  1.405141
+Log-likelihood      -985.4569   Akaike criterion     1982.914
+Schwarz criterion    2008.881   Hannan-Quinn         1993.053
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.6217     0.0000     2.6217     0.0000
+  MA
+    Root  1          -2.0986     0.0000     2.0986     0.5000
+  -----------------------------------------------------------
+
+? arma 1 1 ; y 0 x1 x2 --vcv
+Function evaluations: 58
+Evaluations of gradient: 19
+
+Model 2: ARMAX, using observations 1940:01-1986:08 (T = 560)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       20.3269      0.178735     113.7     0.0000   ***
+  phi_1        0.381434    0.0527792      7.227   4.94e-13 ***
+  theta_1      0.476509    0.0498409      9.561   1.17e-21 ***
+  x1           8.23716     0.157334      52.35    0.0000   ***
+  x2           8.12556     0.154601      52.56    0.0000   ***
+
+Mean dependent var   28.45199   S.D. dependent var   4.415374
+Mean of innovations  0.000873   S.D. of innovations  1.405141
+Log-likelihood      -985.4569   Akaike criterion     1982.914
+Schwarz criterion    2008.881   Hannan-Quinn         1993.053
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.6217     0.0000     2.6217     0.0000
+  MA
+    Root  1          -2.0986     0.0000     2.0986     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const         phi_1       theta_1            x1            x2
+      0.031946   4.45876e-04    0.00116141    -0.0121406    -0.0119112  const
+                  0.00278565   -0.00167332  -4.51196e-04  -3.90174e-04  phi_1
+                                0.00248412   -0.00116174   -0.00122514  theta_1
+                                               0.0247539  -6.90975e-05  x1
+                                                             0.0239014  x2
+
+? arma 1 1 ; y 0 x1 x2 --vcv --conditional
+Convergence achieved after 7 iterations
+
+Model 3: ARMAX, using observations 1940:01-1986:08 (T = 560)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       10.0934      0.371657     27.16     2.04e-162 ***
+  phi_1        0.298889    0.0111724    26.75     1.16e-157 ***
+  theta_1      0.375663    0.0405089     9.274    1.80e-20  ***
+  x1           9.89497     0.152834     64.74     0.0000    ***
+  x2           9.94444     0.148643     66.90     0.0000    ***
+
+Mean dependent var   28.45199   S.D. dependent var   4.415374
+Mean of innovations  0.000218   S.D. of innovations  0.995866
+Log-likelihood      -792.2858   Akaike criterion     1596.572
+Schwarz criterion    1622.539   Hannan-Quinn         1606.711
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           3.3457     0.0000     3.3457     0.0000
+  MA
+    Root  1          -2.6620     0.0000     2.6620     0.5000
+  -----------------------------------------------------------
+
+Covariance matrix of regression coefficients:
+
+         const         phi_1       theta_1            x1            x2
+      0.138129    -0.0039648    0.00365925    -0.0214686    -0.0238234  const
+                 1.24823e-04  -1.23268e-04   3.83087e-04   4.70424e-04  phi_1
+                                0.00164097   9.76831e-06  -1.23267e-04  theta_1
+                                               0.0233583    -0.0010193  x1
+                                                             0.0220946  x2
+
+Done

@@ -1,0 +1,102 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run bjg.inp
+ /home/cottrell/stats/test-gretl/arma/bjg.inp
+/*
+ ARIMA(0,0, 1,1, 1,1) - multiplicative seasonal MA model  p.319
+       Box-Jenkins   TSP
+ theta    .396     .401823
+ (s.e.)  (.08)    (.089182)
+ THETA    .614     .556937
+ (s.e.)  (.07)    (.073493)
+ LogL		   244.697
+*/
+? open bjg.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arma/bjg.gdt
+periodicity: 12, maxobs: 144
+observations range: 1949:01 to 1960:12
+
+Listing 3 variables:
+  0) const    1) g        2) time   
+
+? genr lg = log(g)
+Generated series lg (ID 3)
+? arima 0 1 1 ; 0 1 1 ; lg --nc
+
+Function evaluations: 28
+Evaluations of gradient: 7
+
+Model 1: ARIMA, using observations 1950:02-1960:12 (T = 131)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) lg
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  theta_1     -0.401824    0.0896445    -4.482   7.38e-06 ***
+  Theta_1     -0.556936    0.0731049    -7.618   2.57e-14 ***
+
+Mean dependent var   0.000291   S.D. dependent var   0.045848
+Mean of innovations  0.001008   S.D. of innovations  0.036716
+Log-likelihood       244.6965   Akaike criterion    -483.3930
+Schwarz criterion   -474.7674   Hannan-Quinn        -479.8880
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           2.4887     0.0000     2.4887     0.0000
+  MA (seasonal)
+    Root  1           1.7955     0.0000     1.7955     0.0000
+  -----------------------------------------------------------
+
+# start at values obtained via TSP
+? matrix start = { -.401823, -.556937 }
+Generated matrix start
+? set initvals start
+? arima 0 1 1 ; 0 1 1 ; lg --nc --verbose
+
+
+*** User-specified starting values:
+    -0.401823    -0.556937
+
+Iteration 1: loglikelihood = 244.696486833
+Parameters:     -0.40182    -0.55694
+Gradients:   -7.1054e-06  9.2371e-05 (norm 5.21e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = 244.696486833 (steplength = 0.008)
+Parameters:     -0.40182    -0.55694
+Gradients:   -7.1054e-06  9.2371e-05 (norm 5.21e-03)
+
+
+Function evaluations: 5
+Evaluations of gradient: 1
+
+Model 2: ARIMA, using observations 1950:02-1960:12 (T = 131)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) lg
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  theta_1     -0.401823    0.0896429    -4.482   7.38e-06 ***
+  Theta_1     -0.556936    0.0731044    -7.618   2.57e-14 ***
+
+Mean dependent var   0.000291   S.D. dependent var   0.045848
+Mean of innovations  0.001008   S.D. of innovations  0.036716
+Log-likelihood       244.6965   Akaike criterion    -483.3930
+Schwarz criterion   -474.7674   Hannan-Quinn        -479.8880
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           2.4887     0.0000     2.4887     0.0000
+  MA (seasonal)
+    Root  1           1.7955     0.0000     1.7955     0.0000
+  -----------------------------------------------------------
+
+Done

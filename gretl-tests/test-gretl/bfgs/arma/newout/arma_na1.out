@@ -1,0 +1,132 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run arma_na1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/arma_na1.inp
+? open jgm-data.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/jgm-data.gdt
+periodicity: 1, maxobs: 43
+observations range: 1952 to 1994
+
+Listing 6 variables:
+  0) const    1) pi_c     2) pi_y     3) r_s      4) r_m    
+  5) r_l    
+
+? arma 1 2 ; pi_y 0
+
+Function evaluations: 33
+Evaluations of gradient: 14
+
+Model 1: ARMA, using observations 1952-1994 (T = 43)
+Estimated using Kalman filter (exact ML)
+Dependent variable: pi_y
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       4.20170       0.998728    4.207   2.59e-05 ***
+  phi_1       0.517854      0.209207    2.475   0.0133   **
+  theta_1     0.482398      0.232565    2.074   0.0381   **
+  theta_2     0.503760      0.190901    2.639   0.0083   ***
+
+Mean dependent var   4.225379   S.D. dependent var   3.140690
+Mean of innovations -0.029982   S.D. of innovations  1.655161
+Log-likelihood      -83.51075   Akaike criterion     177.0215
+Schwarz criterion    185.8275   Hannan-Quinn         180.2689
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.9310     0.0000     1.9310     0.0000
+  MA
+    Root  1          -0.4788    -1.3251     1.4089    -0.3052
+    Root  2          -0.4788     1.3251     1.4089     0.3052
+  -----------------------------------------------------------
+
+? pi_y["1965"] = NA
+Modified series pi_y (ID 2)
+? arma 1 2 ; pi_y 0
+
+Function evaluations: 30
+Evaluations of gradient: 13
+
+Model 2: ARMA, using observations 1952-1994 (T = 42)
+Missing or incomplete observations dropped: 1
+Estimated using Kalman filter (exact ML)
+Dependent variable: pi_y
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       4.22650       0.987991    4.278   1.89e-05 ***
+  phi_1       0.497998      0.208529    2.388   0.0169   **
+  theta_1     0.495513      0.220070    2.252   0.0243   **
+  theta_2     0.542605      0.205190    2.644   0.0082   ***
+
+Mean dependent var   4.247166   S.D. dependent var   3.175470
+Mean of innovations -0.035940   S.D. of innovations  1.658601
+Log-likelihood      -82.16869   Akaike criterion     174.3374
+Schwarz criterion    183.0257   Hannan-Quinn         177.5220
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.0080     0.0000     2.0080     0.0000
+  MA
+    Root  1          -0.4566    -1.2785     1.3576    -0.3046
+    Root  2          -0.4566     1.2785     1.3576     0.3046
+  -----------------------------------------------------------
+
+? matrix xcoeff = $coeff
+Generated matrix xcoeff
+? set initvals xcoeff
+? arma 1 2 ; pi_y 0 --verbose
+
+
+*** User-specified starting values:
+     4.226497     0.497998     0.495513     0.542605
+
+Iteration 1: loglikelihood = -82.1686911683
+Parameters:       4.2265     0.49800     0.49551     0.54260
+Gradients:        0.0000 -7.1054e-07 -2.8422e-06  7.1054e-07 (norm 7.33e-04)
+
+
+--- FINAL VALUES: 
+loglikelihood = -82.1686911683 (steplength = 0.0100756)
+Parameters:       4.2265     0.49800     0.49551     0.54260
+Gradients:        0.0000 -7.1054e-07 -2.8422e-06  7.1054e-07 (norm 7.33e-04)
+
+
+Function evaluations: 3
+Evaluations of gradient: 1
+
+Model 3: ARMA, using observations 1952-1994 (T = 42)
+Missing or incomplete observations dropped: 1
+Estimated using Kalman filter (exact ML)
+Dependent variable: pi_y
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       4.22650       0.987991    4.278   1.89e-05 ***
+  phi_1       0.497998      0.208531    2.388   0.0169   **
+  theta_1     0.495513      0.220071    2.252   0.0243   **
+  theta_2     0.542605      0.205191    2.644   0.0082   ***
+
+Mean dependent var   4.247166   S.D. dependent var   3.175470
+Mean of innovations -0.035940   S.D. of innovations  1.658601
+Log-likelihood      -82.16869   Akaike criterion     174.3374
+Schwarz criterion    183.0257   Hannan-Quinn         177.5220
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.0080     0.0000     2.0080     0.0000
+  MA
+    Root  1          -0.4566    -1.2785     1.3576    -0.3046
+    Root  2          -0.4566     1.2785     1.3576     0.3046
+  -----------------------------------------------------------
+
+Done

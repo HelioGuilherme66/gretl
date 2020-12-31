@@ -1,0 +1,11 @@
+nulldata 10
+matrix A = I(2)
+A ~= I(2)
+A
+matrix B = I(2)
+B |= I(2)
+B
+scalar x = 23
+x %= 4
+
+

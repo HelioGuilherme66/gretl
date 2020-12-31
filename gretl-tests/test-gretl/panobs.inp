@@ -1,0 +1,7 @@
+nulldata 20
+setobs 10 1.1 --stacked-time-series
+series S1=(t>=5)
+genr time
+series S2=(time>=5)
+print -o
+

@@ -1,0 +1,6 @@
+open engel.gdt
+
+matrix tau = {0.25, 0.50, 0.75}
+quantreg tau 1 0 2 
+quantreg tau 1 0 2 --robust
+

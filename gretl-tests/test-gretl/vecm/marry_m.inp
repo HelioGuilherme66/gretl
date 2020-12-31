@@ -1,0 +1,53 @@
+function void eigensort (matrix *evals, matrix *evecs, int r)
+  evals = mreverse(evals)
+  evecs = mreverse(evecs')'
+  if r < rows(evals)
+    evals = evals[1:r]
+    evecs = evecs[,1:r]
+  endif
+end function
+
+open marry2.xls -q
+set messages off
+
+setobs 1 1947 --time-series
+genr time
+genr I76 = (t == 30)
+lags 1; I76
+genr Sh76 = (t >= 30)
+lags 2; Sh76
+genr Tr76 = time * Sh76
+lags 2; Tr76
+
+list Y = Men Women
+list dY = diff(Y)
+list Y_1 = lags(1, Y)
+
+print Y dY Y_1 Sh76 I76 Tr76_2 -o
+
+smpl +2 ;
+
+matrix mX = {const, Sh76, I76}
+matrix mY = {dY} ~ {Y_1} ~ {Tr76_2}
+scalar T = rows(mX)
+scalar n = nelem(Y)
+matrix U
+mols(mY, mX, &U)
+U0 = U[,1:n]
+U1 = U[,n+1:]
+matrix S00 = U0'U0 ./ T
+print S00 
+matrix S11 = U1'U1 ./ T
+print S11 
+
+matrix S01 = U0'U1 ./ T
+print S01 
+
+matrix A = qform(S01', inv(S00))
+matrix evecs
+matrix evals = eigsolve(A, S11, &evecs)
+eigensort(&evals, &evecs, n)
+print evals
+print evecs
+
+

@@ -1,0 +1,99 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps5-2.inp
+ /opt/esl/share/gretl/scripts/ps5-2.inp
+# PS5.2, for Example 5.2 and Table 5.2
+? open data3-7
+
+Read datafile /opt/esl/share/gretl/data/data3-7.gdt
+periodicity: 1, maxobs: 57
+observations range: 1 to 57
+
+Listing 4 variables:
+  0) const    1) cost     2) age      3) miles  
+
+? ols cost 0 age
+
+Model 1: OLS, using observations 1-57
+Dependent variable: cost
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -625.935      104.150      -6.010    1.55e-07 ***
+  age           7.34348      0.329580   22.28     3.31e-29 ***
+
+Mean dependent var   1426.632   S.D. dependent var   1151.186
+Sum squared resid     7401653   S.E. of regression   366.8453
+R-squared            0.900265   Adjusted R-squared   0.898451
+F(1, 55)             496.4588   P-value(F)           3.31e-29
+Log-likelihood      -416.4431   Akaike criterion     836.8863
+Schwarz criterion    840.9724   Hannan-Quinn         838.4743
+
+# compute absolute percentage error
+? genr ape1 = 100*abs($uhat)/cost
+Generated series ape1 (ID 4)
+# compute mean percentage error
+? genr mape1 = mean(ape1)
+Generated scalar mape1 = 227.751
+# Model B
+? ols cost 0 miles
+
+Model 2: OLS, using observations 1-57
+Dependent variable: cost
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -796.075     134.745      -5.908    2.26e-07 ***
+  miles         53.4507      2.92614    18.27     5.11e-25 ***
+
+Mean dependent var   1426.632   S.D. dependent var   1151.186
+Sum squared resid    10501755   S.E. of regression   436.9680
+R-squared            0.858491   Adjusted R-squared   0.855919
+F(1, 55)             333.6690   P-value(F)           5.11e-25
+Log-likelihood      -426.4135   Akaike criterion     856.8271
+Schwarz criterion    860.9132   Hannan-Quinn         858.4151
+
+? genr ape2 = 100*abs($uhat)/cost
+Generated series ape2 (ID 5)
+? genr mape2 = mean(ape2)
+Generated scalar mape2 = 278.198
+# Model C
+? ols cost 0 age miles
+
+Model 3: OLS, using observations 1-57
+Dependent variable: cost
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const         26.1888    114.201       0.2293   0.8195  
+  age           28.0163      2.77558    10.09     4.91e-14 ***
+  miles       -154.635      20.6882     -7.475    6.99e-10 ***
+
+Mean dependent var   1426.632   S.D. dependent var   1151.186
+Sum squared resid     3637878   S.E. of regression   259.5537
+R-squared            0.950980   Adjusted R-squared   0.949165
+F(2, 54)             523.8010   P-value(F)           4.36e-36
+Log-likelihood      -396.1995   Akaike criterion     798.3990
+Schwarz criterion    804.5282   Hannan-Quinn         800.7810
+
+? genr ape3 = 100*abs($uhat)/cost
+Generated series ape3 (ID 6)
+? genr mape3 = mean(ape3)
+Generated scalar mape3 = 48.2404
+# Correlation coefficients
+? corr age miles
+
+corr(age, miles) = 0.99646458
+Under the null hypothesis of no correlation:
+ t(55) = 87.9614, with two-tailed p-value 0.0000
+
+? print mape1 mape2 mape3
+
+          mape1 =  227.75136
+
+          mape2 =  278.19832
+
+          mape3 =  48.240362
+Done

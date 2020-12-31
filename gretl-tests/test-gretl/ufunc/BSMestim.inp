@@ -1,0 +1,6 @@
+include BSMestim.gfn
+open data9-3.gdt
+set stopwatch
+list listavar = BSMestim(reskwh)
+printf "Elapsed time = %g\n", $stopwatch
+print reskwh listavar -o

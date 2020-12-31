@@ -1,0 +1,8 @@
+open cigar.txt
+setobs state year --panel-vars
+lnc = log(sales)
+lnp = log(price/cpi)
+lnpn = log(pimin/cpi)
+lny = log(ndi/cpi)
+dpanel 1 ; lnc lnp lnpn lny const --dpdstyle --time-dummies
+dpanel 1 ; lnc lnp lnpn lny const --dpdstyle --time-dummies --two-step 

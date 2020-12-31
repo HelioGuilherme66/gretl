@@ -1,0 +1,2 @@
+open Qdata.xls --coloffset=1
+print -o

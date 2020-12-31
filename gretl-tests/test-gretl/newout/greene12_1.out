@@ -1,0 +1,88 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run greene12_1.inp
+ /opt/esl/share/gretl/scripts/greene12_1.inp
+# William Greene, Econometric Analysis 4e, Example 12.1
+? open greene12_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene12_1.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 8 variables:
+  0) const      1) derog      2) accept     3) age        4) income   
+  5) expend     6) ownrent    7) selfemp  
+
+? series inc2 = income*income
+Generated series inc2 (ID 8)
+# exclude obs where expenditure is zero
+? smpl expend > 0 --restrict
+Full data set: 100 observations
+Current sample: 72 observations
+? ols expend 0 age ownrent income inc2 --vcv
+
+Model 1: OLS, using observations 1-72
+Dependent variable: expend
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -237.147      199.352      -1.190    0.2384 
+  age          -3.08181      5.51472    -0.5588   0.5781 
+  ownrent      27.9409      82.9223      0.3370   0.7372 
+  income      234.347       80.3660      2.916    0.0048  ***
+  inc2        -14.9968       7.46934    -2.008    0.0487  **
+
+Mean dependent var   262.5321   S.D. dependent var   318.0468
+Sum squared resid     5432562   S.E. of regression   284.7508
+R-squared            0.243578   Adjusted R-squared   0.198418
+F(4, 67)             5.393722   P-value(F)           0.000795
+Log-likelihood      -506.4888   Akaike criterion     1022.978
+Schwarz criterion    1034.361   Hannan-Quinn         1027.509
+
+Excluding the constant, p-value was highest for variable 6 (ownrent)
+
+Covariance matrix of regression coefficients:
+
+         const           age       ownrent        income          inc2
+       39741.1      -624.978       4492.61      -9807.22       883.706  const
+                     30.4121       -138.44      -116.391       8.57464  age
+                                   6876.11      -863.296       15.4267  ownrent
+                                                 6458.69       -574.81  income
+                                                                55.791  inc2
+
+# gretl's "jackknife" procedure is more conservative than White
+? ols expend 0 age ownrent income inc2 --vcv --jackknife
+
+Model 2: OLS, using observations 1-72
+Dependent variable: expend
+Heteroskedasticity-robust standard errors, HC3 (jackknife)
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -237.147      227.968      -1.040    0.3020 
+  age          -3.08181      3.57930    -0.8610   0.3923 
+  ownrent      27.9409      98.6221      0.2833   0.7778 
+  income      234.347       94.8156      2.472    0.0160  **
+  inc2        -14.9968       7.42412    -2.020    0.0474  **
+
+Mean dependent var   262.5321   S.D. dependent var   318.0468
+Sum squared resid     5432562   S.E. of regression   284.7508
+R-squared            0.243578   Adjusted R-squared   0.198418
+F(4, 67)             10.78118   P-value(F)           8.32e-07
+Log-likelihood      -506.4888   Akaike criterion     1022.978
+Schwarz criterion    1034.361   Hannan-Quinn         1027.509
+
+Excluding the constant, p-value was highest for variable 6 (ownrent)
+
+Covariance matrix of regression coefficients:
+
+         const           age       ownrent        income          inc2
+       51969.2      -565.272       11931.5      -19386.4        1493.3  const
+                     12.8114      -125.216        109.93       -8.2145  age
+                                   9726.32      -5317.06       365.392  ownrent
+                                                 8989.99      -697.826  income
+                                                               55.1175  inc2
+
+Done

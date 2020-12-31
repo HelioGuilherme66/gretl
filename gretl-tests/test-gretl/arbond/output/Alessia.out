@@ -1,0 +1,160 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run Alessia.inp
+ /home/cottrell/stats/test-gretl/arbond/Alessia.inp
+? open provagretl.dta
+Stata file version 8
+endianness: little
+number of variables = 6
+number of observations = 2523
+length of varnames = 32
+Max length of labels = 81
+dataset label: ''
+timestamp: '24 Nov 2006 11:20'
+variable 1: int type
+variable 2: float type
+variable 3: long type
+variable 4: float type
+variable 5: string type
+variable 6: int type
+variable 1: name = 'year'
+variable 2: name = 'prod'
+variable 3: name = 'emp'
+variable 4: name = 'va'
+variable 5: name = 'country'
+variable 6: name = 'isic'
+String code table written to
+ /home/cottrell/stats/test-gretl/arbond/string_table.txt
+Listing 7 variables:
+  0) const      1) year       2) prod       3) emp        4) va       
+  5) country    6) isic     
+
+? genr panelid = country*1000 + isic
+Generated series panelid (ID 7)
+? setobs panelid year --panel
+Full data range: 1:01 - 87:35 (n = 3045)
+
+? loop foreach i prod emp va
+> #  l$i = log(zeromiss($i))
+> l$i = log($i)
+> diff l$i
+> endloop
+? lprod = log(prod)
+? diff lprod
+Listing 10 variables:
+  0) const      1) year       2) prod       3) emp        4) va       
+  5) country    6) isic       7) panelid    8) lprod      9) d_lprod  
+
+Warning: log: Numerical result out of range
+? lemp = log(emp)
+? diff lemp
+Listing 12 variables:
+  0) const      1) year       2) prod       3) emp        4) va       
+  5) country    6) isic       7) panelid    8) lprod      9) d_lprod  
+ 10) lemp      11) d_lemp   
+
+? lva = log(va)
+? diff lva
+Listing 14 variables:
+  0) const      1) year       2) prod       3) emp        4) va       
+  5) country    6) isic       7) panelid    8) lprod      9) d_lprod  
+ 10) lemp      11) d_lemp    12) lva       13) d_lva    
+
+Warning: log: Numerical result out of range
+
+Number of iterations: 3
+
+? arbond 1 10 ; lprod 0 d_lemp d_lva
+
+Model 1: 1-step Arellano-Bond, using 2346 observations
+Included 87 cross-sectional units
+Dependent variable: lprod
+
+               coefficient   std. error     z      p-value 
+  ---------------------------------------------------------
+  Dlprod(-1)    0.168940     0.0346717     4.873   1.10e-06 ***
+  const        -0.00602378   0.00128090   -4.703   2.57e-06 ***
+  d_lemp       -0.146972     0.0382951    -3.838   0.0001   ***
+  d_lva         0.952837     0.0188251    50.62    0.0000   ***
+
+Sum squared resid    12.74795   S.E. of regression   0.073778
+
+Number of instruments = 264
+Test for AR(1) errors: z = -1.87725 [0.0605]
+Test for AR(2) errors: z = -3.09928 [0.0019]
+Sargan over-identification test: Chi-square(260) = 2608.07 [0.0000]
+Wald (joint) test: Chi-square(3) = 6910.11 [0.0000]
+
+? dpanel 1 ; lprod 0 lemp lva ; 0 lemp lva GMM(lprod,2,10) --dpd
+
+Model 2: 1-step dynamic panel, using 2346 observations
+Included 87 cross-sectional units
+Time-series length: minimum 17, maximum 33
+H-matrix as per Ox/DPD
+Dependent variable: lprod
+
+              coefficient   std. error     z      p-value 
+  --------------------------------------------------------
+  lprod(-1)    0.168940     0.0346717     4.873   1.10e-06 ***
+  const       -0.00602378   0.00128090   -4.703   2.57e-06 ***
+  lemp        -0.146972     0.0382951    -3.838   0.0001   ***
+  lva          0.952837     0.0188251    50.62    0.0000   ***
+
+Sum squared resid    12.74795   S.E. of regression   0.073778
+
+Number of instruments = 264
+Test for AR(1) errors: z = -1.87725 [0.0605]
+Test for AR(2) errors: z = -3.09928 [0.0019]
+Sargan over-identification test: Chi-square(260) = 2608.07 [0.0000]
+Wald (joint) test: Chi-square(3) = 6910.11 [0.0000]
+
+? arbond 1 10 ; lprod d_lemp d_lva 0 --two-step --asym
+
+Model 3: 2-step Arellano-Bond, using 2346 observations
+Included 87 cross-sectional units
+Dependent variable: lprod
+Asymptotic standard errors
+
+               coefficient   std. error      z       p-value 
+  -----------------------------------------------------------
+  Dlprod(-1)    0.166762     0.00450815     36.99   1.59e-299 ***
+  d_lemp       -0.144032     0.00486852    -29.58   2.38e-192 ***
+  d_lva         0.955498     0.00319513    299.0    0.0000    ***
+  const        -0.00584997   0.000243423   -24.03   1.28e-127 ***
+
+Sum squared resid    12.63644   S.E. of regression   0.073455
+
+Number of instruments = 264
+Test for AR(1) errors: z = -2.46903 [0.0135]
+Test for AR(2) errors: z = -3.20113 [0.0014]
+Sargan over-identification test: Chi-square(260) = 85.9851 [1.0000]
+Wald (joint) test: Chi-square(3) = 142368 [0.0000]
+
+? dpanel 1 ; lprod lemp lva 0 ; lemp lva 0 GMM(lprod,2,10) --two-step \
+  --asym --dpd
+
+Model 4: 2-step dynamic panel, using 2346 observations
+Included 87 cross-sectional units
+Time-series length: minimum 17, maximum 33
+H-matrix as per Ox/DPD
+Dependent variable: lprod
+Asymptotic standard errors
+
+              coefficient   std. error      z       p-value 
+  ----------------------------------------------------------
+  lprod(-1)    0.166762     0.00450815     36.99   1.59e-299 ***
+  lemp        -0.144032     0.00486852    -29.58   2.38e-192 ***
+  lva          0.955498     0.00319513    299.0    0.0000    ***
+  const       -0.00584997   0.000243423   -24.03   1.28e-127 ***
+
+Sum squared resid    12.63644   S.E. of regression   0.073455
+
+Number of instruments = 264
+Test for AR(1) errors: z = -2.46903 [0.0135]
+Test for AR(2) errors: z = -3.20113 [0.0014]
+Sargan over-identification test: Chi-square(260) = 85.9851 [1.0000]
+Wald (joint) test: Chi-square(3) = 142368 [0.0000]
+
+Done

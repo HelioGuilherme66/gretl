@@ -1,0 +1,170 @@
+gretl version 2015e-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-12-07 11:53
+? run auto_omit.inp
+ /home/cottrell/stats/test-gretl/ordered/auto_omit.inp
+? open arturdata.gdt --quiet
+Read datafile /home/cottrell/stats/test-gretl/ordered/arturdata.gdt
+? list LHS = arng_ind_r
+Generated list LHS
+? list RHS = const arng_ind_r_7 arng_ind_r_8 arng_ind_r_9 arng_ind_r_10 \
+  ipidx_d_3 ipidx_d_4 ipidx_d_5 ipidx_d_6 jobvac_dln_3 jobvac_dln_4 \
+  jobvac_dln_5 jobvac_dln_6 ifo_r1_dln_1 ifo_r1_dln_2 ifo_r1_dln_3 \
+  ifo_r1_dln_4 eubor_3m_1 eubor_3m_2 eubor_3m_3 eubor_3m_4 cdax_dln_1 \
+  cdax_dln_2 cdax_dln_3 cdax_dln_4 crp_sprd_1 crp_sprd_2 crp_sprd_3 crp_sprd_4 \
+  aftg_inl_dln_3 aftg_inl_dln_4 aftg_inl_dln_5 aftg_inl_dln_6 aftg_aus_dln_3 \
+  aftg_aus_dln_4 aftg_aus_dln_5 aftg_aus_dln_6 yc10y_1 yc10y_2 yc10y_3 yc10y_4
+Generated list RHS
+? probit LHS RHS
+
+Function evaluations: 145
+Evaluations of gradient: 69
+
+Model 1: Ordered Probit, using observations 1993:12-2011:10 (T = 215)
+Dependent variable: arng_ind_r
+Standard errors based on Hessian
+
+                   coefficient   std. error      z       p-value 
+  ---------------------------------------------------------------
+  arng_ind_r_7       0.0823223    0.256752     0.3206    0.7485  
+  arng_ind_r_8      -0.374505     0.343095    -1.092     0.2750  
+  arng_ind_r_9       0.127870     0.348999     0.3664    0.7141  
+  arng_ind_r_10     -0.565688     0.259076    -2.183     0.0290   **
+  ipidx_d_3        -10.3506       9.99784     -1.035     0.3005  
+  ipidx_d_4        -30.4268      10.3568      -2.938     0.0033   ***
+  ipidx_d_5        -23.2974       9.63890     -2.417     0.0156   **
+  ipidx_d_6        -24.9780       7.96149     -3.137     0.0017   ***
+  jobvac_dln_3       1.67677      4.64185      0.3612    0.7179  
+  jobvac_dln_4       2.45978      4.87366      0.5047    0.6138  
+  jobvac_dln_5      -2.96986      5.23299     -0.5675    0.5704  
+  jobvac_dln_6       1.75432      4.97980      0.3523    0.7246  
+  ifo_r1_dln_1      20.4108       9.07333      2.250     0.0245   **
+  ifo_r1_dln_2      17.8707       9.01391      1.983     0.0474   **
+  ifo_r1_dln_3      18.7722       9.08511      2.066     0.0388   **
+  ifo_r1_dln_4      15.9259       8.76150      1.818     0.0691   *
+  eubor_3m_1         1.05385      0.880378     1.197     0.2313  
+  eubor_3m_2         0.432589     1.52077      0.2845    0.7761  
+  eubor_3m_3        -0.539113     1.57854     -0.3415    0.7327  
+  eubor_3m_4        -1.30673      0.928600    -1.407     0.1594  
+  cdax_dln_1         2.33729      1.71094      1.366     0.1719  
+  cdax_dln_2         4.11418      1.87877      2.190     0.0285   **
+  cdax_dln_3         3.94429      1.79057      2.203     0.0276   **
+  cdax_dln_4         0.750415     1.66084      0.4518    0.6514  
+  crp_sprd_1         0.237976     0.455023     0.5230    0.6010  
+  crp_sprd_2         0.0297266    0.631824     0.04705   0.9625  
+  crp_sprd_3         0.0788828    0.652883     0.1208    0.9038  
+  crp_sprd_4        -1.55526      0.478155    -3.253     0.0011   ***
+  aftg_inl_dln_3    -1.09932      5.00085     -0.2198    0.8260  
+  aftg_inl_dln_4    -1.82686      5.86358     -0.3116    0.7554  
+  aftg_inl_dln_5     0.890509     6.55608      0.1358    0.8920  
+  aftg_inl_dln_6     4.80120      5.60431      0.8567    0.3916  
+  aftg_aus_dln_3     4.81151      3.36312      1.431     0.1525  
+  aftg_aus_dln_4     9.70535      4.17955      2.322     0.0202   **
+  aftg_aus_dln_5     7.14867      4.10253      1.743     0.0814   *
+  aftg_aus_dln_6     5.98862      3.51135      1.706     0.0881   *
+  yc10y_1            0.0805413    0.539488     0.1493    0.8813  
+  yc10y_2           -0.179785     0.767189    -0.2343    0.8147  
+  yc10y_3           -0.130798     0.751619    -0.1740    0.8618  
+  yc10y_4           -0.687285     0.509398    -1.349     0.1773  
+
+  cut1              -5.52936      0.747408    -7.398     1.38e-13 ***
+  cut2              -3.95866      0.708849    -5.585     2.34e-08 ***
+
+Mean dependent var   1.139535   S.D. dependent var   0.796646
+Log-likelihood      -150.2964   Akaike criterion     384.5928
+Schwarz criterion    526.1595   Hannan-Quinn         441.7923
+
+Number of cases 'correctly predicted' = 139 (64.7%)
+Likelihood ratio test: Chi-square(40) = 165.101 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 4.32668
+  with p-value = 0.11494
+
+Warning: norm of gradient = 2.07649
+? omit RHS --auto=0.05
+
+Sequential elimination using two-sided alpha = 0.05
+
+ Dropping crp_sprd_2       (p-value 0.962)
+ Dropping aftg_inl_dln_5   (p-value 0.931)
+ Dropping yc10y_3          (p-value 0.990)
+ Dropping yc10y_1          (p-value 0.887)
+ Dropping crp_sprd_3       (p-value 0.841)
+ Dropping eubor_3m_2       (p-value 0.806)
+ Dropping eubor_3m_3       (p-value 0.897)
+ Dropping aftg_inl_dln_3   (p-value 0.790)
+ Dropping jobvac_dln_3     (p-value 0.808)
+ Dropping jobvac_dln_6     (p-value 0.806)
+ Dropping cdax_dln_4       (p-value 0.759)
+ Dropping arng_ind_r_7     (p-value 0.828)
+ Dropping arng_ind_r_9     (p-value 0.723)
+ Dropping jobvac_dln_5     (p-value 0.695)
+ Dropping aftg_inl_dln_4   (p-value 0.593)
+ Dropping yc10y_2          (p-value 0.589)
+ Dropping jobvac_dln_4     (p-value 0.538)
+ Dropping aftg_inl_dln_6   (p-value 0.308)
+ Dropping ipidx_d_3        (p-value 0.930)
+ Dropping aftg_aus_dln_3   (p-value 0.370)
+ Dropping aftg_aus_dln_5   (p-value 0.471)
+ Dropping aftg_aus_dln_4   (p-value 0.365)
+ Dropping aftg_aus_dln_6   (p-value 0.529)
+ Dropping crp_sprd_1       (p-value 0.364)
+ Dropping cdax_dln_1       (p-value 0.269)
+ Dropping arng_ind_r_8     (p-value 0.194)
+ Dropping cdax_dln_2       (p-value 0.058)
+
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    arng_ind_r_7, arng_ind_r_8, arng_ind_r_9, ipidx_d_3, jobvac_dln_3,
+    jobvac_dln_4, jobvac_dln_5, jobvac_dln_6, eubor_3m_2, eubor_3m_3,
+    cdax_dln_1, cdax_dln_2, cdax_dln_4, crp_sprd_1, crp_sprd_2, crp_sprd_3,
+    aftg_inl_dln_3, aftg_inl_dln_4, aftg_inl_dln_5, aftg_inl_dln_6,
+    aftg_aus_dln_3, aftg_aus_dln_4, aftg_aus_dln_5, aftg_aus_dln_6,
+    yc10y_1, yc10y_2, yc10y_3
+  Test statistic: F(27, 173) = 0.624658, p-value 0.925241
+  Omitting variables improved 3 of 3 information criteria.
+
+Function evaluations: 89
+Evaluations of gradient: 26
+
+Model 2: Ordered Probit, using observations 1993:12-2011:10 (T = 215)
+Dependent variable: arng_ind_r
+Standard errors based on Hessian
+
+                  coefficient   std. error     z      p-value 
+  ------------------------------------------------------------
+  arng_ind_r_10    -0.617764     0.133008    -4.645   3.41e-06 ***
+  ipidx_d_4       -14.7020       6.55671     -2.242   0.0249   **
+  ipidx_d_5       -13.9863       6.35293     -2.202   0.0277   **
+  ipidx_d_6       -18.9833       5.98743     -3.171   0.0015   ***
+  ifo_r1_dln_1     25.2395       7.72801      3.266   0.0011   ***
+  ifo_r1_dln_2     19.0163       7.33907      2.591   0.0096   ***
+  ifo_r1_dln_3     18.8545       7.55521      2.496   0.0126   **
+  ifo_r1_dln_4     17.7123       7.78663      2.275   0.0229   **
+  eubor_3m_1        1.22276      0.298847     4.092   4.28e-05 ***
+  eubor_3m_4       -1.61292      0.288919    -5.583   2.37e-08 ***
+  cdax_dln_3        3.64554      1.61247      2.261   0.0238   **
+  crp_sprd_4       -1.28806      0.173127    -7.440   1.01e-13 ***
+  yc10y_4          -0.839383     0.135580    -6.191   5.98e-10 ***
+
+  cut1             -5.48755      0.665211    -8.249   1.59e-16 ***
+  cut2             -4.00989      0.624530    -6.421   1.36e-10 ***
+
+Mean dependent var   1.139535   S.D. dependent var   0.796646
+Log-likelihood      -159.2161   Akaike criterion     348.4321
+Schwarz criterion    398.9917   Hannan-Quinn         368.8605
+
+Number of cases 'correctly predicted' = 133 (61.9%)
+Likelihood ratio test: Chi-square(13) = 147.262 [0.0000]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 3.29763
+  with p-value = 0.192277
+
+Warning: norm of gradient = 3.11528
+Done

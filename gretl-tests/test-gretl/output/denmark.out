@@ -1,0 +1,211 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run denmark.inp
+ /opt/esl/share/gretl/scripts/misc/denmark.inp
+# Replication of some of the results on Danish macro
+# data in S. Johansen, "Likelihood-Based Inference in
+# Cointegrated Vector Auto-Regressive Models" (Oxford,
+# 1995), chapter 7.
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+# determination of the cointegration rank
+? coint2 2 LRM LRY IBO IDE --rc --seasonals
+
+Johansen test:
+Number of equations = 4
+Lag order = 2
+Estimation period: 1974:3 - 1987:3 (T = 53)
+Case 2: Restricted constant
+
+Log-likelihood = 829.051 (including constant term: 678.644)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.43317     49.144 [0.1284]     30.087 [0.0286]
+   1    0.17758     19.057 [0.7812]     10.362 [0.8017]
+   2    0.11279     8.6950 [0.7645]     6.3427 [0.7483]
+   3   0.043411     2.3522 [0.7088]     2.3522 [0.7076]
+
+Corrected for sample size (df = 41)
+Rank Trace test p-value
+   0     49.144 [0.2018]
+   1     19.057 [0.8197]
+   2     8.6950 [0.7816]
+   3     2.3522 [0.7095]
+
+eigenvalue     0.43317      0.17758      0.11279     0.043411 
+
+beta (cointegrating vectors)
+LRM             21.974      -14.656       7.9465      -1.0245 
+LRY            -22.698       20.051      -25.641       1.9298 
+IBO             114.42      -3.5611       4.2775      -24.997 
+IDE            -92.640      -100.26      -44.877       14.648 
+const          -133.16       62.593       62.749       2.3187 
+
+alpha (adjustment vectors)
+LRM         -0.0096912   0.00032853    0.0044058   -0.0019804 
+LRY          0.0052344   -0.0013476    0.0062843   -0.0010821 
+IBO          0.0010548   0.00072298   0.00043797    0.0015361 
+IDE          0.0013384    0.0020626  -0.00035380   4.6536e-05 
+
+renormalized beta
+LRM             1.0000     -0.73094       1.8578    -0.069940 
+LRY            -1.0329       1.0000      -5.9943      0.13174 
+IBO             5.2069     -0.17761       1.0000      -1.7065 
+IDE            -4.2159      -5.0004      -10.491       1.0000 
+const          -6.0599       3.1217       14.670      0.15829 
+
+renormalized alpha
+LRM           -0.21295    0.0065874     0.018846    -0.029009 
+LRY            0.11502    -0.027020     0.026881    -0.015852 
+IBO           0.023177     0.014496    0.0018734     0.022501 
+IDE           0.029411     0.041357   -0.0015134   0.00068168 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.18073      0.10977      -1.0417      0.63812       1.5829 
+LRY            0.18582     -0.30905      0.65764     -0.64768     -0.38955 
+IBO           0.014488    -0.017710     0.081582     -0.16735    -0.064154 
+IDE         -0.0036773     0.020138      0.14312     -0.31424    -0.071218 
+
+# estimation of the vector EC model
+? vecm 2 1 LRM LRY IBO IDE --rc --seasonals
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000 
+           (0.0000) 
+LRY        -1.0329 
+          (0.14054) 
+IBO         5.2069 
+          (0.55682) 
+IDE        -4.2159 
+           (1.1031) 
+const      -6.0599 
+          (0.87213) 
+
+alpha (adjustment vectors)
+
+LRM       -0.21295 
+LRY        0.11502 
+IBO       0.023177 
+IDE       0.029411 
+
+Log-likelihood = 669.11539
+Determinant of covariance matrix = 1.2715236e-16
+AIC = -23.5893
+BIC = -21.9535
+HQC = -22.9602
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  d_LRM_1     0.262771     0.160534      1.637     0.1088  
+  d_LRY_1    -0.144254     0.144528     -0.9981    0.3237  
+  d_IBO_1    -0.0401148    0.414434     -0.09679   0.9233  
+  d_IDE_1    -0.670698     0.548151     -1.224     0.2276  
+  S1         -0.0576527    0.0103852    -5.551     1.53e-06 ***
+  S2         -0.0163050    0.00928088   -1.757     0.0859   *
+  S3         -0.0408586    0.00886655   -4.608     3.48e-05 ***
+  EC1        -0.212955     0.0650808    -3.272     0.0021   ***
+
+Mean dependent var   0.007757   S.D. dependent var   0.033086
+Sum squared resid    0.020456   S.E. of regression   0.021562
+R-squared            0.659708   Adjusted R-squared   0.597836
+rho                 -0.043855   Durbin-Watson        2.075695
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_LRM_1     0.602668     0.168100      3.585    0.0008  ***
+  d_LRY_1    -0.142828     0.151340     -0.9438   0.3504 
+  d_IBO_1    -0.290609     0.433968     -0.6697   0.5066 
+  d_IDE_1    -0.182561     0.573987     -0.3181   0.7519 
+  S1         -0.0268262    0.0108747    -2.467    0.0176  **
+  S2          0.00784216   0.00971833    0.8069   0.4240 
+  S3         -0.0130827    0.00928446   -1.409    0.1658 
+  EC1         0.115022     0.0681483     1.688    0.0985  *
+
+Mean dependent var   0.003340   S.D. dependent var   0.025239
+Sum squared resid    0.022429   S.E. of regression   0.022578
+R-squared            0.334755   Adjusted R-squared   0.213801
+rho                  0.009422   Durbin-Watson        1.964505
+
+Equation 3: d_IBO
+
+             coefficient    std. error   t-ratio    p-value
+  ---------------------------------------------------------
+  d_LRM_1     0.0573489     0.0635355     0.9026    0.3716 
+  d_LRY_1     0.144224      0.0572009     2.521     0.0154  **
+  d_IBO_1     0.310660      0.164023      1.894     0.0648  *
+  d_IDE_1     0.203769      0.216945      0.9393    0.3527 
+  S1         -0.000400021   0.00411024   -0.09732   0.9229 
+  S2          0.00762196    0.00367316    2.075     0.0439  **
+  S3          0.00462651    0.00350917    1.318     0.1942 
+  EC1         0.0231772     0.0257575     0.8998    0.3731 
+
+Mean dependent var  -0.001114   S.D. dependent var   0.009802
+Sum squared resid    0.003204   S.E. of regression   0.008534
+R-squared            0.367037   Adjusted R-squared   0.251953
+rho                  0.174104   Durbin-Watson        1.615919
+
+Equation 4: d_IDE
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_LRM_1     0.0613395    0.0428204     1.432    0.1591 
+  d_LRY_1     0.0177406    0.0385511     0.4602   0.6476 
+  d_IBO_1     0.264939     0.110545      2.397    0.0209  **
+  d_IDE_1     0.212009     0.146212      1.450    0.1541 
+  S1         -0.00482995   0.00277013   -1.744    0.0882  *
+  S2         -0.00117799   0.00247556   -0.4758   0.6365 
+  S3         -0.00288469   0.00236504   -1.220    0.2291 
+  EC1         0.0294111    0.0173595     1.694    0.0973  *
+
+Mean dependent var  -0.000384   S.D. dependent var   0.006897
+Sum squared resid    0.001455   S.E. of regression   0.005751
+R-squared            0.413390   Adjusted R-squared   0.306733
+rho                  0.015545   Durbin-Watson        1.959732
+
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00038595   0.00022597  -6.5007e-05  -2.9101e-05 
+LRY    0.00022597   0.00042320  -1.2151e-05  -2.7357e-05 
+IBO   -6.5007e-05  -1.2151e-05   6.0456e-05   1.0517e-05 
+IDE   -2.9101e-05  -2.7357e-05   1.0517e-05   2.7460e-05 
+
+determinant = 1.27152e-16
+
+# retrieve the cointegration vector and the loadings
+? matrix alpha = $jalpha
+Generated matrix alpha
+? matrix beta = $jbeta
+Generated matrix beta
+? matrix Pi = alpha*beta'
+Generated matrix Pi
+Restricted long-run matrix
+? Pi
+Pi (4 x 5)
+
+    -0.21295      0.21997      -1.1088      0.89779       1.2905 
+     0.11502     -0.11881      0.59891     -0.48492     -0.69703 
+    0.023177    -0.023941      0.12068    -0.097712     -0.14045 
+    0.029411    -0.030380      0.15314     -0.12399     -0.17823 
+
+Done

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="china" frequency="1" startobs="1" endobs="12" type="cross-section">
+<variables count="8">
+<variable name="Yr"
+ label="Year"
+ displayname="year"
+/>
+<variable name="rurpop"
+ label="Rural population"
+/>
+<variable name="urbpop"
+ label="Urban population"
+/>
+<variable name="agemp"
+ label="Agricultural employment"
+/>
+<variable name="rnaemp"
+ label="Rural non-agricultural employment"
+/>
+<variable name="urbemp"
+ label="Urban employment"
+/>
+<variable name="totemp"
+ label="Total employment"
+/>
+<variable name="indpc"
+ label="indpc = 100*(rnaemp+urbemp)/totemp"
+/>
+</variables>
+<observations count="12" labels="false">
+<obs>1952 503190 71630 173170 9500 24620 207290 16.46003184 </obs>
+<obs>1957 547040 99490 193090 13690 30930 237710 18.77077111 </obs>
+<obs>1958 552730 107210 154900 60040 51060 266000 41.76691729 </obs>
+<obs>1959 548360 123710 162710 48030 51000 261740 37.83525636 </obs>
+<obs>1960 531340 130730 170160 31690 56960 258810 34.25292686 </obs>
+<obs>1962 556360 116590 212760 4550 41790 259100 17.88498649 </obs>
+<obs>1970 685680 144240 278110 8750 57460 344320 19.22920539 </obs>
+<obs>1977 783050 166690 293400 17320 83050 393770 25.48949895 </obs>
+<obs>1978 790140 172450 283730 31510 86280 401520 29.33602311 </obs>
+<obs>1987 816260 276740 308700 81304 137826 527830 41.51526060 </obs>
+<obs>1994 855490 343010 326903 119639 167316 613858 46.74615302 </obs>
+<obs>1995 859470 351740 323345 127074 173461 623880 48.17192409 </obs>
+</observations>
+</gretldata>

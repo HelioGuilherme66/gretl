@@ -1,0 +1,116 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps9-6.inp
+ /opt/esl/share/gretl/scripts/ps9-6.inp
+# PS9.6, for Example 9.7
+? open data9-1
+
+Read datafile /opt/esl/share/gretl/data/data9-1.gdt
+periodicity: 12, maxobs: 30
+observations range: 1951:03 to 1953:08
+
+Listing 5 variables:
+  0) const     1) demand    2) income    3) price     4) temp    
+
+? ar1 demand 0 price income temp --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99    0.0791734    -0.90    0.0723615    -0.80    0.0653231
+ -0.70    0.0588455    -0.60    0.0529318    -0.50    0.0475855
+ -0.40    0.0428108    -0.30    0.0386122    -0.20    0.0349948
+ -0.10    0.0319634     0.00    0.0295211     0.10    0.0276677
+  0.20    0.0263940     0.30    0.0256743     0.40    0.0254519
+  0.50    0.0256225     0.60    0.0260240     0.70    0.0264685
+  0.80    0.0268545     0.90    0.0273151     0.99    0.0280823   
+
+ESS is minimized for rho = 0.4
+
+  ESS
+  0.0791734  |o                             |                              
+             |                              |                              
+             |                              |                              
+  0.0702198  +  o                           |                              
+             |                              |                              
+             |     o                        |                              
+             |                              |                              
+             |        o                     |                              
+  0.0552972  +                              |                              
+             |           o                  |                              
+             |                              |                              
+             |              o               |                              
+             |                              |                              
+  0.0403745  +                 o            |                              
+             |                    o         |                              
+             |                       o      |                              
+             |                          o   |                              
+             |                              o                              
+  0.0254519  +                              |  o  o  o  o  o  o  o  o  o  o
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1      0.40000   0.0254519
+                   2      0.40064   0.0254519
+                   3      0.40084   0.0254519
+                   4      0.40090   0.0254519
+                   5      0.40092   0.0254519
+
+Model 1: Hildreth-Lu, using observations 1951:04-1953:08 (T = 29)
+Dependent variable: demand
+rho = 0.400917
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const       0.157143     0.289628       0.5426   0.5922  
+  price      -0.892392     0.810850      -1.101    0.2816  
+  income      0.00320278   0.00154604     2.072    0.0488   **
+  temp        0.00355839   0.000554675    6.415    1.02e-06 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.358517   S.D. dependent var   0.066760
+Sum squared resid    0.025452   S.E. of regression   0.031907
+R-squared            0.796423   Adjusted R-squared   0.771993
+F(3, 25)             15.40206   P-value(F)           7.01e-06
+rho                  0.122034   Durbin-Watson        1.548831
+
+Excluding the constant, p-value was highest for variable 3 (price)
+
+? ar1 demand 0 price income temp
+
+Performing iterative calculation of rho...
+
+                 ITER       RHO        ESS
+                   1      0.40063   0.0254519
+                   2      0.40083   0.0254519
+                   3      0.40090   0.0254519
+                   4      0.40092   0.0254519
+
+Model 2: Cochrane-Orcutt, using observations 1951:04-1953:08 (T = 29)
+Dependent variable: demand
+rho = 0.400917
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const       0.157143     0.289628       0.5426   0.5922  
+  price      -0.892392     0.810850      -1.101    0.2816  
+  income      0.00320278   0.00154604     2.072    0.0488   **
+  temp        0.00355840   0.000554675    6.415    1.02e-06 ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.358517   S.D. dependent var   0.066760
+Sum squared resid    0.025452   S.E. of regression   0.031907
+R-squared            0.796423   Adjusted R-squared   0.771993
+F(3, 25)             15.40207   P-value(F)           7.01e-06
+rho                  0.122035   Durbin-Watson        1.548831
+
+Excluding the constant, p-value was highest for variable 3 (price)
+
+Done

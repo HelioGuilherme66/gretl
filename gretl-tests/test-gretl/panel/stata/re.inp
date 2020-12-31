@@ -1,0 +1,6 @@
+open nlswork.dta
+setobs idcode year --panel
+series black = race==2
+panel ln_wage 0 grade age ttl_exp tenure black not_smsa south --random
+eval corr(ln_wage, $yhat)^2
+

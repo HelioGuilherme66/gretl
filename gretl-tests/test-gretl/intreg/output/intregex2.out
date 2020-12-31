@@ -1,0 +1,132 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run intregex2.inp
+ /home/cottrell/stats/test-gretl/intreg/intregex2.inp
+# cf. http://www.ats.ucla.edu/stat/stata/dae/intreg2.htm
+? open intregex2.dta
+Stata file version 7
+endianness: big
+number of variables = 6
+number of observations = 30
+length of varnames = 32
+Max length of labels = 81
+dataset label: ''
+timestamp: '17 Jan 2006 15:19'
+variable 1: float type
+variable 2: float type
+variable 3: float type
+variable 4: float type
+variable 5: float type
+variable 6: float type
+variable 1: name = 'id'
+variable 2: name = 'lgpa'
+variable 3: name = 'ugpa'
+variable 4: name = 'write'
+variable 5: name = 'rating'
+variable 6: name = 'read'
+Listing 7 variables:
+  0) const     1) id        2) lgpa      3) ugpa      4) write   
+  5) rating    6) read    
+
+? intreg lgpa ugpa 0 write rating read
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 4 iterations
+
+Model 1: Interval estimates, using observations 1-30
+Lower limit: lgpa, Upper limit: ugpa
+Standard errors based on Hessian
+
+             coefficient   std. error      z     p-value
+  ------------------------------------------------------
+  const      0.792750      0.500172      1.585   0.1130 
+  write      0.00542813    0.00159108    3.412   0.0006  ***
+  rating     0.0185163     0.0101270     1.828   0.0675  *
+  read       0.00241989    0.000833398   2.904   0.0037  ***
+
+Chi-square(3)        52.40649   p-value              2.45e-11
+Log-likelihood      -36.42590   Akaike criterion     82.85179
+Schwarz criterion    89.85778   Hannan-Quinn         85.09307
+
+sigma = 0.348779 (0.0535221)
+Left-unbounded observations: 1
+Right-unbounded observations: 1
+Bounded observations: 28
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 20.6
+  with p-value = 3.36337e-05
+
+? intreg lgpa ugpa 0 write rating read --robust
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 4 iterations
+
+Model 2: Interval estimates, using observations 1-30
+Lower limit: lgpa, Upper limit: ugpa
+QML standard errors
+
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  const      0.792750      0.505245     1.569   0.1166 
+  write      0.00542813    0.00143741   3.776   0.0002  ***
+  rating     0.0185163     0.0107729    1.719   0.0857  *
+  read       0.00241989    0.00110276   2.194   0.0282  **
+
+Chi-square(3)        50.05923   p-value              7.76e-11
+Log-likelihood      -36.42590   Akaike criterion     82.85179
+Schwarz criterion    89.85778   Hannan-Quinn         85.09307
+
+sigma = 0.348779 (0.0445865)
+Left-unbounded observations: 1
+Right-unbounded observations: 1
+Bounded observations: 28
+Point observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 20.6
+  with p-value = 3.36337e-05
+
+? fcast irfc
+Generated series irfc (ID 7)
+? print lgpa ugpa irfc --byobs
+
+           lgpa         ugpa         irfc
+
+ 1     2.500000     3.000000     3.105535
+ 2     3.400000     3.800000     3.335345
+ 3     2.500000     3.000000     2.424484
+ 4                  2.000000     2.147997
+ 5     3.000000     3.400000     2.684989
+ 6     3.400000     3.800000     3.259121
+ 7     3.800000     4.000000     3.707957
+ 8     2.000000     2.500000     2.594942
+ 9     3.000000     3.400000     3.061779
+10     3.400000     3.800000     3.245299
+11     2.000000     2.500000     2.221428
+12     2.000000     2.500000     2.355864
+13     2.000000     2.500000     2.256560
+14     2.500000     3.000000     3.203186
+15     2.500000     3.000000     3.583423
+16     2.500000     3.000000     3.105535
+17     3.400000     3.800000     3.335345
+18     2.500000     3.000000     2.424484
+19     2.000000     2.500000     2.392263
+20     3.000000     3.400000     2.684989
+21     3.400000     3.800000     3.259121
+22     4.000000                  3.828952
+23     2.000000     2.500000     2.594942
+24     3.000000     3.400000     3.061779
+25     3.400000     3.800000     3.245299
+26     2.000000     2.500000     2.221428
+27     2.000000     2.500000     2.355864
+28     2.000000     2.500000     2.256560
+29     2.500000     3.000000     3.203186
+30     2.500000     3.000000     3.583423
+
+Done

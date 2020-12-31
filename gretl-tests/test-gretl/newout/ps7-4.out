@@ -1,0 +1,82 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps7-4.inp
+ /opt/esl/share/gretl/scripts/ps7-4.inp
+# PS7.4, for Practice Problem 7.2
+? open data7-3
+
+Read datafile /opt/esl/share/gretl/data/data7-3.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 8 variables:
+  0) const      1) price      2) sqft       3) bedrms     4) baths    
+  5) pool       6) famroom    7) firepl   
+
+? genr lsqft = log(sqft)
+Generated series lsqft (ID 8)
+# Model A'
+? ols price 0 lsqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1660.81      273.543     -6.071    5.57e-05 ***
+  lsqft         263.316      36.3816     7.238    1.03e-05 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18976.68   S.E. of regression   39.76670
+R-squared            0.813616   Adjusted R-squared   0.798084
+F(1, 12)             52.38323   P-value(F)           0.000010
+Log-likelihood      -70.34850   Akaike criterion     144.6970
+Schwarz criterion    145.9751   Hannan-Quinn         144.5787
+
+# Model E'
+? ols price 0 lsqft bedrms baths pool famroom firepl
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      -1977.51       335.467     -5.895     0.0006  ***
+  lsqft        313.659       52.4492     5.980     0.0006  ***
+  bedrms       -16.9177      24.2746    -0.6969    0.5083 
+  baths          1.27531     34.3024     0.03718   0.9714 
+  pool          55.5374      18.6769     2.974     0.0207  **
+  famroom      -21.7661      36.2983    -0.5996    0.5676 
+  firepl        -6.57889     47.4103    -0.1388    0.8935 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    6469.137   S.E. of regression   30.40004
+R-squared            0.936462   Adjusted R-squared   0.882001
+F(6, 7)              17.19500   P-value(F)           0.000723
+Log-likelihood      -62.81532   Akaike criterion     139.6306
+Schwarz criterion    144.1041   Hannan-Quinn         139.2166
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# Model F'
+? ols price 0 lsqft pool
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -1794.47       191.870     -9.353    1.44e-06 ***
+  lsqft        278.329       25.3941    10.96     2.94e-07 ***
+  pool          58.4437      15.4820     3.775    0.0031   ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    8267.020   S.E. of regression   27.41436
+R-squared            0.918804   Adjusted R-squared   0.904041
+F(2, 11)             62.23693   P-value(F)           1.01e-06
+Log-likelihood      -64.53194   Akaike criterion     135.0639
+Schwarz criterion    136.9811   Hannan-Quinn         134.8864
+
+Done

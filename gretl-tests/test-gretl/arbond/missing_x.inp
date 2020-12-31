@@ -1,0 +1,4 @@
+open missing_x.csv
+setobs id year --panel
+print y diff(y) diff(x) --by
+arbond 1 0 ; y diff(x)

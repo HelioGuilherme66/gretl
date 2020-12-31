@@ -1,0 +1,7 @@
+# Estimate Weibull duration model on Kennan strike data
+# Compare W. Greene, "Econometric Analysis", 5e, Chapter 22
+
+open kennan
+
+duration Ti 0 Prod 
+duration Ti 0 Prod --exponential

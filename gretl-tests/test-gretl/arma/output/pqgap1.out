@@ -1,0 +1,158 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run pqgap1.inp
+ /home/cottrell/stats/test-gretl/arma/pqgap1.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + .6 * eps(-1) - .3 * eps(-4)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-2) - 0.1 * y(-3) + u
+Replaced series y (ID 4)
+? arma {2 3} {1 4} ; y -cx
+
+Model 1: ARMA, using observations 1950:04-2001:12 (T = 621)
+Estimated using X-13-ARIMA (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0664535    0.125337      0.5302   0.5960  
+  phi_2       0.670801     0.0424772    15.79     3.53e-56 ***
+  phi_3      -0.104707     0.0368559    -2.841    0.0045   ***
+  theta_1     0.582936     0.0369821    15.76     5.62e-56 ***
+  theta_4    -0.286969     0.0362627    -7.914    2.50e-15 ***
+
+Mean dependent var   0.067172   S.D. dependent var   1.456544
+Mean of innovations -0.001816   S.D. of innovations  1.045683
+Log-likelihood      -908.9009   Akaike criterion     1829.802
+Schwarz criterion    1856.390   Hannan-Quinn         1840.136
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3782     0.0000     1.3782     0.0000
+    Root  2          -1.1260     0.0000     1.1260     0.5000
+    Root  3           6.1543     0.0000     6.1543     0.0000
+  MA
+    Root  1           1.6125     0.0000     1.6125     0.0000
+    Root  2          -1.0701     0.0000     1.0701     0.5000
+    Root  3          -0.2712     1.3950     1.4211     0.2806
+    Root  4          -0.2712    -1.3950     1.4211    -0.2806
+  -----------------------------------------------------------
+
+? arma {2 3} {1 4} ; y -c
+
+Function evaluations: 18
+Evaluations of gradient: 9
+
+Model 2: ARMA, using observations 1950:04-2001:12 (T = 621)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0288295    0.0550704     0.5235   0.6006  
+  phi_2       0.670812     0.0433752    15.47     5.95e-54 ***
+  phi_3      -0.104707     0.0354332    -2.955    0.0031   ***
+  theta_1     0.582923     0.0351808    16.57     1.16e-61 ***
+  theta_4    -0.286989     0.0366914    -7.822    5.21e-15 ***
+
+Mean dependent var   0.067172   S.D. dependent var   1.456544
+Mean of innovations -0.001813   S.D. of innovations  1.045683
+Log-likelihood      -908.9009   Akaike criterion     1829.802
+Schwarz criterion    1856.390   Hannan-Quinn         1840.136
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -1.1260     0.0000     1.1260     0.5000
+    Root  2           1.3781     0.0000     1.3781     0.0000
+    Root  3           6.1544     0.0000     6.1544     0.0000
+  MA
+    Root  1          -1.0700     0.0000     1.0700     0.5000
+    Root  2           1.6124     0.0000     1.6124     0.0000
+    Root  3          -0.2712    -1.3950     1.4211    -0.2806
+    Root  4          -0.2712     1.3950     1.4211     0.2806
+  -----------------------------------------------------------
+
+? arma {2 3} {1 4} ; y -x
+
+Model 3: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0604194    0.124103      0.4868   0.6264  
+  phi_2       0.669485     0.0396183    16.90     4.63e-64 ***
+  phi_3      -0.104280     0.0350073    -2.979    0.0029   ***
+  theta_1     0.582905     0.0352867    16.52     2.67e-61 ***
+  theta_4    -0.286712     0.0342783    -8.364    6.05e-17 ***
+
+Mean dependent var   0.066849   S.D. dependent var   1.453040
+Mean of innovations  0.000164   S.D. of innovations  1.043098
+Log-likelihood      -912.2434   Akaike criterion     1836.487
+Schwarz criterion    1863.104   Hannan-Quinn         1846.830
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.3793     0.0000     1.3793     0.0000
+    Root  2          -1.1272     0.0000     1.1272     0.5000
+    Root  3           6.1680     0.0000     6.1680     0.0000
+  MA
+    Root  1           1.6129     0.0000     1.6129     0.0000
+    Root  2          -1.0702     0.0000     1.0702     0.5000
+    Root  3          -0.2713     1.3953     1.4215     0.2806
+    Root  4          -0.2713    -1.3953     1.4215    -0.2806
+  -----------------------------------------------------------
+
+? arma {2 3} {1 4} ; y
+
+Function evaluations: 70
+Evaluations of gradient: 19
+
+Model 4: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0604191    0.123923      0.4876   0.6259  
+  phi_2       0.669516     0.0440026    15.22     2.80e-52 ***
+  phi_3      -0.104297     0.0373452    -2.793    0.0052   ***
+  theta_1     0.582911     0.0380790    15.31     6.77e-53 ***
+  theta_4    -0.286742     0.0392146    -7.312    2.63e-13 ***
+
+Mean dependent var   0.066849   S.D. dependent var   1.453040
+Mean of innovations  0.000058   S.D. of innovations  1.043098
+Log-likelihood      -912.2434   Akaike criterion     1836.487
+Schwarz criterion    1863.104   Hannan-Quinn         1846.830
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1          -1.1272     0.0000     1.1272     0.5000
+    Root  2           1.3793     0.0000     1.3793     0.0000
+    Root  3           6.1672     0.0000     6.1672     0.0000
+  MA
+    Root  1          -1.0702     0.0000     1.0702     0.5000
+    Root  2           1.6128     0.0000     1.6128     0.0000
+    Root  3          -0.2713    -1.3953     1.4214    -0.2806
+    Root  4          -0.2713     1.3953     1.4214     0.2806
+  -----------------------------------------------------------
+
+Done

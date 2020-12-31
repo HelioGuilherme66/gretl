@@ -1,0 +1,17 @@
+open gretl-dnl-m.gdt
+
+genr y = log(mdnl)
+genr ld = log(days)
+genr time
+
+matrix p = { 1,2,6 }
+
+arima p 0 ; y const time -c
+
+if 0
+  b = $coeff
+  set initvals b
+endif
+
+arima p 0 ; y const time
+

@@ -1,0 +1,75 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run denmark_ch2.inp
+ /home/cottrell/stats/test-gretl/vecm/denmark_ch2.inp
+# Replicate results in Johansen, chapter 2, tables
+# 2.1 to 2.4, for Danish data
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 4
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors)
+
+LRM       1.0000       0.0000       0.0000       0.0000 
+LRY       0.0000       1.0000       0.0000       0.0000 
+IBO       0.0000       0.0000       1.0000       0.0000 
+IDE       0.0000       0.0000       0.0000       1.0000 
+
+alpha (adjustment vectors)
+
+LRM     -0.18073      0.10977      -1.0417      0.63812 
+LRY      0.18582     -0.30905      0.65764     -0.64768 
+IBO     0.014488    -0.017710     0.081582     -0.16735 
+IDE   -0.0036773     0.020138      0.14312     -0.31424 
+
+Log-likelihood = 678.64385
+Determinant of covariance matrix = 8.8749845e-17
+AIC = -23.7979
+BIC = -22.0135
+HQC = -23.1117
+Portmanteau test: LB(13) = 197.625, df = 176 [0.1264]
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00036251   0.00019658  -6.4132e-05  -2.8128e-05 
+LRY    0.00019658   0.00038072  -1.2267e-05  -2.2303e-05 
+IBO   -6.4132e-05  -1.2267e-05   5.7381e-05   9.1097e-06 
+IDE   -2.8128e-05  -2.2303e-05   9.1097e-06   2.3079e-05 
+
+determinant = 8.87498e-17
+
+Pi:
+       m       y      ib      id
+  -0.181   0.110  -1.042   0.638
+   0.186  -0.309   0.658  -0.648
+   0.014  -0.018   0.082  -0.167
+  -0.004   0.020   0.143  -0.314
+
+Gamma:
+     d_m     d_y    d_ib    d_id
+   0.195  -0.096  -0.138  -0.462
+   0.504  -0.045  -0.377   0.060
+   0.051   0.136   0.301   0.253
+   0.069  -0.022   0.227   0.265
+
+D:
+      s1      s2      s3       c
+  -0.056  -0.016  -0.039   1.583
+  -0.025   0.007  -0.011  -0.390
+  -0.000   0.007   0.005  -0.064
+  -0.004  -0.001  -0.003  -0.071
+
+100 * sigma:
+    1.90    1.95    0.76    0.48
+
+correlations:
+    1.00    0.53   -0.44   -0.31
+    0.53    1.00   -0.08   -0.24
+   -0.44   -0.08    1.00    0.25
+   -0.31   -0.24    0.25    1.00
+

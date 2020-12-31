@@ -1,0 +1,106 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run looptest.inp
+ /home/cottrell/stats/test-gretl/looptest.inp
+# tests for certain operations in loops that could
+# possibly get messed up by "compilation"
+? open data4-1.gdt -q
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+? set seed 1234
+Pseudo-random number generator seeded with 1234
+? loop i=1..5 -q
+> sqft[i+3] = i
+> endloop
+? print sqft -o
+
+           sqft
+
+ 1         1065
+ 2         1254
+ 3         1300
+ 4            1
+ 5            2
+ 6            3
+ 7            4
+ 8            5
+ 9         1935
+10         1948
+11         2254
+12         2600
+13         2800
+14         3000
+
+? loop i=1..5 -q
+> series x = normal()
+> if i == 3
+> open data4-10
+> endif
+> endloop
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? print x -o
+
+              x
+
+AL    -1.334868
+AK    -0.611308
+AZ    -0.786640
+AR    -2.601956
+CA    -0.713815
+CO     0.543476
+CT     0.790042
+DE    -3.375077
+DC     1.430105
+FL    -0.449350
+GA    -0.418351
+HI    -0.347575
+ID     0.364894
+IL     0.714195
+IN     0.146346
+IA     0.046326
+KS    -0.760860
+KY     0.061758
+LA     0.768958
+ME     1.322442
+MD     1.250127
+MA     0.131544
+MI    -0.174715
+MN     1.313773
+MS    -0.735856
+MO    -0.564891
+MT     1.047083
+NE    -0.387907
+NV    -0.147640
+NH    -1.111444
+NJ     1.659103
+NM     3.041325
+NY     1.915966
+NC     0.094847
+ND     0.610615
+OH    -1.213486
+OK     1.377631
+OR    -0.701186
+PA    -1.414171
+RI    -0.063212
+SC    -0.896654
+SD    -1.757672
+TN     0.308434
+TX    -1.067035
+UT    -0.186430
+VT     0.804945
+VA     0.019101
+WA    -1.588207
+WV    -0.516973
+WI     0.303432
+WY    -1.025020
+
+Done

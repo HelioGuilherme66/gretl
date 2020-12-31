@@ -1,0 +1,79 @@
+
+. insheet using cigar.csv
+(6 vars, 1380 obs)
+
+. xtset state year
+       panel variable:  state (strongly balanced)
+        time variable:  year, 63 to 92
+                delta:  1 unit
+
+. xtabond lnc lnp lnpn lny, lag(1)
+
+Arellano-Bond dynamic panel-data estimation  Number of obs         =      1288
+Group variable: state                        Number of groups      =        46
+Time variable: year
+                                             Obs per group:    min =        28
+                                                               avg =        28
+                                                               max =        28
+
+Number of instruments =    410               Wald chi2(4)          =   8713.16
+                                             Prob > chi2           =    0.0000
+One-step results
+------------------------------------------------------------------------------
+         lnc |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         lnc |
+         L1. |   .8517338   .0192099    44.34   0.000      .814083    .8893846
+             |
+         lnp |  -.1490983   .0268618    -5.55   0.000    -.2017464   -.0964502
+        lnpn |   .0112354   .0257127     0.44   0.662    -.0391604    .0616313
+         lny |  -.0473278   .0082608    -5.73   0.000    -.0635187    -.031137
+       _cons |   .9056804    .102458     8.84   0.000     .7048664    1.106494
+------------------------------------------------------------------------------
+Instruments for differenced equation
+        GMM-type: L(2/.).lnc
+        Standard: D.lnp D.lnpn D.lny
+Instruments for level equation
+        Standard: _cons
+
+. xtabond2 lnc L.lnc lnp lnpn lny, gmm(L.lnc) iv(lnp lnpn lny) noleveleq
+Favoring space over speed. To switch, type or click on mata: mata set matafavor
+>  speed, perm.
+Warning: Number of instruments may be large relative to number of observations.
+
+Dynamic panel-data estimation, one-step difference GMM
+------------------------------------------------------------------------------
+Group variable: state                           Number of obs      =      1288
+Time variable : year                            Number of groups   =        46
+Number of instruments = 409                     Obs per group: min =        28
+Wald chi2(4)  =   8747.11                                      avg =     28.00
+Prob > chi2   =     0.000                                      max =        28
+------------------------------------------------------------------------------
+         lnc |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         lnc |
+         L1. |   .8517338   .0191726    44.42   0.000     .8141562    .8893115
+             |
+         lnp |  -.1490983   .0268096    -5.56   0.000    -.2016441   -.0965525
+        lnpn |   .0112354   .0256627     0.44   0.662    -.0390625    .0615334
+         lny |  -.0473278   .0082447    -5.74   0.000    -.0634872   -.0311684
+------------------------------------------------------------------------------
+Instruments for first differences equation
+  Standard
+    D.(lnp lnpn lny)
+  GMM-type (missing=0, separate instruments for each period unless collapsed)
+    L(1/.).L.lnc
+------------------------------------------------------------------------------
+Arellano-Bond test for AR(1) in first differences: z = -15.44  Pr > z =  0.000
+Arellano-Bond test for AR(2) in first differences: z =   2.79  Pr > z =  0.005
+------------------------------------------------------------------------------
+Sargan test of overid. restrictions: chi2(405)  = 847.68  Prob > chi2 =  0.000
+  (Not robust, but not weakened by many instruments.)
+
+Difference-in-Sargan tests of exogeneity of instrument subsets:
+  iv(lnp lnpn lny)
+    Sargan test excluding group:     chi2(402)  = 786.17  Prob > chi2 =  0.000
+    Difference (null H = exogenous): chi2(3)    =  61.51  Prob > chi2 =  0.000
+
+. 
+. 

@@ -1,0 +1,207 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch6.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch6.inp
+# Stock and Watson, ch 6
+# California schools data
+#
+? open caschool.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/caschool.gdt
+periodicity: 1, maxobs: 420
+observations range: 1 to 420
+
+Listing 14 variables:
+  0) const       1) enrl_tot    2) teachers    3) calw_pct    4) meal_pct  
+  5) computer    6) testscr     7) comp_stu    8) expn_stu    9) str       
+ 10) avginc     11) el_pct     12) read_scr   13) math_scr  
+
+? set hc_version 1
+# quadratic (6.2)
+? genr inc2 = avginc^2
+Generated series inc2 (ID 14)
+? ols testscr 0 avginc inc2 --robust
+
+Model 1: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      607.302       2.90175      209.3     0.0000   ***
+  avginc       3.85099     0.268094      14.36    2.68e-38 ***
+  inc2        -0.0423085   0.00478034    -8.851   2.51e-17 ***
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    67510.32   S.E. of regression   12.72381
+R-squared            0.556173   Adjusted R-squared   0.554045
+F(2, 417)            428.5233   P-value(F)           7.4e-102
+Log-likelihood      -1662.708   Akaike criterion     3331.416
+Schwarz criterion    3343.537   Hannan-Quinn         3336.207
+
+# cubic (6.11)
+? genr inc3 = avginc^3
+Generated series inc3 (ID 15)
+? ols testscr 0 avginc inc2 inc3 --robust
+
+Model 2: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const      600.079         5.10206       117.6     0.0000   ***
+  avginc       5.01868       0.707350        7.095   5.61e-12 ***
+  inc2        -0.0958052     0.0289537      -3.309   0.0010   ***
+  inc3         0.000685484   0.000347065     1.975   0.0489   **
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    67169.69   S.E. of regression   12.70691
+R-squared            0.558413   Adjusted R-squared   0.555228
+F(3, 416)            270.1797   P-value(F)           2.81e-97
+Log-likelihood      -1661.646   Akaike criterion     3331.292
+Schwarz criterion    3347.453   Hannan-Quinn         3337.679
+
+# linear-log (6.18)
+? genr loginc = ln(avginc)
+Generated series loginc (ID 16)
+? ols testscr 0 loginc --robust
+
+Model 3: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       557.832       3.83994     145.3     0.0000   ***
+  loginc       36.4197      1.39694      26.07    1.15e-89 ***
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    66546.86   S.E. of regression   12.61757
+R-squared            0.562507   Adjusted R-squared   0.561461
+F(1, 418)            679.6967   P-value(F)           1.15e-89
+Log-likelihood      -1659.690   Akaike criterion     3323.379
+Schwarz criterion    3331.460   Hannan-Quinn         3326.573
+
+# log-log (6.23)
+? genr logtst = ln(testscr)
+Generated series logtst (ID 17)
+? ols logtst 0 loginc --robust
+
+Model 4: OLS, using observations 1-420
+Dependent variable: logtst
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       6.33635      0.00592459   1070      0.0000   ***
+  loginc      0.0554190    0.00214458     25.84   1.13e-88 ***
+
+Mean dependent var   6.482924   S.D. dependent var   0.029116
+Sum squared resid    0.157072   S.E. of regression   0.019385
+R-squared            0.557783   Adjusted R-squared   0.556725
+F(1, 418)            667.7801   P-value(F)           1.13e-88
+Log-likelihood       1061.220   Akaike criterion    -2118.440
+Schwarz criterion   -2110.359   Hannan-Quinn        -2115.246
+
+# log-linear (6.24)
+? ols logtst 0 avginc --robust
+
+Model 5: OLS, using observations 1-420
+Dependent variable: logtst
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      6.43936       0.00289382    2225      0.0000   ***
+  avginc     0.00284407    0.000175088     16.24   2.40e-46 ***
+
+Mean dependent var   6.482924   S.D. dependent var   0.029116
+Sum squared resid    0.178232   S.E. of regression   0.020649
+R-squared            0.498211   Adjusted R-squared   0.497011
+F(1, 418)            263.8552   P-value(F)           2.40e-46
+Log-likelihood       1034.680   Akaike criterion    -2065.360
+Schwarz criterion   -2057.280   Hannan-Quinn        -2062.167
+
+# dummies and interaction (6.30)
+? genr HiSTR = (str >= 20)
+Generated series HiSTR (ID 18)
+? genr HiEL = (el_pct >= 10)
+Generated series HiEL (ID 19)
+? genr inter = HiSTR * HiEL
+Generated series inter (ID 20)
+? ols testscr 0 HiEL HiSTR inter --robust
+
+Model 6: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       664.143       1.38809     478.5      0.0000   ***
+  HiEL        -18.1629      2.34595      -7.742    7.50e-14 ***
+  HiSTR        -1.90784     1.93221      -0.9874   0.3240  
+  inter        -3.49434     3.12123      -1.120    0.2636  
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    107152.8   S.E. of regression   16.04926
+R-squared            0.295555   Adjusted R-squared   0.290475
+F(3, 416)            60.19527   P-value(F)           2.44e-32
+Log-likelihood      -1759.723   Akaike criterion     3527.446
+Schwarz criterion    3543.607   Hannan-Quinn         3533.834
+
+Excluding the constant, p-value was highest for variable 18 (HiSTR)
+
+# interaction again (6.34)
+? genr str_el = str * HiEL
+Generated series str_el (ID 21)
+? ols testscr 0 str HiEL str_el --robust
+
+Model 7: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      682.246       11.8678      57.49     4.99e-200 ***
+  str         -0.968460     0.589102    -1.644    0.1009   
+  HiEL         5.63914     19.5146       0.2890   0.7727   
+  str_el      -1.27661      0.966919    -1.320    0.1875   
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    104903.7   S.E. of regression   15.87994
+R-squared            0.310341   Adjusted R-squared   0.305368
+F(3, 416)            63.67257   P-value(F)           6.74e-34
+Log-likelihood      -1755.268   Akaike criterion     3518.537
+Schwarz criterion    3534.698   Hannan-Quinn         3524.924
+
+Excluding the constant, p-value was highest for variable 19 (HiEL)
+
+# and again (6.37)
+? genr str_pcel = str * el_pct
+Generated series str_pcel (ID 22)
+? ols testscr 0 str el_pct str_pcel --robust
+
+Model 8: OLS, using observations 1-420
+Dependent variable: testscr
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient    std. error   t-ratio     p-value 
+  -----------------------------------------------------------
+  const      686.339        11.7593      58.37      1.82e-202 ***
+  str         -1.11702       0.587514    -1.901     0.0580    *
+  el_pct      -0.672911      0.374123    -1.799     0.0728    *
+  str_pcel     0.00116175    0.0185357    0.06268   0.9501   
+
+Mean dependent var   654.1565   S.D. dependent var   19.05335
+Sum squared resid    87244.70   S.E. of regression   14.48181
+R-squared            0.426435   Adjusted R-squared   0.422299
+F(3, 416)            155.0483   P-value(F)           1.89e-67
+Log-likelihood      -1716.560   Akaike criterion     3441.120
+Schwarz criterion    3457.281   Hannan-Quinn         3447.507
+
+Excluding the constant, p-value was highest for variable 22 (str_pcel)
+
+Done

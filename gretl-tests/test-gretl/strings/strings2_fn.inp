@@ -1,0 +1,20 @@
+nulldata 20
+set seed 8976453
+genr x = normal()
+string xname = "x"
+
+string foo = "avocado"
+printf("foo = '%s'\n", foo)
+
+print x
+
+loop for i=1..5 --quiet
+printf("%s\t %10.4f\n", date(i), x[i])
+endloop
+
+quit
+
+loop for i=1..5 --quiet
+scalar ti=i
+printf("%s\t %10.0f\n", date(i), @xname[i])
+endloop

@@ -1,0 +1,23 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-02-16 11:20
+? run bcast-test.inp
+ /home/cottrell/stats/test-gretl/mpi/bcast-test.inp
+gretlmpi 1.10.0cvs
+Current session: 2015-02-16 11:21
+rank 1: x = 3.14159
+rank 2: x = 3.14159
+Done
+rank 2: m = 
+    1.0000    0.0000    0.0000
+    0.0000    1.0000    0.0000
+    0.0000    0.0000    1.0000
+
+rank 1: m = 
+    1.0000    0.0000    0.0000
+    0.0000    1.0000    0.0000
+    0.0000    0.0000    1.0000
+
+
+Done

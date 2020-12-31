@@ -1,0 +1,73 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run missing_x.inp
+ /home/cottrell/stats/test-gretl/arbond/missing_x.inp
+? open missing_x.csv
+parsing /home/cottrell/stats/test-gretl/arbond/missing_x.csv...
+using delimiter ','
+   longest line: 41 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 5
+   number of variables: 4
+   number of non-blank lines: 21
+scanning for variable names...
+   line: obs,id,year,y,x
+scanning for row labels and data...
+   first row label "1:1", last label "4:5"
+trying to parse row labels as dates...
+treating these as undated data
+
+Listing 5 variables:
+  0) const    1) id       2) year     3) y        4) x      
+
+? setobs id year --panel
+Full data range: 1:1 - 4:5 (n = 20)
+
+? print y diff(y) diff(x) --by
+
+               y          d_y          d_x
+
+1:1     0.000000                          
+1:2     1.173348     1.173348    0.1418168
+1:3     2.019974     0.846626    0.3198908
+1:4     2.718867     0.698893   -0.2142908
+1:5     2.963692     0.244826     -0.06972
+2:1     2.841500                          
+2:2     1.010234    -1.831267    0.1206282
+2:3     0.351634    -0.658600   -0.2017671
+2:4    -0.130916    -0.482550    0.1359325
+2:5     0.456472     0.587388    0.2198037
+3:1     0.960461                          
+3:2     0.252913    -0.707548    0.8127655
+3:3     1.206515     0.953602   -0.4541731
+3:4     0.843681    -0.362834     -0.08443
+3:5     0.009205    -0.834477   -0.2924739
+4:1    -0.208110                          
+4:2     0.339008     0.547118    0.3003799
+4:3     0.783376     0.444368             
+4:4     0.501312    -0.282064             
+4:5     0.916568     0.415256   -0.4792098
+
+? arbond 1 0 ; y diff(x)
+
+Model 1: 1-step Arellano-Bond, using 10 observations
+Included 4 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  Dy(-1)       0.348102     0.117061     2.974    0.0029  ***
+  d_x         -0.256031     0.483499    -0.5295   0.5964 
+
+Sum squared resid    3.557894   S.E. of regression   0.666886
+
+Number of instruments = 7
+Test for AR(1) errors: z = -0.913159 [0.3612]
+Test for AR(2) errors: z = -0.990909 [0.3217]
+Sargan over-identification test: Chi-square(5) = 3.64383 [0.6017]
+Wald (joint) test: Chi-square(2) = 9.12992 [0.0104]
+
+Done

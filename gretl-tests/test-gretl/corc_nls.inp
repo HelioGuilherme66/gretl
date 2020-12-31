@@ -1,0 +1,36 @@
+open data3-6
+
+# initial OLS for comparison
+ols 1 0 2
+lmtest --autocorr
+
+# Cochrane-Orcutt
+corc Ct 0 Yt
+
+# set-up for NLS
+lags Ct Yt
+genr b0 = 0
+genr b1 = 1
+genr r = 0.5
+nls Ct = (1 - r)*b0 + b1*(Yt - r*Yt_1) + r*Ct_1
+ deriv b0 = 1 - r
+ deriv b1 = Yt - r*Yt_1
+ deriv r = -b0 - b1*Yt_1 + Ct_1
+end nls --verbose
+genr essr = $ess
+
+# more general dynamic model
+ols Ct 0 Yt Yt_1 Ct_1
+genr essu = $ess
+genr df = $df
+genr Fc = (essr - essu)/(essu / df)
+pvalue F 1 df Fc
+
+# long-run solution to dynamic model
+scalar a = coeff(0)
+scalar b = coeff(Yt)
+scalar c = coeff(Yt_1)
+scalar d = coeff(Ct_1)
+scalar b0 = a / (1-d)
+scalar b1 = (b+c) / (1-d)
+

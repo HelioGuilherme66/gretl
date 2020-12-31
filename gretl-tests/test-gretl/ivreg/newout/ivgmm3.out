@@ -1,0 +1,120 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-19 10:48
+? run ivgmm3.inp
+ /home/cottrell/stats/test-gretl/ivreg/ivgmm3.inp
+? open data13-1.csv -q
+Read datafile /home/cottrell/stats/test-gretl/ivreg/data13-1.csv
+? list X = 0 Ct_1 DYt DYt_1
+Generated list X
+? list Z = 0 Ct_1 DYt_1 Gt
+Generated list Z
+? tsls Ct X ; Z
+
+Model 1: TSLS, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 Gt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.697781     0.667447    -1.045   0.2958  
+  Ct_1         0.777840     0.176482     4.407   1.05e-05 ***
+  DYt          0.945861     0.408646     2.315   0.0206   **
+  DYt_1       -0.674721     0.252880    -2.668   0.0076   ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.341542   S.E. of regression   0.106699
+R-squared            0.997648   Adjusted R-squared   0.997412
+F(3, 30)             4213.962   P-value(F)           1.84e-39
+Log-likelihood      -11.45492   Akaike criterion     30.90983
+Schwarz criterion    37.01528   Hannan-Quinn         32.99197
+rho                  0.170593   Durbin-Watson        1.607429
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 0.843543
+  with p-value = 0.358385
+
+Weak instrument test - 
+  First-stage F-statistic (1, 30) = 1.45691
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    16.38     8.96     6.66     5.53
+
+  Maximal size may exceed 25%
+
+# check that this does not interfere with the following
+# estimators
+? scalar b2 = 0
+Generated scalar b2 = 0
+? tsls Ct X ; Z --liml
+
+Model 2: LIML, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 Gt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.697781     0.667447    -1.045   0.2958  
+  Ct_1         0.777840     0.176482     4.407   1.05e-05 ***
+  DYt          0.945861     0.408646     2.315   0.0206   **
+  DYt_1       -0.674721     0.252880    -2.668   0.0076   ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.341542   S.E. of regression   0.106699
+Log-likelihood      -11.45492   Akaike criterion     30.90983
+Schwarz criterion    37.01528   Hannan-Quinn         32.99197
+
+Smallest eigenvalue = 1
+Equation is just identified
+
+Weak instrument test - 
+  First-stage F-statistic (1, 30) = 1.45691
+  Critical values for desired LIML maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    16.38     8.96     6.66     5.53
+
+  Maximal size may exceed 25%
+
+? tsls Ct X ; Z --gmm
+
+Function evaluations: 517
+Evaluations of gradient: 135
+
+Model 3: 1-step GMM, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 Gt 
+HAC standard errors, bandwidth 2 (Bartlett kernel)
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.697781     0.675582    -1.033   0.3017  
+  Ct_1         0.777840     0.186889     4.162   3.15e-05 ***
+  DYt          0.945861     0.381135     2.482   0.0131   **
+  DYt_1       -0.674721     0.206699    -3.264   0.0011   ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+
+  GMM criterion: Q = 8.2755e-21 (TQ = 2.81367e-19)
+
+? print b2
+
+             b2 =  0.0000000
+? series u = $uhat
+Generated series u (ID 6)
+? u
+u
+0.129321 -0.00661405 -0.0458737 0.0023368 -0.188986 -0.128259 -0.136663 -0.0699881
+0.120548 0.163801 0.0503432 -0.0530684 0.144616 -0.0851068 0.0469317 0.0571604
+0.125722 -0.0153631 -0.116392 -0.0538864 0.00822293 -0.0101461 0.226935 0.0210462
+-0.146851 0.133911 0.0735743 0.0743296 -0.133028 -0.053568 -0.0517698 -0.0582038
+-0.0604475 0.0354131
+Done

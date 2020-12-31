@@ -1,0 +1,122 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mresample.inp
+ /home/cottrell/stats/test-gretl/matrix/mresample.inp
+? set seed 1278654
+Pseudo-random number generator seeded with 1278654
+? scalar T = 20
+Generated scalar T = 20
+? scalar R = 20
+Generated scalar R = 20
+? matrix A = mnormal(T,2)
+Generated matrix A
+? set seed 3456543
+Pseudo-random number generator seeded with 3456543
+? matrix S = resample(seq(1,R)')
+Generated matrix S
+? matrix B = A[S,]
+Generated matrix B
+? print A B
+A (20 x 2)
+
+     0.16356      0.45577 
+    -0.11871     -0.36766 
+    -0.61366      0.56498 
+     -1.1792      0.89909 
+      1.7335     -0.78939 
+     -1.4559       1.3278 
+    -0.63640      0.44023 
+     0.80802      0.24093 
+     -1.0747      0.31634 
+     -1.6404     -0.48653 
+      1.0082       2.8630 
+    -0.32018      0.43429 
+    -0.61433     -0.57358 
+    -0.84105      -1.0214 
+    -0.35803     -0.22579 
+      1.9723      -1.8115 
+   -0.020099      -1.6704 
+      1.4068    -0.067836 
+    -0.61659    -0.075321 
+     0.22663     -0.77592 
+
+B (20 x 2)
+
+    -0.84105      -1.0214 
+    -0.35803     -0.22579 
+     -1.4559       1.3278 
+      1.0082       2.8630 
+      1.7335     -0.78939 
+     0.16356      0.45577 
+    -0.61366      0.56498 
+      1.9723      -1.8115 
+      1.4068    -0.067836 
+   -0.020099      -1.6704 
+    -0.84105      -1.0214 
+      1.0082       2.8630 
+      1.9723      -1.8115 
+     -1.0747      0.31634 
+      1.7335     -0.78939 
+     -1.4559       1.3278 
+     -1.6404     -0.48653 
+     -1.4559       1.3278 
+    -0.61433     -0.57358 
+      1.7335     -0.78939 
+
+? set seed 3456543
+Pseudo-random number generator seeded with 3456543
+? matrix C = resample(A)
+Generated matrix C
+? print C
+C (20 x 2)
+
+    -0.84105      -1.0214 
+    -0.35803     -0.22579 
+     -1.4559       1.3278 
+      1.0082       2.8630 
+      1.7335     -0.78939 
+     0.16356      0.45577 
+    -0.61366      0.56498 
+      1.9723      -1.8115 
+      1.4068    -0.067836 
+   -0.020099      -1.6704 
+    -0.84105      -1.0214 
+      1.0082       2.8630 
+      1.9723      -1.8115 
+     -1.0747      0.31634 
+      1.7335     -0.78939 
+     -1.4559       1.3278 
+     -1.6404     -0.48653 
+     -1.4559       1.3278 
+    -0.61433     -0.57358 
+      1.7335     -0.78939 
+
+? matrix Test = B - C
+Generated matrix Test
+? print Test
+Test (20 x 2)
+
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+  0   0 
+
+Done

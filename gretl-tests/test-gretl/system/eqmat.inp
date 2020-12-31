@@ -1,0 +1,43 @@
+open greene14_1.gdt -q
+
+list L = C Q PF LF
+L = logs(L)
+matrix X = {L}
+
+nulldata 15 --preserve
+
+matrix eqmat
+loop i=1..6 -q
+  scalar r1 = (i-1) * 15 + 1
+  scalar r2 = r1 + 14
+  series y$i  = X[r1:r2,1]
+  series x1$i = X[r1:r2,2]
+  series x2$i = X[r1:r2,3]
+  series x3$i = X[r1:r2,4]
+  list L$i = y$i 0 x1$i x2$i x3$i
+  eqmat |= L$i
+endloop
+
+sursys <- system
+  equations eqmat
+end system
+
+restrict sursys
+  b[1,2] - b[2,2] = 0
+end restrict
+
+estimate sursys method=SUR --unrestrict-init
+
+# check use of trailing 0s in matrix-row lists
+
+eqmat = eqmat[1:2,]
+eqmat[2,4:5] = 0
+print eqmat
+system method=sur
+  equations eqmat
+end system
+
+
+
+
+

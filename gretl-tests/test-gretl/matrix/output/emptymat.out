@@ -1,0 +1,68 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run emptymat.inp
+ /home/cottrell/stats/test-gretl/matrix/emptymat.inp
+? nulldata 7
+periodicity: 1, maxobs: 7
+observations range: 1 to 7
+# create an empty matrix
+? a = {}
+Generated matrix a
+# rows() and cols() functions
+rows = 0, cols = 0
+# concatenation
+? matrix b = I(3) | a
+Generated matrix b
+? b
+b (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+# transposition
+? b = a'
+Replaced matrix b
+# functions that should return NA
+det(empty) = NA
+ldet(empty) = NA
+tr(empty) = NA
+onenorm(empty) = NA
+infnorm(empty) = NA
+rcond(empty) = NA
+# functions that should return 0
+rank(empty) = 0
+# functions that should return an empty matrix
+? a = I(0)
+Replaced matrix a
+I():		rows = 0, cols = 0
+? a = zeros(0,0)
+Replaced matrix a
+zeros():	rows = 0, cols = 0
+? a = ones(0,0)
+Replaced matrix a
+ones():		rows = 0, cols = 0
+? a = mnormal(0,0)
+Replaced matrix a
+mnormal():	rows = 0, cols = 0
+? a = muniform(0,0)
+Replaced matrix a
+muniform()	rows = 0, cols = 0
+? a = diag(a)
+Replaced matrix a
+diag():	rows = 0, cols = 0
+? a = vec(a)
+Replaced matrix a
+vec():	rows = 0, cols = 0
+? a = vech(a)
+Replaced matrix a
+vech():	rows = 0, cols = 0
+? a = unvech(a)
+Replaced matrix a
+unvech():	rows = 0, cols = 0
+? a = nullspace(I(3))
+Replaced matrix a
+nullspace():	rows = 0, cols = 0
+Done

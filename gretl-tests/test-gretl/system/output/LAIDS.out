@@ -1,0 +1,294 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run LAIDS.inp
+ /home/cottrell/stats/test-gretl/system/LAIDS.inp
+### Script for LAIDS estimation
+### description :
+### estimation of Linear approximation AIDS of two shares : home energy (WLOG) and motorfuel (WCAR)
+### Added three demographic variables : home rented, child dummy, automobile dummy
+### in this version, a sample of 500 hundred observations has been randomly selected out of the full 10 305 dataset
+? open AIDS_data_set.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/system/AIDS_data_set.gdt
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+
+Listing 20 variables:
+  0) const          1) MEN_ID         2) VAGUESURV      3) WLOG         
+  4) WCAR           5) WCOMP          6) lnDEPTOTR      7) lnREVTOTR    
+  8) lnREVTOTUCR    9) lnPLOGCOMP    10) lnPCARBCOMP   11) DSTALOG_1    
+ 12) DSTALOG_2     13) NBTOT         14) NBENF         15) NBADULT      
+ 16) NBFEM         17) NBFEMACTIVE   18) CHILD         19) AUTOMOBILE   
+
+### list of three socio-demographic variables
+? list socdemo = 12 18 19
+Generated list socdemo
+#### SUR estimation of the system with symmetry in price imposed by the restrict command
+? LAIDS <- system
+? equation WLOG const lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+? equation WCAR const lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+? instr const lnPLOGCOMP lnPCARBCOMP 8 socdemo
+? end system
+? estimate LAIDS method=sur --iterate
+
+Equation system, LAIDS
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 1 iterations
+Log-likelihood = 1583.73
+
+Equation 1: SUR, using observations 1-500
+Dependent variable: WLOG
+
+                coefficient   std. error   t-ratio    p-value 
+  ------------------------------------------------------------
+  const          0.510572     0.0357115     14.30     4.86e-39 ***
+  lnPLOGCOMP    -0.387310     0.149512      -2.590    0.0099   ***
+  lnPCARBCOMP   -0.0870839    0.0917749     -0.9489   0.3431  
+  lnDEPTOTR     -0.0469185    0.00439417   -10.68     4.41e-24 ***
+  DSTALOG_2     -0.0389641    0.00537185    -7.253    1.59e-12 ***
+  CHILD         -0.00382082   0.00569935    -0.6704   0.5029  
+  AUTOMOBILE     0.00719900   0.00748664     0.9616   0.3367  
+
+Mean dependent var   0.067363   S.D. dependent var   0.067352
+Sum squared resid    1.570568   S.E. of regression   0.056046
+R-squared            0.306160   Adjusted R-squared   0.297716
+
+Equation 2: SUR, using observations 1-500
+Dependent variable: WCAR
+
+                coefficient    std. error   t-ratio    p-value 
+  -------------------------------------------------------------
+  const          0.0883995     0.0280341     3.153     0.0017   ***
+  lnPLOGCOMP    -0.0673993     0.117370     -0.5742    0.5661  
+  lnPCARBCOMP   -0.000847624   0.0720448    -0.01177   0.9906  
+  lnDEPTOTR     -0.00897545    0.00344950   -2.602     0.0095   ***
+  DSTALOG_2     -0.00844031    0.00421699   -2.001     0.0459   **
+  CHILD          0.00216847    0.00447409    0.4847    0.6281  
+  AUTOMOBILE     0.0507132     0.00587714    8.629     8.57e-17 ***
+
+Mean dependent var   0.047715   S.D. dependent var   0.048173
+Sum squared resid    0.967865   S.E. of regression   0.043997
+R-squared            0.164204   Adjusted R-squared   0.154032
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0031411     (-0.015)
+  -3.6305e-05    0.0019357
+
+log determinant = -12.0107
+LR test for diagonal covariance matrix:
+  Chi-square(1) = 0.108399 [0.7420]
+
+? matrix B = $coeff
+Generated matrix B
+? matrix YH = $yhat
+Generated matrix YH
+? print B
+B (14 x 1)
+
+     0.51057 
+    -0.38731 
+   -0.087084 
+   -0.046919 
+   -0.038964 
+  -0.0038208 
+   0.0071990 
+    0.088399 
+   -0.067399 
+ -0.00084762 
+  -0.0089755 
+  -0.0084403 
+   0.0021685 
+    0.050713 
+
+? restrict LAIDS
+? b[1,3]-b[2,2]=0
+? end restrict
+Restriction:
+ b[1,3] - b[2,2] = 0
+? estimate LAIDS method=sur --iterate
+
+Equation system, LAIDS
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 1 iterations
+Log-likelihood = 1583.72
+
+Equation 1: SUR, using observations 1-500
+Dependent variable: WLOG
+
+                coefficient   std. error   t-ratio    p-value 
+  ------------------------------------------------------------
+  const          0.509917     0.0353688     14.42     1.43e-39 ***
+  lnPLOGCOMP    -0.394781     0.138511      -2.850    0.0046   ***
+  lnPCARBCOMP   -0.0796365    0.0726204     -1.097    0.2733  
+  lnDEPTOTR     -0.0469561    0.00438508   -10.71     3.37e-24 ***
+  DSTALOG_2     -0.0389685    0.00537178    -7.254    1.58e-12 ***
+  CHILD         -0.00377464   0.00568875    -0.6635   0.5073  
+  AUTOMOBILE     0.00726333   0.00747098     0.9722   0.3314  
+
+Mean dependent var   0.067363   S.D. dependent var   0.067352
+Sum squared resid    1.570589   S.E. of regression   0.056046
+R-squared            0.306151   Adjusted R-squared   0.297707
+
+Equation 2: SUR, using observations 1-500
+Dependent variable: WCAR
+
+                coefficient   std. error   t-ratio    p-value 
+  ------------------------------------------------------------
+  const          0.0883508    0.0280320     3.152     0.0017   ***
+  lnPLOGCOMP    -0.0796365    0.0726204    -1.097     0.2733  
+  lnPCARBCOMP    0.00381165   0.0629129     0.06059   0.9517  
+  lnDEPTOTR     -0.00899079   0.00344760   -2.608     0.0094   ***
+  DSTALOG_2     -0.00841944   0.00421411   -1.998     0.0463   **
+  CHILD          0.00217217   0.00447405    0.4855    0.6275  
+  AUTOMOBILE     0.0507685    0.00586243    8.660     6.76e-17 ***
+
+Mean dependent var   0.047715   S.D. dependent var   0.048173
+Sum squared resid    0.967887   S.E. of regression   0.043997
+R-squared            0.164186   Adjusted R-squared   0.154014
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0031412     (-0.015)
+  -3.6280e-05    0.0019358
+
+log determinant = -12.0106
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = 1583.72
+  Unrestricted log-likelihood = 1583.73
+  Chi-square(1) = 0.0176133 [0.8944]
+
+### post estimation computation of fitted values and elasticities
+### Note : elasticities computed at fitted shares using the Chalfant (1987) approximation
+### Income Elasticity :=> ei = 1 + beta[i]/ what[i,h]
+### price elasticity :=> eij = (gamma[i,j]/what[i,h]) + beta[i]*what[j,h]/what[i,h] + delta[i,j]
+### indexes = i,j goods i and j (home energy, motorfuel) h = households (h = 1..500)
+### each household has one personal elasticities which are then summarized by summation/and or agregation (relative weights)
+### here i compute only income elasticity for brievity.
+### calling results for elasticity computations.
+? scalar nbobs=$nobs
+Generated scalar nbobs = 500
+? matrix resij=$uhat
+Generated matrix resij
+? matrix V=$vcv[1:14,1:14]
+Generated matrix V
+? V
+V (14 x 14)
+
+   0.0012510  -0.00017583  -0.00045642  -0.00014399  -2.1664e-05   5.3410e-05   5.6645e-05  -1.6542e-05  -0.00045642   0.00018180   1.0766e-06   1.0246e-06  -4.5928e-07   1.4293e-06 
+ -0.00017583     0.019185   -0.0054488   1.2673e-05  -3.9609e-05   1.1906e-05  -7.4310e-05  -2.1842e-05   -0.0054488    0.0020757  -6.8336e-06   9.2865e-06   1.6593e-06   2.4615e-05 
+ -0.00045642   -0.0054488    0.0052737  -2.6416e-05  -2.5973e-06   3.2177e-05   4.5868e-05   2.9070e-05    0.0052737   -0.0020674   6.9714e-06  -8.7713e-06  -2.1628e-06  -2.4212e-05 
+ -0.00014399   1.2673e-05  -2.6416e-05   1.9229e-05   6.6000e-07  -8.3045e-06  -1.3148e-05   1.5431e-06  -2.6416e-05   1.0421e-05  -2.5570e-07   3.6748e-08   1.0495e-07   2.7125e-07 
+ -2.1664e-05  -3.9609e-05  -2.5973e-06   6.6000e-07   2.8856e-05  -3.5941e-06   1.0414e-05   2.3626e-07  -2.5973e-06   1.2063e-06  -1.1531e-08  -3.2812e-07   4.2562e-08  -1.0640e-07 
+  5.3410e-05   1.1906e-05   3.2177e-05  -8.3045e-06  -3.5941e-06   3.2362e-05   4.0809e-08  -4.6929e-07   3.2177e-05  -1.2815e-05   1.3726e-07  -1.3070e-08  -3.8488e-07  -1.4734e-07 
+  5.6645e-05  -7.4310e-05   4.5868e-05  -1.3148e-05   1.0414e-05   4.0809e-08   5.5816e-05  -4.4867e-07   4.5868e-05  -1.7861e-05   2.0944e-07  -1.9630e-07  -1.5943e-08  -8.4922e-07 
+ -1.6542e-05  -2.1842e-05   2.9070e-05   1.5431e-06   2.3626e-07  -4.6929e-07  -4.4867e-07   0.00078579   2.9070e-05  -0.00043912  -8.7917e-05  -1.3193e-05   3.1866e-05   3.3586e-05 
+ -0.00045642   -0.0054488    0.0052737  -2.6416e-05  -2.5973e-06   3.2177e-05   4.5868e-05   2.9070e-05    0.0052737   -0.0020674   6.9714e-06  -8.7713e-06  -2.1628e-06  -2.4212e-05 
+  0.00018180    0.0020757   -0.0020674   1.0421e-05   1.2063e-06  -1.2815e-05  -1.7861e-05  -0.00043912   -0.0020674    0.0039580  -2.2007e-05  -8.2579e-06   3.0885e-05   3.0409e-05 
+  1.0766e-06  -6.8336e-06   6.9714e-06  -2.5570e-07  -1.1531e-08   1.3726e-07   2.0944e-07  -8.7917e-05   6.9714e-06  -2.2007e-05   1.1886e-05   4.3063e-07  -5.1751e-06  -8.1391e-06 
+  1.0246e-06   9.2865e-06  -8.7713e-06   3.6748e-08  -3.2812e-07  -1.3070e-08  -1.9630e-07  -1.3193e-05  -8.7713e-06  -8.2579e-06   4.3063e-07   1.7759e-05  -2.2264e-06   6.3425e-06 
+ -4.5928e-07   1.6593e-06  -2.1628e-06   1.0495e-07   4.2562e-08  -3.8488e-07  -1.5943e-08   3.1866e-05  -2.1628e-06   3.0885e-05  -5.1751e-06  -2.2264e-06   2.0017e-05   1.1748e-07 
+  1.4293e-06   2.4615e-05  -2.4212e-05   2.7125e-07  -1.0640e-07  -1.4734e-07  -8.4922e-07   3.3586e-05  -2.4212e-05   3.0409e-05  -8.1391e-06   6.3425e-06   1.1748e-07   3.4368e-05 
+
+### Allin: print raw coeff matrix
+? matrix B = $coeff
+Replaced matrix B
+? print B
+B (14 x 1)
+
+     0.50992 
+    -0.39478 
+   -0.079637 
+   -0.046956 
+   -0.038969 
+  -0.0037746 
+   0.0072633 
+    0.088351 
+   -0.079637 
+   0.0038117 
+  -0.0089908 
+  -0.0084194 
+   0.0021722 
+    0.050768 
+
+### I extract the coefficients of each separate equation to compute an estimated coefficients matrix ("coeffaids")
+? matrix betalog=$coeff[1:7]
+Generated matrix betalog
+? matrix betacar=$coeff[8:14]
+Generated matrix betacar
+? matrix coeffaids=betalog~betacar
+Generated matrix coeffaids
+### recalling estimated coefficients as a matrix {equ1 , equ2}
+? coeffaids
+coeffaids (7 x 2)
+
+     0.50992     0.088351 
+    -0.39478    -0.079637 
+   -0.079637    0.0038117 
+   -0.046956   -0.0089908 
+   -0.038969   -0.0084194 
+  -0.0037746    0.0021722 
+   0.0072633     0.050768 
+
+### computing fitted values by matrix computation
+? list data_aids = 0 lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+Generated list data_aids
+? matrix datacomp = {data_aids}
+Generated matrix datacomp
+? matrix what = datacomp*coeffaids
+Generated matrix what
+### what = matrix of fitted values for each equation
+### I intend next to use what[,i] to compute households elasticities by matrix functions
+### computing households elasticities using genr == > this code is OK
+? series yhat_s01 = YH[,1]
+Generated series yhat_s01 (ID 20)
+? series yhat_s02 = YH[,2]
+Generated series yhat_s02 (ID 21)
+? genr elr_log=1+(1/yhat_s01)*$coeff[4]
+Generated series elr_log (ID 22)
+? genr elr_car=1+(1/yhat_s02)*$coeff[11]
+Generated series elr_car (ID 23)
+? matrix melrlog=mean(elr_log)
+Generated matrix melrlog = {-0.035561}
+? matrix melrcar=mean(elr_car)
+Generated matrix melrcar = {0.503527}
+? matrix merl=melrlog~melrcar
+Generated matrix merl
+### listing the values of the mean income elasticities
+? merl
+merl (1 x 2)
+
+   -0.035561      0.50353 
+
+#### Alternative approach
+? matrix vecun = ones(nbobs,1)
+Generated matrix vecun
+? matrix wloghat = what[,1]
+Generated matrix wloghat
+? scalar tmp = coeffaids[4,1]
+Generated scalar tmp = -0.0469561
+? matrix erlog = vecun + tmp./wloghat
+Generated matrix erlog
+? matrix wcarhat = what[,2]
+Generated matrix wcarhat
+? scalar tmp = coeffaids[4,2]
+Replaced scalar tmp = -0.00899079
+? matrix ercar = vecun + tmp./wcarhat
+Generated matrix ercar
+? matrix erij = erlog~ercar
+Generated matrix erij
+? matrix er=meanc(erij)
+Generated matrix er
+? er
+er (1 x 2)
+
+    0.011590      0.79488 
+
+Done

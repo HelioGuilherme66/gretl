@@ -1,0 +1,308 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m8b.inp
+ /home/cottrell/stats/test-gretl/matrix/m8b.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? series y = LRM
+Generated series y (ID 5)
+? list x = const LRY
+Generated list x
+? matrix X = { x }
+Generated matrix X
+? scalar t1 = cols(X) + 10
+Generated scalar t1 = 12
+? scalar t2 = rows(X)
+Generated scalar t2 = 55
+? smpl 1 t1
+Full data range: 1974:1 - 1987:3 (n = 55)
+Current sample: 1974:1 - 1976:4 (n = 12)
+
+? ols y x --quiet
+? matrix bt = $coeff
+Generated matrix bt
+? matrix XX = { x }
+Generated matrix XX
+? smpl full
+Full data range: 1974:1 - 1987:3 (n = 55)
+
+? XX = inv(XX'XX)
+Replaced matrix XX
+? scalar tt = t1+1
+Generated scalar tt = 13
+? series e = 0
+Generated series e (ID 6)
+? series gain = 0
+Generated series gain (ID 7)
+? scalar u = 0
+Generated scalar u = 0
+Fcast err.[13] = 0.00835142 (y[13] = 11.7459)
+bt (2 x 1)
+
+      4.3541 
+      1.2457 
+
+Fcast err.[14] = 0.0184763 (y[14] = 11.7687)
+bt (2 x 1)
+
+      4.2074 
+      1.2709 
+
+Fcast err.[15] = -0.0278044 (y[15] = 11.7498)
+bt (2 x 1)
+
+      4.4708 
+      1.2258 
+
+Fcast err.[16] = -0.00294709 (y[16] = 11.7487)
+bt (2 x 1)
+
+      4.4883 
+      1.2228 
+
+Fcast err.[17] = -0.0375851 (y[17] = 11.7049)
+bt (2 x 1)
+
+      4.6567 
+      1.1938 
+
+Fcast err.[18] = -0.0341692 (y[18] = 11.7034)
+bt (2 x 1)
+
+      4.7922 
+      1.1705 
+
+Fcast err.[19] = -0.0796354 (y[19] = 11.703)
+bt (2 x 1)
+
+      5.4410 
+      1.0597 
+
+Fcast err.[20] = -0.0626427 (y[20] = 11.7037)
+bt (2 x 1)
+
+      5.8598 
+     0.98821 
+
+Fcast err.[21] = -0.0731075 (y[21] = 11.6789)
+bt (2 x 1)
+
+      6.2499 
+     0.92153 
+
+Fcast err.[22] = -0.0588463 (y[22] = 11.7078)
+bt (2 x 1)
+
+      6.6599 
+     0.85165 
+
+Fcast err.[23] = -0.0806963 (y[23] = 11.6762)
+bt (2 x 1)
+
+      7.1414 
+     0.76958 
+
+Fcast err.[24] = -0.0552458 (y[24] = 11.6859)
+bt (2 x 1)
+
+      7.4030 
+     0.72494 
+
+Fcast err.[25] = -0.100193 (y[25] = 11.6416)
+bt (2 x 1)
+
+      7.8951 
+     0.64106 
+
+Fcast err.[26] = -0.0711371 (y[26] = 11.6352)
+bt (2 x 1)
+
+      8.0178 
+     0.61985 
+
+Fcast err.[27] = -0.0666575 (y[27] = 11.6093)
+bt (2 x 1)
+
+      7.9292 
+     0.63438 
+
+Fcast err.[28] = -0.0159841 (y[28] = 11.6576)
+bt (2 x 1)
+
+      7.9097 
+     0.63758 
+
+Fcast err.[29] = -0.0419313 (y[29] = 11.6278)
+bt (2 x 1)
+
+      7.8463 
+     0.64804 
+
+Fcast err.[30] = -0.0368675 (y[30] = 11.6289)
+bt (2 x 1)
+
+      7.7839 
+     0.65837 
+
+Fcast err.[31] = -0.0535602 (y[31] = 11.6038)
+bt (2 x 1)
+
+      7.6594 
+     0.67909 
+
+Fcast err.[32] = -0.0334097 (y[32] = 11.6291)
+bt (2 x 1)
+
+      7.6101 
+     0.68725 
+
+Fcast err.[33] = -0.0644518 (y[33] = 11.602)
+bt (2 x 1)
+
+      7.5508 
+     0.69693 
+
+Fcast err.[34] = -0.0759237 (y[34] = 11.6038)
+bt (2 x 1)
+
+      7.5931 
+     0.68940 
+
+Fcast err.[35] = -0.100301 (y[35] = 11.5946)
+bt (2 x 1)
+
+      7.8151 
+     0.65137 
+
+Fcast err.[36] = -0.0730182 (y[36] = 11.6038)
+bt (2 x 1)
+
+      7.8697 
+     0.64179 
+
+Fcast err.[37] = -0.049311 (y[37] = 11.6171)
+bt (2 x 1)
+
+      7.8647 
+     0.64239 
+
+Fcast err.[38] = 0.00839609 (y[38] = 11.6881)
+bt (2 x 1)
+
+      7.8532 
+     0.64438 
+
+Fcast err.[39] = 0.0507235 (y[39] = 11.7265)
+bt (2 x 1)
+
+      7.8068 
+     0.65246 
+
+Fcast err.[40] = 0.0765224 (y[40] = 11.7813)
+bt (2 x 1)
+
+      7.5317 
+     0.69927 
+
+Fcast err.[41] = 0.0955582 (y[41] = 11.7976)
+bt (2 x 1)
+
+      7.2693 
+     0.74399 
+
+Fcast err.[42] = 0.107882 (y[42] = 11.8419)
+bt (2 x 1)
+
+      6.7425 
+     0.83342 
+
+Fcast err.[43] = 0.105143 (y[43] = 11.8403)
+bt (2 x 1)
+
+      6.3348 
+     0.90268 
+
+Fcast err.[44] = 0.20091 (y[44] = 11.9236)
+bt (2 x 1)
+
+      5.8464 
+     0.98592 
+
+Fcast err.[45] = 0.127433 (y[45] = 11.903)
+bt (2 x 1)
+
+      5.2396 
+      1.0888 
+
+Fcast err.[46] = 0.150627 (y[46] = 11.9268)
+bt (2 x 1)
+
+      4.6637 
+      1.1866 
+
+Fcast err.[47] = 0.135143 (y[47] = 11.971)
+bt (2 x 1)
+
+      3.9142 
+      1.3135 
+
+Fcast err.[48] = 0.124095 (y[48] = 12.0259)
+bt (2 x 1)
+
+      3.1074 
+      1.4499 
+
+Fcast err.[49] = 0.105494 (y[49] = 12.0512)
+bt (2 x 1)
+
+      2.4730 
+      1.5572 
+
+Fcast err.[50] = 0.119499 (y[50] = 12.0755)
+bt (2 x 1)
+
+      1.8893 
+      1.6559 
+
+Fcast err.[51] = 0.067311 (y[51] = 12.0562)
+bt (2 x 1)
+
+      1.5844 
+      1.7075 
+
+Fcast err.[52] = 0.104457 (y[52] = 12.0716)
+bt (2 x 1)
+
+      1.2189 
+      1.7693 
+
+Fcast err.[53] = 0.0848129 (y[53] = 12.028)
+bt (2 x 1)
+
+     0.98869 
+      1.8083 
+
+Fcast err.[54] = 0.0859169 (y[54] = 12.0398)
+bt (2 x 1)
+
+     0.76620 
+      1.8460 
+
+Fcast err.[55] = 0.0792706 (y[55] = 12.0153)
+bt (2 x 1)
+
+     0.59629 
+      1.8748 
+
+
+Number of iterations: 43
+

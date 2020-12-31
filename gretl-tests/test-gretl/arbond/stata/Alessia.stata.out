@@ -1,0 +1,80 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    9.2   Copyright 1984-2006
+  Statistics/Data Analysis            StataCorp
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  81290539372
+         Licensed to:  Dipartimento di Economia
+                       Università Politecnica delle Marche
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set mem 100m
+(102400k)
+
+. 
+. use provagretl
+
+. egen pan=group(country)
+
+. gene panelid=isic+1000*pan
+
+. tsset panelid year
+       panel variable:  panelid, 1300 to 3390
+        time variable:  year, 1970 to 2004
+
+. gene lprod = log(prod)
+(2 missing values generated)
+
+. gene lemp = log(emp)
+
+. gene lva = log(va)
+(2 missing values generated)
+
+. 
+. set matsize 800
+
+. 
+. xtabond lprod lemp lva, rob maxldep(9)
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =      2346
+Group variable (i): panelid                     Number of groups   =        87
+
+                                                Wald chi2(3)       =   6910.11
+
+Time variable (t): year                         Obs per group: min =        17
+                                                               avg =  26.96552
+                                                               max =        33
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+     D.lprod |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lprod |
+         LD. |   .1689401   .0346717     4.87   0.000     .1009849    .2368953
+        lemp |
+         D1. |  -.1469715   .0382951    -3.84   0.000    -.2220285   -.0719146
+         lva |
+         D1. |   .9528375   .0188251    50.62   0.000     .9159411    .9897339
+       _cons |  -.0060238   .0012809    -4.70   0.000    -.0085343   -.0035133
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -1.88   Pr > z = 0.0605
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -3.10   Pr > z = 0.0019
+
+. 

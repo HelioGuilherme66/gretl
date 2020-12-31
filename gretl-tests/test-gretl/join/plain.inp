@@ -1,0 +1,5 @@
+open people.csv
+smpl 1 6
+join hholds.csv xh
+print -o
+

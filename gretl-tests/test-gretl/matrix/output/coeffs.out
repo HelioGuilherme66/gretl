@@ -1,0 +1,67 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run coeffs.inp
+ /home/cottrell/stats/test-gretl/matrix/coeffs.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? enroll_mod <- ols 1 0 2 3 4 5 --vcv
+
+enroll_mod:
+OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.290669     0.0785301     3.701    0.0006   ***
+  CATHOL      0.221596     0.0458372     4.834    1.53e-05 ***
+  PUPIL      -0.00303514   0.00272652   -1.113    0.2714  
+  WHITE      -0.148189     0.0407444    -3.637    0.0007   ***
+  ADMEXP     -0.155052     0.134150     -1.156    0.2537  
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.068957   S.E. of regression   0.038718
+R-squared            0.494157   Adjusted R-squared   0.450170
+F(4, 46)             11.23431   P-value(F)           1.93e-06
+Log-likelihood       96.08969   Akaike criterion    -182.1794
+Schwarz criterion   -172.5203   Hannan-Quinn        -178.4883
+
+Excluding the constant, p-value was highest for variable 3 (PUPIL)
+
+Covariance matrix of regression coefficients:
+
+         const        CATHOL         PUPIL         WHITE        ADMEXP
+    0.00616698   -0.00123079  -1.40069e-04   -0.00151118   -0.00575275  const
+                  0.00210105   5.21431e-05  -1.89756e-04   2.24469e-04  CATHOL
+                               7.43393e-06   1.93210e-05  -4.02590e-05  PUPIL
+                                              0.00166011  -5.17044e-04  WHITE
+                                                             0.0179963  ADMEXP
+
+enroll_mod saved
+? matrix B = transp(enroll_mod.$coeff[2:5])
+Generated matrix B
+? B
+B (1 x 4)
+
+     0.22160   -0.0030351     -0.14819     -0.15505 
+
+? matrix S = enroll_mod.$vcv[2:5,2:5]
+Generated matrix S
+? S
+S (4 x 4)
+
+   0.0021011   5.2143e-05  -0.00018976   0.00022447 
+  5.2143e-05   7.4339e-06   1.9321e-05  -4.0259e-05 
+ -0.00018976   1.9321e-05    0.0016601  -0.00051704 
+  0.00022447  -4.0259e-05  -0.00051704     0.017996 
+
+Done

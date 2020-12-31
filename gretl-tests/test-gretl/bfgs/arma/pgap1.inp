@@ -1,0 +1,13 @@
+nulldata 624
+setobs 12 1950:01
+set seed 371
+genr eps = normal()
+genr u = eps + .4 * eps(-1)
+series y = 0
+genr y = 0.7 * y(-1) + u
+
+matrix pvec = {1,3}
+arma pvec 1 ; y 
+
+
+

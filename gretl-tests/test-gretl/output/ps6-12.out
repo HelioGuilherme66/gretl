@@ -1,0 +1,187 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-12.inp
+ /opt/esl/share/gretl/scripts/ps6-12.inp
+# PS6.12 for Ramsey's RESET test - Example 6.9
+? open data6-1
+
+Read datafile /opt/esl/share/gretl/data/data6-1.gdt
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+
+Listing 4 variables:
+  0) const       1) UNITCOST    2) OUTPUT      3) INPCOST   
+
+? ols UNITCOST const OUTPUT INPCOST
+
+Model 1: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       5.19878      0.565756      9.189    5.27e-08 ***
+  OUTPUT     -0.0351553    0.00417800   -8.414    1.82e-07 ***
+  INPCOST     0.0207658    0.00294897    7.042    1.98e-06 ***
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.982611   S.E. of regression   0.240418
+R-squared            0.913677   Adjusted R-squared   0.903521
+F(2, 17)             89.96711   P-value(F)           9.06e-10
+Log-likelihood       1.753976   Akaike criterion     2.492048
+Schwarz criterion    5.479244   Hannan-Quinn         3.075180
+
+# generate estimated Y and its powers
+? genr yhat1 = UNITCOST-$uhat
+Generated series yhat1 (ID 4)
+? genr yhat2 = yhat1*yhat1
+Generated series yhat2 (ID 5)
+? genr yhat3 = yhat1*yhat2
+Generated series yhat3 (ID 6)
+? genr yhat4 = yhat2*yhat2
+Generated series yhat4 (ID 7)
+? list
+Listing 8 variables:
+  0) const       1) UNITCOST    2) OUTPUT      3) INPCOST     4) yhat1     
+  5) yhat2       6) yhat3       7) yhat4     
+
+# estimated model with new variables
+? ols UNITCOST const OUTPUT INPCOST yhat2 yhat3 yhat4
+
+Model 2: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      224.118       626.756       0.3576   0.7260 
+  OUTPUT      -1.91640       5.54662    -0.3455   0.7348 
+  INPCOST      1.13619       3.27698     0.3467   0.7340 
+  yhat2      -17.6124       47.8037     -0.3684   0.7181 
+  yhat3        2.49635       6.38096     0.3912   0.7015 
+  yhat4       -0.129121      0.316727   -0.4077   0.6897 
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.545155   S.E. of regression   0.197331
+R-squared            0.952108   Adjusted R-squared   0.935003
+F(5, 14)             55.66441   P-value(F)           9.65e-09
+Log-likelihood       7.645399   Akaike criterion    -3.290799
+Schwarz criterion    2.683595   Hannan-Quinn        -2.124534
+
+Excluding the constant, p-value was highest for variable 2 (OUTPUT)
+
+? omit yhat2 yhat3 yhat4
+Test on Model 2:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    yhat2, yhat3, yhat4
+  Test statistic: F(3, 14) = 3.74473, p-value 0.0364069
+  Omitting variables improved 0 of 3 information criteria.
+
+Model 3: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       5.19878      0.565756      9.189    5.27e-08 ***
+  OUTPUT     -0.0351553    0.00417800   -8.414    1.82e-07 ***
+  INPCOST     0.0207658    0.00294897    7.042    1.98e-06 ***
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.982611   S.E. of regression   0.240418
+R-squared            0.913677   Adjusted R-squared   0.903521
+F(2, 17)             89.96711   P-value(F)           9.06e-10
+Log-likelihood       1.753976   Akaike criterion     2.492048
+Schwarz criterion    5.479244   Hannan-Quinn         3.075180
+
+# Repeat example with the square of OUTPUT added to the model
+? square OUTPUT
+Listing 9 variables:
+  0) const        1) UNITCOST     2) OUTPUT       3) INPCOST    
+  4) yhat1        5) yhat2        6) yhat3        7) yhat4      
+  8) sq_OUTPUT  
+
+? ols UNITCOST const OUTPUT INPCOST sq_OUTPUT
+
+Model 4: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const       10.5223        0.736531      14.29     1.58e-10 ***
+  OUTPUT      -0.174473      0.0180692     -9.656    4.46e-08 ***
+  INPCOST      0.0201678     0.00139534    14.45     1.33e-10 ***
+  sq_OUTPUT    0.000894804   0.000115360    7.757    8.26e-07 ***
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.206417   S.E. of regression   0.113583
+R-squared            0.981866   Adjusted R-squared   0.978466
+F(3, 16)             288.7748   P-value(F)           3.87e-14
+Log-likelihood       17.35712   Akaike criterion    -26.71424
+Schwarz criterion   -22.73132   Hannan-Quinn        -25.93674
+
+? genr yhat5 = UNITCOST-$uhat
+Generated series yhat5 (ID 9)
+? genr yhat6 = yhat5*yhat5
+Generated series yhat6 (ID 10)
+? genr yhat7 = yhat5*yhat6
+Generated series yhat7 (ID 11)
+? genr yhat8 = yhat6*yhat6
+Generated series yhat8 (ID 12)
+? list
+Listing 13 variables:
+  0) const        1) UNITCOST     2) OUTPUT       3) INPCOST    
+  4) yhat1        5) yhat2        6) yhat3        7) yhat4      
+  8) sq_OUTPUT    9) yhat5       10) yhat6       11) yhat7      
+ 12) yhat8      
+
+? ols UNITCOST const OUTPUT INPCOST sq_OUTPUT yhat6 yhat7 yhat8
+
+Model 5: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+              coefficient    std. error    t-ratio   p-value
+  ----------------------------------------------------------
+  const       -99.0282       386.002       -0.2565   0.8015 
+  OUTPUT        1.91694        7.26511      0.2639   0.7960 
+  INPCOST      -0.224111       0.840193    -0.2667   0.7939 
+  sq_OUTPUT    -0.00980809     0.0372521   -0.2633   0.7965 
+  yhat6         3.10725       12.3045       0.2525   0.8046 
+  yhat7        -0.337696       1.59740     -0.2114   0.8359 
+  yhat8         0.0129103      0.0769299    0.1678   0.8693 
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.185731   S.E. of regression   0.119528
+R-squared            0.983683   Adjusted R-squared   0.976153
+F(6, 13)             130.6220   P-value(F)           7.47e-11
+Log-likelihood       18.41310   Akaike criterion    -22.82621
+Schwarz criterion   -15.85608   Hannan-Quinn        -21.46557
+
+Excluding the constant, p-value was highest for variable 12 (yhat8)
+
+? omit yhat6 yhat7 yhat8
+Test on Model 5:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    yhat6, yhat7, yhat8
+  Test statistic: F(3, 13) = 0.482626, p-value 0.700039
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const       10.5223        0.736531      14.29     1.58e-10 ***
+  OUTPUT      -0.174473      0.0180692     -9.656    4.46e-08 ***
+  INPCOST      0.0201678     0.00139534    14.45     1.33e-10 ***
+  sq_OUTPUT    0.000894804   0.000115360    7.757    8.26e-07 ***
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.206417   S.E. of regression   0.113583
+R-squared            0.981866   Adjusted R-squared   0.978466
+F(3, 16)             288.7748   P-value(F)           3.87e-14
+Log-likelihood       17.35712   Akaike criterion    -26.71424
+Schwarz criterion   -22.73132   Hannan-Quinn        -25.93674
+
+Done

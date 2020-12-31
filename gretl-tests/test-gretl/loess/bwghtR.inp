@@ -1,0 +1,15 @@
+open bwght.gdt
+series yh = loess(bwght, cigs, 1, 0.10)
+
+foreign language=R --send-data
+  y <- gretldata[,"bwght"]
+  x <- gretldata[,"cigs"]
+  ymod <- loess(y ~ x, span=0.10)
+  yhatR <- as.matrix(predict(ymod, x))
+  gretl.export(yhatR)
+end foreign 
+
+matrix Rmat = mread("@dotdir/yhatR.mat")
+series yhR = Rmat
+print y yh yhR -o
+gnuplot y yh yhR x --output=display --with-lines=yh,yhR

@@ -1,0 +1,20 @@
+open data9-7
+matrix y = {QNC}
+matrix X = {const, PRICE, INCOME, PRIME}
+# OLS coefficients
+matrix b_gretl = inv(X'X)*X'y
+
+mwrite(y, "y.mat", 1)
+mwrite(X, "X.mat", 1)
+
+foreign language=octave
+ y = gretl_loadmat("y.mat");
+ X = gretl_loadmat("X.mat");
+ b_octave = inv(X'*X)*X'*y
+ gretl_export(b_octave, "b_octave.mat");
+end foreign
+
+matrix b_octave = mread("b_octave.mat", 1)
+print b_gretl
+print b_octave
+

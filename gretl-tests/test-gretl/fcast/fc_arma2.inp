@@ -1,0 +1,14 @@
+open data9-7
+set arma_vcv hessian
+genr dy = diff(QNC)
+smpl ; 1987:4
+arima 1 1 1 ; QNC 
+smpl --full
+fcast fc1
+smpl ; 1987:4
+arma 1 1 ; dy
+smpl --full
+fcast fc2
+genr dfc1 = diff(fc1)
+print QNC fc1 fc2 dfc1 --byobs
+

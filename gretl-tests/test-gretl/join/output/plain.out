@@ -1,0 +1,55 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-07 15:16
+? run plain.inp
+ /home/cottrell/stats/test-gretl/join/plain.inp
+? open people.csv
+parsing /home/cottrell/stats/test-gretl/join/people.csv...
+using delimiter ','
+   longest line: 27 characters
+   first field: 'pid'
+   number of columns = 6
+   number of variables: 6
+   number of non-blank lines: 11
+scanning for variable names...
+   line: pid,hid,gender,age,xp,str2
+scanning for row labels and data...
+variable 3 (gender): non-numeric values = 10 (100.00 percent)
+variable 6 (str2): non-numeric values = 10 (100.00 percent)
+allocating string table
+treating these as undated data
+
+String code table written to
+ /home/cottrell/stats/test-gretl/join/string_table.txt
+Listing 7 variables:
+  0) const     1) pid       2) hid       3) gender    4) age     
+  5) xp        6) str2    
+
+? smpl 1 6
+Full data range: 1 - 10 (n = 10)
+Current sample: 1 - 6 (n = 6)
+
+? join hholds.csv xh
+Data appended OK
+? print -o
+
+           pid          hid       gender          age           xp
+
+1            1            1            M           50            1
+2            2            1            F           40            2
+3            3            2            M           30            3
+4            4            2            F           25            2
+5            5            3            M           40            3
+6            6            4            F           35            4
+
+          str2           xh
+
+1            A            1
+2            B           12
+3            C            6
+4            D            8
+5            E            4
+6            F           10
+
+Done

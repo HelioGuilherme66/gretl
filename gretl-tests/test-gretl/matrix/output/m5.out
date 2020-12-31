@@ -1,0 +1,19 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m5.inp
+ /home/cottrell/stats/test-gretl/matrix/m5.inp
+? matrix A = {1,2;3,4}
+Generated matrix A
+? A
+A (2 x 2)
+
+  1   2 
+  3   4 
+
+? matrix B = I(2)
+Generated matrix B
+? scalar x = det(A*B)
+Generated scalar x = -2
+Done

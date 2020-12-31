@@ -1,0 +1,214 @@
+
+. insheet using cigar.csv
+(6 vars, 1380 obs)
+
+. xtset state year
+       panel variable:  state (strongly balanced)
+        time variable:  year, 63 to 92
+                delta:  1 unit
+
+. quietly tabulate year, generate(dyear)
+
+. xtabond lnc lnp lnpn lny dyear3-dyear30, lag(1) nocons
+
+Arellano-Bond dynamic panel-data estimation  Number of obs         =      1288
+Group variable: state                        Number of groups      =        46
+Time variable: year
+                                             Obs per group:    min =        28
+                                                               avg =        28
+                                                               max =        28
+
+Number of instruments =    437               Wald chi2(32)         =  13646.73
+                                             Prob > chi2           =    0.0000
+One-step results
+------------------------------------------------------------------------------
+         lnc |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         lnc |
+         L1. |   .8325297    .016091    51.74   0.000     .8009918    .8640675
+             |
+         lnp |  -.3701284   .0309829   -11.95   0.000    -.4308538   -.3094029
+        lnpn |  -.0277982   .0398965    -0.70   0.486     -.105994    .0503975
+         lny |   .1343293   .0356307     3.77   0.000     .0644943    .2041642
+      dyear3 |   .0297216    .007649     3.89   0.000     .0147298    .0447134
+      dyear4 |   .0163488   .0080908     2.02   0.043     .0004911    .0322066
+      dyear5 |   .0206067   .0084891     2.43   0.015     .0039684    .0372449
+      dyear6 |   .0107643   .0092365     1.17   0.244    -.0073388    .0288674
+      dyear7 |   .0006261   .0093463     0.07   0.947    -.0176923    .0189445
+      dyear8 |   -.005422   .0100068    -0.54   0.588    -.0250349     .014191
+      dyear9 |   .0382952   .0107633     3.56   0.000     .0171996    .0593908
+     dyear10 |   .0448202   .0119129     3.76   0.000     .0214712    .0681691
+     dyear11 |   .0050739    .013444     0.38   0.706    -.0212759    .0314236
+     dyear12 |  -.0068609   .0129099    -0.53   0.595    -.0321638    .0184421
+     dyear13 |  -.0231934   .0129168    -1.80   0.073    -.0485098    .0021231
+     dyear14 |  -.0079639   .0130008    -0.61   0.540    -.0334449    .0175172
+     dyear15 |  -.0434255   .0140501    -3.09   0.002    -.0709631   -.0158878
+     dyear16 |  -.0336845   .0146208    -2.30   0.021    -.0623407   -.0050282
+     dyear17 |  -.0736497   .0152222    -4.84   0.000    -.1034846   -.0438148
+     dyear18 |  -.0808336   .0159868    -5.06   0.000    -.1121672      -.0495
+     dyear19 |  -.1005715   .0174708    -5.76   0.000    -.1348136   -.0663295
+     dyear20 |  -.0990347   .0159211    -6.22   0.000    -.1302395   -.0678299
+     dyear21 |  -.0803314   .0140457    -5.72   0.000    -.1078605   -.0528023
+     dyear22 |  -.0648027   .0148673    -4.36   0.000    -.0939421   -.0356632
+     dyear23 |  -.0328825   .0155911    -2.11   0.035    -.0634406   -.0023244
+     dyear24 |  -.0286845   .0170882    -1.68   0.093    -.0621767    .0048078
+     dyear25 |  -.0307951   .0178906    -1.72   0.085      -.06586    .0042697
+     dyear26 |  -.0330593   .0193322    -1.71   0.087    -.0709497    .0048312
+     dyear27 |  -.0301085   .0204979    -1.47   0.142    -.0702836    .0100666
+     dyear28 |  -.0263535   .0220117    -1.20   0.231    -.0694956    .0167886
+     dyear29 |  -.0071584   .0220215    -0.33   0.745    -.0503197    .0360029
+     dyear30 |   .0367087   .0261087     1.41   0.160    -.0144636    .0878809
+------------------------------------------------------------------------------
+Instruments for differenced equation
+        GMM-type: L(2/.).lnc
+        Standard: D.lnp D.lnpn D.lny D.dyear3 D.dyear4 D.dyear5 D.dyear6
+                  D.dyear7 D.dyear8 D.dyear9 D.dyear10 D.dyear11 D.dyear12
+                  D.dyear13 D.dyear14 D.dyear15 D.dyear16 D.dyear17
+                  D.dyear18 D.dyear19 D.dyear20 D.dyear21 D.dyear22
+                  D.dyear23 D.dyear24 D.dyear25 D.dyear26 D.dyear27
+                  D.dyear28 D.dyear29 D.dyear30
+
+. xtabond lnc lnp lnpn lny dyear3-dyear30, lag(1) nocons twostep
+
+Arellano-Bond dynamic panel-data estimation  Number of obs         =      1288
+Group variable: state                        Number of groups      =        46
+Time variable: year
+                                             Obs per group:    min =        28
+                                                               avg =        28
+                                                               max =        28
+
+Number of instruments =    437               Wald chi2(32)         =  28905.45
+                                             Prob > chi2           =    0.0000
+Two-step results
+------------------------------------------------------------------------------
+         lnc |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         lnc |
+         L1. |   .8135355   .1252663     6.49   0.000     .5680181    1.059053
+             |
+         lnp |  -.3933306   .0443416    -8.87   0.000    -.4802386   -.3064226
+        lnpn |    .008032   .0601018     0.13   0.894    -.1097653    .1258292
+         lny |   .2503601     .21197     1.18   0.238    -.1650935    .6658138
+      dyear3 |   .0219043   .0164559     1.33   0.183    -.0103486    .0541573
+      dyear4 |  -.0027073   .0209273    -0.13   0.897     -.043724    .0383093
+      dyear5 |   .0090457   .0297889     0.30   0.761    -.0493396    .0674309
+      dyear6 |   -.006256   .0328096    -0.19   0.849    -.0705617    .0580497
+      dyear7 |  -.0169307   .0362341    -0.47   0.640    -.0879483    .0540869
+      dyear8 |  -.0283609   .0438384    -0.65   0.518    -.1142827    .0575608
+      dyear9 |   .0124823   .0494387     0.25   0.801    -.0844158    .1093804
+     dyear10 |   .0145714   .0560761     0.26   0.795    -.0953358    .1244786
+     dyear11 |  -.0301307   .0693627    -0.43   0.664    -.1660791    .1058177
+     dyear12 |  -.0322023   .0621189    -0.52   0.604     -.153953    .0895484
+     dyear13 |  -.0533132   .0588532    -0.91   0.365    -.1686633    .0620369
+     dyear14 |   -.041193   .0602343    -0.68   0.494      -.15925     .076864
+     dyear15 |  -.0715951   .0650012    -1.10   0.271    -.1989951    .0558048
+     dyear16 |  -.0720363   .0711687    -1.01   0.311    -.2115243    .0674517
+     dyear17 |  -.1123576   .0696541    -1.61   0.107    -.2488772     .024162
+     dyear18 |  -.1127801    .063014    -1.79   0.073    -.2362853    .0107251
+     dyear19 |  -.1350117   .0639029    -2.11   0.035    -.2602592   -.0097642
+     dyear20 |  -.1306007   .0618447    -2.11   0.035     -.251814   -.0093874
+     dyear21 |  -.1133949   .0672995    -1.68   0.092    -.2452995    .0185097
+     dyear22 |  -.1089488   .0784492    -1.39   0.165    -.2627064    .0448087
+     dyear23 |  -.0782829   .0850252    -0.92   0.357    -.2449293    .0883635
+     dyear24 |  -.0763872    .092817    -0.82   0.411    -.2583053    .1055308
+     dyear25 |  -.0847997    .097655    -0.87   0.385       -.2762    .1066005
+     dyear26 |  -.0861417   .1061179    -0.81   0.417    -.2941289    .1218455
+     dyear27 |  -.0890833   .1122636    -0.79   0.427    -.3091159    .1309494
+     dyear28 |  -.0851007   .1184291    -0.72   0.472    -.3172174     .147016
+     dyear29 |  -.0734971   .1209385    -0.61   0.543    -.3105321    .1635379
+     dyear30 |  -.0333527   .1332956    -0.25   0.802    -.2946073    .2279018
+------------------------------------------------------------------------------
+Warning: gmm two-step standard errors are biased; robust standard 
+         errors are recommended.
+Instruments for differenced equation
+        GMM-type: L(2/.).lnc
+        Standard: D.lnp D.lnpn D.lny D.dyear3 D.dyear4 D.dyear5 D.dyear6
+                  D.dyear7 D.dyear8 D.dyear9 D.dyear10 D.dyear11 D.dyear12
+                  D.dyear13 D.dyear14 D.dyear15 D.dyear16 D.dyear17
+                  D.dyear18 D.dyear19 D.dyear20 D.dyear21 D.dyear22
+                  D.dyear23 D.dyear24 D.dyear25 D.dyear26 D.dyear27
+                  D.dyear28 D.dyear29 D.dyear30
+
+. xtabond2 lnc L.lnc lnp lnpn lny dyear3-dyear30, gmm(L.lnc) iv(lnp lnpn lny dy
+> ear3-dyear30) rob nocons noleveleq twostep
+Favoring space over speed. To switch, type or click on mata: mata set matafavor
+>  speed, perm.
+Warning: Number of instruments may be large relative to number of observations.
+Warning: Two-step estimated covariance matrix of moments is singular.
+  Using a generalized inverse to calculate optimal weighting matrix for two-ste
+> p estimation.
+  Difference-in-Sargan/Hansen statistics may be negative.
+
+Dynamic panel-data estimation, two-step difference GMM
+------------------------------------------------------------------------------
+Group variable: state                           Number of obs      =      1288
+Time variable : year                            Number of groups   =        46
+Number of instruments = 437                     Obs per group: min =        28
+Wald chi2(32) =   8004.50                                      avg =     28.00
+Prob > chi2   =     0.000                                      max =        28
+------------------------------------------------------------------------------
+             |              Corrected
+         lnc |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         lnc |
+         L1. |   .8135355   .1807666     4.50   0.000     .4592396    1.167831
+             |
+         lnp |  -.3933306   .0578549    -6.80   0.000    -.5067241    -.279937
+        lnpn |    .008032   .0814553     0.10   0.921    -.1516174    .1676814
+         lny |   .2503601   .3292126     0.76   0.447    -.3948847     .895605
+      dyear3 |   .0219043   .0248986     0.88   0.379     -.026896    .0707047
+      dyear4 |  -.0027073   .0326027    -0.08   0.934    -.0666074    .0611927
+      dyear5 |   .0090457    .045284     0.20   0.842    -.0797094    .0978008
+      dyear6 |   -.006256   .0506418    -0.12   0.902    -.1055122    .0930002
+      dyear7 |  -.0169307   .0560966    -0.30   0.763     -.126878    .0930166
+      dyear8 |  -.0283609   .0669668    -0.42   0.672    -.1596134    .1028916
+      dyear9 |   .0124823   .0762141     0.16   0.870    -.1368946    .1618591
+     dyear10 |   .0145714   .0865619     0.17   0.866    -.1550869    .1842296
+     dyear11 |  -.0301307   .1057475    -0.28   0.776    -.2373921    .1771307
+     dyear12 |  -.0322023   .0940799    -0.34   0.732    -.2165956    .1521909
+     dyear13 |  -.0533132   .0893657    -0.60   0.551    -.2284667    .1218403
+     dyear14 |   -.041193   .0927372    -0.44   0.657    -.2229546    .1405686
+     dyear15 |  -.0715951   .1001337    -0.71   0.475    -.2678535    .1246632
+     dyear16 |  -.0720363    .109693    -0.66   0.511    -.2870306     .142958
+     dyear17 |  -.1123576   .1071216    -1.05   0.294    -.3223121     .097597
+     dyear18 |  -.1127801   .0962123    -1.17   0.241    -.3013527    .0757925
+     dyear19 |  -.1350117   .0964214    -1.40   0.161    -.3239941    .0539708
+     dyear20 |  -.1306007   .0941844    -1.39   0.166    -.3151987    .0539974
+     dyear21 |  -.1133949   .1031534    -1.10   0.272    -.3155718     .088782
+     dyear22 |  -.1089488   .1205287    -0.90   0.366    -.3451808    .1272831
+     dyear23 |  -.0782829   .1301069    -0.60   0.547    -.3332878     .176722
+     dyear24 |  -.0763872   .1427627    -0.54   0.593    -.3561969    .2034225
+     dyear25 |  -.0847997   .1498054    -0.57   0.571    -.3784129    .2088135
+     dyear26 |  -.0861417   .1624539    -0.53   0.596    -.4045455    .2322621
+     dyear27 |  -.0890833   .1717803    -0.52   0.604    -.4257664    .2475999
+     dyear28 |  -.0851007   .1810719    -0.47   0.638     -.439995    .2697936
+     dyear29 |  -.0734971   .1841265    -0.40   0.690    -.4343784    .2873843
+     dyear30 |  -.0333527   .2039054    -0.16   0.870        -.433    .3662945
+------------------------------------------------------------------------------
+Instruments for first differences equation
+  Standard
+    D.(lnp lnpn lny dyear3 dyear4 dyear5 dyear6 dyear7 dyear8 dyear9 dyear10
+    dyear11 dyear12 dyear13 dyear14 dyear15 dyear16 dyear17 dyear18 dyear19
+    dyear20 dyear21 dyear22 dyear23 dyear24 dyear25 dyear26 dyear27 dyear28
+    dyear29 dyear30)
+  GMM-type (missing=0, separate instruments for each period unless collapsed)
+    L(1/.).L.lnc
+------------------------------------------------------------------------------
+Arellano-Bond test for AR(1) in first differences: z =  -3.69  Pr > z =  0.000
+Arellano-Bond test for AR(2) in first differences: z =   1.75  Pr > z =  0.081
+------------------------------------------------------------------------------
+Sargan test of overid. restrictions: chi2(405)  = 561.83  Prob > chi2 =  0.000
+  (Not robust, but not weakened by many instruments.)
+Hansen test of overid. restrictions: chi2(405)  =  14.71  Prob > chi2 =  1.000
+  (Robust, but can be weakened by many instruments.)
+
+Difference-in-Hansen tests of exogeneity of instrument subsets:
+  iv(lnp lnpn lny dyear3 dyear4 dyear5 dyear6 dyear7 dyear8 dyear9 dyear10 dyea
+> r11 dyear12 dyear13 dyear14 dyear15 dyear16 dyear17 dyear18 dyear19 dyear20 d
+> year21 dyear22 dyear23 dyear24 dyear25 dyear26 dyear27 dyear28 dyear29 dyear3
+> 0)
+    Hansen test excluding group:     chi2(374)  =  15.17  Prob > chi2 =  1.000
+    Difference (null H = exogenous): chi2(31)   =  -0.45  Prob > chi2 =  1.000
+
+. 
+. 

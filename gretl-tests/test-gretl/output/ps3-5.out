@@ -1,0 +1,76 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps3-5.inp
+ /opt/esl/share/gretl/scripts/ps3-5.inp
+# PS3.5 using DATA3-1, for Example 3.9
+? open data3-1
+
+Read datafile /opt/esl/share/gretl/data/data3-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 3 variables:
+  0) const    1) price    2) sqft   
+
+? ols price 0 sqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# regress sqft against price
+? ols sqft 0 price
+
+Model 2: OLS, using observations 1-14
+Dependent variable: sqft
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       33.3846      262.475      0.1272    0.9009  
+  price        5.91366       0.798410   7.407     8.20e-06 ***
+
+Mean dependent var   1910.929   S.D. dependent var   577.7571
+Sum squared resid    778835.1   S.E. of regression   254.7605
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -96.35062   Akaike criterion     196.7012
+Schwarz criterion    197.9794   Hannan-Quinn         196.5829
+
+? smpl 1 1
+Full data range: 1 - 14 (n = 14)
+Current sample: 1 - 1 (n = 1)
+
+# retrieve estimated constant term
+? genr astar = $coeff(0)
+Generated scalar astar = 33.3846
+# retrieve estimated slope term
+? genr bstar = $coeff(price)
+Generated scalar bstar = 5.91366
+# calculate new intercept and slope and print all variables
+? genr aprime = -astar/bstar
+Generated scalar aprime = -5.64533
+? genr bprime = 1/bstar
+Generated scalar bprime = 0.1691
+? print astar bstar aprime bprime
+
+          astar =  33.384557
+
+          bstar =  5.9136575
+
+         aprime = -5.6453315
+
+         bprime =  0.16910009
+Done

@@ -1,0 +1,414 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-10.inp
+ /opt/esl/share/gretl/scripts/ps6-10.inp
+# PS6.10, for LM test application in Example 6.7.
+? open data4-8
+
+Read datafile /opt/esl/share/gretl/data/data4-8.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 9 variables:
+  0) const    1) sub      2) home     3) inst     4) svc    
+  5) tv       6) age      7) air      8) y      
+
+# First generate squared variables.
+? square home inst svc tv age air y
+Listing 16 variables:
+  0) const      1) sub        2) home       3) inst       4) svc      
+  5) tv         6) age        7) air        8) y          9) sq_home  
+ 10) sq_inst   11) sq_svc    12) sq_tv     13) sq_age    14) sq_air   
+ 15) sq_y     
+
+# estimate basic model
+? ols sub const home inst svc tv age air y
+
+Model 1: OLS, using observations 1-40
+Dependent variable: sub
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      -6.80773      26.6598       -0.2554   0.8001  
+  home        0.405549      0.0350034    11.59     5.50e-13 ***
+  inst       -0.526420      0.476074     -1.106    0.2771  
+  svc         2.03873       2.12697       0.9585   0.3450  
+  tv          0.756508      0.687811      1.100    0.2796  
+  age         1.19351       0.502651      2.374    0.0237   **
+  air        -5.11114       1.51846      -3.366    0.0020   ***
+  y           0.00165517    0.00346922    0.4771   0.6365  
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    4923.914   S.E. of regression   12.40453
+R-squared            0.887748   Adjusted R-squared   0.863193
+F(7, 32)             36.15343   P-value(F)           1.92e-13
+Log-likelihood      -153.0171   Akaike criterion     322.0343
+Schwarz criterion    335.5453   Hannan-Quinn         326.9194
+
+Excluding the constant, p-value was highest for variable 8 (y)
+
+? genr ut=$uhat
+Generated series ut (ID 16)
+# estimate auxiliary regression
+? ols ut const home inst svc tv age air y sq_home sq_inst sq_svc \
+  sq_tv sq_age sq_air sq_y
+
+Model 2: OLS, using observations 1-40
+Dependent variable: ut
+
+              coefficient      std. error     t-ratio   p-value
+  -------------------------------------------------------------
+  const      -481.436         264.286         -1.822    0.0805  *
+  home          0.0338516       0.0838807      0.4036   0.6900 
+  inst          0.918388        2.12419        0.4323   0.6692 
+  svc          10.1055         19.1942         0.5265   0.6032 
+  tv           -1.41798         2.65420       -0.5342   0.5979 
+  age          -2.55065         1.46227       -1.744    0.0934  *
+  air          23.8229          5.23916        4.547    0.0001  ***
+  y             0.0828789       0.0525754      1.576    0.1275 
+  sq_home       0.000220711     0.000283865    0.7775   0.4441 
+  sq_inst      -0.0210408       0.0655122     -0.3212   0.7507 
+  sq_svc       -0.778979        1.28544       -0.6060   0.5500 
+  sq_tv         0.0484438       0.101687       0.4764   0.6379 
+  sq_age        0.139275        0.0733663      1.898    0.0693  *
+  sq_air       -1.58228         0.373179      -4.240    0.0003  ***
+  sq_y         -4.54651e-06     2.83458e-06   -1.604    0.1213 
+
+Mean dependent var  -9.30e-15   S.D. dependent var   11.23629
+Sum squared resid    2216.666   S.E. of regression   9.416297
+R-squared            0.549816   Adjusted R-squared   0.297713
+F(14, 25)            2.180920   P-value(F)           0.043134
+Log-likelihood      -137.0551   Akaike criterion     304.1103
+Schwarz criterion    329.4435   Hannan-Quinn         313.2700
+
+Excluding the constant, p-value was highest for variable 10 (sq_inst)
+
+# compute LM test statistic
+? genr LM = $nrsq
+Generated scalar LM = 21.9927
+# compute pvalue
+? pvalue X 7 LM
+Chi-square(7): area to the right of 21.9927 = 0.00254783
+(to the left: 0.997452)
+# from auxiliary regression add variables to basic model
+? ols sub const home inst svc tv age air y sq_home sq_age sq_air sq_y
+
+Model 3: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -407.079         211.780         -1.922    0.0648   *
+  home          0.431916        0.0792356      5.451    8.09e-06 ***
+  inst         -0.182083        0.395713      -0.4601   0.6490  
+  svc           0.212256        1.96663        0.1079   0.9148  
+  tv            0.696158        0.529216       1.315    0.1990  
+  age          -1.07175         1.23045       -0.8710   0.3911  
+  air          18.1986          4.88240        3.727    0.0009   ***
+  y             0.0756733       0.0475539      1.591    0.1228  
+  sq_home       0.000223963     0.000268892    0.8329   0.4119  
+  sq_age        0.117385        0.0579629      2.025    0.0525   *
+  sq_air       -1.55792         0.338291      -4.605    8.16e-05 ***
+  sq_y         -4.04945e-06     2.55618e-06   -1.584    0.1244  
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2307.187   S.E. of regression   9.077419
+R-squared            0.947403   Adjusted R-squared   0.926739
+F(11, 28)            45.84957   P-value(F)           6.01e-15
+Log-likelihood      -137.8556   Akaike criterion     299.7113
+Schwarz criterion    319.9778   Hannan-Quinn         307.0390
+
+Excluding the constant, p-value was highest for variable 4 (svc)
+
+# carry out data-based model reduction
+? omit svc
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for svc
+  Test statistic: F(1, 28) = 0.0116487, p-value 0.914822
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -415.596         193.151         -2.152    0.0399   **
+  home          0.432271        0.0778066      5.556    5.42e-06 ***
+  inst         -0.166386        0.361690      -0.4600   0.6489  
+  tv            0.703778        0.515471       1.365    0.1827  
+  age          -1.15514         0.941165      -1.227    0.2296  
+  air          18.2184          4.79507        3.799    0.0007   ***
+  y             0.0778031       0.0425223      1.830    0.0776   *
+  sq_home       0.000226465     0.000263286    0.8601   0.3968  
+  sq_age        0.121108        0.0457841      2.645    0.0130   **
+  sq_air       -1.55758         0.332463      -4.685    6.08e-05 ***
+  sq_y         -4.16298e-06     2.28966e-06   -1.818    0.0794   *
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2308.147   S.E. of regression   8.921394
+R-squared            0.947381   Adjusted R-squared   0.929236
+F(10, 29)            52.21283   P-value(F)           8.07e-16
+Log-likelihood      -137.8640   Akaike criterion     297.7279
+Schwarz criterion    316.3056   Hannan-Quinn         304.4450
+
+Excluding the constant, p-value was highest for variable 3 (inst)
+
+? omit sq_home
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for sq_home
+  Test statistic: F(1, 29) = 0.739852, p-value 0.396764
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -489.587         172.187         -2.843    0.0080   ***
+  home          0.494411        0.0287654     17.19     4.46e-17 ***
+  inst         -0.185738        0.359421      -0.5168   0.6091  
+  tv            0.586987        0.495106       1.186    0.2451  
+  age          -1.28107         0.925668      -1.384    0.1766  
+  air          16.6129          4.39767        3.778    0.0007   ***
+  y             0.0945355       0.0376474      2.511    0.0177   **
+  sq_age        0.123682        0.0454877      2.719    0.0108   **
+  sq_air       -1.42528         0.293460      -4.857    3.49e-05 ***
+  sq_y         -5.04053e-06     2.04089e-06   -2.470    0.0194   **
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2367.033   S.E. of regression   8.882628
+R-squared            0.946038   Adjusted R-squared   0.929850
+F(9, 30)             58.43881   P-value(F)           1.46e-16
+Log-likelihood      -138.3678   Akaike criterion     296.7356
+Schwarz criterion    313.6244   Hannan-Quinn         302.8421
+
+Excluding the constant, p-value was highest for variable 3 (inst)
+
+? omit inst
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for inst
+  Test statistic: F(1, 30) = 0.267051, p-value 0.609106
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -520.515         159.531         -3.263    0.0027   ***
+  home          0.492248        0.0281207     17.50     1.26e-17 ***
+  tv            0.633888        0.480928       1.318    0.1971  
+  age          -1.31103         0.912864      -1.436    0.1610  
+  air          16.4769          4.33759        3.799    0.0006   ***
+  y             0.100779        0.0352324      2.860    0.0075   ***
+  sq_age        0.123192        0.0449370      2.741    0.0101   **
+  sq_air       -1.41101         0.288683      -4.888    2.96e-05 ***
+  sq_y         -5.38280e-06     1.90747e-06   -2.822    0.0083   ***
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2388.103   S.E. of regression   8.776992
+R-squared            0.945558   Adjusted R-squared   0.931508
+F(8, 31)             67.30152   P-value(F)           1.94e-17
+Log-likelihood      -138.5450   Akaike criterion     295.0901
+Schwarz criterion    310.2900   Hannan-Quinn         300.5859
+
+Excluding the constant, p-value was highest for variable 5 (tv)
+
+# final model with all coefficients significant at 10 percent level
+? omit tv
+Test on Model 6:
+
+  Null hypothesis: the regression parameter is zero for tv
+  Test statistic: F(1, 31) = 1.73726, p-value 0.197144
+  Omitting variables improved 2 of 3 information criteria.
+
+Model 7: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -562.676         158.082         -3.559    0.0012   ***
+  home          0.495955        0.0283002     17.52     5.79e-18 ***
+  age          -1.55753         0.903735      -1.723    0.0945   *
+  air          17.3047          4.34104        3.986    0.0004   ***
+  y             0.110830        0.0347911      3.186    0.0032   ***
+  sq_age        0.139212        0.0437577      3.181    0.0033   ***
+  sq_air       -1.41766         0.291945      -4.856    3.02e-05 ***
+  sq_y         -5.94850e-06     1.87984e-06   -3.164    0.0034   ***
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2521.934   S.E. of regression   8.877524
+R-squared            0.942507   Adjusted R-squared   0.929930
+F(7, 32)             74.94125   P-value(F)           4.94e-18
+Log-likelihood      -139.6356   Akaike criterion     295.2712
+Schwarz criterion    308.7822   Hannan-Quinn         300.1563
+
+#  estimate most general model using the Hendry/LSE approach
+? ols sub const home inst svc tv age air y sq_home sq_inst sq_svc \
+  sq_tv sq_age sq_air sq_y
+
+Model 8: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -488.244         264.286         -1.847    0.0766   *
+  home          0.439400        0.0838807      5.238    2.01e-05 ***
+  inst          0.391969        2.12419        0.1845   0.8551  
+  svc          12.1443         19.1942         0.6327   0.5327  
+  tv           -0.661471        2.65420       -0.2492   0.8052  
+  age          -1.35714         1.46227       -0.9281   0.3622  
+  air          18.7117          5.23916        3.572    0.0015   ***
+  y             0.0845341       0.0525754      1.608    0.1204  
+  sq_home       0.000220711     0.000283865    0.7775   0.4441  
+  sq_inst      -0.0210408       0.0655122     -0.3212   0.7507  
+  sq_svc       -0.778979        1.28544       -0.6060   0.5500  
+  sq_tv         0.0484438       0.101687       0.4764   0.6379  
+  sq_age        0.139275        0.0733663      1.898    0.0693   *
+  sq_air       -1.58228         0.373179      -4.240    0.0003   ***
+  sq_y         -4.54651e-06     2.83458e-06   -1.604    0.1213  
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2216.666   S.E. of regression   9.416297
+R-squared            0.949466   Adjusted R-squared   0.921167
+F(14, 25)            33.55130   P-value(F)           1.05e-12
+Log-likelihood      -137.0551   Akaike criterion     304.1103
+Schwarz criterion    329.4435   Hannan-Quinn         313.2700
+
+Excluding the constant, p-value was highest for variable 3 (inst)
+
+# carry out data-based model reduction on this
+? omit inst tv sq_inst
+Test on Model 8:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    inst, tv, sq_inst
+  Test statistic: F(3, 25) = 0.171713, p-value 0.914494
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 9: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -547.288         238.868         -2.291    0.0297   **
+  home          0.429155        0.0775755      5.532    6.49e-06 ***
+  svc          12.8681         17.1810         0.7490   0.4601  
+  age          -1.59429         1.31900       -1.209    0.2369  
+  air          18.3260          4.84122        3.785    0.0007   ***
+  y             0.0969648       0.0470986      2.059    0.0489   **
+  sq_home       0.000251946     0.000265565    0.9487   0.3509  
+  sq_svc       -0.865139        1.15218       -0.7509   0.4590  
+  sq_tv         0.0261119       0.0203784      1.281    0.2106  
+  sq_age        0.146243        0.0671456      2.178    0.0380   **
+  sq_air       -1.54434         0.340643      -4.534    9.91e-05 ***
+  sq_y         -5.21527e-06     2.53739e-06   -2.055    0.0493   **
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2262.342   S.E. of regression   8.988766
+R-squared            0.948425   Adjusted R-squared   0.928163
+F(11, 28)            46.80888   P-value(F)           4.59e-15
+Log-likelihood      -137.4631   Akaike criterion     298.9261
+Schwarz criterion    319.1927   Hannan-Quinn         306.2539
+
+Excluding the constant, p-value was highest for variable 4 (svc)
+
+? omit svc sq_svc
+Test on Model 9:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    svc, sq_svc
+  Test statistic: F(2, 28) = 0.282137, p-value 0.756289
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 10: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -443.440         180.963         -2.450    0.0203   **
+  home          0.431146        0.0753048      5.725    3.01e-06 ***
+  age          -1.16745         0.923237      -1.265    0.2158  
+  air          18.5293          4.71154        3.933    0.0005   ***
+  y             0.0839718       0.0400278      2.098    0.0444   **
+  sq_home       0.000238292     0.000258271    0.9226   0.3636  
+  sq_tv         0.0302365       0.0191479      1.579    0.1248  
+  sq_age        0.119854        0.0449698      2.665    0.0123   **
+  sq_air       -1.58142         0.328884      -4.808    4.00e-05 ***
+  sq_y         -4.49789e-06     2.15185e-06   -2.090    0.0452   **
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2307.934   S.E. of regression   8.771039
+R-squared            0.947386   Adjusted R-squared   0.931601
+F(9, 30)             60.02059   P-value(F)           1.00e-16
+Log-likelihood      -137.8621   Akaike criterion     295.7242
+Schwarz criterion    312.6130   Hannan-Quinn         301.8307
+
+Excluding the constant, p-value was highest for variable 9 (sq_home)
+
+? omit sq_home
+Test on Model 10:
+
+  Null hypothesis: the regression parameter is zero for sq_home
+  Test statistic: F(1, 30) = 0.851268, p-value 0.363555
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 11: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -523.698         158.304         -3.308    0.0024   ***
+  home          0.495658        0.0278944     17.77     8.28e-18 ***
+  age          -1.30228         0.909410      -1.432    0.1622  
+  air          16.7659          4.29612        3.903    0.0005   ***
+  y             0.101954        0.0348784      2.923    0.0064   ***
+  sq_tv         0.0257202       0.0184672      1.393    0.1736  
+  sq_age        0.122472        0.0447724      2.735    0.0102   **
+  sq_air       -1.43616         0.288057      -4.986    2.24e-05 ***
+  sq_y         -5.44255e-06     1.88811e-06   -2.883    0.0071   ***
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2373.423   S.E. of regression   8.749973
+R-squared            0.945893   Adjusted R-squared   0.931929
+F(8, 31)             67.74177   P-value(F)           1.77e-17
+Log-likelihood      -138.4217   Akaike criterion     294.8434
+Schwarz criterion    310.0434   Hannan-Quinn         300.3393
+
+Excluding the constant, p-value was highest for variable 12 (sq_tv)
+
+# note that the final model is identical to the one above
+? omit sq_tv
+Test on Model 11:
+
+  Null hypothesis: the regression parameter is zero for sq_tv
+  Test statistic: F(1, 31) = 1.93975, p-value 0.173605
+  Omitting variables improved 2 of 3 information criteria.
+
+Model 12: OLS, using observations 1-40
+Dependent variable: sub
+
+              coefficient      std. error     t-ratio   p-value 
+  --------------------------------------------------------------
+  const      -562.676         158.082         -3.559    0.0012   ***
+  home          0.495955        0.0283002     17.52     5.79e-18 ***
+  age          -1.55753         0.903735      -1.723    0.0945   *
+  air          17.3047          4.34104        3.986    0.0004   ***
+  y             0.110830        0.0347911      3.186    0.0032   ***
+  sq_age        0.139212        0.0437577      3.181    0.0033   ***
+  sq_air       -1.41766         0.291945      -4.856    3.02e-05 ***
+  sq_y         -5.94850e-06     1.87984e-06   -3.164    0.0034   ***
+
+Mean dependent var   24.50850   S.D. dependent var   33.53720
+Sum squared resid    2521.934   S.E. of regression   8.877524
+R-squared            0.942507   Adjusted R-squared   0.929930
+F(7, 32)             74.94125   P-value(F)           4.94e-18
+Log-likelihood      -139.6356   Akaike criterion     295.2712
+Schwarz criterion    308.7822   Hannan-Quinn         300.1563
+
+Done

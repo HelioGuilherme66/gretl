@@ -1,0 +1,23 @@
+gretl version 1.9.14cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-10-31 09:57
+? run mprintf_fn.inp
+ /home/cottrell/stats/test-gretl/strings/mprintf_fn.inp
+? set seed 123763
+Pseudo-random number generator seeded with 123763
+? matrix M = muniform(6,2)
+Generated matrix M
+? matrix C = mcorr(M)
+Generated matrix C
+? printf("C:\n%8.3f\n", C)
+C:
+   1.000  -0.420
+  -0.420   1.000
+
+? printf("C:\n%8.3f\n", mcorr(M))
+C:
+   1.000  -0.420
+  -0.420   1.000
+
+Done

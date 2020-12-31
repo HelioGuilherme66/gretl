@@ -1,0 +1,10 @@
+open greene19_1.gdt
+logit GRADE 0 GPA TUCE PSI 
+genr yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+probit GRADE 0 GPA TUCE PSI
+genr yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+

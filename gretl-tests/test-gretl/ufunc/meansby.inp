@@ -1,0 +1,26 @@
+function void meansby(list X, series d)
+  matrix v = values(d)
+  scalar n = rows(v)
+
+  printf "\n           "
+  loop foreach i X --quiet
+    printf "%11s", "$i"
+  endloop
+  printf "\n\n"
+
+  loop for j=1..n --quiet
+    scalar x = v[$j]
+    smpl (d=x) --restrict --replace
+    printf "%11d", x
+
+    loop foreach i X --quiet
+      printf " %10.5f", mean(X.$i)
+    endloop
+
+    printf "\n"
+
+  endloop
+
+  smpl full
+
+end function

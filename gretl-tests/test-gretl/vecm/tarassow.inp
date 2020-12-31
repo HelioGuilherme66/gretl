@@ -1,0 +1,17 @@
+open denmark
+
+v1 <- vecm 2 1 LRM LRY IBO
+ecm = $ec
+
+v2 <- restrict --full
+  b[1] = -1
+  b[3] = 0
+  a[3] = 0
+end restrict
+
+ecm_r = $ec
+se = $stderr
+se
+
+ecm = ecm ~ ecm_r
+ecm

@@ -1,0 +1,36 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run cholesky.inp
+ /home/cottrell/stats/test-gretl/matrix/cholesky.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = {const, sqft}
+Generated matrix X
+? matrix C = cholesky(X'*X)
+Generated matrix C
+? C
+C (2 x 2)
+
+      3.7417       0.0000 
+      7150.0       2083.1 
+
+? matrix XPX = X'*X
+Generated matrix XPX
+? C = cholesky(XPX)
+Replaced matrix C
+? C
+C (2 x 2)
+
+      3.7417       0.0000 
+      7150.0       2083.1 
+
+Done

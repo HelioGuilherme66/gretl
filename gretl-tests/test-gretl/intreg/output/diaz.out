@@ -1,0 +1,154 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run diaz.inp
+ /home/cottrell/stats/test-gretl/intreg/diaz.inp
+? open diaz.txt
+parsing /home/cottrell/stats/test-gretl/intreg/diaz.txt...
+using delimiter ','
+   longest line: 15 characters
+   first field: 'obs'
+   seems to be observation label
+   number of columns = 3
+   number of variables: 2
+   number of non-blank lines: 51
+scanning for variable names...
+   line: obs,Y,X
+scanning for row labels and data...
+   first row label "1", last label "50"
+treating these as undated data
+
+Listing 3 variables:
+  0) const    1) Y        2) X      
+
+? series TY = 1000 - Y
+Generated series TY (ID 3)
+? TY = (TY < 0)? 0 : TY
+Replaced series TY (ID 3)
+? tobit TY const X -v
+Iteration 1: loglikelihood = -185.179289168 (steplength = 1)
+Parameters:       886.03     -87.290      5.4081
+Gradients:     -0.082512     -1.0982      26.110 (norm 1.02e+01)
+
+Iteration 2: loglikelihood = -180.292748435 (steplength = 1)
+Parameters:       1030.0     -114.95      5.5419
+Gradients:     -0.020319    -0.32212      14.733 (norm 6.82e+00)
+
+Iteration 3: loglikelihood = -179.288716260 (steplength = 1)
+Parameters:       1135.4     -135.59      5.6109
+Gradients:    -0.0075389    -0.11117      3.9334 (norm 3.90e+00)
+
+Iteration 4: loglikelihood = -179.231258466 (steplength = 1)
+Parameters:       1162.0     -141.11      5.6436
+Gradients:    -0.0015205   -0.020529      1.1161 (norm 1.91e+00)
+
+Iteration 5: loglikelihood = -179.230920218 (steplength = 1)
+Parameters:       1164.1     -141.57      5.6465
+Gradients:   -0.00013235  -0.0015897    0.081859 (norm 5.30e-01)
+
+Iteration 6: loglikelihood = -179.230920203 (steplength = 1)
+Parameters:       1164.2     -141.57      5.6465
+Gradients:   -1.0222e-06 -1.1220e-05  0.00051608 (norm 4.36e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -179.230920203 (steplength = 1)
+Parameters:       1164.2     -141.57      5.6465
+Gradients:   -5.0174e-11 -5.1651e-10  2.2280e-08 (norm 2.93e-04)
+
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 6 iterations
+
+Model 1: Tobit, using observations 1-50
+Dependent variable: TY
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       1164.16       135.951      8.563   1.10e-17 ***
+  X           -141.569       21.9110    -6.461   1.04e-10 ***
+
+Chi-square(1)        41.74578   p-value              1.04e-10
+Log-likelihood      -179.2309   Akaike criterion     364.4618
+Schwarz criterion    370.1979   Hannan-Quinn         366.6462
+
+sigma = 283.294 (44.1009)
+Left-censored observations: 26
+Right-censored observations: 0
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 4.97161
+  with p-value = 0.0832584
+
+? ll1 = $lnl
+Generated scalar ll1 = -179.231
+? y_lo = TY>0 ? TY : NA
+Generated series y_lo (ID 4)
+? y_hi = TY>0 ? TY : 0
+Generated series y_hi (ID 5)
+? intreg y_lo y_hi const X -v
+Iteration 1: loglikelihood = -185.179289168 (steplength = 1)
+Parameters:       886.03     -87.290      5.4081
+Gradients:     -0.082512     -1.0982      26.110 (norm 1.02e+01)
+
+Iteration 2: loglikelihood = -180.292748435 (steplength = 1)
+Parameters:       1030.0     -114.95      5.5419
+Gradients:     -0.020319    -0.32212      14.733 (norm 6.82e+00)
+
+Iteration 3: loglikelihood = -179.288716260 (steplength = 1)
+Parameters:       1135.4     -135.59      5.6109
+Gradients:    -0.0075389    -0.11117      3.9334 (norm 3.90e+00)
+
+Iteration 4: loglikelihood = -179.231258466 (steplength = 1)
+Parameters:       1162.0     -141.11      5.6436
+Gradients:    -0.0015205   -0.020529      1.1161 (norm 1.91e+00)
+
+Iteration 5: loglikelihood = -179.230920218 (steplength = 1)
+Parameters:       1164.1     -141.57      5.6465
+Gradients:   -0.00013235  -0.0015897    0.081859 (norm 5.30e-01)
+
+Iteration 6: loglikelihood = -179.230920203 (steplength = 1)
+Parameters:       1164.2     -141.57      5.6465
+Gradients:   -1.0222e-06 -1.1220e-05  0.00051608 (norm 4.36e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -179.230920203 (steplength = 1)
+Parameters:       1164.2     -141.57      5.6465
+Gradients:   -5.0174e-11 -5.1651e-10  2.2280e-08 (norm 2.93e-04)
+
+Gradient within tolerance (1e-07)
+
+Convergence achieved after 6 iterations
+
+Model 2: Interval estimates, using observations 1-50
+Lower limit: y_lo, Upper limit: y_hi
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       1164.16       135.951      8.563   1.10e-17 ***
+  X           -141.569       21.9110    -6.461   1.04e-10 ***
+
+Chi-square(1)        41.74578   p-value              1.04e-10
+Log-likelihood      -179.2309   Akaike criterion     364.4618
+Schwarz criterion    370.1979   Hannan-Quinn         366.6462
+
+sigma = 283.294 (44.1009)
+Left-unbounded observations: 26
+Right-unbounded observations: 0
+Bounded observations: 0
+Point observations: 24
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 4.97161
+  with p-value = 0.0832584
+
+? ll2 = $lnl
+Generated scalar ll2 = -179.231
+ll1 - ll2 = 0
+Done

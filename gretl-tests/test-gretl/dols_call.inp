@@ -1,0 +1,11 @@
+include dols.inp
+open EUR-YC.gdt
+series y = log(Y/P)
+series c = log(C/P)
+scalar se4
+scalar se6
+b4 = dols(4,c,y,&se4)
+b6 = dols(6,c,y,&se6)
+scalar z4 = b4/se4
+scalar z6 = b6/se6
+

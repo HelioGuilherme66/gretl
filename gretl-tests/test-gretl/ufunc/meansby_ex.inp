@@ -1,0 +1,11 @@
+open rac3d
+
+include meansby.inp
+
+age = int(100*AGE)
+discrete age
+
+list X = INCOME FREEREPA HSCORE
+
+meansby(X, age)
+ 

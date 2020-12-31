@@ -1,0 +1,4 @@
+open baltagi_Gasoline
+series dum = ($unit > 5)
+panel gas 0 y rp car dum
+

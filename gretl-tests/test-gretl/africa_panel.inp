@@ -1,0 +1,7 @@
+open africa_panel.gdt
+ols gdpgr const pcgdp inigdp polrts gvtsz ecnstr mnpr altcur \
+ legpr trdfr xcap educatio DEMOC 
+panel gdpgr const pcgdp inigdp polrts gvtsz ecnstr mnpr altcur \
+ legpr trdfr xcap educatio DEMOC --unit-weights
+
+

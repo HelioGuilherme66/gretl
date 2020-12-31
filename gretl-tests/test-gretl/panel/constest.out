@@ -1,0 +1,72 @@
+gretl version 1.9.12cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2013-07-01 10:23
+? run constest.inp
+ /home/cottrell/stats/test-gretl/panel/constest.inp
+? open cigar.csv
+parsing /home/cottrell/stats/test-gretl/panel/cigar.csv...
+using delimiter ','
+   longest line: 69 characters
+   first field: 'state'
+   number of columns = 6
+   number of variables: 6
+   number of non-blank lines: 1381
+scanning for variable names...
+   line: state,year,lnc,lnp,lnpn,lny
+scanning for row labels and data...
+treating these as undated data
+
+Listing 7 variables:
+  0) const    1) state    2) year     3) lnc      4) lnp    
+  5) lnpn     6) lny    
+
+? setobs state year --panel-vars
+Full data range: 1:01 - 46:30 (n = 1380)
+
+? dpanel 1 ; lnc lnp lnpn lny
+
+Model 1: 1-step dynamic panel, using 1288 observations
+Included 46 cross-sectional units
+Dependent variable: lnc
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  lnc(-1)     0.851734     0.0279893    30.43     2.16e-203 ***
+  lnp        -0.149098     0.0334568    -4.456    8.33e-06  ***
+  lnpn        0.0112355    0.0333977     0.3364   0.7366   
+  lny        -0.0473278    0.0128443    -3.685    0.0002    ***
+
+Sum squared resid    3.718277   S.E. of regression   0.053813
+
+Number of instruments = 409
+Test for AR(1) errors: z = -5.2512 [0.0000]
+Test for AR(2) errors: z = 2.1874 [0.0287]
+Sargan over-identification test: Chi-square(405) = 845.05 [0.0000]
+Wald (joint) test: Chi-square(4) = 7929.92 [0.0000]
+
+? genr time
+Generated series time (ID 7)
+? dpanel 1 ; lnc lnp lnpn lny time
+
+Model 2: 1-step dynamic panel, using 1288 observations
+Included 46 cross-sectional units
+Dependent variable: lnc
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  lnc(-1)     0.774858     0.0446845      17.34    2.32e-67 ***
+  lnp        -0.248628     0.0342848      -7.252   4.11e-13 ***
+  lnpn        0.0773866    0.0335737       2.305   0.0212   **
+  lny         0.301841     0.0392169       7.697   1.40e-14 ***
+  time       -0.00604438   0.000560556   -10.78    4.15e-27 ***
+
+Sum squared resid    3.331017   S.E. of regression   0.050954
+
+Number of instruments = 410
+Test for AR(1) errors: z = -5.1561 [0.0000]
+Test for AR(2) errors: z = 2.00027 [0.0455]
+Sargan over-identification test: Chi-square(405) = 689.029 [0.0000]
+Wald (joint) test: Chi-square(5) = 6257.89 [0.0000]
+
+Done

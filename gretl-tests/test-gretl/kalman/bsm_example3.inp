@@ -1,0 +1,13 @@
+set echo off
+set messages off
+
+include bsm2.inp
+
+open data9-3
+y = reskwh
+# estimate BSM and get the smoothed state
+matrix V = {}
+list State = bsm(y, &V)
+colnames(V, "level slope seasonal irreg")
+V
+print State -o

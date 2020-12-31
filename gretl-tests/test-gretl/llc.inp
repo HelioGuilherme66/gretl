@@ -1,0 +1,10 @@
+open greene14_1.gdt
+y = log(C)
+levinlin 0 y
+levinlin 0 y --nc
+levinlin 2 y
+levinlin 0 y --ct
+levinlin 2 y --ct
+scalar test = $test
+scalar pv = $pvalue
+

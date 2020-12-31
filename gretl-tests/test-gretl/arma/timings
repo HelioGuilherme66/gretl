@@ -1,0 +1,33 @@
+"time -p make", 3 runs:
+
+real 3.22
+user 2.93
+sys 0.26
+
+real 3.21
+user 2.93
+sys 0.25
+
+real 3.21
+user 2.93
+sys 0.27
+
+"KALMAN_AVG_LL=1 time -p make", 3 runs:
+
+real 3.74
+user 3.45
+sys 0.26
+
+real 3.74
+user 3.45
+sys 0.27
+
+real 3.72
+user 3.43
+sys 0.27
+
+
+
+
+
+

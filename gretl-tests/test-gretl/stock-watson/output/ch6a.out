@@ -1,0 +1,81 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch6a.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch6a.inp
+# Stock and Watson, chapter 6, boxed feature
+#
+? open journals.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/journals.gdt
+periodicity: 1, maxobs: 180
+observations range: 1 to 180
+
+Listing 8 variables:
+  0) const       1) society     2) libprice    3) pages       4) charpp    
+  5) citestot    6) date1       7) oclc      
+
+# Set S & W's preferred HC variant
+? set hc_version 1
+# generate price per citation
+? genr ppc = libprice / citestot
+Generated series ppc (ID 8)
+# Simplest model
+? logs oclc ppc
+Listing 11 variables:
+  0) const       1) society     2) libprice    3) pages       4) charpp    
+  5) citestot    6) date1       7) oclc        8) ppc         9) l_oclc    
+ 10) l_ppc     
+
+? ols l_oclc 0 l_ppc --robust
+
+Model 1: OLS, using observations 1-180
+Dependent variable: l_oclc
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const        4.76621     0.0552583     86.25    3.86e-147 ***
+  l_ppc       -0.533053    0.0339593    -15.70    2.04e-35  ***
+
+Mean dependent var   4.740388   S.D. dependent var   1.123617
+Sum squared resid    100.0561   S.E. of regression   0.749742
+R-squared            0.557255   Adjusted R-squared   0.554767
+F(1, 178)            246.3903   P-value(F)           2.04e-35
+Log-likelihood      -202.5586   Akaike criterion     409.1171
+Schwarz criterion    415.5031   Hannan-Quinn         411.7064
+
+Log-likelihood for oclc = -1055.83
+
+# Find the log-age of the journals
+? genr l_age = log(2000 - date1)
+Generated series l_age (ID 11)
+# Find log of size (in millions of chars)
+? genr l_size = log(charpp * pages / 10^6)
+Generated series l_size (ID 12)
+# Second model
+? ols l_oclc 0 l_ppc l_age l_size --robust
+
+Model 2: OLS, using observations 1-180
+Dependent variable: l_oclc
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        3.20665     0.379725      8.445    1.10e-14 ***
+  l_ppc       -0.407718    0.0437175    -9.326    4.64e-17 ***
+  l_age        0.423649    0.119064      3.558    0.0005   ***
+  l_size       0.205614    0.0977507     2.103    0.0368   **
+
+Mean dependent var   4.740388   S.D. dependent var   1.123617
+Sum squared resid    87.41082   S.E. of regression   0.704736
+R-squared            0.613209   Adjusted R-squared   0.606616
+F(3, 176)            101.1792   P-value(F)           4.18e-38
+Log-likelihood      -190.3985   Akaike criterion     388.7971
+Schwarz criterion    401.5689   Hannan-Quinn         393.9755
+
+Log-likelihood for oclc = -1043.67
+
+# You get the idea; now you do the rest...
+Done

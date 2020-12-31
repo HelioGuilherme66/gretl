@@ -1,0 +1,78 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps5-3.inp
+ /opt/esl/share/gretl/scripts/ps5-3.inp
+# PS5.3, for the per capita housing model
+? open data4-3
+
+Read datafile /opt/esl/share/gretl/data/data4-3.gdt
+periodicity: 1, maxobs: 23
+observations range: 1963 to 1985
+
+Listing 7 variables:
+  0) const      1) year       2) housing    3) pop        4) gnp      
+  5) unemp      6) intrate  
+
+? genr pchouse = housing/pop
+Generated series pchouse (ID 7)
+? genr pcgnp = gnp/pop
+Generated series pcgnp (ID 8)
+? corr pcgnp unemp intrate
+
+Correlation Coefficients, using the observations 1963 - 1985
+5% critical value (two-tailed) = 0.4132 for n = 23
+
+         pcgnp         unemp       intrate
+        1.0000        0.6310        0.8431  pcgnp
+                      1.0000        0.7875  unemp
+                                    1.0000  intrate
+
+? ols pchouse 0 pcgnp unemp intrate
+
+Model 1: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: pchouse
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        1.52491      3.43941      0.4434   0.6625 
+  pcgnp        0.966194     0.371747     2.599    0.0176  **
+  unemp        0.212660     0.256737     0.8283   0.4178 
+  intrate     -0.818791     0.237635    -3.446    0.0027  ***
+
+Mean dependent var   7.507526   S.D. dependent var   1.661212
+Sum squared resid    33.18390   S.E. of regression   1.321560
+R-squared            0.453419   Adjusted R-squared   0.367117
+F(3, 19)             5.253848   P-value(F)           0.008260
+Log-likelihood      -36.85115   Akaike criterion     81.70230
+Schwarz criterion    86.24427   Hannan-Quinn         82.84459
+rho                  0.566968   Durbin-Watson        0.824793
+
+Excluding the constant, p-value was highest for variable 5 (unemp)
+
+? omit unemp
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for unemp
+  Test statistic: F(1, 19) = 0.686114, p-value 0.417773
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1963-1985 (T = 23)
+Dependent variable: pchouse
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        2.07913      3.34712      0.6212   0.5415 
+  pcgnp        0.935638     0.366998     2.549    0.0191  **
+  intrate     -0.698264     0.186397    -3.746    0.0013  ***
+
+Mean dependent var   7.507526   S.D. dependent var   1.661212
+Sum squared resid    34.38222   S.E. of regression   1.311149
+R-squared            0.433681   Adjusted R-squared   0.377049
+F(2, 20)             7.657901   P-value(F)           0.003393
+Log-likelihood      -37.25911   Akaike criterion     80.51821
+Schwarz criterion    83.92470   Hannan-Quinn         81.37493
+rho                  0.549618   Durbin-Watson        0.844440
+
+Done

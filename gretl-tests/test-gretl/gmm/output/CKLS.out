@@ -1,0 +1,142 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run CKLS.inp
+ /home/cottrell/stats/test-gretl/gmm/CKLS.inp
+/*
+  Replicate results from:
+  Chan, Karolyi, Longstaff and Sanders (1992), "An Empirical Comparison
+  of Alternative Models of Short-Term Interest Rates", Journal of Finance,
+  XLVII, 3
+  We replicate the results reported in Table III (page 1218) for the models
+  labelled "Vasicek", "CIR SR", "Brennan-Schwartz" and "Unrestricted".
+  Note that our estimates for Vasicek and CIR are rather different from
+  those reported in the article: since the reported J tests are higher, the
+  original values should be local minima. A further clue in this direction
+  comes from the fact that setting the BFGS tolerance to 1.0e-3 yields much
+  estimates much closer to the ones in the article.
+*/
+? open CKLS.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/gmm/CKLS.gdt
+periodicity: 12, maxobs: 307
+observations range: 1964:06 to 1989:12
+
+Listing 4 variables:
+  0) const    1) day      2) rat      3) rat2   
+
+? function series Full(matrix theta, scalar gam, series dr, series \
+  r_lag, series *oc2)
+? function series Vasicek(matrix theta, series dr, series r_lag, \
+  series *oc2)
+? function series CIR(matrix theta, series dr, series r_lag, series \
+  *oc2)
+? function series BrenSchwa(matrix theta, series dr, series r_lag, \
+  series *oc2)
+? dy = 12*diff(rat)
+Generated series dy (ID 4)
+? y_1 = 12*rat(-1)
+Generated series y_1 (ID 5)
+#set bfgs_toler 1.0e-03
+#set bfgs_richardson on
+/*
+  uncomment previous line to match Vasicek and CIR better
+*/
+? set force_hc on
+/*
+  this is probably inappropriate, but indispensable to
+  replicate the t statistics reported in the article
+*/
+? ols dy 0 y_1 --quiet
+Generated scalar a = 0.0408239
+Generated scalar b = -0.592135
+Generated scalar s2 = 0.000790753
+Generated matrix theta
+Generated scalar gam = 2
+Generated series e (ID 6)
+Generated series e2 (ID 7)
+Generated list Z
+Generated matrix V
+Full data range: 1964:06 - 1989:12 (n = 307)
+Current sample: 1964:07 - 1989:12 (n = 306)
+
+
+
+----------------- Unrestricted Model --------------------- 
+In regard to function Full:
+Warning: exp: Numerical result out of range
+Tolerance = 1.81899e-12
+
+Function evaluations: 11
+Evaluations of gradient: 1
+
+Model 2: Iterated GMM, using observations 1964:07-1989:12 (T = 306)
+
+              estimate    std. error      z      p-value 
+  -------------------------------------------------------
+  theta[1]    0.0408239   0.0220113     1.855    0.0636   *
+  theta[2]   -0.592135    0.381483     -1.552    0.1206  
+  theta[3]    1.67038     2.16217       0.7725   0.4398  
+  gam         1.49990     0.252176      5.948    2.72e-09 ***
+
+  GMM criterion: Q = 2.66202e-27 (TQ = 8.14577e-25)
+
+
+
+---------------------- Vasicek --------------------------- 
+Tolerance = 1.81899e-12
+
+Function evaluations: 47
+Evaluations of gradient: 2
+
+Model 3: Iterated GMM, using observations 1964:07-1989:12 (T = 306)
+
+               estimate     std. error       z       p-value 
+  -----------------------------------------------------------
+  theta[1]    0.00634566    0.0191697      0.3310    0.7406  
+  theta[2]   -0.0150364     0.335949      -0.04476   0.9643  
+  theta[3]    0.000423789   5.91177e-05    7.169     7.58e-13 ***
+
+  GMM criterion: Q = 0.0222163 (TQ = 6.7982)
+  J test: Chi-square(1) = 6.7982 [0.0091]
+
+
+
+---------------------- CIR SR ---------------------------- 
+Tolerance = 1.81899e-12
+
+Function evaluations: 41
+Evaluations of gradient: 2
+
+Model 4: Iterated GMM, using observations 1964:07-1989:12 (T = 306)
+
+              estimate     std. error       z      p-value 
+  ---------------------------------------------------------
+  theta[1]    0.0127645    0.0191821      0.6654   0.5058  
+  theta[2]   -0.122482     0.336064      -0.3645   0.7155  
+  theta[3]    0.00744461   0.000974409    7.640    2.17e-14 ***
+
+  GMM criterion: Q = 0.0160028 (TQ = 4.89685)
+  J test: Chi-square(1) = 4.89685 [0.0269]
+
+
+
+----------------- Brennan - Schwartz --------------------- 
+Tolerance = 1.81899e-12
+
+Function evaluations: 36
+Evaluations of gradient: 2
+
+Model 5: Iterated GMM, using observations 1964:07-1989:12 (T = 306)
+
+              estimate    std. error      z      p-value 
+  -------------------------------------------------------
+  theta[1]    0.0242077   0.0195694     1.237    0.2161  
+  theta[2]   -0.313649    0.342037     -0.9170   0.3591  
+  theta[3]    0.118565    0.0146547     8.091    5.94e-16 ***
+
+  GMM criterion: Q = 0.00722989 (TQ = 2.21234)
+  J test: Chi-square(1) = 2.21234 [0.1369]
+
+Done

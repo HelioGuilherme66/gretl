@@ -1,0 +1,58 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run PPtest.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/PPtest.gfn.inp
+? include ./PPtest.gfn
+ /home/cottrell/stats/test-gretl/testgfn/PPtest.gfn
+PPtest 0.1, 2012-08-23 (Riccardo "Jack" Lucchetti)
+? nulldata 169
+periodicity: 1, maxobs: 169
+observations range: 1 to 169
+? setobs 4 1947:1
+Full data range: 1947:1 - 1989:1 (n = 169)
+
+? open fedstl.bin
+/opt/esl/share/gretl/db/fedstl.bin
+? data gdpc96
+Series imported OK
+? series y = 100*log(gdpc96)
+Generated series y (ID 3)
+? scalar c = 1
+Generated scalar c = 1
+? scalar ct = 2
+Generated scalar ct = 2
+# Bartlett bandwidth
+? scalar m = 0
+Generated scalar m = 0
+# Test:
+? ptest = PPtest(y, ct, m, 0)
+Generated matrix ptest
+? print ptest
+ptest (1 x 2)
+
+       Z_tau         pval 
+     -2.4134      0.37130 
+
+? PPtest(y, ct, m, 1)
+Phillips-Perron unit-root test for y, Bartlett bandwidth 4:
+Z_t = -2.41338 (p-value = 0.3713)
+? PPtest(y, ct, m, 2)
+
+Phillips-Perron unit-root test for y, Bartlett bandwidth 4:
+
+Z_t = -2.41338 (p-value = 0.3713)
+
+Test regression (OLS, dependent variable y, T = 168):
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const      31.4347       16.3511       1.922   0.0545  *
+  time        0.0347262     0.0192566    1.803   0.0713  *
+  y(-1)       0.959812      0.0215755   44.49    0.0000  ***
+
+Sample variance of residual       1.20426
+Estimated long-run error variance 2.04686
+
+Done

@@ -1,0 +1,41 @@
+set echo off
+set messages off
+include op_predict.inp
+
+nulldata 50
+
+set seed 1970882
+
+series y = floor(uniform(0,4))
+matrix f = freq(y)
+print f
+scalar fmax = maxc(f[,2])
+printf "cases correct, naive prediction = %d (%.1f%%)\n", 
+  fmax, 100*fmax/$nobs
+scalar ifmax = f[imaxc(f[,2]), 1]
+scalar sumdist = sum(abs(y - ifmax))
+printf "sum abs distances, naive prediction: %g\n", sumdist
+
+series x1 = y + 4*normal()
+series x2 = -(y + 4*normal())
+
+# estimate the full model
+probit y 0 x1 x2
+matrix P = op_predict($coeff[3:], $yhat)
+nc = sumc(P[,5] .= y)
+printf "cases correct: %d\n", nc
+P = {y} ~ P
+# print P
+scalar sumdist = sumc(abs(P[,6] - P[,1]))
+printf "sum abs distances: %g\n", sumdist
+
+# drop x2 from the model
+probit y 0 x1
+matrix P = op_predict($coeff[2:], $yhat)
+nc = sumc(P[,5] .= y)
+printf "cases correct: %d\n", nc
+P = {y} ~ P
+# print P
+scalar sumdist = sumc(abs(P[,6] - P[,1]))
+printf "sum abs distances: %g\n", sumdist
+

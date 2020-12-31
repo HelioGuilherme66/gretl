@@ -1,0 +1,5 @@
+open cars100.gdt
+set bhhh_toler .0002
+arima 1 2 1 ; Cars100 --nc --verbose
+arima 0 2 1 ; Cars100 --nc --verbose --conditional
+

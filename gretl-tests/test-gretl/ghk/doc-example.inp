@@ -1,0 +1,25 @@
+set echo off
+set messages off
+
+nulldata 20
+set seed 1234
+
+series inf1 = -2*uniform()
+series sup1 = 2*uniform()
+series inf2 = -2*uniform()
+series sup2 = 2*uniform()
+scalar rho = 0.25
+matrix V = {1, rho; rho, 1}
+series P = cdf(D, rho, inf1, inf2) - cdf(D, rho, sup1, inf2) \
+ - cdf(D, rho, inf1, sup2) + cdf(D, rho, sup1, sup2)
+C = cholesky(V)
+U = muniform(2, 100)
+H = halton(2,100)
+
+series QU = ghk(C, {inf1, inf2}, {sup1, sup2}, U)
+series pcerrU = 100*abs(QU - P)/P
+series QH = ghk(C, {inf1, inf2}, {sup1, sup2}, H)
+series pcerrH = 100*abs(QH - P)/P
+
+# compare results, uniform vs halton
+print P QU QH pcerrU pcerrH --byobs

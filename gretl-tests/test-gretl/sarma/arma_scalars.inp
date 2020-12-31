@@ -1,0 +1,9 @@
+open data9-7
+
+scalar b0 = 199
+scalar phi1 = -20
+scalar Phi1 = -40
+
+arma 1 1 ; 1 0 ; QNC
+
+print b0 phi1 Phi1

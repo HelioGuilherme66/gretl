@@ -1,0 +1,48 @@
+function matrix stata_reorder (matrix m)
+  # stata puts the intercept last, but gretl puts it first
+  scalar n = rows(m)
+  return m[n] | m[1:n-1]
+end function
+
+open longley.gdt -q
+set messages off
+set echo off
+
+matrix nistvals = { \
+   -3482258.63459582, 890420.383607373 ; \
+    15.0618722713733, 84.9149257747669 ; \
+   -0.358191792925910E-01, 0.334910077722432E-01 ; \
+   -2.02022980381683, 0.488399681651699 ; \
+   -1.03322686717359, 0.214274163161675 ; \
+   -0.511041056535807E-01, 0.226073200069370 ; \
+   1829.15146461355, 455.478499142212 }
+
+ols employ 0 prdefl gnp unemp armfrc pop year --simple
+matrix gretlvals = $coeff ~ $stderr
+
+foreign language=stata --send-data
+  regress employ prdefl gnp unemp armfrc pop year
+  matrix b = e(b)
+  matrix vcv = e(V)
+  gretl_export b "b.mat"
+  gretl_export vcv "vcv.mat"
+end foreign
+
+matrix stata_b = mread("@dotdir/b.mat")
+matrix stata_vcv = mread("@dotdir/vcv.mat")
+stata_b = stata_reorder(stata_b')
+stata_se = stata_reorder(sqrt(diag(stata_vcv)))
+matrix statavals = stata_b ~ stata_se
+
+matrix gretl_errs = -log10(abs(gretlvals - nistvals) ./ abs(nistvals))
+matrix stata_errs = -log10(abs(statavals - nistvals) ./ abs(nistvals))
+colnames(gretl_errs, "coeff stderr")
+colnames(stata_errs, "coeff stderr")
+
+printf "Comparison with NIST certified values\n\n"
+printf "Log-relative error (= correct digits): gretl\n\n%10.3f\n", gretl_errs
+printf "Log-relative error (= correct digits): stata\n\n%10.3f\n", stata_errs
+
+
+
+

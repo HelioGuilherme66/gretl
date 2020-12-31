@@ -1,0 +1,49 @@
+function series mrate (series cons, scalar discrat, scalar riskad)
+  series tmp = discrat * cons ^ (-riskad)
+  return tmp
+end function
+
+open pricing.gdt
+
+loop i=1..10 --quiet
+   genr ex$i = r$i - rf
+endloop
+
+series gf = 1 + rf
+
+list exlist = ex*
+
+scalar d = 0.5
+scalar g = 10
+
+matrix V = I(11)
+series m = mrate(cons,d,g)
+series oc1 = m * gf - 1
+
+/* 
+  first step
+*/
+
+gmm
+   series m = mrate(cons,d,g)
+   series oc1 = m * gf - 1
+   orthog m ; exlist
+   orthog oc1 ; const
+   weights V
+   params d g
+end gmm
+
+/*
+  iteration --- asymptotically unncessary, but it is 
+  sometimes suggested it improves small-sample properties
+*/
+
+gmm
+   series m = mrate(cons,d,g)
+   series oc1 = m * gf - 1
+   orthog m ; exlist
+   orthog oc1 ; const
+   weights V
+   params d g
+end gmm --iterate
+

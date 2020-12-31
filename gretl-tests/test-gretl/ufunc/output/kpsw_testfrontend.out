@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run kpsw_testfrontend.inp
+ /home/cottrell/stats/test-gretl/ufunc/kpsw_testfrontend.inp
+? open kpsw_ciy.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/ufunc/kpsw_ciy.gdt
+periodicity: 4, maxobs: 168
+observations range: 1947:1 to 1988:4
+
+Listing 4 variables:
+  0) const     1) consum    2) invest    3) inc     
+
+? varselector = 3
+Generated scalar varselector = 3
+? confcoverage = 0.90
+Generated scalar confcoverage = 0.9
+? dodelta = 1
+Generated scalar dodelta = 1
+? doboot = 1
+Generated scalar doboot = 1
+? numofW = 50
+Generated scalar numofW = 50
+? list uexo = null
+Generated list uexo
+? list rexo = null
+Generated list rexo
+? lagorder = 9
+Generated scalar lagorder = 9
+? cirank = 2
+Generated scalar cirank = 2
+? determcase = 3
+Generated scalar determcase = 3
+# later also care about seasonals
+? set vecm_norm diag
+? list endo = consum invest inc
+Generated list endo
+? include permaconfbackend.inp
+ /home/cottrell/stats/test-gretl/ufunc/permaconfbackend.inp
+? set stopwatch
+? list results = pconfbackend(endo,rexo,uexo,cirank,lagorder,determcase, \
+  varselector,confcoverage,dodelta,doboot,numofW)
+entering pconfbackend
+entering getdeltabands
+entering getdeltacovmats
+entering getXXi
+entering getcovsubset
+entering getcovsubset
+entering getGLmat
+Generated list results
+elapsed time: 0.633340
+## specify filename here:
+? store kpswciy_3_90_test.csv --csv
+wrote kpswciy_3_90_test.csv
+Done

@@ -1,0 +1,68 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run nlswitch.inp
+ /home/cottrell/stats/test-gretl/nlswitch.inp
+Read datafile /home/cottrell/stats/test-gretl/gretl_plant.gdt
+*** Estimated via GRID SEARCH
+
+mu in [0.28,0.501), sigma in [0.01,0.201)
+number of points evaluated: 460
+min(SSR): 25.6531 for mu = 0.400, sigma = 0.200
+max(SSR): 27.4197 for mu = 0.280, sigma = 0.030
+
+Model 461: Fixed-effects, using 324 observations
+Included 9 cross-sectional units
+Time-series length = 36
+Dependent variable: y
+
+                   coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------------
+  const             3.35048      1.13624        2.949    0.0034   ***
+  Cost              0.00580668   0.000578499   10.04     1.05e-20 ***
+  Domestic_Sales    2.69236      0.303558       8.869    6.02e-17 ***
+  Export_Sales     -2.37277      1.04182       -2.278    0.0234   **
+  Soda              0.102600     0.0294605      3.483    0.0006   ***
+  PCFT             -4.30259      1.33488       -3.223    0.0014   ***
+  Total_import      0.346596     0.129627       2.674    0.0079   ***
+
+Mean dependent var   0.875671   S.D. dependent var   0.635946
+Sum squared resid    25.65314   S.E. of regression   0.288132
+LSDV R-squared       0.803620   Within R-squared     0.477197
+LSDV F(14, 309)      90.32003   P-value(F)           3.6e-100
+Log-likelihood      -48.89154   Akaike criterion     127.7831
+Schwarz criterion    184.4942   Hannan-Quinn         150.4191
+rho                  0.589188   Durbin-Watson        0.803143
+
+Joint test on named regressors -
+  Test statistic: F(6, 309) = 47.0074
+  with p-value = P(F(6, 309) > 47.0074) = 8.55034e-41
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(8, 309) = 35.601
+  with p-value = P(F(8, 309) > 35.601) = 1.06531e-39
+
+*** Estimated via NLS (fixed effects)
+
+                   coefficient   std. error       z      p-value 
+  ---------------------------------------------------------------
+  const             1.97487      1.30278        1.516    0.1295  
+  Cost              0.00572302   0.000581334    9.845    7.23e-23 ***
+  Domestic_Sales    2.69895      0.303596       8.890    6.12e-19 ***
+  Export_Sales     -2.17834      1.07049       -2.035    0.0419   **
+  Soda              0.0958468    0.0296032      3.238    0.0012   ***
+  PCFT             -3.60507      1.52625       -2.362    0.0182   **
+  Total_import      0.323866     0.141768       2.284    0.0223   **
+  mu                0.176986     0.0234749      7.539    4.72e-14 ***
+  sigma             0.0280415    0.0286810      0.9777   0.3282  
+
+SSR = 25.4212, R-squared = 0.806201
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: chi2(8) = 286.143
+  with p-value = P(chi2(8) > 286.143) = 3.65093e-57
+
+NLS: mu (0.176986) is not in [0.28,0.501)

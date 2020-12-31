@@ -1,0 +1,89 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run ignatbug.inp
+ /home/cottrell/stats/test-gretl/ufunc/ignatbug.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? numcat=4
+Generated scalar numcat = 4
+? mnart={14, 7, 23, 18}
+Generated matrix mnart
+? scalar princ=1
+Generated scalar princ = 1
+? loop i=1..numcat -q
+> scalar ultc=mnart[1,i]
+> printf "ultc = %d\n", ultc
+> loop j=princ..ultc -q
+> printf "iteration= %d\n", j
+> endloop
+> endloop
+ultc = 14
+iteration= 1
+iteration= 2
+iteration= 3
+iteration= 4
+iteration= 5
+iteration= 6
+iteration= 7
+iteration= 8
+iteration= 9
+iteration= 10
+iteration= 11
+iteration= 12
+iteration= 13
+iteration= 14
+ultc = 7
+iteration= 1
+iteration= 2
+iteration= 3
+iteration= 4
+iteration= 5
+iteration= 6
+iteration= 7
+ultc = 23
+iteration= 1
+iteration= 2
+iteration= 3
+iteration= 4
+iteration= 5
+iteration= 6
+iteration= 7
+iteration= 8
+iteration= 9
+iteration= 10
+iteration= 11
+iteration= 12
+iteration= 13
+iteration= 14
+iteration= 15
+iteration= 16
+iteration= 17
+iteration= 18
+iteration= 19
+iteration= 20
+iteration= 21
+iteration= 22
+iteration= 23
+ultc = 18
+iteration= 1
+iteration= 2
+iteration= 3
+iteration= 4
+iteration= 5
+iteration= 6
+iteration= 7
+iteration= 8
+iteration= 9
+iteration= 10
+iteration= 11
+iteration= 12
+iteration= 13
+iteration= 14
+iteration= 15
+iteration= 16
+iteration= 17
+iteration= 18
+Done

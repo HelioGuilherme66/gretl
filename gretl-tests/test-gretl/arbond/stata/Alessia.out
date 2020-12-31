@@ -1,0 +1,114 @@
+
+  ___  ____  ____  ____  ____ tm
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/    8.0   Copyright 1984-2003
+  Statistics/Data Analysis            Stata Corporation
+                                      4905 Lakeway Drive
+                                      College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+Single-user Stata for Linux perpetual license:
+       Serial number:  1280522278
+         Licensed to:  Riccardo `Jack' Lucchetti
+                       Dipartimento di Economia
+
+Notes:
+      1.  (-m# option or -set memory-) 1.00 MB allocated to data
+      2.  Command line editing disabled
+      3.  Stata running in batch mode
+
+Note:  Your site can add messages to the introduction by editing the file
+       stata.msg in the directory where Stata is installed.
+
+. set mem 100m
+(102400k)
+
+. 
+. use provagretl
+
+. egen pan=group(country)
+
+. gene panelid=isic+1000*pan
+
+. tsset panelid year
+       panel variable:  panelid, 1300 to 3390
+        time variable:  year, 1970 to 2004
+
+. gene lprod = log(prod)
+(2 missing values generated)
+
+. gene lemp = log(emp)
+
+. gene lva = log(va)
+(2 missing values generated)
+
+. 
+. set matsize 800
+
+. 
+. xtabond lprod lemp lva, rob maxldep(9)
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =      2346
+Group variable (i): panelid                     Number of groups   =        87
+
+                                                Wald chi2(3)       =   6910.11
+
+Time variable (t): year                         Obs per group: min =        17
+                                                               avg =  26.96552
+                                                               max =        33
+
+One-step results
+------------------------------------------------------------------------------
+             |               Robust
+lprod        |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lprod        |
+          LD |   .1689401   .0346717     4.87   0.000     .1009849    .2368953
+lemp         |
+          D1 |  -.1469715   .0382951    -3.84   0.000    -.2220285   -.0719146
+lva          |
+          D1 |   .9528375   .0188251    50.62   0.000     .9159411    .9897339
+_cons        |  -.0060238   .0012809    -4.70   0.000    -.0085343   -.0035133
+------------------------------------------------------------------------------
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -1.88   Pr > z = 0.0605
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -3.10   Pr > z = 0.0019
+
+. xtabond lprod lemp lva, maxldep(9) twostep
+
+Arellano-Bond dynamic panel-data estimation     Number of obs      =      2346
+Group variable (i): panelid                     Number of groups   =        87
+
+                                                Wald chi2(3)       =  1.03e+06
+
+Time variable (t): year                         Obs per group: min =        17
+                                                               avg =  26.96552
+                                                               max =        33
+
+Two-step results
+------------------------------------------------------------------------------
+lprod        |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lprod        |
+          LD |   .1665825   .0039018    42.69   0.000     .1589352    .1742298
+lemp         |
+          D1 |   -.145327   .0031002   -46.88   0.000    -.1514032   -.1392508
+lva          |
+          D1 |   .9538936   .0020996   454.31   0.000     .9497784    .9580088
+_cons        |  -.0058816   .0001992   -29.53   0.000     -.006272   -.0054911
+------------------------------------------------------------------------------
+Warning: Arellano and Bond recommend using one-step results for 
+         inference on coefficients
+
+Sargan test of over-identifying restrictions:     
+         chi2(260) =    86.48     Prob > chi2 = 1.0000
+
+Arellano-Bond test that average autocovariance in residuals of order 1 is 0:
+         H0: no autocorrelation   z =  -2.50   Pr > z = 0.0124
+Arellano-Bond test that average autocovariance in residuals of order 2 is 0:
+         H0: no autocorrelation   z =  -3.19   Pr > z = 0.0014
+
+. 

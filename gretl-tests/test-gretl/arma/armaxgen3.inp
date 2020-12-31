@@ -1,0 +1,17 @@
+nulldata 800
+setobs 12 1920:01
+set seed 43377
+series x1 = uniform()
+series x2 = uniform()
+series eps = normal()
+series u = eps + .4 * eps(-1)
+series y = 0
+y = 10 + .3 * y(-1) + 10 * x1 + 10 * x2 + u
+smpl 1940:01 ;
+arma 1 1 ; y 0 x1 x2 --x-12-arima
+arma 1 1 ; y 0 x1 x2 --vcv
+arma 1 1 ; y 0 x1 x2 --vcv --conditional
+
+
+
+

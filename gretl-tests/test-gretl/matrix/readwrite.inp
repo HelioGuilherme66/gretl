@@ -1,0 +1,16 @@
+# write and read w string literals
+matrix m1 = mnormal(5,3)
+mwrite(m1, "test.mat")
+m2 = mread("test.mat")
+m3 = m1 - m2
+printf "\n%20.15g\n", m3
+! rm test.mat
+
+# write and read w string variable
+string mname = "test2.mat"
+matrix m1 = mnormal(5,3)
+mwrite(m1, mname)
+m2 = mread(mname)
+m3 = m1 - m2
+printf "\n%20.15g\n", m3
+! rm test2.mat

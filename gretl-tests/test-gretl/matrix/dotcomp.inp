@@ -1,0 +1,15 @@
+matrix m1 = {1,2,3;4,5,6}
+matrix m2 = {2,2,2;6,5,4}
+m1
+m2
+
+eval m1 == m2
+eval m1 .= m2
+
+eval m1 > m2
+eval m1 .> m2
+eval m1 .>= m2
+
+eval m1 < m2
+eval m1 .< m2
+eval m1 .<= m2

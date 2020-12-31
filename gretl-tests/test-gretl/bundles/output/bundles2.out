@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles2.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles2.inp
+# creation and return of bundle by user function
+? function bundle make_bundle (scalar x)
+? b = make_bundle(34)
+? matrix goo = 3 * b["mat"]
+Generated matrix goo
+? goo
+goo (3 x 3)
+
+  3   0   0 
+  0   3   0 
+  0   0   3 
+
+? string s2 = b["str"]
+Generated string s2
+? s2
+foo
+scalar from bundle: 68
+? delete b
+Deleted b
+Done

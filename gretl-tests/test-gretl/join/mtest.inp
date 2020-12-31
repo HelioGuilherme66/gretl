@@ -1,0 +1,5 @@
+nulldata 16
+setobs 12 1989:10
+join mtest.csv x # --tkey="quarter"
+print -o
+

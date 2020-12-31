@@ -1,0 +1,5 @@
+open data4-2.gdt
+lags Ct Yt
+ols Ct const Yt Ct_1 Yt_1
+coeffsum Ct_1 Yt_1
+

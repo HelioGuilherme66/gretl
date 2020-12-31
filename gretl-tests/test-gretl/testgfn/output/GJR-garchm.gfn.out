@@ -1,0 +1,386 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run GJR-garchm.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/GJR-garchm.gfn.inp
+? include ./GJR-garchm.gfn
+ /home/cottrell/stats/test-gretl/testgfn/GJR-garchm.gfn
+GJR-garchm 1.1, 2010-01-25 (Yi-Nung Yang)
+#================================================================
+#   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+#   Chung Yuan Christian University, Taiwan
+#   http://yaya.it.cycu.edu.tw/gretl
+#================================================================
+# full parameters usages:
+# arguments:
+#    Dependent varaible = r
+#       GARCH p=1
+#       ARCH q=2
+#    List of independent variables in the mean equation (can be null)
+#       gjr_order = 1
+#       GARCH-in-Mean option =0, 1, 2, 3
+#    LB-Q stats order for standardized residuals =8
+#    LB-Q2 stats order for standardized residuals =12
+#    backbast parameter (for initial h_0) = 0.7
+#    Show initial parameters? = 0 (no)
+#    Save (standardized) residuals? = 1 (yes)
+#        User defined "residual" name on Saving
+#        User defined "h" name on Saving
+? open djclose
+
+Read datafile /opt/esl/share/gretl/data/misc/djclose.gdt
+periodicity: 5, maxobs: 2528
+observations range: 1980-01-02 to 1989-12-29
+
+Listing 2 variables:
+  0) const      1) djclose  
+
+? series r=ldiff(djclose)*100
+Generated series r (ID 2)
+# A general GJR-GARCH-in-mean case with saving standardized residuals and predicted h
+# retList is a list include standardized residuals (named u_hat) and predicted conditional variance (named h_uhat)
+? retList = garchm(r, 1, 2, null, 1, 1, 8, 12, 0.7, 0, 1, "u_hat", "h_hat")
+
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+The coefficient of GJR Term is gamma_i
+GARCH in mean Term is SQRT(h)
+The coefficient of GARCH in mean Term is theta
+----------------------------------------------------------------
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e= y -theta*h^0.5
+   h = omega +alpha1*(e(-1))^2+alpha2*(e(-2))^2+gamma1*(e(-1))^2*(e(-1)<0)+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 150
+Evaluations of gradient: 35
+
+Model 3: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+              estimate    std. error      z      p-value 
+  -------------------------------------------------------
+  theta       0.0518876   0.0189413     2.739    0.0062   ***
+  omega       0.0485226   0.00549272    8.834    1.01e-18 ***
+  alpha1      0.0496916   0.0206699     2.404    0.0162   **
+  alpha2     -0.0142104   0.0204908    -0.6935   0.4880  
+  gamma1      0.0792290   0.0118694     6.675    2.47e-11 ***
+  beta1       0.883272    0.0118110    74.78     0.0000   ***
+
+Log-likelihood      -3552.650   Akaike criterion     7117.300
+Schwarz criterion    7152.309   Hannan-Quinn         7130.003
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+
+Autocorrelation function for u_hat
+***, **, * indicate significance at the 1%, 5%, 10% levels
+using standard error 1/T^0.5
+
+  LAG      ACF          PACF         Q-stat. [p-value]
+
+    1   0.0467  **    0.0467 **       5.5064  [0.019]
+    2   0.0065        0.0043          5.6120  [0.060]
+    3   0.0066        0.0061          5.7211  [0.126]
+    4  -0.0322       -0.0329 *        8.3436  [0.080]
+    5  -0.0017        0.0012          8.3512  [0.138]
+    6  -0.0096       -0.0093          8.5849  [0.198]
+    7   0.0118        0.0132          8.9360  [0.257]
+    8  -0.0034       -0.0055          8.9649  [0.345]
+
+
+Autocorrelation function for stz_u2
+***, **, * indicate significance at the 1%, 5%, 10% levels
+using standard error 1/T^0.5
+
+  LAG      ACF          PACF         Q-stat. [p-value]
+
+    1   0.0021        0.0021          0.0113  [0.915]
+    2  -0.0137       -0.0137          0.4878  [0.784]
+    3   0.0190        0.0191          1.4022  [0.705]
+    4  -0.0087       -0.0090          1.5943  [0.810]
+    5  -0.0055       -0.0050          1.6718  [0.892]
+    6  -0.0031       -0.0037          1.6963  [0.945]
+    7  -0.0113       -0.0111          2.0181  [0.959]
+    8   0.0069        0.0070          2.1403  [0.976]
+    9   0.0406  **    0.0403 **       6.3145  [0.708]
+   10  -0.0125       -0.0122          6.7140  [0.752]
+   11  -0.0021       -0.0015          6.7257  [0.821]
+   12  -0.0098       -0.0117          6.9692  [0.860]
+
+Generated list retList
+# GARCH(1,1) without any variables in the mean equation
+? garchm(r,1,1)
+
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e= y 
+   h = omega +alpha1*(e(-1))^2+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 105
+Evaluations of gradient: 23
+
+Model 2: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error      z       p-value 
+  -------------------------------------------------------
+  omega      0.0469564   0.00526553     8.918   4.76e-19  ***
+  alpha1     0.0898960   0.00252934    35.54    1.13e-276 ***
+  beta1      0.873101    0.00816167   107.0     0.0000    ***
+
+Log-likelihood      -3575.139   Akaike criterion     7156.278
+Schwarz criterion    7173.782   Hannan-Quinn         7162.629
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+# GARCH(1,1) with a contant only in the mean equation
+? list list0 = const
+Generated list list0
+? garchm(r,1,1,list0)
+
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e = y - b0 
+   h = omega +alpha1*(e(-1))^2+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 134
+Evaluations of gradient: 28
+
+Model 3: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error      z       p-value 
+  -------------------------------------------------------
+  b0         0.0703612   0.0182239      3.861   0.0001    ***
+  omega      0.0476007   0.00507464     9.380   6.59e-21  ***
+  alpha1     0.0911171   0.00266964    34.13    2.57e-255 ***
+  beta1      0.871058    0.00803505   108.4     0.0000    ***
+
+Log-likelihood      -3567.937   Akaike criterion     7143.874
+Schwarz criterion    7167.213   Hannan-Quinn         7152.342
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+# GJR-GARCG(1,1,null,1)
+? garchm(r,1,1,null,1)
+
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+The coefficient of GJR Term is gamma_i
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e= y 
+   h = omega +alpha1*(e(-1))^2+gamma1*(e(-1))^2*(e(-1)<0)+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 123
+Evaluations of gradient: 25
+
+Model 2: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error      z      p-value 
+  ------------------------------------------------------
+  omega      0.0534615   0.00462968    11.55    7.59e-31 ***
+  alpha1     0.0347224   0.00841129     4.128   3.66e-05 ***
+  gamma1     0.0929228   0.00765190    12.14    6.19e-34 ***
+  beta1      0.876460    0.00872650   100.4     0.0000   ***
+
+Log-likelihood      -3556.347   Akaike criterion     7120.693
+Schwarz criterion    7144.033   Hannan-Quinn         7129.162
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+# GARCH in mean (in-mean term: h^0.5)
+? garchm(r,1,1,null,0,1)
+
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+GARCH in mean Term is SQRT(h)
+The coefficient of GARCH in mean Term is theta
+----------------------------------------------------------------
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e= y -theta*h^0.5
+   h = omega +alpha1*(e(-1))^2+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 108
+Evaluations of gradient: 25
+
+Model 3: ML, using observations 1980-01-03:1989-12-29 (T = 2527)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+             estimate    std. error      z       p-value 
+  -------------------------------------------------------
+  theta      0.0713294   0.0184747      3.861   0.0001    ***
+  omega      0.0476007   0.00507465     9.380   6.59e-21  ***
+  alpha1     0.0911171   0.00266964    34.13    2.57e-255 ***
+  beta1      0.871058    0.00803505   108.4     0.0000    ***
+
+Log-likelihood      -3567.937   Akaike criterion     7143.874
+Schwarz criterion    7167.213   Hannan-Quinn         7152.342
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+# AR(2)-GARCH(1,1) WITHOUT a contant only in the mean equation
+? list list2 = r(-1) r(-2) r(-3)
+Generated list list2
+? garchm(r,1,1,list2)
+r_1 --- r_2 --- r_3 --- 
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e= y -b1*X1-b2*X2-b3*X3
+   h = omega +alpha1*(e(-1))^2+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 150
+Evaluations of gradient: 35
+
+Model 3: ML, using observations 1980-01-08:1989-12-29 (T = 2524)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+              estimate     std. error      z        p-value 
+  ----------------------------------------------------------
+  b1          0.0363119    0.0250636      1.449    0.1474   
+  b2         -0.0194902    0.0239993     -0.8121   0.4167   
+  b3         -0.00609936   0.0232421     -0.2624   0.7930   
+  omega       0.0478781    0.00540108     8.865    7.68e-19  ***
+  alpha1      0.0904439    0.00325227    27.81     3.33e-170 ***
+  beta1       0.871616     0.00857555   101.6      0.0000    ***
+
+Log-likelihood      -3569.879   Akaike criterion     7151.759
+Schwarz criterion    7186.761   Hannan-Quinn         7164.460
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+# AR(3)-GARCH(1,1) with a contant only in the mean equation
+? list list3 = const r(-1) r(-2) r(-3)
+Generated list list3
+? garchm(r,1,1,list3)
+r_1 --- r_2 --- r_3 --- 
+
+================================================================
+   GJR-GARCH-in-Mean fucntion for gretl by Yi-Nung Yang
+   Chung Yuan Christian University, Taiwan
+   http://yaya.it.cycu.edu.tw/gretl
+================================================================
+Presample variance: backcast (parameter = 0.7)
+
+-------    mean eq & variance eq in this GARCH model --------
+   e = y - b0 -b1*X1-b2*X2-b3*X3
+   h = omega +alpha1*(e(-1))^2+beta1*h(-1)
+================================================================
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Using numerical derivatives
+Tolerance = 1.81899e-12
+
+Function evaluations: 119
+Evaluations of gradient: 31
+
+Model 3: ML, using observations 1980-01-08:1989-12-29 (T = 2524)
+ll = -0.5*(log(2*pi)+log(h) + (e^2)/h)
+Standard errors based on Outer Products matrix
+
+              estimate    std. error      z        p-value 
+  ---------------------------------------------------------
+  b0          0.0702052   0.0184093      3.814    0.0001    ***
+  b1          0.0300327   0.0251124      1.196    0.2317   
+  b2         -0.0243470   0.0241213     -1.009    0.3128   
+  b3         -0.0123859   0.0232979     -0.5316   0.5950   
+  omega       0.0487386   0.00525337     9.278    1.73e-20  ***
+  alpha1      0.0919786   0.00337570    27.25     1.79e-163 ***
+  beta1       0.869096    0.00850619   102.2      0.0000    ***
+
+Log-likelihood      -3562.822   Akaike criterion     7139.644
+Schwarz criterion    7180.479   Hannan-Quinn         7154.462
+
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+In regard to function garchm (package GJR-garchm):
+Warning: pow: Numerical result out of range
+Done

@@ -1,0 +1,17 @@
+open data4-1
+scalar n = $nobs
+
+# check interaction: resampling in outer loop, 
+# creation of series in inner loop
+
+set seed 7865401
+
+loop 10 --progressive
+  dataset resample n
+  ols 1 0 2
+  loop 1 -q
+     series s = 0
+  endloop
+endloop
+
+

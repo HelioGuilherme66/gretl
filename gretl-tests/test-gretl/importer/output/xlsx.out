@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run xlsx.inp
+ /home/cottrell/stats/test-gretl/importer/xlsx.inp
+? open pindata.xlsx
+
+Found 1 valid sheet(s)
+Found 3 variables and 240 observations
+Listing 4 variables:
+  0) const    1) Day      2) B        3) S      
+
+? open test1.xlsx --sheet="foozle"
+'foozle' -> worksheets/sheet3.xml
+Found 2 variables and 4 observations
+Listing 3 variables:
+  0) const    1) xvar1    2) xvar2  
+
+? print -o
+
+              xvar1        xvar2
+
+1990:1     9321.025      134.558
+1990:2     3612.007     2237.464
+1990:3     1243.040     7436.613
+1990:4     2981.408     2518.394
+
+? open test2.xlsx --sheet=2
+'Sheet2' -> worksheets/sheet2.xml
+Found 2 variables and 12 observations
+Listing 3 variables:
+  0) const    1) B        2) S      
+
+? print -o
+
+                      B            S
+
+1990-01-02     9321.025      134.558
+1990-01-03     3612.007     2237.464
+1990-01-04     1243.040     7436.613
+1990-01-05     2981.408     2518.394
+1990-01-06     3384.742     4959.646
+1990-01-07     9247.887     7994.168
+1990-01-08     9008.264     7438.111
+1990-01-09     7071.841     1300.233
+1990-01-10     8659.743      611.671
+1990-01-11     4789.311     3370.279
+1990-01-12     6874.562     5925.993
+1990-01-13     9301.716     1428.359
+
+Done

@@ -1,0 +1,12 @@
+loop i=1..4 -q
+  if i>1
+    matrix pstar_t = I(2)
+  endif  
+  if i>1
+    if i==2
+      matrix pstar_t = I(3)
+    else
+      matrix pstar_t = I(4)
+    endif
+  endif
+endloop

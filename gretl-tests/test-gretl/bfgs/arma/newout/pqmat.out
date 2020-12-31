@@ -1,0 +1,82 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run pqmat.inp
+ /home/allin/stats/test-gretl/bfgs/arma/pqmat.inp
+? set seed 324568
+Pseudo-random number generator seeded with 324568
+? nulldata 40
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+? x = normal()
+Generated series x (ID 2)
+? p = { 1 }
+Generated matrix p
+? q = { 2, 3 }
+Generated matrix q
+? arma p q ; x
+
+Function evaluations: 38
+Evaluations of gradient: 17
+
+Model 1: ARMA, using observations 1-40
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.257894     0.0753035    -3.425    0.0006  ***
+  phi_1      -0.0808490    0.180786     -0.4472   0.6547 
+  theta_2    -0.315487     0.214821     -1.469    0.1419 
+  theta_3    -0.161488     0.224411     -0.7196   0.4718 
+
+Mean dependent var  -0.295673   S.D. dependent var   0.940666
+Mean of innovations  0.005873   S.D. of innovations  0.881716
+Log-likelihood      -51.87693   Akaike criterion     113.7539
+Schwarz criterion    122.1983   Hannan-Quinn         116.8071
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1         -12.3687     0.0000    12.3687     0.5000
+  MA
+    Root  1          -1.6597     1.3338     2.1293     0.3923
+    Root  2          -1.6597    -1.3338     2.1293    -0.3923
+    Root  3           1.3658     0.0000     1.3658     0.0000
+  -----------------------------------------------------------
+
+? arma 1 {2 3} ; x
+
+Function evaluations: 38
+Evaluations of gradient: 17
+
+Model 2: ARMA, using observations 1-40
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -0.257894     0.0753035    -3.425    0.0006  ***
+  phi_1      -0.0808490    0.180786     -0.4472   0.6547 
+  theta_2    -0.315487     0.214821     -1.469    0.1419 
+  theta_3    -0.161488     0.224411     -0.7196   0.4718 
+
+Mean dependent var  -0.295673   S.D. dependent var   0.940666
+Mean of innovations  0.005873   S.D. of innovations  0.881716
+Log-likelihood      -51.87693   Akaike criterion     113.7539
+Schwarz criterion    122.1983   Hannan-Quinn         116.8071
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1         -12.3687     0.0000    12.3687     0.5000
+  MA
+    Root  1          -1.6597     1.3338     2.1293     0.3923
+    Root  2          -1.6597    -1.3338     2.1293    -0.3923
+    Root  3           1.3658     0.0000     1.3658     0.0000
+  -----------------------------------------------------------
+
+Done

@@ -1,0 +1,76 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run sarma2.inp
+ /home/allin/stats/test-gretl/bfgs/arma/sarma2.inp
+# Seasonal ARMA test script
+? nulldata 620
+periodicity: 1, maxobs: 620
+observations range: 1 to 620
+? setobs 12 1920:01
+Full data range: 1920:01 - 1971:08 (n = 620)
+
+? set seed 37111
+Pseudo-random number generator seeded with 37111
+? scalar phi_1 = 0.5
+Generated scalar phi_1 = 0.5
+? scalar Phi_1 = 0.1
+Generated scalar Phi_1 = 0.1
+? scalar theta_1 = 0.2
+Generated scalar theta_1 = 0.2
+? scalar Theta_1 = 0.2
+Generated scalar Theta_1 = 0.2
+? genr eps = normal()
+Generated series eps (ID 2)
+# Artificial error process
+? genr u = eps + theta_1*eps(-1) + Theta_1*eps(-12) + theta_1*Theta_1*eps(-13)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+# Artificial seasonal series
+? genr y = phi_1*y(-1) + Phi_1*y(-12) - phi_1*Phi_1*y(-13) + u
+Replaced series y (ID 4)
+? genr y = y + 500 / (1 - phi_1 - Phi_1 + phi_1*Phi_1)
+Replaced series y (ID 4)
+? smpl +20 ;
+Full data range: 1920:01 - 1971:08 (n = 620)
+Current sample: 1921:09 - 1971:08 (n = 600)
+
+# Kalman
+? arma 1 1 ; 1 1 ; y
+
+Function evaluations: 42
+Evaluations of gradient: 12
+
+Model 1: ARMA, using observations 1921:09-1971:08 (T = 600)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient    std. error       z       p-value 
+  -----------------------------------------------------------
+  const      1111.02        0.125019     8887        0.0000   ***
+  phi_1         0.464536    0.0552302       8.411    4.07e-17 ***
+  Phi_1         0.208841    0.162720        1.283    0.1993  
+  theta_1       0.209670    0.0584697       3.586    0.0003   ***
+  Theta_1       0.0986737   0.168092        0.5870   0.5572  
+
+Mean dependent var   1111.034   S.D. dependent var   1.290624
+Mean of innovations  0.001442   S.D. of innovations  0.984581
+Log-likelihood      -842.8479   Akaike criterion     1697.696
+Schwarz criterion    1724.077   Hannan-Quinn         1707.966
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.1527     0.0000     2.1527     0.0000
+  AR (seasonal)
+    Root  1           4.7883     0.0000     4.7883     0.0000
+  MA
+    Root  1          -4.7694     0.0000     4.7694     0.5000
+  MA (seasonal)
+    Root  1         -10.1344     0.0000    10.1344     0.5000
+  -----------------------------------------------------------
+
+Done

@@ -1,0 +1,163 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch8.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch8.inp
+# Stock and Watson, ch 8
+#
+? open fatality.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/fatality.gdt
+periodicity: 7, maxobs: 336
+observations range: 1:1 to 48:7
+
+Listing 44 variables:
+  0) const       1) state       2) year        3) spircons    4) unrate    
+  5) perinc      6) emppop      7) beertax     8) sobapt      9) mormon    
+ 10) mlda       11) dry        12) yngdrv     13) vmiles     14) breath    
+ 15) jaild      16) comserd    17) allmort    18) mrall      19) allnite   
+ 20) mralln     21) allsvn     22) a1517      23) mra1517    24) a1517n    
+ 25) mra1517n   26) a1820      27) a1820n     28) mra1820    29) mra1820n  
+ 30) a2124      31) mra2124    32) a2124n     33) mra2124n   34) aidall    
+ 35) mraidall   36) pop        37) pop1517    38) pop1820    39) pop2124   
+ 40) miles      41) unus       42) epopus     43) gspch     
+
+# Set variant HC1 of HCCME
+? set hc_version 1
+# generate variables
+? genr vfrall = 10000 * mrall
+Generated series vfrall (ID 44)
+? genr vfrdiff = vfrall - vfrall(-6)
+Generated series vfrdiff (ID 45)
+? genr btaxdiff = beertax - beertax(-6)
+Generated series btaxdiff (ID 46)
+? smpl --restrict year=1982
+Full data set: 336 observations
+Current sample: 48 observations
+# Equation 8.2
+? ols vfrall 0 beertax --robust
+
+Model 1: OLS, using observations 1-48
+Dependent variable: vfrall
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       2.01038       0.149573    13.44     1.53e-17 ***
+  beertax     0.148460      0.132605     1.120    0.2687  
+
+Mean dependent var   2.089106   S.D. dependent var   0.667772
+Sum squared resid    20.67898   S.E. of regression   0.670480
+R-squared            0.013324   Adjusted R-squared  -0.008126
+F(1, 46)             1.253426   P-value(F)           0.268711
+Log-likelihood      -47.89905   Akaike criterion     99.79810
+Schwarz criterion    103.5405   Hannan-Quinn         101.2124
+
+? smpl --restrict --replace year=1988
+Full data set: 336 observations
+Current sample: 48 observations
+# Equation 8.3
+? ols vfrall 0 beertax --robust
+
+Model 2: OLS, using observations 1-48
+Dependent variable: vfrall
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.85907       0.114612    16.22     1.18e-20 ***
+  beertax     0.438755      0.127865     3.431    0.0013   ***
+
+Mean dependent var   2.069594   S.D. dependent var   0.521183
+Sum squared resid    11.05591   S.E. of regression   0.490251
+R-squared            0.134003   Adjusted R-squared   0.115177
+F(1, 46)             11.77445   P-value(F)           0.001279
+Log-likelihood      -32.87140   Akaike criterion     69.74279
+Schwarz criterion    73.48519   Hannan-Quinn         71.15705
+
+# Equation 8.8
+? ols vfrdiff 0 btaxdiff --robust
+
+Model 3: OLS, using observations 1-48
+Dependent variable: vfrdiff
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0720371    0.0653552    -1.102    0.2761 
+  btaxdiff   -1.04097      0.355006     -2.932    0.0052  ***
+
+Mean dependent var  -0.019512   S.D. dependent var   0.415349
+Sum squared resid    7.141752   S.E. of regression   0.394025
+R-squared            0.119194   Adjusted R-squared   0.100046
+F(1, 46)             8.598191   P-value(F)           0.005229
+Log-likelihood      -22.38322   Akaike criterion     48.76644
+Schwarz criterion    52.50884   Hannan-Quinn         50.18070
+
+? smpl full
+Full data range: 1:1 - 48:7 (n = 336)
+
+# setobs 7 1:1
+? ols vfrall beertax 0
+
+Model 4: Pooled OLS, using 336 observations
+Included 48 cross-sectional units
+Time-series length = 7
+Dependent variable: vfrall
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       1.85331      0.0435671    42.54     6.95e-137 ***
+  beertax     0.364605     0.0621698     5.865    1.08e-08  ***
+
+Mean dependent var   2.040444   S.D. dependent var   0.570194
+Sum squared resid    98.74685   S.E. of regression   0.543736
+R-squared            0.093363   Adjusted R-squared   0.090648
+F(1, 334)            34.39433   P-value(F)           1.08e-08
+Log-likelihood      -271.0387   Akaike criterion     546.0773
+Schwarz criterion    553.7116   Hannan-Quinn         549.1206
+rho                  0.877554   Durbin-Watson        0.114152
+
+? hausman
+      Diagnostics: assuming a balanced panel with 48 cross-sectional units
+                         observed over 7 periods
+
+Fixed effects estimator
+allows for differing intercepts by cross-sectional unit
+slope standard errors in parentheses, p-values in brackets
+
+       const:         2.3771       (0.09697)       [0.00000]
+     beertax:       -0.65587       (0.18785)       [0.00056]
+
+48 group means were subtracted from the data
+
+Residual variance: 10.3454/(336 - 49) = 0.0360466
+Joint significance of differing group means:
+ F(47, 287) = 52.1792 with p-value 7.74341e-115
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the fixed effects alternative.)
+
+
+Breusch-Pagan test statistic:
+ LM = 754.567 with p-value = prob(chi-square(1) > 754.567) = 4.07799e-166
+(A low p-value counts against the null hypothesis that the pooled OLS model
+is adequate, in favor of the random effects alternative.)
+
+Variance estimators:
+ between = 0.27119
+ within = 0.0360466
+theta used for quasi-demeaning = 0.862201
+
+                         Random effects estimator
+           allows for a unit-specific component to the error term
+           (standard errors in parentheses, p-values in brackets)
+
+          const:         2.0671      (0.099971)       [0.00000]
+        beertax:      -0.052016       (0.12418)       [0.67557]
+
+Hausman test statistic:
+ H = 17.8587 with p-value = prob(chi-square(1) > 17.8587) = 2.37926e-05
+(A low p-value counts against the null hypothesis that the random effects
+model is consistent, in favor of the fixed effects model.)
+Done

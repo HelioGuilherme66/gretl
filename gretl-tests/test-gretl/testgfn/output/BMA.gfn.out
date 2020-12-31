@@ -1,0 +1,350 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run BMA.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/BMA.gfn.inp
+? include ./BMA/BMA.gfn
+ /home/cottrell/stats/test-gretl/testgfn/BMA/BMA.gfn
+BMA 1.24, 2015-10-29 (Marcin Błażejowski, Jacek Kwiatkowski)
+# Usage:
+? open greene9_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene9_1.gdt
+periodicity: 1, maxobs: 25
+observations range: 1 to 25
+
+Listing 5 variables:
+  0) const      1) valadd     2) capital    3) labor      4) nfirm    
+
+? list greene = dataset
+Generated list greene
+? BMA_main(greene, 1, 1.5, 0.6, 4, 1, 0, 0, 10000, 10, 1)
+No independent variables were omitted
+
+Overall progress: 10%..20%..30%..40%..50%..60%..70%..80%..90%..100%..
+----------------------------------
+
+Posterior average model size: 2.024889
+
+Posterior moments (unconditional and conditional on inclusion):
+                    PIP           Mean       Std.Dev.      Cond.Mean   Cond.Std.Dev
+capital        0.805333       2.969080       2.184294       3.686772       1.810653
+  labor        0.923556       5.036218       2.079578       5.453075       1.552241
+  nfirm        0.296000       0.114427       0.382347       0.386576       0.623439
+
+----------------------------------
+
+Posterior probability of models:
+Model 1:	0.569222
+Model 2:	0.159667
+Model 3:	0.134778
+Model 4:	0.076444
+Total probability of the models in ranking (numerical): 0.940111
+
+Correlation coefficient between the analytical
+and numerical probabilities of the above models: 0.999126
+----------------------------------
+
+
+# The above example consists of three blocks.
+# The first block is just opening of the so called greene9_1 dataset,
+# which is bundled in every standard gretl installation.
+# This dataset contains cross-sectional data on manufacturing
+# of transportation equipment # presented as Table 9.1 in
+# Greene, Econometric Analysis, 4e}.
+# The second block is the definition of the green list which
+# contains all variables available in the greene9_1 dataset.
+# The first variable - valadd - will be the dependent variable.
+# The third block contains the definition for Bayesian model
+# averaging analysis: binomial prior, prior average model size
+# set to 1.5 (which means that we have uniform model prior),
+# significance level for the initial model set to 0.6,
+# 4 top ranked models, Benchmark g-prior, without jointness analysis,
+# without out-of-sample predictions, 10000 replications with 10%
+# burn-in draws and basic output (verbosity set to 1).
+# Suppose we want to run the same analysis but following
+# Occam's razor philosophy. The simplest way is setting the prior
+# average model size to 1. The code would be as follows:
+? BMA_main(greene, 1, 1, 0.6, 4, 1, 0, 0, 10000, 10, 1)
+No independent variables were omitted
+
+Overall progress: 10%..20%..30%..40%..50%..60%..70%..80%..90%..100%..
+----------------------------------
+
+Posterior average model size: 1.772556
+
+Posterior moments (unconditional and conditional on inclusion):
+                    PIP           Mean       Std.Dev.      Cond.Mean   Cond.Std.Dev
+capital        0.649000       2.355491       2.260727       3.629416       1.803168
+  labor        0.934889       5.525422       2.036942       5.910244       1.470954
+  nfirm        0.188667       0.075126       0.335323       0.398194       0.683621
+
+----------------------------------
+
+Posterior probability of models:
+Model 1:	0.514222
+Model 2:	0.069667
+Model 3:	0.297000
+Model 4:	0.065000
+Total probability of the models in ranking (numerical): 0.945889
+
+Correlation coefficient between the analytical
+and numerical probabilities of the above models: 0.891534
+----------------------------------
+
+
+# Because in the Occam's razor philosophy we penalize large
+# models assigning high probability for small ones, better distribution
+# then binomial is binomial-beta (which is right skewed). In order to
+# use binomial-beta distribution we have to set prior to 2.
+# The code would be as follows:
+? BMA_main(greene, 2, 1, 0.6, 4, 1, 0, 0, 10000, 10, 1)
+No independent variables were omitted
+
+Overall progress: 10%..20%..30%..40%..50%..60%..70%..80%..90%..100%..
+----------------------------------
+
+Posterior average model size: 1.189000
+
+Posterior moments (unconditional and conditional on inclusion):
+                    PIP           Mean       Std.Dev.      Cond.Mean   Cond.Std.Dev
+capital        0.380556       2.620568       3.767458       6.886163       2.814929
+  labor        0.391556       2.573068       3.374553       6.571400       1.675816
+  nfirm        0.416889       0.527300       1.048381       1.264844       1.305204
+
+----------------------------------
+
+Posterior probability of models:
+Model 1:	0.076111
+Model 2:	0.055222
+Model 3:	0.160333
+Model 4:	0.102222
+Total probability of the models in ranking (numerical): 0.393889
+
+Correlation coefficient between the analytical
+and numerical probabilities of the above models: -0.318931
+----------------------------------
+
+
+# Suppose we want to set g-prior to Risk Inflation Criterion (g-RIC),
+# uniform model prior, do jointness analysis with Ley-Steel Measure,
+# compute forecasts for 3 observations and print additional information
+# in results (verbosity set to 2). The code would be as follows:
+? BMA_main(greene, 1, 1.5, 0.6, 4, 3, 1, 3, 10000, 10, 2)
+No independent variables were omitted
+
+Overall progress: 10%..20%..30%..40%..50%..60%..70%..80%..90%..100%..
+----------------------------------
+Total CPU time: 0.070043 min.
+Prior: Binomial
+Prior average model size: 1.500000
+Significance level for the initial model: 0.600000
+g-prior: Risk Inflation Criterion (g-RIC)
+Total number of iterations: 10000
+Number of burn-in draws: 1000
+
+The initial model:
+
+OLS, using observations 1-22
+Dependent variable: valadd
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -32.2641      36.2671      -0.8896   0.3854 
+  capital      4.22623      0.932387     4.533    0.0003  ***
+  labor        4.07109      0.993979     4.096    0.0007  ***
+  nfirm        0.351708     0.230110     1.528    0.1438 
+
+SSR = 254851, R-squared = 0.988273
+
+----------------------------------
+
+Posterior average model size: 1.795111
+
+Posterior moments (unconditional and conditional on inclusion):
+                    PIP           Mean       Std.Dev.      Cond.Mean   Cond.Std.Dev
+capital        0.574778       2.388219       2.830567       4.155031       2.568723
+  labor        0.852556       4.927645       2.698814       5.779852       1.902005
+  nfirm        0.367778       0.137419       0.495668       0.373647       0.761423
+
+----------------------------------
+
+Posterior probability of models:
+Model 1:	0.320556
+Model 2:	0.302556
+Model 3:	0.138333
+Model 4:	0.122667
+Total probability of the models in ranking (numerical): 0.884111
+
+Correlation coefficient between the analytical
+and numerical probabilities of the above models: 0.998917
+
+----------------------------------
+
+Predictive results:
+            valadd           Mean       Std.Dev.
+WA      636.948000     614.888081     379.789433
+WV       22.700000     109.033099     384.922156
+WI      349.711000     415.590837     379.351561
+
+----------------------------------
+
+Posterior joint probability of variables:
+                capital          labor          nfirm
+capital        0.000000       0.427333       0.245111
+  labor        0.000000       0.000000       0.229444
+  nfirm        0.000000       0.000000       0.000000
+
+Jointness statistics (Ley-Steel Measure):
+                capital          labor          nfirm
+capital        0.000000      -0.292739      -0.612708
+  labor        0.000000       0.000000      -1.199556
+  nfirm        0.000000       0.000000       0.000000
+
+Significant substitutes:
+      -1.199556----------------------------------
+
+Model: 1, posterior probability: 0.320556
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  capital      2.90426      1.85048     1.569   0.1165 
+  labor        4.84961      1.37819     3.519   0.0004  ***
+
+----------------------------------
+
+Model: 2, posterior probability: 0.302556
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  labor        6.83464      0.580200    11.78   4.96e-32 ***
+
+----------------------------------
+
+Model: 3, posterior probability: 0.138333
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  capital      7.01347      0.962142    7.289   3.11e-13 ***
+  nfirm        1.05205      0.330875    3.180   0.0015   ***
+
+----------------------------------
+
+Model: 4, posterior probability: 0.122667
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  labor        7.45095      1.03505      7.199    6.08e-13 ***
+  nfirm       -0.341692     0.477929    -0.7149   0.4746  
+
+----------------------------------
+
+
+# Finally, if we want to save results of the above Bayesian model
+# averaging analysis in the matrix results_mat,
+# the code should be as follows:
+? results_mat = BMA_main(greene, 1, 1.5, 0.6, 4, 3, 1, 3, 10000, 10, 2)
+No independent variables were omitted
+
+Overall progress: 10%..20%..30%..40%..50%..60%..70%..80%..90%..100%..
+----------------------------------
+Total CPU time: 0.069643 min.
+Prior: Binomial
+Prior average model size: 1.500000
+Significance level for the initial model: 0.600000
+g-prior: Risk Inflation Criterion (g-RIC)
+Total number of iterations: 10000
+Number of burn-in draws: 1000
+
+The initial model:
+
+OLS, using observations 1-22
+Dependent variable: valadd
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -32.2641      36.2671      -0.8896   0.3854 
+  capital      4.22623      0.932387     4.533    0.0003  ***
+  labor        4.07109      0.993979     4.096    0.0007  ***
+  nfirm        0.351708     0.230110     1.528    0.1438 
+
+SSR = 254851, R-squared = 0.988273
+
+----------------------------------
+
+Posterior average model size: 1.798000
+
+Posterior moments (unconditional and conditional on inclusion):
+                    PIP           Mean       Std.Dev.      Cond.Mean   Cond.Std.Dev
+capital        0.574333       2.362272       2.803157       4.113068       2.545636
+  labor        0.857667       4.946233       2.680033       5.767081       1.908051
+  nfirm        0.366000       0.138655       0.494142       0.378838       0.759050
+
+----------------------------------
+
+Posterior probability of models:
+Model 1:	0.321444
+Model 2:	0.307222
+Model 3:	0.137000
+Model 4:	0.118444
+Total probability of the models in ranking (numerical): 0.884111
+
+Correlation coefficient between the analytical
+and numerical probabilities of the above models: 0.998888
+
+----------------------------------
+
+Predictive results:
+            valadd           Mean       Std.Dev.
+WA      636.948000     615.067644     379.364996
+WV       22.700000     108.209786     384.339161
+WI      349.711000     415.299895     378.916904
+
+----------------------------------
+
+Posterior joint probability of variables:
+                capital          labor          nfirm
+capital        0.000000       0.432000       0.247556
+  labor        0.000000       0.000000       0.229000
+  nfirm        0.000000       0.000000       0.000000
+
+Jointness statistics (Ley-Steel Measure):
+                capital          labor          nfirm
+capital        0.000000      -0.273696      -0.586939
+  labor        0.000000       0.000000      -1.207025
+  nfirm        0.000000       0.000000       0.000000
+
+Significant substitutes:
+      -1.207025----------------------------------
+
+Model: 1, posterior probability: 0.321444
+             coefficient   std. error     z     p-value
+  -----------------------------------------------------
+  capital      2.90426      1.85048     1.569   0.1165 
+  labor        4.84961      1.37819     3.519   0.0004  ***
+
+----------------------------------
+
+Model: 2, posterior probability: 0.307222
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  labor        6.83464      0.580200    11.78   4.96e-32 ***
+
+----------------------------------
+
+Model: 3, posterior probability: 0.137000
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  capital      7.01347      0.962142    7.289   3.11e-13 ***
+  nfirm        1.05205      0.330875    3.180   0.0015   ***
+
+----------------------------------
+
+Model: 4, posterior probability: 0.118444
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  labor        7.45095      1.03505      7.199    6.08e-13 ***
+  nfirm       -0.341692     0.477929    -0.7149   0.4746  
+
+----------------------------------
+
+
+Generated matrix results_mat
+Done

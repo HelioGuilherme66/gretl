@@ -1,0 +1,63 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run loss_functions.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/loss_functions.gfn.inp
+? include ./loss_functions.gfn
+ /home/cottrell/stats/test-gretl/testgfn/loss_functions.gfn
+loss_functions 1.0, 2015-06-14 (Germán Villar)
+? open arma.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/arma.gdt
+periodicity: 12, maxobs: 624
+observations range: 1950:01 to 2001:12
+
+Listing 4 variables:
+  0) const    1) u        2) eps      3) y      
+
+? d = (u<0)
+Generated series d (ID 4)
+? bundle evaluate = loss_functions(100, y, u, eps, d, .2)
+In regard to function loss_functions (package loss_functions):
+Warning: pow: Numerical argument out of domain
+In regard to function loss_functions (package loss_functions):
+Warning: pow: Numerical argument out of domain
+In regard to function loss_functions (package loss_functions):
+Warning: log: Numerical argument out of domain
+In regard to function loss_functions (package loss_functions):
+Warning: log: Numerical argument out of domain
+In regard to function loss_functions (package loss_functions):
+Warning: log: Numerical argument out of domain
+In regard to function loss_functions (package loss_functions):
+Warning: generated non-finite values
+In regard to function loss_functions (package loss_functions):
+Warning: generated non-finite values
+bundle LF:
+ LF_for_probability_forecasts (matrix: 1 x 2)
+ LF_for_assymetry (matrix: 1 x 4)
+ LF_for_Financial_Forecasts (matrix: 1 x 6)
+
+LFOR (1 x 6)
+
+      MSFEsq         MSFE         MAFE         MAPE         MFTR         MCFD 
+      10.146       3.1853       6.3775       12.096      -6.2816      -4.5900 
+
+LASSYM (1 x 4)
+
+   MAFElinex    MSFElinex   MALFElinex   MSLFElinex 
+      4.0544       8.8400       9.4889       34.524 
+
+LPF (1 x 2)
+
+         QPS          LPS 
+      26.983          nan 
+
+#'a' is a scalar such that a<.5. See Hwang, S., Knight, J. L., & Satchell, S. (1999).
+? print evaluate
+bundle evaluate, created by loss_functions:
+ LF_for_probability_forecasts (matrix: 1 x 2)
+ LF_for_assymetry (matrix: 1 x 4)
+ LF_for_Financial_Forecasts (matrix: 1 x 6)
+
+Done

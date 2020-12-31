@@ -1,0 +1,100 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run reset2.inp
+ /home/cottrell/stats/test-gretl/reset2.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+? ols 1 0 2
+
+Model 1: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0536345    0.0106601     5.031    6.95e-06 ***
+  CATHOL      0.219508     0.0457858     4.794    1.56e-05 ***
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.092793   S.E. of regression   0.043517
+R-squared            0.319301   Adjusted R-squared   0.305409
+F(1, 49)             22.98480   P-value(F)           0.000016
+Log-likelihood       88.51891   Akaike criterion    -173.0378
+Schwarz criterion   -169.1742   Hannan-Quinn        -171.5614
+
+? reset
+
+Auxiliary regression for RESET specification test
+OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        0.0319011     0.100640    0.3170   0.7527 
+  CATHOL       0.142346      1.14704     0.1241   0.9018 
+  yhat^2       7.22420      46.4241      0.1556   0.8770 
+  yhat^3     -31.1671      128.189      -0.2431   0.8090 
+
+Test statistic: F = 0.395136,
+with p-value = P(F(2,47) > 0.395136) = 0.676
+
+? reset --squares-only
+
+Auxiliary regression for RESET specification test
+OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0562179    0.0110986     5.065    6.45e-06 ***
+  CATHOL      0.415382     0.231414      1.795    0.0790   *
+  yhat^2     -4.00551      4.63824      -0.8636   0.3921  
+
+Test statistic: F = 0.745775,
+with p-value = P(F(1,48) > 0.745775) = 0.392
+
+? reset --cubes-only
+
+Auxiliary regression for RESET specification test
+OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        0.0474325    0.0127803    3.711    0.0005  ***
+  CATHOL       0.319802     0.122349     2.614    0.0119  **
+  yhat^3     -11.3211      12.8026      -0.8843   0.3810 
+
+Test statistic: F = 0.781952,
+with p-value = P(F(1,48) > 0.781952) = 0.381
+
+? series yh2 = $yhat^2
+Generated series yh2 (ID 10)
+? ols 1 0 2 yh2
+
+Model 2: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0562179    0.0110986     5.065    6.45e-06 ***
+  CATHOL      0.415382     0.231414      1.795    0.0790   *
+  yh2        -4.00551      4.63824      -0.8636   0.3921  
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.091374   S.E. of regression   0.043630
+R-squared            0.329715   Adjusted R-squared   0.301786
+F(2, 48)             11.80566   P-value(F)           0.000068
+Log-likelihood       88.91206   Akaike criterion    -171.8241
+Schwarz criterion   -166.0286   Hannan-Quinn        -169.6095
+
+Done

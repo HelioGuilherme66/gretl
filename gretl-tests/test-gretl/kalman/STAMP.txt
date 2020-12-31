@@ -1,0 +1,52 @@
+Date: Mon, 21 Sep 2009 11:43:28 +0200
+From: Ignacio Diaz-Emparanza <ignacio.diaz-emparanza@ehu.es>
+
+I estimated the model without restrictions using STAMP 6.0. 
+The results are:
+
+Eq  1 : Estimated variances of disturbances.
+
+Component          Var1 (q-ratio)  
+Irr              767.01 ( 1.0000) 
+Lvl              329.94 ( 0.4302) 
+Slp             0.00000 ( 0.0000) 
+Sea              41.031 ( 0.0535) 
+
+=== AC ===
+
+Cf. gretl (using Jack's BSM function)
+
+V (4 x 1)
+
+      766.95
+      329.99
+  1.1910e-10
+      41.033
+
+==========
+
+With STAMP again, restricting the q-ration of  irregular and level 
+to 1 and slope to zero I obtain:
+
+Eq  2 : Estimated variances of disturbances.
+
+Component          Var1 (q-ratio)  
+Irr              547.16 ( 1.0000) 
+Lvl              547.16 ( 1.0000) 
+Slp         2.0656e-008 ( 0.0000) 
+Sea              49.032 ( 0.0896) 
+
+Date: Mon, 21 Sep 2009 17:49:28 +0200
+From: Ignacio Diaz-Emparanza <ignacio.diaz-emparanza@ehu.es>
+
+There is a theoretical warning that seems proper in this case:
+Page 170 in "Forecasting, Structural Time Series Models, and the Kalman 
+Filter" (1989) by A.C. Harvey:
+
+"When sigma^2_xi=0 (slope), convergence to the steady state does not take 
+place exponentially fast and \bar{P} is not p.d. The slope component in this 
+case is _deterministic_. One of the attractions of the kalman filter is that it 
+can handle deterministic components. However, since \bar{P} is not p.d. a 
+switch to the steady-state filter should not be made. An alternative way of 
+handling the deterministic slope is to drop it from the state vector ..."
+

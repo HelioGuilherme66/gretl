@@ -1,0 +1,173 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run sun-activity.inp
+ /home/cottrell/stats/test-gretl/arma/sun-activity.inp
+? open sun-activity.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/arma/sun-activity.gdt
+periodicity: 1, maxobs: 309
+observations range: 1700 to 2008
+
+Listing 2 variables:
+  0) const          1) sunactivity  
+
+? arima 9 0 0 ; sunactivity
+
+Function evaluations: 63
+Evaluations of gradient: 18
+
+Model 1: ARMA, using observations 1700-2008 (T = 309)
+Estimated using Kalman filter (exact ML)
+Dependent variable: sunactivity
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      48.3249       6.87334       7.031    2.05e-12 ***
+  phi_1       1.16071      0.0550885    21.07     1.50e-98 ***
+  phi_2      -0.395382     0.0859557    -4.600    4.23e-06 ***
+  phi_3      -0.166341     0.0888519    -1.872    0.0612   *
+  phi_4       0.150446     0.0893803     1.683    0.0923   *
+  phi_5      -0.0943925    0.0897395    -1.052    0.2929  
+  phi_6       0.00906257   0.0899883     0.1007   0.9198  
+  phi_7       0.0520532    0.0901457     0.5774   0.5636  
+  phi_8      -0.0858438    0.0872794    -0.9836   0.3253  
+  phi_9       0.252392     0.0558415     4.520    6.19e-06 ***
+
+Mean dependent var   49.75210   S.D. dependent var   40.45259
+Mean of innovations  0.159780   S.D. of innovations  14.85883
+Log-likelihood      -1274.311   Akaike criterion     2570.623
+Schwarz criterion    2611.689   Hannan-Quinn         2587.041
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0490     0.0000     1.0490     0.0000
+    Root  2           0.8485    -0.5759     1.0255    -0.0949
+    Root  3           0.8485     0.5759     1.0255     0.0949
+    Root  4          -1.1772    -0.4453     1.2586    -0.4424
+    Root  5          -1.1772     0.4453     1.2586     0.4424
+    Root  6           0.4205    -1.0894     1.1677    -0.1914
+    Root  7           0.4205     1.0894     1.1677     0.1914
+    Root  8          -0.4463    -1.2098     1.2895    -0.3062
+    Root  9          -0.4463     1.2098     1.2895     0.3062
+  -----------------------------------------------------------
+
+? fcast 1709 1720 gretl_fc --dynamic
+Generated series gretl_fc (ID 2)
+? smpl 1709 1719
+Full data range: 1700 - 2008 (n = 309)
+Current sample: 1709 - 1719 (n = 11)
+
+? print sunactivity gretl_fc --byobs
+
+      sunactivity     gretl_fc
+
+1709            8     11.23055
+1710            3     13.23749
+1711            0     19.66433
+1712            0     27.00403
+1713            2     33.57889
+1714           11     44.90813
+1715           27     47.95894
+1716           47     45.09373
+1717           63     36.50681
+1718           60     28.78843
+1719           39     23.48740
+
+? smpl --full
+Full data range: 1700 - 2008 (n = 309)
+
+? genr year = time + 1699
+Generated series year (ID 4)
+? foreign language=stata --send-data
+?   tsset year
+?   arima sunactivity, arima(9,0,0)
+?   predict stata_fc, dyn(1709)
+?   list year sunactivity stata_fc in 10/20
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(5 vars, 309 obs)
+
+. tsset year
+        time variable:  year, 1700 to 2008
+                delta:  1 unit
+
+. arima sunactivity, arima(9,0,0)
+
+(setting optimization to BHHH)
+Iteration 0:   log likelihood =  -1274.425  
+Iteration 1:   log likelihood = -1274.3513  
+Iteration 2:   log likelihood = -1274.3209  
+Iteration 3:   log likelihood = -1274.3197  
+Iteration 4:   log likelihood = -1274.3137  
+(switching optimization to BFGS)
+Iteration 5:   log likelihood = -1274.3135  
+Iteration 6:   log likelihood = -1274.3116  
+Iteration 7:   log likelihood = -1274.3113  
+Iteration 8:   log likelihood = -1274.3113  
+Iteration 9:   log likelihood = -1274.3113  
+
+ARIMA regression
+
+Sample:  1700 - 2008                            Number of obs      =       309
+                                                Wald chi2(9)       =   2376.03
+Log likelihood = -1274.311                      Prob > chi2        =    0.0000
+
+------------------------------------------------------------------------------
+             |                 OPG
+ sunactivity |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+sunactivity  |
+       _cons |   48.32398   8.578282     5.63   0.000     31.51086     65.1371
+-------------+----------------------------------------------------------------
+ARMA         |
+          ar |
+         L1. |   1.160683   .0466234    24.89   0.000     1.069303    1.252063
+         L2. |  -.3953729   .0778712    -5.08   0.000    -.5479977    -.242748
+         L3. |  -.1663215   .0909147    -1.83   0.067     -.344511     .011868
+         L4. |   .1504268   .1078301     1.40   0.163    -.0609163    .3617699
+         L5. |  -.0943794   .0998399    -0.95   0.345     -.290062    .1013031
+         L6. |   .0090588   .0908246     0.10   0.921    -.1689542    .1870718
+         L7. |   .0520344    .090119     0.58   0.564    -.1245955    .2286643
+         L8. |  -.0858318    .078745    -1.09   0.276     -.240169    .0685055
+         L9. |   .2523965   .0458691     5.50   0.000     .1624947    .3422984
+-------------+----------------------------------------------------------------
+      /sigma |   14.85874   .5210791    28.52   0.000     13.83744    15.88003
+------------------------------------------------------------------------------
+Note: The test of the variance against zero is one sided, and the two-sided
+    confidence interval is truncated at zero.
+
+. predict stata_fc, dyn(1709)
+(option xb assumed; predicted values)
+
+. list year sunactivity stata_fc in 10/20
+
+     +----------------------------+
+     | year   sunact~y   stata_fc |
+     |----------------------------|
+ 10. | 1709          8   11.23058 |
+ 11. | 1710          3   13.23802 |
+ 12. | 1711          0   19.66476 |
+ 13. | 1712          0   27.00397 |
+ 14. | 1713          2   33.57886 |
+     |----------------------------|
+ 15. | 1714         11   44.90837 |
+ 16. | 1715         27   47.95922 |
+ 17. | 1716         47   45.09379 |
+ 18. | 1717         63   36.50683 |
+ 19. | 1718         60   28.78849 |
+     |----------------------------|
+ 20. | 1719         39   23.48775 |
+     +----------------------------+
+
+. 
+end of do-file
+
+Done

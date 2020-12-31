@@ -1,0 +1,38 @@
+set echo off
+set messages off
+
+function matrix logrel_error (matrix est, matrix true)
+  return -log10(abs(est - true) ./ abs(true))
+end function
+
+open longley.gdt -q
+list LX = prdefl .. year
+# gretl's regular OLS
+ols employ 0 LX -q
+matrix b = $coeff
+
+mwrite({employ}, "y.mat", 1)
+mwrite({const} ~ {LX}, "X.mat", 1)
+
+foreign language=julia
+   using MultivariateStats
+   y = gretl_loadmat("y.mat", true)
+   X = gretl_loadmat("X.mat", true)
+   b = llsq(X, y; bias=false)
+   gretl_export(b, "jl_b.mat", true)
+end foreign
+
+# NIST's certified coefficient values
+matrix nist_b = {-3482258.63459582, 15.0618722713733,
+    -0.358191792925910E-01, -2.02022980381683,
+    -1.03322686717359, -0.511041056535807E-01,
+     1829.15146461355}'
+
+matrix jl_b = mread("jl_b.mat", 1)
+matrix errs = logrel_error(b, nist_b) ~ logrel_error(jl_b, nist_b)
+colnames(errs, "gretl julia")
+printf "Log-relative errors, Longley coefficients:\n\n%#12.5g\n", errs
+printf "Column means\n%#12.5g\n", meanc(errs)
+
+
+

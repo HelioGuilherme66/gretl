@@ -1,0 +1,220 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch14.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch14.inp
+# Stock and Watson, ch 14
+# illustrative VAR and GARCH
+#
+? open sw_ch14.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/sw_ch14.gdt
+periodicity: 4, maxobs: 164
+observations range: 1959:1 to 1999:4
+
+Listing 3 variables:
+  0) const    1) LHUR     2) PUNEW  
+
+? set force_hc on
+? set hc_version 1
+? genr infl = 400 * log(PUNEW/PUNEW(-1))
+Generated series infl (ID 3)
+? diff infl
+Listing 5 variables:
+  0) const     1) LHUR      2) PUNEW     3) infl      4) d_infl  
+
+? lags d_infl LHUR
+Listing 13 variables:
+  0) const       1) LHUR        2) PUNEW       3) infl        4) d_infl    
+  5) d_infl_1    6) d_infl_2    7) d_infl_3    8) d_infl_4    9) LHUR_1    
+ 10) LHUR_2     11) LHUR_3     12) LHUR_4    
+
+? smpl 1962:1 1999:4
+Full data range: 1959:1 - 1999:4 (n = 164)
+Current sample: 1962:1 - 1999:4 (n = 152)
+
+# run "automatic" VAR
+# Equations 14.5 and 14.6
+? var 4 d_infl LHUR const -r
+
+VAR system, lag order 4
+OLS estimates, observations 1962:1-1999:4 (T = 152)
+Log-likelihood = -252.82128
+Determinant of covariance matrix = 0.095449464
+AIC = 3.5634
+BIC = 3.9215
+HQC = 3.7089
+Portmanteau test: LB(38) = 159.94, df = 136 [0.0787]
+
+Equation 1: d_infl
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.31784      0.470406      2.801    0.0058   ***
+  d_infl_1   -0.363005     0.0926343    -3.919    0.0001   ***
+  d_infl_2   -0.343201     0.100822     -3.404    0.0009   ***
+  d_infl_3    0.0724664    0.0848746     0.8538   0.3946  
+  d_infl_4   -0.0345864    0.0868339    -0.3983   0.6910  
+  LHUR_1     -2.68340      0.472365     -5.681    7.24e-08 ***
+  LHUR_2      3.43224      0.889193      3.860    0.0002   ***
+  LHUR_3     -1.03966      0.890172     -1.168    0.2448  
+  LHUR_4      0.0719850    0.442068      0.1628   0.8709  
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Sum squared resid    268.7935   S.E. of regression   1.371012
+R-squared            0.380168   Adjusted R-squared   0.345492
+F(8, 143)            7.986428   P-value(F)           7.27e-09
+rho                 -0.002972   Durbin-Watson        2.005690
+
+F-tests of zero restrictions:
+
+All lags of d_infl          F(4, 143) =   5.8486 [0.0002]
+All lags of LHUR            F(4, 143) =   8.5096 [0.0000]
+All vars, lag 4             F(2, 143) = 0.088439 [0.9154]
+
+Equation 2: LHUR
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient    std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const       0.117334      0.0935750     1.254     0.2119  
+  d_infl_1    0.0433821     0.0196426     2.209     0.0288   **
+  d_infl_2    0.000483034   0.0152510     0.03167   0.9748  
+  d_infl_3    0.0211765     0.0156331     1.355     0.1777  
+  d_infl_4    0.0207443     0.0151054     1.373     0.1718  
+  LHUR_1      1.68384       0.116909     14.40      1.26e-29 ***
+  LHUR_2     -0.695718      0.203861     -3.413     0.0008   ***
+  LHUR_3     -0.0308361     0.197083     -0.1565    0.8759  
+  LHUR_4      0.0227603     0.0925423     0.2459    0.8061  
+
+Mean dependent var   6.003070   S.D. dependent var   1.526698
+Sum squared resid    8.350583   S.E. of regression   0.241652
+R-squared            0.976274   Adjusted R-squared   0.974946
+F(8, 143)            508.2069   P-value(F)           5.7e-101
+rho                 -0.012444   Durbin-Watson        2.022784
+
+F-tests of zero restrictions:
+
+All lags of d_infl          F(4, 143) =   2.4149 [0.0516]
+All lags of LHUR            F(4, 143) =   912.95 [0.0000]
+All vars, lag 4             F(2, 143) =  0.99351 [0.3728]
+
+For the system as a whole:
+
+  Null hypothesis: the longest lag is 3
+  Alternative hypothesis: the longest lag is 4
+  Likelihood ratio test: Chi-square(4) = 2.66366 [0.6156]
+
+  Comparison of information criteria:
+  Lag order 4: AIC = 3.56344, BIC = 3.92153, HQC = 3.70891
+  Lag order 3: AIC = 3.52833, BIC = 3.80685, HQC = 3.64147
+
+# for comparison, try one equation manually
+? ols LHUR const d_infl(-1 to -4) LHUR(-1 to -4) -r
+
+Model 1: OLS, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: LHUR
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient    std. error   t-ratio    p-value 
+  ----------------------------------------------------------
+  const       0.117334      0.0935750     1.254     0.2119  
+  d_infl_1    0.0433821     0.0196426     2.209     0.0288   **
+  d_infl_2    0.000483034   0.0152510     0.03167   0.9748  
+  d_infl_3    0.0211765     0.0156331     1.355     0.1777  
+  d_infl_4    0.0207443     0.0151054     1.373     0.1718  
+  LHUR_1      1.68384       0.116909     14.40      1.26e-29 ***
+  LHUR_2     -0.695718      0.203861     -3.413     0.0008   ***
+  LHUR_3     -0.0308361     0.197083     -0.1565    0.8759  
+  LHUR_4      0.0227603     0.0925423     0.2459    0.8061  
+
+Mean dependent var   6.003070   S.D. dependent var   1.526698
+Sum squared resid    8.350583   S.E. of regression   0.241652
+R-squared            0.976274   Adjusted R-squared   0.974946
+F(8, 143)            508.2069   P-value(F)           5.7e-101
+Log-likelihood       4.839081   Akaike criterion     8.321838
+Schwarz criterion    35.53676   Hannan-Quinn         19.37749
+rho                 -0.012444   Durbin-Watson        2.022784
+
+Excluding the constant, p-value was highest for variable 6 (d_infl_2)
+
+# Test for Granger causality of unemployment by inflation
+? omit d_infl(-1 to -4) --quiet
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    d_infl_1, d_infl_2, d_infl_3, d_infl_4
+  Test statistic: Robust F(4, 143) = 2.41493, p-value 0.0515825
+
+# GARCH model
+? garch 1 1 ; d_infl const d_infl(-1 to -4) LHUR(-1 to -4) -r --vcv
+
+Function evaluations: 70
+Evaluations of gradient: 23
+
+Model 3: GARCH, using observations 1962:1-1999:4 (T = 152)
+Dependent variable: d_infl
+QML standard errors
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       1.28604      0.333549      3.856    0.0001   ***
+  d_infl_1   -0.410318     0.100512     -4.082    4.46e-05 ***
+  d_infl_2   -0.305478     0.0906555    -3.370    0.0008   ***
+  d_infl_3    0.0224661    0.106760      0.2104   0.8333  
+  d_infl_4   -0.0282520    0.0926602    -0.3049   0.7604  
+  LHUR_1     -2.50430      0.341373     -7.336    2.20e-13 ***
+  LHUR_2      2.75673      0.709807      3.884    0.0001   ***
+  LHUR_3      0.151760     0.805210      0.1885   0.8505  
+  LHUR_4     -0.635191     0.399366     -1.590    0.1117  
+
+  alpha(0)    0.258953     0.143188      1.808    0.0705   *
+  alpha(1)    0.467134     0.200501      2.330    0.0198   **
+  beta(1)     0.449615     0.169511      2.652    0.0080   ***
+
+Mean dependent var   0.017097   S.D. dependent var   1.694665
+Log-likelihood      -247.7488   Akaike criterion     521.4977
+Schwarz criterion    560.8081   Hannan-Quinn         537.4669
+
+Unconditional error variance = 3.11051
+Likelihood ratio test for (G)ARCH terms:
+  Chi-square(2) = 22.5092 [1.29476e-05]
+
+Covariance matrix of regression coefficients:
+
+         const      d_infl_1      d_infl_2      d_infl_3      d_infl_4
+      0.111255    -0.0154476    -0.0142594     -0.019324    -0.0107531  const
+                   0.0101027    0.00372863    0.00429623  -9.34799e-05  d_infl_1
+                                0.00821843    0.00713222    0.00509176  d_infl_2
+                                               0.0113976    0.00702017  d_infl_3
+                                                            0.00858591  d_infl_4
+
+        LHUR_1        LHUR_2        LHUR_3        LHUR_4      alpha(0)
+    -0.0327058    -0.0231602     0.0502464    -0.0133828    0.00356526  const
+    0.00172776     0.0246588    -0.0353782     0.0119165    0.00542848  d_infl_1
+    0.00251637    0.00939803   -0.00347361   -0.00582647   -0.00189391  d_infl_2
+     0.0059779     0.0045644     0.0017734   -0.00892708   -0.00503875  d_infl_3
+   7.74928e-05    0.00431367    0.00705786   -0.00964335   -0.00715782  d_infl_4
+      0.116536     -0.193086      0.111054    -0.0284776    -0.0056276  LHUR_1
+                    0.503827     -0.472597      0.165864     0.0215744  LHUR_2
+                                  0.648363     -0.295174    -0.0366833  LHUR_3
+                                                0.159493      0.020167  LHUR_4
+                                                             0.0205028  alpha(0)
+
+      alpha(1)       beta(1)
+     0.0377225    -0.0288199  const
+   -0.00217496  -6.04840e-04  d_infl_1
+   -0.00462412    0.00517401  d_infl_2
+    -0.0085086     0.0101464  d_infl_3
+   -0.00545914    0.00878577  d_infl_4
+   -0.00253816    0.00397085  LHUR_1
+    -0.0163636    0.00319125  LHUR_2
+      0.017454     0.0069695  LHUR_3
+   -0.00484975   -0.00933299  LHUR_4
+    0.00737512    -0.0160012  alpha(0)
+     0.0402008    -0.0281249  alpha(1)
+                   0.0287339  beta(1)
+
+Done

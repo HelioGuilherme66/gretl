@@ -1,0 +1,174 @@
+*
+*  ComplexRoots
+*  Finds all roots (real or complex) of a polynomial by Laguerre's method
+*  (see e.g. Numerical Recipes in C by Press, Flannery, et. al.).
+*
+*  Syntax:
+*
+*  @ComplexRoots( options ) a n roots
+*
+*  Parameters
+*    a = coefficients of polynomial. a(i) is the coefficient on the x**(i-1) term, that is,
+*        the polynomial is a(1)+a(2)*x+a(3)*x**2+...
+*    n = degree of the polynomial. It doesn't have to match the dimension of a.
+*    roots (output) = VECT[COMPLEX] of roots sorted in absolute value from high to low.
+*
+*  Options
+*    iters = maximum number of iterations on any single root [100]
+*    eps   = convergence criterion [.000001]
+*
+*  Example. To find the roots of 2*x**3-5*x**2+7*x+40
+*
+*     dec vect[complex] a(4)
+*     compute a=||40.0,7.0,-5.0,2.0||   ;* Note that the coefficients start with the low order terms
+*     @ComplexRoots a 3 roots
+*
+*
+*  Revision Schedule
+*    10/02 Adapted to RATS with minor adjustments from code in Press, Flannery, Teukolsky, Vettering,
+*      "Numerical Recipes in C", Cambridge University Press.
+*
+proc OneCmplxRoot a n x
+type vector[complex] a
+type integer n
+type complex *x
+*
+option real    eps   .000001
+option integer iters 100
+*
+local complex xx xxc p0 p1 p2
+local complex sq h gp gm g2 g dx x1 xx
+local real exx xxa
+local int iter j
+*
+*  Unless told otherwise, assume we're starting at 0
+*
+if %defined(x)
+   compute xx=x
+else
+   compute xx=0.0
+*
+*  If the polynomial is linear, just solve it
+*
+if n==1 {
+   compute x=-a(1)/a(2)
+   return
+}
+
+do iter=1,iters
+*
+*     Compute the polynomial and its first two derivatives
+*
+   compute p0=a(n+1)
+   compute p1=p2=0.0
+   compute xxa=%cabs(xx)
+   compute xxc=%conjg(xx)
+   compute exx=%cabs(p0)
+   do j=n,1,-1
+      compute p2=p1+p2*xxc
+      compute p1=p0+p1*xxc
+      compute p0=a(j)+p0*xxc
+      compute exx=%cabs(p0)+exx*xxa
+   end do j
+*
+*     If the value of the polynomial has zero precision relative
+*     to the norm of its possible roundoff error, we're done.
+*
+   if %noprec(%cabs(p0)/exx) {
+      compute x=xx
+      return
+   }
+*
+   compute g =p1/p0
+   compute g2=g*%conjg(g)
+   compute h =g2-2.0*p2/p0
+   compute sq=%csqrt((n-1)*(n*h-g2))
+*
+*     Take the solution which gives the smallest delta
+*
+   compute gp=g+sq,gm=g-sq
+   if %cabs(gp)<%cabs(gm)
+      compute gp=gm
+*
+   compute dx=n/gp
+   compute x1=xx-dx
+*
+*     If dx is so small that it wouldn't change x, we're done.
+*
+   if (xx==x1) {
+      compute x=xx
+      return
+   }
+*
+*     If things are taking a while, occasionally take a reduced step to try
+*     to get things back on track.
+*
+   if %clock(iter,10)==10
+      compute xx=xx-.5*dx
+   else
+      compute xx=x1
+end do iter
+*
+display 'OneCmplxRoot failed to converge on degree' n
+end
+
+procedure ComplexRoots a n roots
+type vect[complex] a *roots
+type integer n
+option real    eps   .000001
+option integer iters 100
+*
+local vect[complex] ad
+local complex x b c xc
+local integer j k l
+*
+if .not.%defined(a).or..not.%defined(n).or..not.%defined(roots) {
+   display 'Syntax: @ComplexRoots a n roots'
+   display 'a = VECT[COMPLEX] of coefficients, n = degree of polynomial'
+   display 'roots = VECT[COMPLEX] of roots (output)'
+   return
+}
+dim roots(n)
+*
+*  Find one root at a time and deflate. ad is the deflated polynomial.
+*
+compute ad=a
+do j=n,1,-1
+   compute x=0.0
+   @OneCmplxRoot(eps=eps,iters=iters) ad j x
+*
+*     If the imaginary part is trivially small compared to the absolute
+*     value, assume the root is real.
+*
+   if abs(%imag(x))<=(eps*%cabs(x))
+      compute x=%real(x)
+*
+*     Sort the roots by absolute value from high to low
+*
+   do k=1,(n-j)
+      if %cabs(x)>%cabs(roots(k)) {
+         do l=(n-j),k,-1
+            compute roots(l+1)=roots(l)
+         end do l
+         compute roots(k)=x
+         branch deflate
+      }
+   end do k
+   compute roots(n-j+1)=x
+*
+*     Deflate the polynomial. Note that xc is conjugated because RATS
+*     does complex * as w*conjg(z) and we need just the straight multiply.
+*
+:deflate
+   compute b=ad(j+1)
+   compute xc=%conjg(x)
+   do jj=j,1,-1
+      compute c=ad(jj)
+      compute ad(jj)=b
+      compute b=b*xc+c
+   end do jj
+end do j
+end
+
+
+

@@ -1,0 +1,5 @@
+# Script to check handling of non-integer dep. var. 
+open summers.gdt -q
+probit RRscore const ld_credit2(-1 to -5)
+RRscore *= 2
+probit RRscore const ld_credit2(-1 to -5)

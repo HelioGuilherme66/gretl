@@ -1,0 +1,78 @@
+gretl version 1.9.6cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2011-12-02 15:07
+? run op_test.inp
+ /home/cottrell/stats/test-gretl/ordered/op_testing/op_test.inp
+? set echo off
+periodicity: 1, maxobs: 50
+observations range: 1-50
+f (4 x 2)
+
+   0   17 
+   1   12 
+   2   12 
+   3    9 
+
+cases correct, naive prediction = 17 (34.0%)
+sum abs distances, naive prediction: 63
+
+Function evaluations: 31
+Evaluations of gradient: 12
+
+Model 1: Ordered Probit, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  x1          0.0151294    0.0356838     0.4240   0.6716  
+  x2         -0.166560     0.0496523    -3.355    0.0008   ***
+
+  cut1       -0.250001     0.211074     -1.184    0.2362  
+  cut2        0.496812     0.219863      2.260    0.0238   **
+  cut3        1.32616      0.259082      5.119    3.08e-07 ***
+
+Mean dependent var   1.260000   S.D. dependent var   1.121406
+Log-likelihood      -61.64052   Akaike criterion     133.2810
+Schwarz criterion    142.8412   Hannan-Quinn         136.9216
+
+Number of cases 'correctly predicted' = 16 (32.0%)
+Likelihood ratio test: Chi-square(2) = 12.7664 [0.0017]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.864281
+  with p-value = 0.649118
+
+cases correct: 16
+sum abs distances: 51
+
+Function evaluations: 24
+Evaluations of gradient: 10
+
+Model 2: Ordered Probit, using observations 1-50
+Dependent variable: y
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  x1          0.0277537    0.0349115     0.7950   0.4266  
+
+  cut1       -0.356774     0.196432     -1.816    0.0693   *
+  cut2        0.264144     0.195477      1.351    0.1766  
+  cut3        0.980333     0.222922      4.398    1.09e-05 ***
+
+Mean dependent var   1.260000   S.D. dependent var   1.121406
+Log-likelihood      -67.70693   Akaike criterion     143.4139
+Schwarz criterion    151.0620   Hannan-Quinn         146.3263
+
+Number of cases 'correctly predicted' = 18 (36.0%)
+Likelihood ratio test: Chi-square(1) = 0.633619 [0.4260]
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.582373
+  with p-value = 0.747376
+
+cases correct: 18
+sum abs distances: 57
+Done

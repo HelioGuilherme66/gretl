@@ -1,0 +1,6 @@
+open strleft.csv
+print strleft -o
+join strval.csv strval --ikey=strleft --okey=strval --aggr=seq:1
+print strleft strval -o
+print strleft -o
+print strval -o

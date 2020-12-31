@@ -1,0 +1,4 @@
+open abdata.gdt
+list reg = w w(-1) k ys ys(-1)
+# dpanel 2 ; n reg 0 --two-step --time-dummies --dpdstyle
+dpanel 2 ; n reg 0

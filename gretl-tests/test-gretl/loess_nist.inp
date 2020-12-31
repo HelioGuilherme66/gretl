@@ -1,0 +1,7 @@
+# replicate example at 
+# http://itl.nist.gov/div898/handbook/pmd/section1/dep/dep144.htm
+# "Example of LOESS Computations"
+
+open loess_nist.txt -q
+series yh = loess(y, x, 1, 0.33, 0)
+print x y yh -o

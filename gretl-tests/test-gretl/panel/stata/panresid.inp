@@ -1,0 +1,23 @@
+open nlswork.dta
+setobs idcode year --panel-vars
+
+genr age2 = age^2
+genr ttl_exp2 = ttl_exp^2
+genr tenure2 = tenure^2
+genr black = (race == 2)
+
+# fixed effects
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south
+series uhat_fe = $uhat
+series ue_fe = $uhat + $ahat - $coeff[1]
+
+# random effects
+panel ln_wage 0 grade age* ttl_exp* tenure* black not_smsa south --random
+series uhat_re = $uhat
+series e_re = $uhat
+e_re -= pmean(e_re)
+
+smpl ok(uhat_fe) --restrict
+summary uhat_fe ue_fe e_re uhat_re --simple
+smpl 1 10
+print uhat_fe ue_fe e_re uhat_re -o

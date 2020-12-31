@@ -1,0 +1,38 @@
+w/out new GMM weights normalization, CKLS.inp and hall.inp fail
+with it, only CKLS.inp failed
+
+stats excluding CKLS.inp:
+
+                     output newout  newer
+BFGS gradient evals:   545    1704   2640
+BFGS function evals:  2597    3362   9526
+
+dell old: 1.38, 1.37, 1.34
+dell new: 1.72, 1.73, 1.76
+
+========
+
+Using GMM_NORMALIZE_2=1 _without_ the new step-length code:
+
+CKLS.inp failed
+favero.inp failed
+hall.inp failed
+HS_HAC.inp failed
+HS_SE.inp failed
+
+However, GMM_NORMALIZE_2=1 works faster on the 9 scripts for
+which it works.
+
+But... something funny about gmm3.inp, where we do one-step, then
+use the V matrix from that as the starting V for two-step: in this
+case we end up with a GMM criterion that's about 35% bigger, and a
+J-test statistic to match.
+
+Compare: _without_ GMM_NORMALIZE_2 the two-step results are pretty
+much invariant wrt V = I(11) or V = (V after one step). Q is the
+same to 6 figures. _With_ GMM_NORMALIZE_2 the two-step results
+differ: Q = 0.0135 vs 0.0179.
+
+
+
+

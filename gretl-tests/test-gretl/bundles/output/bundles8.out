@@ -1,0 +1,32 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles8.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles8.inp
+? bundle b1
+? b1["mat"] = I(3)
+? b1["x"] = 32
+? bundle b2
+? b2["str"] = "hello"
+? b2["num"] = 64
+? b1["inside"] = b2
+? delete b2
+Deleted b2
+? print b1
+bundle b1:
+ mat (matrix: 3 x 3)
+ inside (bundle)
+ x = 32
+
+? b2 = b1["inside"]
+? print b2
+bundle b2:
+ str = hello
+ num = 64
+
+? string s = b2["str"]
+Generated string s
+? s
+hello
+Done

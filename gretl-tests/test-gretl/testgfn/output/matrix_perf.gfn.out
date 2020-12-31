@@ -1,0 +1,107 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run matrix_perf.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/matrix_perf.gfn.inp
+? include ./matrix_perf.gfn
+ /home/cottrell/stats/test-gretl/testgfn/matrix_perf.gfn
+matrix_perf 0.4, 2014-06-17 (Allin Cottrell)
+? matrix_perf(1234567)
+dgemm experiment 1, variant 1, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+       128       128       128    1.1589    4.1004    11.223
+       128       128       256    1.2519    4.2954    20.083
+       128       128       512    1.2784    6.5880    23.373
+       128       128      1024    1.2835    6.4179    25.549
+       128       128      2048    1.2853    6.8725    26.600
+
+result: openblas dominates
+
+dgemm experiment 1, variant 2, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+       128       128       128    1.1566    5.6896    12.943
+       256       256       128    1.1518    5.9418    16.303
+       512       512       128    1.0386    6.0043    14.378
+      1024      1024       128    1.2483    5.8841    13.418
+      2048      2048       128    1.1718    6.1117    13.813
+
+result: openblas dominates
+
+dgemm experiment 1, variant 3, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+       128       128       128    1.2167    5.7065    8.3964
+       256       256       256    1.1750    6.2873    21.219
+       512       512       512    1.0200    6.2821    23.799
+      1024      1024      1024   0.98132    6.5827    26.038
+      2048      2048      2048    1.1384    6.4350    27.856
+
+result: openblas dominates
+
+dgemm experiment 2, variant 1, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+         8         8         8   0.48633   0.20613   0.63230
+        16         8         8   0.63278   0.45688   0.92931
+        32         8         8   0.76545   0.67185    1.2942
+        64         8         8   0.70574   0.99464    1.5511
+       128         8         8   0.85086    1.2022    1.7636
+       256         8         8   0.72556    1.4958    1.8336
+       512         8         8   0.75449    1.5889    1.8593
+      1024         8         8   0.78685    1.7074    1.8410
+      2048         8         8   0.77028    1.6953    1.8342
+      4096         8         8   0.75710    1.6952    1.8134
+
+result: openblas dominates
+
+dgemm experiment 2, variant 2, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+        10         2      1000    1.0324   0.68990    2.7299
+        20         2      1000    1.2007   0.92694    2.8114
+        40         2      1000    1.2934    1.4718    2.6682
+        80         2      1000    1.2842    1.6432    2.5739
+       160         2      1000    1.3296    2.0153    2.3866
+       320         2      1000    1.2832    2.2372    2.3728
+       640         2      1000    1.2558    2.3697    2.3411
+      1280         2      1000    1.1846    2.0919    1.9352
+      2560         2      1000    1.1375    2.4003    1.9191
+      5120         2      1000    1.1452    2.8085    2.0013
+
+result: openmp dominates for mnk >= 1280000
+  openblas dominates for mnk < 1280000
+
+dgemm experiment 2, variant 3, speed in Gflops
+
+         m         n         k   vanilla    openmp  openblas
+        10        10      1000    1.0477    1.7201    4.9814
+        20        10      1000    1.2127    2.7835    5.8443
+        40        10      1000    1.2283    3.8895    6.1870
+        80        10      1000    1.1731    4.0196    6.2070
+       160        10      1000    1.2695    4.7591    6.1715
+       320        10      1000    1.2807    5.1864    6.3617
+
+result: openblas dominates
+
+Operating system: Linux (64-bit)
+BLAS library: OpenBLAS
+Number of processors: 8
+OpenMP enabled: yes
+
+Performance summary:
+
+vanilla -
+  dominates outright in 0 out of 6 tests
+
+openmp -
+  dominates outright in 0 out of 6 tests
+  dominates in 1 test(s) for mnk >= 1280000
+
+openblas -
+  dominates outright in 5 out of 6 tests
+  dominates in 1 test(s) for mnk < 1280000
+
+Done

@@ -1,0 +1,24 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run cnumber.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/cnumber.gfn.inp
+? include ./cnumber.gfn
+ /home/cottrell/stats/test-gretl/testgfn/cnumber.gfn
+cnumber 1.0, 2010-08-31 (Monsueto, S.E)
+? open greene12_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene12_1.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 8 variables:
+  0) const      1) derog      2) accept     3) age        4) income   
+  5) expend     6) ownrent    7) selfemp  
+
+? matrix X = {age, income, expend}
+Generated matrix X
+? cnumber(X)
+Conditional Number =         5.18
+Done

@@ -1,0 +1,29 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run FEPoisson.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/FEPoisson.gfn.inp
+? include ./FEPoisson.gfn
+ /home/cottrell/stats/test-gretl/testgfn/FEPoisson.gfn
+FEPoisson 1.1, 2016-01-13 (Riccardo "Jack" Lucchetti)
+Read datafile /opt/esl/share/gretl/data/misc/rwm.gdt
+
+
+Fixed effects Poisson Model
+Dependent variable: docvis
+Sample size = 23653, (5179 units)
+Originally: 27326;
+	1525 dropped because T_i = 1
+	2148 dropped because y_ti = 0 for all t
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  age         0.0311485    0.00144322   21.58     2.62e-103 ***
+  educ       -0.0380325    0.0173345    -2.194    0.0282    **
+  hhkids      0.00192671   0.0154578     0.1246   0.9008   
+  income     -0.0303040    0.00410360   -7.385    1.53e-13  ***
+  public      0.101497     0.0297965     3.406    0.0007    ***
+
+	LLik = -197578
+	Wald chi^2 test(5) = 499.588 (pvalue = 9.79693e-106)

@@ -1,0 +1,61 @@
+#!/bin/sh
+# This is required to fake original Data directories in this machine
+# to be equal as Allin's machine
+
+if [ "$HOME" == "/home/cottrell" ];
+then
+    printf "Nothing to do here :).\n"
+    exit 0
+fi
+
+. `dirname $0`/sitevars
+
+CURRENT_GRETL=`echo "open data4-1" | gretlcli -e -b  - | grep "Read datafile " | cut -f 3 -d ' ' | sed "s/data\/data4\-1\.gdt//g" -`
+
+#DEBUG
+#printf "Current DATA DIR is: %s\n" $CURRENT_GRETL
+#printf "test dir is: %s\n" `dirname $PWD`
+BASE=`dirname $PWD`
+#stats/test-gretl
+#Sorry must be hardcoded for now (the - in gretl-tests)!
+BASE2="$HOME/github/gretl/gretl-tests/test-gretl"
+
+for f in $(ls newout/*) ; do 
+    `sed -i "s:open stata:open ~/stats/stata:g" $f`
+    `sed -i "s:open hamilton/:open ~/stats/hamilton/:g" $f`
+    `sed -i "s:$CURRENT_GRETL:/opt/esl/share/gretl/:g" $f`
+    #`sed -i "s:$BASE/test\-gretl:/home/cottrell/stats/test\-gretl:g" $f`
+    `sed -i "s:$BASE2:/home/cottrell/stats/test\-gretl:g" $f`
+    `sed -i "s:$HOME:/home/cottrell:g" $f`
+    # Known unharmonized paths
+    if [ "$f" == "newout/ivreg.out" ]; 
+    then
+        `sed -i "s: griliches.gdt: ~/stats/test\-gretl/griliches.gdt:g" $f` 
+    fi
+    # data/wooldridge/
+    #     "$f" == "newout/wooldridge_f.out"  -o \
+    if [ "$f" == "newout/recid_medians.out" -o \
+         "$f" == "newout/recid_means.out" -o \
+         "$f" == "newout/recid.out"         -o \
+         "$f" == "newout/wool14_4.out"      -o \
+         "$f" == "newout/bwght.out"         -o \
+         "$f" == "newout/C17.1.out"         -o \
+         "$f" == "newout/pensions.out" ];
+    then
+        `sed -i "s:data/misc/:data/wooldridge/:g" $f`
+    fi
+    # X-13-ARIMA
+    `sed -i "s:X\-13\-ARIMA:X\-12\-ARIMA:g" $f`
+
+    # stock_watson reverting
+    `sed -i "s:Read datafile /home/cottrell/stats/test\-gretl/stock\-watson:Read datafile /opt/esl/share/gretl/data/stock_watson:g" $f`
+    `sed -i "s:/home/cottrell/stats/test\-gretl/stock\-watson:/opt/esl/share/gretl/scripts/stock_watson:g" $f`
+    `sed -i "s:wrote /opt/esl/share/gretl/scripts/stock_watson:wrote /home/cottrell/stats/test\-gretl/stock\-watson:g" $f`
+    `sed -i "s:/opt/esl/share/gretl/data/stock_watson/sw_:/opt/esl/share/gretl/data/misc/sw_:g" $f`
+    `sed -i "s:/opt/esl/share/gretl/data/stock_watson/djclose:/opt/esl/share/gretl/data/misc/djclose:g" $f`
+    `sed -i "s:Read datafile /home/cottrell/stats/test\-gretl/stata:Read datafile /home/cottrell/stats/stata:g" $f`
+    `sed -i "s:/home/cottrell/stats/test\-gretl/hamilton/:/home/cottrell/stats/hamilton/:g" $f`
+    `sed -i "s:/home/cottrell/stats/test\-gretl/gpa3\.gdt:/opt/esl/share/gretl/data/wooldridge/gpa3\.gdt:g" $f`
+    `sed -i "s:/home/cottrell/stats/test\-gretl/converge\.inp:/home/cottrell/gretl/pwt56/converge\.inp:g" $f`
+    `sed -i "s:/home/cottrell/stats/test\-gretl/prodfunc\.inp:/home/cottrell/gretl/pwt56/prodfunc\.inp:g" $f`
+done 

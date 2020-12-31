@@ -1,0 +1,14 @@
+open mroz87.gdt --quiet
+list X = const WA
+list Z = WMED WFED
+
+# 1st stage
+ols WE X Z --quiet
+series u = $uhat
+
+# 2nd stage
+ols WW X WE u --quiet --no-df-corr
+omit u --chi-square --quiet
+
+# tsls
+tsls WW X WE ; X Z

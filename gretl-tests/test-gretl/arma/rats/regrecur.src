@@ -1,0 +1,122 @@
+*
+*  RegRecursive is a regression post-processing procedure which
+*  computes recursive residuals and does testing methods based upon them.
+*
+*  The basic regression is y(t)=X(t)b+u(t). The variance of u is assumed to
+*  be the (unknown) sigma**2. RegRecursive uses the Kalman filter to produce
+*  a series of estimates for the regression. Recursive residuals are the
+*  residuals for t using the estimates through t-1, normalized to be homoscedastic
+*  if the regression model is correct.
+*
+*  RegRecusive can produce
+*   (a) the recursive residuals
+*   (b) the history of coefficient estimates
+*   (c) the history of the standard errors of the coefficient estimates
+*   (d) the history of estimates of sigma
+*
+*  Syntax:
+*
+*  @RegRecursive( options ) resids
+*
+*  Parameters:
+*    resids (output)  the series of recursive residuals (optional)
+*
+*  Options:
+*    cusum/[nocusum]  generate a CUSUM graph
+*    cohist=VECTOR[SERIES] of the history of coefficient estimates
+*    sehist=VECTOR[SERIES] of the history of standard errors of coefficient estimates
+*    sighist=SERIES of sequential estimates of the standard deviation of the regression
+*    varyingsigma/[novaryingsigma] in producing sehist, should the sequential estimates of
+*      sigma be used (varyingsigma) or the final one (novaryingsigma).
+*
+*   Variables Defined:
+*     %sigmasq   Estimate of residual variance
+*
+*  Revision Schedule:
+*    03/03 Written by Estima
+*
+procedure RegRecursive resids
+type series *resids
+*
+option series order
+option switch       cusum         0
+option vect[series] *cohist
+option vect[series] *sehist
+option series       *sighist
+option switch       varyingsigma  0
+*
+local equation regeqn
+local integer startr end i time rnobs
+local series reorder arrange residsl
+local series cusums upper5 lower5
+local rect likely
+local symm xxx
+local real s1 s2
+*
+equation(lastreg) regeqn
+compute start=%regstart(),end=%regend()
+if %defined(order) {
+   set reorder start end = order
+   set arrange start end = t
+   order reorder start end arrange
+}
+if %defined(sehist)
+   dim sehist(%nreg)
+*
+system regeqn
+kfset(likelihood=likely) xxx
+end(system)
+*
+*  Estimate (perfect fit) over first %nreg entries.  Kalman filter
+*  over remainder.
+*
+estimate(noprint) start start+%nreg-1
+set residsl start start+%nreg-1 = %na
+compute startr = start+%nreg
+compute rnobs  = end-startr+1
+do time=startr,end
+   kalman(rtype=recursive,cohist=cohist) residsl
+   compute s2=sqrt(likely(2,1)/(time-startr+1))
+   if %defined(sighist)
+      set sighist time time = s2;
+   if %defined(sehist)
+      do i=1,%nreg
+         set sehist(i) time time = sqrt(xxx(i,i))*%if(varyingsigma,s2,1.0)
+      end do i
+end do time
+
+if %defined(resids)
+   set resids start end = residsl
+*
+stats(noprint) residsl
+*
+* s1 is the sample standard deviation of the recursive residuals
+*   over the sample
+* s2 is the maximum likelihood estimate of the variance from the
+*   Kalman filtering procedure.
+* You can use your own choice below. We've used s1 since it seems
+* to be the one most commonly chosen.
+*
+compute s1=sqrt(%variance)
+compute s2=sqrt(likely(2,1)/rnobs)
+compute %sigmasq=s1
+*
+* Rescale the standard error history
+*
+if %defined(sehist).and.varyingsigma==0
+   do i=1,%nreg
+      set sehist(i) startr end = sehist(i)*%sigmasq
+   end do i
+
+if cusum {
+   set cusums startr end = residsl/s1
+   acc cusums startr end
+   set upper5 startr end = .948*sqrt(rnobs)*(1+2.0*(t-startr)/rnobs)
+   set lower5 startr end = -upper5
+   graph(header='CUSUM test') 3
+   # cusums
+   # upper5
+   # lower5
+}
+end
+

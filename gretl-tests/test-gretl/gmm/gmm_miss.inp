@@ -1,0 +1,37 @@
+nulldata 20
+set seed 334455
+
+genr y = normal()
+genr x = normal()
+
+list Z = const x(-1) x(-2)
+
+tsls y 0 x ; Z --robust
+
+scalar b0 = 0
+scalar b1 = 0
+series e = 0
+matrix mZ = { Z }
+matrix V = inv(mZ'mZ)
+
+smpl 3 ;
+
+gmm e = y - b0 - b1*x
+  orthog e ; Z
+  weights V
+  params b0 b1
+end gmm
+
+smpl --full
+
+scalar b0 = 0
+scalar b1 = 0
+series e = 0
+matrix mZ = { Z }
+matrix V = inv(mZ'mZ)
+
+gmm e = y - b0 - b1*x
+  orthog e ; Z
+  weights V
+  params b0 b1
+end gmm

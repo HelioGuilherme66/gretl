@@ -1,0 +1,8 @@
+open jgm-data.gdt
+arma 1 2 ; pi_y 0
+pi_y["1965"] = NA
+arma 1 2 ; pi_y 0
+matrix xcoeff = $coeff
+set initvals xcoeff
+arma 1 2 ; pi_y 0 --verbose
+

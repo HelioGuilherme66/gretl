@@ -1,0 +1,79 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run pca.inp
+ /home/cottrell/stats/test-gretl/pca.inp
+? open pca.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/pca.gdt
+periodicity: 1, maxobs: 30
+observations range: 1 to 30
+
+Listing 6 variables:
+  0) const    1) V1       2) V2       3) V3       4) V4     
+  5) V5     
+
+? summary
+
+                     Mean         Median        Minimum        Maximum
+V1                 1.1647         1.2450         0.0000         2.7000
+V2                 60.162         62.910         0.0000         124.00
+V3                0.46467        0.49000         0.0000        0.85000
+V4                 12.771         12.765         12.300         13.300
+V5                 3.0200         3.5900         0.0000         6.4500
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+V1                0.66041        0.56703        0.28486       -0.30316
+V2                 31.758        0.52788       0.031393       -0.64570
+V3                0.23255        0.50047       -0.20046        -1.0569
+V4                0.23487       0.018392        0.13310       -0.30099
+V5                 1.8068        0.59826      -0.070806       -0.92872
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+V1               0.093500         2.5845        0.87250              0
+V2                 2.7775         118.51         45.203              0
+V3               0.060500        0.81150        0.39250              0
+V4                 12.355         13.212        0.29500              0
+V5               0.022000         6.3345         2.8625              0
+
+? corr
+
+Correlation Coefficients, using the observations 1 - 30
+5% critical value (two-tailed) = 0.3610 for n = 30
+
+            V1            V2            V3            V4            V5
+        1.0000        0.6309        0.5532       -0.0302       -0.3989  V1
+                      1.0000        0.8945        0.2464        0.0321  V2
+                                    1.0000        0.1669       -0.0457  V3
+                                                  1.0000        0.5340  V4
+                                                                1.0000  V5
+
+? pca -o
+Principal Components Analysis
+
+Eigenanalysis of the Correlation Matrix
+
+Component  Eigenvalue  Proportion   Cumulative
+    1       2.4480       0.4896       0.4896
+    2       1.6518       0.3304       0.8200
+    3       0.5110       0.1022       0.9222
+    4       0.3044       0.0609       0.9830
+    5       0.0848       0.0170       1.0000
+
+Eigenvectors (component loadings)
+
+               PC1      PC2      PC3      PC4      PC5
+V1          -0.513   -0.262    0.479    0.628   -0.208
+V2          -0.605    0.132   -0.229   -0.015    0.751
+V3          -0.587    0.077   -0.383   -0.358   -0.611
+V4          -0.123    0.651    0.666   -0.342   -0.017
+V5           0.101    0.695   -0.357    0.600   -0.138
+
+Generated principal component series
+? labels
+Listing labels for variables:
+ PC1: Component with eigenvalue = 2.4480
+ PC2: Component with eigenvalue = 1.6518
+
+Done

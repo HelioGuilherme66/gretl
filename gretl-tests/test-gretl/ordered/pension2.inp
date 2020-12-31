@@ -1,0 +1,9 @@
+open pension.gdt
+logit pctstck const choice finc25 wealth89 prftshr
+foreign language=R --send-data
+  library(MASS)
+  y <- factor(pctstck)
+  plr <- polr(y ~ choice + finc25 + wealth89 + prftshr, 
+            method = "logistic")
+  summary(plr) 
+end foreign

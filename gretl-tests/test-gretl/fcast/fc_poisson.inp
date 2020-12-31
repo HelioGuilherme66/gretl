@@ -1,0 +1,8 @@
+open mccullagh.gdt
+poisson Acc const TB TC TD TE T6569 T7074 T7579 O7579 ; Months
+genr yh1 = $yhat
+fcast yh2
+print Acc yh1 yh2 --byobs
+
+
+

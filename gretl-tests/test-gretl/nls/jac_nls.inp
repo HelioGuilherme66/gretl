@@ -1,0 +1,7 @@
+open ../jac_nls.gdt
+genr alpha = 1
+genr beta = .01
+nls g7080 = alpha - l_PCI1970*(1-exp(-10*beta))*(1/10)
+deriv alpha = 1
+deriv beta = -l_PCI1970*exp(-10*beta)
+end nls

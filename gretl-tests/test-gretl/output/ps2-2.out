@@ -1,0 +1,99 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps2-2.inp
+ /opt/esl/share/gretl/scripts/ps2-2.inp
+# PS2.2 -- on means, s.d., c.v., Section 2.2
+? open data2-2
+
+Read datafile /opt/esl/share/gretl/data/data2-2.gdt
+periodicity: 1, maxobs: 427
+observations range: 1 to 427
+
+Listing 3 variables:
+  0) const     1) colgpa    2) hsgpa   
+
+? summary colgpa
+
+Summary statistics, using the observations 1 - 427
+for the variable 'colgpa' (427 valid observations)
+
+  Mean                         2.7855
+  Median                       2.7900
+  Minimum                     0.85000
+  Maximum                      3.9700
+  Standard deviation          0.54082
+  C.V.                        0.19416
+  Skewness                   -0.20436
+  Ex. kurtosis              -0.037888
+  5% percentile                1.9000
+  95% percentile               3.6960
+  Interquartile range         0.78000
+  Missing obs.                      0
+
+# learn about the summary command
+? help summary
+
+summary
+
+Variants:   summary [ varlist ]
+            summary --matrix=matname
+Options:    --simple (basic statistics only)
+            --weight=wvar (weighting variable)
+            --by=byvar (see below)
+
+In its first form, this command prints summary statistics for the variables
+in varlist, or for all the variables in the data set if varlist is omitted.
+By default, output consists of the mean, standard deviation (sd),
+coefficient of variation (= sd/mean), median, minimum, maximum, skewness
+coefficient, and excess kurtosis. If the --simple option is given, output is
+restricted to the mean, minimum, maximum and standard deviation.
+
+If the --by option is given (in which case the parameter byvar should be the
+name of a discrete variable), then statistics are printed for sub-samples
+corresponding to the distinct values taken on by byvar. For example, if
+byvar is a (binary) dummy variable, statistics are given for the cases byvar
+= 0 and byvar = 1. Note: at present, this option is incompatible with the
+--weight option.
+
+If the alternative form is given, using a named matrix, then summary
+statistics are printed for each column of the matrix. The --by option is not
+available in this case.
+
+Menu path:    /View/Summary statistics
+Other access: Main window pop-up menu
+
+# verify summary statistics by computing them separately
+? genr xbar=mean(colgpa)
+Generated scalar xbar = 2.7855
+# s.d. of colgpa
+? genr sdx=sd(colgpa)
+Generated scalar sdx = 0.54082
+# variance of colgpa
+? genr varx = sdx*sdx
+Generated scalar varx = 0.292486
+# coefficient of variation
+? genr cv = sdx/xbar
+Generated scalar cv = 0.194155
+# list the variables
+? list
+Listing 3 variables:
+  0) const     1) colgpa    2) hsgpa   
+
+# reset sample range
+? smpl 1 1
+Full data range: 1 - 427 (n = 427)
+Current sample: 1 - 1 (n = 1)
+
+# print variables
+? print xbar varx sdx cv
+
+           xbar =  2.7855035
+
+           varx =  0.29248584
+
+            sdx =  0.54081960
+
+             cv =  0.19415506
+Done

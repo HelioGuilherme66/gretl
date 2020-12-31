@@ -1,0 +1,119 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-04-02 10:12
+? run funpanmiss.inp
+ /home/cottrell/stats/test-gretl/fnsample/funpanmiss.inp
+? function void pantest (series y, list X)
+? open greene14_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+periodicity: 15, maxobs: 90
+observations range: 1:01 to 6:15
+
+Listing 7 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF     
+
+? C[2:01] = NA
+Modified series C (ID 3)
+? logs C Q PF LF
+Listing 11 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+ 10) l_LF   
+
+Warning: generated missing values
+? panel l_C 0 l_Q l_PF l_LF
+
+Model 1: Fixed-effects, using 89 observations
+Included 6 cross-sectional units
+Time-series length: minimum 14, maximum 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.82451     0.240534     36.69     8.33e-52 ***
+  l_Q          0.916565    0.0301999    30.35     1.18e-45 ***
+  l_PF         0.414572    0.0152568    27.17     3.77e-42 ***
+  l_LF        -0.556897    0.111490     -4.995    3.39e-06 ***
+
+Mean dependent var   13.36688   S.D. dependent var   1.138320
+Sum squared resid    0.291516   S.E. of regression   0.060365
+LSDV R-squared       0.997443   Within R-squared     0.992332
+LSDV F(8, 80)        3901.544   P-value(F)           2.5e-100
+Log-likelihood       128.3121   Akaike criterion    -238.6243
+Schwarz criterion   -216.2265   Hannan-Quinn        -229.5964
+rho                  0.601499   Durbin-Watson        0.693847
+
+Joint test on named regressors -
+  Test statistic: F(3, 80) = 3450.9
+  with p-value = P(F(3, 80) > 3450.9) = 1.75241e-84
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(5, 80) = 56.4997
+  with p-value = P(F(5, 80) > 56.4997) = 7.81431e-25
+
+? list XL = l_Q l_PF l_LF
+Generated list XL
+? pantest(l_C, XL)
+
+Model 2: OLS, using observations 1-89
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       8.81623      0.211320     41.72     4.72e-56 ***
+  l_Q         0.916565     0.0301999    30.35     1.18e-45 ***
+  l_PF        0.414572     0.0152568    27.17     3.77e-42 ***
+  l_LF       -0.556897     0.111490     -4.995    3.39e-06 ***
+  Du_2       -0.0295487    0.0254251    -1.162    0.2486  
+  Du_3       -0.209837     0.0432043    -4.857    5.82e-06 ***
+  Du_4        0.181966     0.0611903     2.974    0.0039   ***
+  Du_5        0.0192025    0.0806209     0.2382   0.8123  
+  Du_6        0.0854228    0.0848604     1.007    0.3171  
+
+Mean dependent var   13.36688   S.D. dependent var   1.138320
+Sum squared resid    0.291516   S.E. of regression   0.060365
+R-squared            0.997443   Adjusted R-squared   0.997188
+F(8, 80)             3901.544   P-value(F)           2.5e-100
+Log-likelihood       128.3121   Akaike criterion    -238.6243
+Schwarz criterion   -216.2265   Hannan-Quinn        -229.5964
+
+Log-likelihood for C = -1061.34
+
+Excluding the constant, p-value was highest for variable 16 (Du_5)
+
+? panel l_C 0 l_Q l_PF l_LF
+
+Model 2: Fixed-effects, using 89 observations
+Included 6 cross-sectional units
+Time-series length: minimum 14, maximum 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.82451     0.240534     36.69     8.33e-52 ***
+  l_Q          0.916565    0.0301999    30.35     1.18e-45 ***
+  l_PF         0.414572    0.0152568    27.17     3.77e-42 ***
+  l_LF        -0.556897    0.111490     -4.995    3.39e-06 ***
+
+Mean dependent var   13.36688   S.D. dependent var   1.138320
+Sum squared resid    0.291516   S.E. of regression   0.060365
+LSDV R-squared       0.997443   Within R-squared     0.992332
+LSDV F(8, 80)        3901.544   P-value(F)           2.5e-100
+Log-likelihood       128.3121   Akaike criterion    -238.6243
+Schwarz criterion   -216.2265   Hannan-Quinn        -229.5964
+rho                  0.601499   Durbin-Watson        0.693847
+
+Joint test on named regressors -
+  Test statistic: F(3, 80) = 3450.9
+  with p-value = P(F(3, 80) > 3450.9) = 1.75241e-84
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(5, 80) = 56.4997
+  with p-value = P(F(5, 80) > 56.4997) = 7.81431e-25
+
+Done

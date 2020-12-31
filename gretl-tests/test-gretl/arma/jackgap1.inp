@@ -1,0 +1,25 @@
+function series genarma22(series e, scalar a1, scalar a2, scalar ma1, scalar ma2)
+  series u = e + ma1*e(-1) + ma2*e(-2)
+  series y = 0
+  series y = a1*y(-1) + a2*y(-2) + u
+  return y
+end function 
+
+nulldata 128
+setobs 4 1980:1 
+set seed 2340897
+
+genr e = normal()
+y = genarma22(e, 0, 0.8, 0.1, 0)
+matrix sel = { 2 }
+ 
+arma sel 2 ; y -xc
+arma sel 2 ; y -c
+arma sel 2 ; y -x
+arma sel 2 ; y
+
+arma 2 sel ; y -xc
+arma 2 sel ; y -c
+arma 2 sel ; y -x
+arma 2 sel ; y
+

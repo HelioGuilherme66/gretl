@@ -1,0 +1,154 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run dt_anova.inp
+ /home/cottrell/stats/test-gretl/dt_anova.inp
+# one-way ANOVA
+? open dt_anova1.txt -q
+Read datafile /home/cottrell/stats/test-gretl/dt_anova1.txt
+? list xt = dummify(treat)
+Generated list xt
+? ols resp 0 xt --anova
+
+Model 1: OLS, using observations 1-30
+Dependent variable: resp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        6.10000      0.291230    20.95     3.15e-18 ***
+  Dtreat_2     2.40000      0.436845     5.494    8.10e-06 ***
+  Dtreat_3     2.90000      0.394327     7.354    6.54e-08 ***
+
+Mean dependent var   7.900000   S.D. dependent var   1.583318
+Sum squared resid    22.90000   S.E. of regression   0.920950
+R-squared            0.685007   Adjusted R-squared   0.661674
+F(2, 27)             29.35808   P-value(F)           1.69e-07
+Log-likelihood      -38.51725   Akaike criterion     83.03450
+Schwarz criterion    87.23809   Hannan-Quinn         84.37926
+
+Analysis of Variance:
+
+                     Sum of squares       df      Mean square
+
+  Regression                   49.8        2             24.9
+  Residual                     22.9       27         0.848148
+  Total                        72.7       29           2.5069
+
+  R^2 = 49.8 / 72.7 = 0.685007
+  F(2, 27) = 24.9 / 0.848148 = 29.3581 [p-value 1.69e-07]
+
+? anova resp treat
+
+Analysis of Variance, response = resp, treatment = treat:
+
+                     Sum of squares       df      Mean square
+
+  Treatment                    49.8        2             24.9
+  Residual                     22.9       27         0.848148
+  Total                        72.7       29           2.5069
+
+  F(2, 27) = 24.9 / 0.848148 = 29.3581 [p-value 1.69e-07]
+
+  Level         n       mean     std. dev
+
+  1            10        6.1      0.99443
+  2             8        8.5      0.92582
+  3            12          9      0.85280
+
+  Grand mean = 7.9
+
+saved result: F = 29.3581 [1.6868e-07]
+# test degenerate case
+? resp = treat
+Replaced series resp (ID 1)
+? anova resp treat
+
+Analysis of Variance, response = resp, treatment = treat:
+
+                     Sum of squares       df      Mean square
+
+  Treatment                 21.8667        2          10.9333
+  Residual                        0       27                0
+  Total                     21.8667       29         0.754023
+
+  F(2, 27) = 10.9333 / 0 (undefined)
+
+  Level         n       mean     std. dev
+
+  1            10          1       0.0000
+  2             8          2       0.0000
+  3            12          3       0.0000
+
+  Grand mean = 2.06667
+
+# two-way ANOVA
+? open dt_anova2.txt -q
+Read datafile /home/cottrell/stats/test-gretl/dt_anova2.txt
+? list xt = dummify(treat)
+Generated list xt
+? list xb = dummify(block)
+Generated list xb
+? ols resp 0 xt xb --anova
+
+Model 1: OLS, using observations 1-30
+Dependent variable: resp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        21.6667      2.52960      8.565    4.00e-08 ***
+  Dtreat_2     -9.20000     2.77104     -3.320    0.0034   ***
+  Dtreat_3     -5.20000     2.77104     -1.877    0.0752   *
+  Dtreat_4     -8.40000     2.77104     -3.031    0.0066   ***
+  Dtreat_5    -10.0000      2.77104     -3.609    0.0018   ***
+  Dtreat_6    -13.2000      2.77104     -4.764    0.0001   ***
+  Dblock_2     -1.16667     2.52960     -0.4612   0.6496  
+  Dblock_3      1.66667     2.52960      0.6589   0.5175  
+  Dblock_4     -3.83333     2.52960     -1.515    0.1453  
+  Dblock_5      3.00000     2.52960      1.186    0.2495  
+
+Mean dependent var   13.93333   S.D. dependent var   6.073875
+Sum squared resid    383.9333   S.E. of regression   4.381400
+R-squared            0.641139   Adjusted R-squared   0.479652
+F(9, 20)             3.970211   P-value(F)           0.004908
+Log-likelihood      -80.80723   Akaike criterion     181.6145
+Schwarz criterion    195.6264   Hannan-Quinn         186.0970
+
+Excluding the constant, p-value was highest for variable 9 (Dblock_2)
+
+Analysis of Variance:
+
+                     Sum of squares       df      Mean square
+
+  Regression                685.933        9          76.2148
+  Residual                  383.933       20          19.1967
+  Total                     1069.87       29           36.892
+
+  R^2 = 685.933 / 1069.87 = 0.641139
+  F(9, 20) = 76.2148 / 19.1967 = 3.97021 [p-value 0.0049]
+
+? omit xt --test-only
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    Dtreat_2, Dtreat_3, Dtreat_4, Dtreat_5, Dtreat_6
+  Test statistic: F(5, 20) = 5.40788, p-value 0.00263472
+
+? anova resp treat block
+
+Analysis of Variance, response = resp, treatment = treat:
+
+                     Sum of squares       df      Mean square
+
+  Treatment                 519.067        5          103.813
+  Block                     166.867        4          41.7167
+  Residual                  383.933       20          19.1967
+  Total                     1069.87       29           36.892
+
+  F(5, 20) = 103.813 / 19.1967 = 5.40788 [p-value 0.0026]
+
+saved result: F = 5.40788 [0.00263472]
+# quiet option
+? anova resp treat block --quiet
+saved result: F = 5.40788 [0.00263472]
+Done

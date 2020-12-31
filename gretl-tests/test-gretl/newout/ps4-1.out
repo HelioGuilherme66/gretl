@@ -1,0 +1,291 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps4-1.inp
+ /opt/esl/share/gretl/scripts/ps4-1.inp
+# PS4.1 for reproducing Table 4.2
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? ols price const sqft
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# add bedrms - Model B
+? add bedrms
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for bedrms
+  Test statistic: F(1, 11) = 0.941527, p-value 0.352738
+  Adding variables improved 0 of 3 information criteria.
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      121.179       80.1778       1.511    0.1589  
+  sqft         0.148314     0.0212080    6.993    2.29e-05 ***
+  bedrms     -23.9106      24.6419      -0.9703   0.3527  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16832.79   S.E. of regression   39.11846
+R-squared            0.834673   Adjusted R-squared   0.804613
+F(2, 11)             27.76736   P-value(F)           0.000050
+Log-likelihood      -69.50933   Akaike criterion     145.0187
+Schwarz criterion    146.9358   Hannan-Quinn         144.8412
+
+# add bath rooms also - Model C
+? add baths
+Test on Model 2:
+
+  Null hypothesis: the regression parameter is zero for baths
+  Test statistic: F(1, 10) = 0.0794752, p-value 0.783758
+  Adding variables improved 0 of 3 information criteria.
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# model with only constant - Model D
+? ols price const
+
+Model 4: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        317.493      23.6521      13.42    5.39e-09 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    101815.0   S.E. of regression   88.49816
+R-squared            0.000000   Adjusted R-squared   0.000000
+Log-likelihood      -82.10813   Akaike criterion     166.2163
+Schwarz criterion    166.8553   Hannan-Quinn         166.1571
+
+# model without a constant
+? ols price sqft
+
+Model 5: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  sqft        0.164002     0.00543212    30.19    2.00e-13 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    21275.57   S.E. of regression   40.45469
+Uncentered R-squared 0.985939   Centered R-squared   0.791037
+F(1, 13)             911.5114   P-value(F)           2.00e-13
+Log-likelihood      -71.14894   Akaike criterion     144.2979
+Schwarz criterion    144.9369   Hannan-Quinn         144.2387
+
+# The following commands will be useful for Example 4.6 on Wald F-test
+? ols price const sqft bedrms baths
+
+Model 6: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# retrieve ESS
+? genr ESSU = $ess
+Generated scalar ESSU = 16700.1
+# retrieve d.f.
+? genr DFU = $df
+Generated scalar DFU = 10
+# restricted model R
+? ols price const sqft
+
+Model 7: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# retrieve ESS
+? genr ESSR = $ess
+Generated scalar ESSR = 18273.6
+# retrieve d.f.
+? genr DFR = $df
+Generated scalar DFR = 12
+# number of restrictions
+? genr NR = DFR - DFU
+Generated scalar NR = 2
+# compute Fc
+? genr Fc = (ESSR - ESSU)*DFU/(ESSU*NR)
+Generated scalar Fc = 0.471106
+# learn about pvalue
+? help pvalue
+
+pvalue
+
+Arguments:  dist [ params ] xval 
+Examples:   pvalue z zscore
+            pvalue t 25 3.0
+            pvalue X 3 5.6
+            pvalue F 4 58 fval
+            pvalue G shape scale x
+            pvalue B bprob 10 6
+            pvalue P lambda x
+            pvalue W shape scale x
+
+Computes the area to the right of xval in the specified distribution (z for
+Gaussian, t for Student's t, X for chi-square, F for F, G for gamma, B for
+binomial, P for Poisson, or W for Weibull).
+
+Depending on the distribution, the following information must be given,
+before the xval: for the t and chi-square distributions, the degrees of
+freedom; for F, the numerator and denominator degrees of freedom; for gamma,
+the shape and scale parameters; for the binomial distribution, the "success"
+probability and the number of trials; for the Poisson distribution, the
+parameter lambda (which is both the mean and the variance); and for the
+Weibull distribution, shape and scale parameters. As shown in the examples
+above, the numerical parameters may be given in numeric form or as the names
+of variables.
+
+The parameters for the gamma distribution are sometimes given as mean and
+variance rather than shape and scale. The mean is the product of the shape
+and the scale; the variance is the product of the shape and the square of
+the scale. So the scale may be found as the variance divided by the mean,
+and the shape as the mean divided by the scale.
+
+Menu path:    /Tools/P-value finder
+
+# compute pvalue - F-distribution is 4
+? pvalue F NR DFU Fc
+F(2, 10): area to the right of 0.471106 = 0.637492
+(to the left: 0.362508)
+# Model U again
+? ols price const sqft bedrms baths
+
+Model 8: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+# use omit command and note that Fc and pvalue are given at the end
+? omit bedrms baths
+Test on Model 8:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    bedrms, baths
+  Test statistic: F(2, 10) = 0.471106, p-value 0.637492
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 9: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       52.3509      37.2855       1.404    0.1857  
+  sqft         0.138750     0.0187329    7.407    8.20e-06 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18273.57   S.E. of regression   39.02304
+R-squared            0.820522   Adjusted R-squared   0.805565
+F(1, 12)             54.86051   P-value(F)           8.20e-06
+Log-likelihood      -70.08421   Akaike criterion     144.1684
+Schwarz criterion    145.4465   Hannan-Quinn         144.0501
+
+# commands for Example 4.2
+? genr sqft2 = sqft-2000
+Generated series sqft2 (ID 5)
+? genr bedrms2 = bedrms-4
+Generated series bedrms2 (ID 6)
+? genr baths2 = baths-2.5
+Generated series baths2 (ID 7)
+? ols price 0 sqft2 bedrms2 baths2
+
+Model 10: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      321.829       13.8654      23.21     4.98e-10 ***
+  sqft2        0.154800     0.0319404    4.847    0.0007   ***
+  bedrms2    -21.5875      27.0293      -0.7987   0.4430  
+  baths2     -12.1928      43.2500      -0.2819   0.7838  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 7 (baths2)
+
+Done

@@ -1,0 +1,5 @@
+open mccullagh.gdt -q
+poisson Acc 0 TB TC TD TE O7579 ; Months
+negbin Acc 0 TB TC TD TE O7579 ; Months
+
+

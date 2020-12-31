@@ -1,0 +1,21 @@
+function string country_name (string code)
+  if code == "FRA"
+    return "France"
+  elif code == "GER"
+    return "Germany"
+  elif code == "ITA"
+    return "Italy"
+  else
+    return "United Kingdom"
+  endif
+end function
+
+nulldata 10
+setobs 4 1959:2
+
+string cname
+loop foreach i FRA GER ITA UK
+  cname = country_name("$i")
+  join oecd.csv $i --tkey="Period,Q%q-%Y" --data=Value --filter="Country==cname"
+endloop
+

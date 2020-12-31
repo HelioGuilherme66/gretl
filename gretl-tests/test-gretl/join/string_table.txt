@@ -1,0 +1,18 @@
+people.csv
+
+One or more non-numeric variables were found.
+These variables have been given numeric codes as follows.
+
+String code table for variable 3 (gender):
+  1 = 'M'
+  2 = 'F'
+
+String code table for variable 6 (str2):
+  1 = 'A'
+  2 = 'B'
+  3 = 'C'
+  4 = 'D'
+  5 = 'E'
+  6 = 'F'
+  7 = 'G'
+  8 = 'M'

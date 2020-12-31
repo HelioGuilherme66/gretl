@@ -1,0 +1,8 @@
+open ziliak.gdt
+
+genr timedum
+delete dt_1
+ols 1 0 2 dt* 
+panel 1 0 2 --time-dummies --pooled
+ols 1 0 2 dt* -r
+panel 1 0 2 --time-dummies --pooled -r

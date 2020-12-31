@@ -1,0 +1,246 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_tsls.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_tsls.inp
+? open data13-1
+
+Read datafile /opt/esl/share/gretl/data/data13-1.gdt
+periodicity: 1, maxobs: 35
+observations range: 1959 to 1993
+
+Listing 13 variables:
+  0) const      1) YEAR       2) GDP        3) CONS       4) INV      
+  5) EXPORTS    6) IMPORTS    7) GOVEXP     8) GOVREC     9) MONYSUP  
+ 10) Pt        11) rt        12) POP      
+
+? genr TAXt=100*GOVREC/Pt
+Generated series TAXt (ID 13)
+? genr DISPINCM=GDP-TAXt
+Generated series DISPINCM (ID 14)
+? genr M=100*MONYSUP/Pt
+Generated series M (ID 15)
+? genr Yt=GDP/POP
+Generated series Yt (ID 16)
+? genr Ct=CONS/POP
+Generated series Ct (ID 17)
+? genr It=INV/POP
+Generated series It (ID 18)
+? genr Gt=GOVEXP/POP
+Generated series Gt (ID 19)
+? genr Tt=TAXt/POP
+Generated series Tt (ID 20)
+? genr Xt=EXPORTS/POP
+Generated series Xt (ID 21)
+? genr IMPt=IMPORTS/POP
+Generated series IMPt (ID 22)
+? genr DYt=DISPINCM/POP
+Generated series DYt (ID 23)
+? genr Mt=M/POP
+Generated series Mt (ID 24)
+? lags Yt Ct It Gt Xt DYt Mt rt
+Listing 33 variables:
+  0) const       1) YEAR        2) GDP         3) CONS        4) INV       
+  5) EXPORTS     6) IMPORTS     7) GOVEXP      8) GOVREC      9) MONYSUP   
+ 10) Pt         11) rt         12) POP        13) TAXt       14) DISPINCM  
+ 15) M          16) Yt         17) Ct         18) It         19) Gt        
+ 20) Tt         21) Xt         22) IMPt       23) DYt        24) Mt        
+ 25) Yt_1       26) Ct_1       27) It_1       28) Gt_1       29) Xt_1      
+ 30) DYt_1      31) Mt_1       32) rt_1      
+
+? smpl 1960 1993
+Full data range: 1959 - 1993 (n = 35)
+Current sample: 1960 - 1993 (n = 34)
+
+? tsls Ct 0 Ct_1 DYt DYt_1 ; 0 Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt
+
+Model 1: TSLS, using observations 1960-1993 (T = 34)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.404480    0.299926     -1.349   0.1775  
+  Ct_1         0.852123    0.0868648     9.810   1.02e-22 ***
+  DYt          0.741398    0.0976482     7.593   3.14e-14 ***
+  DYt_1       -0.562068    0.109763     -5.121   3.04e-07 ***
+
+Mean dependent var   10.14465   S.D. dependent var   2.094352
+Sum squared resid    0.235844   S.E. of regression   0.088665
+R-squared            0.998371   Adjusted R-squared   0.998208
+F(3, 30)             6119.164   P-value(F)           6.91e-42
+rho                  0.220884   Durbin's h           1.493744
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 1.57444
+  with p-value = 0.209564
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 11.0486
+  with p-value = P(Chi-square(6) > 11.0486) = 0.0868874
+
+Weak instrument test - 
+  First-stage F-statistic (7, 24) = 4.36539
+  Critical values for TSLS bias relative to OLS:
+
+     bias       5%      10%      20%      30%
+    value    19.86    11.29     6.73     5.07
+
+  Relative bias may exceed 30%
+
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    31.50    17.38    12.48     9.93
+
+  Maximal size may exceed 25%
+
+? genr yh1 = $yhat
+Generated series yh1 (ID 33)
+? fcast yh2
+Generated series yh2 (ID 34)
+? print yh1 yh2 --byobs
+
+              yh1          yh2
+
+1960      6.63507      6.63507
+1961      6.79267      6.79267
+1962      6.98050      6.98050
+1963      7.10384      7.10384
+1964      7.51798      7.51798
+1965      7.77549      7.77549
+1966      8.08366      8.08366
+1967      8.21719      8.21719
+1968      8.37193      8.37193
+1969      8.59951      8.59951
+1970      8.82744      8.82744
+1971      9.07312      9.07312
+1972      9.26945      9.26945
+1973      9.79575      9.79575
+1974      9.64061      9.64061
+1975      9.68992      9.68992
+1976      9.98384      9.98384
+1977     10.42263     10.42263
+1978     10.81313     10.81313
+1979     10.93124     10.93124
+1980     10.80620     10.80620
+1981     10.81528     10.81528
+1982     10.64534     10.64534
+1983     11.12903     11.12903
+1984     11.68662     11.68662
+1985     11.86475     11.86475
+1986     12.25259     12.25259
+1987     12.50462     12.50462
+1988     12.98222     12.98222
+1989     13.08335     13.08335
+1990     13.15842     13.15842
+1991     13.02139     13.02139
+1992     13.12713     13.12713
+1993     13.31605     13.31605
+
+? genr yh1 = NA
+Replaced series yh1 (ID 33)
+? smpl 1960 1987
+Full data range: 1959 - 1993 (n = 35)
+Current sample: 1960 - 1987 (n = 28)
+
+? tsls Ct 0 Ct_1 DYt DYt_1 ; 0 Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt
+
+Model 2: TSLS, using observations 1960-1987 (T = 28)
+Dependent variable: Ct
+Instrumented: DYt 
+Instruments: const Ct_1 DYt_1 It_1 Yt_1 rt_1 Mt Mt_1 Gt Xt 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       -0.674502    0.322941     -2.089   0.0367   **
+  Ct_1         0.823606    0.0885321     9.303   1.37e-20 ***
+  DYt          0.784694    0.0984861     7.968   1.62e-15 ***
+  DYt_1       -0.553203    0.118996     -4.649   3.34e-06 ***
+
+Mean dependent var   9.519151   S.D. dependent var   1.748249
+Sum squared resid    0.197282   S.E. of regression   0.090665
+R-squared            0.997612   Adjusted R-squared   0.997314
+F(3, 24)             3339.750   P-value(F)           1.40e-31
+rho                  0.111915   Durbin's h           0.670300
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 13.5688
+  with p-value = 0.00022998
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 7.2052
+  with p-value = P(Chi-square(6) > 7.2052) = 0.302287
+
+Weak instrument test - 
+  First-stage F-statistic (7, 18) = 5.20188
+  Critical values for TSLS bias relative to OLS:
+
+     bias       5%      10%      20%      30%
+    value    19.86    11.29     6.73     5.07
+
+  Relative bias may exceed 20%
+
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    31.50    17.38    12.48     9.93
+
+  Maximal size may exceed 25%
+
+? genr yh1 = $yhat
+Replaced series yh1 (ID 33)
+? smpl full
+Full data range: 1959 - 1993 (n = 35)
+
+? fcast yh2
+Replaced series yh2 (ID 34)
+? print yh1 yh2 --byobs
+
+              yh1          yh2
+
+1959                          
+1960      6.59143      6.59143
+1961      6.74992      6.74992
+1962      6.94897      6.94897
+1963      7.07573      7.07573
+1964      7.50797      7.50797
+1965      7.77793      7.77793
+1966      8.09502      8.09502
+1967      8.22678      8.22678
+1968      8.38190      8.38190
+1969      8.59988      8.59988
+1970      8.82236      8.82236
+1971      9.07540      9.07540
+1972      9.27892      9.27892
+1973      9.81426      9.81426
+1974      9.64222      9.64222
+1975      9.69513      9.69513
+1976      9.99937      9.99937
+1977     10.44414     10.44414
+1978     10.84810     10.84810
+1979     10.96660     10.96660
+1980     10.82913     10.82913
+1981     10.83980     10.83980
+1982     10.65777     10.65777
+1983     11.15781     11.15781
+1984     11.73528     11.73528
+1985     11.91567     11.91567
+1986     12.30381     12.30381
+1987     12.55492     12.55492
+1988                  13.04817
+1989                  13.26568
+1990                  13.41637
+1991                  13.33980
+1992                  13.55886
+1993                  13.78102
+
+Done

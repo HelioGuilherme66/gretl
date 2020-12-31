@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run covcorr.inp
+ /home/cottrell/stats/test-gretl/matrix/covcorr.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? list X = 2 3 4
+Generated list X
+? corr X
+
+Correlation Coefficients, using the observations 1 - 14
+5% critical value (two-tailed) = 0.5324 for n = 14
+
+          sqft        bedrms         baths
+        1.0000        0.4647        0.7873  sqft
+                      1.0000        0.5323  bedrms
+                                    1.0000  baths
+
+? matrix M = { X }
+Generated matrix M
+? matrix V = mcov(M)
+Generated matrix V
+? V
+V (3 x 3)
+
+  3.3380e+05       133.51       203.01 
+      133.51      0.24725      0.11813 
+      203.01      0.11813      0.19918 
+
+? matrix C = mcorr(M)
+Generated matrix C
+? C
+C (3 x 3)
+
+      1.0000      0.46473      0.78732 
+     0.46473       1.0000      0.53233 
+     0.78732      0.53233       1.0000 
+
+Done

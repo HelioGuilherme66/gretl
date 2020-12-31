@@ -1,0 +1,24 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run BFGS_analytical.inp
+ /home/cottrell/stats/test-gretl/ufunc/BFGS_analytical.inp
+Function evaluations: 142
+Evaluations of gradient: 128
+Function evaluations: 106
+Evaluations of gradient: 94
+ret (5 x 5)
+
+        true    numerical   analytical      err.(n)      err.(a) 
+     0.20000      0.20000      0.20000  -1.4129e-06  -5.5158e-07 
+     0.40000      0.40000      0.40000  -1.1875e-06  -4.3730e-07 
+     0.60000      0.60000      0.60000  -1.2147e-06  -4.4684e-07 
+     0.80000      0.80000      0.80000  -1.4229e-06  -7.0823e-07 
+      1.0000       1.0000       1.0000  -6.1658e-07  -2.7453e-07 
+
+Elapsed time: numerical = 0.0338977, analytical = 0.00541451
+
+fdjac
+     -1.0270      0.56591      0.32705     0.070353      0.46087 
+

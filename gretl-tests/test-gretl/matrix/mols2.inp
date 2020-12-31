@@ -1,0 +1,20 @@
+open data4-1
+matrix X = { const, sqft }
+matrix y = { price }
+matrix u, V
+matrix b = mols(y, X, null, &V)
+b
+V
+matrix se = sqrt(diag(V))
+printf "estimated standard errors\n"
+se
+
+# compare built-in
+ols 1 0 2 --vcv
+matrix b2 = $coeff
+matrix se2 = $stderr
+matrix xdiff = b - b2
+xdiff
+xdiff = se - se2
+xdiff
+

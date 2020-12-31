@@ -1,0 +1,52 @@
+
+. set more off
+
+. set matsize 800
+
+. 
+. use nlswork.dta,clear
+(National Longitudinal Survey.  Young Women 14-26 years of age in 1968)
+
+. 
+. iis idcode
+
+. tis year
+
+. 
+. gen byte black = race==2
+
+. xtreg ln_wage grade age ttl_exp tenure black not_smsa south, re sa theta
+
+Random-effects GLS regression                   Number of obs      =     28091
+Group variable: idcode                          Number of groups   =      4697
+
+R-sq:  within  = 0.1482                         Obs per group: min =         1
+       between = 0.4727                                        avg =       6.0
+       overall = 0.3604                                        max =        15
+
+                                                Wald chi2(7)       =   8693.49
+corr(u_i, X)   = 0 (assumed)                    Prob > chi2        =    0.0000
+
+------------------- theta --------------------
+  min      5%       median        95%      max
+0.2251   0.2251     0.5193     0.6781   0.6982
+
+------------------------------------------------------------------------------
+     ln_wage |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       grade |   .0676726   .0017075    39.63   0.000     .0643259    .0710192
+         age |  -.0039103   .0006444    -6.07   0.000    -.0051733   -.0026473
+     ttl_exp |   .0301387   .0011064    27.24   0.000     .0279702    .0323073
+      tenure |   .0138226   .0008442    16.37   0.000      .012168    .0154772
+       black |  -.0493511   .0095904    -5.15   0.000    -.0681479   -.0305543
+    not_smsa |   -.134938   .0071307   -18.92   0.000    -.1489139   -.1209622
+       south |  -.0870157   .0072045   -12.08   0.000    -.1011363   -.0728952
+       _cons |   .7882228    .026919    29.28   0.000     .7354625    .8409831
+-------------+----------------------------------------------------------------
+     sigma_u |  .24045288
+     sigma_e |  .29477563
+         rho |  .39954034   (fraction of variance due to u_i)
+------------------------------------------------------------------------------
+
+. 
+. 

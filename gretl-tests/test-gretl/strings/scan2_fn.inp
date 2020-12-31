@@ -1,0 +1,16 @@
+nulldata 10
+
+scalar x 
+scalar y
+sscanf("123456", "%3d%3d", x, y)
+print x y
+
+string S
+sprintf(S, "1 2 3 4\n5 6 7 8\n2 3 4 5")
+S
+matrix m
+sscanf(S, "%2m", m)
+m
+
+string S2 = "1 2 3 4\n5 6 7 8\n2 3 4 5"
+S2

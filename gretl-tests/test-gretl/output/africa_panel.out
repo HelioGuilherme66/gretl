@@ -1,0 +1,91 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run africa_panel.inp
+ /home/cottrell/stats/test-gretl/africa_panel.inp
+? open africa_panel.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/africa_panel.gdt
+periodicity: 6, maxobs: 138
+observations range: 1:1 to 23:6
+
+Listing 25 variables:
+  0) const       1) time        2) gdpgr       3) pcgdp       4) inigdp    
+  5) polrts      6) cvlb        7) gvtsz       8) ecnstr      9) mnpr      
+ 10) altcur     11) legpr      12) trdfr      13) xcap       14) frdsum    
+ 15) educatio   16) DEMOC      17) AUTOC      18) DURABLE    19) XRREG     
+ 20) XRCOMP     21) XROPEN     22) XCONST     23) PARREG     24) PARCOMP   
+
+? ols gdpgr const pcgdp inigdp polrts gvtsz ecnstr mnpr altcur legpr \
+  trdfr xcap educatio DEMOC
+
+Model 1: Pooled OLS, using 68 observations
+Included 21 cross-sectional units
+Time-series length: minimum 1, maximum 6
+Dependent variable: gdpgr
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       3.77009      3.65876       1.030    0.3073 
+  pcgdp       0.00562641   0.00158118    3.558    0.0008  ***
+  inigdp     -0.00574818   0.00149178   -3.853    0.0003  ***
+  polrts     -0.984863     0.345017     -2.855    0.0061  ***
+  gvtsz       0.124992     0.354887      0.3522   0.7260 
+  ecnstr      0.460443     0.208644      2.207    0.0315  **
+  mnpr       -0.146521     0.146359     -1.001    0.3212 
+  altcur      0.222542     0.141918      1.568    0.1226 
+  legpr      -0.133520     0.195848     -0.6818   0.4983 
+  trdfr       0.0577411    0.156899      0.3680   0.7143 
+  xcap        0.388946     0.281399      1.382    0.1725 
+  educatio   -0.508419     1.61291      -0.3152   0.7538 
+  DEMOC      -0.561937     0.182694     -3.076    0.0033  ***
+
+Mean dependent var   0.560147   S.D. dependent var   2.557370
+Sum squared resid    218.0138   S.E. of regression   1.990951
+R-squared            0.502467   Adjusted R-squared   0.393914
+F(12, 55)            4.628784   P-value(F)           0.000039
+Log-likelihood      -136.0995   Akaike criterion     298.1991
+Schwarz criterion    327.0527   Hannan-Quinn         309.6318
+rho                  0.127429   Durbin-Watson        1.189383
+
+Excluding the constant, p-value was highest for variable 15 (educatio)
+
+? panel gdpgr const pcgdp inigdp polrts gvtsz ecnstr mnpr altcur \
+  legpr trdfr xcap educatio DEMOC --unit-weights
+
+Model 2: WLS, using 68 observations
+Included 21 cross-sectional units
+Dependent variable: gdpgr
+Weights based on per-unit error variances
+
+             coefficient   std. error    t-ratio    p-value 
+  ----------------------------------------------------------
+  const       2.18647      2.54809        0.8581    0.3946  
+  pcgdp       0.00685986   0.00103480     6.629     1.53e-08 ***
+  inigdp     -0.00699889   0.000936437   -7.474     6.31e-10 ***
+  polrts     -1.00367      0.225180      -4.457     4.13e-05 ***
+  gvtsz       0.237656     0.213349       1.114     0.2702  
+  ecnstr      0.560012     0.128078       4.372     5.51e-05 ***
+  mnpr       -0.105968     0.105947      -1.000     0.3216  
+  altcur      0.332641     0.0971384      3.424     0.0012   ***
+  legpr       0.00592764   0.121429       0.04882   0.9612  
+  trdfr       0.0122872    0.101834       0.1207    0.9044  
+  xcap        0.138064     0.201509       0.6852    0.4961  
+  educatio    0.124579     0.947781       0.1314    0.8959  
+  DEMOC      -0.557270     0.112923      -4.935     7.80e-06 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    58.54424   S.E. of regression   1.031717
+R-squared            0.812507   Adjusted R-squared   0.771600
+F(12, 55)            19.86205   P-value(F)           8.20e-16
+Log-likelihood      -91.39717   Akaike criterion     208.7943
+Schwarz criterion    237.6479   Hannan-Quinn         220.2270
+
+Statistics based on the original data:
+
+Mean dependent var   0.560147   S.D. dependent var   2.557370
+Sum squared resid    231.6943   S.E. of regression   2.052468
+
+Done

@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run Rlm.inp
+ /home/cottrell/stats/test-gretl/foreign/Rlm.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? set R_functions on
+? foreign language=R
+?   ols <- function(y,x) {
+?     m <- lm(y~x + 1)
+?     summary(m)
+?     b <- as.matrix(coefficients(m))
+?     invisible(b)
+?   }
+? end foreign
+? set messages off
+? matrix rb = R.ols(price, sqft)
+? rb
+rb (2 x 1)
+
+      52.351 
+     0.13875 
+
+? matrix rb = R.ols(2*price, sqft)
+? rb
+rb (2 x 1)
+
+      104.70 
+     0.27750 
+

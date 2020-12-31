@@ -1,0 +1,26 @@
+Here's an example which I found quite interesting (using
+dummy data). We have two regressors, x1 and x2, and in the
+full model x2 has a rather small p-value ("highly 
+significant"). Yet when we drop x2 we get a "better" result 
+in terms of cases correctly predicted, on the method of 
+predicting the outcome that has the highest estimated 
+probability.
+
+In addition, the full model has a lower count of correct
+predictions than the naive method of always predicting the
+outcome with the greatest sample frequency. 
+
+What's going on? Well, you get a different perspective if
+you look not just at binary hits/misses, but at the distance
+between predicted and actual outcomes. I measured the latter
+as the sum of the absolute deviations (y - yhat). On that
+metric the full model is best and the naive prediction is
+worst.
+
+So use of a distance measure in a sense "validates"
+ML estimation. On the other hand, the results suggest that
+if you're in a context where "a miss is as good as a mile" 
+you should be wary of ordered probit, since even a 
+"highly significant" model may predict worse than the
+naive method. 
+

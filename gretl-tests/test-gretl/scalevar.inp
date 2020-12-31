@@ -1,0 +1,8 @@
+open data4-1
+ols 1 0 2
+modtest --white
+genr psmall = price/1000000
+ols psmall 0 2
+modtest --white
+genr test = 3 * price
+ols price 0 test

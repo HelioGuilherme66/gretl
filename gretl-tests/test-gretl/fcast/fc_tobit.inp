@@ -1,0 +1,16 @@
+# Fair's extra-marital affairs data
+set seed 555551
+open greene22_2.gdt
+tobit Y 0 Z2 Z3 Z5 Z7 Z8
+genr yh1 = $yhat
+fcast yh2
+print yh1 yh2 --byobs
+genr yh1 = NA
+genr yh2 = NA
+smpl 400 --random
+tobit Y 0 Z2 Z3 Z5 Z7 Z8
+genr yh1 = $yhat
+fcast yh2
+smpl full
+print yh1 yh2 --byobs
+

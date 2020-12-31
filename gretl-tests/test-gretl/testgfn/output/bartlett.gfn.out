@@ -1,0 +1,64 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run bartlett.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/bartlett.gfn.inp
+? include ./bartlett.gfn
+ /home/cottrell/stats/test-gretl/testgfn/bartlett.gfn
+bartlett 0.2, 2009-08-21 (Marcos Larios Santa Rosa)
+# use the NIST illustrative dataset
+? open gear.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/gear.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 3 variables:
+  0) const    1) y        2) x      
+
+# Is the variance of y homogeneous with respect to x?
+? bartlett(y, x)
+BARTLETT TEST FOR HOMOGENEITY OF VARIANCES
+NULL HYPOTHESIS: VARIANCES ARE EQUAL
+H0: S(1)=S(2)=...=S(k)
+
+       Group        S(i)        N(i)
+           1   0.0043461          10
+           2   0.0052164          10
+           3   0.0039777          10
+           4   0.0038528          10
+           5   0.0075785          10
+           6    0.009886          10
+           7   0.0078775          10
+           8   0.0036271          10
+           9   0.0041379          10
+          10   0.0053292          10
+
+TEST RESULTS
+   Degrees of Freedom 		=   9.000000
+   Bartlett's Test Statistic 	=  20.785873
+   Critical Value 95% 		=  16.918978
+   Critical Value 99% 		=  21.665994
+   Chi-Square(9) P-Value 	=   0.013636
+
+# Now try using 4 bins for x
+? bartlett(y, x, 4)
+BARTLETT TEST FOR HOMOGENEITY OF VARIANCES
+NULL HYPOTHESIS: VARIANCES ARE EQUAL
+H0: S(1)=S(2)=...=S(k)
+
+       Group        S(i)        N(i)
+           1   0.0046591          30
+           2   0.0066844          20
+           3   0.0088095          20
+           4   0.0048713          30
+
+TEST RESULTS
+   Degrees of Freedom 		=   3.000000
+   Bartlett's Test Statistic 	=  12.834698
+   Critical Value 95% 		=   7.814728
+   Critical Value 99% 		=  11.344867
+   Chi-Square(3) P-Value 	=   0.005008
+
+Done

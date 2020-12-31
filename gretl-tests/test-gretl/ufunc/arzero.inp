@@ -1,0 +1,31 @@
+function scalar BGzeros (series x, series u, scalar T, scalar order)
+  scalar N = T
+  matrix um = u
+  matrix uml = mlag(um, order)
+  matrix X = ones(N, 3)
+  X[,2] = x
+  X[,3] = uml
+  matrix B = mols(um, X, null)
+  scalar rho = B[3]
+  return rho
+end function
+
+nulldata 50
+set seed 786445221
+setobs 1 1 --time
+scalar rho = .7
+series x = uniform()
+
+loop 500 --prog --quiet
+  series e = 0
+  series u = normal()
+  e = rho*e(-1) + u
+  series y = 10 + 10*x + e
+  ols y 0 x -q
+  genr uh = $uhat
+  genr uh1 = uh(-1)
+  ols uh 0 x uh1 -q
+  scalar rbg = $coeff[3]
+  scalar rzeros = BGzeros(x, uh, 50, 1)
+  print rbg rzeros
+endloop

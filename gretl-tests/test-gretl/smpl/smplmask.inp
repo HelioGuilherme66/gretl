@@ -1,0 +1,10 @@
+nulldata 12
+series x = 10
+x[2] = 0
+series y = 5
+y[4] = 0
+print -o
+smpl x > 0 --restrict
+print -o
+smpl obs != 8 && y > 0 && x > 0 --restrict
+print -o

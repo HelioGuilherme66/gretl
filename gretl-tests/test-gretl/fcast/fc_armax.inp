@@ -1,0 +1,9 @@
+open USMacro
+set arma_vcv hessian
+smpl ; 2000:4
+arma 1 1 ; l_i const time --conditional
+smpl full
+fcast autofit
+smpl 1999:4 ;
+print l_i autofit -o
+fcasterr 1999:4 2001:4

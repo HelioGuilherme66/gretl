@@ -1,0 +1,186 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run rols.inp
+ /home/cottrell/stats/test-gretl/matrix/rols.inp
+? open data4-1 -q
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+# estimate equation by equation, and restrict
+? ols 1 0 2 -q
+? restrict --full
+? b1 = 50
+? end restrict
+Restriction:
+ b[const] = 50
+
+Test statistic: F(1, 12) = 0.0039755, with p-value = 0.950764
+
+
+Model 2: Restricted OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       50.0000      0.00000       NA       NA       
+  sqft         0.139884    0.00503515    27.78     5.81e-13 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18279.62   S.E. of regression   37.49833
+Log-likelihood      -70.08653   Akaike criterion     142.1731
+Schwarz criterion    142.8121   Hannan-Quinn         142.1139
+
+? matrix B1 = $coeff
+Generated matrix B1
+? matrix SE1 = $stderr
+Generated matrix SE1
+? ols 3 0 2 -q
+? restrict --full
+? b1 = 3
+? end restrict
+Restriction:
+ b[const] = 3
+
+Test statistic: F(1, 12) = 0.0769415, with p-value = 0.786206
+
+
+Model 4: Restricted OLS, using observations 1-14
+Dependent variable: bedrms
+
+             coefficient   std. error    t-ratio    p-value 
+  ----------------------------------------------------------
+  const      3.00000       0.00000       NA        NA       
+  sqft       0.000341384   5.93094e-05    5.756     6.64e-05 ***
+
+Mean dependent var   3.642857   S.D. dependent var   0.497245
+Sum squared resid    2.536241   S.E. of regression   0.441696
+Log-likelihood      -7.906518   Akaike criterion     17.81304
+Schwarz criterion    18.45209   Hannan-Quinn         17.75388
+
+? B1 ~= $coeff
+Replaced matrix B1
+? SE1 ~= $stderr
+Replaced matrix SE1
+# estimate as system, and restrict
+? s0 <- system
+? equation 1 0 2
+? equation 3 0 2
+? end system
+? restrict s0
+? b[1,1] = 50
+? b[2,1] = 3
+? end restrict
+Restriction set
+ 1: b[1,1] = 50
+ 2: b[2,1] = 3
+? estimate s0 method=ols
+
+Equation system, s0
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error     t-ratio     p-value 
+  ------------------------------------------------------------
+  const       50.0000      3.95109e-07    1.265e+08   1.77e-99 ***
+  sqft         0.139884    0.00503515    27.78        5.81e-13 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18279.62   S.E. of regression   37.49833
+R-squared            0.820522   Adjusted R-squared   0.820522
+
+Equation 2: OLS, using observations 1-14
+Dependent variable: bedrms
+
+             coefficient   std. error     t-ratio     p-value 
+  ------------------------------------------------------------
+  const      3.00000       4.65402e-09   6.446e+08   1.14e-108 ***
+  sqft       0.000341384   5.93094e-05   5.756       6.64e-05  ***
+
+Mean dependent var   3.642857   S.D. dependent var   0.497245
+Sum squared resid    2.536241   S.E. of regression   0.441696
+R-squared            0.215974   Adjusted R-squared   0.215974
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1305.7     (-0.281)
+      -4.3264      0.18116
+
+log determinant = 5.38367
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 1.10784 [0.2926]
+
+F test for the specified restrictions:
+  F(2,24) = 0.0404585 [0.9604]
+
+? matrix B2 = mshape($coeff, 2, 2)
+Generated matrix B2
+? matrix SE2 = mshape($stderr, 2, 2)
+Generated matrix SE2
+# restricted estimates via matrix method (mrls)
+? matrix Y = {price, bedrms}
+Generated matrix Y
+? matrix X = {const, sqft}
+Generated matrix X
+? matrix R = {1, 0, 0, 0 ; 0, 0, 1, 0}
+Generated matrix R
+? matrix Q = {50 ; 3}
+Generated matrix Q
+? matrix U
+? matrix V
+? matrix B3 = mrls(Y, X, R, Q, &U, &V)
+Generated matrix B3
+? SSR = sumc(U .* U)
+Generated matrix SSR
+SSR = 
+      18279.62      2.536241
+
+? sigma = sdc(U)
+Generated matrix sigma
+? sigma *= sqrt(14/13)
+Replaced matrix sigma
+sigma = 
+     37.4978    0.441586
+
+? V1 = sigma[1]^2 * V[1:2,1:2]
+Generated matrix V1
+? V2 = sigma[2]^2 * V[3:4,3:4]
+Generated matrix V2
+? matrix SE3 = sqrt(diag(V1)) ~ sqrt(diag(V2))
+Generated matrix SE3
+# compare
+? print B1 B2 B3
+B1 (2 x 2)
+
+      50.000       3.0000 
+     0.13988   0.00034138 
+
+B2 (2 x 2)
+
+      50.000       3.0000 
+     0.13988   0.00034138 
+
+B3 (2 x 2)
+
+      50.000       3.0000 
+     0.13988   0.00034138 
+
+? print SE1 SE2 SE3
+SE1 (2 x 2)
+
+      0.0000       0.0000 
+   0.0050351   5.9309e-05 
+
+SE2 (2 x 2)
+
+  3.9511e-07   4.6540e-09 
+   0.0050351   5.9309e-05 
+
+SE3 (2 x 2)
+
+  3.9510e-07   4.6529e-09 
+   0.0050351   5.9295e-05 
+
+Done

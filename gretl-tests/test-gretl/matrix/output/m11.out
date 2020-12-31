@@ -1,0 +1,13 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m11.inp
+ /home/cottrell/stats/test-gretl/matrix/m11.inp
+? matrix A = I(3) * 2
+Generated matrix A
+? scalar x = det(A)
+Generated scalar x = 8
+? scalar x = det(transp(A))
+Replaced scalar x = 8
+Done

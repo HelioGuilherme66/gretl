@@ -1,0 +1,8 @@
+nulldata 20
+set seed 5671
+string sname = null
+loop i=1..10 -q
+  sprintf(sname, "norm%d", i)
+  series @sname = normal()
+endloop
+varlist

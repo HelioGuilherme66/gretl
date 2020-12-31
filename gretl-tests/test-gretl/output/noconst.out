@@ -1,0 +1,64 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run noconst.inp
+ /home/cottrell/stats/test-gretl/noconst.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ols 1 2 3 8 9 10 11
+
+Model 1: OLS, using observations 1975:1-1990:4 (T = 64)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  PRICE        -24.8611      4.99596    -4.976    6.12e-06 ***
+  INCOME       603.770     111.901       5.396    1.32e-06 ***
+  WINTER     -1576.30      751.343      -2.098    0.0403   **
+  SPRING     -1284.44      751.882      -1.708    0.0929   *
+  SUMMER     -1497.24      753.181      -1.988    0.0516   *
+  FALL       -1629.20      751.525      -2.168    0.0343   **
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Sum squared resid     3893302   S.E. of regression   259.0867
+R-squared            0.442439   Adjusted R-squared   0.394373
+F(5, 58)             9.204887   P-value(F)           1.72e-06
+Log-likelihood      -443.3204   Akaike criterion     898.6408
+Schwarz criterion    911.5941   Hannan-Quinn         903.7437
+rho                  0.581689   Durbin-Watson        0.793624
+
+? ols 1 0 2 3 8 9 10
+
+Model 2: OLS, using observations 1975:1-1990:4 (T = 64)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -1629.20      751.525      -2.168    0.0343   **
+  PRICE        -24.8611      4.99596    -4.976    6.12e-06 ***
+  INCOME       603.770     111.901       5.396    1.32e-06 ***
+  WINTER        52.9024     91.7375      0.5767   0.5664  
+  SPRING       344.762      91.6749      3.761    0.0004   ***
+  SUMMER       131.958      91.6422      1.440    0.1553  
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
+Sum squared resid     3893302   S.E. of regression   259.0867
+R-squared            0.442439   Adjusted R-squared   0.394373
+F(5, 58)             9.204887   P-value(F)           1.72e-06
+Log-likelihood      -443.3204   Akaike criterion     898.6408
+Schwarz criterion    911.5941   Hannan-Quinn         903.7437
+rho                  0.581689   Durbin-Watson        0.793624
+
+Excluding the constant, p-value was highest for variable 8 (WINTER)
+
+Done

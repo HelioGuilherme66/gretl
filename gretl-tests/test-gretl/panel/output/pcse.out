@@ -1,0 +1,123 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run pcse.inp
+ /home/cottrell/stats/test-gretl/panel/pcse.inp
+? open ziliak.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/panel/ziliak.gdt
+periodicity: 10, maxobs: 5320
+observations range: 1:01 to 532:10
+
+Listing 9 variables:
+  0) const    1) lnhr     2) lnwg     3) kids     4) ageh   
+  5) agesq    6) disab    7) id       8) year   
+
+# pooled OLS with Arellano-type standard errors
+? ols 1 0 2 --robust
+
+Model 1: Pooled OLS, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       7.44152      0.0795047    93.60     0.0000  ***
+  lnwg        0.0827435    0.0292409     2.830    0.0048  ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    427.2252   S.E. of regression   0.283436
+R-squared            0.015226   Adjusted R-squared   0.015041
+F(1, 531)            8.007327   P-value(F)           0.004835
+Log-likelihood      -840.4529   Akaike criterion     1684.906
+Schwarz criterion    1698.064   Hannan-Quinn         1689.503
+rho                  0.468737   Durbin-Watson        0.978594
+
+# and PCSE
+? set pcse on
+? ols 1 0 2 --robust
+
+Model 2: Pooled OLS, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Beck-Katz standard errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       7.44152      0.0469398    158.5     0.0000   ***
+  lnwg        0.0827435    0.0165872      4.988   8.26e-07 ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    427.2252   S.E. of regression   0.283436
+R-squared            0.015226   Adjusted R-squared   0.015041
+F(1, 531)            24.88415   P-value(F)           8.26e-07
+Log-likelihood      -840.4529   Akaike criterion     1684.906
+Schwarz criterion    1698.064   Hannan-Quinn         1689.503
+rho                  0.468737   Durbin-Watson        0.978594
+
+# fixed effects, robust, both ways
+? set pcse off
+? panel 1 0 2 --robust
+
+Model 3: Fixed-effects, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Robust (HAC) standard errors
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       7.21989      0.221496     32.60     8.22e-129 ***
+  lnwg        0.167675     0.0848827     1.975    0.0487    **
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    259.3985   S.E. of regression   0.232783
+LSDV R-squared       0.402074   Within R-squared     0.016227
+Log-likelihood       486.7433   Akaike criterion     92.51344
+Schwarz criterion    3599.242   Hannan-Quinn         1317.714
+rho                  0.107065   Durbin-Watson        1.613760
+
+Joint test on named regressors -
+  Test statistic: F(1, 531) = 3.90212
+  with p-value = P(F(1, 531) > 3.90212) = 0.0487426
+
+Robust test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: Welch F(531, 1601.9) = 33.1221
+  with p-value = P(F(531, 1601.9) > 33.1221) = 0
+
+? set pcse on
+? panel 1 0 2 --robust
+
+Model 4: Fixed-effects, using 5320 observations
+Included 532 cross-sectional units
+Time-series length = 10
+Dependent variable: lnhr
+Beck-Katz standard errors
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       7.21989      0.136563     52.87     1.04e-213 ***
+  lnwg        0.167675     0.0522844     3.207    0.0014    ***
+
+Mean dependent var   7.657430   S.D. dependent var   0.285591
+Sum squared resid    259.3985   S.E. of regression   0.232783
+LSDV R-squared       0.402074   Within R-squared     0.016227
+Log-likelihood       486.7433   Akaike criterion     92.51344
+Schwarz criterion    3599.242   Hannan-Quinn         1317.714
+rho                  0.107065   Durbin-Watson        1.613760
+
+Joint test on named regressors -
+  Test statistic: F(1, 531) = 10.2848
+  with p-value = P(F(1, 531) > 10.2848) = 0.00142213
+
+Robust test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: Welch F(531, 1601.9) = 33.1221
+  with p-value = P(F(531, 1601.9) > 33.1221) = 0
+
+Done

@@ -1,0 +1,145 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_garch.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_garch.inp
+# Stock and Watson, ch 14
+# illustrative VAR and GARCH
+#
+? open sw_ch14.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/sw_ch14.gdt
+periodicity: 4, maxobs: 164
+observations range: 1959:1 to 1999:4
+
+Listing 3 variables:
+  0) const    1) LHUR     2) PUNEW  
+
+? set force_hc on
+? set hc_version 1
+? genr infl = 400 * log(PUNEW/PUNEW(-1))
+Generated series infl (ID 3)
+? diff infl
+Listing 5 variables:
+  0) const     1) LHUR      2) PUNEW     3) infl      4) d_infl  
+
+? lags d_infl LHUR
+Listing 13 variables:
+  0) const       1) LHUR        2) PUNEW       3) infl        4) d_infl    
+  5) d_infl_1    6) d_infl_2    7) d_infl_3    8) d_infl_4    9) LHUR_1    
+ 10) LHUR_2     11) LHUR_3     12) LHUR_4    
+
+? smpl 1962:1 1995:4
+Full data range: 1959:1 - 1999:4 (n = 164)
+Current sample: 1962:1 - 1995:4 (n = 136)
+
+# GARCH model
+? garch 1 1 ; d_infl const d_infl(-1 to -4) LHUR(-1 to -4) -r
+
+Function evaluations: 78
+Evaluations of gradient: 24
+
+Model 1: GARCH, using observations 1962:1-1995:4 (T = 136)
+Dependent variable: d_infl
+QML standard errors
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       1.46240      0.313150      4.670    3.01e-06 ***
+  d_infl_1   -0.413716     0.105728     -3.913    9.12e-05 ***
+  d_infl_2   -0.332161     0.0812952    -4.086    4.39e-05 ***
+  d_infl_3   -0.0580934    0.0822607    -0.7062   0.4801  
+  d_infl_4   -0.0889729    0.0734318    -1.212    0.2257  
+  LHUR_1     -2.72288      0.335193     -8.123    4.54e-16 ***
+  LHUR_2      3.31740      0.711794      4.661    3.15e-06 ***
+  LHUR_3     -0.627693     0.829357     -0.7568   0.4491  
+  LHUR_4     -0.223893     0.394260     -0.5679   0.5701  
+
+  alpha(0)    0.333915     0.145393      2.297    0.0216   **
+  alpha(1)    0.541147     0.222479      2.432    0.0150   **
+  beta(1)     0.375964     0.129851      2.895    0.0038   ***
+
+Mean dependent var   0.013001   S.D. dependent var   1.767881
+Log-likelihood      -228.6735   Akaike criterion     483.3470
+Schwarz criterion    521.2115   Hannan-Quinn         498.7342
+
+Unconditional error variance = 4.02843
+Likelihood ratio test for (G)ARCH terms:
+  Chi-square(2) = 15.7745 [0.0003755]
+
+? genr yh1 = $yhat
+Generated series yh1 (ID 13)
+? fcast 1995:1 1999:4 yh2
+Generated series yh2 (ID 14)
+? smpl 1995:1 1999:4
+Full data range: 1959:1 - 1999:4 (n = 164)
+Current sample: 1995:1 - 1999:4 (n = 20)
+
+? print d_infl yh1 yh2 -o
+
+             d_infl          yh1          yh2
+
+1995:1     0.605339     0.848157     0.848157
+1995:2     0.329333     0.216639     0.216639
+1995:3    -1.244718    -1.095944    -1.095944
+1995:4     0.336723     0.630632     0.630632
+1996:1     1.018795                  0.523910
+1996:2     0.057128                 -0.248582
+1996:3    -1.128750                  0.099963
+1996:4     1.164383                  0.628848
+1997:1    -0.946594                 -0.604712
+1997:2    -1.594566                  0.335050
+1997:3     0.910672                  0.809597
+1997:4     0.404016                 -0.168947
+1998:1    -1.243783                  0.417993
+1998:2     0.243544                 -0.131065
+1998:3     0.567824                  0.706487
+1998:4     0.154380                 -0.315488
+1999:1    -0.332858                  0.357940
+1999:2     1.199854                  0.571273
+1999:3    -0.019750                 -0.171222
+1999:4     0.376290                  0.397050
+
+? fcasterr 1995:1 1999:4
+
+ For 95% confidence intervals, z(0.025) = 1.96
+
+               d_infl    prediction    std. error        95% interval
+
+  1995:1      0.605339     0.848157     0.918968    -0.952988 - 2.649302
+  1995:2      0.329333     0.216639     0.711320    -1.177522 - 1.610801
+  1995:3     -1.244718    -1.095944     0.608218    -2.288029 - 0.096141
+  1995:4      0.336723     0.630632     0.574560    -0.495486 - 1.756749
+  1996:1      1.018795     0.523910     0.772447    -0.990058 - 2.037878
+  1996:2      0.057128    -0.248582     0.991594    -2.192070 - 1.694906
+  1996:3     -1.128750     0.099963     1.143805    -2.141855 - 2.341780
+  1996:4      1.164383     0.628848     1.269755    -1.859827 - 3.117522
+  1997:1     -0.946594    -0.604712     1.374246    -3.298183 - 2.088760
+  1997:2     -1.594566     0.335050     1.463221    -2.532811 - 3.202911
+  1997:3      0.910672     0.809597     1.540311    -2.209357 - 3.828552
+  1997:4      0.404016    -0.168947     1.607858    -3.320291 - 2.982397
+  1998:1     -1.243783     0.417993     1.667367    -2.849985 - 3.685971
+  1998:2      0.243544    -0.131065     1.720127    -3.502452 - 3.240323
+  1998:3      0.567824     0.706487     1.767132    -2.757029 - 4.170002
+  1998:4      0.154380    -0.315488     1.809168    -3.861393 - 3.230417
+  1999:1     -0.332858     0.357940     1.846879    -3.261876 - 3.977756
+  1999:2      1.199854     0.571273     1.880799    -3.115024 - 4.257571
+  1999:3     -0.019750    -0.171222     1.911378    -3.917454 - 3.575010
+  1999:4      0.376290     0.397050     1.938999    -3.403318 - 4.197417
+
+  Forecast evaluation statistics
+
+  Mean Error                       -0.14752
+  Mean Squared Error                0.52657
+  Root Mean Squared Error           0.72565
+  Mean Absolute Error               0.52225
+  Mean Percentage Error             51.11
+  Mean Absolute Percentage Error    143.54
+  Theil's U                         0.74416
+  Bias proportion, UM               0.041326
+  Regression proportion, UR         0.007146
+  Disturbance proportion, UD        0.95153
+
+Warning: "fcasterr": obsolete command; please use "fcast"
+Done

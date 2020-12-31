@@ -1,0 +1,9 @@
+open greene14_1.gdt -q
+logs C Q PF
+loop i=2..15 -q
+  l_C[i] = NA
+endloop
+# the following agrees with stata's xtgls
+panel l_C 0 l_Q l_PF LF --unit-weights
+panel l_C 0 l_Q l_PF LF
+modtest --panel

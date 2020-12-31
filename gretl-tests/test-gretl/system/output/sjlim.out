@@ -1,0 +1,514 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run sjlim.inp
+ /home/cottrell/stats/test-gretl/system/sjlim.inp
+? open sjlim.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/system/sjlim.gdt
+periodicity: 12, maxobs: 187
+observations range: 1995:02 to 2010:08
+
+Listing 13 variables:
+  0) const    1) sw1      2) sw2      3) sw3      4) sw4    
+  5) dq1      6) dq2      7) dq3      8) dq4      9) dp1    
+ 10) dp2     11) dp3     12) dp4    
+
+? genr DivisiaQ = sw1*dq1 + sw2*dq2 + sw3*dq3 + sw4*dq4
+Generated series DivisiaQ (ID 13)
+? genr wdq1 = sw1*dq1
+Generated series wdq1 (ID 14)
+? genr wdq2 = sw2*dq2
+Generated series wdq2 (ID 15)
+? genr wdq3 = sw1*dq3
+Generated series wdq3 (ID 16)
+? genr wdq4 = sw2*dq4
+Generated series wdq4 (ID 17)
+? genr ddp1=dp1-dp4
+Generated series ddp1 (ID 18)
+? genr ddp2=dp2-dp4
+Generated series ddp2 (ID 19)
+? genr ddp3=dp3-dp4
+Generated series ddp3 (ID 20)
+? system name="Rotterdam"
+? equation wdq1 DivisiaQ ddp1 ddp2 ddp3
+? equation wdq2 DivisiaQ ddp1 ddp2 ddp3
+? equation wdq3 DivisiaQ ddp1 ddp2 ddp3
+? end system
+# Unrestricted estimation
+? estimate "Rotterdam" method=sur
+
+Equation system, Rotterdam
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.508077     0.0213022    23.85     6.63e-58 ***
+  ddp1       -0.575472     0.0730790    -7.875    2.98e-13 ***
+  ddp2       -0.0857695    0.0544893    -1.574    0.1172  
+  ddp3        0.839723     0.0467801    17.95     3.94e-42 ***
+
+Mean dependent var   0.003633   S.D. dependent var   0.109815
+Sum squared resid    0.332517   S.E. of regression   0.042282
+
+Equation 2: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.0391081    0.00314330   12.44     4.11e-26 ***
+  ddp1        0.0345350    0.0107833     3.203    0.0016   ***
+  ddp2       -0.00338201   0.00804028   -0.4206   0.6745  
+  ddp3       -0.0392455    0.00690275   -5.685    5.11e-08 ***
+
+Mean dependent var  -0.000272   S.D. dependent var   0.009755
+Sum squared resid    0.007240   S.E. of regression   0.006239
+
+Equation 3: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ     0.607355    0.0581564     10.44    2.65e-20 ***
+  ddp1         2.01822     0.199510      10.12    2.28e-19 ***
+  ddp2         0.330620    0.148759       2.223   0.0275   **
+  ddp3        -2.90646     0.127713     -22.76    4.01e-55 ***
+
+Mean dependent var  -0.007292   S.D. dependent var   0.272372
+Sum squared resid    2.478332   S.E. of regression   0.115431
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0017877     (-0.398)     (-0.893)
+  -0.00010486   3.8924e-05      (0.236)
+   -0.0043595   0.00017024     0.013324
+
+log determinant = -22.6561
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 188.19 [0.0000]
+
+? restrict "Rotterdam"
+? b[1,3] - b[2,2] = 0
+? b[1,4] - b[3,2] = 0
+? b[2,4] - b[3,3] = 0
+? end restrict
+Restriction set
+ 1: b[1,3] - b[2,2] = 0
+ 2: b[1,4] - b[3,2] = 0
+ 3: b[2,4] - b[3,3] = 0
+# Restricted estimation, not iterated
+? estimate "Rotterdam" method=sur
+
+Equation system, Rotterdam
+Estimator: Seemingly Unrelated Regressions
+
+Equation 1: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.542401     0.0260822    20.80     5.75e-50 ***
+  ddp1       -0.437471     0.0624017    -7.011    4.48e-11 ***
+  ddp2       -0.0854976    0.0228841    -3.736    0.0002   ***
+  ddp3        0.806227     0.0573782    14.05     7.52e-31 ***
+
+Mean dependent var   0.003633   S.D. dependent var   0.109815
+Sum squared resid    0.351764   S.E. of regression   0.043488
+
+Equation 2: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  DivisiaQ    0.0238498    0.0110282     2.163    0.0319  **
+  ddp1       -0.0854976    0.0228841    -3.736    0.0002  ***
+  ddp2       -0.0406587    0.0149418    -2.721    0.0071  ***
+  ddp3        0.0775854    0.0200570     3.868    0.0002  ***
+
+Mean dependent var  -0.000272   S.D. dependent var   0.009755
+Sum squared resid    0.019748   S.E. of regression   0.010304
+
+Equation 3: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.404677     0.0569738      7.103   2.66e-11 ***
+  ddp1        0.806227     0.0573782     14.05    7.52e-31 ***
+  ddp2        0.0775854    0.0200570      3.868   0.0002   ***
+  ddp3       -2.01885      0.0899145    -22.45    2.46e-54 ***
+
+Mean dependent var  -0.007292   S.D. dependent var   0.272372
+Sum squared resid    3.481835   S.E. of regression   0.136819
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0018912     (-0.316)     (-0.825)
+  -0.00014179   0.00010617      (0.519)
+   -0.0049092   0.00073226     0.018720
+
+log determinant = -20.9108
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 195.421 [0.0000]
+
+F test for the specified restrictions:
+  F(3,546) = 41.7214 [0.0000]
+
+# Restricted estimation, iterated
+? estimate "Rotterdam" method=sur --iterate
+
+Equation system, Rotterdam
+Estimator: iterated Seemingly Unrelated Regressions
+
+Convergence achieved after 19 iterations
+Log-likelihood = 1267.26
+
+Equation 1: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq1
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.593643     0.0236593    25.09     5.54e-61 ***
+  ddp1       -0.111757     0.0383627    -2.913    0.0040   ***
+  ddp2        0.0180003    0.0104685     1.719    0.0872   *
+  ddp3        0.519937     0.0422873    12.30     1.11e-25 ***
+
+Mean dependent var   0.003633   S.D. dependent var   0.109815
+Sum squared resid    0.487056   S.E. of regression   0.051172
+
+Equation 2: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq2
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.0360507    0.00313027   11.52     2.10e-23 ***
+  ddp1        0.0180003    0.0104685     1.719    0.0872   *
+  ddp2       -0.00701971   0.00767120   -0.9151   0.3614  
+  ddp3       -0.0279293    0.00667307   -4.185    4.43e-05 ***
+
+Mean dependent var  -0.000272   S.D. dependent var   0.009755
+Sum squared resid    0.007436   S.E. of regression   0.006323
+
+Equation 3: SUR, using observations 1995:02-2010:07 (T = 186)
+Dependent variable: wdq3
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DivisiaQ    0.333270     0.0678116      4.915   1.98e-06 ***
+  ddp1        0.519937     0.0422873     12.30    1.11e-25 ***
+  ddp2       -0.0279293    0.00667307    -4.185   4.43e-05 ***
+  ddp3       -1.84101      0.107482     -17.13    8.51e-40 ***
+
+Mean dependent var  -0.007292   S.D. dependent var   0.272372
+Sum squared resid    4.116949   S.E. of regression   0.148775
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0026186     (-0.416)     (-0.928)
+  -0.00013443   3.9977e-05      (0.283)
+   -0.0070637   0.00026647     0.022134
+
+log determinant = -22.14
+
+LR test for the specified restrictions:
+  Restricted log-likelihood = 1267.26
+  Unrestricted log-likelihood = 1315.25
+  Chi-square(3) = 95.9903 [0.0000]
+
+? foreign language=R --send-data
+?    wdq1 <- gretldata[,"wdq1"]
+?    wdq2 <- gretldata[,"wdq2"]
+?    wdq3 <- gretldata[,"wdq3"]
+?    wdq4 <- gretldata[,"wdq4"]
+?    ddp1 <- gretldata[,"ddp1"]
+?    ddp2 <- gretldata[,"ddp2"]
+?    ddp3 <- gretldata[,"ddp3"]
+?    DivisiaQ <- gretldata[,"DivisiaQ"]
+?    library(systemfit)
+?    e1 <- wdq1 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+?    e2 <- wdq2 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+?    e3 <- wdq3 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+?    system <- list(e1, e2, e3)
+?    # Unrestricted estimation
+?    fit1 <- systemfit(system, method="SUR")
+?    print(summary(fit1))
+?    R <- matrix(0,3,12)
+?    q <- matrix(0,3,1)
+?    R[1,3] <-  1
+?    R[1,6] <- -1
+?    R[2,4] <- 1
+?    R[2,10] <- -1
+?    R[3,8] <- 1
+?    R[3,11] <- -1
+?    # Restricted estimation, not iterated
+?    fit1r <- systemfit(system, method="SUR", restrict.matrix=R,
+?       restrict.rhs=q, maxiter=1)
+?    print(summary(fit1r))
+?    # Restricted estimation, iterated
+?    fit2 <- systemfit(system, method="SUR", restrict.matrix=R,
+?       restrict.rhs=q, maxiter=80)
+?    print(summary(fit2))
+?    lrtest(fit2, fit1)
+? end foreign
+
+systemfit results 
+method: SUR 
+
+         N  DF     SSR detRCov   OLS-R2 McElroy-R2
+system 558 546 2.81809       0 0.823573   0.952301
+
+      N  DF      SSR      MSE     RMSE       R2   Adj R2
+eq1 186 182 0.332517 0.001827 0.042744 0.850954 0.848497
+eq2 186 182 0.007240 0.000040 0.006307 0.588742 0.581963
+eq3 186 182 2.478332 0.013617 0.116693 0.819423 0.816447
+
+The covariance matrix of the residuals used for estimation
+             eq1          eq2          eq3
+eq1  0.001827019 -1.07167e-04 -0.004455355
+eq2 -0.000107167  3.97799e-05  0.000173981
+eq3 -0.004455355  1.73981e-04  0.013617210
+
+The covariance matrix of the residuals
+             eq1          eq2          eq3
+eq1  0.001827019 -1.07167e-04 -0.004455355
+eq2 -0.000107167  3.97799e-05  0.000173981
+eq3 -0.004455355  1.73981e-04  0.013617210
+
+The correlations of the residuals
+          eq1       eq2       eq3
+eq1  1.000000 -0.397052 -0.893914
+eq2 -0.397052  1.000000  0.236397
+eq3 -0.893914  0.236397  1.000000
+
+
+SUR estimates for 'eq1' (equation 1)
+Model Formula: wdq1 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+           Estimate Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.5080771  0.0215351 23.59303 < 2.22e-16 ***
+ddp1     -0.5754723  0.0738777 -7.78953 4.9472e-13 ***
+ddp2     -0.0857695  0.0550848 -1.55705     0.1212    
+ddp3      0.8397235  0.0472914 17.75636 < 2.22e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.042744 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.332517 MSE: 0.001827 Root MSE: 0.042744 
+Multiple R-Squared: 0.850954 Adjusted R-Squared: 0.848497 
+
+
+SUR estimates for 'eq2' (equation 2)
+Model Formula: wdq2 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+            Estimate  Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.03910814  0.00317765 12.30724 < 2.22e-16 ***
+ddp1      0.03453497  0.01090118  3.16800  0.0018005 ** 
+ddp2     -0.00338201  0.00812816 -0.41609  0.6778377    
+ddp3     -0.03924552  0.00697819 -5.62403 6.9298e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.006307 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.00724 MSE: 4e-05 Root MSE: 0.006307 
+Multiple R-Squared: 0.588742 Adjusted R-Squared: 0.581963 
+
+
+SUR estimates for 'eq3' (equation 3)
+Model Formula: wdq3 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+          Estimate Std. Error   t value Pr(>|t|)    
+DivisiaQ  0.607355   0.058792  10.33057  < 2e-16 ***
+ddp1      2.018221   0.201691  10.00652  < 2e-16 ***
+ddp2      0.330620   0.150385   2.19849 0.029175 *  
+ddp3     -2.906459   0.129108 -22.51175  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.116693 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 2.478332 MSE: 0.013617 Root MSE: 0.116693 
+Multiple R-Squared: 0.819423 Adjusted R-Squared: 0.816447 
+
+
+systemfit results 
+method: SUR 
+
+         N  DF     SSR detRCov  OLS-R2 McElroy-R2
+system 558 549 3.85335       0 0.75876    0.88942
+
+      N  DF      SSR      MSE     RMSE        R2    Adj R2
+eq1 186 182 0.351764 0.001933 0.043963  0.842326  0.839727
+eq2 186 182 0.019748 0.000109 0.010417 -0.121760 -0.140251
+eq3 186 182 3.481835 0.019131 0.138315  0.746306  0.742124
+
+The covariance matrix of the residuals used for estimation
+             eq1         eq2          eq3
+eq1  0.002805576 0.000557233 -0.003402275
+eq2  0.000557233 0.000501739  0.000819672
+eq3 -0.003402275 0.000819672  0.015192769
+
+The covariance matrix of the residuals
+             eq1          eq2         eq3
+eq1  0.001932771 -0.000144905 -0.00501705
+eq2 -0.000144905  0.000108505  0.00074835
+eq3 -0.005017055  0.000748350  0.01913096
+
+The correlations of the residuals
+          eq1       eq2       eq3
+eq1  1.000000 -0.315048 -0.825114
+eq2 -0.315048  1.000000  0.519024
+eq3 -0.825114  0.519024  1.000000
+
+
+SUR estimates for 'eq1' (equation 1)
+Model Formula: wdq1 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+           Estimate Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.5424013  0.0263673 20.57100 < 2.22e-16 ***
+ddp1     -0.4374706  0.0630837 -6.93476 1.1478e-11 ***
+ddp2     -0.0854976  0.0231343 -3.69572 0.00024126 ***
+ddp3      0.8062273  0.0580053 13.89920 < 2.22e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.043963 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.351764 MSE: 0.001933 Root MSE: 0.043963 
+Multiple R-Squared: 0.842326 Adjusted R-Squared: 0.839727 
+
+
+SUR estimates for 'eq2' (equation 2)
+Model Formula: wdq2 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+           Estimate Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.0238498  0.0111487  2.13925 0.03285609 *  
+ddp1     -0.0854976  0.0231343 -3.69572 0.00024126 ***
+ddp2     -0.0406587  0.0151051 -2.69172 0.00732531 ** 
+ddp3      0.0775854  0.0202762  3.82642 0.00014496 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.010417 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.019748 MSE: 0.000109 Root MSE: 0.010417 
+Multiple R-Squared: -0.12176 Adjusted R-Squared: -0.140251 
+
+
+SUR estimates for 'eq3' (equation 3)
+Model Formula: wdq3 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+           Estimate Std. Error   t value   Pr(>|t|)    
+DivisiaQ  0.4046771  0.0575965   7.02607 6.3187e-12 ***
+ddp1      0.8062273  0.0580053  13.89920 < 2.22e-16 ***
+ddp2      0.0775854  0.0202762   3.82642 0.00014496 ***
+ddp3     -2.0188512  0.0908972 -22.21026 < 2.22e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.138315 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 3.481835 MSE: 0.019131 Root MSE: 0.138315 
+Multiple R-Squared: 0.746306 Adjusted R-Squared: 0.742124 
+
+
+systemfit results 
+method: iterated SUR 
+
+convergence achieved after 13 iterations
+
+         N  DF     SSR detRCov   OLS-R2 McElroy-R2
+system 558 549 4.61142       0 0.711301   0.949578
+
+      N  DF      SSR      MSE     RMSE       R2   Adj R2
+eq1 186 182 0.487051 0.002676 0.051731 0.781686 0.778087
+eq2 186 182 0.007436 0.000041 0.006392 0.577618 0.570655
+eq3 186 182 4.116938 0.022621 0.150401 0.700031 0.695086
+
+The covariance matrix of the residuals used for estimation
+             eq1          eq2          eq3
+eq1  0.002676068 -1.37396e-04 -0.007218839
+eq2 -0.000137396  4.08563e-05  0.000272349
+eq3 -0.007218839  2.72349e-04  0.022620454
+
+The covariance matrix of the residuals
+             eq1          eq2          eq3
+eq1  0.002676105 -1.37392e-04 -0.007218912
+eq2 -0.000137392  4.08559e-05  0.000272334
+eq3 -0.007218912  2.72334e-04  0.022620540
+
+The correlations of the residuals
+          eq1       eq2       eq3
+eq1  1.000000 -0.414775 -0.928154
+eq2 -0.414775  1.000000  0.282783
+eq3 -0.928154  0.282783  1.000000
+
+
+SUR estimates for 'eq1' (equation 1)
+Model Formula: wdq1 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+           Estimate Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.5936418  0.0239176 24.82029 < 2.22e-16 ***
+ddp1     -0.1117637  0.0387819 -2.88186  0.0041081 ** 
+ddp2      0.0179986  0.0105829  1.70072  0.0895613 .  
+ddp3      0.5199411  0.0427490 12.16264 < 2.22e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.051731 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.487051 MSE: 0.002676 Root MSE: 0.051731 
+Multiple R-Squared: 0.781686 Adjusted R-Squared: 0.778087 
+
+
+SUR estimates for 'eq2' (equation 2)
+Model Formula: wdq2 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+            Estimate  Std. Error  t value   Pr(>|t|)    
+DivisiaQ  0.03605041  0.00316450 11.39215 < 2.22e-16 ***
+ddp1      0.01799860  0.01058291  1.70072   0.089561 .  
+ddp2     -0.00702011  0.00775503 -0.90523   0.365739    
+ddp3     -0.02792807  0.00674602 -4.13993 4.0207e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.006392 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 0.007436 MSE: 4.1e-05 Root MSE: 0.006392 
+Multiple R-Squared: 0.577618 Adjusted R-Squared: 0.570655 
+
+
+SUR estimates for 'eq3' (equation 3)
+Model Formula: wdq3 ~ 0 + DivisiaQ + ddp1 + ddp2 + ddp3
+
+            Estimate  Std. Error   t value   Pr(>|t|)    
+DivisiaQ  0.33327155  0.06855256   4.86155 1.5227e-06 ***
+ddp1      0.51994112  0.04274904  12.16264 < 2.22e-16 ***
+ddp2     -0.02792807  0.00674602  -4.13993 4.0207e-05 ***
+ddp3     -1.84101333  0.10865610 -16.94349 < 2.22e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.150401 on 182 degrees of freedom
+Number of observations: 186 Degrees of Freedom: 182 
+SSR: 4.116938 MSE: 0.022621 Root MSE: 0.150401 
+Multiple R-Squared: 0.700031 Adjusted R-Squared: 0.695086 
+
+Likelihood ratio test
+
+Model 1: fit2
+Model 2: fit1
+  #Df LogLik Df Chisq Pr(>Chisq)    
+1  15 1267.3                        
+2  18 1315.2  3 95.99  < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Done

@@ -1,0 +1,205 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run recid.inp
+ /home/cottrell/stats/test-gretl/duration/recid.inp
+# see http://data.princeton.edu/pop509a/recid1.html
+? open recid.gdt -q
+Read datafile /opt/esl/share/gretl/data/wooldridge/recid.gdt
+? list X = workprg priors tserved felon alcohol drugs black married educ age
+Generated list X
+? duration durat 0 X ; cens
+
+Convergence achieved after 8 iterations
+
+Model 1: Duration (Weibull), using observations 1-1445
+Dependent variable: durat
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       4.22167      0.341311      12.37    3.85e-35 ***
+  workprg    -0.112785     0.112535      -1.002   0.3162  
+  priors     -0.110176     0.0170675     -6.455   1.08e-10 ***
+  tserved    -0.0168297    0.00213029    -7.900   2.78e-15 ***
+  felon       0.371623     0.131995       2.815   0.0049   ***
+  alcohol    -0.555132     0.132243      -4.198   2.69e-05 ***
+  drugs      -0.349265     0.121880      -2.866   0.0042   ***
+  black      -0.563016     0.110817      -5.081   3.76e-07 ***
+  married     0.188104     0.135752       1.386   0.1659  
+  educ        0.0289111    0.0241153      1.199   0.2306  
+  age         0.00462188   0.000664820    6.952   3.60e-12 ***
+  sigma       1.24090      0.0482896                      
+
+Mean dependent var   55.37232   S.D. dependent var   27.29783
+Chi-square(10)       165.4772   p-value              2.39e-30
+Log-likelihood      -1633.032   Akaike criterion     3290.065
+Schwarz criterion    3353.375   Hannan-Quinn         3313.694
+
+1/sigma = 0.805864 (0.0313601)
+
+? series wpred = $yhat
+Generated series wpred (ID 19)
+? series wres = $uhat
+Generated series wres (ID 20)
+? duration durat 0 X ; cens --expon
+
+Convergence achieved after 6 iterations
+
+Model 2: Duration (exponential), using observations 1-1445
+Dependent variable: durat
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       4.16921      0.275628      15.13    1.09e-51 ***
+  workprg    -0.0955800    0.0905511     -1.056   0.2912  
+  priors     -0.0913370    0.0133434     -6.845   7.64e-12 ***
+  tserved    -0.0144009    0.00165995    -8.676   4.12e-18 ***
+  felon       0.312224     0.105655       2.955   0.0031   ***
+  alcohol    -0.467671     0.105775      -4.421   9.81e-06 ***
+  drugs      -0.294165     0.0978584     -3.006   0.0026   ***
+  black      -0.475675     0.0881961     -5.393   6.91e-08 ***
+  married     0.151951     0.109258       1.391   0.1643  
+  educ        0.0242123    0.0194075      1.248   0.2122  
+  age         0.00391121   0.000528194    7.405   1.31e-13 ***
+
+Mean dependent var   55.37232   S.D. dependent var   27.29783
+Chi-square(10)       180.2826   p-value              2.05e-33
+Log-likelihood      -1649.753   Akaike criterion     3321.506
+Schwarz criterion    3379.541   Hannan-Quinn         3343.167
+
+? series expred = $yhat
+Generated series expred (ID 21)
+? series exres = $uhat
+Generated series exres (ID 22)
+? duration durat 0 X ; cens --loglog
+
+Convergence achieved after 7 iterations
+
+Model 3: Duration (log-logistic), using observations 1-1445
+Dependent variable: durat
+Standard errors based on Hessian
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  const       3.81771      0.350981      10.88     1.48e-27 ***
+  workprg    -0.0664501    0.119564      -0.5558   0.5784  
+  priors     -0.148287     0.0230937     -6.421    1.35e-10 ***
+  tserved    -0.0191425    0.00299063    -6.401    1.55e-10 ***
+  felon       0.410808     0.143651       2.860    0.0042   ***
+  alcohol    -0.632508     0.142780      -4.430    9.43e-06 ***
+  drugs      -0.349394     0.129943      -2.689    0.0072   ***
+  black      -0.561211     0.116111      -4.833    1.34e-06 ***
+  married     0.270863     0.138767       1.952    0.0509   *
+  educ        0.0314568    0.0253634      1.240    0.2149  
+  age         0.00450692   0.000662788    6.800    1.05e-11 ***
+  sigma       1.03538      0.0388421                       
+
+Mean dependent var   55.37232   S.D. dependent var   27.29783
+Chi-square(10)       178.9239   p-value              3.92e-33
+Log-likelihood      -1610.943   Akaike criterion     3245.886
+Schwarz criterion    3309.197   Hannan-Quinn         3269.516
+
+? series llpred = $yhat
+Generated series llpred (ID 23)
+? series llres = $uhat
+Generated series llres (ID 24)
+? duration durat 0 X ; cens --lognorm
+
+Convergence achieved after 7 iterations
+
+Model 4: Duration (log-normal), using observations 1-1445
+Dependent variable: durat
+Standard errors based on Hessian
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  const       4.09939      0.347535      11.80     4.11e-32 ***
+  workprg    -0.0625715    0.120037      -0.5213   0.6022  
+  priors     -0.137253     0.0214587     -6.396    1.59e-10 ***
+  tserved    -0.0193305    0.00297792    -6.491    8.51e-11 ***
+  felon       0.443995     0.145087       3.060    0.0022   ***
+  alcohol    -0.634909     0.144217      -4.402    1.07e-05 ***
+  drugs      -0.298160     0.132736      -2.246    0.0247   **
+  black      -0.542718     0.117443      -4.621    3.82e-06 ***
+  married     0.340684     0.139843       2.436    0.0148   **
+  educ        0.0229196    0.0253974      0.9024   0.3668  
+  age         0.00391029   0.000606205    6.450    1.12e-10 ***
+  sigma       1.81047      0.0623022                       
+
+Mean dependent var   55.37232   S.D. dependent var   27.29783
+Chi-square(10)       166.7361   p-value              1.31e-30
+Log-likelihood      -1597.059   Akaike criterion     3218.118
+Schwarz criterion    3281.428   Hannan-Quinn         3241.747
+
+? series lnpred = $yhat
+Generated series lnpred (ID 25)
+? series lnres = $uhat
+Generated series lnres (ID 26)
+? smpl 1 10
+Full data range: 1 - 1445 (n = 1445)
+Current sample: 1 - 10 (n = 10)
+
+? print durat wpred wres -o
+
+          durat        wpred         wres
+
+ 1           72     269.6923    0.3799234
+ 2           75     240.6312    0.4304142
+ 3            9     189.6733      0.09443
+ 4           25     124.0377    0.3029131
+ 5           81     202.8998    0.5254269
+ 6           79     143.1351    0.6821491
+ 7           73     100.5109    0.8510627
+ 8           73     146.2035    0.6292329
+ 9           54     471.4890    0.1920911
+10           60     400.2799    0.2386078
+
+? print durat expred exres -o
+
+          durat       expred        exres
+
+ 1           72     184.9741    0.3892436
+ 2           75     168.6548    0.4446952
+ 3            9     138.0280      0.06520
+ 4           25      96.4699    0.2591482
+ 5           81     146.8910    0.5514294
+ 6           79     109.2198    0.7233121
+ 7           73      80.8144    0.9033038
+ 8           73     110.8436    0.6585853
+ 9           54     297.8381    0.1813066
+10           60     257.0987    0.2333734
+
+? print durat llpred llres -o
+
+          durat       llpred        llres
+
+ 1           72                 0.3962925
+ 2           75                 0.4174861
+ 3            9                   0.08554
+ 4           25                 0.3243891
+ 5           81                 0.5263437
+ 6           79                 0.6695924
+ 7           73                 0.8770658
+ 8           73                 0.6493717
+ 9           54                 0.1935889
+10           60                 0.2205534
+
+? print durat lnpred lnres -o
+
+          durat       lnpred        lnres
+
+ 1           72      801.469    0.4081645
+ 2           75      800.474    0.4210420
+ 3            9      592.625      0.08297
+ 4           25      406.694    0.3046241
+ 5           81      680.746    0.4998277
+ 6           79      447.032    0.6524544
+ 7           73      263.250    0.8627469
+ 8           73      446.872    0.6198149
+ 9           54     1451.312    0.1993189
+10           60     1383.866    0.2278859
+
+Done

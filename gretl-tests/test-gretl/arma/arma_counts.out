@@ -1,0 +1,57 @@
+Below: counts of function and gradient evaluations, for
+cases where these numbers differed depending on the
+initialization of the curvature matrix for BFGS.
+In the "baseline" case this is just an identity matrix.
+
+* plain arma directory (33 scripts):
+
+INITH, OPG
+
+Total 'function evaluation' counts
+  baseline 1214, new 1300
+Total 'gradient evaluation' counts
+  baseline 43, new 47
+
+INITH, I/T
+
+Total 'function evaluation' counts
+  baseline 1676, new 1514
+Total 'gradient evaluation' counts
+  baseline 342, new 410
+
+INITH, fancier scaled I
+
+Total 'function evaluation' counts
+  baseline 1582, new 1355
+Total 'gradient evaluation' counts
+  baseline 335, new 349
+
+* seasonal arma directory (6 scripts)
+
+INITH, OPG
+
+Total 'function evaluation' counts
+  baseline 161, new 163
+Total 'gradient evaluation' counts
+  baseline 0, new 0
+
+INITH, I/T
+
+Total 'function evaluation' counts
+  baseline 161, new 97
+Total 'gradient evaluation' counts
+  baseline 34, new 39
+
+INITH, fancier scaled I
+
+Total 'function evaluation' counts
+  baseline 161, new 120
+Total 'gradient evaluation' counts
+  baseline 24, new 29
+
+
+
+
+
+
+

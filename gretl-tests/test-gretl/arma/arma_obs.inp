@@ -1,0 +1,32 @@
+set echo off
+set messages off
+
+nulldata 500
+setobs 1 1 --time-series
+set seed 1234
+genr u = randgen(N,0,1)
+genr e = randgen(N,0,2)
+series X=100
+series X=X(-1)+u
+series S=(obs>400)
+series P=(obs=401)
+series Y=200
+series \
+Y=1.8*Y(-1)-0.8*Y(-2)+2*X-3.6*X(-1)+1.6*X(-2)+50*S-90*S(-1)+40*S(-2)+e
+
+#smpl 301 500
+diff Y X
+
+ols d_Y const d_Y(-1) d_X d_X(-1) P P(-1) --simple
+Tols = $T
+printf "T = %d (via ols -- should be ok)\n", Tols
+arima 1 0 0 ; d_Y 0 d_X d_X(-1) P P(-1) --conditional
+printf "T = %d (should be %d, same as ols)\n", $T, Tols
+arima 1 1 0 ; Y 0 d_X d_X(-1) P P(-1) --conditional
+printf "T = %d (should be %d, same as ols)\n\n", $T, Tols
+
+ols d_Y const d_Y(-1) d_X P --simple
+Tols = $T
+printf "T = %d (via ols -- should be ok)\n", Tols
+arima 1 1 0 ; Y 0 d_X P --conditional
+printf "T = %d (should be %d, same as ols)\n", $T, Tols

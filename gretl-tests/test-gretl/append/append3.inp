@@ -1,0 +1,3 @@
+open data4-1
+append 41_app.txt
+print -o

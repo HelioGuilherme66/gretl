@@ -1,0 +1,23 @@
+open mon_dem_euroland.gdt 
+
+infl = 400*ldiff(p)
+
+vecm 2 3 m_p infl rl rs y
+
+restrict
+  b[1,1] = 1
+  b[1,2] = 0
+  b[1,4] = 0
+
+  b[2,1] = 0
+  b[2,2] = 1
+  b[2,4] = 0
+  b[2,5] = 0
+
+  b[3,1] = 0
+  b[3,2] = 0
+  b[3,3] = 1
+  b[3,4] = -1
+  b[3,5] = 0
+end restrict
+

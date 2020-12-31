@@ -1,0 +1,16 @@
+open data9-7
+genr QNC_1 = QNC(-1)
+ar1 QNC 0 PRICE QNC_1 --vcv
+genr eps = $uhat
+genr uh = QNC - $coeff(const) - $coeff(PRICE)*PRICE - $coeff(QNC_1)*QNC_1
+genr uh1 = uh(-1)
+# print -o QNC eps uh
+genr r = $rho(1)
+genr PRICEr = PRICE - r * PRICE(-1)
+genr Q1r = QNC_1 - r * QNC_1(-1)
+ols eps 0 PRICEr Q1r uh1 --vcv
+
+
+
+
+

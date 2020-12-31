@@ -1,0 +1,118 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run wages.inp
+ /home/cottrell/stats/test-gretl/rq/wages.inp
+? open Lavorco-minimal.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/rq/Lavorco-minimal.gdt
+periodicity: 1, maxobs: 3663
+observations range: 1 to 3663
+
+Listing 24 variables:
+  0) const        1) lnyhour      2) explav       3) explav2    
+  4) tenure       5) tenure2      6) industria    7) servizi    
+  8) impiega      9) operaio     10) coniuga     11) sesso      
+ 12) educa       13) area3       14) eduge       15) acom4c     
+ 16) nord        17) sud         18) dipl        19) diplge     
+ 20) laurea      21) laurge      22) town        23) bigtown    
+
+# OK?
+? quantreg 0.5 lnyhour const sesso explav explav2 tenure tenure2
+
+Model 1: Quantile estimates, using observations 1-3663
+Dependent variable: lnyhour
+tau = 0.5
+Asymptotic standard errors assuming IID errors
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       2.21320       0.0146438     151.1     0.0000   ***
+  sesso       0.0828854     0.0100832       8.220   2.79e-16 ***
+  explav      0.0117828     0.00187247      6.293   3.49e-10 ***
+  explav2    -0.000237283   4.24826e-05    -5.585   2.50e-08 ***
+  tenure      0.0192948     0.00184604     10.45    3.24e-25 ***
+  tenure2    -0.000340489   4.92872e-05    -6.908   5.76e-12 ***
+
+Median depend. var   2.548303   S.D. dependent var   0.342452
+Sum absolute resid   847.6387   Sum squared resid    366.0867
+Log-likelihood      -840.8925   Akaike criterion     1693.785
+Schwarz criterion    1731.021   Hannan-Quinn         1707.043
+
+# NOCONV?
+# The same thing in R just produces a nonuniqueness warning.
+# In a case like this (see point 1) there's no way to get any
+# output if tau is a vector.
+? quantreg 0.5 lnyhour const sesso explav explav2 tenure tenure2 \
+  --intervals
+
+Model 2: Quantile estimates, using observations 1-3663
+Dependent variable: lnyhour
+tau = 0.5
+With 90 percent confidence intervals
+Warning: solution is probably not unique
+
+             coefficient       lower          upper    
+  -----------------------------------------------------
+  const       2.21320        2.19837        2.24011    
+  sesso       0.0828854      0.0670828      0.101218   
+  explav      0.0117828      0.00884290     0.0141816   **
+  explav2    -0.000237283   -0.000287202   -0.000183041 ***
+  tenure      0.0192948      0.0163743      0.0221203   **
+  tenure2    -0.000340489   -0.000409811   -0.000269907 ***
+
+Median depend. var   2.548303   S.D. dependent var   0.342452
+Sum absolute resid   847.6387   Sum squared resid    366.0867
+Log-likelihood      -840.8925   Akaike criterion     1693.785
+Schwarz criterion    1731.021   Hannan-Quinn         1707.043
+
+# results differ from R?
+? quantreg 0.5 lnyhour const explav explav2 tenure tenure2 industria \
+  servizi
+
+Model 3: Quantile estimates, using observations 1-3663
+Dependent variable: lnyhour
+tau = 0.5
+Asymptotic standard errors assuming IID errors
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const        2.17123       0.0362308     59.93     0.0000   ***
+  explav       0.0118531     0.00217576     5.448    5.44e-08 ***
+  explav2     -0.000228709   4.93450e-05   -4.635    3.70e-06 ***
+  tenure       0.0153189     0.00216159     7.087    1.64e-12 ***
+  tenure2     -0.000244630   5.75537e-05   -4.250    2.19e-05 ***
+  industria    0.0626955     0.0340202      1.843    0.0654   *
+  servizi      0.169486      0.0337406      5.023    5.32e-07 ***
+
+Median depend. var   2.548303   S.D. dependent var   0.342452
+Sum absolute resid   839.2734   Sum squared resid    359.5558
+Log-likelihood      -804.5630   Akaike criterion     1623.126
+Schwarz criterion    1666.568   Hannan-Quinn         1638.594
+
+? quantreg 0.5 lnyhour const explav explav2 tenure tenure2 industria \
+  servizi -i
+
+Model 4: Quantile estimates, using observations 1-3663
+Dependent variable: lnyhour
+tau = 0.5
+With 90 percent confidence intervals
+Warning: solution is probably not unique
+
+              coefficient       lower          upper    
+  ------------------------------------------------------
+  const        2.15839        2.10678        2.26030    
+  explav       0.0118531      0.00752526     0.0150103   **
+  explav2     -0.000228709   -0.000289817   -0.000144053 ***
+  tenure       0.0153189      0.0115595      0.0185594   **
+  tenure2     -0.000244630   -0.000326343   -0.000168189 ***
+  industria    0.0755277     -0.00799470     0.126461   
+  servizi      0.182318       0.0890965      0.228029   
+
+Median depend. var   2.548303   S.D. dependent var   0.342452
+Sum absolute resid   839.2734   Sum squared resid    359.5424
+Log-likelihood      -804.5630   Akaike criterion     1623.126
+Schwarz criterion    1666.568   Hannan-Quinn         1638.594
+
+Done

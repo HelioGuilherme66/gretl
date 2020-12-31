@@ -1,0 +1,50 @@
+
+Ox version 4.04 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.24, object created on 25-11-2006
+
+DPD( 1) Modelling lprod by 1 and 2 step (using alessia.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dlprod(-1)           0.168940    0.03467     4.87   0.000
+Dlemp               -0.146972    0.03830    -3.84   0.000
+Dlva                 0.952837    0.01883     50.6   0.000
+Constant          -0.00602378   0.001281    -4.70   0.000
+
+sigma              0.07377797  sigma^2           0.005443189
+sigma levels       0.05216891
+RSS              12.747949792  TSS               100.9004411
+no. of observations      2346  no. of parameters           4
+Using robust standard errors
+
+Wald (joint):    Chi^2(3) =     6910. [0.000] **
+Wald (dummy):    Chi^2(1) =     22.12 [0.000] **
+Sargan test:   Chi^2(260) =     2608. [0.000] **
+Warning: invertgen: singular matrix
+D:\OxMetrics4\Ox\packages\DPD\dpd.ox (1517): doEstimation
+
+                  ----   2-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dlprod(-1)           0.166762   0.004508     37.0   0.000
+Dlemp               -0.144032   0.004869    -29.6   0.000
+Dlva                 0.955498   0.003195     299.   0.000
+Constant          -0.00584997  0.0002434    -24.0   0.000
+
+sigma              0.07345458  sigma^2           0.005395576
+sigma levels       0.05194023
+RSS              12.636438037  TSS               100.9004411
+no. of observations      2346  no. of parameters           4
+Warning: standard errors are unreliable!
+
+Transformation used:      first differences
+Transformed instruments:  lemp  lva
+Level instruments:        Dummies  Gmm("lprod",2,10)
+
+constant:                 yes  time dummies:               0
+number of individuals      87 (derived from year)
+longest time series        33 [1972 - 2004]
+shortest time series       17 (unbalanced panel)
+
+Wald (joint):    Chi^2(3) = 1.424e+05 [0.000] **
+Wald (dummy):    Chi^2(1) =     577.5 [0.000] **
+Sargan test:   Chi^2(260) =     85.99 [1.000]

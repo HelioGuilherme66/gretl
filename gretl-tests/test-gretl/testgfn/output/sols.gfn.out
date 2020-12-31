@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run sols.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/sols.gfn.inp
+? include ./sols.gfn
+ /home/cottrell/stats/test-gretl/testgfn/sols.gfn
+sols 1.4, 2014-01-26 (Allin Cottrell)
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? list xlist = const sqft bedrms
+Generated list xlist
+? matrix b = sols(price, xlist)
+
+OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      121.179       80.1778       1.511    0.1589  
+  sqft         0.148314     0.0212080    6.993    2.29e-05 ***
+  bedrms     -23.9106      24.6419      -0.9703   0.3527  
+
+SSR = 16832.8, R-squared = 0.834673
+
+Standard deviation of dependent var. = 88.4982
+
+Independent variables:
+
+                    std. dev.    standardized coeff.
+
+           const            0           1.3693
+            sqft       577.76          0.96826
+          bedrms      0.49725         -0.13435
+
+Generated matrix b
+? print b
+b (3 x 1)
+
+      1.3693 
+     0.96826 
+    -0.13435 
+
+Done

@@ -1,0 +1,16 @@
+set seed 6754354
+matrix X, U, V, S, B, A, D
+loop 1
+  matrix X = mnormal(1000,500)
+  X = X'X
+  S = svd(X, &U, &V)
+  B = I(cols(U))
+  B[diag] = S
+  A = U*B*V
+  D = maxr(maxc(abs(A - X)))
+  D
+endloop
+printf "time: %g\n", $stopwatch
+
+
+

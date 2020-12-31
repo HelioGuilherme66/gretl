@@ -1,0 +1,63 @@
+function list bsm (series y, matrix *m[null])
+    smpl ok(y) --restrict
+
+    scalar seps = 10
+    scalar seta = 10
+    scalar szeta = 10
+    
+    matrix F = { 1, 1; 0, 1 } 
+    matrix Sigma1 = { 10 }
+    matrix A = { 1 ; 0 }    
+
+    p = $pd   
+    if p > 1
+        scalar somega = 10
+        matrix F2 = -ones(1,p-1) | (I(p-2) ~ zeros(p-2,1))
+        F = (F ~ zeros(2,p-1)) | (zeros(p-1,2) ~ F2)
+        matrix Sigma2 = zeros(p+1, p+1)
+        Sigma2[1:3,1:3] = 10*I(3)
+        A = A | {1} | zeros(p-2,1)
+    else
+        matrix Sigma2 = I(2)
+    endif
+    
+    /* Kalman filter set-up */
+    kalman
+       obsy y
+       obsymat A
+       obsvar Sigma1
+       statemat F
+       statevar Sigma2
+   end kalman --diffuse
+   
+    /* ML estimation */
+    mle ll = ERR ? NA : $kalman_lnl
+        Sigma1[1] = seps^2
+        Sigma2[1,1] = seta^2
+        Sigma2[2,2] = szeta^2
+        Sigma2[3,3] = somega^2
+        ERR = kfilter()
+        params seps seta szeta somega
+    end mle --quiet --auxiliary
+
+    printf "loglik = %.8g\n\n", $lnl
+
+    if (!isnull(m))
+        m = { seta^2, szeta^2, somega^2, seps^2 }
+    endif
+
+    /* smoothed state */
+    matrix smst = ksmooth()
+    series level = smst[,1]
+    setinfo level -d "level component"
+    series slope = smst[,2]
+    setinfo slope -d "slope"
+    list L = level slope
+    if p > 1
+        series seasonal = smst[,3]
+        setinfo seasonal -d "seasonal component"
+        L = L seasonal
+    endif
+
+    return L
+end function

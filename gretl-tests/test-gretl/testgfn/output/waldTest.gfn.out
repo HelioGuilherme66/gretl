@@ -1,0 +1,70 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run waldTest.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/waldTest.gfn.inp
+? include ./waldTest.gfn
+ /home/cottrell/stats/test-gretl/testgfn/waldTest.gfn
+waldTest 0.1, 2015-07-30 (Oleh Komashko)
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? ols LRM const LRY
+
+Model 1: OLS, using observations 1974:1-1987:3 (T = 55)
+Dependent variable: LRM
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.929031      0.848846     1.094    0.2787  
+  LRY         1.81866       0.142595    12.75     8.80e-18 ***
+
+Mean dependent var   11.75441   S.D. dependent var   0.152357
+Sum squared resid    0.308048   S.E. of regression   0.076238
+R-squared            0.754248   Adjusted R-squared   0.749611
+F(1, 53)             162.6642   P-value(F)           8.80e-18
+Log-likelihood       64.54124   Akaike criterion    -125.0825
+Schwarz criterion   -121.0678   Hannan-Quinn        -123.5300
+rho                  0.856564   Durbin-Watson        0.298798
+
+# default is Chi-squared statistic
+? nlwaldtest("b[2]*b[1]= 0.5; b[1]=0",$coeff,$vcv)
+
+Wald test of (non)linear restrictions:
+
+b[2]*b[1] = 0.5; b[1] = 0
+
+Chi(2) = 48969.3, with p-value = 0
+
+# suppress printing
+? eval nlwaldtest("b[2]*b[1]= 0.5;   b[1]=0",$coeff,$vcv,0,1)
+         Chi      p-value 
+      48969.       0.0000 
+
+# one restriction, F statistic
+? nlwaldtest("b[2]*b[1]=0.5",$coeff,$vcv,53)
+
+Wald test of a (non)linear restriction:
+
+b[2]*b[1] = 0.5
+
+F(1,53) = 0.710492, with p-value = 0.403069
+
+# exotic restrictions; bad input string formatting
+# doesn't matter
+? nlwaldtest("b[2]^(-   b[1])- 2*b[1 ]=- 0.5;  -sin(b[1])=0",$coeff,$vcv)
+
+Wald test of (non)linear restrictions:
+
+b[2]^(-b[1]) - 2*b[1] = -0.5; -sin(b[1]) = 0
+
+Chi(2) = 2.03898e+07, with p-value = 0
+
+Done

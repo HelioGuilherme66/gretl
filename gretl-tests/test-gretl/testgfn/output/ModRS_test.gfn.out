@@ -1,0 +1,38 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run ModRS_test.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/ModRS_test.gfn.inp
+? include ./ModRS_test.gfn
+ /home/cottrell/stats/test-gretl/testgfn/ModRS_test.gfn
+ModRS_test 1.0, 2011-02-25 (Daniel Ventosa-Santaulària)
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+# the "2" accounts for the level of the test (5% in this case)
+? TRIAL = ModRS_test(QNC,2)
+-------------------------------------------------
+      Lo's(1991) Modified R/S (Hurst) Test
+-------------------------------------------------
+Null hypothesis: short-range memory
+Alternative hypothesis: long-range memory
+-------------------------------------------------
+Note: this function uses the built-in function
+lrvar to compute the long-run variance (lrvar)
+-------------------------------------------------
+Lo's modified R/S statistic: 0.0030266
+-------------------------------------------------
+Critical values: 0.809 and 1.862
+Ho rejected at 5 percent
+-------------------------------------------------
+Generated scalar TRIAL = 0.00302659
+Done

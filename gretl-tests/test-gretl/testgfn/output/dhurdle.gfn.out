@@ -1,0 +1,76 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run dhurdle.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/dhurdle.gfn.inp
+? include ./dhurdle/dhurdle.gfn
+ /home/cottrell/stats/test-gretl/testgfn/dhurdle/dhurdle.gfn
+dhurdle 1.22, 2015-07-13 (Riccardo "Jack" Lucchetti)
+# sample function call
+# From the examples datasets supplied with
+# M. Verbeek, "A Guide to Modern Econometrics"
+? open tobacco.gdt --quiet --frompkg=dhurdle
+Read datafile /opt/esl/share/gretl/functions/dhurdle/tobacco.gdt
+# dependent variable: tobacco expenditure share
+? series tobacco_share = misszero(w2)
+Generated series tobacco_share (ID 20)
+# main equation: explanatory variables
+? series l_nad = ln(nadults)
+Generated series l_nad (ID 21)
+? series ladlx = l_nad * lnx
+Generated series ladlx (ID 22)
+? list X = const bluecol whitecol flanders walloon l_nad lnx ladlx
+Generated list X
+# selection equation: extra variables
+? list Z = nkids nkids2 age age2
+Generated list Z
+# estimate and print
+? dhmod = dhurdle(tobacco_share, X, X || Z, 0)
+? dh_bundle_print(&dhmod)
+
+Double hurdle model (robust standard errors)
+
+Main equation
+----------------------------------------------------------
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.637103     0.0745477     8.546    1.27e-17 ***
+  bluecol     0.00705474   0.00373053    1.891    0.0586   *
+  whitecol    0.00220427   0.00333963    0.6600   0.5092  
+  flanders   -0.00781277   0.00416180   -1.877    0.0605   *
+  walloon     0.00224715   0.00434019    0.5178   0.6046  
+  l_nad      -0.191115     0.101524     -1.882    0.0598   *
+  lnx        -0.0462544    0.00540683   -8.555    1.18e-17 ***
+  ladlx       0.0139231    0.00724339    1.922    0.0546   *
+
+Selection equation
+----------------------------------------------------------
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       -1.27847     2.16429      -0.5907   0.5547  
+  bluecol     -0.0425418   0.297855     -0.1428   0.8864  
+  whitecol    -0.349853    0.213698     -1.637    0.1016  
+  flanders     0.0807626   0.181946      0.4439   0.6571  
+  walloon     -0.0626236   0.178077     -0.3517   0.7251  
+  l_nad      -17.1942      4.74931      -3.620    0.0003   ***
+  lnx          0.125267    0.168070      0.7453   0.4561  
+  ladlx        1.33843     0.354547      3.775    0.0002   ***
+  nkids        0.226503    0.123550      1.833    0.0668   *
+  nkids2      -0.758482    0.299154     -2.535    0.0112   **
+  age          0.554886    0.178683      3.105    0.0019   ***
+  age2        -0.191668    0.0419915    -4.564    5.01e-06 ***
+
+----------------------------------------------------------
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  sigma       0.0415443    0.00161047   25.80    9.75e-147 ***
+  rho        -0.139666     0.0842346    -1.658   0.0973    *
+
+    Total observations = 2724
+ Censored observations = 1688 (61.97% of total)
+        log-likelihood =     807.857480
+
+# or simply:
+# dhmod = dhurdle(tobacco_share, X, X || Z, 1)
+Done

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="jack4" frequency="5" startobs="1:1" endobs="8:5" type="stacked-time-series">
+<variables count="3">
+<variable name="id"
+ label="1+int((time-1)/5)"
+/>
+<variable name="year"
+ label="1990+(time-1)%5"
+/>
+<variable name="y"
+ label="zeromiss(y*tmp)"
+/>
+</variables>
+<observations count="40" labels="false">
+<obs>1 1990 NA </obs>
+<obs>1 1991 1.1733476763 </obs>
+<obs>1 1992 2.0199736816 </obs>
+<obs>1 1993 2.7188665641 </obs>
+<obs>1 1994 2.9636924009 </obs>
+<obs>2 1990 NA </obs>
+<obs>2 1991 1.0102337923 </obs>
+<obs>2 1992 0.3516341176 </obs>
+<obs>2 1993 -0.1309156197 </obs>
+<obs>2 1994 0.4564722275 </obs>
+<obs>3 1990 0.9604613683 </obs>
+<obs>3 1991 NA </obs>
+<obs>3 1992 1.2065147367 </obs>
+<obs>3 1993 0.8436812362 </obs>
+<obs>3 1994 0.0092045489 </obs>
+<obs>4 1990 -0.2081100021 </obs>
+<obs>4 1991 0.3390079057 </obs>
+<obs>4 1992 NA </obs>
+<obs>4 1993 0.5013119658 </obs>
+<obs>4 1994 0.9165679349 </obs>
+<obs>5 1990 -0.4979725578 </obs>
+<obs>5 1991 -1.2404888096 </obs>
+<obs>5 1992 -1.8460804075 </obs>
+<obs>5 1993 NA </obs>
+<obs>5 1994 -1.0051455126 </obs>
+<obs>6 1990 0.6163202187 </obs>
+<obs>6 1991 0.0752359563 </obs>
+<obs>6 1992 -2.8815172029 </obs>
+<obs>6 1993 -2.8591094645 </obs>
+<obs>6 1994 NA </obs>
+<obs>7 1990 -1.8375070362 </obs>
+<obs>7 1991 -0.8456492244 </obs>
+<obs>7 1992 -0.8728445226 </obs>
+<obs>7 1993 -0.7580336670 </obs>
+<obs>7 1994 -0.3237462920 </obs>
+<obs>8 1990 NA </obs>
+<obs>8 1991 -1.1362281719 </obs>
+<obs>8 1992 0.8854272392 </obs>
+<obs>8 1993 0.5679632083 </obs>
+<obs>8 1994 0.4615129255 </obs>
+</observations>
+</gretldata>

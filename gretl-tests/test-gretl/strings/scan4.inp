@@ -1,0 +1,10 @@
+string s = "123.456"
+string foo = "double"
+scalar @foo
+sscanf(s, "%lf", @foo)
+@foo
+eval sscanf(s, "%lf", @foo)
+string fmt = "%lf"
+eval sscanf(s, fmt, @foo)
+
+

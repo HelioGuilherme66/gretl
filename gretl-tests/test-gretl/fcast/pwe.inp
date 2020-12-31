@@ -1,0 +1,32 @@
+open data9-7
+list XL = 0 PRICE INCOME PRIME
+matrix X = { XL }
+# get PWE estimates
+ar1 QNC XL --pwe
+# save various things
+uh1 = $uhat
+yh1 = $yhat
+scalar r = $rho
+matrix b = $coeff
+# series for manual computations
+series uh2
+series yh2
+
+# PWE special for first obs
+scalar pw1 = sqrt(1.0 - r * r)
+scalar T = $T
+scalar et  
+
+loop i=1..T --quiet
+  if (i == 1)
+     et = pw1 * (QNC[i] - X[i,] * b)
+  else
+     et = QNC[i] - r * QNC[i-1]
+     et -= (X[i,] - r * X[i-1,]) * b
+  endif
+  uh2[i] = et
+  yh2[i] = QNC[i] - et
+endloop  
+
+# compare automatic and manual values
+print QNC yh1 yh2 uh1 uh2 --byobs

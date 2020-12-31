@@ -1,0 +1,90 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run panel_wls.inp
+ /home/cottrell/stats/test-gretl/panel/panel_wls.inp
+? open greene14_1.gdt -q
+Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+? logs C Q PF
+Listing 10 variables:
+  0) const    1) unit     2) year     3) C        4) Q      
+  5) PF       6) LF       7) l_C      8) l_Q      9) l_PF   
+
+? loop i=2..15 -q
+> l_C[i] = NA
+> endloop
+# the following agrees with stata's xtgls
+? panel l_C 0 l_Q l_PF LF --unit-weights
+
+Model 1: WLS, using 76 observations
+Included 6 cross-sectional units
+Dependent variable: l_C
+Weights based on per-unit error variances
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.55622     0.159333      59.98    3.28e-63 ***
+  l_Q          0.877657    0.00856150   102.5     9.01e-80 ***
+  l_PF         0.450859    0.0149358     30.19    1.31e-42 ***
+  LF          -1.66387     0.235935      -7.052   8.85e-10 ***
+
+Statistics based on the weighted data:
+
+Sum squared resid    69.73237   S.E. of regression   0.984127
+R-squared            0.995571   Adjusted R-squared   0.995387
+F(3, 72)             5395.161   P-value(F)           1.26e-84
+Log-likelihood      -104.5687   Akaike criterion     217.1374
+Schwarz criterion    226.4604   Hannan-Quinn         220.8633
+
+Statistics based on the original data:
+
+Mean dependent var   13.11470   S.D. dependent var   1.035549
+Sum squared resid    1.224192   S.E. of regression   0.130394
+
+? panel l_C 0 l_Q l_PF LF
+
+Model 2: Fixed-effects, using 76 observations
+Included 6 cross-sectional units
+Time-series length: minimum 1, maximum 15
+Dependent variable: l_C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        9.44485     0.287216     32.88     4.58e-43 ***
+  l_Q          0.894632    0.0339734    26.33     4.62e-37 ***
+  l_PF         0.430533    0.0181398    23.73     2.51e-34 ***
+  LF          -0.947199    0.222191     -4.263    6.46e-05 ***
+
+Mean dependent var   13.11470   S.D. dependent var   1.035549
+Sum squared resid    0.266207   S.E. of regression   0.063034
+LSDV R-squared       0.996690   Within R-squared     0.992592
+LSDV F(8, 67)        2521.901   P-value(F)           6.05e-80
+Log-likelihood       107.0208   Akaike criterion    -196.0417
+Schwarz criterion   -175.0651   Hannan-Quinn        -187.6584
+rho                  0.586141   Durbin-Watson        0.718678
+
+Joint test on named regressors -
+  Test statistic: F(3, 67) = 2992.5
+  with p-value = P(F(3, 67) > 2992.5) = 2.83682e-71
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(5, 67) = 46.3606
+  with p-value = P(F(5, 67) > 46.3606) = 1.88762e-20
+
+? modtest --panel
+
+Distribution free Wald test for heteroskedasticity:
+ Chi-square(5) = 10.5317, with p-value = 0.0614987
+
+Pooled error variance = 0.00350272
+
+ unit    variance
+    1          NA (T = 1)
+    2  0.00481623 (T = 15)
+    3  0.00202400 (T = 15)
+    4  0.00499722 (T = 15)
+    5  0.00278702 (T = 15)
+    6  0.00312264 (T = 15)
+Done

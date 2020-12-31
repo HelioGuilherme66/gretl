@@ -1,0 +1,12 @@
+# NAM series B - Pankratz series 23, Housing Starts
+# apparently over the sample 65:1,74:12  (skip final 12 months).
+#         NAM ML1   NAM ML2     TSP
+# theta    .270      .269     .271454
+# (s.e.)  (.087)    (.085)      (0)
+# THETA    .967     1.000    1.000000
+# (s.e.)  (.601)   (153.6)      (0)
+# LogL   -360.755  -360.751  -360.750
+
+open hst23
+smpl ; 1974:12
+arima 0 1 1 ; 0 1 1 ; hst23 --nc

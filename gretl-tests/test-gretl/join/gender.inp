@@ -1,0 +1,4 @@
+open hholds.csv -q
+string wanted = "F"
+join people.csv female_xp --ikey=hid --filter="gender==wanted" --data=xp --aggr=sum
+print hid female_xp -o

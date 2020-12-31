@@ -1,0 +1,25 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run dot_asn.inp
+ /home/cottrell/stats/test-gretl/matrix/dot_asn.inp
+? matrix m = I(3)
+Generated matrix m
+? print m
+m (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+? m .= 4
+Replaced matrix m
+? print m
+m (3 x 3)
+
+  4   4   4 
+  4   4   4 
+  4   4   4 
+
+Done

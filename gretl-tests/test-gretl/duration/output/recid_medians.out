@@ -1,0 +1,22 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run recid_medians.inp
+ /home/cottrell/stats/test-gretl/duration/recid_medians.inp
+? open recid.gdt -q
+Read datafile /opt/esl/share/gretl/data/wooldridge/recid.gdt
+
+          wpred       expred       llpred       lnpred
+
+ 1     151.8340     128.2143     151.8805     155.6400
+ 2     135.4729     116.9026     148.1552     155.4468
+ 3     106.7841      95.6737     109.7649     115.0838
+ 4      69.8319      66.8678      67.4948      78.9773
+ 5     114.2305     101.8171     118.4570     132.1965
+ 6      80.5836      75.7054      82.9977      86.8108
+ 7      56.5866      56.0163      51.3800      51.1213
+ 8      82.3111      76.8310      80.0926      86.7797
+ 9     265.4434     206.4456     267.0035     281.8353
+10     225.3535     178.2073     255.4855     268.7377
+

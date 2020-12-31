@@ -1,0 +1,324 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run distribs.inp
+ /home/cottrell/stats/test-gretl/distribs.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+# Poisson
+? pvalue P 200 0
+Poisson (mean = 200): area to the right of 0 =~ 1
+ Prob(x = 0) = 1.3839e-87
+? pvalue P 200 10
+Poisson (mean = 200): area to the right of 10 =~ 1
+ Prob(x <= 10) = 4.10958e-71
+ Prob(x = 10) = 3.90518e-71
+? pvalue P 200 50
+Poisson (mean = 200): area to the right of 50 =~ 1
+ Prob(x <= 50) = 6.81585e-37
+ Prob(x = 50) = 5.12305e-37
+? pvalue P 200 100
+Poisson (mean = 200): area to the right of 100 =~ 1
+ Prob(x <= 100) = 3.72364e-15
+ Prob(x = 100) = 1.87975e-15
+? pvalue P 200 103
+Poisson (mean = 200): area to the right of 103 =~ 1
+ Prob(x <= 103) = 2.89165e-14
+ Prob(x = 103) = 1.4172e-14
+? pvalue P 200 104
+Poisson (mean = 200): area to the right of 104 =~ 1
+ Prob(x <= 104) = 5.61703e-14
+ Prob(x = 104) = 2.72538e-14
+? pvalue P 200 110
+Poisson (mean = 200): area to the right of 110 =~ 1
+ Prob(x <= 110) = 2.48129e-12
+ Prob(x = 110) = 1.13106e-12
+? pvalue P 200 133
+Poisson (mean = 200): area to the right of 133 =~ 1
+ Prob(x <= 133) = 2.9439e-07
+ Prob(x = 133) = 1.01322e-07
+? pvalue P 200 134
+Poisson (mean = 200): area to the right of 134 =~ 1
+ Prob(x <= 134) = 4.45617e-07
+ Prob(x = 134) = 1.51227e-07
+? pvalue P 200 200
+Poisson (mean = 200): area to the right of 200 = 0.481206
+ Prob(x <= 200) = 0.518794
+ Prob(x = 200) = 0.0281977
+? pvalue P 200 250
+Poisson (mean = 200): area to the right of 250 = 0.000284621
+ Prob(x <= 250) = 0.999715
+ Prob(x = 250) = 7.74491e-05
+? pvalue P 200 314
+Poisson (mean = 200): area to the right of 314 = 3.83227e-14
+ Prob(x <= 314) = 1
+ Prob(x = 314) = 2.23568e-14
+? pvalue P 200 315
+Poisson (mean = 200): area to the right of 315 = 2.41279e-14
+ Prob(x <= 315) = 1
+ Prob(x = 315) = 1.41948e-14
+? pvalue P 200 500
+Poisson (mean = 200): area to the right of 500 = 2.46154e-71
+ Prob(x <= 500) = 1
+ Prob(x = 500) = 3.71273e-71
+? pvalue P 200 569
+Poisson (mean = 200): area to the right of 569 = 6.87606e-101
+ Prob(x <= 569) = 1
+ Prob(x = 569) = 1.27392e-100
+? pvalue P 200 570
+Poisson (mean = 200): area to the right of 570 = 2.40617e-101
+ Prob(x <= 570) = 1
+ Prob(x = 570) = 4.46989e-101
+? pvalue P 200 900
+Poisson (mean = 200): area to the right of 900 = 4.94037e-287
+ Prob(x <= 900) = 1
+ Prob(x = 900) = 1.7323e-286
+? pvalue P 200 950
+Poisson (mean = 200): area to the right of 950: NA
+? pvalue P 200 956
+Poisson (mean = 200): area to the right of 956: NA
+? pvalue P 200 957
+Poisson (mean = 200): area to the right of 957: NA
+# Binomial
+? pvalue B 0.5 1030 10
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 10) = 1
+ Prob(x <= 10) = 3.11137e-287
+ Prob(x = 10) = 3.08092e-287
+? pvalue B 0.5 1030 50
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 50) = 1
+ Prob(x <= 50) = 3.94085e-225
+ Prob(x = 50) = 3.74021e-225
+? pvalue B 0.5 1030 100
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 100) = 1
+ Prob(x <= 100) = 1.39413e-169
+ Prob(x = 100) = 1.24459e-169
+? pvalue B 0.5 1030 200
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 200) = 1
+ Prob(x <= 200) = 5.45781e-92
+ Prob(x = 200) = 4.14682e-92
+? pvalue B 0.5 1030 390
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 390) = 1
+ Prob(x <= 390) = 3.18196e-15
+ Prob(x = 390) = 1.25793e-15
+? pvalue B 0.5 1030 391
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 391) = 1
+ Prob(x <= 391) = 5.24099e-15
+ Prob(x = 391) = 2.05902e-15
+? pvalue B 0.5 1030 400
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 400) = 1
+ Prob(x <= 400) = 3.89735e-13
+ Prob(x = 400) = 1.44351e-13
+? pvalue B 0.5 1030 499
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 499) = 0.832958
+ Prob(x <= 499) = 0.167042
+ Prob(x = 499) = 0.0151255
+? pvalue B 0.5 1030 500
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 500) = 0.816894
+ Prob(x <= 500) = 0.183106
+ Prob(x = 500) = 0.0160632
+? pvalue B 0.5 1030 515
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 515) = 0.487572
+ Prob(x <= 515) = 0.512428
+ Prob(x = 515) = 0.0248551
+? pvalue B 0.5 1030 550
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 550) = 0.0134496
+ Prob(x <= 550) = 0.98655
+ Prob(x = 550) = 0.00230459
+? pvalue B 0.5 1030 575
+Binomial (p = 0.5, n = 1030):
+ Prob(x > 575) = 8.02379e-05
+ Prob(x <= 575) = 0.99992
+ Prob(x = 575) = 2.26794e-05
+# Hypergeometric -- not available
+# Gamma
+? p = cdf(G, 0.2, 1, 0.3)
+Generated scalar p = 0.816527
+? p = cdf(G, 0.2, 1, 0.2)
+Replaced scalar p = 0.764435
+? p = cdf(G, 0.2, 1, 0.1)
+Replaced scalar p = 0.676043
+? p = cdf(G, 0.1, 1, 0.2)
+Replaced scalar p = 0.87942
+? p = cdf(G, 0.1, 1, 0.1)
+Replaced scalar p = 0.827552
+? p = cdf(G, 0.1, 1, 0.05)
+Replaced scalar p = 0.775539
+? p = cdf(G, 0.05, 1, 0.2)
+Replaced scalar p = 0.939209
+? p = cdf(G, 0.05, 1, 0.1)
+Replaced scalar p = 0.911258
+? p = cdf(G, 0.05, 1, 0.05)
+Replaced scalar p = 0.882244
+? p = cdf(G, 0.05, 1, 0.01)
+Replaced scalar p = 0.81556
+? p = cdf(G, 0.05, 1, 0.001)
+Replaced scalar p = 0.727179
+# Normal
+? p = cdf(N, -3)
+Replaced scalar p = 0.0013499
+? p = cdf(N, -4)
+Replaced scalar p = 3.16712e-05
+? p = cdf(N, -5)
+Replaced scalar p = 2.86652e-07
+? p = cdf(N, -6)
+Replaced scalar p = 9.86588e-10
+? p = cdf(N, -8.2)
+Replaced scalar p = 1.20194e-16
+? p = cdf(N, -8.3)
+Replaced scalar p = 5.20557e-17
+? p = cdf(N, 4.6)
+Replaced scalar p = 0.999998
+? p = cdf(N, 4.5)
+Replaced scalar p = 0.999997
+? p = cdf(N, 0)
+Replaced scalar p = 0.5
+? p = cdf(N, -11)
+Replaced scalar p = 1.91066e-28
+? p = cdf(N, -21)
+Replaced scalar p = 3.27928e-98
+? p = cdf(N, -22)
+Replaced scalar p = 1.43989e-107
+? p = cdf(N, -27)
+Replaced scalar p = 7.38948e-161
+? p = cdf(N, -37)
+Replaced scalar p = 5.72557e-300
+? p = cdf(N, -38)
+Replaced scalar p = 0
+# Normal p-values
+? p = pvalue(N, 3)
+Replaced scalar p = 0.0013499
+? p = pvalue(N, 11)
+Replaced scalar p = 1.91066e-28
+? p = pvalue(N, 21)
+Replaced scalar p = 3.27928e-98
+? p = pvalue(N, 22)
+Replaced scalar p = 1.43989e-107
+? p = pvalue(N, 27)
+Replaced scalar p = 7.38948e-161
+? pvalue N 40
+Standard normal: area to the right of 40 =~ 0
+(two-tailed value = 0; complement = 1)
+# Inverse normal
+? z = -critical(N, 1.0e-3)
+Generated scalar z = -3.09023
+? z = -critical(N, 1.0e-4)
+Replaced scalar z = -3.71902
+? z = -critical(N, 1.0e-5)
+Replaced scalar z = -4.26489
+? z = -critical(N, 1.0e-6)
+Replaced scalar z = -4.75342
+? z = -critical(N, 3.0e-7)
+Replaced scalar z = -4.99122
+? z = -critical(N, 2.0e-7)
+Replaced scalar z = -5.06896
+? z = -critical(N, 1.0e-200)
+Replaced scalar z = -30.2056
+? z = -critical(N, 1.0e-250)
+Replaced scalar z = -33.7996
+? z = -critical(N, 1.0e-300)
+Replaced scalar z = -37.0471
+? z = invcdf(N, 1.0e-300)
+Replaced scalar z = -37.0471
+# Inverse chi-square
+? x = critical(X, 1, 1.0e-3)
+Generated scalar x = 10.8276
+? x = critical(X, 10, 1.0e-3)
+Replaced scalar x = 29.5883
+? x = critical(X, 1, 1.0e-6)
+Replaced scalar x = 23.9281
+? x = critical(X, 10, 1.0e-6)
+Replaced scalar x = 46.863
+? x = critical(X, 1, 1.0e-7)
+Replaced scalar x = 28.374
+? x = critical(X, 10, 1.0e-7)
+Replaced scalar x = 52.3095
+? x = critical(X, 1, 1.0e-12)
+Replaced scalar x = 50.8441
+? x = critical(X, 10, 1.0e-12)
+Replaced scalar x = 78.4716
+? x = critical(X, 1, 1.0e-13)
+Replaced scalar x = 55.367
+? x = critical(X, 10, 1.0e-13)
+Replaced scalar x = 83.5671
+? x = critical(X, 1, 1.0e-100)
+Replaced scalar x = 453.943
+? x = critical(X, 10, 1.0e-100)
+Replaced scalar x = 498.338
+# Inverse F
+? x = critical(F, 2, 2, 1.0e-3)
+Replaced scalar x = 999
+? x = critical(F, 5, 5, 1.0e-3)
+Replaced scalar x = 29.7524
+? x = critical(F, 10, 10, 1.0e-3)
+Replaced scalar x = 8.75387
+? x = critical(F, 2, 2, 1.0e-6)
+Replaced scalar x = 999999
+? x = critical(F, 5, 5, 1.0e-6)
+Replaced scalar x = 492.881
+? x = critical(F, 10, 10, 1.0e-6)
+Replaced scalar x = 40.0156
+? x = critical(F, 1, 1, 1.0e-4)
+Replaced scalar x = 4.05285e+07
+? x = critical(F, 1, 1, 1.0e-5)
+Replaced scalar x = 4.05285e+09
+? x = critical(F, 1, 1, 1.0e-6)
+Replaced scalar x = 4.05285e+11
+? x = critical(F, 1, 1, 1.0e-12)
+Replaced scalar x = 4.05285e+23
+? x = critical(F, 1, 1, 1.0e-13)
+Replaced scalar x = 4.05285e+25
+? x = critical(F, 1, 1, 1.0e-100)
+Replaced scalar x = 4.05285e+199
+# Inverse beta -- not available
+# Inverse Student's t
+? x = critical(t, 2, 1.0e-3)
+Replaced scalar x = 22.3271
+? x = critical(t, 5, 1.0e-3)
+Replaced scalar x = 5.89343
+? x = critical(t, 10, 1.0e-3)
+Replaced scalar x = 4.1437
+? x = critical(t, 2, 1.0e-6)
+Replaced scalar x = 707.106
+? x = critical(t, 5, 1.0e-6)
+Replaced scalar x = 24.771
+? x = critical(t, 10, 1.0e-6)
+Replaced scalar x = 9.752
+? x = critical(t, 1, 1.0e-7)
+Replaced scalar x = 3.1831e+06
+? x = critical(t, 1, 1.0e-8)
+Replaced scalar x = 3.1831e+07
+? x = critical(t, 1, 1.0e-9)
+Replaced scalar x = 3.1831e+08
+? x = critical(t, 1, 1.0e-12)
+Replaced scalar x = 3.1831e+11
+? x = critical(t, 1, 1.0e-13)
+Replaced scalar x = 3.1831e+12
+? x = critical(t, 1e+8, 0.1)
+Replaced scalar x = 1.28155
+? x = critical(t, 1e+9, 0.1)
+Replaced scalar x = 1.28155
+? x = critical(t, 1e+10, 0.1)
+Replaced scalar x = 1.28157
+? x = critical(t, 1e+12, 0.1)
+Replaced scalar x = 1.28177
+? x = critical(t, 1e+13, 0.1)
+Replaced scalar x = 1.24922
+# t p-values
+? x = pvalue(t, 100, 3)
+Replaced scalar x = 0.00170396
+? x = pvalue(t, 100, 30)
+Replaced scalar x = 4.19017e-52
+Done

@@ -1,0 +1,74 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps9-1.inp
+ /opt/esl/share/gretl/scripts/ps9-1.inp
+# PS9.1, for Examples 9.1 and 9.2 illustrating
+# autocorrelation and the residual plot
+? open data6-6
+
+Read datafile /opt/esl/share/gretl/data/data6-6.gdt
+periodicity: 1, maxobs: 44
+observations range: 1948 to 1991
+
+Listing 3 variables:
+  0) const      1) year       2) farmpop  
+
+? genr time
+Generated series time (ID 3)
+? ols farmpop const time
+
+Model 1: OLS, using observations 1948-1991 (T = 44)
+Dependent variable: farmpop
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       13.7773      0.436669      31.55    7.07e-31 ***
+  time        -0.324848    0.0169016    -19.22    1.99e-22 ***
+
+Mean dependent var   6.468182   S.D. dependent var   4.403581
+Sum squared resid    85.12467   S.E. of regression   1.423649
+R-squared            0.897912   Adjusted R-squared   0.895481
+F(1, 42)             369.4094   P-value(F)           1.99e-22
+Log-likelihood      -76.95169   Akaike criterion     157.9034
+Schwarz criterion    161.4718   Hannan-Quinn         159.2267
+rho                  0.944462   Durbin-Watson        0.055649
+
+? genr ut=$uhat
+Generated series ut (ID 4)
+? genr ut1=ut(-1)
+Generated series ut1 (ID 5)
+? corr ut ut1
+
+corr(ut, ut1) = 0.96970203
+Under the null hypothesis of no correlation:
+ t(41) = 25.4169, with two-tailed p-value 0.0000
+
+? textplot ut time
+
+  ut
+    3.14758  |o                                                            
+             | o                                                           
+             |                                                             
+    2.32626  +  o                                                         o
+             |                                                          o  
+             |                                                         o   
+             |    oo                                                 o     
+             |                                                      o      
+   0.957407  +                                                     o       
+             |                                                   o         
+             |      o                                         o o          
+        0.0  |--------oo-o-------------------------------------------------
+             |                                               o             
+  -0.411448  +            oo                              o o              
+             |               o                     o o   o                 
+             |                o                 o o    o                   
+             |                  oo             o      o                    
+             |                    o           o                            
+    -1.7803  +                      oo ooo oo                              
+             |+---------+---------+---------+---------+---------+---------+
+              1                           time                            44
+
+
+Done

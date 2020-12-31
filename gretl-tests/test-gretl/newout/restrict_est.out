@@ -1,0 +1,136 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run restrict_est.inp
+ /home/cottrell/stats/test-gretl/restrict_est.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? ols 1 0 2 3 4
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+? restrict
+? b3 - b4 = 0
+? end restrict
+Restriction:
+ b[bedrms] - b[baths] = 0
+
+Test statistic: F(1, 10) = 0.0266334, with p-value = 0.873614
+
+Restricted estimates:
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      127.736       83.9482       1.522    0.1563  
+  sqft         0.157407     0.0264067    5.961    9.44e-05 ***
+  bedrms     -18.5060      18.4649      -1.002    0.3378  
+  baths      -18.5060      18.4649      -1.002    0.3378  
+
+  Standard error of the regression = 39.0158
+? genr x = bedrms + baths
+Generated series x (ID 5)
+? ols 1 0 2 x
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      127.736       83.9482       1.522    0.1563  
+  sqft         0.157407     0.0264067    5.961    9.44e-05 ***
+  x          -18.5060      18.4649      -1.002    0.3378  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16744.55   S.E. of regression   39.01579
+R-squared            0.835540   Adjusted R-squared   0.805638
+F(2, 11)             27.94268   P-value(F)           0.000049
+Log-likelihood      -69.47253   Akaike criterion     144.9451
+Schwarz criterion    146.8622   Hannan-Quinn         144.7676
+
+? ols 1 0 2 3 4
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      129.062       88.3033       1.462    0.1746 
+  sqft         0.154800     0.0319404    4.847    0.0007  ***
+  bedrms     -21.5875      27.0293      -0.7987   0.4430 
+  baths      -12.1928      43.2500      -0.2819   0.7838 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16700.07   S.E. of regression   40.86572
+R-squared            0.835976   Adjusted R-squared   0.786769
+F(3, 10)             16.98894   P-value(F)           0.000299
+Log-likelihood      -69.45391   Akaike criterion     146.9078
+Schwarz criterion    149.4641   Hannan-Quinn         146.6712
+
+Excluding the constant, p-value was highest for variable 4 (baths)
+
+? restrict
+? b1 = 100
+? end restrict
+Restriction:
+ b[const] = 100
+
+Test statistic: F(1, 10) = 0.108314, with p-value = 0.74886
+
+Restricted estimates:
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      100.000        0.00000     NA        NA     
+  sqft         0.152299     0.0297397    5.121     0.0003 ***
+  bedrms     -15.3368      18.4357      -0.8319    0.4232
+  baths       -7.68536     39.3264      -0.1954    0.8486
+
+  Standard error of the regression = 39.1744
+? genr p2 = price - 100
+Generated series p2 (ID 6)
+? ols p2 2 3 4
+
+Model 4: OLS, using observations 1-14
+Dependent variable: p2
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  sqft         0.152299     0.0297397    5.121    0.0003  ***
+  bedrms     -15.3368      18.4357      -0.8319   0.4232 
+  baths       -7.68536     39.3264      -0.1954   0.8486 
+
+Mean dependent var   217.4929   S.D. dependent var   88.49816
+Sum squared resid    16880.95   S.E. of regression   39.17438
+Uncentered R-squared 0.977906   Centered R-squared   0.834200
+F(3, 11)             162.2925   P-value(F)           2.19e-09
+Log-likelihood      -69.52933   Akaike criterion     145.0587
+Schwarz criterion    146.9758   Hannan-Quinn         144.8812
+
+P-value was highest for variable 4 (baths)
+
+Done

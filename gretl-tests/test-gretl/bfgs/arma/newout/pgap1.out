@@ -1,0 +1,57 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run pgap1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/pgap1.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 371
+Pseudo-random number generator seeded with 371
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-1) + u
+Replaced series y (ID 4)
+? matrix pvec = {1,3}
+Generated matrix pvec
+? arma pvec 1 ; y
+
+Function evaluations: 43
+Evaluations of gradient: 15
+
+Model 1: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       0.0830636    0.184332      0.4506   0.6523  
+  phi_1       0.660565     0.0399405    16.54     1.93e-61 ***
+  phi_3       0.0108243    0.0342956     0.3156   0.7523  
+  theta_1     0.452143     0.0437485    10.34     4.89e-25 ***
+
+Mean dependent var   0.091332   S.D. dependent var   1.874244
+Mean of innovations -0.000552   S.D. of innovations  1.039918
+Log-likelihood      -910.5113   Akaike criterion     1831.023
+Schwarz criterion    1853.203   Hannan-Quinn         1839.642
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4626     0.0000     1.4626     0.0000
+    Root  2          -0.7313    -7.9139     7.9476    -0.2647
+    Root  3          -0.7313     7.9139     7.9476     0.2647
+  MA
+    Root  1          -2.2117     0.0000     2.2117     0.5000
+  -----------------------------------------------------------
+
+Done

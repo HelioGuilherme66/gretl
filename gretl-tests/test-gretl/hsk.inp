@@ -1,0 +1,48 @@
+include criteria.gfn
+
+open data4-5.gdt
+ols wlfp 0 yf educ ue urb wh 
+genr usq=$uhat*$uhat
+square yf educ ue urb wh
+ols usq 0 yf educ ue urb wh sq_yf sq_educ sq_ue sq_urb sq_wh 
+genr usqhat1=usq-$uhat
+print usqhat1
+genr lnusq=log(usq)
+ols lnusq 0 yf educ ue urb wh sq_yf sq_educ sq_ue sq_urb sq_wh
+genr usqhat2 = exp(lnusq-$uhat)
+print usqhat2
+genr wt=1/(usqhat2^0.5)
+print wt
+genr y=wt*wlfp
+genr x0=wt
+genr x1=wt*yf
+genr x2=wt*educ
+genr x3=wt*ue
+genr x4=wt*urb
+genr x5=wt*wh
+genr zero = 0*const
+ols -o y x1 x2 x3 x4 x5 x0
+genr olsess = $ess
+hsk -o wlfp 0 yf educ zero ue urb wh
+genr wt = 1/usqhat2
+wls -o wt wlfp 0 yf educ ue urb wh
+genr essa=$ess
+genr df=$df
+genr n=$nobs
+smpl 1 1
+print n df essa -o
+smpl 1 50
+genr ut=$uhat
+genr usq=ut*ut*$nobs
+genr ess=mean(usq)
+genr sgmahat=(ess/$df)^0.5
+genr yht=wlfp-ut
+genr yh=yht*sqrt(wt)
+genr yhsq = mean($nobs*yh*yh)
+genr fstt = yhsq*$df/(6*olsess)
+corr wlfp yht
+# genr rsq=.842*.842
+genr rsq=corr(wlfp, yht)*corr(wlfp, yht)
+smpl 1 1
+print rsq ess sgmahat fstt -o
+criteria(ess, 50, 6)

@@ -1,0 +1,148 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run eigsolve_m.inp
+ /home/cottrell/stats/test-gretl/vecm/eigsolve_m.inp
+? function void eigensort (matrix *evals, matrix *evecs, int r)
+? open denmark.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+? list Y = LRM LRY IBO IDE
+Generated list Y
+? coint2 2 Y --rc
+
+Johansen test:
+Number of equations = 4
+Lag order = 2
+Estimation period: 1974:3 - 1987:3 (T = 53)
+Case 2: Restricted constant
+
+Log-likelihood = 803.807 (including constant term: 653.399)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.46968     52.711 [0.0647]     33.616 [0.0079]
+   1    0.17424     19.095 [0.7791]     10.147 [0.8181]
+   2    0.11808     8.9477 [0.7424]     6.6598 [0.7131]
+   3   0.042249     2.2878 [0.7208]     2.2878 [0.7197]
+
+Corrected for sample size (df = 44)
+Rank Trace test p-value
+   0     52.711 [0.1091]
+   1     19.095 [0.8153]
+   2     8.9477 [0.7593]
+   3     2.2878 [0.7213]
+
+eigenvalue     0.46968      0.17424      0.11808     0.042249 
+
+beta (cointegrating vectors)
+LRM            -19.045       12.020       13.507       1.5265 
+LRY             18.457      -16.539      -30.514     -0.21960 
+IBO            -102.90      -4.0287       22.162      -17.872 
+IDE             78.852       108.25      -50.235       11.506 
+const           123.37      -52.044       24.125      -15.661 
+
+alpha (adjustment vectors)
+LRM           0.015741   -0.0021074    0.0049353   -0.0026693 
+LRY         -0.0014147  -2.4170e-05    0.0075531  -0.00083979 
+IBO        -0.00020590  -0.00085529   0.00044722    0.0016219 
+IDE         -0.0010502   -0.0021907  -0.00028331   5.3412e-06 
+
+renormalized beta
+LRM             1.0000     -0.72675      0.60946      0.13267 
+LRY           -0.96912       1.0000      -1.3769    -0.019085 
+IBO             5.4028      0.24358       1.0000      -1.5532 
+IDE            -4.1403      -6.5450      -2.2667       1.0000 
+const          -6.4781       3.1467       1.0886      -1.3611 
+
+renormalized alpha
+LRM           -0.29978     0.034855      0.10937    -0.030714 
+LRY           0.026943   0.00039976      0.16739   -0.0096629 
+IBO          0.0039214     0.014146    0.0099111     0.018662 
+IDE           0.020001     0.036232   -0.0062786   6.1457e-05 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.26253      0.17537      -1.4541      0.73444       2.2126 
+LRY            0.12739     -0.25601      0.32806     -0.50326     0.022089 
+IBO          0.0021571   -0.0036571    0.0055565     -0.11263    0.0044974 
+IDE          -0.010149     0.025493      0.11051     -0.30566    -0.022476 
+
+? list dY = diff(Y)
+Generated list dY
+? list dY_1 = lags(1, dY)
+Generated list dY_1
+? list Y_1 = lags(1, Y) const
+Generated list Y_1
+? smpl +2 ;
+Full data range: 1974:1 - 1987:3 (n = 55)
+Current sample: 1974:3 - 1987:3 (n = 53)
+
+? matrix mX = {dY_1}
+Generated matrix mX
+? matrix mY = {dY} ~ {Y_1}
+Generated matrix mY
+? scalar T = rows(mX)
+Generated scalar T = 53
+? scalar n = nelem(Y)
+Generated scalar n = 4
+? matrix U
+? mols(mY, mX, &U)
+? U0 = U[,1:n]
+Generated matrix U0
+? U1 = U[,n+1:]
+Generated matrix U1
+? matrix S00 = U0'U0 ./ T
+Generated matrix S00
+? print S00
+S00 (4 x 4)
+
+  0.00092796   0.00032162  -8.0339e-05  -2.0880e-05 
+  0.00032162   0.00050409  -2.8944e-06  -1.4761e-05 
+ -8.0339e-05  -2.8944e-06   6.8247e-05   1.0346e-05 
+ -2.0880e-05  -1.4761e-05   1.0346e-05   3.0571e-05 
+
+? matrix S11 = U1'U1 ./ T
+Generated matrix S11
+? print S11
+S11 (5 x 5)
+
+      130.68       66.209       1.7787       1.0196       11.127 
+      66.209       33.546      0.90176      0.51676       5.6376 
+      1.7787      0.90176     0.025048     0.014194      0.15175 
+      1.0196      0.51676     0.014194    0.0081256     0.086922 
+      11.127       5.6376      0.15175     0.086922      0.94757 
+
+? matrix S01 = U0'U1 ./ T
+Generated matrix S01
+? print S01
+S01 (4 x 5)
+
+    0.085191     0.042962   0.00093670   0.00060384    0.0072465 
+    0.013301    0.0065284   0.00015019   7.5124e-05    0.0011424 
+   -0.015145   -0.0076953  -0.00023804  -0.00013586   -0.0013000 
+  -0.0036058   -0.0017915  -4.4785e-05  -4.2870e-05  -0.00030708 
+
+? matrix A = qform(S01', inv(S00))
+Generated matrix A
+? matrix evecs
+? matrix evals = eigsolve(A, S11, &evecs)
+Generated matrix evals
+? eigensort(&evals, &evecs, n)
+? print evals
+evals (4 x 1)
+
+     0.46968 
+     0.17424 
+     0.11808 
+    0.042249 
+
+? print evecs
+evecs (5 x 4)
+
+     -19.045       12.020       13.507      -1.5265 
+      18.457      -16.539      -30.514      0.21960 
+     -102.90      -4.0287       22.162       17.872 
+      78.852       108.25      -50.235      -11.506 
+      123.37      -52.044       24.125       15.661 
+
+Done

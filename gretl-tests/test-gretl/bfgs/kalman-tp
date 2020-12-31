@@ -1,0 +1,8 @@
+kalman
+
+                     output newout
+BFGS gradient evals:    114    101
+BFGS function evals:    453    388
+
+old: real 1.51, 1.51
+new: real 1.46, 1.46

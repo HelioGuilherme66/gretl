@@ -1,0 +1,44 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:57
+? run irreg.inp
+ /home/cottrell/stats/test-gretl/arbond/irreg.inp
+? open irreg.csv
+parsing /home/cottrell/stats/test-gretl/arbond/irreg.csv...
+using delimiter ','
+   longest line: 21 characters
+   first field: 'y'
+   number of columns = 3
+   number of variables: 3
+   number of non-blank lines: 43
+scanning for variable names...
+   line: y,unit,year
+scanning for row labels and data...
+treating these as undated data
+
+Listing 4 variables:
+  0) const    1) y        2) unit     3) year   
+
+? setobs unit year --panel
+Full data range: 1:1 - 6:7 (n = 42)
+
+? arbond 1 0 ; y
+
+Model 1: 1-step Arellano-Bond, using 24 observations
+Included 6 cross-sectional units
+Dependent variable: y
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  Dy(-1)      0.500917     0.0211467    23.69   4.82e-124 ***
+
+Sum squared resid    0.253933   S.E. of regression   0.105074
+
+Number of instruments = 15
+Test for AR(1) errors: z = -2.17839 [0.0294]
+Test for AR(2) errors: z = -1.37484 [0.1692]
+Sargan over-identification test: Chi-square(14) = 17.8989 [0.2114]
+Wald (joint) test: Chi-square(1) = 561.109 [0.0000]
+
+Done

@@ -1,0 +1,5 @@
+open data9-7
+ar1 1 0 2 3
+ar1 1 0 2 3 --hilu
+ar1 1 0 2 3 --hilu --no-corc
+ar1 1 0 2 3 --pwe

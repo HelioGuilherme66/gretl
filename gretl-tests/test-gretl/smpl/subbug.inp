@@ -1,0 +1,17 @@
+nulldata 10
+series mask1 =   {0, 0, 1, 0, 1, 0, 1, 1, 1, 0}
+series mask2 =   {0, 1, 1, 0, 1, 0, 1, 1, 1, 0}
+series mask3 =   {1, 1, 1, 1, 0, 1, 1, 1, 1, 0}
+series badmask = {0, 1, 1, 1, 0, 1, 1, 0, 1, 0}
+series x = normal()
+x[5] = NA
+smpl mask1 --dummy
+# or can try the following:
+# smpl 3 9
+m1 <- ols x 0 index
+eval $uhat
+smpl full
+# smpl mask2 --dummy --permanent
+# smpl mask3 --dummy --permanent
+smpl badmask --dummy --permanent
+eval $uhat

@@ -1,0 +1,16 @@
+open data4-1 -q
+price[3] = NA
+sqft[8] = NA
+ols 1 0 2 --quiet
+series yh1 = $yhat
+list L = price sqft
+series chk = ok(L)
+set matrix_mask chk
+matrix y = {price}
+matrix x = {sqft}
+x = 1 ~ x
+series yh2 = x * mols(y, x)
+print yh1 yh2 -o
+
+
+

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gretldata SYSTEM "gretldata.dtd">
+
+<gretldata name="test" frequency="8" startobs="1:1" endobs="5:8" type="stacked-time-series">
+<description>
+14 Jul 2006 14:20</description>
+<variables count="6">
+<variable name="codlav"
+ label="Numero identificativo lavoratore"
+/>
+<variable name="year"
+ label="Anno di riferimento del panel"
+ discrete="true"
+/>
+<variable name="lnwreal"
+/>
+<variable name="x3reg"
+ label="Regione di lavoro"
+/>
+<variable name="eta"
+ label="Eta nell'anno panel"
+/>
+<variable name="eta2"
+/>
+</variables>
+<observations count="40" labels="false">
+<obs>30 1990 3.6427922249 3 47 2209 </obs>
+<obs>30 1991 3.6362524033 3 48 2304 </obs>
+<obs>30 1992 NA NA NA NA </obs>
+<obs>30 1993 4.4976453781 3 50 2500 </obs>
+<obs>30 1994 NA NA NA NA </obs>
+<obs>30 1995 NA NA NA NA </obs>
+<obs>30 1996 NA NA NA NA </obs>
+<obs>30 1997 NA NA NA NA </obs>
+<obs>31 1990 3.4169991016 3 46 2116 </obs>
+<obs>31 1991 3.4683752060 3 47 2209 </obs>
+<obs>31 1992 3.4781839848 3 48 2304 </obs>
+<obs>31 1993 3.4634823799 3 49 2401 </obs>
+<obs>31 1994 3.4114563465 3 50 2500 </obs>
+<obs>31 1995 3.4406700134 3 51 2601 </obs>
+<obs>31 1996 3.5199494362 3 52 2704 </obs>
+<obs>31 1997 NA NA NA NA </obs>
+<obs>33 1990 3.6394653320 3 45 2025 </obs>
+<obs>33 1991 3.8861594200 3 46 2116 </obs>
+<obs>33 1992 3.8119428158 3 47 2209 </obs>
+<obs>33 1993 3.7770280838 3 48 2304 </obs>
+<obs>33 1994 3.7712147236 3 49 2401 </obs>
+<obs>33 1995 3.8010370731 3 50 2500 </obs>
+<obs>33 1996 3.9436254501 3 51 2601 </obs>
+<obs>33 1997 3.9894306660 3 52 2704 </obs>
+<obs>34 1990 3.7105021477 3 44 1936 </obs>
+<obs>34 1991 3.8826470375 3 45 2025 </obs>
+<obs>34 1992 3.9081804752 3 46 2116 </obs>
+<obs>34 1993 3.8914065361 3 47 2209 </obs>
+<obs>34 1994 3.8495161533 3 48 2304 </obs>
+<obs>34 1995 3.8262069225 3 49 2401 </obs>
+<obs>34 1996 3.8565359116 3 50 2500 </obs>
+<obs>34 1997 3.8878939152 3 51 2601 </obs>
+<obs>38 1990 4.0676999092 3 42 1764 </obs>
+<obs>38 1991 4.0173144341 3 43 1849 </obs>
+<obs>38 1992 3.8666608334 3 44 1936 </obs>
+<obs>38 1993 3.7268071175 3 45 2025 </obs>
+<obs>38 1994 NA NA NA NA </obs>
+<obs>38 1995 4.0467205048 3 47 2209 </obs>
+<obs>38 1996 4.0778841972 3 48 2304 </obs>
+<obs>38 1997 4.0778636932 3 49 2401 </obs>
+</observations>
+</gretldata>

@@ -1,0 +1,105 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run coint2finite.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/coint2finite.gfn.inp
+? include ./coint2finite.gfn
+ /home/cottrell/stats/test-gretl/testgfn/coint2finite.gfn
+coint2finite 1.1, 2014-06-02 (Andreas Noack Jensen and Sven Schreiber)
+? open australia
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+? list endo = ius2 iau2
+Generated list endo
+# Bartlett:
+? coint2finite(endo, 2, 3, 0, null, null)
+Bartlett-corrected CI test
+Rank     trace   asy-pval  bart-pval  bart-tr
+   0    19.651      0.249      0.294   18.885
+   1     4.073      0.731      0.762    3.847
+
+Effective sample: 1972:1-1991:1
+Lags (levels) in VAR: 2
+Deterministic spec (1=nc; 2=rc; 3=crt): 3
+Endogenous variables:
+ius2,iau2
+# Bootstrap:
+? coint2finite(endo, 2, 3, 500, null, null)
+CI test with bootstrapped p-values
+(500 replications)
+Rank     trace  asy-p-val  boot-pval
+   0    19.651      0.265      1.000
+   1     4.073      0.734      0.654
+
+Effective sample: 1972:1-1991:1
+Lags (levels) in VAR: 2
+Deterministic spec (1=nc; 2=rc; 3=crt): 3
+Endogenous variables:
+ius2,iau2
+? diff e2
+Listing 13 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau    12) d_e2   
+
+? lags e2 d_e2
+Listing 21 variables:
+  0) const     1) PAU       2) PUS       3) E         4) IAU     
+  5) IUS       6) ius2      7) iau2      8) e2        9) lpus    
+ 10) le       11) lpau     12) d_e2     13) e2_1     14) e2_2    
+ 15) e2_3     16) e2_4     17) d_e2_1   18) d_e2_2   19) d_e2_3  
+ 20) d_e2_4  
+
+? list exo = d_e2 d_e2_1
+Generated list exo
+? list rexo = e2_1
+Generated list rexo
+? coint2finite(endo, 2, 3, 0, exo, rexo)
+Bartlett-corrected CI test
+Rank     trace   asy-pval  bart-pval  bart-tr
+   0    21.853      0.147      0.183   20.985
+   1     5.490      0.537      0.570    5.244
+
+Warning: Method only valid for restricted determistic terms.
+(But we proceed anyway...)
+
+Effective sample: 1972:1-1991:1
+Lags (levels) in VAR: 2
+Deterministic spec (1=nc; 2=rc; 3=crt): 3
+Endogenous variables:
+ius2,iau2
+Unrestricted variables:
+d_e2,d_e2_1
+Restricted variables:
+e2_1
+? coint2finite(endo, 2, 3, 500, exo, rexo)
+In regard to function coint2boot (package coint2finite):
+Warning: generated non-finite values
+CI test with bootstrapped p-values
+(500 replications)
+Rank     trace  asy-p-val  boot-pval
+   0    21.853      0.370      1.000
+   1     5.490      0.750      0.662
+
+Warning: Method only valid for restricted determistic terms.
+(But we proceed anyway...)
+
+Effective sample: 1972:1-1991:1
+Lags (levels) in VAR: 2
+Deterministic spec (1=nc; 2=rc; 3=crt): 3
+Endogenous variables:
+ius2,iau2
+Unrestricted variables:
+d_e2,d_e2_1
+Restricted variables:
+e2_1
+Done

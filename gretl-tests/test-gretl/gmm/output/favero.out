@@ -1,0 +1,76 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run favero.inp
+ /home/cottrell/stats/test-gretl/gmm/favero.inp
+? function series OC(matrix theta, matrix X)
+? open hs
+
+Read datafile /home/cottrell/stats/test-gretl/gmm/hs.gdt
+periodicity: 1, maxobs: 238
+observations range: 1 to 238
+
+Listing 3 variables:
+  0) const    1) x1       2) x2     
+
+? set bfgs_toler 1.0e-12
+? set hac_lag 4
+? matrix X = { x1, x2 }
+Generated matrix X
+? matrix W = { const } ~ mlag(X,1)
+Generated matrix W
+? W[1,1] = 0
+Modified matrix W
+? matrix b = { 0.98 , 0.9 }'
+Generated matrix b
+? series e = OC(b, X)
+Generated series e (ID 3)
+? matrix V = 10*I(3)
+Generated matrix V
+? gmm
+? series e = OC(b, X)
+? orthog e ; W
+? weights V
+? params b
+? end gmm --two-step
+Tolerance = 1e-12
+
+Function evaluations: 65
+Evaluations of gradient: 11
+
+Model 1: 2-step GMM, using observations 1-238
+HAC standard errors, bandwidth 4 (Bartlett kernel)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  b[1]       0.998458   0.00447316   223.2      0.0000  ***
+  b[2]       0.856289   1.80757        0.4737   0.6357 
+
+  GMM criterion: Q = 0.00221256 (TQ = 0.526588)
+  J test: Chi-square(1) = 0.526588 [0.4680]
+
+# Favero (2001) Table 7.1
+? gmm
+? series e = OC(b, X)
+? orthog e ; W
+? weights V
+? params b
+? end gmm --iterate
+Tolerance = 1e-12
+
+Function evaluations: 69
+Evaluations of gradient: 6
+
+Model 2: Iterated GMM, using observations 1-238
+HAC standard errors, bandwidth 4 (Bartlett kernel)
+
+             estimate   std. error      z       p-value
+  -----------------------------------------------------
+  b[1]       0.998083   0.00445045   224.3      0.0000  ***
+  b[2]       0.892675   1.80460        0.4947   0.6208 
+
+  GMM criterion: Q = 0.00642601 (TQ = 1.52939)
+  J test: Chi-square(1) = 1.52939 [0.2162]
+
+Done

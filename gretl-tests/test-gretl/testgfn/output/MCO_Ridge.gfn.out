@@ -1,0 +1,54 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run MCO_Ridge.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/MCO_Ridge.gfn.inp
+? include ./MCO_Ridge.gfn
+ /home/cottrell/stats/test-gretl/testgfn/MCO_Ridge.gfn
+MCO_Ridge 1.4, 2015-06-15 (Uriel Rodríguez Ramírez)
+? open australia.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+? matrix Y = PAU
+Generated matrix Y
+? matrix C = {PUS, IUS, IAU}
+Generated matrix C
+? MCO_Ridge(Y,C , 0.3644, 3, 77)
+==============================================================
+Ridge regression coefficients:
+==============================================================
+B (3 x 1)
+
+      2.1712 
+     -3.5515 
+     -2.4728 
+
+Lambda= 0.3644
+S.E. of regression  30.248156
+R-squared            0.988740
+F( 2,   74)         3248.938102
+--------------------------------------------------------------
+
+==============================================================
+OLS coefficients:
+==============================================================
+Beta (3 x 1)
+
+      2.1708 
+     -3.5506 
+     -2.4708 
+
+S.E. of regression  30.248114
+R-squared            0.988738
+F( 2,   74)         3248.272167
+--------------------------------------------------------------
+Done

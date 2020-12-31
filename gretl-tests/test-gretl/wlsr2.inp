@@ -1,0 +1,23 @@
+open GREENE.txt
+smpl --no-missing
+genr y = Exp
+genr x = Income/1000
+genr x2 = Income^2
+genr w = 1/x
+# Weighted least squares
+wls w y 0 x x2
+# Manually weighted least squares
+genr wy = w * y
+genr w0 = w * const
+genr wx = w * x
+genr wx2 = w * x2
+ols wy w0 wx wx2 --simple-print
+# Manual calculation of R-squared for WLS
+genr w2 = w * w
+genr wybar = sum(w2 * y) / sum(w2)
+genr bar2 = mean(w2 * y)
+genr wd = w * (y - wybar)
+genr r2 = 1 - $ess / sum(wd^2)
+printf "WTSS = %g\n", sum(wd^2)
+ols wy w0
+

@@ -1,0 +1,51 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run china.inp
+ /home/cottrell/stats/test-gretl/china.inp
+? open china.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/china.gdt
+periodicity: 1, maxobs: 12
+observations range: 1 to 12
+
+Listing 9 variables:
+  0) const     1) Yr        2) rurpop    3) urbpop    4) agemp   
+  5) rnaemp    6) urbemp    7) totemp    8) indpc   
+
+? smpl Yr > 1960 --restrict
+Full data range: 1 - 12 (n = 12)
+Current sample: 6 - 12 (n = 7)
+
+? logistic indpc 0 Yr --ymax=100.0 --vcv
+
+Model 1: Logistic, using observations 6-12 (n = 7)
+Dependent variable: indpc
+yhat = 100 / (1 + exp(-X*b))
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -96.5105      8.06720      -11.96    7.20e-05 ***
+  Yr           0.0483385   0.00407340    11.87    7.48e-05 ***
+
+Statistics based on the transformed data:
+
+Sum squared resid    0.075141   S.E. of regression   0.122589
+R-squared            0.965712   Adjusted R-squared   0.958854
+F(1, 5)              140.8227   P-value(F)           0.000075
+Log-likelihood       5.937499   Akaike criterion    -7.874997
+Schwarz criterion   -7.983177   Hannan-Quinn        -9.212078
+
+Statistics based on the original data:
+
+Mean dependent var   32.62472   S.D. dependent var   12.77105
+Sum squared resid    24.83861   S.E. of regression   2.228839
+
+Covariance matrix of regression coefficients:
+
+         const            Yr
+       65.0797    -0.0328604  const
+                 1.65925e-05  Yr
+
+Done

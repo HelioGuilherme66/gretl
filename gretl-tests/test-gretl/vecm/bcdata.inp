@@ -1,0 +1,7 @@
+open brand_cassola.gdt
+matrix BC1 = {y,m_p,rs,rl,p,m}
+open ../mon_dem_euroland.gdt --preserve
+series infl=100*diff(p)
+matrix BC2 = {y,m_p,rs,rl,p,m}
+matrix CHK=BC2-BC1
+print CHK

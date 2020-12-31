@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run Qdata.inp
+ /home/cottrell/stats/test-gretl/importer/Qdata.inp
+? open Qdata.xls --coloffset=1
+Excel 97 +
+rows=5, total cols=4, data cols=3
+found label strings in first imported column
+   first row label "1970Q1", last label "1970Q4"
+trying to parse row labels as dates...
+   1970: probably a year... quarter 1?
+Listing 3 variables:
+  0) const    1) x1       2) x2     
+
+? print -o
+
+                 x1           x2
+
+1970:1            1            5
+1970:2            2            6
+1970:3            3            7
+1970:4            4            8
+
+Done

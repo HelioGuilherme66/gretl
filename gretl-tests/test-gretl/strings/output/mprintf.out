@@ -1,0 +1,21 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run mprintf.inp
+ /home/cottrell/stats/test-gretl/strings/mprintf.inp
+? set seed 123763
+Pseudo-random number generator seeded with 123763
+? matrix M = muniform(6,2)
+Generated matrix M
+? matrix C = mcorr(M)
+Generated matrix C
+C:
+   1.000  -0.420
+  -0.420   1.000
+
+C:
+   1.000  -0.420
+  -0.420   1.000
+
+Done

@@ -1,0 +1,81 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run arimadD.inp
+ /home/allin/stats/test-gretl/bfgs/arma/arimadD.inp
+? nulldata 500
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+? setobs 4 1900:1
+Full data range: 1900:1 - 2024:4 (n = 500)
+
+? set seed 456722
+Pseudo-random number generator seeded with 456722
+? genr u = normal()
+Generated series u (ID 2)
+? genr y = u + .5*u(-1)
+Generated series y (ID 3)
+? genr y0 = y
+Generated series y0 (ID 4)
+? genr y = y + y(-4)
+Replaced series y (ID 3)
+? genr y = y + y(-1)
+Replaced series y (ID 3)
+? genr y = y + y(-1)
+Replaced series y (ID 3)
+? genr Dy = sdiff(diff(diff(y)))
+Generated series Dy (ID 5)
+? arma 0 0 1 ; Dy
+
+Function evaluations: 28
+Evaluations of gradient: 11
+
+Model 1: ARMA, using observations 1901:4-2024:4 (T = 493)
+Estimated using Kalman filter (exact ML)
+Dependent variable: Dy
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.0825215    0.0673245     1.226   0.2203  
+  theta_1     0.468224     0.0391490    11.96    5.75e-33 ***
+
+Mean dependent var   0.083244   S.D. dependent var   1.124913
+Mean of innovations -0.000072   S.D. of innovations  1.018646
+Log-likelihood      -708.7680   Akaike criterion     1423.536
+Schwarz criterion    1436.138   Hannan-Quinn         1428.484
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.1357     0.0000     2.1357     0.5000
+  -----------------------------------------------------------
+
+? arma 0 2 1 ; 0 1 0 ; y
+
+Function evaluations: 31
+Evaluations of gradient: 11
+
+Model 2: ARIMA, using observations 1901:4-2024:4 (T = 493)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)^2(1-Ls) y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       0.0825213    0.0672595     1.227   0.2199  
+  theta_1     0.468224     0.0391486    11.96    5.74e-33 ***
+
+Mean dependent var   0.083244   S.D. dependent var   1.124913
+Mean of innovations -0.000072   S.D. of innovations  1.018646
+Log-likelihood      -708.7680   Akaike criterion     1423.536
+Schwarz criterion    1436.138   Hannan-Quinn         1428.484
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.1357     0.0000     2.1357     0.5000
+  -----------------------------------------------------------
+
+Done

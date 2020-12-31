@@ -1,0 +1,25 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundles7a.inp
+ /home/cottrell/stats/test-gretl/bundles/bundles7a.inp
+? bundle b
+? b.mat = I(3)
+? b.x = 32
+? setnote(b, "mat", "identity matrix")
+? setnote(b, "x", "just a number")
+? b
+bundle b:
+ mat (matrix: 3 x 3) identity matrix
+ x = 32 just a number
+
+? delete b.x
+? b
+bundle b:
+ mat (matrix: 3 x 3) identity matrix
+
+? delete b.mat
+? b
+bundle b: empty
+Done

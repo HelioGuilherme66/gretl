@@ -1,0 +1,77 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps8-4.inp
+ /opt/esl/share/gretl/scripts/ps8-4.inp
+# PS8.4, for the White's test of Example 8.5
+? open data8-1
+
+Read datafile /opt/esl/share/gretl/data/data8-1.gdt
+periodicity: 1, maxobs: 222
+observations range: 1 to 222
+
+Listing 3 variables:
+  0) const     1) SALARY    2) YEARS   
+
+? genr LNSALARY=ln(SALARY)
+Generated series LNSALARY (ID 3)
+# generate squares and cross-products
+? genr YRS2 = YEARS*YEARS
+Generated series YRS2 (ID 4)
+? genr YRS3 = YRS2*YEARS
+Generated series YRS3 (ID 5)
+? genr YRS4 = YRS2*YRS2
+Generated series YRS4 (ID 6)
+# estimate log quadratic model
+? ols LNSALARY const YEARS YRS2
+
+Model 1: OLS, using observations 1-222
+Dependent variable: LNSALARY
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       3.80937       0.0413383     92.15     3.79e-177 ***
+  YEARS       0.0438528     0.00482873     9.082    6.43e-17  ***
+  YRS2       -0.000627348   0.000120861   -5.191    4.77e-07  ***
+
+Mean dependent var   4.325410   S.D. dependent var   0.302511
+Sum squared resid    9.380504   S.E. of regression   0.206962
+R-squared            0.536179   Adjusted R-squared   0.531943
+F(2, 219)            126.5823   P-value(F)           2.92e-37
+Log-likelihood       36.20452   Akaike criterion    -66.40903
+Schwarz criterion   -56.20100   Hannan-Quinn        -62.28766
+
+# save squared residuals
+? genr usq=$uhat*$uhat
+Generated series usq (ID 7)
+# auxiliary regression
+? ols usq const YEARS YRS2 YRS3 YRS4
+
+Model 2: OLS, using observations 1-222
+Dependent variable: usq
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const      -0.00177015    0.0259525     -0.06821   0.9457 
+  YEARS       0.000167112   0.00795976     0.02099   0.9833 
+  YRS2        0.000646662   0.000729938    0.8859    0.3766 
+  YRS3       -3.26367e-05   2.51701e-05   -1.297     0.1961 
+  YRS4        4.22236e-07   2.87764e-07    1.467     0.1437 
+
+Mean dependent var   0.042255   S.D. dependent var   0.069804
+Sum squared resid    0.979836   S.E. of regression   0.067197
+R-squared            0.090076   Adjusted R-squared   0.073303
+F(4, 217)            5.370347   P-value(F)           0.000384
+Log-likelihood       286.9539   Akaike criterion    -563.9079
+Schwarz criterion   -546.8945   Hannan-Quinn        -557.0389
+
+Excluding the constant, p-value was highest for variable 2 (YEARS)
+
+# compute LM test statistic and p-value
+? genr LM=$nrsq
+Generated scalar LM = 19.9968
+? pvalue X 4 LM
+Chi-square(4): area to the right of 19.9968 = 0.000500123
+(to the left: 0.9995)
+Done

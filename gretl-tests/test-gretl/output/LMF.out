@@ -1,0 +1,78 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run LMF.inp
+ /home/cottrell/stats/test-gretl/LMF.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ols 1 0 2 -q
+# new LMF calculation
+? modtest --autocorr
+
+Breusch-Godfrey test for autocorrelation up to order 4
+OLS, using observations 1975:1-1990:4 (T = 64)
+Dependent variable: uhat
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      67.1519       161.982       0.4146   0.6800 
+  PRICE      -0.780410       1.67011    -0.4673   0.6421 
+  uhat_1      0.392803       0.120138    3.270    0.0018  ***
+  uhat_2     -0.0288858      0.130668   -0.2211   0.8258 
+  uhat_3      0.0508144      0.131110    0.3876   0.6998 
+  uhat_4      0.427347       0.121144    3.528    0.0008  ***
+
+  Unadjusted R-squared = 0.479275
+
+Test statistic: LMF = 13.345786,
+with p-value = P(F(4,58) > 13.3458) = 9.01e-08
+
+Alternative statistic: TR^2 = 30.673593,
+with p-value = P(Chi-square(4) > 30.6736) = 3.57e-06
+
+Ljung-Box Q' = 66.043,
+with p-value = P(Chi-square(4) > 66.043) = 1.55e-13
+
+? genr LMF1 = $test
+Generated scalar LMF1 = 13.3458
+# calculate longhand
+? genr u = misszero($uhat)
+Generated series u (ID 12)
+? genr u_1 = misszero(u(-1))
+Generated series u_1 (ID 13)
+? genr u_2 = misszero(u(-2))
+Generated series u_2 (ID 14)
+? genr u_3 = misszero(u(-3))
+Generated series u_3 (ID 15)
+? genr u_4 = misszero(u(-4))
+Generated series u_4 (ID 16)
+? ols u 0 2 u_* -q
+? omit u_* --silent --test-only
+? genr LMF2 = $test
+Generated scalar LMF2 = 13.3458
+# compare our previous method:
+# ((T - k - n)/n) * R^2 / (1 - R^2)
+? ols 1 0 2 -q
+? genr u = $uhat
+Replaced series u (ID 12)
+? delete u_*
+Deleted 4 variables
+? ols u 0 2 u(-1 to -4) -q
+? genr R2 = $rsq
+Generated scalar R2 = 0.508774
+? genr LMF3 = (($T - $ncoeff)/4) * (R2/(1-R2))
+Generated scalar LMF3 = 13.9822
+Built-in LMF:        13.34578592
+Hand-calculated LMF: 13.34578592
+Our previous LMF:    13.98224082
+Done

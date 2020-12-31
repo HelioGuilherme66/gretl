@@ -1,0 +1,9 @@
+set seed 897673
+matrix M = mnormal(4,3)
+string s = "foo bar baz"
+eval colnames(M, s)
+M
+delete M
+
+
+

@@ -1,0 +1,38 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-11-25 13:10
+? run monthly.inp
+ /home/cottrell/stats/test-gretl/join/monthly.inp
+? nulldata 18
+periodicity: 1, maxobs: 18
+observations range: 1 to 18
+? setobs 12 1989:01
+Full data range: 1989:01 - 1990:06 (n = 18)
+
+? join monthly.csv x
+Data appended OK
+? print -o
+
+               index            x
+
+1989:01            1             
+1989:02            2          100
+1989:03            3          101
+1989:04            4             
+1989:05            5             
+1989:06            6             
+1989:07            7          102
+1989:08            8             
+1989:09            9             
+1989:10           10             
+1989:11           11             
+1989:12           12          103
+1990:01           13          104
+1990:02           14             
+1990:03           15             
+1990:04           16          105
+1990:05           17             
+1990:06           18             
+
+Done

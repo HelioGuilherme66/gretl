@@ -1,0 +1,39 @@
+nulldata 50
+setobs 1 1 --special
+
+# Replicate the example at 
+# http://www.cs.unc.edu/~welch/kalman/kalmanIntro.html
+
+scalar T = 50
+scalar mu = -0.37727
+series y = mread("y.mat")
+
+matrix V = zeros(T,1)
+matrix St = zeros(T,1)
+matrix L = zeros(T,1)
+
+kalman
+  obsy y
+  obsymat 1
+  obsvar 0.01
+  statemat 1
+  statevar 1.0e-5
+  inivar 1
+end kalman
+
+matrix em
+kfilter(&em)
+printf "LL = %g\n", $kalman_lnl
+printf "s2 = %g\n", $kalman_s2
+series e = em
+print y e -o
+
+matrix SP
+matrix SS = ksmooth(&SP)
+matrix out2 = SS ~ SP
+out2
+
+delete kalman
+
+
+

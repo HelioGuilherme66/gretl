@@ -1,0 +1,84 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run imodel.inp
+ /home/allin/stats/test-gretl/bfgs/arma/imodel.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? arima 0 1 0 ; QNC 0
+
+Model 1: ARIMA, using observations 1975:2-1990:4 (T = 63)
+Estimated using least squares (= MLE)
+Dependent variable: (1-L) QNC
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const        2.80952      38.2640     0.07342   0.9415 
+
+Mean dependent var   2.809524   S.D. dependent var   303.7112
+Mean of innovations -7.22e-15   S.D. of innovations  303.7112
+Log-likelihood      -449.0020   Akaike criterion     900.0040
+Schwarz criterion    902.1471   Hannan-Quinn         900.8469
+
+? series dy = diff(QNC)
+Generated series dy (ID 12)
+? ols dy const
+
+Model 2: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: dy
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        2.80952      38.2640     0.07342   0.9417 
+
+Mean dependent var   2.809524   S.D. dependent var   303.7112
+Sum squared resid     5718912   S.E. of regression   303.7112
+R-squared            0.000000   Adjusted R-squared   0.000000
+Log-likelihood      -449.0020   Akaike criterion     900.0040
+Schwarz criterion    902.1471   Hannan-Quinn         900.8469
+rho                 -0.274910   Durbin-Watson        2.521381
+
+? arima 0 1 0 ; 0 1 0 ; QNC 0
+
+Model 3: ARIMA, using observations 1976:2-1990:4 (T = 59)
+Estimated using least squares (= MLE)
+Dependent variable: (1-L)(1-Ls) QNC
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       -6.96610      36.4081     -0.1913   0.8483 
+
+Mean dependent var  -6.966102   S.D. dependent var   279.6559
+Mean of innovations  5.78e-15   S.D. of innovations  279.6559
+Log-likelihood      -415.5931   Akaike criterion     833.1862
+Schwarz criterion    835.2638   Hannan-Quinn         833.9972
+
+? series Dy = sdiff(dy)
+Generated series Dy (ID 13)
+? ols Dy const
+
+Model 4: OLS, using observations 1976:2-1990:4 (T = 59)
+Dependent variable: Dy
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       -6.96610      36.4081     -0.1913   0.8489 
+
+Mean dependent var  -6.966102   S.D. dependent var   279.6559
+Sum squared resid     4536030   S.E. of regression   279.6559
+R-squared            0.000000   Adjusted R-squared   0.000000
+Log-likelihood      -415.5931   Akaike criterion     833.1862
+Schwarz criterion    835.2638   Hannan-Quinn         833.9972
+rho                 -0.408646   Durbin-Watson        2.767942
+
+Done

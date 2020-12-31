@@ -1,0 +1,103 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps9-3.inp
+ /opt/esl/share/gretl/scripts/ps9-3.inp
+# PS9.3, for the LM test in Example 9.4
+? open data4-7
+
+Read datafile /opt/esl/share/gretl/data/data4-7.gdt
+periodicity: 1, maxobs: 34
+observations range: 1947 to 1980
+
+Listing 10 variables:
+  0) const      1) chd        2) cal        3) unemp      4) cig      
+  5) edfat      6) meat       7) spirits    8) beer       9) wine     
+
+? ols chd 0 cig edfat spirits beer
+
+Model 1: OLS, using observations 1947-1980 (T = 34)
+Dependent variable: chd
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       139.678      77.9441       1.792    0.0836   *
+  cig          10.7057      4.59040      2.332    0.0268   **
+  edfat         3.38024     0.966698     3.497    0.0015   ***
+  spirits      26.7490      7.03684      3.801    0.0007   ***
+  beer         -4.13156     0.862896    -4.788    4.57e-05 ***
+
+Mean dependent var   354.8147   S.D. dependent var   14.94605
+Sum squared resid    2122.322   S.E. of regression   8.554737
+R-squared            0.712098   Adjusted R-squared   0.672387
+F(4, 29)             17.93218   P-value(F)           1.63e-07
+Log-likelihood      -118.5203   Akaike criterion     247.0406
+Schwarz criterion    254.6724   Hannan-Quinn         249.6433
+rho                  0.178607   Durbin-Watson        1.485271
+
+# save residuals
+? genr ut=$uhat
+Generated series ut (ID 10)
+# generate lag of ut
+? genr ut1=ut(-1)
+Generated series ut1 (ID 11)
+# print ut and ut1 to see how ut1 is internally stored
+? print ut ut1
+
+ut:
+Full data range: 1947 - 1980 (n = 34)
+
+-18.0515  -12.6632   12.8311   5.11098   4.18321  -0.552382  -0.912819  
+-10.8509  -2.49954  -6.24938   13.7559   6.85261  -0.976693   4.61432  
+-5.00774   2.66109   5.28806  -1.46288  -6.60880  -6.65733   8.16001  
+ 11.4560   7.27210   6.18059   9.84428  -1.17175  -0.305387  -4.31813  
+-13.2069  -4.41197   11.2471  -10.7193   0.792734  -3.62357  
+
+ut1:
+Full data range: 1947 - 1980 (n = 33)
+
+      NA  -18.0515  -12.6632   12.8311   5.11098   4.18321  -0.552382  
+-0.912819  -10.8509  -2.49954  -6.24938   13.7559   6.85261  -0.976693  
+ 4.61432  -5.00774   2.66109   5.28806  -1.46288  -6.60880  -6.65733  
+ 8.16001   11.4560   7.27210   6.18059   9.84428  -1.17175  -0.305387  
+-4.31813  -13.2069  -4.41197   11.2471  -10.7193   0.792734  
+
+# suppress first obs. because ut1 is not defined for it
+? smpl 1948 1980
+Full data range: 1947 - 1980 (n = 34)
+Current sample: 1948 - 1980 (n = 33)
+
+# auxiliary regression for LM test
+? ols ut 0 cig edfat spirits beer ut1
+
+Model 2: OLS, using observations 1948-1980 (T = 33)
+Dependent variable: ut
+
+             coefficient   std. error   t-ratio    p-value
+  --------------------------------------------------------
+  const      113.628       78.5355       1.447     0.1595 
+  cig         -4.67486      4.33849     -1.078     0.2908 
+  edfat       -1.57896      0.998884    -1.581     0.1256 
+  spirits      0.360863     6.79647      0.05310   0.9580 
+  beer         0.207451     0.806207     0.2573    0.7989 
+  ut1          0.258806     0.183561     1.410     0.1700 
+
+Mean dependent var   0.547016   S.D. dependent var   7.472010
+Sum squared resid    1541.876   S.E. of regression   7.556885
+R-squared            0.136973   Adjusted R-squared  -0.022847
+F(5, 27)             0.857045   P-value(F)           0.522247
+Log-likelihood      -110.2551   Akaike criterion     232.5101
+Schwarz criterion    241.4891   Hannan-Quinn         235.5313
+rho                 -0.134687   Durbin-Watson        2.115481
+
+Excluding the constant, p-value was highest for variable 7 (spirits)
+
+# compute nrsquare statistic
+? genr LM = $nrsq
+Generated scalar LM = 4.5201
+# compute pvalue for it
+? pvalue X 1 LM
+Chi-square(1): area to the right of 4.5201 = 0.0334989
+(to the left: 0.966501)
+Done

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. `dirname $0`/sitevars
+
+rm -f full_valgrind.log
+
+for f in $(cat ps.list | grep -v '#' | grep -v nomem | awk '{ print $1 }') ; do
+   echo -n $f
+   if ! ${CLI} -b $f >/dev/null 2>&1 ; then
+      echo ": ABORTED" 
+   else
+      echo ": runs ok"
+      MEMOK=yes
+      echo -n "memory test... "
+      G_SLICE=always-malloc valgrind --tool=memcheck --leak-check=yes --log-fd=9 \
+	  $CLI -b $f >/dev/null 2>&1 9>valgrind.log
+      if grep '   definitely lost' valgrind.log ; then MEMOK=no ; fi
+      if grep '   possibly lost' valgrind.log ; then MEMOK=no ; fi
+      if [ "$MEMOK" = "yes" ] ; then echo "OK" ; fi
+      echo $f >> full_valgrind.log
+      cat valgrind.log >> full_valgrind.log
+   fi
+done 
+

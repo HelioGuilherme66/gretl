@@ -1,0 +1,30 @@
+nulldata 700
+set seed 975478687
+setobs 1 1 --time-series
+
+genr eps=normal()
+series y = 0
+series y = 0.4*y(-1) - 0.6*y(-2) + eps + 0.8*eps(-1)
+ 
+ols y const y(-1 to -24) -q
+genr e = $uhat
+
+ols y const y(-1 to -2) e(-1)
+matrix cf0 = $coeff
+genr e = $uhat
+scalar crit = 1.0E10
+
+loop while crit > 0.0001
+  ols y const y(-1 to -2) e(-1)
+  matrix cf1 = $coeff
+  cf0
+  cf1
+  matrix d = cf0 - cf1
+  cf0 = cf1
+  d
+  crit = d' * d
+  genr e = $uhat
+endloop
+
+arma 2 1 ; y -c
+

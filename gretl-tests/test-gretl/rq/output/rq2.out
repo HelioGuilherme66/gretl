@@ -1,0 +1,52 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:54
+? run rq2.inp
+ /home/cottrell/stats/test-gretl/rq/rq2.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? quantreg .1 1 0 2 3 4
+
+Model 1: Quantile estimates, using observations 1-14
+Dependent variable: price
+tau = 0.1
+Asymptotic standard errors assuming IID errors
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        1.13915     41.9916      0.02713   0.9789  
+  sqft         0.106679     0.0151889   7.023     3.61e-05 ***
+  bedrms      13.8757      12.8535      1.080     0.3057  
+  baths       12.7737      20.5670      0.6211    0.5484  
+
+Median depend. var   291.5000   S.D. dependent var   88.49816
+Sum absolute resid   445.7766   Sum squared resid    37053.30
+Log-likelihood      -63.92570   Akaike criterion     135.8514
+Schwarz criterion    138.4076   Hannan-Quinn         135.6148
+
+? quantreg .4 1 0 2 --robust
+
+Model 2: Quantile estimates, using observations 1-14
+Dependent variable: price
+tau = 0.4
+Robust (sandwich) standard errors
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       76.5918      33.8925       2.260    0.0432  **
+  sqft         0.115782     0.0209261    5.533    0.0001  ***
+
+Median depend. var   291.5000   S.D. dependent var   88.49816
+Sum absolute resid   374.1875   Sum squared resid    25968.08
+Log-likelihood      -68.04888   Akaike criterion     140.0978
+Schwarz criterion    141.3759   Hannan-Quinn         139.9794
+
+Done

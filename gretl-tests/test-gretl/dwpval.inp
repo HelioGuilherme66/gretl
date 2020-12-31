@@ -1,0 +1,9 @@
+# cf. http://shazam.econ.ubc.ca/intro/testauto.htm
+
+open theil.gdt
+                                                                                
+ols consume 0 relprice 
+scalar pv = $dwpval
+ols consume 0 income relprice
+scalar pv = $dwpval
+

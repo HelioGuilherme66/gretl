@@ -1,0 +1,96 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-31 14:57
+? run re_robust.inp
+ /home/cottrell/stats/test-gretl/panel/re_robust.inp
+? open baltagi_Gasoline
+
+Read datafile /home/cottrell/stats/test-gretl/panel/baltagi_Gasoline.gdt
+periodicity: 19, maxobs: 342
+observations range: 1:01 to 18:19
+
+Listing 6 variables:
+  0) const    1) YEAR     2) gas      3) y        4) rp     
+  5) car    
+
+? list X = y rp car
+Generated list X
+? panel gas 0 X --random-effects
+
+Model 1: Random-effects (GLS), using 342 observations
+Included 18 cross-sectional units
+Time-series length = 19
+Dependent variable: gas
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const        1.99670     0.184326      10.83    2.42e-27  ***
+  y            0.554986    0.0591282      9.386   6.22e-21  ***
+  rp          -0.420389    0.0399781    -10.52    7.33e-26  ***
+  car         -0.606840    0.0255150    -23.78    4.93e-125 ***
+
+Mean dependent var   4.296242   S.D. dependent var   0.548907
+Sum squared resid    27.64625   S.E. of regression   0.285574
+Log-likelihood      -55.15718   Akaike criterion     118.3144
+Schwarz criterion    133.6536   Hannan-Quinn         124.4251
+
+'Between' variance = 0.0382377
+'Within' variance = 0.00852489
+theta used for quasi-demeaning = 0.892307
+corr(y,yhat)^2 = 0.730921
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(3) = 1642.2
+  with p-value = 0
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1465.55
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(3) = 27.0487
+  with p-value = 5.75061e-06
+
+? panel gas 0 X --random-effects --robust
+
+Model 2: Random-effects (GLS), using 342 observations
+Included 18 cross-sectional units
+Time-series length = 19
+Dependent variable: gas
+Robust (HAC) standard errors
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        1.99670     0.525615      3.799   0.0001   ***
+  y            0.554986    0.122371      4.535   5.75e-06 ***
+  rp          -0.420389    0.120924     -3.476   0.0005   ***
+  car         -0.606840    0.0909742    -6.670   2.55e-11 ***
+
+Mean dependent var   4.296242   S.D. dependent var   0.548907
+Sum squared resid    27.64625   S.E. of regression   0.285574
+Log-likelihood      -55.15718   Akaike criterion     118.3144
+Schwarz criterion    133.6536   Hannan-Quinn         124.4251
+
+'Between' variance = 0.0382377
+'Within' variance = 0.00852489
+theta used for quasi-demeaning = 0.892307
+corr(y,yhat)^2 = 0.730921
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(3) = 50.1661
+  with p-value = 7.36423e-11
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 1465.55
+  with p-value = 0
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(3) = 27.0487
+  with p-value = 5.75061e-06
+
+Done

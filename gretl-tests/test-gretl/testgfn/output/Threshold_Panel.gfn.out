@@ -1,0 +1,272 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run Threshold_Panel.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/Threshold_Panel.gfn.inp
+? include ./Threshold_Panel/Threshold_Panel.gfn
+ /home/cottrell/stats/test-gretl/testgfn/Threshold_Panel/Threshold_Panel.gfn
+Threshold_Panel 0.921, 2015-08-24 (Artur Tarassow)
+#*****************************************************************************
+# EXAMPLE: Replication of Hansen's results in Journal of Econometrics (1999)
+#*****************************************************************************
+#clear
+#open http://www.wiso.uni-hamburg.de/fileadmin/sozialoekonomie/vwl/fritsche/Tarassow/invest_joe99.gdt
+? open invest_joe99.gdt --frompkg=Threshold_Panel
+
+Read datafile /home/cottrell/stats/test-gretl/testgfn//Threshold_Panel/invest_joe99.gdt
+periodicity: 565, maxobs: 8475
+observations range: 1:001 to 15:565
+
+Listing 5 variables:
+  0) const    1) inva     2) vala     3) cfa      4) debta  
+
+# LOAD DATASET
+? list linvest = inva vala cfa debta
+Generated list linvest
+? matrix invest = { linvest }
+Generated matrix invest
+? matrix i = invest[,1]
+Generated matrix i
+? matrix q = invest[,2]
+Generated matrix q
+? matrix c = invest[,3]
+Generated matrix c
+? matrix d = invest[,4]
+Generated matrix d
+? scalar N = 565
+Generated scalar N = 565
+? scalar T = 15
+Generated scalar T = 15
+# Shrink the orginal dataset for illustrative reasons
+# Comment the lines below for replicating the Hansen's results exactly! #
+# --- from here -------------------
+? scalar nsel = 20
+Generated scalar nsel = 20
+? matrix i = mshape(i,T,N)
+Replaced matrix i
+? i = vec(i[,1:nsel])
+Replaced matrix i
+? matrix q = mshape(q,T,N)
+Replaced matrix q
+? q = vec(q[,1:nsel])
+Replaced matrix q
+? matrix c = mshape(c,T,N)
+Replaced matrix c
+? c = vec(c[,1:nsel])
+Replaced matrix c
+? matrix d = mshape(d,T,N)
+Replaced matrix d
+? d = vec(d[,1:nsel])
+Replaced matrix d
+# --- to here ---------------------
+# SET UP MODEL PARAMETERS
+? scalar nthresh = 2
+Generated scalar nthresh = 2
+? scalar opt_const = 0
+Generated scalar opt_const = 0
+? scalar max_lag = 1
+Generated scalar max_lag = 1
+? scalar t = 15
+Generated scalar t = 15
+? scalar nt = rows(i)
+Generated scalar nt = 300
+? scalar n = nt/t
+Generated scalar n = 20
+? scalar qn = 300
+Generated scalar qn = 300
+? scalar nrep = 100
+Generated scalar nrep = 100
+? scalar trim_1 = 0.01
+Generated scalar trim_1 = 0.01
+? scalar trim_2 = 0.01
+Generated scalar trim_2 = 0.01
+? scalar trim_3 = 0.05
+Generated scalar trim_3 = 0.05
+? scalar conf_lev = 0.95
+Generated scalar conf_lev = 0.95
+# LAGS
+? matrix y = LAG_V(i,0,t,n,max_lag)
+Generated matrix y
+? matrix q1 = LAG_V(q,1,t,n,max_lag)
+Generated matrix q1
+? matrix d1 = LAG_V(d,1,t,n,max_lag)
+Generated matrix d1
+? matrix cf = LAG_V(c,1,t,n,max_lag)
+Generated matrix cf
+? matrix THRESH = d1
+Generated matrix THRESH
+# SET UP THE MODEL SPECIFICATION
+# Further regime-independent regressors following Hansen (1999) eq. (22)
+? matrix x = q1~(q1.^2)~(q1.^3)~d1~(q1.*d1)
+Generated matrix x
+# RUN THE MODEL(S)
+? set stopwatch
+? bundle B = THRESH_SETUP(y,x,cf,d1, "i", "q1 q1_sq q1_tr d1 q1d1", "cf", "d", \
+  nthresh, opt_const, max_lag, t, qn, nrep, trim_1, trim_2, trim_3, conf_lev)
+Number of Individuals 	 20
+Number of Years used 	 14
+Total Observations 	 260
+Number of Quantiles 	 300
+Confidence Level  	 0.950
+
+*******************************************************
+
+
+**********************
+Linear Model  *
+**********************
+
+Regression without constant
+
+
+Sum of Squared Errors:      0.30897
+Dependent variable: 	 i 
+
+Coefficient Estimates
+             Coeff  t-val(het)      OLS_SE    White_SE
+   q1       0.0267      0.7779      0.0342      0.0343
+q1_sq      -0.0113     -0.5026      0.0195      0.0225
+q1_tr       0.0017      0.3872      0.0034      0.0045
+   d1      -0.0535     -1.6869      0.0315      0.0317
+ q1d1       0.0387      1.0297      0.0453      0.0376
+   cf       0.1746      4.9413      0.0379      0.0353
+
+
+*******************************************************************************
+
+*************************************
+
+Threshold Model with 1 Threshold(s)
+
+Regression without constant
+
+*******************************************************************************
+*************************
+Single Threshold Model  *
+*************************
+Threshold Estimate =      0.60238
+Confidence Region: 	 MIN: 0.00636 	 MAX: 0.62819
+Sum of Squared Errors:      0.30388
+Trimming Percentage =        0.010
+LR-test statistics =        4.353
+Number of bootstrap replications = 100
+Bootstrap p-value: 	 0.770
+Critical Values: 	 10pct.=10.268	5pct.=13.691	1pct.=15.661
+*******************************************************************************
+
+Dependent variable: 	 i 
+Threshold variable: 	 d 
+First Iteration
+Regime-dependent variable: cf
+
+Regime-independent Coefficients
+             Coeff  t-val(het)      OLS_SE    White_SE
+   q1       0.0282      0.8339      0.0340      0.0339
+q1_sq      -0.0116     -0.5185      0.0194      0.0223
+q1_tr       0.0018      0.3954      0.0034      0.0044
+   d1      -0.0410     -1.2811      0.0319      0.0320
+ q1d1       0.0322      0.8556      0.0452      0.0376
+
+
+Regime-dependent Coefficients
+                       Coeff  t-val(het)      OLS_SE    White_SE
+cf*I*(d<=0.602)       0.1825      5.1307      0.0378      0.0356
+ cf*I*(d>0.602)      -0.1666     -1.2958      0.1768      0.1286
+
+
+*******************************************************************************
+
+*************************************
+
+Threshold Model with 2 Threshold(s)
+
+Regression without constant
+
+*******************************************************************************
+*************************
+Double Threshold Model *
+*************************
+Trimming Percentage 	 0.010
+
+First Iteration
+
+Fixed Threshold(s) =      0.60238
+Threshold Estimate =      0.54543
+Confidence Region: 	 MIN: 0.00636 	 MAX: 0.62819
+Sum of Squared Errors:      0.29626
+Trimming Percentage =        0.010
+LR-test statistics =        6.683
+Number of bootstrap replications = 100
+Bootstrap p-value: 	 0.480
+Critical Values: 	 10pct.=11.831	5pct.=13.634	1pct.=19.745
+*******************************************************************************
+
+Dependent variable: 	 i 
+Threshold variable: 	 d 
+First Iteration
+Regime-dependent variable: cf
+
+Regime-independent Coefficients
+             Coeff  t-val(het)      OLS_SE    White_SE
+   q1       0.0304      0.9038      0.0336      0.0336
+q1_sq      -0.0122     -0.5479      0.0192      0.0222
+q1_tr       0.0017      0.3940      0.0033      0.0044
+   d1      -0.0553     -1.7453      0.0321      0.0317
+ q1d1       0.0410      1.0932      0.0448      0.0375
+
+
+Regime-dependent Coefficients
+                             Coeff  t-val(het)      OLS_SE    White_SE
+      cf*I*(d<=0.545)       0.1666      4.7585      0.0380      0.0350
+cf*I*(0.545<d<=0.602)       0.5317      6.5050      0.1478      0.0817
+       cf*I*(0.602<d)      -0.1344     -1.1437      0.1755      0.1175
+
+
+*******************************************************************************
+
+Regression without constant
+
+*******************************************************************************
+*************************
+Double Threshold Model *
+*************************
+Trimming Percentage 	 0.010
+
+Second Iteration
+
+Dependent variable: 	 i 
+Threshold variable: 	 d 
+Refinement estimations
+Regime-dependent variable: cf
+
+Regime-independent Coefficients
+             Coeff  t-val(het)      OLS_SE    White_SE
+   q1       0.0304      0.9038      0.0336      0.0336
+q1_sq      -0.0122     -0.5479      0.0192      0.0222
+q1_tr       0.0017      0.3940      0.0033      0.0044
+   d1      -0.0553     -1.7453      0.0321      0.0317
+ q1d1       0.0410      1.0932      0.0448      0.0375
+
+
+Regime-dependent Coefficients
+                             Coeff  t-val(het)      OLS_SE    White_SE
+      cf*I*(d<=0.545)       0.1666      4.7585      0.0380      0.0350
+cf*I*(0.545<d<=0.602)       0.5317      6.5050      0.1478      0.0817
+       cf*I*(0.602<d)      -0.1344     -1.1437      0.1755      0.1175
+
+
+*******************************************************************************
+
+ This took 21.47 seconds
+# Plot the Likelihood Ratio test confidence interval
+? matrix qq = B.qq1
+Generated matrix qq
+? matrix lrstats = B.lrstats
+Generated matrix lrstats
+? matrix lrcrit = B.lrcrit
+Generated matrix lrcrit
+? lrplot(lrstats, lrcrit, qq)
+In regard to function lrplot (package Threshold_Panel):
+Warning: generated non-finite values
+Done

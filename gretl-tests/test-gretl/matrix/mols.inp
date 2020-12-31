@@ -1,0 +1,25 @@
+open data4-1
+matrix X = { const, sqft }
+matrix y = { price }
+matrix b = (X'*X) \ (X'*y)
+b
+matrix uh = y - X*b
+scalar SSR = uh'*uh
+scalar s2 = SSR / (rows(X) - rows(b))
+matrix V = s2 * inv(X'*X)
+V
+matrix se = sqrt(diag(V))
+printf "estimated standard errors\n"
+se
+
+# compare built-in
+ols 1 0 2 --vcv
+matrix b2 = $coeff
+matrix bdiff = b - b2
+bdiff
+
+
+
+
+
+

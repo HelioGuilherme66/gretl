@@ -1,0 +1,184 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run fc_ols.inp
+ /home/cottrell/stats/test-gretl/fcast/fc_ols.inp
+? open data4-10
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+# OLS, full dataset
+? ols 1 0 2 3
+
+Model 1: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0855655    0.0579350     1.477    0.1462 
+  CATHOL      0.206523     0.0515958     4.003    0.0002  ***
+  PUPIL      -0.00169675   0.00302524   -0.5609   0.5775 
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.092189   S.E. of regression   0.043825
+R-squared            0.323733   Adjusted R-squared   0.295555
+F(2, 48)             11.48893   P-value(F)           0.000084
+Log-likelihood       88.68548   Akaike criterion    -171.3710
+Schwarz criterion   -165.5755   Hannan-Quinn        -169.1563
+
+? series yh1 = $yhat
+Generated series yh1 (ID 10)
+? fcast yh2
+Generated series yh2 (ID 11)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL      0.05845      0.05845
+AK      0.07797      0.07797
+AZ      0.09112      0.09112
+AR      0.06120      0.06120
+CA      0.09340      0.09340
+CO      0.08902      0.08902
+CT    0.1499787    0.1499787
+DE      0.09113      0.09113
+DC      0.09898      0.09898
+FL      0.08131      0.08131
+GA      0.05978      0.05978
+HI      0.08651      0.08651
+ID      0.06486      0.06486
+IL    0.1204421    0.1204421
+IN      0.08159      0.08159
+IA      0.09629      0.09629
+KS      0.08859      0.08859
+KY      0.07499      0.07499
+LA    0.1204261    0.1204261
+ME    0.1106921    0.1106921
+MD      0.09248      0.09248
+MA    0.1696518    0.1696518
+MI    0.1053559    0.1053559
+MN    0.1092527    0.1092527
+MS      0.06117      0.06117
+MO      0.09271      0.09271
+MT      0.09585      0.09585
+NE    0.1044461    0.1044461
+NV      0.08243      0.08243
+NH    0.1211636    0.1211636
+NJ    0.1465161    0.1465161
+NM    0.1080579    0.1080579
+NY    0.1360473    0.1360473
+NC      0.05818      0.05818
+ND    0.1164734    0.1164734
+OH      0.09858      0.09858
+OK      0.06648      0.06648
+OR      0.08005      0.08005
+PA    0.1209661    0.1209661
+RI    0.1946677    0.1946677
+SC      0.06068      0.06068
+SD    0.1007518    0.1007518
+TN      0.05763      0.05763
+TX      0.09694      0.09694
+UT      0.05400      0.05400
+VT    0.1207782    0.1207782
+VA      0.06831      0.06831
+WA      0.07139      0.07139
+WV      0.07093      0.07093
+WI    0.1252804    0.1252804
+WY      0.09003      0.09003
+
+# OLS, subsample
+? series yh1 = NA
+Replaced series yh1 (ID 10)
+? smpl 10 40
+Full data range: 1 - 51 (n = 51)
+Current sample: 10 - 40 (n = 31)
+
+? ols 1 0 2 3
+
+Model 2: OLS, using observations 10-40 (n = 31)
+Dependent variable: ENROLL
+
+             coefficient    std. error   t-ratio   p-value
+  --------------------------------------------------------
+  const       0.0701515     0.0828714     0.8465   0.4044 
+  CATHOL      0.192313      0.0600014     3.205    0.0034  ***
+  PUPIL      -0.000701318   0.00432532   -0.1621   0.8724 
+
+Mean dependent var   0.100194   S.D. dependent var   0.047585
+Sum squared resid    0.044309   S.E. of regression   0.039780
+R-squared            0.347734   Adjusted R-squared   0.301144
+F(2, 28)             7.463637   P-value(F)           0.002523
+Log-likelihood       57.54651   Akaike criterion    -109.0930
+Schwarz criterion   -104.7911   Hannan-Quinn        -107.6907
+
+? series yh1 = $yhat
+Replaced series yh1 (ID 10)
+? smpl full
+Full data range: 1 - 51 (n = 51)
+
+? fcast yh2
+Replaced series yh2 (ID 11)
+? print yh1 yh2 --byobs
+
+            yh1          yh2
+
+AL                   0.06230
+AK                   0.07775
+AZ                   0.09149
+AR                   0.06284
+CA                   0.09765
+CO                   0.08936
+CT                 0.1421705
+DE                   0.08939
+DC                   0.09520
+FL      0.08157      0.08157
+GA      0.06275      0.06275
+HI      0.09089      0.09089
+ID      0.06880      0.06880
+IL    0.1179174    0.1179174
+IN      0.08253      0.08253
+IA      0.09376      0.09376
+KS      0.08650      0.08650
+KY      0.07665      0.07665
+LA    0.1188691    0.1188691
+ME    0.1071688    0.1071688
+MD      0.09161      0.09161
+MA    0.1611051    0.1611051
+MI    0.1054509    0.1054509
+MN    0.1074979    0.1074979
+MS      0.06413      0.06413
+MO      0.09122      0.09122
+MT      0.09343      0.09343
+NE    0.1010011    0.1010011
+NV      0.08516      0.08516
+NH    0.1172713    0.1172713
+NJ    0.1398249    0.1398249
+NM    0.1077912    0.1077912
+NY    0.1306915    0.1306915
+NC      0.06109      0.06109
+ND    0.1123765    0.1123765
+OH      0.09817      0.09817
+OK      0.06723      0.06723
+OR      0.08109      0.08109
+PA    0.1174388    0.1174388
+RI    0.1850148    0.1850148
+SC                   0.06218
+SD                   0.09800
+TN                   0.06162
+TX                   0.09585
+UT                   0.06132
+VT                 0.1155943
+VA                   0.06884
+WA                   0.07497
+WV                   0.06997
+WI                 0.1214562
+WY                   0.08661
+
+Done

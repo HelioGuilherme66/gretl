@@ -1,0 +1,26 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mkfinite.inp
+ /home/cottrell/stats/test-gretl/matrix/mkfinite.inp
+? function void matrix_misszero (matrix *m)
+? matrix m = 3*I(2)
+Generated matrix m
+? m[2,2] = 0/0
+Modified matrix m
+Warning: generated non-finite values
+? print m
+m (2 x 2)
+
+     3      0 
+     0    nan 
+
+? matrix_misszero(&m)
+? print m
+m (2 x 2)
+
+  3   0 
+  0   0 
+
+Done

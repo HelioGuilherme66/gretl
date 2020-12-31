@@ -1,0 +1,20 @@
+set echo off
+set messages off
+set seed 897601327
+
+bundle b
+
+matrix m = mnormal(500, 50)
+
+set stopwatch
+loop 1000 -q
+  b.mat = m
+endloop
+printf "copy-in mode: %g secs\n", $stopwatch
+
+loop 1000 -q
+  b.mat = &m
+endloop
+printf "pointer mode: %g secs\n", $stopwatch
+
+  

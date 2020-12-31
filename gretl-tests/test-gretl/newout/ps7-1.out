@@ -1,0 +1,63 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps7-1.inp
+ /opt/esl/share/gretl/scripts/ps7-1.inp
+# PS7.1 for example in Section 7.1
+? open data7-1
+
+Read datafile /opt/esl/share/gretl/data/data7-1.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 3 variables:
+  0) const    1) WAGE     2) D      
+
+? ols WAGE 0 D
+
+Model 1: OLS, using observations 1-49
+Dependent variable: WAGE
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1518.70       122.537     12.39     2.03e-16 ***
+  D            568.227      168.221      3.378    0.0015   ***
+
+Mean dependent var   1820.204   S.D. dependent var   648.2687
+Sum squared resid    16231629   S.E. of regression   587.6681
+R-squared            0.195343   Adjusted R-squared   0.178223
+F(1, 47)             11.40999   P-value(F)           0.001476
+Log-likelihood      -380.9390   Akaike criterion     765.8779
+Schwarz criterion    769.6616   Hannan-Quinn         767.3134
+
+? genr n=$T
+Generated scalar n = 49
+? genr nm=sum(D)
+Generated scalar nm = 26
+? genr wall=sum(WAGE)
+Generated scalar wall = 89190
+? genr wbar=wall/n
+Generated scalar wbar = 1820.2
+? genr nf=n-nm
+Generated scalar nf = 23
+? genr wm=sum(WAGE*D)
+Generated scalar wm = 54260
+? genr mbar=wm/nm
+Generated scalar mbar = 2086.92
+? genr wf=sum(WAGE*(1-D))
+Generated scalar wf = 34930
+? genr fbar=wf/nf
+Generated scalar fbar = 1518.7
+? print wbar nm mbar nf fbar
+
+           wbar =  1820.2041
+
+             nm =  26.000000
+
+           mbar =  2086.9231
+
+             nf =  23.000000
+
+           fbar =  1518.6957
+Done

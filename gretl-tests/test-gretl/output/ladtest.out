@@ -1,0 +1,64 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ladtest.inp
+ /home/cottrell/stats/test-gretl/ladtest.inp
+? open fraserf.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/fraserf.gdt
+periodicity: 1, maxobs: 31
+observations range: 1 to 31
+
+Listing 12 variables:
+  0) const      1) APICO      2) APIEN      3) APIEN2     4) LCC      
+  5) SCC        6) PICOPHA    7) PIENPHA    8) Z81        9) Z105     
+ 10) Z50       11) Z90      
+
+? set seed 333777
+Pseudo-random number generator seeded with 333777
+? lad LCC 0 APICO
+
+Model 1: LAD, using observations 1-31
+Dependent variable: LCC
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const        8.78874      5.91394      1.486    0.1480  
+  APICO        1.05355      0.198091     5.319    1.05e-05 ***
+
+Median depend. var   26.00000   S.D. dependent var   18.66726
+Sum absolute resid   252.8516   Sum squared resid    2749.217
+Log-likelihood      -117.5508   Akaike criterion     239.1017
+Schwarz criterion    241.9697   Hannan-Quinn         240.0366
+
+? lad LCC APICO
+
+Model 2: LAD, using observations 1-31
+Dependent variable: LCC
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  APICO        1.31434      0.103213     12.73    1.25e-13 ***
+
+Median depend. var   26.00000   S.D. dependent var   18.66726
+Sum absolute resid   267.4469   Sum squared resid    3287.115
+Log-likelihood      -119.2905   Akaike criterion     240.5810
+Schwarz criterion    242.0150   Hannan-Quinn         241.0485
+
+? lad LCC APICO PICOPHA
+
+Model 3: LAD, using observations 1-31
+Dependent variable: LCC
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  APICO       0.934739     0.0699092     13.37    6.27e-14 ***
+  PICOPHA     0.0115724    0.00111399    10.39    2.76e-11 ***
+
+Median depend. var   26.00000   S.D. dependent var   18.66726
+Sum absolute resid   127.5113   Sum squared resid    915.3131
+Log-likelihood      -96.32831   Akaike criterion     196.6566
+Schwarz criterion    199.5246   Hannan-Quinn         197.5915
+
+Done

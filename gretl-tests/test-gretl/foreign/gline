@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+
+$text1 = "foreign language=R --quiet --send-data";
+$text2 = "foreign language=R";
+
+print "text1\n";
+if ($text1 =~ m/language=(R|r)(\s+--[^\s=]+)?(\s+--[^\s=]+)?/) {
+  print "matched $1.\n";
+  print "matched $+.\n";
+}
+
+print "text2\n";
+if ($text2 =~ m/language=(R|r)(\s+--quiet)?(\s+--send-data)?/) {
+  print "matched $1.\n";
+  print "matched $+.\n";
+}
+

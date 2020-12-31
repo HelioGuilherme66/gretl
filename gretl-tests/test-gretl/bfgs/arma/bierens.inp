@@ -1,0 +1,9 @@
+open bierens.gdt
+diff y
+smpl 1950:2 1997:1
+# native Kalman
+arma 1 1 ; 0 1 ; d_y 
+arima 1 1 1 ; 0 0 1 ; y 
+
+
+

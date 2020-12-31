@@ -1,0 +1,78 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-4.inp
+ /opt/esl/share/gretl/scripts/ps6-4.inp
+# PS6.4, for Practice Problems 6.5 and 6.6 of Section 6.4
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? genr sqft2=sqft*sqft
+Generated series sqft2 (ID 5)
+# obtain logarithm of sqft
+? genr lsqft=log(sqft)
+Generated series lsqft (ID 6)
+# Practice problem 6.5
+? ols price 0 sqft sqft2
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+              coefficient     std. error     t-ratio   p-value
+  ------------------------------------------------------------
+  const      -28.6071        133.021         -0.2151   0.8337 
+  sqft         0.224620        0.136493       1.646    0.1281 
+  sqft2       -2.09847e-05     3.30237e-05   -0.6354   0.5381 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    17626.53   S.E. of regression   40.03014
+R-squared            0.826877   Adjusted R-squared   0.795400
+F(2, 11)             26.26930   P-value(F)           0.000065
+Log-likelihood      -69.83186   Akaike criterion     145.6637
+Schwarz criterion    147.5809   Hannan-Quinn         145.4863
+
+# Practice problem 6.5
+? ols price 0 lsqft
+
+Model 2: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1660.81      273.543     -6.071    5.57e-05 ***
+  lsqft         263.316      36.3816     7.238    1.03e-05 ***
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18976.68   S.E. of regression   39.76670
+R-squared            0.813616   Adjusted R-squared   0.798084
+F(1, 12)             52.38323   P-value(F)           0.000010
+Log-likelihood      -70.34850   Akaike criterion     144.6970
+Schwarz criterion    145.9751   Hannan-Quinn         144.5787
+
+# Practice problem 6.6
+? ols price 0 lsqft baths
+
+Model 3: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -1775.23       383.203     -4.633    0.0007  ***
+  lsqft        284.253       60.4153     4.705    0.0006  ***
+  baths        -18.1891      41.0388    -0.4432   0.6662 
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    18643.74   S.E. of regression   41.16898
+R-squared            0.816886   Adjusted R-squared   0.783593
+F(2, 11)             24.53596   P-value(F)           0.000088
+Log-likelihood      -70.22460   Akaike criterion     146.4492
+Schwarz criterion    148.3664   Hannan-Quinn         146.2717
+
+Done

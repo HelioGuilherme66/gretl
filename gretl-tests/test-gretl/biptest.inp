@@ -1,0 +1,13 @@
+open stata/school.gdt
+
+biprobit private vote 0 logptax loginc years
+matrix yh = $yhat
+yh
+
+biprobit private vote 0 logptax loginc years ; 0 logptax years
+biprobit private vote 0 logptax loginc years ; 0 logptax years --robust
+
+loginc[32] = NA
+vote[24] = NA
+biprobit private vote 0 logptax loginc years ; 0 logptax years --verbose
+

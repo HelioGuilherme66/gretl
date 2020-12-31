@@ -1,0 +1,34 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-04-02 10:12
+? run preserve.inp
+ /home/cottrell/stats/test-gretl/fnsample/preserve.inp
+? scalar T = 10
+Generated scalar T = 10
+? matrix m = I(2)
+Generated matrix m
+? nulldata 20 --preserve
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+? print T
+
+              T =  10.000000
+? print m
+m (2 x 2)
+
+  1   0 
+  0   1 
+
+? open data4-1 --preserve --quiet
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+? print T
+
+              T =  10.000000
+? print m
+m (2 x 2)
+
+  1   0 
+  0   1 
+
+Done

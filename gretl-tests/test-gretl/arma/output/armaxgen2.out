@@ -1,0 +1,96 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run armaxgen2.inp
+ /home/cottrell/stats/test-gretl/arma/armaxgen2.inp
+? nulldata 500
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+? setobs 12 1950:01
+Full data range: 1950:01 - 1991:08 (n = 500)
+
+? set seed 43337
+Pseudo-random number generator seeded with 43337
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr time
+Generated series time (ID 3)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 4)
+? genr y = 0.1*time + u
+Generated series y (ID 5)
+? arma 0 1 ; y time -x
+
+Model 1: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using X-13-ARIMA (exact ML)
+Dependent variable: y
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  theta_1     0.390582     0.0412301       9.473   2.71e-21 ***
+  time        0.100265     0.000212206   472.5     0.0000   ***
+
+Mean dependent var   25.20064   S.D. dependent var   14.43789
+Mean of innovations  0.024047   S.D. of innovations  0.987353
+Log-likelihood      -701.7821   Akaike criterion     1409.564
+Schwarz criterion    1422.202   Hannan-Quinn         1414.524
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.5603     0.0000     2.5603     0.5000
+  -----------------------------------------------------------
+
+? arma 0 1 ; y time
+
+Function evaluations: 53
+Evaluations of gradient: 9
+
+Model 2: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  theta_1     0.390582     0.0421720       9.262   2.01e-20 ***
+  time        0.100265     0.000212207   472.5     0.0000   ***
+
+Mean dependent var   25.20064   S.D. dependent var   14.43789
+Mean of innovations  0.024413   S.D. of innovations  0.987353
+Log-likelihood      -701.7821   Akaike criterion     1409.564
+Schwarz criterion    1422.202   Hannan-Quinn         1414.524
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.5603     0.0000     2.5603     0.5000
+  -----------------------------------------------------------
+
+? arma 0 1 ; y time --conditional
+
+Function evaluations: 14
+Evaluations of gradient: 7
+
+Model 3: ARMAX, using observations 1950:02-1991:08 (T = 499)
+Estimated using BHHH method (conditional ML)
+Dependent variable: y
+
+             coefficient   std. error       z      p-value 
+  ---------------------------------------------------------
+  theta_1     0.390311     0.0391703       9.964   2.18e-23 ***
+  time        0.100265     0.000215259   465.8     0.0000   ***
+
+Mean dependent var   25.20064   S.D. dependent var   14.43789
+Mean of innovations  0.024308   S.D. of innovations  0.987604
+Log-likelihood      -701.8262   Akaike criterion     1409.652
+Schwarz criterion    1422.290   Hannan-Quinn         1414.612
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1          -2.5621     0.0000     2.5621     0.5000
+  -----------------------------------------------------------
+
+Done

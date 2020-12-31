@@ -1,0 +1,95 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run leverage.inp
+ /opt/esl/share/gretl/scripts/misc/leverage.inp
+# Illustration of the analysis of influential observations
+# and "leverage".  The example comes from Davidson and
+# MacKinnon's "Estimation and Inference in Econometrics"
+# (Oxford, 1993), Chapter 1.
+? open leverage.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/leverage.gdt
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+
+Listing 4 variables:
+  0) const    1) y        2) x1       3) x2     
+
+# OLS using "correct" x data
+? ols y 0 x1
+
+Model 1: OLS, using observations 1-10
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const        1.39037      0.603391     2.304    0.0501  *
+  x1           1.22292      0.264423     4.625    0.0017  ***
+
+Mean dependent var   4.060000   S.D. dependent var   1.004169
+Sum squared resid    2.470351   S.E. of regression   0.555692
+R-squared            0.727791   Adjusted R-squared   0.693765
+F(1, 8)              21.38918   P-value(F)           0.001699
+Log-likelihood      -7.198261   Akaike criterion     18.39652
+Schwarz criterion    19.00169   Hannan-Quinn         17.73265
+
+? leverage
+                residual        leverage       influence        DFFITS
+                    u          0<=h<=1         u*h/(1-h)
+
+       1       -0.35698          0.203        -0.090675         -0.351
+       2       -0.61977          0.105        -0.072627         -0.415
+       3       -0.11618          0.536*          -0.134         -0.310
+       4       -0.55296          0.101        -0.062054         -0.354
+       5      -0.063665          0.194        -0.015286         -0.059
+       6         1.0084          0.151          0.17888          1.081
+       7       -0.16779          0.156        -0.030997         -0.133
+       8        0.13806          0.101         0.015514          0.083
+       9      -0.024623          0.269       -0.0090443         -0.029
+      10        0.75546          0.186          0.17285          0.797
+
+('*' indicates a leverage point)
+
+Cross-validation criterion = 3.46259
+
+# using data with an erroneous value for x at
+# observation 7 (otherwise x2 is identical to x1)
+? ols y 0 x2
+
+Model 2: OLS, using observations 1-10
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       3.42044       0.543836     6.289    0.0002  ***
+  x2          0.238374      0.168741     1.413    0.1955 
+
+Mean dependent var   4.060000   S.D. dependent var   1.004169
+Sum squared resid    7.263341   S.E. of regression   0.952847
+R-squared            0.199649   Adjusted R-squared   0.099606
+F(1, 8)              1.995621   P-value(F)           0.195455
+Log-likelihood      -12.59066   Akaike criterion     29.18132
+Schwarz criterion    29.78649   Hannan-Quinn         28.51745
+
+? leverage
+                residual        leverage       influence        DFFITS
+                    u          0<=h<=1         u*h/(1-h)
+
+       1       -0.90039          0.143         -0.15042         -0.419
+       2       -0.35585          0.104        -0.041264         -0.127
+       3         1.3686          0.125          0.19493          0.645
+       4        -0.4958          0.110        -0.061241         -0.185
+       5       -0.57754          0.141        -0.094778         -0.255
+       6        0.66194          0.130          0.09864          0.279
+       7       -0.75116          0.883*         -5.6741        -10.233
+       8        0.32322          0.106         0.038275          0.116
+       9        -0.7551          0.158         -0.14197         -0.368
+      10         1.4821          0.100          0.16546          0.629
+
+('*' indicates a leverage point)
+
+Cross-validation criterion = 49.9805
+
+Done

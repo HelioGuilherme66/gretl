@@ -1,0 +1,79 @@
+# Stock and Watson, ch 10
+# IV analysis of demand for cigarettes
+#
+open cig_ch10.gdt
+set hc_version 1
+# real avg price including sales tax
+genr ravgprs = avgprs / cpi
+# real avg cig-specific tax
+genr rtax = tax / cpi
+# real average total tax
+genr rtaxs = taxs / cpi
+# real average sales tax
+genr rtaxso = rtaxs - rtax
+# logs of consumption, price
+genr lpackpc = log(packpc)
+genr lravgprs = log(ravgprs)
+# real personal state income
+genr perinc = income / (pop*cpi)
+genr lperinc = log(perinc)
+# generate 10-year differences
+# strict replication of Stock and Watson (see coment below)
+genr ltpackpc = log(packpc/packpc(-1)) 
+genr ltavgprs = log(avgprs/avgprs(-1))
+# the above should really be:
+# genr ltavgprs = log(ravgprs/ravgprs(-1))
+genr ltperinc = log(perinc/perinc(-1))
+genr dtrtaxs = rtaxs - rtaxs(-1)
+genr dtrtax = rtax - rtax(-1)
+genr dtrtaxso = rtaxso - rtaxso(-1);
+# restrict sample to 1995 observations
+smpl --restrict year=1995
+# Equation (10.9)
+ols lravgprs 0 rtaxso --robust
+genr pfit = $yhat
+# Equation (10.10)
+ols lpackpc 0 pfit --robust
+# Equation (10.11)
+tsls lpackpc 0 lravgprs ; 0 rtaxso --robust
+# Equation (10.15)
+tsls lpackpc 0 lravgprs lperinc ; 0 rtaxso lperinc --robust
+# Equation (10.16)
+tsls lpackpc 0 lravgprs lperinc ; 0 rtaxso rtax lperinc --robust
+# Table 10.1, TSLS estimates
+#
+# Comment by Allin Cottrell: the intercepts in these equations
+# are misleading, since on the RHS we have the 10-year log
+# difference in real income, but the 10-year log difference
+# in nominal price: price should also be given in real terms.
+# The intercepts in S&W's Table 10.1 give the estimated change
+# in cigarette consumption if real income is held constant
+# while the nominal price of cigarettes is held constant, which
+# is an odd thought experiment.
+#
+# col 1
+tsls ltpackpc 0 ltavgprs ltperinc ; 0 dtrtaxso ltperinc --robust
+# Compute first-stage F-stat
+ols ltavgprs 0 dtrtaxso ltperinc --robust --quiet
+omit dtrtaxso --quiet
+# col 2
+tsls ltpackpc 0 ltavgprs ltperinc ; 0 dtrtax ltperinc --robust
+# Compute first-stage F-stat
+ols ltavgprs 0 dtrtax ltperinc --robust --quiet
+omit dtrtax --quiet
+# col 3
+tsls ltpackpc 0 ltavgprs ltperinc ; 0 dtrtax dtrtaxso ltperinc --robust
+genr tslsu = $uhat
+# Compute first-stage F-stat
+ols ltavgprs 0 dtrtax dtrtaxso ltperinc --robust --quiet
+omit dtrtax dtrtaxso --quiet
+# J test
+ols tslsu 0 dtrtax dtrtaxso ltperinc --quiet
+genr ssru = $ess
+genr dfu = $df
+ols tslsu 0 ltperinc --quiet
+genr ssrr = $ess
+genr test = (ssrr - ssru)/(ssru/dfu)
+pvalue X 1 test
+
+

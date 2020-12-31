@@ -1,0 +1,18 @@
+open data4-1
+matrix A = {1,2,3;4,5,6;7,8,9}
+matrix B = A[1:2,2:3]
+B
+scalar m = 3
+scalar n = 4
+set seed 37
+matrix B = mnormal(m, n)
+B
+A[2:3,2:3] = I(2)
+A
+
+
+
+
+
+
+

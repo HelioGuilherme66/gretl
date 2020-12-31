@@ -1,0 +1,150 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps4-4.inp
+ /opt/esl/share/gretl/scripts/ps4-4.inp
+# PS4.4, for Table 4.4 and the application in Section 4.6
+? open data4-4
+
+Read datafile /opt/esl/share/gretl/data/data4-4.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 8 variables:
+  0) const       1) BUSTRAVL    2) FARE        3) GASPRICE    4) INCOME    
+  5) POP         6) DENSITY     7) LANDAREA  
+
+? ols BUSTRAVL 0 FARE GASPRICE INCOME POP DENSITY LANDAREA
+
+Model 1: OLS, using observations 1-40
+Dependent variable: BUSTRAVL
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      2744.68       2641.67         1.039    0.3064  
+  FARE       -238.654       451.728       -0.5283   0.6008  
+  GASPRICE    522.113      2658.23         0.1964   0.8455  
+  INCOME       -0.194744      0.0648867   -3.001    0.0051   ***
+  POP           1.71144       0.231364     7.397    1.69e-08 ***
+  DENSITY       0.116415      0.0595703    1.954    0.0592   *
+  LANDAREA     -1.15523       1.80264     -0.6409   0.5260  
+
+Mean dependent var   1933.175   S.D. dependent var   2431.757
+Sum squared resid    18213267   S.E. of regression   742.9113
+R-squared            0.921026   Adjusted R-squared   0.906667
+F(6, 33)             64.14338   P-value(F)           8.92e-17
+Log-likelihood      -317.3332   Akaike criterion     648.6663
+Schwarz criterion    660.4885   Hannan-Quinn         652.9409
+
+Excluding the constant, p-value was highest for variable 3 (GASPRICE)
+
+# omit variables -- Model B
+? omit GASPRICE LANDAREA FARE
+Test on Model 1:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    FARE, GASPRICE, LANDAREA
+  Test statistic: F(3, 33) = 0.315845, p-value 0.8138
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1-40
+Dependent variable: BUSTRAVL
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      2815.70       976.301        2.884    0.0066   ***
+  INCOME       -0.201273     0.0621008   -3.241    0.0026   ***
+  POP           1.57658      0.120612    13.07     3.10e-15 ***
+  DENSITY       0.153421     0.0348977    4.396    9.34e-05 ***
+
+Mean dependent var   1933.175   S.D. dependent var   2431.757
+Sum squared resid    18736228   S.E. of regression   721.4228
+R-squared            0.918759   Adjusted R-squared   0.911989
+F(3, 36)             135.7080   P-value(F)           1.12e-19
+Log-likelihood      -317.8993   Akaike criterion     643.7987
+Schwarz criterion    650.5542   Hannan-Quinn         646.2413
+
+# estimate full model and omit variables one at a time
+? ols BUSTRAVL 0 FARE GASPRICE INCOME POP DENSITY LANDAREA
+
+Model 3: OLS, using observations 1-40
+Dependent variable: BUSTRAVL
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      2744.68       2641.67         1.039    0.3064  
+  FARE       -238.654       451.728       -0.5283   0.6008  
+  GASPRICE    522.113      2658.23         0.1964   0.8455  
+  INCOME       -0.194744      0.0648867   -3.001    0.0051   ***
+  POP           1.71144       0.231364     7.397    1.69e-08 ***
+  DENSITY       0.116415      0.0595703    1.954    0.0592   *
+  LANDAREA     -1.15523       1.80264     -0.6409   0.5260  
+
+Mean dependent var   1933.175   S.D. dependent var   2431.757
+Sum squared resid    18213267   S.E. of regression   742.9113
+R-squared            0.921026   Adjusted R-squared   0.906667
+F(6, 33)             64.14338   P-value(F)           8.92e-17
+Log-likelihood      -317.3332   Akaike criterion     648.6663
+Schwarz criterion    660.4885   Hannan-Quinn         652.9409
+
+Excluding the constant, p-value was highest for variable 3 (GASPRICE)
+
+# Model C
+? omit GASPRICE
+Test on Model 3:
+
+  Null hypothesis: the regression parameter is zero for GASPRICE
+  Test statistic: F(1, 33) = 0.0385785, p-value 0.845491
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1-40
+Dependent variable: BUSTRAVL
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      3215.86       1090.47         2.949    0.0057   ***
+  FARE       -225.659       440.494       -0.5123   0.6118  
+  INCOME       -0.195716      0.0637765   -3.069    0.0042   ***
+  POP           1.71681       0.226474     7.581    8.33e-09 ***
+  DENSITY       0.118216      0.0580228    2.037    0.0495   **
+  LANDAREA     -1.19530       1.76555     -0.6770   0.5030  
+
+Mean dependent var   1933.175   S.D. dependent var   2431.757
+Sum squared resid    18234559   S.E. of regression   732.3323
+R-squared            0.920934   Adjusted R-squared   0.909307
+F(5, 34)             79.20400   P-value(F)           9.63e-18
+Log-likelihood      -317.3565   Akaike criterion     646.7131
+Schwarz criterion    656.8464   Hannan-Quinn         650.3769
+
+Excluding the constant, p-value was highest for variable 2 (FARE)
+
+# Model D
+? omit LANDAREA
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for LANDAREA
+  Test statistic: F(1, 34) = 0.458342, p-value 0.50298
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1-40
+Dependent variable: BUSTRAVL
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      3111.18       1071.07         2.905    0.0063   ***
+  FARE       -295.731       424.835       -0.6961   0.4910  
+  INCOME       -0.202197      0.0625643   -3.232    0.0027   ***
+  POP           1.58834       0.122654    12.95     6.56e-15 ***
+  DENSITY       0.149027      0.0357127    4.173    0.0002   ***
+
+Mean dependent var   1933.175   S.D. dependent var   2431.757
+Sum squared resid    18480373   S.E. of regression   726.6434
+R-squared            0.919868   Adjusted R-squared   0.910710
+F(4, 35)             100.4449   P-value(F)           1.12e-18
+Log-likelihood      -317.6243   Akaike criterion     645.2487
+Schwarz criterion    653.6931   Hannan-Quinn         648.3019
+
+Excluding the constant, p-value was highest for variable 2 (FARE)
+
+Done

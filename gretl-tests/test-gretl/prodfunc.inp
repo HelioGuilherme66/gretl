@@ -1,0 +1,8 @@
+open pwt56_1985.gdt
+# restrict the sample to just obs with valid KAPW values
+smpl --no-missing KAPW
+# take logs of output per worker and capital per worker
+logs RGDPW KAPW
+# run log-log regression
+ols l_RGDPW const l_KAPW
+

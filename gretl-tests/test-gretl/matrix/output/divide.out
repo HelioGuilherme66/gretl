@@ -1,0 +1,47 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run divide.inp
+ /home/cottrell/stats/test-gretl/matrix/divide.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = {const, sqft, bedrms}
+Generated matrix X
+? matrix y = price
+Generated matrix y
+? matrix B = X \ y
+Generated matrix B
+? print B
+B (3 x 1)
+
+      121.18 
+     0.14831 
+     -23.911 
+
+? ols 1 0 2 3
+
+Model 1: OLS, using observations 1-14
+Dependent variable: price
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      121.179       80.1778       1.511    0.1589  
+  sqft         0.148314     0.0212080    6.993    2.29e-05 ***
+  bedrms     -23.9106      24.6419      -0.9703   0.3527  
+
+Mean dependent var   317.4929   S.D. dependent var   88.49816
+Sum squared resid    16832.79   S.E. of regression   39.11846
+R-squared            0.834673   Adjusted R-squared   0.804613
+F(2, 11)             27.76736   P-value(F)           0.000050
+Log-likelihood      -69.50933   Akaike criterion     145.0187
+Schwarz criterion    146.9358   Hannan-Quinn         144.8412
+
+Done

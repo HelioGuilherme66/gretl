@@ -1,0 +1,633 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps10-8.inp
+ /opt/esl/share/gretl/scripts/ps10-8.inp
+# PS10.8, for the Application section 10.9
+? open data10-4
+
+Read datafile /opt/esl/share/gretl/data/data10-4.gdt
+periodicity: 1, maxobs: 48
+observations range: 1940 to 1987
+
+Listing 17 variables:
+  0) const     1) year      2) ug        3) um        4) gnpdef  
+  5) hdem      6) sdem      7) pres      8) elect     9) reagan  
+ 10) opp      11) ww2      12) kwar     13) vwar     14) krus    
+ 15) gorb     16) salt    
+
+? genr ml = um * 100/gnpdef
+Generated series ml (ID 17)
+# convert to real terms
+? genr g = ug * 100/gnpdef
+Generated series g (ID 18)
+# generate log variables
+? logs ml g
+Listing 21 variables:
+  0) const     1) year      2) ug        3) um        4) gnpdef  
+  5) hdem      6) sdem      7) pres      8) elect     9) reagan  
+ 10) opp      11) ww2      12) kwar     13) vwar     14) krus    
+ 15) gorb     16) salt     17) ml       18) g        19) l_ml    
+ 20) l_g     
+
+# generate first difference of logs
+? genr milit = ldiff(ml)
+Generated series milit (ID 21)
+? genr govt = ldiff(g)
+Generated series govt (ID 22)
+# generate error correction term
+? genr longdef = l_g(-1) - l_ml(-1)
+Generated series longdef (ID 23)
+# create interaction terms
+? genr lpres = longdef * pres
+Generated series lpres (ID 24)
+? genr lelect = longdef * elect
+Generated series lelect (ID 25)
+? genr lreagan = longdef * reagan
+Generated series lreagan (ID 26)
+? genr lopp = longdef * opp
+Generated series lopp (ID 27)
+? genr lhdem = longdef * hdem
+Generated series lhdem (ID 28)
+? genr lsdem = longdef * sdem
+Generated series lsdem (ID 29)
+? genr lww2 = longdef * ww2
+Generated series lww2 (ID 30)
+? genr lkwar = longdef * kwar
+Generated series lkwar (ID 31)
+? genr lvwar = longdef * vwar
+Generated series lvwar (ID 32)
+? genr lkrus = longdef * krus
+Generated series lkrus (ID 33)
+? genr lgorb = longdef * gorb
+Generated series lgorb (ID 34)
+? genr lsalt = longdef * salt
+Generated series lsalt (ID 35)
+? list
+Listing 36 variables:
+  0) const      1) year       2) ug         3) um         4) gnpdef   
+  5) hdem       6) sdem       7) pres       8) elect      9) reagan   
+ 10) opp       11) ww2       12) kwar      13) vwar      14) krus     
+ 15) gorb      16) salt      17) ml        18) g         19) l_ml     
+ 20) l_g       21) milit     22) govt      23) longdef   24) lpres    
+ 25) lelect    26) lreagan   27) lopp      28) lhdem     29) lsdem    
+ 30) lww2      31) lkwar     32) lvwar     33) lkrus     34) lgorb    
+ 35) lsalt    
+
+# suppress the first observation
+? smpl 1941 ;
+Full data range: 1940 - 1987 (n = 48)
+Current sample: 1941 - 1987 (n = 47)
+
+# estimate the basic error correction model
+? ols milit const govt longdef
+
+Model 1: OLS, using observations 1941-1987 (T = 47)
+Dependent variable: milit
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -0.171719    0.0617215    -2.782    0.0079   ***
+  govt         1.57884     0.122738     12.86     1.65e-16 ***
+  longdef      0.168819    0.0607210     2.780    0.0080   ***
+
+Mean dependent var   0.058021   S.D. dependent var   0.378136
+Sum squared resid    1.307870   S.E. of regression   0.172407
+R-squared            0.801157   Adjusted R-squared   0.792119
+F(2, 44)             88.64001   P-value(F)           3.69e-16
+Log-likelihood       17.48097   Akaike criterion    -28.96193
+Schwarz criterion   -23.41149   Hannan-Quinn        -26.87326
+rho                  0.149106   Durbin-Watson        1.242227
+
+# estimate the model in equation (10.27)
+? ols milit const govt longdef lpres lelect lreagan lopp lhdem lsdem \
+  lww2 lkwar lvwar lkrus lgorb lsalt
+
+Model 2: OLS, using observations 1941-1987 (T = 47)
+Dependent variable: milit
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      -0.235725     0.0448270    -5.259     9.37e-06 ***
+  govt        1.30799      0.0695948    18.79      7.49e-19 ***
+  longdef     0.426273     0.263615      1.617     0.1157  
+  lpres       0.0171758    0.0750381     0.2289    0.8204  
+  lelect      0.00703052   0.0315797     0.2226    0.8252  
+  lreagan    -0.00802970   0.0883275    -0.09091   0.9281  
+  lopp       -0.0341639    0.0727450    -0.4696    0.6418  
+  lhdem      -0.00269590   0.00501742   -0.5373    0.5948  
+  lsdem      -0.00183587   0.00620822   -0.2957    0.7694  
+  lww2        0.499708     0.0948597     5.268     9.11e-06 ***
+  lkwar       0.408881     0.0800547     5.108     1.45e-05 ***
+  lvwar       0.118699     0.0812718     1.461     0.1539  
+  lkrus       0.148321     0.0769081     1.929     0.0627   *
+  lgorb       0.0186082    0.0558101     0.3334    0.7410  
+  lsalt      -0.0132142    0.0540676    -0.2444    0.8085  
+
+Mean dependent var   0.058021   S.D. dependent var   0.378136
+Sum squared resid    0.241915   S.E. of regression   0.086947
+R-squared            0.963220   Adjusted R-squared   0.947129
+F(14, 32)            59.86020   P-value(F)           6.77e-19
+Log-likelihood       57.13880   Akaike criterion    -84.27760
+Schwarz criterion   -56.52538   Hannan-Quinn        -73.83425
+rho                 -0.274098   Durbin-Watson        2.525775
+
+Excluding the constant, p-value was highest for variable 26 (lreagan)
+
+# LM test for first order autocorrelation
+? genr ut = $uhat
+Generated series ut (ID 36)
+? genr ut1 = ut(-1)
+Generated series ut1 (ID 37)
+? smpl 1942 ;
+Full data range: 1940 - 1987 (n = 48)
+Current sample: 1942 - 1987 (n = 46)
+
+? ols ut const govt longdef lpres lelect lreagan lopp lhdem lsdem \
+  lww2 lkwar lvwar lkrus lgorb lsalt ut1
+
+Model 3: OLS, using observations 1942-1987 (T = 46)
+Dependent variable: ut
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const       0.0583663     0.0545552     1.070      0.2932 
+  govt        0.00330534    0.0985190     0.03355    0.9735 
+  longdef    -0.236033      0.274576     -0.8596     0.3968 
+  lpres       0.00624528    0.0766057     0.08153    0.9356 
+  lelect     -0.00474349    0.0303781    -0.1561     0.8770 
+  lreagan     0.00725197    0.0870910     0.08327    0.9342 
+  lopp       -0.0118653     0.0729772    -0.1626     0.8719 
+  lhdem       0.00280311    0.00497857    0.5630     0.5776 
+  lsdem       4.71608e-05   0.00595378    0.007921   0.9937 
+  lww2       -0.0951779     0.164926     -0.5771     0.5682 
+  lkwar       0.0166468     0.0774764     0.2149     0.8313 
+  lvwar      -0.0102981     0.0781861    -0.1317     0.8961 
+  lkrus      -0.00722960    0.0751099    -0.09625    0.9240 
+  lgorb      -0.00271959    0.0537980    -0.05055    0.9600 
+  lsalt       0.0161073     0.0526682     0.3058     0.7618 
+  ut1        -0.419548      0.216515     -1.938      0.0621  *
+
+Mean dependent var  -0.000545   S.D. dependent var   0.073223
+Sum squared resid    0.208093   S.E. of regression   0.083285
+R-squared            0.137522   Adjusted R-squared  -0.293718
+F(15, 30)            0.318899   P-value(F)           0.988720
+Log-likelihood       58.89225   Akaike criterion    -85.78451
+Schwarz criterion   -56.52624   Hannan-Quinn        -74.82418
+rho                 -0.156093   Durbin-Watson        2.276009
+
+Excluding the constant, p-value was highest for variable 29 (lsdem)
+
+? genr LM = $trsq
+Generated scalar LM = 6.326
+? pvalue X 1 LM
+Chi-square(1): area to the right of 6.326 = 0.0118981
+(to the left: 0.988102)
+? smpl 1941 ;
+Full data range: 1940 - 1987 (n = 48)
+Current sample: 1941 - 1987 (n = 47)
+
+# mixed Hilu-Corc estimation of the general model
+? ar1 milit const govt longdef lpres lelect lreagan lopp lhdem lsdem \
+  lww2 lkwar lvwar lkrus lgorb lsalt --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99     0.281390    -0.90     0.260040    -0.80     0.240726
+ -0.70     0.225957    -0.60     0.215595    -0.50     0.209458
+ -0.40     0.207316    -0.30     0.208917    -0.20     0.214015
+ -0.10     0.222434     0.00     0.234138     0.10     0.249268
+  0.20     0.268040     0.30     0.289916     0.40     0.308941
+  0.50     0.324294     0.60     0.350371     0.70     0.379319
+  0.80     0.409166     0.90     0.442208     0.99     0.479303   
+
+ESS is minimized for rho = -0.39
+
+  ESS
+   0.479303  |                              |                             o
+             |                              |                              
+             |                              |                              
+   0.433972  +                              |                          o   
+             |                              |                              
+             |                              |                       o      
+             |                              |                              
+             |                              |                    o         
+    0.35842  +                              |                              
+             |                              |                 o            
+             |                              |                              
+             |                              |              o               
+             |                              |           o                  
+   0.282868  +                              |        o                     
+             |o                             |     o                        
+             |  o                           |                              
+             |     o                        |  o                           
+             |        o                 o   o                              
+   0.207316  +           o  o  o  o  o      |                              
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1     -0.39000   0.207312
+                   2     -0.39282   0.207310
+                   3     -0.39361   0.207310
+                   4     -0.39383   0.207310
+                   5     -0.39390   0.207310
+                   6     -0.39391   0.207310
+
+Model 4: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.393914
+
+             coefficient    std. error    t-ratio     p-value 
+  ------------------------------------------------------------
+  const      -0.198141      0.0367943    -5.385       7.12e-06 ***
+  govt        1.31690       0.0703364    18.72        1.87e-18 ***
+  longdef     0.290232      0.222336      1.305       0.2014  
+  lpres       0.0355205     0.0642966     0.5524      0.5846  
+  lelect     -0.00136559    0.0272175    -0.05017     0.9603  
+  lreagan    -0.0270312     0.0780588    -0.3463      0.7315  
+  lopp       -0.0530530     0.0644843    -0.8227      0.4169  
+  lhdem       8.92890e-07   0.00403123    0.0002215   0.9998  
+  lsdem      -0.00298656    0.00502299   -0.5946      0.5564  
+  lww2        0.466624      0.0974840     4.787       3.96e-05 ***
+  lkwar       0.416989      0.0654927     6.367       4.34e-07 ***
+  lvwar       0.123668      0.0661945     1.868       0.0712   *
+  lkrus       0.145212      0.0603118     2.408       0.0222   **
+  lgorb       0.0247038     0.0432845     0.5707      0.5723  
+  lsalt      -0.00533826    0.0417592    -0.1278      0.8991  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.207310   S.E. of regression   0.081777
+R-squared            0.960627   Adjusted R-squared   0.942846
+F(14, 31)            98.34309   P-value(F)           1.16e-21
+rho                 -0.196615   Durbin-Watson        2.342656
+
+Excluding the constant, p-value was highest for variable 28 (lhdem)
+
+# recursively omit variable with the highest p-value
+? omit lhdem
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for lhdem
+  Test statistic: F(1, 31) = 4.90594e-08, p-value 0.999825
+
+Model 5: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.393909
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      -0.198142     0.0356275    -5.562     3.88e-06 ***
+  govt        1.31690      0.0691276    19.05      5.03e-19 ***
+  longdef     0.290243     0.213376      1.360     0.1833  
+  lpres       0.0355256    0.0578892     0.6137    0.5438  
+  lelect     -0.00136375   0.0255208    -0.05344   0.9577  
+  lreagan    -0.0270313    0.0767558    -0.3522    0.7270  
+  lopp       -0.0530589    0.0562975    -0.9425    0.3530  
+  lsdem      -0.00298580   0.00359300   -0.8310    0.4121  
+  lww2        0.466617     0.0913795     5.106     1.46e-05 ***
+  lkwar       0.416987     0.0635300     6.564     2.15e-07 ***
+  lvwar       0.123663     0.0615440     2.009     0.0530   *
+  lkrus       0.145209     0.0573946     2.530     0.0165   **
+  lgorb       0.0247034    0.0425844     0.5801    0.5659  
+  lsalt      -0.00533676   0.0405650    -0.1316    0.8962  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.207310   S.E. of regression   0.080489
+R-squared            0.960627   Adjusted R-squared   0.944632
+F(13, 32)            109.3235   P-value(F)           1.08e-22
+rho                 -0.196609   Durbin-Watson        2.342646
+
+Excluding the constant, p-value was highest for variable 25 (lelect)
+
+? omit lelect
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for lelect
+  Test statistic: F(1, 32) = 0.00285549, p-value 0.957716
+
+Model 6: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.393675
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.198360     0.0348578    -5.691    2.40e-06 ***
+  govt        1.31646      0.0675330    19.49     1.12e-19 ***
+  longdef     0.290498     0.210098      1.383    0.1760  
+  lpres       0.0365659    0.0534871     0.6836   0.4990  
+  lreagan    -0.0281477    0.0725884    -0.3878   0.7007  
+  lopp       -0.0542267    0.0508574    -1.066    0.2941  
+  lsdem      -0.00299104   0.00353740   -0.8455   0.4039  
+  lww2        0.467119     0.0894657     5.221    9.61e-06 ***
+  lkwar       0.416008     0.0599093     6.944    6.18e-08 ***
+  lvwar       0.123448     0.0604858     2.041    0.0493   **
+  lkrus       0.144920     0.0562788     2.575    0.0147   **
+  lgorb       0.0252973    0.0404572     0.6253   0.5361  
+  lsalt      -0.00579013   0.0390661    -0.1482   0.8831  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.207328   S.E. of regression   0.079263
+R-squared            0.960624   Adjusted R-squared   0.946305
+F(12, 33)            122.0830   P-value(F)           9.53e-24
+rho                 -0.196439   Durbin-Watson        2.342357
+
+Excluding the constant, p-value was highest for variable 35 (lsalt)
+
+? omit lsalt
+Test on Model 6:
+
+  Null hypothesis: the regression parameter is zero for lsalt
+  Test statistic: F(1, 33) = 0.0219673, p-value 0.883076
+
+Model 7: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.392911
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.197412     0.0337963    -5.841    1.38e-06 ***
+  govt        1.31631      0.0665695    19.77     3.18e-20 ***
+  longdef     0.297672     0.201588      1.477    0.1490  
+  lpres       0.0337435    0.0495156     0.6815   0.5002  
+  lreagan    -0.0293276    0.0710486    -0.4128   0.6824  
+  lopp       -0.0523446    0.0487026    -1.075    0.2900  
+  lsdem      -0.00320175   0.00319484   -1.002    0.3233  
+  lww2        0.472985     0.0787735     6.004    8.50e-07 ***
+  lkwar       0.419438     0.0544736     7.700    5.93e-09 ***
+  lvwar       0.129101     0.0462505     2.791    0.0085   ***
+  lkrus       0.149762     0.0451520     3.317    0.0022   ***
+  lgorb       0.0254898    0.0398623     0.6394   0.5268  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.207466   S.E. of regression   0.078115
+R-squared            0.960597   Adjusted R-squared   0.947850
+F(11, 34)            136.9747   P-value(F)           8.13e-25
+rho                 -0.198597   Durbin-Watson        2.346481
+
+Excluding the constant, p-value was highest for variable 26 (lreagan)
+
+? omit lreagan
+Test on Model 7:
+
+  Null hypothesis: the regression parameter is zero for lreagan
+  Test statistic: F(1, 34) = 0.170389, p-value 0.682358
+
+Model 8: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.371458
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.192221     0.0312163    -6.158    4.79e-07 ***
+  govt        1.32432      0.0654278    20.24     6.66e-21 ***
+  longdef     0.249840     0.154300      1.619    0.1144  
+  lpres       0.0179274    0.0352768     0.5082   0.6145  
+  lopp       -0.0357196    0.0314785    -1.135    0.2642  
+  lsdem      -0.00247892   0.00251206   -0.9868   0.3305  
+  lww2        0.458245     0.0739166     6.199    4.22e-07 ***
+  lkwar       0.425893     0.0515604     8.260    9.78e-10 ***
+  lvwar       0.123258     0.0437853     2.815    0.0080   ***
+  lkrus       0.144364     0.0430743     3.352    0.0019   ***
+  lgorb       0.0155195    0.0311495     0.4982   0.6214  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.208407   S.E. of regression   0.077165
+R-squared            0.960419   Adjusted R-squared   0.949110
+F(10, 35)            149.7147   P-value(F)           1.15e-25
+rho                 -0.188690   Durbin-Watson        2.343579
+
+Excluding the constant, p-value was highest for variable 34 (lgorb)
+
+? omit lgorb
+Test on Model 8:
+
+  Null hypothesis: the regression parameter is zero for lgorb
+  Test statistic: F(1, 35) = 0.248229, p-value 0.621441
+
+Model 9: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.373667
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.193092     0.0307875    -6.272    3.02e-07 ***
+  govt        1.32244      0.0645602    20.48     1.98e-21 ***
+  longdef     0.253994     0.152228      1.669    0.1039  
+  lpres       0.0219078    0.0340310     0.6438   0.5238  
+  lopp       -0.0380254    0.0308184    -1.234    0.2253  
+  lsdem      -0.00253586   0.00247948   -1.023    0.3133  
+  lww2        0.460563     0.0728154     6.325    2.56e-07 ***
+  lkwar       0.425385     0.0509444     8.350    6.08e-10 ***
+  lvwar       0.123654     0.0432588     2.858    0.0070   ***
+  lkrus       0.144308     0.0425602     3.391    0.0017   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.209884   S.E. of regression   0.076355
+R-squared            0.960138   Adjusted R-squared   0.950173
+F(9, 36)             170.4109   P-value(F)           9.13e-27
+rho                 -0.189288   Durbin-Watson        2.322035
+
+Excluding the constant, p-value was highest for variable 24 (lpres)
+
+? omit lpres
+Test on Model 9:
+
+  Null hypothesis: the regression parameter is zero for lpres
+  Test statistic: F(1, 36) = 0.414427, p-value 0.523811
+
+Model 10: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.336217
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.197255     0.0306937    -6.427    1.66e-07 ***
+  govt        1.33760      0.0629349    21.25     2.48e-22 ***
+  longdef     0.332507     0.0940439     3.536    0.0011   ***
+  lopp       -0.0232827    0.0219216    -1.062    0.2951  
+  lsdem      -0.00376637   0.00163338   -2.306    0.0268   **
+  lww2        0.457073     0.0758275     6.028    5.76e-07 ***
+  lkwar       0.414215     0.0484891     8.542    2.80e-10 ***
+  lvwar       0.129769     0.0427803     3.033    0.0044   ***
+  lkrus       0.150974     0.0418418     3.608    0.0009   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.211973   S.E. of regression   0.075690
+R-squared            0.959745   Adjusted R-squared   0.951041
+F(8, 37)             184.7465   P-value(F)           1.99e-27
+rho                 -0.176947   Durbin-Watson        2.297017
+
+Excluding the constant, p-value was highest for variable 27 (lopp)
+
+? omit lopp
+Test on Model 10:
+
+  Null hypothesis: the regression parameter is zero for lopp
+  Test statistic: F(1, 37) = 1.12804, p-value 0.295078
+
+Model 11: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.30093
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.207499     0.0299166    -6.936    3.00e-08 ***
+  govt        1.34259      0.0646609    20.76     2.44e-22 ***
+  longdef     0.352686     0.0943476     3.738    0.0006   ***
+  lsdem      -0.00413190   0.00163583   -2.526    0.0158   **
+  lww2        0.469159     0.0779309     6.020    5.34e-07 ***
+  lkwar       0.425897     0.0481067     8.853    9.00e-11 ***
+  lvwar       0.141212     0.0422778     3.340    0.0019   ***
+  lkrus       0.157730     0.0423695     3.723    0.0006   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.218136   S.E. of regression   0.075766
+R-squared            0.958581   Adjusted R-squared   0.950951
+F(7, 38)             199.9106   P-value(F)           5.82e-28
+rho                 -0.145530   Durbin-Watson        2.258061
+
+# re-try the above using the --auto option
+? ar1 milit const govt longdef lpres lelect lreagan lopp lhdem lsdem \
+  lww2 lkwar lvwar lkrus lgorb lsalt --hilu
+
+   rho          ESS      rho          ESS      rho          ESS
+ -0.99     0.281390    -0.90     0.260040    -0.80     0.240726
+ -0.70     0.225957    -0.60     0.215595    -0.50     0.209458
+ -0.40     0.207316    -0.30     0.208917    -0.20     0.214015
+ -0.10     0.222434     0.00     0.234138     0.10     0.249268
+  0.20     0.268040     0.30     0.289916     0.40     0.308941
+  0.50     0.324294     0.60     0.350371     0.70     0.379319
+  0.80     0.409166     0.90     0.442208     0.99     0.479303   
+
+ESS is minimized for rho = -0.39
+
+  ESS
+   0.479303  |                              |                             o
+             |                              |                              
+             |                              |                              
+   0.433972  +                              |                          o   
+             |                              |                              
+             |                              |                       o      
+             |                              |                              
+             |                              |                    o         
+    0.35842  +                              |                              
+             |                              |                 o            
+             |                              |                              
+             |                              |              o               
+             |                              |           o                  
+   0.282868  +                              |        o                     
+             |o                             |     o                        
+             |  o                           |                              
+             |     o                        |  o                           
+             |        o                 o   o                              
+   0.207316  +           o  o  o  o  o      |                              
+             |+---------+---------+---------+---------+---------+---------+
+              -0.99                        RHO                            0.99
+
+
+
+Fine-tune rho using the CORC procedure...
+
+                 ITER       RHO        ESS
+                   1     -0.39000   0.207312
+                   2     -0.39282   0.207310
+                   3     -0.39361   0.207310
+                   4     -0.39383   0.207310
+                   5     -0.39390   0.207310
+                   6     -0.39391   0.207310
+
+Model 12: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.393914
+
+             coefficient    std. error    t-ratio     p-value 
+  ------------------------------------------------------------
+  const      -0.198141      0.0367943    -5.385       7.12e-06 ***
+  govt        1.31690       0.0703364    18.72        1.87e-18 ***
+  longdef     0.290232      0.222336      1.305       0.2014  
+  lpres       0.0355205     0.0642966     0.5524      0.5846  
+  lelect     -0.00136559    0.0272175    -0.05017     0.9603  
+  lreagan    -0.0270312     0.0780588    -0.3463      0.7315  
+  lopp       -0.0530530     0.0644843    -0.8227      0.4169  
+  lhdem       8.92890e-07   0.00403123    0.0002215   0.9998  
+  lsdem      -0.00298656    0.00502299   -0.5946      0.5564  
+  lww2        0.466624      0.0974840     4.787       3.96e-05 ***
+  lkwar       0.416989      0.0654927     6.367       4.34e-07 ***
+  lvwar       0.123668      0.0661945     1.868       0.0712   *
+  lkrus       0.145212      0.0603118     2.408       0.0222   **
+  lgorb       0.0247038     0.0432845     0.5707      0.5723  
+  lsalt      -0.00533826    0.0417592    -0.1278      0.8991  
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.207310   S.E. of regression   0.081777
+R-squared            0.960627   Adjusted R-squared   0.942846
+F(14, 31)            98.34309   P-value(F)           1.16e-21
+rho                 -0.196615   Durbin-Watson        2.342656
+
+Excluding the constant, p-value was highest for variable 28 (lhdem)
+
+? omit --auto
+
+Sequential elimination using two-sided alpha = 0.10
+
+ Dropping lhdem            (p-value 1.000)
+ Dropping lelect           (p-value 0.958)
+ Dropping lsalt            (p-value 0.883)
+ Dropping lreagan          (p-value 0.682)
+ Dropping lgorb            (p-value 0.621)
+ Dropping lpres            (p-value 0.524)
+ Dropping lopp             (p-value 0.295)
+
+Test on Model 12:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    lpres, lelect, lreagan, lopp, lhdem, lgorb, lsalt
+  Test statistic: F(7, 31) = 0.275621, p-value 0.95881
+
+Model 13: Hildreth-Lu, using observations 1942-1987 (T = 46)
+Dependent variable: milit
+rho = -0.30093
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      -0.207499     0.0299166    -6.936    3.00e-08 ***
+  govt        1.34259      0.0646609    20.76     2.44e-22 ***
+  longdef     0.352686     0.0943476     3.738    0.0006   ***
+  lsdem      -0.00413190   0.00163583   -2.526    0.0158   **
+  lww2        0.469159     0.0779309     6.020    5.34e-07 ***
+  lkwar       0.425897     0.0481067     8.853    9.00e-11 ***
+  lvwar       0.141212     0.0422778     3.340    0.0019   ***
+  lkrus       0.157730     0.0423695     3.723    0.0006   ***
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
+Sum squared resid    0.218136   S.E. of regression   0.075766
+R-squared            0.958581   Adjusted R-squared   0.950951
+F(7, 38)             199.9106   P-value(F)           5.82e-28
+rho                 -0.145530   Durbin-Watson        2.258061
+
+Done

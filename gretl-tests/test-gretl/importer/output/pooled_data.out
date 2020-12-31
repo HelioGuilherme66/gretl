@@ -1,0 +1,1747 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run pooled_data.inp
+ /home/cottrell/stats/test-gretl/importer/pooled_data.inp
+? open pooled_data.xls --coloffset=1
+Excel 97 +
+rows=213, total cols=42, data cols=42
+found label strings in first imported column
+Warning: there were missing values
+Listing 41 variables:
+  0) const           1) DLAND           2) DMERC           3) DFARM         
+  4) DFARMCO         5) DDEBT           6) VSECR           7) DSECR         
+  8) VBANK           9) DBANK          10) NSLAVE         11) DSLAVE        
+ 12) AGE            13) AGECO          14) DENGL          15) REVOFF        
+ 16) REVOFFCO       17) DCONG          18) SLAVES         19) PUBCRED       
+ 20) WEALTH         21) DIST           22) POPW           23) ENGLISH       
+ 24) PROFIT         25) votenum        26) vote_yes       27) raw           
+ 28) step4          29) V9             30) SLAVESCOUNTY   31) IMPORTS       
+ 32) ban_slaves     33) DAG            34) DPERONSA       35) LoanOffice    
+ 36) ArmyDebt       37) Certificates   38) stdebt         39) vdebt         
+ 40) exports       
+
+? print -o
+
+                     DLAND        DMERC        DFARM      DFARMCO        DDEBT
+
+    Ellsworth            0            0            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman            0            1            0            0            1
+       Basset            0            0            0            0            0
+      Bedford            0            0            0            0            0
+        Broom            0            0            1            1            0
+    Dickinson            0            0            0            0            0
+         Read            0            0            0            0            0
+      Baldwin            0            0            0            0            0
+          Few            0            0            1            1            0
+       Pierce            0            1            0            0            1
+   W Houstoun            0            0            1            0            0
+        Gerry            1            1            0            0            0
+       Gorham            1            1            0            0            0
+         King            0            0            0            0            0
+       Strong            0            0            0            0            0
+       Carrol            0            0            0            0            0
+      Jenifer            0            0            1            0            0
+    L. Martin            0            0            0            0            1
+      McHenry            0            0            0            0            0
+       Mercer            0            0            0            0            0
+       Gilman            0            0            0            0            0
+      Langdon            0            1            0            0            0
+    A. Martin            0            0            0            0            0
+       Blount            1            0            0            0            0
+        Davie            0            0            0            0            0
+      Spaight            0            0            0            0            0
+   Williamson            1            0            0            0            0
+     Brearley            0            0            0            0            0
+       Dayton            1            0            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0            0            0            0
+      Lansing            1            0            0            0            0
+        Yates            0            0            0            0            0
+       Clymer            0            1            0            0            0
+   Fitzsimons            1            1            0            0            0
+     Franklin            1            0            0            0            0
+    G. Morris            0            0            0            0            0
+     Ingersol            0            0            0            0            0
+      Mifflin            0            1            0            0            0
+    R. Morris            1            1            0            0            0
+       Wilson            1            0            0            0            0
+       Butler            0            0            0            0            0
+  C. Pinckney            0            0            0            0            0
+C.C. Pinckney            0            0            0            0            0
+     Rutledge            0            0            0            0            0
+        Blair            0            0            0            0            0
+      Madison            0            0            0            0            0
+        Mason            1            0            0            0            0
+      McClurg            0            0            0            0            0
+     Randolph            0            0            0            0            0
+   Washington            1            0            0            0            0
+    Ellsworth            0            0            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman            0            1            0            0            1
+       Basset            0            0            0            0            0
+      Bedford            0            0            0            0            0
+        Broom            0            0            1            1            0
+    Dickinson            0            0            0            0            0
+         Read            0            0            0            0            0
+      Baldwin            0            0            0            0            0
+          Few            0            0            1            1            0
+       Pierce            0            1            0            0            1
+   W Houstoun            0            0            1            0            0
+        Gerry            1            1            0            0            0
+       Gorham            1            1            0            0            0
+         King            0            0            0            0            0
+       Strong            0            0            0            0            0
+       Carrol            0            0            0            0            0
+      Jenifer            0            0            1            0            0
+    L. Martin            0            0            0            0            1
+      McHenry            0            0            0            0            0
+       Mercer            0            0            0            0            0
+       Gilman            0            0            0            0            0
+      Langdon            0            1            0            0            0
+    A. Martin            0            0            0            0            0
+       Blount            1            0            0            0            0
+        Davie            0            0            0            0            0
+      Spaight            0            0            0            0            0
+   Williamson            1            0            0            0            0
+     Brearley            0            0            0            0            0
+       Dayton            1            0            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0            0            0            0
+      Lansing            1            0            0            0            0
+        Yates            0            0            0            0            0
+       Clymer            0            1            0            0            0
+   Fitzsimons            1            1            0            0            0
+     Franklin            1            0            0            0            0
+    G. Morris            0            0            0            0            0
+     Ingersol            0            0            0            0            0
+      Mifflin            0            1            0            0            0
+    R. Morris            1            1            0            0            0
+       Wilson            1            0            0            0            0
+       Butler            0            0            0            0            0
+  C. Pinckney            0            0            0            0            0
+C.C. Pinckney            0            0            0            0            0
+     Rutledge            0            0            0            0            0
+        Blair            0            0            0            0            0
+      Madison            0            0            0            0            0
+        Mason            1            0            0            0            0
+      McClurg            0            0            0            0            0
+     Randolph            0            0            0            0            0
+   Washington            1            0            0            0            0
+    Ellsworth            0            0            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman            0            1            0            0            1
+       Basset            0            0            0            0            0
+      Bedford            0            0            0            0            0
+        Broom            0            0            1            1            0
+    Dickinson            0            0            0            0            0
+         Read            0            0            0            0            0
+      Baldwin            0            0            0            0            0
+          Few            0            0            1            1            0
+       Pierce            0            1            0            0            1
+   W Houstoun            0            0            1            0            0
+        Gerry            1            1            0            0            0
+       Gorham            1            1            0            0            0
+         King            0            0            0            0            0
+       Strong            0            0            0            0            0
+       Carrol            0            0            0            0            0
+      Jenifer            0            0            1            0            0
+    L. Martin            0            0            0            0            1
+      McHenry            0            0            0            0            0
+       Mercer            0            0            0            0            0
+       Gilman            0            0            0            0            0
+      Langdon            0            1            0            0            0
+    A. Martin            0            0            0            0            0
+       Blount            1            0            0            0            0
+        Davie            0            0            0            0            0
+      Spaight            0            0            0            0            0
+   Williamson            1            0            0            0            0
+     Brearley            0            0            0            0            0
+       Dayton            1            0            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0            0            0            0
+      Lansing            1            0            0            0            0
+        Yates            0            0            0            0            0
+       Clymer            0            1            0            0            0
+   Fitzsimons            1            1            0            0            0
+     Franklin            1            0            0            0            0
+    G. Morris            0            0            0            0            0
+     Ingersol            0            0            0            0            0
+      Mifflin            0            1            0            0            0
+    R. Morris            1            1            0            0            0
+       Wilson            1            0            0            0            0
+       Butler            0            0            0            0            0
+  C. Pinckney            0            0            0            0            0
+C.C. Pinckney            0            0            0            0            0
+     Rutledge            0            0            0            0            0
+        Blair            0            0            0            0            0
+      Madison            0            0            0            0            0
+        Mason            1            0            0            0            0
+      McClurg            0            0            0            0            0
+     Randolph            0            0            0            0            0
+   Washington            1            0            0            0            0
+    Ellsworth            0            0            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman            0            1            0            0            1
+       Basset            0            0            0            0            0
+      Bedford            0            0            0            0            0
+        Broom            0            0            1            1            0
+    Dickinson            0            0            0            0            0
+         Read            0            0            0            0            0
+      Baldwin            0            0            0            0            0
+          Few            0            0            1            1            0
+       Pierce            0            1            0            0            1
+   W Houstoun            0            0            1            0            0
+        Gerry            1            1            0            0            0
+       Gorham            1            1            0            0            0
+         King            0            0            0            0            0
+       Strong            0            0            0            0            0
+       Carrol            0            0            0            0            0
+      Jenifer            0            0            1            0            0
+    L. Martin            0            0            0            0            1
+      McHenry            0            0            0            0            0
+       Mercer            0            0            0            0            0
+       Gilman            0            0            0            0            0
+      Langdon            0            1            0            0            0
+    A. Martin            0            0            0            0            0
+       Blount            1            0            0            0            0
+        Davie            0            0            0            0            0
+      Spaight            0            0            0            0            0
+   Williamson            1            0            0            0            0
+     Brearley            0            0            0            0            0
+       Dayton            1            0            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0            0            0            0
+      Lansing            1            0            0            0            0
+        Yates            0            0            0            0            0
+       Clymer            0            1            0            0            0
+   Fitzsimons            1            1            0            0            0
+     Franklin            1            0            0            0            0
+    G. Morris            0            0            0            0            0
+     Ingersol            0            0            0            0            0
+      Mifflin            0            1            0            0            0
+    R. Morris            1            1            0            0            0
+       Wilson            1            0            0            0            0
+       Butler            0            0            0            0            0
+  C. Pinckney            0            0            0            0            0
+C.C. Pinckney            0            0            0            0            0
+     Rutledge            0            0            0            0            0
+        Blair            0            0            0            0            0
+      Madison            0            0            0            0            0
+        Mason            1            0            0            0            0
+      McClurg            0            0            0            0            0
+     Randolph            0            0            0            0            0
+   Washington            1            0            0            0            0
+
+                     VSECR        DSECR        VBANK        DBANK       NSLAVE
+
+    Ellsworth          750            1            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman         1000            1            0            0            0
+       Basset            0            0            0            0            0
+      Bedford          360            1            0            0            0
+        Broom           10            1            0            0            0
+    Dickinson            0            0            0            0            0
+         Read           50            1            0            0            0
+      Baldwin          300            1         2250            1            0
+          Few           80            1            0            0            0
+       Pierce            0            0            0            0            0
+   W Houstoun            0            0            0            0           80
+        Gerry        10000            1            0            0            0
+       Gorham            0            0            0            0            0
+         King         5000            1         3000            1            0
+       Strong         2200            1            0            0            0
+       Carrol           90            1            0            0           53
+      Jenifer            0            0            0            0           80
+    L. Martin         1300            1            0            0            6
+      McHenry            0            0            0            0            0
+       Mercer         2150            1            0            0           80
+       Gilman          125            1            0            0            0
+      Langdon         3500            1         4000            1            0
+    A. Martin            0            0            0            0           47
+       Blount            0            0            0            0           80
+        Davie            0            0            0            0           36
+      Spaight            0            0            0            0           71
+   Williamson          300            1            0            0            0
+     Brearley            5            1            0            0            0
+       Dayton         1000            1            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0          375            1            0
+      Lansing         3500            1            0            0            0
+        Yates            0            0            0            0            0
+       Clymer         6350            1         2800            1            0
+   Fitzsimons         3300            1          800            1            0
+     Franklin         3250            1            0            0            0
+    G. Morris            0            0          400            1            0
+     Ingersol            0            0            0            0            0
+      Mifflin         1000            1          800            1            0
+    R. Morris         4500            1        52000            1            0
+       Wilson            0            0         2000            1            0
+       Butler            0            0            0            0          143
+  C. Pinckney            0            0            0            0          111
+C.C. Pinckney         2500            1            0            0           70
+     Rutledge            0            0            0            0          243
+        Blair         2500            1            0            0           35
+      Madison            0            0            0            0           99
+        Mason            0            0        30000            1          300
+      McClurg         6500            1         9000            1            0
+     Randolph         3450            1            0            0          101
+   Washington           75            1            0            0           80
+    Ellsworth          750            1            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman         1000            1            0            0            0
+       Basset            0            0            0            0            0
+      Bedford          360            1            0            0            0
+        Broom           10            1            0            0            0
+    Dickinson            0            0            0            0            0
+         Read           50            1            0            0            0
+      Baldwin          300            1         2250            1            0
+          Few           80            1            0            0            0
+       Pierce            0            0            0            0            0
+   W Houstoun            0            0            0            0           80
+        Gerry        10000            1            0            0            0
+       Gorham            0            0            0            0            0
+         King         5000            1         3000            1            0
+       Strong         2200            1            0            0            0
+       Carrol           90            1            0            0           53
+      Jenifer            0            0            0            0           80
+    L. Martin         1300            1            0            0            6
+      McHenry            0            0            0            0            0
+       Mercer         2150            1            0            0           80
+       Gilman          125            1            0            0            0
+      Langdon         3500            1         4000            1            0
+    A. Martin            0            0            0            0           47
+       Blount            0            0            0            0           80
+        Davie            0            0            0            0           36
+      Spaight            0            0            0            0           71
+   Williamson          300            1            0            0            0
+     Brearley            5            1            0            0            0
+       Dayton         1000            1            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0          375            1            0
+      Lansing         3500            1            0            0            0
+        Yates            0            0            0            0            0
+       Clymer         6350            1         2800            1            0
+   Fitzsimons         3300            1          800            1            0
+     Franklin         3250            1            0            0            0
+    G. Morris            0            0          400            1            0
+     Ingersol            0            0            0            0            0
+      Mifflin         1000            1          800            1            0
+    R. Morris         4500            1        52000            1            0
+       Wilson            0            0         2000            1            0
+       Butler            0            0            0            0          143
+  C. Pinckney            0            0            0            0          111
+C.C. Pinckney         2500            1            0            0           70
+     Rutledge            0            0            0            0          243
+        Blair         2500            1            0            0           35
+      Madison            0            0            0            0           99
+        Mason            0            0        30000            1          300
+      McClurg         6500            1         9000            1            0
+     Randolph         3450            1            0            0          101
+   Washington           75            1            0            0           80
+    Ellsworth          750            1            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman         1000            1            0            0            0
+       Basset            0            0            0            0            0
+      Bedford          360            1            0            0            0
+        Broom           10            1            0            0            0
+    Dickinson            0            0            0            0            0
+         Read           50            1            0            0            0
+      Baldwin          300            1         2250            1            0
+          Few           80            1            0            0            0
+       Pierce            0            0            0            0            0
+   W Houstoun            0            0            0            0           80
+        Gerry        10000            1            0            0            0
+       Gorham            0            0            0            0            0
+         King         5000            1         3000            1            0
+       Strong         2200            1            0            0            0
+       Carrol           90            1            0            0           53
+      Jenifer            0            0            0            0           80
+    L. Martin         1300            1            0            0            6
+      McHenry            0            0            0            0            0
+       Mercer         2150            1            0            0           80
+       Gilman          125            1            0            0            0
+      Langdon         3500            1         4000            1            0
+    A. Martin            0            0            0            0           47
+       Blount            0            0            0            0           80
+        Davie            0            0            0            0           36
+      Spaight            0            0            0            0           71
+   Williamson          300            1            0            0            0
+     Brearley            5            1            0            0            0
+       Dayton         1000            1            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0          375            1            0
+      Lansing         3500            1            0            0            0
+        Yates            0            0            0            0            0
+       Clymer         6350            1         2800            1            0
+   Fitzsimons         3300            1          800            1            0
+     Franklin         3250            1            0            0            0
+    G. Morris            0            0          400            1            0
+     Ingersol            0            0            0            0            0
+      Mifflin         1000            1          800            1            0
+    R. Morris         4500            1        52000            1            0
+       Wilson            0            0         2000            1            0
+       Butler            0            0            0            0          143
+  C. Pinckney            0            0            0            0          111
+C.C. Pinckney         2500            1            0            0           70
+     Rutledge            0            0            0            0          243
+        Blair         2500            1            0            0           35
+      Madison            0            0            0            0           99
+        Mason            0            0        30000            1          300
+      McClurg         6500            1         9000            1            0
+     Randolph         3450            1            0            0          101
+   Washington           75            1            0            0           80
+    Ellsworth          750            1            0            0            0
+      Johnson            0            0            0            0            0
+      Sherman         1000            1            0            0            0
+       Basset            0            0            0            0            0
+      Bedford          360            1            0            0            0
+        Broom           10            1            0            0            0
+    Dickinson            0            0            0            0            0
+         Read           50            1            0            0            0
+      Baldwin          300            1         2250            1            0
+          Few           80            1            0            0            0
+       Pierce            0            0            0            0            0
+   W Houstoun            0            0            0            0           80
+        Gerry        10000            1            0            0            0
+       Gorham            0            0            0            0            0
+         King         5000            1         3000            1            0
+       Strong         2200            1            0            0            0
+       Carrol           90            1            0            0           53
+      Jenifer            0            0            0            0           80
+    L. Martin         1300            1            0            0            6
+      McHenry            0            0            0            0            0
+       Mercer         2150            1            0            0           80
+       Gilman          125            1            0            0            0
+      Langdon         3500            1         4000            1            0
+    A. Martin            0            0            0            0           47
+       Blount            0            0            0            0           80
+        Davie            0            0            0            0           36
+      Spaight            0            0            0            0           71
+   Williamson          300            1            0            0            0
+     Brearley            5            1            0            0            0
+       Dayton         1000            1            0            0            0
+   Livingston            0            0            0            0            0
+     Paterson            0            0            0            0            0
+     Hamilton            0            0          375            1            0
+      Lansing         3500            1            0            0            0
+        Yates            0            0            0            0            0
+       Clymer         6350            1         2800            1            0
+   Fitzsimons         3300            1          800            1            0
+     Franklin         3250            1            0            0            0
+    G. Morris            0            0          400            1            0
+     Ingersol            0            0            0            0            0
+      Mifflin         1000            1          800            1            0
+    R. Morris         4500            1        52000            1            0
+       Wilson            0            0         2000            1            0
+       Butler            0            0            0            0          143
+  C. Pinckney            0            0            0            0          111
+C.C. Pinckney         2500            1            0            0           70
+     Rutledge            0            0            0            0          243
+        Blair         2500            1            0            0           35
+      Madison            0            0            0            0           99
+        Mason            0            0        30000            1          300
+      McClurg         6500            1         9000            1            0
+     Randolph         3450            1            0            0          101
+   Washington           75            1            0            0           80
+
+                    DSLAVE          AGE        AGECO        DENGL       REVOFF
+
+    Ellsworth            0           42           42            1            0
+      Johnson            0           60           60            1            1
+      Sherman            0           66           66            1            0
+       Basset            0           42           42            0            1
+      Bedford            0           40           40            1            0
+        Broom            0           35           35            0            0
+    Dickinson            0           55           55            0            1
+         Read            0           54           54            0            0
+      Baldwin            0           33           33            0            0
+          Few            0           39           39            1            1
+       Pierce            0           47           47            0            1
+   W Houstoun            1           32           32            1            0
+        Gerry            0           43           43            1            0
+       Gorham            0           49           49            1            0
+         King            0           32           32            1            0
+       Strong            0           42           42            1            0
+       Carrol            1           57           57            0            0
+      Jenifer            1           64           64            1            0
+    L. Martin            1           39           39            1            0
+      McHenry            0           34           34            0            0
+       Mercer            1           28           28            1            1
+       Gilman            0           32           32            1            1
+      Langdon            0           46           46            1            1
+    A. Martin            1           47           47            0            1
+       Blount            1           38           38            1            0
+        Davie            1           31           31            1            1
+      Spaight            1           29           29            0            0
+   Williamson            0           52           52            0            0
+     Brearley            0           42           42            0            1
+       Dayton            0           27           27            0            1
+   Livingston            0           64           64            0            1
+     Paterson            0           42           42            0            0
+     Hamilton            0           30           30            0            1
+      Lansing            0           33           33            0            0
+        Yates            0           49           49            1            0
+       Clymer            0           48           48            1            1
+   Fitzsimons            0           46           46            0            1
+     Franklin            0           81           81            1            0
+    G. Morris            0           35           35            1            0
+     Ingersol            0           38           38            1            0
+      Mifflin            0           43           43            1            1
+    R. Morris            0           53           53            1            0
+       Wilson            0           45           45            0            1
+       Butler            1           43           43            0            0
+  C. Pinckney            1           30           29            0            1
+C.C. Pinckney            1           41           41            0            1
+     Rutledge            1           48           48            0            0
+        Blair            1           55           55            0            0
+      Madison            1           36           36            1            0
+        Mason            1           62           62            1            0
+      McClurg            0           41           41            0            0
+     Randolph            1           34           34            1            0
+   Washington            1           55           55            1            1
+    Ellsworth            0           42           42            1            0
+      Johnson            0           60           60            1            1
+      Sherman            0           66           66            1            0
+       Basset            0           42           42            0            1
+      Bedford            0           40           40            1            0
+        Broom            0           35           35            0            0
+    Dickinson            0           55           55            0            1
+         Read            0           54           54            0            0
+      Baldwin            0           33           33            0            0
+          Few            0           39           39            1            1
+       Pierce            0           47           47            0            1
+   W Houstoun            1           32           32            1            0
+        Gerry            0           43           43            1            0
+       Gorham            0           49           49            1            0
+         King            0           32           32            1            0
+       Strong            0           42           42            1            0
+       Carrol            1           57           57            0            0
+      Jenifer            1           64           64            1            0
+    L. Martin            1           39           39            1            0
+      McHenry            0           34           34            0            0
+       Mercer            1           28           28            1            1
+       Gilman            0           32           32            1            1
+      Langdon            0           46           46            1            1
+    A. Martin            1           47           47            0            1
+       Blount            1           38           38            1            0
+        Davie            1           31           31            1            1
+      Spaight            1           29           29            0            0
+   Williamson            0           52           52            0            0
+     Brearley            0           42           42            0            1
+       Dayton            0           27           27            0            1
+   Livingston            0           64           64            0            1
+     Paterson            0           42           42            0            0
+     Hamilton            0           30           30            0            1
+      Lansing            0           33           33            0            0
+        Yates            0           49           49            1            0
+       Clymer            0           48           48            1            1
+   Fitzsimons            0           46           46            0            1
+     Franklin            0           81           81            1            0
+    G. Morris            0           35           35            1            0
+     Ingersol            0           38           38            1            0
+      Mifflin            0           43           43            1            1
+    R. Morris            0           53           53            1            0
+       Wilson            0           45           45            0            1
+       Butler            1           43           43            0            0
+  C. Pinckney            1           30           29            0            1
+C.C. Pinckney            1           41           41            0            1
+     Rutledge            1           48           48            0            0
+        Blair            1           55           55            0            0
+      Madison            1           36           36            1            0
+        Mason            1           62           62            1            0
+      McClurg            0           41           41            0            0
+     Randolph            1           34           34            1            0
+   Washington            1           55           55            1            1
+    Ellsworth            0           42           42            1            0
+      Johnson            0           60           60            1            1
+      Sherman            0           66           66            1            0
+       Basset            0           42           42            0            1
+      Bedford            0           40           40            1            0
+        Broom            0           35           35            0            0
+    Dickinson            0           55           55            0            1
+         Read            0           54           54            0            0
+      Baldwin            0           33           33            0            0
+          Few            0           39           39            1            1
+       Pierce            0           47           47            0            1
+   W Houstoun            1           32           32            1            0
+        Gerry            0           43           43            1            0
+       Gorham            0           49           49            1            0
+         King            0           32           32            1            0
+       Strong            0           42           42            1            0
+       Carrol            1           57           57            0            0
+      Jenifer            1           64           64            1            0
+    L. Martin            1           39           39            1            0
+      McHenry            0           34           34            0            0
+       Mercer            1           28           28            1            1
+       Gilman            0           32           32            1            1
+      Langdon            0           46           46            1            1
+    A. Martin            1           47           47            0            1
+       Blount            1           38           38            1            0
+        Davie            1           31           31            1            1
+      Spaight            1           29           29            0            0
+   Williamson            0           52           52            0            0
+     Brearley            0           42           42            0            1
+       Dayton            0           27           27            0            1
+   Livingston            0           64           64            0            1
+     Paterson            0           42           42            0            0
+     Hamilton            0           30           30            0            1
+      Lansing            0           33           33            0            0
+        Yates            0           49           49            1            0
+       Clymer            0           48           48            1            1
+   Fitzsimons            0           46           46            0            1
+     Franklin            0           81           81            1            0
+    G. Morris            0           35           35            1            0
+     Ingersol            0           38           38            1            0
+      Mifflin            0           43           43            1            1
+    R. Morris            0           53           53            1            0
+       Wilson            0           45           45            0            1
+       Butler            1           43           43            0            0
+  C. Pinckney            1           30           29            0            1
+C.C. Pinckney            1           41           41            0            1
+     Rutledge            1           48           48            0            0
+        Blair            1           55           55            0            0
+      Madison            1           36           36            1            0
+        Mason            1           62           62            1            0
+      McClurg            0           41           41            0            0
+     Randolph            1           34           34            1            0
+   Washington            1           55           55            1            1
+    Ellsworth            0           42           42            1            0
+      Johnson            0           60           60            1            1
+      Sherman            0           66           66            1            0
+       Basset            0           42           42            0            1
+      Bedford            0           40           40            1            0
+        Broom            0           35           35            0            0
+    Dickinson            0           55           55            0            1
+         Read            0           54           54            0            0
+      Baldwin            0           33           33            0            0
+          Few            0           39           39            1            1
+       Pierce            0           47           47            0            1
+   W Houstoun            1           32           32            1            0
+        Gerry            0           43           43            1            0
+       Gorham            0           49           49            1            0
+         King            0           32           32            1            0
+       Strong            0           42           42            1            0
+       Carrol            1           57           57            0            0
+      Jenifer            1           64           64            1            0
+    L. Martin            1           39           39            1            0
+      McHenry            0           34           34            0            0
+       Mercer            1           28           28            1            1
+       Gilman            0           32           32            1            1
+      Langdon            0           46           46            1            1
+    A. Martin            1           47           47            0            1
+       Blount            1           38           38            1            0
+        Davie            1           31           31            1            1
+      Spaight            1           29           29            0            0
+   Williamson            0           52           52            0            0
+     Brearley            0           42           42            0            1
+       Dayton            0           27           27            0            1
+   Livingston            0           64           64            0            1
+     Paterson            0           42           42            0            0
+     Hamilton            0           30           30            0            1
+      Lansing            0           33           33            0            0
+        Yates            0           49           49            1            0
+       Clymer            0           48           48            1            1
+   Fitzsimons            0           46           46            0            1
+     Franklin            0           81           81            1            0
+    G. Morris            0           35           35            1            0
+     Ingersol            0           38           38            1            0
+      Mifflin            0           43           43            1            1
+    R. Morris            0           53           53            1            0
+       Wilson            0           45           45            0            1
+       Butler            1           43           43            0            0
+  C. Pinckney            1           30           29            0            1
+C.C. Pinckney            1           41           41            0            1
+     Rutledge            1           48           48            0            0
+        Blair            1           55           55            0            0
+      Madison            1           36           36            1            0
+        Mason            1           62           62            1            0
+      McClurg            0           41           41            0            0
+     Randolph            1           34           34            1            0
+   Washington            1           55           55            1            1
+
+                  REVOFFCO        DCONG       SLAVES      PUBCRED       WEALTH
+
+    Ellsworth            0            1            1      2.65665        135.4
+      Johnson            0            1            1      2.65665        135.4
+      Sherman            0            1            1      2.65665        135.4
+       Basset            1            0           19    -13.30435        247.8
+      Bedford            0            1           19    -13.30435        247.8
+        Broom            0            0           19    -13.30435        247.8
+    Dickinson            1            1           19    -13.30435        247.8
+         Read            0            1           19    -13.30435        247.8
+      Baldwin            0            1           55      0.37736        489.2
+          Few            1            1           55      0.37736        489.2
+       Pierce            1            1           55      0.37736        489.2
+   W Houstoun            0            1           55      0.37736        489.2
+        Gerry            0            1            0      3.34584        232.9
+       Gorham            0            1            0      3.34584        232.9
+         King            0            1            0      3.34584        232.9
+       Strong            0            0            0      3.34584        232.9
+       Carrol            0            1           49     -0.72249        616.4
+      Jenifer            0            1           49     -0.72249        616.4
+    L. Martin            0            1           49     -0.72249        616.4
+      McHenry            0            1           49     -0.72249        616.4
+       Mercer            1            1           49     -0.72249        616.4
+       Gilman            1            1            0      0.52817        206.0
+      Langdon            0            1            0      0.52817        206.0
+    A. Martin            1            0           35     -1.73611        464.6
+       Blount            0            1           35     -1.73611        464.6
+        Davie            1            0           35     -1.73611        464.6
+      Spaight            0            1           35     -1.73611        464.6
+   Williamson            0            1           35     -1.73611        464.6
+     Brearley            1            0            7      0.28824        340.8
+       Dayton            1            0            7      0.28824        340.8
+   Livingston            1            1            7      0.28824        340.8
+     Paterson            0            0            7      0.28824        340.8
+     Hamilton            1            1            7     -6.60510        278.0
+      Lansing            0            1            7     -6.60510        278.0
+        Yates            0            0            7     -6.60510        278.0
+       Clymer            1            1            0     -0.17925        320.9
+   Fitzsimons            1            1            0     -0.17925        320.9
+     Franklin            0            1            0     -0.17925        320.9
+    G. Morris            0            1            0     -0.17925        320.9
+     Ingersol            0            1            0     -0.17925        320.9
+      Mifflin            1            1            0     -0.17925        320.9
+    R. Morris            0            1            0     -0.17925        320.9
+       Wilson            0            1            0     -0.17925        320.9
+       Butler            0            1           76      8.60714       2337.7
+  C. Pinckney            1            1           76      8.60714       2337.7
+C.C. Pinckney            1            0           76      8.60714       2337.7
+     Rutledge            0            1           76      8.60714       2337.7
+        Blair            0            0           66     -0.22624        453.5
+      Madison            0            1           66     -0.22624        453.5
+        Mason            0            0           66     -0.22624        453.5
+      McClurg            0            0           66     -0.22624        453.5
+     Randolph            0            1           66     -0.22624        453.5
+   Washington            1            1           66     -0.22624        453.5
+    Ellsworth            0            1            1      2.65665        135.4
+      Johnson            0            1            1      2.65665        135.4
+      Sherman            0            1            1      2.65665        135.4
+       Basset            1            0           19    -13.30435        247.8
+      Bedford            0            1           19    -13.30435        247.8
+        Broom            0            0           19    -13.30435        247.8
+    Dickinson            1            1           19    -13.30435        247.8
+         Read            0            1           19    -13.30435        247.8
+      Baldwin            0            1           55      0.37736        489.2
+          Few            1            1           55      0.37736        489.2
+       Pierce            1            1           55      0.37736        489.2
+   W Houstoun            0            1           55      0.37736        489.2
+        Gerry            0            1            0      3.34584        232.9
+       Gorham            0            1            0      3.34584        232.9
+         King            0            1            0      3.34584        232.9
+       Strong            0            0            0      3.34584        232.9
+       Carrol            0            1           49     -0.72249        616.4
+      Jenifer            0            1           49     -0.72249        616.4
+    L. Martin            0            1           49     -0.72249        616.4
+      McHenry            0            1           49     -0.72249        616.4
+       Mercer            1            1           49     -0.72249        616.4
+       Gilman            1            1            0      0.52817        206.0
+      Langdon            0            1            0      0.52817        206.0
+    A. Martin            1            0           35     -1.73611        464.6
+       Blount            0            1           35     -1.73611        464.6
+        Davie            1            0           35     -1.73611        464.6
+      Spaight            0            1           35     -1.73611        464.6
+   Williamson            0            1           35     -1.73611        464.6
+     Brearley            1            0            7      0.28824        340.8
+       Dayton            1            0            7      0.28824        340.8
+   Livingston            1            1            7      0.28824        340.8
+     Paterson            0            0            7      0.28824        340.8
+     Hamilton            1            1            7     -6.60510        278.0
+      Lansing            0            1            7     -6.60510        278.0
+        Yates            0            0            7     -6.60510        278.0
+       Clymer            1            1            0     -0.17925        320.9
+   Fitzsimons            1            1            0     -0.17925        320.9
+     Franklin            0            1            0     -0.17925        320.9
+    G. Morris            0            1            0     -0.17925        320.9
+     Ingersol            0            1            0     -0.17925        320.9
+      Mifflin            1            1            0     -0.17925        320.9
+    R. Morris            0            1            0     -0.17925        320.9
+       Wilson            0            1            0     -0.17925        320.9
+       Butler            0            1           76      8.60714       2337.7
+  C. Pinckney            1            1           76      8.60714       2337.7
+C.C. Pinckney            1            0           76      8.60714       2337.7
+     Rutledge            0            1           76      8.60714       2337.7
+        Blair            0            0           66     -0.22624        453.5
+      Madison            0            1           66     -0.22624        453.5
+        Mason            0            0           66     -0.22624        453.5
+      McClurg            0            0           66     -0.22624        453.5
+     Randolph            0            1           66     -0.22624        453.5
+   Washington            1            1           66     -0.22624        453.5
+    Ellsworth            0            1            1      2.65665        135.4
+      Johnson            0            1            1      2.65665        135.4
+      Sherman            0            1            1      2.65665        135.4
+       Basset            1            0           19    -13.30435        247.8
+      Bedford            0            1           19    -13.30435        247.8
+        Broom            0            0           19    -13.30435        247.8
+    Dickinson            1            1           19    -13.30435        247.8
+         Read            0            1           19    -13.30435        247.8
+      Baldwin            0            1           55      0.37736        489.2
+          Few            1            1           55      0.37736        489.2
+       Pierce            1            1           55      0.37736        489.2
+   W Houstoun            0            1           55      0.37736        489.2
+        Gerry            0            1            0      3.34584        232.9
+       Gorham            0            1            0      3.34584        232.9
+         King            0            1            0      3.34584        232.9
+       Strong            0            0            0      3.34584        232.9
+       Carrol            0            1           49     -0.72249        616.4
+      Jenifer            0            1           49     -0.72249        616.4
+    L. Martin            0            1           49     -0.72249        616.4
+      McHenry            0            1           49     -0.72249        616.4
+       Mercer            1            1           49     -0.72249        616.4
+       Gilman            1            1            0      0.52817        206.0
+      Langdon            0            1            0      0.52817        206.0
+    A. Martin            1            0           35     -1.73611        464.6
+       Blount            0            1           35     -1.73611        464.6
+        Davie            1            0           35     -1.73611        464.6
+      Spaight            0            1           35     -1.73611        464.6
+   Williamson            0            1           35     -1.73611        464.6
+     Brearley            1            0            7      0.28824        340.8
+       Dayton            1            0            7      0.28824        340.8
+   Livingston            1            1            7      0.28824        340.8
+     Paterson            0            0            7      0.28824        340.8
+     Hamilton            1            1            7     -6.60510        278.0
+      Lansing            0            1            7     -6.60510        278.0
+        Yates            0            0            7     -6.60510        278.0
+       Clymer            1            1            0     -0.17925        320.9
+   Fitzsimons            1            1            0     -0.17925        320.9
+     Franklin            0            1            0     -0.17925        320.9
+    G. Morris            0            1            0     -0.17925        320.9
+     Ingersol            0            1            0     -0.17925        320.9
+      Mifflin            1            1            0     -0.17925        320.9
+    R. Morris            0            1            0     -0.17925        320.9
+       Wilson            0            1            0     -0.17925        320.9
+       Butler            0            1           76      8.60714       2337.7
+  C. Pinckney            1            1           76      8.60714       2337.7
+C.C. Pinckney            1            0           76      8.60714       2337.7
+     Rutledge            0            1           76      8.60714       2337.7
+        Blair            0            0           66     -0.22624        453.5
+      Madison            0            1           66     -0.22624        453.5
+        Mason            0            0           66     -0.22624        453.5
+      McClurg            0            0           66     -0.22624        453.5
+     Randolph            0            1           66     -0.22624        453.5
+   Washington            1            1           66     -0.22624        453.5
+    Ellsworth            0            1            1      2.65665        135.4
+      Johnson            0            1            1      2.65665        135.4
+      Sherman            0            1            1      2.65665        135.4
+       Basset            1            0           19    -13.30435        247.8
+      Bedford            0            1           19    -13.30435        247.8
+        Broom            0            0           19    -13.30435        247.8
+    Dickinson            1            1           19    -13.30435        247.8
+         Read            0            1           19    -13.30435        247.8
+      Baldwin            0            1           55      0.37736        489.2
+          Few            1            1           55      0.37736        489.2
+       Pierce            1            1           55      0.37736        489.2
+   W Houstoun            0            1           55      0.37736        489.2
+        Gerry            0            1            0      3.34584        232.9
+       Gorham            0            1            0      3.34584        232.9
+         King            0            1            0      3.34584        232.9
+       Strong            0            0            0      3.34584        232.9
+       Carrol            0            1           49     -0.72249        616.4
+      Jenifer            0            1           49     -0.72249        616.4
+    L. Martin            0            1           49     -0.72249        616.4
+      McHenry            0            1           49     -0.72249        616.4
+       Mercer            1            1           49     -0.72249        616.4
+       Gilman            1            1            0      0.52817        206.0
+      Langdon            0            1            0      0.52817        206.0
+    A. Martin            1            0           35     -1.73611        464.6
+       Blount            0            1           35     -1.73611        464.6
+        Davie            1            0           35     -1.73611        464.6
+      Spaight            0            1           35     -1.73611        464.6
+   Williamson            0            1           35     -1.73611        464.6
+     Brearley            1            0            7      0.28824        340.8
+       Dayton            1            0            7      0.28824        340.8
+   Livingston            1            1            7      0.28824        340.8
+     Paterson            0            0            7      0.28824        340.8
+     Hamilton            1            1            7     -6.60510        278.0
+      Lansing            0            1            7     -6.60510        278.0
+        Yates            0            0            7     -6.60510        278.0
+       Clymer            1            1            0     -0.17925        320.9
+   Fitzsimons            1            1            0     -0.17925        320.9
+     Franklin            0            1            0     -0.17925        320.9
+    G. Morris            0            1            0     -0.17925        320.9
+     Ingersol            0            1            0     -0.17925        320.9
+      Mifflin            1            1            0     -0.17925        320.9
+    R. Morris            0            1            0     -0.17925        320.9
+       Wilson            0            1            0     -0.17925        320.9
+       Butler            0            1           76      8.60714       2337.7
+  C. Pinckney            1            1           76      8.60714       2337.7
+C.C. Pinckney            1            0           76      8.60714       2337.7
+     Rutledge            0            1           76      8.60714       2337.7
+        Blair            0            0           66     -0.22624        453.5
+      Madison            0            1           66     -0.22624        453.5
+        Mason            0            0           66     -0.22624        453.5
+      McClurg            0            0           66     -0.22624        453.5
+     Randolph            0            1           66     -0.22624        453.5
+   Washington            1            1           66     -0.22624        453.5
+
+                      DIST         POPW      ENGLISH       PROFIT      votenum
+
+    Ellsworth           30          233         96.2         3050          304
+      Johnson            0          233         96.2            0          304
+      Sherman            0          233         96.2         4000          304
+       Basset            8           46         86.3            0          304
+      Bedford            0           46         86.3         1515          304
+        Broom            8           46         86.3           15          304
+    Dickinson            0           46         86.3            0          304
+         Read            0           46         86.3          175          304
+      Baldwin           20           53         83.1         1300          304
+          Few            0           53         83.1          345          304
+       Pierce            0           53         83.1            0          304
+   W Houstoun            0           53         83.1            0          304
+        Gerry            1          373         95.0        22500          304
+       Gorham            0          373         95.0            0          304
+         King            1          373         95.0         1300          304
+       Strong           85          373         95.0         4950          304
+       Carrol           17          209         84.0           60          304
+      Jenifer           20          209         84.0            0          304
+    L. Martin            0          209         84.0         1550          304
+      McHenry            0          209         84.0            0          304
+       Mercer            0          209         84.0         2450          304
+       Gilman            7          142         94.1          500          304
+      Langdon            7          142         94.1        14700          304
+    A. Martin          200          288         83.1            0          304
+       Blount           40          288         83.1            0          304
+        Davie           50          288         83.1            0          304
+      Spaight            0          288         83.1            0          304
+   Williamson            8          288         83.1         1400          304
+     Brearley            0          170         59.1            5          304
+       Dayton            0          170         59.1         2600          304
+   Livingston           17          170         59.1            0          304
+     Paterson            0          170         59.1            0          304
+     Hamilton            0          314         78.2            0          304
+      Lansing          117          314         78.2         1050          304
+        Yates          117          314         78.2            0          304
+       Clymer            0          424         59.0         3750          304
+   Fitzsimons            0          424         59.0         2100          304
+     Franklin            0          424         59.0         2000          304
+    G. Morris            0          424         59.0            0          304
+     Ingersol            0          424         59.0            0          304
+      Mifflin            0          424         59.0          600          304
+    R. Morris            0          424         59.0         2650          304
+       Wilson            0          424         59.0            0          304
+       Butler            0          140         82.4            0          304
+  C. Pinckney            0          140         82.4            0          304
+C.C. Pinckney            0          140         82.4         7250          304
+     Rutledge            0          140         82.4            0          304
+        Blair            0          442         85.0         4600          304
+      Madison           50          442         85.0            0          304
+        Mason            4          442         85.0            0          304
+      McClurg            0          442         85.0        14300          304
+     Randolph           62          442         85.0         5450          304
+   Washington            0          442         85.0          250          304
+    Ellsworth           30          233         96.2         3050          365
+      Johnson            0          233         96.2            0          365
+      Sherman            0          233         96.2         4000          365
+       Basset            8           46         86.3            0          365
+      Bedford            0           46         86.3         1515          365
+        Broom            8           46         86.3           15          365
+    Dickinson            0           46         86.3            0          365
+         Read            0           46         86.3          175          365
+      Baldwin           20           53         83.1         1300          365
+          Few            0           53         83.1          345          365
+       Pierce            0           53         83.1            0          365
+   W Houstoun            0           53         83.1            0          365
+        Gerry            1          373         95.0        22500          365
+       Gorham            0          373         95.0            0          365
+         King            1          373         95.0         1300          365
+       Strong           85          373         95.0         4950          365
+       Carrol           17          209         84.0           60          365
+      Jenifer           20          209         84.0            0          365
+    L. Martin            0          209         84.0         1550          365
+      McHenry            0          209         84.0            0          365
+       Mercer            0          209         84.0         2450          365
+       Gilman            7          142         94.1          500          365
+      Langdon            7          142         94.1        14700          365
+    A. Martin          200          288         83.1            0          365
+       Blount           40          288         83.1            0          365
+        Davie           50          288         83.1            0          365
+      Spaight            0          288         83.1            0          365
+   Williamson            8          288         83.1         1400          365
+     Brearley            0          170         59.1            5          365
+       Dayton            0          170         59.1         2600          365
+   Livingston           17          170         59.1            0          365
+     Paterson            0          170         59.1            0          365
+     Hamilton            0          314         78.2            0          365
+      Lansing          117          314         78.2         1050          365
+        Yates          117          314         78.2            0          365
+       Clymer            0          424         59.0         3750          365
+   Fitzsimons            0          424         59.0         2100          365
+     Franklin            0          424         59.0         2000          365
+    G. Morris            0          424         59.0            0          365
+     Ingersol            0          424         59.0            0          365
+      Mifflin            0          424         59.0          600          365
+    R. Morris            0          424         59.0         2650          365
+       Wilson            0          424         59.0            0          365
+       Butler            0          140         82.4            0          365
+  C. Pinckney            0          140         82.4            0          365
+C.C. Pinckney            0          140         82.4         7250          365
+     Rutledge            0          140         82.4            0          365
+        Blair            0          442         85.0         4600          365
+      Madison           50          442         85.0            0          365
+        Mason            4          442         85.0            0          365
+      McClurg            0          442         85.0        14300          365
+     Randolph           62          442         85.0         5450          365
+   Washington            0          442         85.0          250          365
+    Ellsworth           30          233         96.2         3050          387
+      Johnson            0          233         96.2            0          387
+      Sherman            0          233         96.2         4000          387
+       Basset            8           46         86.3            0          387
+      Bedford            0           46         86.3         1515          387
+        Broom            8           46         86.3           15          387
+    Dickinson            0           46         86.3            0          387
+         Read            0           46         86.3          175          387
+      Baldwin           20           53         83.1         1300          387
+          Few            0           53         83.1          345          387
+       Pierce            0           53         83.1            0          387
+   W Houstoun            0           53         83.1            0          387
+        Gerry            1          373         95.0        22500          387
+       Gorham            0          373         95.0            0          387
+         King            1          373         95.0         1300          387
+       Strong           85          373         95.0         4950          387
+       Carrol           17          209         84.0           60          387
+      Jenifer           20          209         84.0            0          387
+    L. Martin            0          209         84.0         1550          387
+      McHenry            0          209         84.0            0          387
+       Mercer            0          209         84.0         2450          387
+       Gilman            7          142         94.1          500          387
+      Langdon            7          142         94.1        14700          387
+    A. Martin          200          288         83.1            0          387
+       Blount           40          288         83.1            0          387
+        Davie           50          288         83.1            0          387
+      Spaight            0          288         83.1            0          387
+   Williamson            8          288         83.1         1400          387
+     Brearley            0          170         59.1            5          387
+       Dayton            0          170         59.1         2600          387
+   Livingston           17          170         59.1            0          387
+     Paterson            0          170         59.1            0          387
+     Hamilton            0          314         78.2            0          387
+      Lansing          117          314         78.2         1050          387
+        Yates          117          314         78.2            0          387
+       Clymer            0          424         59.0         3750          387
+   Fitzsimons            0          424         59.0         2100          387
+     Franklin            0          424         59.0         2000          387
+    G. Morris            0          424         59.0            0          387
+     Ingersol            0          424         59.0            0          387
+      Mifflin            0          424         59.0          600          387
+    R. Morris            0          424         59.0         2650          387
+       Wilson            0          424         59.0            0          387
+       Butler            0          140         82.4            0          387
+  C. Pinckney            0          140         82.4            0          387
+C.C. Pinckney            0          140         82.4         7250          387
+     Rutledge            0          140         82.4            0          387
+        Blair            0          442         85.0         4600          387
+      Madison           50          442         85.0            0          387
+        Mason            4          442         85.0            0          387
+      McClurg            0          442         85.0        14300          387
+     Randolph           62          442         85.0         5450          387
+   Washington            0          442         85.0          250          387
+    Ellsworth           30          233         96.2         3050          390
+      Johnson            0          233         96.2            0          390
+      Sherman            0          233         96.2         4000          390
+       Basset            8           46         86.3            0          390
+      Bedford            0           46         86.3         1515          390
+        Broom            8           46         86.3           15          390
+    Dickinson            0           46         86.3            0          390
+         Read            0           46         86.3          175          390
+      Baldwin           20           53         83.1         1300          390
+          Few            0           53         83.1          345          390
+       Pierce            0           53         83.1            0          390
+   W Houstoun            0           53         83.1            0          390
+        Gerry            1          373         95.0        22500          390
+       Gorham            0          373         95.0            0          390
+         King            1          373         95.0         1300          390
+       Strong           85          373         95.0         4950          390
+       Carrol           17          209         84.0           60          390
+      Jenifer           20          209         84.0            0          390
+    L. Martin            0          209         84.0         1550          390
+      McHenry            0          209         84.0            0          390
+       Mercer            0          209         84.0         2450          390
+       Gilman            7          142         94.1          500          390
+      Langdon            7          142         94.1        14700          390
+    A. Martin          200          288         83.1            0          390
+       Blount           40          288         83.1            0          390
+        Davie           50          288         83.1            0          390
+      Spaight            0          288         83.1            0          390
+   Williamson            8          288         83.1         1400          390
+     Brearley            0          170         59.1            5          390
+       Dayton            0          170         59.1         2600          390
+   Livingston           17          170         59.1            0          390
+     Paterson            0          170         59.1            0          390
+     Hamilton            0          314         78.2            0          390
+      Lansing          117          314         78.2         1050          390
+        Yates          117          314         78.2            0          390
+       Clymer            0          424         59.0         3750          390
+   Fitzsimons            0          424         59.0         2100          390
+     Franklin            0          424         59.0         2000          390
+    G. Morris            0          424         59.0            0          390
+     Ingersol            0          424         59.0            0          390
+      Mifflin            0          424         59.0          600          390
+    R. Morris            0          424         59.0         2650          390
+       Wilson            0          424         59.0            0          390
+       Butler            0          140         82.4            0          390
+  C. Pinckney            0          140         82.4            0          390
+C.C. Pinckney            0          140         82.4         7250          390
+     Rutledge            0          140         82.4            0          390
+        Blair            0          442         85.0         4600          390
+      Madison           50          442         85.0            0          390
+        Mason            4          442         85.0            0          390
+      McClurg            0          442         85.0        14300          390
+     Randolph           62          442         85.0         5450          390
+   Washington            0          442         85.0          250          390
+
+                  vote_yes          raw        step4           V9 SLAVESCOUNTY
+
+    Ellsworth            1            1                               0.006711
+      Johnson            1            0            1                   0.02202
+      Sherman            1            1                                0.01260
+       Basset                                                        0.1215645
+      Bedford            1            0            1                 0.1301300
+        Broom                                                        0.1301300
+    Dickinson            1            0            1                 0.1301300
+         Read            1            1                              0.1301300
+      Baldwin            1            1                              0.3637006
+          Few            1            1                              0.2307302
+       Pierce                         1                              0.7615377
+   W Houstoun                         1                              0.7615377
+        Gerry            1            1                                  0.000
+       Gorham            1            1                                  0.000
+         King            1            0            1                     0.000
+       Strong                                                            0.000
+       Carrol            0            1                              0.5236132
+      Jenifer            0            1                              0.4892544
+    L. Martin            0            1                              0.2310686
+      McHenry            1            1                              0.4482698
+       Mercer            0            1                              0.2310686
+       Gilman            1            1                               0.002246
+      Langdon            1            1                               0.002246
+    A. Martin                                                        0.1090033
+       Blount                                                        0.4109292
+        Davie                                                        0.4679944
+      Spaight            1            0            1                 0.3497231
+   Williamson            1            0            1                 0.5186447
+     Brearley            0            1                                0.06456
+       Dayton            0            1                                0.06584
+   Livingston            1            1                                0.06584
+     Paterson                         1                              0.1472023
+     Hamilton                         1                                0.07167
+      Lansing                         1                                0.04899
+        Yates                         1                                0.04899
+       Clymer            1            0            1                  0.006858
+   Fitzsimons            1            0            1                  0.006858
+     Franklin            0            1                               0.006858
+    G. Morris            1            1                               0.006858
+     Ingersol            1            0            1                  0.006858
+      Mifflin            1            0            1                  0.006858
+    R. Morris            1            1                               0.006858
+       Wilson            1            1                               0.006858
+       Butler            1            1                              0.7558856
+  C. Pinckney            0            1                              0.7558856
+C.C. Pinckney            1            1                              0.7558856
+     Rutledge            1            1                              0.7558856
+        Blair            1            1                              0.5274221
+      Madison            1            1                              0.4456204
+        Mason            0            1                              0.3712662
+      McClurg                         1                              0.5550301
+     Randolph            0            1                              0.5550301
+   Washington            1            1                              0.5550301
+    Ellsworth            0            1                               0.006711
+      Johnson            1            1                                0.02202
+      Sherman            1            1                                0.01260
+       Basset                                                        0.1215645
+      Bedford            1            0            1                 0.1301300
+        Broom                                                        0.1301300
+    Dickinson            1            0            1                 0.1301300
+         Read                                                        0.1301300
+      Baldwin            1            1                              0.3637006
+          Few            1            1                              0.2307302
+       Pierce                         1                              0.7615377
+   W Houstoun                         1                              0.7615377
+        Gerry            1            1                                  0.000
+       Gorham            1            0            1                     0.000
+         King            1            1                                  0.000
+       Strong                                                            0.000
+       Carrol            1            0            1                 0.5236132
+      Jenifer            1            0            1                 0.4892544
+    L. Martin                         1                              0.2310686
+      McHenry            1            0            1                 0.4482698
+       Mercer                         1                              0.2310686
+       Gilman            1            1                               0.002246
+      Langdon            1            1                               0.002246
+    A. Martin                                                        0.1090033
+       Blount                                                        0.4109292
+        Davie                         1                              0.4679944
+      Spaight            1            0            1                 0.3497231
+   Williamson            1            0            1                 0.5186447
+     Brearley                                                          0.06456
+       Dayton            1            0            1                   0.06584
+   Livingston                                                          0.06584
+     Paterson                         1                              0.1472023
+     Hamilton                         1                                0.07167
+      Lansing                         1                                0.04899
+        Yates                         1                                0.04899
+       Clymer                                                         0.006858
+   Fitzsimons                                                         0.006858
+     Franklin                                                         0.006858
+    G. Morris            1            1                               0.006858
+     Ingersol                                                         0.006858
+      Mifflin                                                         0.006858
+    R. Morris                                                         0.006858
+       Wilson            1            1                               0.006858
+       Butler            1            0            1                 0.7558856
+  C. Pinckney            1            1                              0.7558856
+C.C. Pinckney                                                        0.7558856
+     Rutledge            1            1                              0.7558856
+        Blair                                                        0.5274221
+      Madison            1            1                              0.4456204
+        Mason            0            1                              0.3712662
+      McClurg                         1                              0.5550301
+     Randolph            1            1                              0.5550301
+   Washington            1            1                              0.5550301
+    Ellsworth                         1                         1     0.006711
+      Johnson            1            1                         1      0.02202
+      Sherman            1            1                         1      0.01260
+       Basset                                                   1    0.1215645
+      Bedford            1            0            1            1    0.1301300
+        Broom                                                   1    0.1301300
+    Dickinson            1            1                         1    0.1301300
+         Read            1            1                         1    0.1301300
+      Baldwin            1            1                         1    0.3637006
+          Few            1            1                         1    0.2307302
+       Pierce                         1                              0.7615377
+   W Houstoun                         1                              0.7615377
+        Gerry            1            1                         1        0.000
+       Gorham            0            1                         0        0.000
+         King            1            1                         1        0.000
+       Strong                         1                         1        0.000
+       Carrol            1            1                         1    0.5236132
+      Jenifer            0            1                         1    0.4892544
+    L. Martin            0            1                         0    0.2310686
+      McHenry            1            1                         0    0.4482698
+       Mercer                         1                              0.2310686
+       Gilman            1            1                         1     0.002246
+      Langdon            1            1                         1     0.002246
+    A. Martin                                                        0.1090033
+       Blount                                                   1    0.4109292
+        Davie                         1                              0.4679944
+      Spaight            1            0            1            1    0.3497231
+   Williamson            1            1                         1    0.5186447
+     Brearley                         1                                0.06456
+       Dayton                         1                                0.06584
+   Livingston                         1                                0.06584
+     Paterson                         1                              0.1472023
+     Hamilton                         1                                0.07167
+      Lansing                         1                                0.04899
+        Yates                         1                                0.04899
+       Clymer            1            0            1                  0.006858
+   Fitzsimons            1            0            1                  0.006858
+     Franklin            0            1                               0.006858
+    G. Morris            1            1                               0.006858
+     Ingersol            1            0            1                  0.006858
+      Mifflin            1            0            1                  0.006858
+    R. Morris            1            1                               0.006858
+       Wilson            1            1                               0.006858
+       Butler            1            1                         1    0.7558856
+  C. Pinckney            1            1                         1    0.7558856
+C.C. Pinckney            1            1                         1    0.7558856
+     Rutledge            1            0            1            1    0.7558856
+        Blair            0            1                         0    0.5274221
+      Madison            1            1                         0    0.4456204
+        Mason            0            1                         1    0.3712662
+      McClurg                         1                              0.5550301
+     Randolph            1            1                         1    0.5550301
+   Washington            0            1                         0    0.5550301
+    Ellsworth                         1                               0.006711
+      Johnson            1            1                                0.02202
+      Sherman            1            1                                0.01260
+       Basset                                                        0.1215645
+      Bedford            1            0            1                 0.1301300
+        Broom                                                        0.1301300
+    Dickinson            1            1                              0.1301300
+         Read            1            1                              0.1301300
+      Baldwin            1            1                              0.3637006
+          Few            1            1                              0.2307302
+       Pierce                         1                              0.7615377
+   W Houstoun                         1                              0.7615377
+        Gerry            1            1                                  0.000
+       Gorham            0            1                                  0.000
+         King            1            1                                  0.000
+       Strong                         1                                  0.000
+       Carrol            1            1                              0.5236132
+      Jenifer            1            1                              0.4892544
+    L. Martin            0            1                              0.2310686
+      McHenry            1            1                              0.4482698
+       Mercer                         1                              0.2310686
+       Gilman            1            1                               0.002246
+      Langdon            1            1                               0.002246
+    A. Martin                                                        0.1090033
+       Blount                                                        0.4109292
+        Davie                         1                              0.4679944
+      Spaight            1            0            1                 0.3497231
+   Williamson            1            0            1                 0.5186447
+     Brearley                                                          0.06456
+       Dayton            1            0            1                   0.06584
+   Livingston            1            1                                0.06584
+     Paterson                         1                              0.1472023
+     Hamilton                         1                                0.07167
+      Lansing                         1                                0.04899
+        Yates                         1                                0.04899
+       Clymer            1            0            1                  0.006858
+   Fitzsimons            1            0            1                  0.006858
+     Franklin            0            1                               0.006858
+    G. Morris            1            1                               0.006858
+     Ingersol            1            0            1                  0.006858
+      Mifflin            1            0            1                  0.006858
+    R. Morris            1            1                               0.006858
+       Wilson            1            1                               0.006858
+       Butler            1            1                              0.7558856
+  C. Pinckney            1            1                              0.7558856
+C.C. Pinckney            1            1                              0.7558856
+     Rutledge            1            0            1                 0.7558856
+        Blair            1            1                              0.5274221
+      Madison            1            1                              0.4456204
+        Mason            0            1                              0.3712662
+      McClurg                         1                              0.5550301
+     Randolph            0            1                              0.5550301
+   Washington            1            1                              0.5550301
+
+                   IMPORTS   ban_slaves          DAG     DPERONSA   LoanOffice
+
+    Ellsworth      0.00000            1            0            1         5.62
+      Johnson      0.00000            1            0            1         5.62
+      Sherman      0.00000            1            0            1         5.62
+       Basset      0.00000            1            1            1         1.44
+      Bedford      0.00000            1            0            0         1.44
+        Broom      0.00000            1            1            1         1.44
+    Dickinson      0.00000            1            1            1         1.44
+         Read      0.00000            1            1            1         1.44
+      Baldwin      3.97345            0            0            1         1.71
+          Few      3.97345            0            1            1         1.71
+       Pierce      3.97345            0            0            0         1.71
+   W Houstoun      3.97345            0            1            0         1.71
+        Gerry      0.00842            1            0            1         6.40
+       Gorham      0.00842            1            0            1         6.40
+         King      0.00842            1            0            1         6.40
+       Strong      0.00842            1            0            1         6.40
+       Carrol      0.54734            1            1            1         1.96
+      Jenifer      0.54734            1            1            1         1.96
+    L. Martin      0.54734            1            0            1         1.96
+      McHenry      0.54734            1            1            1         1.96
+       Mercer      0.54734            1            1            1         1.96
+       Gilman      0.02819            0            0            1         2.53
+      Langdon      0.02819            0            0            1         2.53
+    A. Martin      0.39240            0            1            1         0.39
+       Blount      0.39240            0            1            1         0.39
+        Davie      0.39240            0            1            1         0.39
+      Spaight      0.39240            0            1            1         0.39
+   Williamson      0.39240            0            1            1         0.39
+     Brearley      0.00000            1            0            0         3.88
+       Dayton      0.00000            1            0            1         3.88
+   Livingston      0.00000            1            1            0         3.88
+     Paterson      0.00000            1            0            0         3.88
+     Hamilton      0.06760            1            0            1         3.02
+      Lansing      0.06760            1            1            0         3.02
+        Yates      0.06760            1            1            0         3.02
+       Clymer      0.00000            1            0            1         9.31
+   Fitzsimons      0.00000            1            0            1         9.31
+     Franklin      0.00000            1            1            1         9.31
+    G. Morris      0.00000            1            0            1         9.31
+     Ingersol      0.00000            1            0            1         9.31
+      Mifflin      0.00000            1            1            1         9.31
+    R. Morris      0.00000            1            0            1         9.31
+       Wilson      0.00000            1            0            1         9.31
+       Butler     28.91120            0            1            1         1.56
+  C. Pinckney     28.91120            0            1            1         1.56
+C.C. Pinckney     28.91120            0            1            1         1.56
+     Rutledge     28.91120            0            1            1         1.56
+        Blair      2.56202            1            1            1         0.71
+      Madison      2.56202            1            1            0         0.71
+        Mason      2.56202            1            1            1         0.71
+      McClurg      2.56202            1            1            1         0.71
+     Randolph      2.56202            1            1            1         0.71
+   Washington      2.56202            1            1            1         0.71
+    Ellsworth      0.00000            1            0            1         5.62
+      Johnson      0.00000            1            0            1         5.62
+      Sherman      0.00000            1            0            1         5.62
+       Basset      0.00000            1            1            1         1.44
+      Bedford      0.00000            1            0            0         1.44
+        Broom      0.00000            1            1            1         1.44
+    Dickinson      0.00000            1            1            1         1.44
+         Read      0.00000            1            1            1         1.44
+      Baldwin      3.97345            0            0            1         1.71
+          Few      3.97345            0            1            1         1.71
+       Pierce      3.97345            0            0            0         1.71
+   W Houstoun      3.97345            0            1            0         1.71
+        Gerry      0.00842            1            0            1         6.40
+       Gorham      0.00842            1            0            1         6.40
+         King      0.00842            1            0            1         6.40
+       Strong      0.00842            1            0            1         6.40
+       Carrol      0.54734            1            1            1         1.96
+      Jenifer      0.54734            1            1            1         1.96
+    L. Martin      0.54734            1            0            1         1.96
+      McHenry      0.54734            1            1            1         1.96
+       Mercer      0.54734            1            1            1         1.96
+       Gilman      0.02819            0            0            1         2.53
+      Langdon      0.02819            0            0            1         2.53
+    A. Martin      0.39240            0            1            1         0.39
+       Blount      0.39240            0            1            1         0.39
+        Davie      0.39240            0            1            1         0.39
+      Spaight      0.39240            0            1            1         0.39
+   Williamson      0.39240            0            1            1         0.39
+     Brearley      0.00000            1            0            0         3.88
+       Dayton      0.00000            1            0            1         3.88
+   Livingston      0.00000            1            1            0         3.88
+     Paterson      0.00000            1            0            0         3.88
+     Hamilton      0.06760            1            0            1         3.02
+      Lansing      0.06760            1            1            0         3.02
+        Yates      0.06760            1            1            0         3.02
+       Clymer      0.00000            1            0            1         9.31
+   Fitzsimons      0.00000            1            0            1         9.31
+     Franklin      0.00000            1            1            1         9.31
+    G. Morris      0.00000            1            0            1         9.31
+     Ingersol      0.00000            1            0            1         9.31
+      Mifflin      0.00000            1            1            1         9.31
+    R. Morris      0.00000            1            0            1         9.31
+       Wilson      0.00000            1            0            1         9.31
+       Butler     28.91120            0            1            1         1.56
+  C. Pinckney     28.91120            0            1            1         1.56
+C.C. Pinckney     28.91120            0            1            1         1.56
+     Rutledge     28.91120            0            1            1         1.56
+        Blair      2.56202            1            1            1         0.71
+      Madison      2.56202            1            1            0         0.71
+        Mason      2.56202            1            1            1         0.71
+      McClurg      2.56202            1            1            1         0.71
+     Randolph      2.56202            1            1            1         0.71
+   Washington      2.56202            1            1            1         0.71
+    Ellsworth      0.00000            1            0            1         5.62
+      Johnson      0.00000            1            0            1         5.62
+      Sherman      0.00000            1            0            1         5.62
+       Basset      0.00000            1            1            1         1.44
+      Bedford      0.00000            1            0            0         1.44
+        Broom      0.00000            1            1            1         1.44
+    Dickinson      0.00000            1            1            1         1.44
+         Read      0.00000            1            1            1         1.44
+      Baldwin      3.97345            0            0            1         1.71
+          Few      3.97345            0            1            1         1.71
+       Pierce      3.97345            0            0            0         1.71
+   W Houstoun      3.97345            0            1            0         1.71
+        Gerry      0.00842            1            0            1         6.40
+       Gorham      0.00842            1            0            1         6.40
+         King      0.00842            1            0            1         6.40
+       Strong      0.00842            1            0            1         6.40
+       Carrol      0.54734            1            1            1         1.96
+      Jenifer      0.54734            1            1            1         1.96
+    L. Martin      0.54734            1            0            1         1.96
+      McHenry      0.54734            1            1            1         1.96
+       Mercer      0.54734            1            1            1         1.96
+       Gilman      0.02819            0            0            1         2.53
+      Langdon      0.02819            0            0            1         2.53
+    A. Martin      0.39240            0            1            1         0.39
+       Blount      0.39240            0            1            1         0.39
+        Davie      0.39240            0            1            1         0.39
+      Spaight      0.39240            0            1            1         0.39
+   Williamson      0.39240            0            1            1         0.39
+     Brearley      0.00000            1            0            0         3.88
+       Dayton      0.00000            1            0            1         3.88
+   Livingston      0.00000            1            1            0         3.88
+     Paterson      0.00000            1            0            0         3.88
+     Hamilton      0.06760            1            0            1         3.02
+      Lansing      0.06760            1            1            0         3.02
+        Yates      0.06760            1            1            0         3.02
+       Clymer      0.00000            1            0            1         9.31
+   Fitzsimons      0.00000            1            0            1         9.31
+     Franklin      0.00000            1            1            1         9.31
+    G. Morris      0.00000            1            0            1         9.31
+     Ingersol      0.00000            1            0            1         9.31
+      Mifflin      0.00000            1            1            1         9.31
+    R. Morris      0.00000            1            0            1         9.31
+       Wilson      0.00000            1            0            1         9.31
+       Butler     28.91120            0            1            1         1.56
+  C. Pinckney     28.91120            0            1            1         1.56
+C.C. Pinckney     28.91120            0            1            1         1.56
+     Rutledge     28.91120            0            1            1         1.56
+        Blair      2.56202            1            1            1         0.71
+      Madison      2.56202            1            1            0         0.71
+        Mason      2.56202            1            1            1         0.71
+      McClurg      2.56202            1            1            1         0.71
+     Randolph      2.56202            1            1            1         0.71
+   Washington      2.56202            1            1            1         0.71
+    Ellsworth      0.00000            1            0            1         5.62
+      Johnson      0.00000            1            0            1         5.62
+      Sherman      0.00000            1            0            1         5.62
+       Basset      0.00000            1            1            1         1.44
+      Bedford      0.00000            1            0            0         1.44
+        Broom      0.00000            1            1            1         1.44
+    Dickinson      0.00000            1            1            1         1.44
+         Read      0.00000            1            1            1         1.44
+      Baldwin      3.97345            0            0            1         1.71
+          Few      3.97345            0            1            1         1.71
+       Pierce      3.97345            0            0            0         1.71
+   W Houstoun      3.97345            0            1            0         1.71
+        Gerry      0.00842            1            0            1         6.40
+       Gorham      0.00842            1            0            1         6.40
+         King      0.00842            1            0            1         6.40
+       Strong      0.00842            1            0            1         6.40
+       Carrol      0.54734            1            1            1         1.96
+      Jenifer      0.54734            1            1            1         1.96
+    L. Martin      0.54734            1            0            1         1.96
+      McHenry      0.54734            1            1            1         1.96
+       Mercer      0.54734            1            1            1         1.96
+       Gilman      0.02819            0            0            1         2.53
+      Langdon      0.02819            0            0            1         2.53
+    A. Martin      0.39240            0            1            1         0.39
+       Blount      0.39240            0            1            1         0.39
+        Davie      0.39240            0            1            1         0.39
+      Spaight      0.39240            0            1            1         0.39
+   Williamson      0.39240            0            1            1         0.39
+     Brearley      0.00000            1            0            0         3.88
+       Dayton      0.00000            1            0            1         3.88
+   Livingston      0.00000            1            1            0         3.88
+     Paterson      0.00000            1            0            0         3.88
+     Hamilton      0.06760            1            0            1         3.02
+      Lansing      0.06760            1            1            0         3.02
+        Yates      0.06760            1            1            0         3.02
+       Clymer      0.00000            1            0            1         9.31
+   Fitzsimons      0.00000            1            0            1         9.31
+     Franklin      0.00000            1            1            1         9.31
+    G. Morris      0.00000            1            0            1         9.31
+     Ingersol      0.00000            1            0            1         9.31
+      Mifflin      0.00000            1            1            1         9.31
+    R. Morris      0.00000            1            0            1         9.31
+       Wilson      0.00000            1            0            1         9.31
+       Butler     28.91120            0            1            1         1.56
+  C. Pinckney     28.91120            0            1            1         1.56
+C.C. Pinckney     28.91120            0            1            1         1.56
+     Rutledge     28.91120            0            1            1         1.56
+        Blair      2.56202            1            1            1         0.71
+      Madison      2.56202            1            1            0         0.71
+        Mason      2.56202            1            1            1         0.71
+      McClurg      2.56202            1            1            1         0.71
+     Randolph      2.56202            1            1            1         0.71
+   Washington      2.56202            1            1            1         0.71
+
+                  ArmyDebt Certificates       stdebt        vdebt      exports
+
+    Ellsworth         4.89         0.15        10.66          750      710.341
+      Johnson         4.89         0.15        10.66            0      710.341
+      Sherman         4.89         0.15        10.66         1000      710.341
+       Basset         3.65         0.96         6.05            0      119.841
+      Bedford         3.65         0.96         6.05          360      119.841
+        Broom         3.65         0.96         6.05           10      119.841
+    Dickinson         3.65         0.96         6.05            0      119.841
+         Read         3.65         0.96         6.05           50      119.841
+      Baldwin         2.08         0.28         4.07         2550      491.473
+          Few         2.08         0.28         4.07           80      491.473
+       Pierce         2.08         0.28         4.07            0      491.473
+   W Houstoun         2.08         0.28         4.07            0      491.473
+        Gerry         7.05         0.61        14.06        10000     2445.976
+       Gorham         7.05         0.61        14.06            0     2445.976
+         King         7.05         0.61        14.06         8000     2445.976
+       Strong         7.05         0.61        14.06         2200     2445.976
+       Carrol         4.17         0.34         6.47           90     2193.356
+      Jenifer         4.17         0.34         6.47            0     2193.356
+    L. Martin         4.17         0.34         6.47         1300     2193.356
+      McHenry         4.17         0.34         6.47            0     2193.356
+       Mercer         4.17         0.34         6.47         2150     2193.356
+       Gilman         2.40         0.05         4.98          125      142.859
+      Langdon         2.40         0.05         4.98         7500      142.859
+    A. Martin         1.34         0.03         1.76            0     1866.022
+       Blount         1.34         0.03         1.76            0     1866.022
+        Davie         1.34         0.03         1.76            0     1866.022
+      Spaight         1.34         0.03         1.76            0     1866.022
+   Williamson         1.34         0.03         1.76          300     1866.022
+     Brearley         3.21         5.40        12.49            5       27.958
+       Dayton         3.21         5.40        12.49         1000       27.958
+   Livingston         3.21         5.40        12.49            0       27.958
+     Paterson         3.21         5.40        12.49            0       27.958
+     Hamilton         2.87         3.92         9.81          375     2516.197
+      Lansing         2.87         3.92         9.81         3500     2516.197
+        Yates         2.87         3.92         9.81            0     2516.197
+       Clymer         3.56         2.14        15.01         9150     2931.624
+   Fitzsimons         3.56         2.14        15.01         4100     2931.624
+     Franklin         3.56         2.14        15.01         3250     2931.624
+    G. Morris         3.56         2.14        15.01          400     2931.624
+     Ingersol         3.56         2.14        15.01            0     2931.624
+      Mifflin         3.56         2.14        15.01         1800     2931.624
+    R. Morris         3.56         2.14        15.01        56500     2931.624
+       Wilson         3.56         2.14        15.01         2000     2931.624
+       Butler         1.66         0.00         3.22            0     1866.022
+  C. Pinckney         1.66         0.00         3.22            0     1866.022
+C.C. Pinckney         1.66         0.00         3.22         2500     1866.022
+     Rutledge         1.66         0.00         3.22            0     1866.022
+        Blair         2.56         0.39         3.66         2500     3131.228
+      Madison         2.56         0.39         3.66            0     3131.228
+        Mason         2.56         0.39         3.66        30000     3131.228
+      McClurg         2.56         0.39         3.66        15500     3131.228
+     Randolph         2.56         0.39         3.66         3450     3131.228
+   Washington         2.56         0.39         3.66           75     3131.228
+    Ellsworth         4.89         0.15        10.66          750      710.341
+      Johnson         4.89         0.15        10.66            0      710.341
+      Sherman         4.89         0.15        10.66         1000      710.341
+       Basset         3.65         0.96         6.05            0      119.841
+      Bedford         3.65         0.96         6.05          360      119.841
+        Broom         3.65         0.96         6.05           10      119.841
+    Dickinson         3.65         0.96         6.05            0      119.841
+         Read         3.65         0.96         6.05           50      119.841
+      Baldwin         2.08         0.28         4.07         2550      491.473
+          Few         2.08         0.28         4.07           80      491.473
+       Pierce         2.08         0.28         4.07            0      491.473
+   W Houstoun         2.08         0.28         4.07            0      491.473
+        Gerry         7.05         0.61        14.06        10000     2445.976
+       Gorham         7.05         0.61        14.06            0     2445.976
+         King         7.05         0.61        14.06         8000     2445.976
+       Strong         7.05         0.61        14.06         2200     2445.976
+       Carrol         4.17         0.34         6.47           90     2193.356
+      Jenifer         4.17         0.34         6.47            0     2193.356
+    L. Martin         4.17         0.34         6.47         1300     2193.356
+      McHenry         4.17         0.34         6.47            0     2193.356
+       Mercer         4.17         0.34         6.47         2150     2193.356
+       Gilman         2.40         0.05         4.98          125      142.859
+      Langdon         2.40         0.05         4.98         7500      142.859
+    A. Martin         1.34         0.03         1.76            0     1866.022
+       Blount         1.34         0.03         1.76            0     1866.022
+        Davie         1.34         0.03         1.76            0     1866.022
+      Spaight         1.34         0.03         1.76            0     1866.022
+   Williamson         1.34         0.03         1.76          300     1866.022
+     Brearley         3.21         5.40        12.49            5       27.958
+       Dayton         3.21         5.40        12.49         1000       27.958
+   Livingston         3.21         5.40        12.49            0       27.958
+     Paterson         3.21         5.40        12.49            0       27.958
+     Hamilton         2.87         3.92         9.81          375     2516.197
+      Lansing         2.87         3.92         9.81         3500     2516.197
+        Yates         2.87         3.92         9.81            0     2516.197
+       Clymer         3.56         2.14        15.01         9150     2931.624
+   Fitzsimons         3.56         2.14        15.01         4100     2931.624
+     Franklin         3.56         2.14        15.01         3250     2931.624
+    G. Morris         3.56         2.14        15.01          400     2931.624
+     Ingersol         3.56         2.14        15.01            0     2931.624
+      Mifflin         3.56         2.14        15.01         1800     2931.624
+    R. Morris         3.56         2.14        15.01        56500     2931.624
+       Wilson         3.56         2.14        15.01         2000     2931.624
+       Butler         1.66         0.00         3.22            0     1866.022
+  C. Pinckney         1.66         0.00         3.22            0     1866.022
+C.C. Pinckney         1.66         0.00         3.22         2500     1866.022
+     Rutledge         1.66         0.00         3.22            0     1866.022
+        Blair         2.56         0.39         3.66         2500     3131.228
+      Madison         2.56         0.39         3.66            0     3131.228
+        Mason         2.56         0.39         3.66        30000     3131.228
+      McClurg         2.56         0.39         3.66        15500     3131.228
+     Randolph         2.56         0.39         3.66         3450     3131.228
+   Washington         2.56         0.39         3.66           75     3131.228
+    Ellsworth         4.89         0.15        10.66          750      710.341
+      Johnson         4.89         0.15        10.66            0      710.341
+      Sherman         4.89         0.15        10.66         1000      710.341
+       Basset         3.65         0.96         6.05            0      119.841
+      Bedford         3.65         0.96         6.05          360      119.841
+        Broom         3.65         0.96         6.05           10      119.841
+    Dickinson         3.65         0.96         6.05            0      119.841
+         Read         3.65         0.96         6.05           50      119.841
+      Baldwin         2.08         0.28         4.07         2550      491.473
+          Few         2.08         0.28         4.07           80      491.473
+       Pierce         2.08         0.28         4.07            0      491.473
+   W Houstoun         2.08         0.28         4.07            0      491.473
+        Gerry         7.05         0.61        14.06        10000     2445.976
+       Gorham         7.05         0.61        14.06            0     2445.976
+         King         7.05         0.61        14.06         8000     2445.976
+       Strong         7.05         0.61        14.06         2200     2445.976
+       Carrol         4.17         0.34         6.47           90     2193.356
+      Jenifer         4.17         0.34         6.47            0     2193.356
+    L. Martin         4.17         0.34         6.47         1300     2193.356
+      McHenry         4.17         0.34         6.47            0     2193.356
+       Mercer         4.17         0.34         6.47         2150     2193.356
+       Gilman         2.40         0.05         4.98          125      142.859
+      Langdon         2.40         0.05         4.98         7500      142.859
+    A. Martin         1.34         0.03         1.76            0     1866.022
+       Blount         1.34         0.03         1.76            0     1866.022
+        Davie         1.34         0.03         1.76            0     1866.022
+      Spaight         1.34         0.03         1.76            0     1866.022
+   Williamson         1.34         0.03         1.76          300     1866.022
+     Brearley         3.21         5.40        12.49            5       27.958
+       Dayton         3.21         5.40        12.49         1000       27.958
+   Livingston         3.21         5.40        12.49            0       27.958
+     Paterson         3.21         5.40        12.49            0       27.958
+     Hamilton         2.87         3.92         9.81          375     2516.197
+      Lansing         2.87         3.92         9.81         3500     2516.197
+        Yates         2.87         3.92         9.81            0     2516.197
+       Clymer         3.56         2.14        15.01         9150     2931.624
+   Fitzsimons         3.56         2.14        15.01         4100     2931.624
+     Franklin         3.56         2.14        15.01         3250     2931.624
+    G. Morris         3.56         2.14        15.01          400     2931.624
+     Ingersol         3.56         2.14        15.01            0     2931.624
+      Mifflin         3.56         2.14        15.01         1800     2931.624
+    R. Morris         3.56         2.14        15.01        56500     2931.624
+       Wilson         3.56         2.14        15.01         2000     2931.624
+       Butler         1.66         0.00         3.22            0     1866.022
+  C. Pinckney         1.66         0.00         3.22            0     1866.022
+C.C. Pinckney         1.66         0.00         3.22         2500     1866.022
+     Rutledge         1.66         0.00         3.22            0     1866.022
+        Blair         2.56         0.39         3.66         2500     3131.228
+      Madison         2.56         0.39         3.66            0     3131.228
+        Mason         2.56         0.39         3.66        30000     3131.228
+      McClurg         2.56         0.39         3.66        15500     3131.228
+     Randolph         2.56         0.39         3.66         3450     3131.228
+   Washington         2.56         0.39         3.66           75     3131.228
+    Ellsworth         4.89         0.15        10.66          750      710.341
+      Johnson         4.89         0.15        10.66            0      710.341
+      Sherman         4.89         0.15        10.66         1000      710.341
+       Basset         3.65         0.96         6.05            0      119.841
+      Bedford         3.65         0.96         6.05          360      119.841
+        Broom         3.65         0.96         6.05           10      119.841
+    Dickinson         3.65         0.96         6.05            0      119.841
+         Read         3.65         0.96         6.05           50      119.841
+      Baldwin         2.08         0.28         4.07         2550      491.473
+          Few         2.08         0.28         4.07           80      491.473
+       Pierce         2.08         0.28         4.07            0      491.473
+   W Houstoun         2.08         0.28         4.07            0      491.473
+        Gerry         7.05         0.61        14.06        10000     2445.976
+       Gorham         7.05         0.61        14.06            0     2445.976
+         King         7.05         0.61        14.06         8000     2445.976
+       Strong         7.05         0.61        14.06         2200     2445.976
+       Carrol         4.17         0.34         6.47           90     2193.356
+      Jenifer         4.17         0.34         6.47            0     2193.356
+    L. Martin         4.17         0.34         6.47         1300     2193.356
+      McHenry         4.17         0.34         6.47            0     2193.356
+       Mercer         4.17         0.34         6.47         2150     2193.356
+       Gilman         2.40         0.05         4.98          125      142.859
+      Langdon         2.40         0.05         4.98         7500      142.859
+    A. Martin         1.34         0.03         1.76            0     1866.022
+       Blount         1.34         0.03         1.76            0     1866.022
+        Davie         1.34         0.03         1.76            0     1866.022
+      Spaight         1.34         0.03         1.76            0     1866.022
+   Williamson         1.34         0.03         1.76          300     1866.022
+     Brearley         3.21         5.40        12.49            5       27.958
+       Dayton         3.21         5.40        12.49         1000       27.958
+   Livingston         3.21         5.40        12.49            0       27.958
+     Paterson         3.21         5.40        12.49            0       27.958
+     Hamilton         2.87         3.92         9.81          375     2516.197
+      Lansing         2.87         3.92         9.81         3500     2516.197
+        Yates         2.87         3.92         9.81            0     2516.197
+       Clymer         3.56         2.14        15.01         9150     2931.624
+   Fitzsimons         3.56         2.14        15.01         4100     2931.624
+     Franklin         3.56         2.14        15.01         3250     2931.624
+    G. Morris         3.56         2.14        15.01          400     2931.624
+     Ingersol         3.56         2.14        15.01            0     2931.624
+      Mifflin         3.56         2.14        15.01         1800     2931.624
+    R. Morris         3.56         2.14        15.01        56500     2931.624
+       Wilson         3.56         2.14        15.01         2000     2931.624
+       Butler         1.66         0.00         3.22            0     1866.022
+  C. Pinckney         1.66         0.00         3.22            0     1866.022
+C.C. Pinckney         1.66         0.00         3.22         2500     1866.022
+     Rutledge         1.66         0.00         3.22            0     1866.022
+        Blair         2.56         0.39         3.66         2500     3131.228
+      Madison         2.56         0.39         3.66            0     3131.228
+        Mason         2.56         0.39         3.66        30000     3131.228
+      McClurg         2.56         0.39         3.66        15500     3131.228
+     Randolph         2.56         0.39         3.66         3450     3131.228
+   Washington         2.56         0.39         3.66           75     3131.228
+
+Done

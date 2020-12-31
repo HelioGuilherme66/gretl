@@ -1,0 +1,761 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run thesisdat.inp
+ /home/cottrell/stats/test-gretl/importer/thesisdat.inp
+? open thesisdat.xls
+Excel 97 +
+rows=183, total cols=19, data cols=19
+found label strings in first imported column
+Warning: there were missing values
+Listing 19 variables:
+  0) const         1) grdrate       2) fm_ratio      3) readlvl     
+  4) mathlvl       5) dscntlunch    6) size          7) enroll      
+  8) amerind       9) black        10) hispanic     11) asian       
+ 12) white        13) b_hisp       14) suspends     15) illtaugh    
+ 16) nocert       17) masters      18) stratio     
+
+? print -o
+
+                     grdrate     fm_ratio      readlvl      mathlvl   dscntlunch
+
+BELMONT PREPARA     0.506000      1.26244        0.123        0.235        0.834
+BRONX  LEADERSH     0.729730      1.43902        0.324        0.299        0.840
+BRONX HS OF BUS     0.525000      0.91205        0.210        0.265             
+BRONX HS OF LAW     0.487500      1.60526        0.144        0.223        0.840
+BRONX HS OF SCI     0.996491      0.82815        0.987        1.000        0.330
+BRONX SCHOOL FO     0.698630      1.43309        0.300        0.361        0.900
+ DEWITT CLINTON     0.675740      1.14133        0.420        0.500        0.720
+FORDHAM HS OF T     0.355556      1.30233        0.100        0.130        0.860
+FORDHAM LEADERS     0.532110      0.61290                                  0.910
+HS FOR TEACHING     0.578512      1.22222                                  0.700
+ HS OF AMERICAN     0.970588                                               0.300
+JOHN F. KENNEDY     0.444717                                               0.950
+JOHNATHAN LEVIN     0.634921                                                    
+ MARBLE HILL HS     0.911392                                               0.930
+THEODORE ROOSEV     0.116279                                                    
+UNIVERSITY HEIG     0.753623                                               0.910
+ADLAI E. STEVEN     0.392405                                               1.000
+BRONX AEROSPACE     0.904762      0.26582        0.079        0.200        0.750
+BRONX COALITION     0.537500      0.36486        0.120        0.250        0.850
+BRONX HS FOR TH     0.844828      0.75439        0.110        0.220        0.780
+BRONX INTERNATI     0.614035      0.92308        0.000        0.110        0.000
+BRONX LEADERSHI     0.712121      0.78571        0.150        0.330        0.000
+CHRISTOPHER COL     0.558029      0.92308        0.000        0.110        0.000
+FANNIE LOU HAME     0.712329      1.27273        0.130        0.130        0.920
+HARRY S. TRUMAN     0.648536      0.66667        0.100        0.160        0.380
+HERBERT H. LEHM     0.596364                     0.220        0.340             
+ HIGH SCHOOL OF     0.461538      0.85185        0.000        0.500        0.910
+HS FOR VIOLIN A     0.672727     19.00000        0.120        0.140        0.000
+JANE ADDAMS HIG     0.592233      2.44828        0.170        0.280        0.840
+ MONROE ACADEMY     0.530000      1.04082        0.150        0.280        0.820
+ MONROE ACADEMY     0.515464      0.61290        0.110        0.140        0.820
+ NEW SCHOOL FOR     0.473684                                                    
+ PELHAM PREP HS     0.866667                                               0.720
+SCHOOL FOR EXCE     0.743243                                                    
+THE BRONX GUILD     0.632911                                                    
+  WINGS ACADEMY     0.626506      1.08333        0.180        0.230        0.950
+BENJAMIN CARDOZ     0.867163      1.27273        0.590        0.740        0.180
+BUSINESS/COMP A     0.466667                                                    
+FLUSHING HIGH S     0.493399      0.75439        0.220        0.280        0.750
+FOREST HILLS HI     0.767578      1.12766        0.460        0.570        0.270
+FRANCIS LEWIS H     0.804598      0.96078        0.520        0.680        0.250
+GATEWAY TO HEAL     0.900000      1.70270        0.880        0.960        0.610
+GEORGE WASHINGT     0.750000      1.12766        0.440        0.540        0.630
+ HILLCREST HIGH     0.658131      1.50000        0.210        0.360        0.420
+HUMANITIES & TH     0.670213      1.17391        0.180        0.210        0.470
+JAMAICA HIGH SC     0.510830      0.88679        0.160        0.210        0.970
+JOHN BOWNE HIGH     0.510817      1.04082        0.180        0.250        0.800
+MAGNET SCHOOL O     0.631068                                               0.770
+MARTIN VAN BURE     0.775168      0.81818        0.260        0.370        0.310
+MATH/SCIENCE RE     0.695312      0.96078        0.290        0.290        0.460
+QUEENS HIGH SCH     0.842857      1.00000        0.360        0.570        0.280
+QUEENS HS FOR T     0.952941                                                    
+ROBERT F. KENNE     0.735849      1.00000        0.360        0.570        0.510
+SPRINGFIELD GAR     0.444444                                               0.330
+THOMAS A. EDISO     0.922607      0.53846        0.680        0.800        0.440
+TOWNSEND HARRIS     0.996047      2.22581        1.000        1.000        0.380
+ART AND BUSINES     0.640884      1.12766        0.310        0.310        0.770
+AVIATION HIGH S     0.783019      0.16279        0.380        0.680        0.800
+BACCALAUREATE S     0.907407                                                    
+BUSHWICK HIGH S     0.622837      0.88679        0.090        0.130        0.840
+EBC/PUBLIC SERV     0.721519      1.32558        0.230        0.410        0.850
+FRANK SINATRA S     0.923729      2.22581        0.740        0.790        0.250
+GROVER CLEVELAN     0.531502      0.78571        0.200        0.280        0.480
+INTERNATIONAL H     0.490196      1.08333        0.000        0.290        0.790
+LONG ISLAND CIT     0.548088      0.88679        0.260        0.310        0.720
+ MIDDLE COLLEGE     0.444444      1.04082        0.240        0.350        0.750
+NEWCOMERS HS: A     0.529412                                                    
+NEWTOWN HIGH SC     0.515057      0.72414        0.170        0.240        0.930
+QUEENS VOCATION     0.519573      0.66667        0.310        0.500        0.250
+ROBERT WAGNER J     0.717949                                                    
+WILLIAM C. BRYA     0.563190                                                    
+BEACH CHANNEL H     0.626050      0.63934        0.160        0.230        0.730
+ENY TRANSIT TEC     0.722433                                                    
+FAR ROCKAWAY HI     0.469298      0.96078        0.150        0.210        0.800
+FRANKLIN K. LAN     0.426187      0.88679        0.170        0.210        0.970
+JOHN ADAMS HIGH     0.531830      0.75439        0.230        0.310        0.890
+RICHMOND HILL H     0.496979      1.12766        0.190        0.270        0.920
+THOMAS JEFFERSO     0.436170                                               1.000
+CANARSIE HIGH S     0.472172      0.88679        0.130        0.230        0.280
+CLARA BARTON HI     0.748918      3.34783        0.380        0.480        0.770
+ERASMUS HALL CA     0.532020                                                    
+ERASMUS HALL CA     0.449735                                                    
+ERASMUS HALL CA     0.729167                                                    
+ GEORGE WINGATE     0.607595                                                    
+JAMES MADISON H     0.745098      0.75439        0.400        0.520        0.370
+LEON M. GOLDSTE     0.865591      0.88679        0.630        0.730        0.260
+ MIDDLE COLLEGE     0.850467                                                    
+MIDWOOD HIGH SC     0.854083      1.12766        0.620        0.720        0.210
+PAUL ROBESON HI     0.481481      0.53846        0.090        0.160        0.890
+PROSPECT HEIGHT     0.638158      0.96078        1.000        0.380        0.950
+SAMUEL J. TILDE     0.434524      0.88679        0.110        0.110        0.400
+ SHEEPSHEAD BAY     0.558673      0.96078        0.160        0.240        0.310
+SOUTH SHORE HIG     0.419149      0.88679        0.110        0.160        0.270
+W.E.B. DUBOIS A     0.158730                     1.000        1.000             
+CURTIS HIGH SCH     0.747934      1.12766        0.330        0.350        0.590
+EDWARD R. MURRO     0.812135      1.85714        0.510        0.640        0.310
+FORT HAMILTON H     0.661084      0.78571        0.330        0.450        0.420
+ HS OF TELECOMM     0.735043      0.88679        0.490        0.580        0.790
+JOHN DEWEY HIGH     0.620592      1.17391        0.380        0.510        0.850
+ LAFAYETTE HIGH     0.435556      0.96078        0.180        0.270        0.730
+MICHAEL J. PETR     0.969388      0.85185        0.670        0.600        0.370
+NEW DORP HIGH S     0.634694      0.96078        0.290        0.290        0.460
+NEW UTRECHT HIG     0.611465      0.78571        0.310        0.420        0.720
+PORT RICHMOND H     0.642336      1.00000        0.230        0.250        0.450
+RALPH MCKEE HIG     0.756757      0.56250        0.140        0.150        0.650
+STATEN ISLAND T     1.000000      1.17391        1.000        0.990        0.100
+SUSAN E. WAGNER     0.820896      1.00000        0.440        0.430        0.200
+TOTTENVILLE HIG     0.847917      1.08333        0.510        0.530        0.100
+WILLIAM E. GRAD     0.494163      0.25000        0.160        0.270        0.900
+ACORN HS FOR SO     0.373016      1.17391        0.120        0.230        0.700
+AUTOMOTIVE  HIG     0.477273      0.05263        0.150        0.250        0.430
+BENJAMIN BANNEK     0.941935      1.94118        0.820        0.880        0.560
+ BOYS AND GIRLS     0.523379      1.00000        0.230        0.250        0.450
+BROOKLYN HIGH S     0.844828     15.00000        0.500        0.500        0.470
+BROOKLYN INTERN     0.794521      0.96078        0.000        0.450        0.700
+BROOKLYN SCHOOL     0.626667      0.88679        0.110        0.220        0.730
+BROOKLYN TECHNI     0.958155      0.66667        0.970        1.000        0.320
+COBBLE HILL SCH     0.521739      0.75439        0.070        0.140        0.800
+EL PUENTE ACADE     0.666667      3.54545        0.400        0.270        0.880
+FREEDOM ACADEMY     0.609756      0.88679        0.210        0.280        0.610
+GEORGE WESTINGH     0.718593      0.61290        0.160        0.260        0.690
+H.S. FOR ENTERP     0.814103      0.61290        0.150        0.370        0.750
+HIGH SCHOOL FOR     0.714286      1.08333        0.220        0.330        0.740
+METROPOLITAN CO     0.648649      1.27273        0.210        0.200        0.910
+PROGRESS HIGH S     0.680203      1.32558        0.160        0.330        0.720
+ SCIENCE SKILLS     0.653631      0.61290        0.590        0.720        0.610
+ALFRED E. SMITH     0.616915      0.13636        0.110        0.190        0.880
+ ART AND DESIGN     0.751055      0.78571        0.350        0.440        0.640
+BARD HS EARLY C     0.929204      2.22581        0.940        0.990        0.340
+ BARUCH COLLEGE     0.980000                     0.730        0.950             
+CENTRAL PARK EA     0.434783      0.85185        0.020        0.100        0.800
+CHELSEA HIGH SC     0.518325      0.61290        0.150        0.210        0.790
+COALITION SCHOO     0.525773      1.50000        0.100        0.170        0.980
+COMMUNITY HS FO     0.716418                     0.160        0.230             
+ELEANOR ROOSEVE     0.970297      2.33333        0.850        0.900        0.250
+GRAPHIC COMMUNI     0.410526      0.96078        0.130        0.190        0.750
+ HARVEY MILK HS     0.387097      0.00000        0.000        0.000        0.780
+HEALTH OPPORTUN     0.664234      3.54545        0.260        0.280        0.860
+HEALTH PROFESSI     0.776119      1.94118        0.510        0.710        0.800
+HERITAGE SCHOOL     0.739726      1.27273        0.210        0.130        0.690
+HIGH SCHOOL FOR     0.803191     10.11111        0.420        0.490        0.830
+ HIGH SCHOOL OF     0.920863      0.88679        0.370        0.620        0.750
+ HS FOR CAREERS     0.898734      0.14943        0.340        0.590        0.880
+HUMANITIES PREP     0.525000      1.08333        0.520        0.520        0.000
+JACQUELINE KENN     0.751825      1.50000        0.230        0.340        0.850
+LANDMARK HIGH S     0.719101      0.92308        0.220        0.310        0.710
+LEADERSHIP/PUBL     0.750000      1.32558        0.200        0.430        0.570
+LEGACY SCHOOL F     0.353659      1.32558        0.210        0.270        0.660
+MANHATTAN CENTE     0.844125      0.85185        0.620        0.810        0.890
+MANHATTAN COMPR     0.270968      1.00000        0.000        0.000        0.800
+MANHATTAN VILLA     0.878378                                                    
+ MILLENIUM H.S.     0.933333      1.12766        0.690        0.800        0.470
+MOTT HAVEN VILL     0.789474      1.17391        0.140        0.260        0.840
+MURRY BERGTRAUM     0.687500      1.04082        0.300        0.450        0.980
+NEW YORK CITY P     0.772727      3.16667        0.300        0.370        0.850
+NORMAN THOMAS H     0.499145      0.96078        0.160        0.260        0.750
+ NYC LAB HS FOR     1.000000      1.22222        0.850        0.910        0.000
+NYC MUSEUM SCHO     0.777778      1.43902        0.490        0.520        0.680
+ PARK EAST HIGH     0.750000      1.17391        0.080        0.180        0.660
+R.R. GREEN HIGH     0.732484      2.33333        0.260        0.370        0.850
+ SCHOOL FOR THE     0.404762      1.04082        0.180        0.200        0.750
+STUYVESANT HIGH     0.992116      0.85185        1.000        1.000        0.290
+TALENT UNLIMITE     0.858974      2.44828        0.710        0.640        0.620
+UNITY  HIGH SCH     0.578947      1.27273        0.020        0.160        0.810
+UNIVERSITY NEIG     0.629630      0.72414        0.200        0.280        0.900
+URBAN PEACE ACA     0.462500      1.22222        0.160        0.240        0.780
+WASHINGTON IRVI     0.511401      1.17391        0.130        0.210        0.990
+BEACON HIGH SCH     0.914530      1.43902        0.880        0.900        0.240
+BREAD & ROSES I     0.547945      1.00000        0.170        0.290        0.890
+FIORELLO H. LAG     0.955117      2.84615        0.950        0.960        0.240
+FREDERICK DOUGL     0.906832      1.27273        0.280        0.350        0.840
+HS FOR INTERNAT     0.474576      0.56250        0.160        0.220        0.850
+HS FOR LAW & PU     0.708029      1.00000        0.160        0.290        1.000
+HS FOR MATH  SC     0.975904                     0.950        1.000             
+ HS FOR MEDIA &     0.696429      0.63934        0.090        0.220        0.930
+LOUIS D. BRANDE     0.480652      1.17391        0.130        0.190        0.710
+ MLK HS FOR ART     0.725000      1.63158        0.470        0.750        0.680
+ MLK HS FOR LAW     0.614035                     0.280        0.300        0.810
+LIBERTY HS ACAD     0.495575                     0.000        0.200             
+PASSAGES ACADEM     0.000000      0.81818        0.990        1.000        0.330
+SATELLITE ACADE     0.124352                     0.000        0.000             
+SECOND OPPORTUN     0.000000      0.81818        0.990        1.000        0.330
+
+                        size       enroll      amerind        black     hispanic
+
+BELMONT PREPARA           30          396         0.00         0.34         0.63
+BRONX  LEADERSH           32          628         0.00         0.37         0.60
+BRONX HS OF BUS           25          482         0.00         0.34         0.63
+BRONX HS OF LAW           25          446         0.01         0.43         0.55
+BRONX HS OF SCI           32         2436         0.00         0.05         0.06
+BRONX SCHOOL FO           25          446         0.01         0.43         0.55
+ DEWITT CLINTON           32         4533         0.00         0.26         0.65
+FORDHAM HS OF T           33          467         0.00         0.38         0.59
+FORDHAM LEADERS           30          527         0.00         0.30         0.66
+HS FOR TEACHING           20          493         0.00         0.34         0.61
+ HS OF AMERICAN           22          309         0.00         0.23         0.24
+JOHN F. KENNEDY           25         3419         0.00         0.29         0.67
+JOHNATHAN LEVIN                                                                 
+ MARBLE HILL HS           27          441         0.00         0.18         0.57
+THEODORE ROOSEV                                                                 
+UNIVERSITY HEIG           28          422         0.00         0.29         0.68
+ADLAI E. STEVEN           25         2565         0.00         0.35         0.62
+BRONX AEROSPACE           25          349         0.00         0.35         0.62
+BRONX COALITION           29          524         0.01         0.35         0.62
+BRONX HS FOR TH           30          348         0.00         0.43         0.51
+BRONX INTERNATI           30          322         0.00         0.25         0.66
+BRONX LEADERSHI           27          361         0.00         0.53         0.44
+CHRISTOPHER COL           27          322         0.00         0.25         0.66
+FANNIE LOU HAME           25          467         0.01         0.34         0.64
+HARRY S. TRUMAN           32         3391         0.01         0.59         0.37
+HERBERT H. LEHM           31                                                    
+ HIGH SCHOOL OF           24          373         0.00         0.06         0.91
+HS FOR VIOLIN A           30          232         0.00         0.38         0.60
+JANE ADDAMS HIG           29         1753         0.00         0.35         0.63
+ MONROE ACADEMY           25          601         0.00         0.32         0.64
+ MONROE ACADEMY           27          529         0.00         0.26         0.72
+ NEW SCHOOL FOR                                                                 
+ PELHAM PREP HS           27          421         0.00         0.41         0.47
+SCHOOL FOR EXCE                                                                 
+THE BRONX GUILD                                                                 
+  WINGS ACADEMY           28          574         0.01         0.41         0.56
+BENJAMIN CARDOZ           29         4042         0.00         0.18         0.14
+BUSINESS/COMP A                                                                 
+FLUSHING HIGH S           32         2661         0.00         0.21         0.51
+FOREST HILLS HI           31         3689         0.00         0.11         0.26
+FRANCIS LEWIS H           32         4235         0.00         0.13         0.21
+GATEWAY TO HEAL           30          569         0.00         0.52         0.15
+GEORGE WASHINGT           27          304         0.00         0.71         0.17
+ HILLCREST HIGH           31         3329         0.00         0.50         0.22
+HUMANITIES & TH           26          513         0.01         0.87         0.07
+JAMAICA HIGH SC           23         3213         0.01         0.28         0.61
+JOHN BOWNE HIGH           30         3326         0.00         0.21         0.49
+MAGNET SCHOOL O           30         1152         0.00         0.23         0.17
+MARTIN VAN BURE           29         3425         0.01         0.60         0.15
+MATH/SCIENCE RE           21         2486         0.00         0.19         0.20
+QUEENS HIGH SCH           28          914         0.00         0.34         0.14
+QUEENS HS FOR T                                                                 
+ROBERT F. KENNE           25          446         0.00         0.14         0.27
+SPRINGFIELD GAR           25          692         0.00         0.02         0.07
+THOMAS A. EDISO           32         2319         0.00         0.29         0.23
+TOWNSEND HARRIS           23         1048         0.00         0.07         0.12
+ART AND BUSINES           28          796         0.00         0.07         0.83
+AVIATION HIGH S           28         1863         0.00         0.09         0.58
+BACCALAUREATE S                                                                 
+BUSHWICK HIGH S           26          347         0.00         0.28         0.71
+EBC/PUBLIC SERV           25          656         0.00         0.11         0.86
+FRANK SINATRA S           33          569         0.00         0.18         0.25
+GROVER CLEVELAN           31         3058         0.00         0.04         0.64
+INTERNATIONAL H           22          329         0.00         0.11         0.47
+LONG ISLAND CIT           26         3824         0.00         0.15         0.55
+ MIDDLE COLLEGE           24          488         0.00         0.10         0.63
+NEWCOMERS HS: A                                                                 
+NEWTOWN HIGH SC           29         4138         0.00         0.08         0.63
+QUEENS VOCATION           32         1210         0.00         0.14         0.64
+ROBERT WAGNER J                                                                 
+WILLIAM C. BRYA                                                                 
+BEACH CHANNEL H           35         2588         0.01         0.54         0.27
+ENY TRANSIT TEC                                                                 
+FAR ROCKAWAY HI           25         1099         0.00         0.65         0.29
+FRANKLIN K. LAN           27         3213         0.01         0.28         0.61
+JOHN ADAMS HIGH           25         3358         0.01         0.27         0.34
+RICHMOND HILL H           32         3619         0.01         0.13         0.49
+THOMAS JEFFERSO                       720         0.00         0.75         0.24
+CANARSIE HIGH S           33         2885         0.00         0.85         0.11
+CLARA BARTON HI           29         2380         0.01         0.87         0.09
+ERASMUS HALL CA                                                                 
+ERASMUS HALL CA                                                                 
+ERASMUS HALL CA                                                                 
+ GEORGE WINGATE                                                                 
+JAMES MADISON H           29         4223         0.00         0.23         0.12
+LEON M. GOLDSTE           32          970         0.00         0.21         0.10
+ MIDDLE COLLEGE                                                                 
+MIDWOOD HIGH SC           27         3773         0.00         0.43         0.08
+PAUL ROBESON HI           31         1528         0.00         0.88         0.10
+PROSPECT HEIGHT                       216         0.00         0.18         0.36
+SAMUEL J. TILDE           29         2501         0.01         0.92         0.06
+ SHEEPSHEAD BAY           29         3531         0.00         0.64         0.13
+SOUTH SHORE HIG           30         1990         0.00         0.88         0.09
+W.E.B. DUBOIS A           20                                                    
+CURTIS HIGH SCH                      2707         0.00         0.33         0.27
+EDWARD R. MURRO           32         3985         0.00         0.29         0.15
+FORT HAMILTON H           27         4538         0.00         0.05         0.34
+ HS OF TELECOMM           32         1207         0.00         0.17         0.51
+JOHN DEWEY HIGH           32         3294         0.00         0.30         0.19
+ LAFAYETTE HIGH           28         1849         0.00         0.45         0.26
+MICHAEL J. PETR           25         1233         0.00         0.16         0.15
+NEW DORP HIGH S           22         2486         0.00         0.19         0.20
+NEW UTRECHT HIG           34         3067         0.00         0.10         0.28
+PORT RICHMOND H           29         2583         0.00         0.28         0.28
+RALPH MCKEE HIG           25          750         0.01         0.39         0.40
+STATEN ISLAND T           29          788         0.00         0.01         0.03
+SUSAN E. WAGNER           28         3156         0.00         0.12         0.18
+TOTTENVILLE HIG           30         3870         0.00         0.03         0.08
+WILLIAM E. GRAD           26         1659         0.00         0.72         0.19
+ACORN HS FOR SO           34          714         0.00         0.77         0.21
+AUTOMOTIVE  HIG           32          982         0.01         0.53         0.43
+BENJAMIN BANNEK           30          939         0.00         0.83         0.12
+ BOYS AND GIRLS           30         2583         0.00         0.28         0.28
+BROOKLYN HIGH S           25          746         0.00         0.73         0.22
+BROOKLYN INTERN           25          331         0.00         0.21         0.32
+BROOKLYN SCHOOL           25          663         0.01         0.47         0.42
+BROOKLYN TECHNI           30         4240         0.00         0.15         0.08
+COBBLE HILL SCH           32          928         0.07         0.57         0.36
+EL PUENTE ACADE           19          151         0.00         0.15         0.83
+FREEDOM ACADEMY           21          288         0.00         0.76         0.19
+GEORGE WESTINGH           26         1054         0.01         0.77         0.19
+H.S. FOR ENTERP           28          823         0.00         0.29         0.69
+HIGH SCHOOL FOR           28          885         0.00         0.55         0.42
+METROPOLITAN CO           34          376         0.01         0.84         0.13
+PROGRESS HIGH S           22         1089         0.00         0.32         0.65
+ SCIENCE SKILLS           30          928         0.00         0.80         0.12
+ALFRED E. SMITH           24         1285         0.01         0.33         0.64
+ ART AND DESIGN           30         1406         0.01         0.28         0.56
+BARD HS EARLY C           21          513         0.00         0.22         0.19
+ BARUCH COLLEGE                                                                 
+CENTRAL PARK EA           23          328         0.01         0.44         0.51
+CHELSEA HIGH SC           30         1040         0.00         0.36         0.59
+COALITION SCHOO           24          418         0.01         0.33         0.61
+COMMUNITY HS FO                                                                 
+ELEANOR ROOSEVE           30          468         0.00         0.09         0.13
+GRAPHIC COMMUNI           30         1955         0.00         0.37         0.59
+ HARVEY MILK HS           25           64         0.00         0.47         0.33
+HEALTH OPPORTUN           28          593         0.00         0.39         0.58
+HEALTH PROFESSI           31         1476         0.00         0.25         0.48
+HERITAGE SCHOOL           25          304         0.00         0.32         0.67
+HIGH SCHOOL FOR           25         1659         0.00         0.35         0.55
+ HIGH SCHOOL OF           29          760         0.00         0.23         0.43
+ HS FOR CAREERS           21          309         0.00         0.33         0.66
+HUMANITIES PREP           25          169         0.00         0.38         0.44
+JACQUELINE KENN           30          700         0.00         0.26         0.66
+LANDMARK HIGH S           25          430         0.00         0.33         0.59
+LEADERSHIP/PUBL           30          682         0.00         0.27         0.54
+LEGACY SCHOOL F           26          497         0.00         0.43         0.43
+MANHATTAN CENTE           30         1583         0.01         0.23         0.61
+MANHATTAN COMPR           25          894         0.00         0.40         0.20
+MANHATTAN VILLA                                                                 
+ MILLENIUM H.S.           30          458         0.00         0.10         0.18
+MOTT HAVEN VILL           25          345         0.00         0.36         0.64
+MURRY BERGTRAUM           34         2907         0.00         0.26         0.48
+NEW YORK CITY P           26          180         0.00         0.51         0.43
+NORMAN THOMAS H           30         2437         0.00         0.22         0.77
+ NYC LAB HS FOR           32          429         0.00         0.07         0.10
+NYC MUSEUM SCHO           28          387         0.01         0.27         0.42
+ PARK EAST HIGH           27          346         0.00         0.44         0.55
+R.R. GREEN HIGH           30          708         0.00         0.36         0.57
+ SCHOOL FOR THE           26          302         0.01         0.39         0.47
+STUYVESANT HIGH           32         3015         0.00         0.02         0.03
+TALENT UNLIMITE           27          442         0.00         0.39         0.40
+UNITY  HIGH SCH           24          203         0.00         0.49         0.48
+UNIVERSITY NEIG           26          478         0.01         0.15         0.54
+URBAN PEACE ACA           21          322         0.00         0.59         0.39
+WASHINGTON IRVI           29         2817         0.00         0.32         0.61
+BEACON HIGH SCH           26         1042         0.00         0.19         0.24
+BREAD & ROSES I           25          488         0.00         0.52         0.46
+FIORELLO H. LAG           32         2464         0.00         0.16         0.17
+FREDERICK DOUGL           26          216         0.00         0.82         0.17
+HS FOR INTERNAT           27          678         0.00         0.08         0.91
+HS FOR LAW & PU           30          598         0.00         0.06         0.93
+HS FOR MATH  SC                                                                 
+ HS FOR MEDIA &           34          601         0.00         0.05         0.94
+LOUIS D. BRANDE           29         2751         0.00         0.33         0.62
+ MLK HS FOR ART           21          320         0.01         0.20         0.43
+ MLK HS FOR LAW           22          520         0.00         0.50         0.46
+LIBERTY HS ACAD                                                                 
+PASSAGES ACADEM           34         2436         0.00         0.05         0.06
+SATELLITE ACADE                                                                 
+SECOND OPPORTUN           32         2436         0.00         0.05         0.06
+
+                       asian        white       b_hisp     suspends     illtaugh
+
+BELMONT PREPARA         0.03         0.02         0.97         0.13         0.21
+BRONX  LEADERSH         0.01         0.01         0.97         0.01         0.13
+BRONX HS OF BUS         0.02         0.01         0.97         0.07         0.30
+BRONX HS OF LAW         0.00         0.01         0.98         0.08         0.21
+BRONX HS OF SCI         0.60         0.28         0.11         0.01         0.06
+BRONX SCHOOL FO         0.00         0.01         0.98         0.08         0.21
+ DEWITT CLINTON         0.06         0.03         0.91         0.02         0.10
+FORDHAM HS OF T         0.01         0.02         0.97         0.06         0.31
+FORDHAM LEADERS         0.02         0.02         0.96         0.11         0.16
+HS FOR TEACHING         0.01         0.02         0.95         0.06         0.17
+ HS OF AMERICAN         0.20         0.33         0.47         0.00         0.02
+JOHN F. KENNEDY         0.02         0.02         0.96         0.02         0.16
+JOHNATHAN LEVIN                                   0.00                          
+ MARBLE HILL HS         0.15         0.10         0.75         0.01         0.17
+THEODORE ROOSEV                                   0.00                          
+UNIVERSITY HEIG         0.01         0.01         0.97         0.02         0.11
+ADLAI E. STEVEN         0.02         0.01         0.97         0.07        15.00
+BRONX AEROSPACE         0.02         0.01         0.97         0.01         0.28
+BRONX COALITION         0.02         0.01         0.97         0.04         0.18
+BRONX HS FOR TH         0.02         0.04         0.94         0.10         0.22
+BRONX INTERNATI         0.06         0.02         0.91         0.00         0.35
+BRONX LEADERSHI         0.02         0.01         0.97         0.03         0.26
+CHRISTOPHER COL         0.06         0.02         0.91         0.00         0.35
+FANNIE LOU HAME         0.00         0.01         0.98         0.06         0.08
+HARRY S. TRUMAN         0.02         0.01         0.96         0.04         0.23
+HERBERT H. LEHM                                   0.00                      0.18
+ HIGH SCHOOL OF         0.03         0.01         0.97         0.03         0.18
+HS FOR VIOLIN A         0.01         0.01         0.98         0.09         0.14
+JANE ADDAMS HIG         0.01         0.01         0.98         0.03         0.13
+ MONROE ACADEMY         0.02         0.01         0.96         0.09         0.24
+ MONROE ACADEMY         0.00         0.01         0.98         0.13         0.32
+ NEW SCHOOL FOR                                   0.00                          
+ PELHAM PREP HS         0.05         0.07         0.88         0.05         0.15
+SCHOOL FOR EXCE                                   0.00                          
+THE BRONX GUILD                                   0.00                          
+  WINGS ACADEMY         0.02         0.01         0.97         0.04         0.16
+BENJAMIN CARDOZ         0.46         0.22         0.32         0.02         0.05
+BUSINESS/COMP A                                   0.00                          
+FLUSHING HIGH S         0.23         0.05         0.72         0.04         0.09
+FOREST HILLS HI         0.22         0.41         0.37         3.00         0.07
+FRANCIS LEWIS H         0.47         0.19         0.34         0.03         0.11
+GATEWAY TO HEAL         0.29         0.03         0.67         0.01         0.15
+GEORGE WASHINGT         0.09         0.03         0.88         0.06         0.22
+ HILLCREST HIGH         0.25         0.03         0.72         0.01         0.13
+HUMANITIES & TH         0.03         0.02         0.94         0.08         0.17
+JAMAICA HIGH SC         0.08         0.03         0.89         0.05         0.15
+JOHN BOWNE HIGH         0.25         0.05         0.70         0.04         0.12
+MAGNET SCHOOL O         0.25         0.35         0.40         0.02         0.18
+MARTIN VAN BURE         0.21         0.04         0.75         0.04         0.07
+MATH/SCIENCE RE         0.07         0.54         0.39         0.05         0.12
+QUEENS HIGH SCH         0.31         0.21         0.48         0.07         0.13
+QUEENS HS FOR T                                   0.00                          
+ROBERT F. KENNE         0.21         0.37         0.41         0.00         0.03
+SPRINGFIELD GAR         0.68         0.23         0.09         0.00         0.03
+THOMAS A. EDISO         0.39         0.08         0.52         0.05         0.07
+TOWNSEND HARRIS         0.44         0.37         0.19         0.01         0.07
+ART AND BUSINES         0.06         0.04         0.90         0.08         0.08
+AVIATION HIGH S         0.20         0.13         0.67         0.03         0.14
+BACCALAUREATE S                                   0.00                          
+BUSHWICK HIGH S         0.01         0.00         0.99         0.07         0.19
+EBC/PUBLIC SERV         0.01         0.01         0.97         0.14         0.16
+FRANK SINATRA S         0.06         0.51         0.43         0.04         0.10
+GROVER CLEVELAN         0.07         0.25         0.68         0.05         0.11
+INTERNATIONAL H         0.28         0.13         0.58         0.01         0.07
+LONG ISLAND CIT         0.16         0.14         0.70         0.02         0.14
+ MIDDLE COLLEGE         0.08         0.18         0.73         0.03         0.28
+NEWCOMERS HS: A                                   0.00                          
+NEWTOWN HIGH SC         0.24         0.05         0.71         0.03         0.11
+QUEENS VOCATION         0.08         0.14         0.78         0.05         0.46
+ROBERT WAGNER J                                   0.00                          
+WILLIAM C. BRYA                                   0.00                          
+BEACH CHANNEL H         0.04         0.14         0.81         0.10         0.09
+ENY TRANSIT TEC                                   0.00                          
+FAR ROCKAWAY HI         0.04         0.02         0.94         0.06         0.20
+FRANKLIN K. LAN         0.08         0.03         0.89         0.05         0.15
+JOHN ADAMS HIGH         0.30         0.08         0.61         0.05         0.14
+RICHMOND HILL H         0.32         0.05         0.62         0.05         0.14
+THOMAS JEFFERSO         0.01         0.00         0.99         0.03         0.34
+CANARSIE HIGH S         0.02         0.02         0.96         0.03         0.14
+CLARA BARTON HI         0.02         0.02         0.96         0.03         0.15
+ERASMUS HALL CA                                   0.00                          
+ERASMUS HALL CA                                   0.00                          
+ERASMUS HALL CA                                   0.00                          
+ GEORGE WINGATE                                   0.00                          
+JAMES MADISON H         0.16         0.49         0.35         0.04         0.06
+LEON M. GOLDSTE         0.10         0.59         0.31         0.02         0.09
+ MIDDLE COLLEGE                                   0.00                          
+MIDWOOD HIGH SC         0.22         0.26         0.51         0.02         0.07
+PAUL ROBESON HI         0.01         0.01         0.98         0.04         0.10
+PROSPECT HEIGHT         0.38         0.07         0.54         0.08         0.19
+SAMUEL J. TILDE         0.01         0.01         0.98         0.07         0.18
+ SHEEPSHEAD BAY         0.11         0.11         0.77         0.06         0.20
+SOUTH SHORE HIG         0.01         0.02         0.97         0.05         0.17
+W.E.B. DUBOIS A                                                             0.26
+CURTIS HIGH SCH         0.06         0.33         0.60         0.04         0.09
+EDWARD R. MURRO         0.21         0.35         0.44         0.04         0.10
+FORT HAMILTON H         0.29         0.32         0.39         0.02         0.16
+ HS OF TELECOMM         0.14         0.18         0.68         0.01         0.20
+JOHN DEWEY HIGH         0.32         0.19         0.49         0.03         0.12
+ LAFAYETTE HIGH         0.20         0.09         0.71         0.07         0.25
+MICHAEL J. PETR         0.07         0.61         0.31         0.03         0.16
+NEW DORP HIGH S         0.07         0.54         0.39         0.05         0.12
+NEW UTRECHT HIG         0.26         0.36         0.38         0.00         0.13
+PORT RICHMOND H         0.07         0.36         0.56         0.05         0.09
+RALPH MCKEE HIG         0.04         0.26         0.79         0.08         0.30
+STATEN ISLAND T         0.13         0.83         0.04         0.01         0.11
+SUSAN E. WAGNER         0.13         0.57         0.30         0.03         0.16
+TOTTENVILLE HIG         0.07         0.82         0.11         0.02         0.11
+WILLIAM E. GRAD         0.03         0.06         0.91         0.06         0.26
+ACORN HS FOR SO         0.01         0.01         0.98         0.16         0.25
+AUTOMOTIVE  HIG         0.01         0.02         0.96         0.02         0.37
+BENJAMIN BANNEK         0.03         0.01         0.95         0.00         0.20
+ BOYS AND GIRLS         0.07         0.36         0.56         0.05         0.09
+BROOKLYN HIGH S         0.02         0.03         0.95         0.02         0.15
+BROOKLYN INTERN         0.35         0.11         0.53         0.05         0.17
+BROOKLYN SCHOOL         0.02         0.08         0.89         0.11         0.38
+BROOKLYN TECHNI         0.53         0.24         0.23         0.00         0.11
+COBBLE HILL SCH         0.01         0.04         0.93         0.04         0.18
+EL PUENTE ACADE         0.00         0.02         0.98         0.01         0.38
+FREEDOM ACADEMY         0.02         0.03         0.95         0.00         0.19
+GEORGE WESTINGH         0.02         0.02         0.96         0.04         0.27
+H.S. FOR ENTERP         0.01         0.02         0.98         0.01         0.21
+HIGH SCHOOL FOR         0.01         0.01         0.97         0.04         0.15
+METROPOLITAN CO         0.02         0.01         0.97         0.13         0.03
+PROGRESS HIGH S         0.01         0.02         0.97         0.05         0.18
+ SCIENCE SKILLS         0.06         0.02         0.92         0.04         0.22
+ALFRED E. SMITH         0.02         0.01         0.97         0.13         0.16
+ ART AND DESIGN         0.06         0.10         0.84         0.04         0.26
+BARD HS EARLY C         0.12         0.47         0.41         0.00         0.37
+ BARUCH COLLEGE                                                                 
+CENTRAL PARK EA         0.03         0.02         0.95         0.12         0.31
+CHELSEA HIGH SC         0.03         0.02         0.95         0.08         0.20
+COALITION SCHOO         0.01         0.04         0.94         0.06         0.21
+COMMUNITY HS FO                                                                 
+ELEANOR ROOSEVE         0.26         0.52         0.22         0.01         0.09
+GRAPHIC COMMUNI         0.02         0.02         0.96         0.07         0.23
+ HARVEY MILK HS         0.13         0.08         0.80         0.04         0.21
+HEALTH OPPORTUN         0.01         0.02         0.97         0.12         0.13
+HEALTH PROFESSI         0.22         0.04         0.73         0.04         0.07
+HERITAGE SCHOOL         0.00         0.01         0.99         0.02         0.10
+HIGH SCHOOL FOR         0.03         0.06         0.90         0.00         0.15
+ HIGH SCHOOL OF         0.24         0.10         0.66         0.02         0.19
+ HS FOR CAREERS         0.00         0.01         0.99         0.03         0.25
+HUMANITIES PREP         0.04         0.14         0.82         0.03         0.13
+JACQUELINE KENN         0.04         0.04         0.92         0.14         0.38
+LANDMARK HIGH S         0.03         0.05         0.92         0.01         0.21
+LEADERSHIP/PUBL         0.11         0.09         0.81         0.08         0.09
+LEGACY SCHOOL F         0.09         0.04         0.86         0.14         0.17
+MANHATTAN CENTE         0.13         0.03         0.84         0.02         0.13
+MANHATTAN COMPR         0.00         0.40         0.60         1.60         0.12
+MANHATTAN VILLA                                                                 
+ MILLENIUM H.S.         0.43         0.28         0.28         0.02         0.09
+MOTT HAVEN VILL         0.00         0.00         1.00         0.06         0.21
+MURRY BERGTRAUM         0.21         0.04         0.74         0.02         0.08
+NEW YORK CITY P         0.02         0.04         0.94         0.01         0.15
+NORMAN THOMAS H         0.04         0.01         0.99         0.04         0.07
+ NYC LAB HS FOR         0.26         0.57         0.17         0.01         0.39
+NYC MUSEUM SCHO         0.11         0.19         0.69         0.11         0.18
+ PARK EAST HIGH         0.01         0.01         0.99         0.06         0.17
+R.R. GREEN HIGH         0.02         0.05         0.93         0.09         0.09
+ SCHOOL FOR THE         0.07         0.06         0.86         0.12         0.12
+STUYVESANT HIGH         0.59         0.36         0.05         0.01         0.03
+TALENT UNLIMITE         0.02         0.19         0.79         0.00         0.11
+UNITY  HIGH SCH         0.01         0.01         0.97         0.03         0.09
+UNIVERSITY NEIG         0.26         0.04         0.69         0.06         0.21
+URBAN PEACE ACA         0.01         0.02         0.98         0.12         0.05
+WASHINGTON IRVI         0.04         0.02         0.93         0.16         0.21
+BEACON HIGH SCH         0.06         0.51         0.43         0.00         0.11
+BREAD & ROSES I         0.00         0.01         0.98         0.05         0.32
+FIORELLO H. LAG         0.17         0.50         0.33         0.01         0.08
+FREDERICK DOUGL         0.00         0.01         0.99         0.10         0.31
+HS FOR INTERNAT         0.00         0.01         0.99         0.04         0.19
+HS FOR LAW & PU         0.01         0.01         0.99         0.06         0.19
+HS FOR MATH  SC                                                                 
+ HS FOR MEDIA &         0.00         0.00         0.99         0.03         0.15
+LOUIS D. BRANDE         0.02         0.02         0.95         0.08         0.10
+ MLK HS FOR ART         0.23         0.13         0.63         0.01         0.06
+ MLK HS FOR LAW         0.02         0.03         0.96         0.23         0.25
+LIBERTY HS ACAD                                                                 
+PASSAGES ACADEM         0.60         0.28         0.11         0.01         0.06
+SATELLITE ACADE                                                                 
+SECOND OPPORTUN         0.60         0.28         0.11         0.01         0.06
+
+                      nocert      masters      stratio
+
+BELMONT PREPARA         0.11         0.20     11.00000
+BRONX  LEADERSH         0.10         0.31     17.44444
+BRONX HS OF BUS         0.10         0.38     12.35897
+BRONX HS OF LAW         0.11         0.13     11.15000
+BRONX HS OF SCI         0.02         0.59     18.17910
+BRONX SCHOOL FO         0.11         0.13     11.15000
+ DEWITT CLINTON         0.05         0.53     15.16054
+FORDHAM HS OF T         0.15         0.29     11.39024
+FORDHAM LEADERS         0.11         0.24     11.45652
+HS FOR TEACHING         0.03         0.10     14.08571
+ HS OF AMERICAN         0.00         0.41     13.43478
+JOHN F. KENNEDY         0.03         0.55     15.75576
+JOHNATHAN LEVIN                                       
+ MARBLE HILL HS         0.09         0.31     12.97059
+THEODORE ROOSEV                                       
+UNIVERSITY HEIG         0.08         0.19     13.61290
+ADLAI E. STEVEN         0.03         0.52     14.01639
+BRONX AEROSPACE         0.21         0.31     10.57576
+BRONX COALITION         0.00         0.18     16.37500
+BRONX HS FOR TH         0.18         0.18     15.81818
+BRONX INTERNATI         0.11         0.37     16.10000
+BRONX LEADERSHI         0.16         0.08     15.04167
+CHRISTOPHER COL         0.11         0.37     16.10000
+FANNIE LOU HAME         0.03         0.17     12.97222
+HARRY S. TRUMAN         0.11         0.19     20.80368
+HERBERT H. LEHM         0.05         0.29      0.00000
+ HIGH SCHOOL OF         0.04         0.33     15.54167
+HS FOR VIOLIN A         0.08         0.46     12.88889
+JANE ADDAMS HIG         0.03         0.49     17.18627
+ MONROE ACADEMY         0.06         0.32     16.24324
+ MONROE ACADEMY         0.11         0.33     15.55882
+ NEW SCHOOL FOR                                       
+ PELHAM PREP HS         0.09         0.22     17.54167
+SCHOOL FOR EXCE                                       
+THE BRONX GUILD                                       
+  WINGS ACADEMY         0.10         0.38     13.04545
+BENJAMIN CARDOZ         0.01         0.58     20.94301
+BUSINESS/COMP A                                       
+FLUSHING HIGH S         0.03         0.49     16.94904
+FOREST HILLS HI         0.04         0.54     19.72727
+FRANCIS LEWIS H         0.03         0.61     19.42661
+GATEWAY TO HEAL         0.07         0.33     18.96667
+GEORGE WASHINGT         0.11         0.42     15.20000
+ HILLCREST HIGH         0.04         0.44     19.24277
+HUMANITIES & TH         0.07         0.52     18.32143
+JAMAICA HIGH SC         0.04         0.42     16.14573
+JOHN BOWNE HIGH         0.03         0.58     16.54726
+MAGNET SCHOOL O         0.06         0.43     14.76923
+MARTIN VAN BURE         0.03         0.55     19.91279
+MATH/SCIENCE RE         0.04         0.42     18.97710
+QUEENS HIGH SCH         0.04         0.31     16.92593
+QUEENS HS FOR T                                       
+ROBERT F. KENNE         0.04         0.40     17.15385
+SPRINGFIELD GAR         0.00         0.41     15.04348
+THOMAS A. EDISO         0.00         0.58     19.16529
+TOWNSEND HARRIS         0.03         0.62     19.05455
+ART AND BUSINES         0.04         0.41     13.26667
+AVIATION HIGH S         0.03         0.62     16.48673
+BACCALAUREATE S                                       
+BUSHWICK HIGH S         0.12         0.12     12.85185
+EBC/PUBLIC SERV         0.02         0.26     13.95745
+FRANK SINATRA S         0.02         0.32     13.54762
+GROVER CLEVELAN         0.05         0.43     20.94521
+INTERNATIONAL H         0.00         0.45     14.95455
+LONG ISLAND CIT         0.05         0.45     16.00000
+ MIDDLE COLLEGE         0.16         0.29     15.25000
+NEWCOMERS HS: A                                       
+NEWTOWN HIGH SC         0.00         0.60     20.08738
+QUEENS VOCATION         0.04         0.43     15.71429
+ROBERT WAGNER J                                       
+WILLIAM C. BRYA                                       
+BEACH CHANNEL H         0.03         0.36     19.75573
+ENY TRANSIT TEC                                       
+FAR ROCKAWAY HI         0.07         0.19     14.85135
+FRANKLIN K. LAN         0.04         0.42     16.14573
+JOHN ADAMS HIGH         0.07         0.45     16.22222
+RICHMOND HILL H         0.02         0.40     20.68000
+THOMAS JEFFERSO         0.04         0.20     14.11765
+CANARSIE HIGH S         0.05         0.46     20.75540
+CLARA BARTON HI         0.08         0.47     16.08108
+ERASMUS HALL CA                                       
+ERASMUS HALL CA                                       
+ERASMUS HALL CA                                       
+ GEORGE WINGATE                                       
+JAMES MADISON H         0.01         0.41     20.20574
+LEON M. GOLDSTE         0.04         0.45     18.65385
+ MIDDLE COLLEGE                                       
+MIDWOOD HIGH SC         0.02         0.52     20.39459
+PAUL ROBESON HI         0.05         0.43     20.64865
+PROSPECT HEIGHT         0.08         0.08     18.00000
+SAMUEL J. TILDE         0.03         0.52     21.19492
+ SHEEPSHEAD BAY         0.08         0.47     19.83708
+SOUTH SHORE HIG         0.03         0.53     21.86813
+W.E.B. DUBOIS A         0.04         0.35             
+CURTIS HIGH SCH         0.05         0.49     17.24204
+EDWARD R. MURRO         0.01         0.07     18.62150
+FORT HAMILTON H         0.04         0.17     20.34978
+ HS OF TELECOMM         0.10         0.35     15.27848
+JOHN DEWEY HIGH         0.03         0.50     19.60714
+ LAFAYETTE HIGH         0.03         0.54     15.53782
+MICHAEL J. PETR         0.03         0.35     15.41250
+NEW DORP HIGH S         0.04         0.42     18.97710
+NEW UTRECHT HIG         0.03         0.44     19.53503
+PORT RICHMOND H         0.05         0.41     20.02326
+RALPH MCKEE HIG         0.04         0.44     13.88889
+STATEN ISLAND T         0.05         0.74     14.86792
+SUSAN E. WAGNER         0.07         0.51     20.90066
+TOTTENVILLE HIG         0.02         0.56     20.69519
+WILLIAM E. GRAD         0.06         0.22     16.42574
+ACORN HS FOR SO         0.11         0.16     18.78947
+AUTOMOTIVE  HIG         0.14         0.34     12.92105
+BENJAMIN BANNEK         0.04         0.27     19.56250
+ BOYS AND GIRLS         0.05         0.41     20.02326
+BROOKLYN HIGH S         0.08         0.40     16.95455
+BROOKLYN INTERN         0.15         0.25     13.79167
+BROOKLYN SCHOOL         0.19         0.14     13.81250
+BROOKLYN TECHNI         0.02         0.58     18.76106
+COBBLE HILL SCH         0.07         0.22     15.21311
+EL PUENTE ACADE         0.09         0.27     13.72727
+FREEDOM ACADEMY         0.06         0.06     18.00000
+GEORGE WESTINGH         0.04         0.58     12.69880
+H.S. FOR ENTERP         0.06         0.26     13.06349
+HIGH SCHOOL FOR         0.04         0.19     16.69811
+METROPOLITAN CO         0.00         0.17     18.80000
+PROGRESS HIGH S         0.07         0.17     18.45763
+ SCIENCE SKILLS         0.13         0.31     20.17391
+ALFRED E. SMITH         0.06         0.44     13.38542
+ ART AND DESIGN         0.08         0.61     18.02564
+BARD HS EARLY C         0.26         0.74     13.86486
+ BARUCH COLLEGE                                       
+CENTRAL PARK EA         0.12         0.20     12.14815
+CHELSEA HIGH SC         0.12         0.33     14.64789
+COALITION SCHOO         0.03         0.38     13.48387
+COMMUNITY HS FO                                       
+ELEANOR ROOSEVE         0.03         0.41     15.60000
+GRAPHIC COMMUNI         0.08         0.43     16.29167
+ HARVEY MILK HS         0.00         0.33      5.81818
+HEALTH OPPORTUN         0.08         0.35     15.60526
+HEALTH PROFESSI         0.01         0.44     17.78313
+HERITAGE SCHOOL         0.04         0.35     13.21739
+HIGH SCHOOL FOR         0.04         0.50     17.28125
+ HIGH SCHOOL OF         0.07         0.37     16.88889
+ HS FOR CAREERS         0.04         0.22     12.87500
+HUMANITIES PREP         0.06         0.31      9.94118
+JACQUELINE KENN         0.05         0.30     16.66667
+LANDMARK HIGH S         0.07         0.34     15.35714
+LEADERSHIP/PUBL         0.03         0.30     15.86047
+LEGACY SCHOOL F         0.09         0.17     13.43243
+MANHATTAN CENTE         0.05         0.48     18.40698
+MANHATTAN COMPR         0.06         0.61     18.24490
+MANHATTAN VILLA                                       
+ MILLENIUM H.S.         0.16         0.13     14.31250
+MOTT HAVEN VILL         0.16         0.21     18.15789
+MURRY BERGTRAUM         0.02         0.57     17.20118
+NEW YORK CITY P         0.00         0.50     12.00000
+NORMAN THOMAS H         0.04         0.51     15.82468
+ NYC LAB HS FOR         0.05         0.33     17.87500
+NYC MUSEUM SCHO         0.08         0.13     13.82143
+ PARK EAST HIGH         0.11         0.32     11.93103
+R.R. GREEN HIGH         0.06         0.38     12.64286
+ SCHOOL FOR THE         0.06         0.47     13.72727
+STUYVESANT HIGH         0.00         0.65     17.03390
+TALENT UNLIMITE         0.05         0.23     14.73333
+UNITY  HIGH SCH         0.00         0.60     13.53333
+UNIVERSITY NEIG         0.06         0.31     13.27778
+URBAN PEACE ACA         0.00         0.21     14.63636
+WASHINGTON IRVI         0.09         0.37     19.42759
+BEACON HIGH SCH         0.00         0.44     19.66038
+BREAD & ROSES I         0.08         0.32     12.51282
+FIORELLO H. LAG         0.02         0.59     16.31788
+FREDERICK DOUGL         0.33         0.08     16.61538
+HS FOR INTERNAT         0.09         0.32     16.53659
+HS FOR LAW & PU         0.10         0.45     14.95000
+HS FOR MATH  SC                                       
+ HS FOR MEDIA &         0.05         0.21     13.06522
+LOUIS D. BRANDE         0.04         0.37     16.98148
+ MLK HS FOR ART         0.04         0.16     12.80000
+ MLK HS FOR LAW         0.20         0.25     11.30435
+LIBERTY HS ACAD                                       
+PASSAGES ACADEM         0.02         0.59     18.17910
+SATELLITE ACADE                                       
+SECOND OPPORTUN         0.02         0.59     18.17910
+
+Done

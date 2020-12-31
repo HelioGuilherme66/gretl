@@ -1,0 +1,116 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run mrozprob.inp
+ /home/cottrell/stats/test-gretl/probit/mrozprob.inp
+? open mroz87.gdt -q
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+# list of independent variables
+? list Xlist = KL6 WA WE MTR
+Generated list Xlist
+# set variables other than KL6 to their sample means
+? matrix Xrow = { 1, 0, mean(WA), mean(WE), mean(MTR) }
+Generated matrix Xrow
+? matrix X = Xrow | Xrow | Xrow | Xrow
+Generated matrix X
+# set KL6 values from 0 to 3
+? matrix Kcol = { 0, 1, 2, 3 }'
+Generated matrix Kcol
+? X[,2] = Kcol
+Modified matrix X
+# check X
+? print X
+X (4 x 5)
+
+      1.0000       0.0000       42.538       12.287      0.67886 
+      1.0000       1.0000       42.538       12.287      0.67886 
+      1.0000       2.0000       42.538       12.287      0.67886 
+      1.0000       3.0000       42.538       12.287      0.67886 
+
+# run probit
+? probit LFP 0 Xlist
+
+Model 1: Probit, using observations 1-753
+Dependent variable: LFP
+Standard errors based on Hessian
+
+             coefficient   std. error     z        slope   
+  ---------------------------------------------------------
+  const       1.32275      0.705847      1.874             
+  KL6        -0.852144     0.111001     -7.677   -0.334180 
+  WA         -0.0347571    0.00673706   -5.159   -0.0136305
+  WE          0.105956     0.0240874     4.399    0.0415522
+  MTR        -1.11720      0.639522     -1.747   -0.438127 
+
+Mean dependent var   0.568393   S.D. dependent var   0.495630
+McFadden R-squared   0.097742   Adjusted R-squared   0.088031
+Log-likelihood      -464.5482   Akaike criterion     939.0964
+Schwarz criterion    962.2167   Hannan-Quinn         948.0035
+
+Number of cases 'correctly predicted' = 503 (66.8%)
+f(beta'x) at mean of independent vars = 0.392
+Likelihood ratio test: Chi-square(4) = 100.65 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0  156   169
+         1   81   347
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 1.37852
+  with p-value = 0.501947
+
+# compute Phi(X\beta)
+? matrix P = Kcol ~ cnorm(X*$coeff)
+Generated matrix P
+# give names to the columns of P (optional)
+? colnames(P, "KL6 P(LFP=1)")
+? print P
+P (4 x 2)
+
+         KL6     P(LFP=1) 
+      0.0000      0.65088 
+      1.0000      0.32116 
+      2.0000     0.093988 
+      3.0000     0.015052 
+
+# make a graph
+# gnuplot 2 1 --matrix=P --suppress --with-lines --output=display
+# run LPM
+? ols LFP 0 Xlist
+
+Model 2: OLS, using observations 1-753
+Dependent variable: LFP
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.991030     0.248372      3.990    7.25e-05 ***
+  KL6        -0.298219     0.0360656    -8.269    6.17e-16 ***
+  WA         -0.0123439    0.00234534   -5.263    1.85e-07 ***
+  WE          0.0368162    0.00826551    4.454    9.71e-06 ***
+  MTR        -0.411006     0.224200     -1.833    0.0672   *
+
+Mean dependent var   0.568393   S.D. dependent var   0.495630
+Sum squared resid    161.5752   S.E. of regression   0.464768
+R-squared            0.125333   Adjusted R-squared   0.120656
+F(4, 748)            26.79576   P-value(F)           8.50e-21
+Log-likelihood      -488.9916   Akaike criterion     987.9832
+Schwarz criterion    1011.103   Hannan-Quinn         996.8903
+
+# compute Phi(X\beta)
+? matrix P = Kcol ~ X*$coeff
+Replaced matrix P
+# give names to the columns of P (optional)
+? colnames(P, "KL6 P(LFP=1)")
+? print P
+P (4 x 2)
+
+         KL6     P(LFP=1) 
+      0.0000      0.63928 
+      1.0000      0.34107 
+      2.0000     0.042847 
+      3.0000     -0.25537 
+
+Done

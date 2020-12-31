@@ -1,0 +1,18 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run m6.inp
+ /home/cottrell/stats/test-gretl/matrix/m6.inp
+? matrix A = {1,2}
+Generated matrix A
+? matrix B = A*A'
+Generated matrix B = {5}
+? B
+B (1 x 1)
+
+  5 
+
+? scalar x = A*A'
+Generated scalar x = 5
+Done

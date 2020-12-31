@@ -1,0 +1,17 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run logit_burr.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/logit_burr.gfn.inp
+? include ./logit_burr.gfn
+ /home/cottrell/stats/test-gretl/testgfn/logit_burr.gfn
+logit_burr 0.5, 2014-11-08 (Artur Tarassow)
+Read datafile /home/cottrell/.gretl/Logistic_Burr.wf1
+-------------------------------------------------------
+H0: 	 Logistic distribution
+H1: 	 Burr (skewed) distribution
+
+Test results (n=5000):
+LM-BURR =   4.06 (prob=  0.044)
+-------------------------------------------------------

@@ -1,0 +1,9 @@
+include logprob.inp
+open SHIW_3_32.gdt
+
+list X = const educ eta sq_eta male married north southisland \
+  mcity lcity income sq_income wealth sq_wealth
+  
+lp(pos_af, X, 0)
+
+probit pos_af X -vrp

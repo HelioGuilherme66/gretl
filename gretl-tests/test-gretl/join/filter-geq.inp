@@ -1,0 +1,3 @@
+nulldata 6
+join geq.txt x --filter="y > = 19990300.999999"
+print -o

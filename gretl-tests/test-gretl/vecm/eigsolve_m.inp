@@ -1,0 +1,48 @@
+function void eigensort (matrix *evals, matrix *evecs, int r)
+  evals = mreverse(evals)
+  evecs = mreverse(evecs')'
+  if r < rows(evals)
+    evals = evals[1:r]
+    evecs = evecs[,1:r]
+  endif
+end function
+
+open denmark.gdt -q
+
+list Y = LRM LRY IBO IDE
+
+coint2 2 Y --rc #--verbose
+
+list dY = diff(Y)
+list dY_1 = lags(1, dY)
+list Y_1 = lags(1, Y) const 
+
+smpl +2 ;
+
+matrix mX = {dY_1}
+matrix mY = {dY} ~ {Y_1}
+scalar T = rows(mX)
+scalar n = nelem(Y)
+matrix U
+mols(mY, mX, &U)
+U0 = U[,1:n]
+U1 = U[,n+1:]
+matrix S00 = U0'U0 ./ T
+print S00 
+matrix S11 = U1'U1 ./ T
+print S11 
+
+matrix S01 = U0'U1 ./ T
+print S01 
+
+matrix A = qform(S01', inv(S00))
+matrix evecs
+matrix evals = eigsolve(A, S11, &evecs)
+eigensort(&evals, &evecs, n)
+print evals
+print evecs
+
+
+
+
+

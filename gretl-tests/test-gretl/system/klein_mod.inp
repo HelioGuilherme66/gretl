@@ -1,0 +1,29 @@
+open klein.gdt
+
+genr W = Wp + Wg
+genr A = t - obsnum(1931)
+
+smpl ; -2
+
+# test: an extra lag of P is added
+Klein_mod <- system 
+ equation C 0 P P(-1 to -2) W 
+ equation I 0 P P(-1) K(-1)
+ equation Wp 0 X X(-1) A
+ identity P = X - T - Wp
+ identity W = Wp + Wg
+ identity X = C + I + G
+ identity K = K(-1) + I
+ endog C I Wp P W X K
+end system
+
+estimate Klein_mod method=3sls --iterate
+fcast 1928 1941 
+
+matrix F = $fcast
+matrix E = $fcerr
+print F E
+series Ccast = F[,1]
+print C Ccast -o
+
+

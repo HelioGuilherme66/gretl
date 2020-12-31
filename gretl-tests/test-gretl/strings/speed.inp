@@ -1,0 +1,15 @@
+string s = "United Nations Organization"
+scalar x = 54321
+string targ
+
+set stopwatch
+loop 5000 -q
+  sprintf targ "hello %s; x = %d\n", s, x
+endloop
+printf "command: elapsed: %g\n", $stopwatch
+
+set stopwatch
+loop 5000 -q
+  sprintf(targ, "hello %s; x = %d\n", s, x)
+endloop
+printf "function elapsed: %g\n", $stopwatch

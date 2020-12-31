@@ -1,0 +1,164 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:12
+? run frontier.inp
+ /home/cottrell/stats/test-gretl/mle/frontier.inp
+? open banks91
+
+Read datafile /home/cottrell/stats/test-gretl/mle/banks91.gdt
+periodicity: 1, maxobs: 198
+observations range: 1 to 198
+
+Listing 6 variables:
+  0) const    1) y        2) p1       3) p2       4) p3     
+  5) cost   
+
+# Cobb-Douglas cost function
+? ols cost const y p1 p2 p3
+
+Model 1: OLS, using observations 1-198
+Dependent variable: cost
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       -1.13819     0.373188      -3.050   0.0026    ***
+  y            1.01620     0.00571846   177.7     7.39e-216 ***
+  p1           0.161650    0.0718120      2.251   0.0255    **
+  p2           0.180052    0.0310701      5.795   2.74e-08  ***
+  p3           0.600621    0.0615520      9.758   1.54e-18  ***
+
+Mean dependent var   12.27418   S.D. dependent var   1.509853
+Sum squared resid    1.790899   S.E. of regression   0.096329
+R-squared            0.996012   Adjusted R-squared   0.995930
+F(4, 193)            12051.09   P-value(F)           2.9e-230
+Log-likelihood       184.8995   Akaike criterion    -359.7991
+Schwarz criterion   -343.3578   Hannan-Quinn        -353.1442
+
+# Cobb-Douglas cost function with homogeneity restrictions
+? genr rcost = cost - p3
+Generated series rcost (ID 6)
+? genr rp1 = p1 - p3
+Generated series rp1 (ID 7)
+? genr rp2 = p2 - p3
+Generated series rp2 (ID 8)
+? list xlist = const y rp1 rp2
+Generated list xlist
+? ols rcost xlist
+
+Model 2: OLS, using observations 1-198
+Dependent variable: rcost
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       -1.16934     0.368820      -3.170   0.0018    ***
+  y            1.01529     0.00549928   184.6     5.98e-220 ***
+  rp1          0.191082    0.0516135      3.702   0.0003    ***
+  rp2          0.186887    0.0287854      6.492   6.91e-10  ***
+
+Mean dependent var   14.99198   S.D. dependent var   1.476115
+Sum squared resid    1.794135   S.E. of regression   0.096167
+R-squared            0.995820   Adjusted R-squared   0.995756
+F(3, 194)            15406.82   P-value(F)           2.0e-230
+Log-likelihood       184.7208   Akaike criterion    -361.4417
+Schwarz criterion   -348.2886   Hannan-Quinn        -356.1177
+
+# Cobb-Douglas cost function with homogeneity restrictions
+# and inefficiency
+? matrix b = $coeff
+Generated matrix b
+? scalar su = 0.1
+Generated scalar su = 0.1
+? scalar sv = 0.1
+Generated scalar sv = 0.1
+? mle logl = ln(cnorm(e*lambda/ss)) - (ln(ss) + 0.5*(e/ss)^2)
+? scalar ss = sqrt(su^2 + sv^2)
+? scalar lambda = su/sv
+? series e = rcost - lincomb(xlist, b)
+? params b su sv
+? end mle --hessian --verbose
+Using numerical derivatives
+Iteration 1: loglikelihood = 178.631719477
+Parameters:      -1.1693      1.0153     0.19108     0.18689     0.10000     0.10000
+Gradients:       -1188.8     -17648.     -8508.3      1630.3     -795.23      219.82 (norm 5.96e+01)
+
+Iteration 2: loglikelihood = 209.519454291 (steplength = 1.024e-07)
+Parameters:      -1.1695      1.0135     0.19021     0.18705    0.099919     0.10002
+Gradients:       -662.17     -9785.4     -4737.3      903.90     -548.61     -297.26 (norm 4.44e+01)
+
+Iteration 3: loglikelihood = 220.538576128 (steplength = 1.28e-05)
+Parameters:      -1.1696      1.0132     0.18948     0.18708    0.096807    0.087973
+Gradients:       -592.31     -8744.5     -4235.1      807.89     -454.04     -178.02 (norm 4.20e+01)
+
+Iteration 4: loglikelihood = 221.860433910 (steplength = 0.00032)
+Parameters:      -1.1713      1.0161     0.18141     0.18701     0.11692    0.081454
+Gradients:       -556.95     -8360.8     -3977.8      775.16     -446.94     -201.57 (norm 4.10e+01)
+
+Iteration 5: loglikelihood = 222.850653776 (steplength = 6.4e-05)
+Parameters:      -1.1718      1.0146     0.18276     0.18772     0.13433    0.075673
+Gradients:       -508.44     -7612.8     -3627.9      706.18     -439.82     -229.22 (norm 3.91e+01)
+
+Iteration 6: loglikelihood = 222.941502394 (steplength = 0.008)
+Parameters:      -1.1984      1.0172     0.18549     0.21131     0.13492    0.075077
+Gradients:       -502.53     -7544.9     -3592.5      670.35     -433.67     -224.73 (norm 3.91e+01)
+
+Iteration 7: loglikelihood = 230.516660000 (steplength = 0.04)
+Parameters:      -1.9607      1.0147     0.28918     0.18220     0.13846    0.062183
+Gradients:       -302.72     -4718.2     -2193.6      421.12     -278.85     -116.99 (norm 3.20e+01)
+
+Iteration 8: loglikelihood = 234.671943296 (steplength = 0.2)
+Parameters:      -1.4784      1.0127     0.22804     0.19135     0.11710    0.058535
+Gradients:       -133.86     -2049.3     -959.58      178.11     -22.190      99.246 (norm 2.06e+01)
+
+Iteration 9: loglikelihood = 235.006399657 (steplength = 0.2)
+Parameters:      -1.4724      1.0117     0.22842     0.18998     0.12306    0.056465
+Gradients:       -98.933     -1498.1     -706.05      132.60     -33.332      78.478 (norm 1.76e+01)
+
+Iteration 10: loglikelihood = 235.112908298 (steplength = 1)
+Parameters:      -1.6370      1.0087     0.25508     0.18030     0.12245    0.058537
+Gradients:        33.315      549.38      231.48     -50.007      31.886     -28.504 (norm 1.07e+01)
+
+Iteration 11: loglikelihood = 235.258113765 (steplength = 1)
+Parameters:      -1.5362      1.0105     0.23800     0.18487     0.12562    0.056955
+Gradients:        6.4539      92.146      46.290     -7.9881     -1.4378    -0.51853 (norm 4.39e+00)
+
+Iteration 12: loglikelihood = 235.261429787 (steplength = 1)
+Parameters:      -1.5241      1.0105     0.23652     0.18517     0.12432    0.057523
+Gradients:       -2.9059     -41.899     -20.663      3.6326    -0.93582    -0.68909 (norm 2.96e+00)
+
+Iteration 13: loglikelihood = 235.261872714 (steplength = 1)
+Parameters:      -1.5294      1.0105     0.23721     0.18497     0.12457    0.057370
+Gradients:      0.097468      1.2645     0.70094   -0.075619     0.21830     0.20183 (norm 5.24e-01)
+
+Iteration 14: loglikelihood = 235.261875218 (steplength = 1)
+Parameters:      -1.5294      1.0105     0.23722     0.18500     0.12459    0.057370
+Gradients:     0.0051926     0.10191    0.033474   -0.024055   -0.048848   -0.084439 (norm 1.50e-01)
+
+
+--- FINAL VALUES: 
+loglikelihood = 235.261875218 (steplength = 5.12e-07)
+Parameters:      -1.5294      1.0105     0.23722     0.18500     0.12459    0.057370
+Gradients:     0.0051926     0.10191    0.033474   -0.024055   -0.048848   -0.084439 (norm 1.50e-01)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 59
+Evaluations of gradient: 14
+
+Model 3: ML, using observations 1-198
+logl = ln(cnorm(e*lambda/ss)) - (ln(ss) + 0.5*(e/ss)^2)
+Standard errors based on Hessian
+
+              estimate    std. error      z      p-value 
+  -------------------------------------------------------
+  b[1]       -1.52940     0.359796      -4.251   2.13e-05 ***
+  b[2]        1.01049     0.00550058   183.7     0.0000   ***
+  b[3]        0.237219    0.0512876      4.625   3.74e-06 ***
+  b[4]        0.185004    0.0275059      6.726   1.74e-11 ***
+  su          0.124591    0.0141593      8.799   1.38e-18 ***
+  sv          0.0573703   0.00807428     7.105   1.20e-12 ***
+
+Log-likelihood       235.2619   Akaike criterion    -458.5238
+Schwarz criterion   -438.7941   Hannan-Quinn        -450.5379
+
+Done

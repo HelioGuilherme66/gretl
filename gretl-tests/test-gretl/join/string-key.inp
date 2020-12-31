@@ -1,0 +1,6 @@
+# test use of string keys
+open hholds.csv -q
+print country -o
+# join country-year.csv GDP80 --data=GDP  --ikey=country --filter="year==1980"
+join country-year.csv GDPavg --data=GDP --ikey=country --aggr=avg
+print hid country GDPavg -o

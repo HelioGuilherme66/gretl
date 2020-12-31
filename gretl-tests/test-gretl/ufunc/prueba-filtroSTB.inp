@@ -1,0 +1,50 @@
+# Build the seasonal filters Smith-Taylor-Barrio
+function list seasfSTB(const series *y) 
+    string yn=argname(y)
+    #scalar pd=$pd
+    scalar pd1=$pd-1
+    scalar fpd2=floor($pd/2)
+    scalar pd2=$pd/2
+    scalar s21 = (pd2==fpd2) ? floor($pd/2)-1 : floor($pd/2)
+    matrix b0 = ones($pd,1)
+    # all frequencies except zero
+    series @yn0 = (obs>=$pd) ? filter(y,b0,null) : NA 
+    if pd2==fpd2
+        # all frequencies except pi
+        matrix b2 = { null }
+        loop i=0..pd1
+            scalar cc = cos((i+1)*pi)
+            matrix b2 = b2 | cc
+        endloop
+        series @ynpi = (obs>=$pd) ? filter(y,b2,null) : NA 
+        list fil = @yn0(-1) @ynpi(-1)
+    else
+        list fil = @yn0(-1)
+    endif
+    loop j=1..s21 --quiet
+        matrix ba$j = { null }
+        matrix bb$j = { null }
+        scalar w$j = 2*pi*j/$pd
+        loop i=0..pd1
+            scalar ca$j = cos((i+1)*w$j)
+            scalar cb$j = -sin((i+1)*w$j)
+            matrix ba$j = ba$j | ca$j
+            matrix bb$j = bb$j | cb$j
+        endloop
+        series @yna$j=(obs>=$pd) ? -filter(y,ba$j, null) : NA
+        series @ynb$j=(obs>=$pd) ? -filter(y,bb$j, null) : NA
+        fil += @yna$j(-1) @ynb$j(-1)
+    endloop
+    return fil
+end function
+
+open data9-3.gdt
+list xx=seasfSTB(&reskwh)
+varlist
+print reskwh*_1 -o
+# gnuplot reskwh0_1 --time-series --with-lines --output=display
+# gnuplot reskwhpi_1 --time-series --with-lines --output=display
+# gnuplot reskwha1_1 --time-series --with-lines --output=display
+# gnuplot reskwha1_1 --time-series --with-lines --output=display
+
+

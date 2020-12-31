@@ -1,0 +1,7 @@
+open data4-10
+ols 1 0 2 3 4 -w
+m2 <- ols 1 0 2 3
+modeltab add
+m3 <- ols 1 0 2 3 4 5
+modeltab add
+smpl CATHOL > .18 --restrict --permanent

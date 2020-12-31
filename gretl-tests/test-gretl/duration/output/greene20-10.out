@@ -1,0 +1,82 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run greene20-10.inp
+ /home/cottrell/stats/test-gretl/duration/greene20-10.inp
+? open kennan -q
+Read datafile /opt/esl/share/gretl/data/misc/kennan.gdt
+
+Convergence achieved after 5 iterations
+
+Model 1: Duration (exponential), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        3.75367      0.127000    29.56   5.43e-192 ***
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Log-likelihood      -102.2512   Akaike criterion     206.5025
+Schwarz criterion    208.6296   Hannan-Quinn         207.3377
+
+
+Convergence achieved after 6 iterations
+
+Model 2: Duration (Weibull), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        3.71620      0.145005    25.63   7.42e-145 ***
+  sigma        1.08145      0.107083                     
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Log-likelihood      -101.9264   Akaike criterion     207.8528
+Schwarz criterion    212.1071   Hannan-Quinn         209.5231
+
+1/sigma = 0.924686 (0.0915611)
+
+
+Convergence achieved after 4 iterations
+
+Model 3: Duration (log-logistic), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       3.18371      0.166236     19.15   9.35e-82 ***
+  sigma       0.745727     0.0785053                    
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Log-likelihood      -104.7823   Akaike criterion     213.5646
+Schwarz criterion    217.8189   Hannan-Quinn         215.2349
+
+
+Convergence achieved after 5 iterations
+
+Model 4: Duration (log-normal), using observations 1-62
+Dependent variable: Ti
+Standard errors based on Hessian
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const        3.10446      0.163075    19.04   8.42e-81 ***
+  sigma        1.28405      0.115311                    
+
+Mean dependent var   42.67742   S.D. dependent var   45.84070
+Log-likelihood      -103.4755   Akaike criterion     210.9511
+Schwarz criterion    215.2053   Hannan-Quinn         212.6214
+
+
+Greene
+
+    lambda         p
+   0.02343   1.00000
+   0.02433   0.92469
+   0.04143   1.34097
+   0.04485   0.77878
+

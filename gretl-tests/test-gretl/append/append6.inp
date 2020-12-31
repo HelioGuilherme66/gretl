@@ -1,0 +1,3 @@
+open xltest.xls -q
+append xltest.xls --sheet=2
+print -o

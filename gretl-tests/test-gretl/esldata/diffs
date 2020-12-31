@@ -1,0 +1,11 @@
+=== /home/cottrell/stats/test-gretl/esldata ===
+diff -rbB output/esl_in.out newout/esl_in.out
+4c4
+< Current session: 2011-12-19 14:49
+---
+> Current session: 2011-12-19 15:23
+diff -rbB output/esl_out.out newout/esl_out.out
+4c4
+< Current session: 2011-12-19 14:49
+---
+> Current session: 2011-12-19 15:23

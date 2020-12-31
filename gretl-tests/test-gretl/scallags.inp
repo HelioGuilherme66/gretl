@@ -1,0 +1,6 @@
+open denmark
+scalar a = 1
+ls
+print a
+arma 1 a ; 1 --conditional
+var a 1 2 ; const

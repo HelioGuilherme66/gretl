@@ -1,0 +1,21 @@
+nulldata 100
+set echo off
+set messages off
+set seed 12347
+setobs 10 1.1 --stacked-time-series
+series u = uniform()
+series y = 0
+y += 0.5*(u>.1)
+y += 0.5*(u>.2)
+y += 0.5*(u>.3)
+y += (u>.5)
+y += (u>.7)
+discrete y
+series x = normal()
+# store nonint.csv y x
+# x = y==1.5 ? NA : x
+probit y 0 x -v
+smpl ok(x) --restrict
+probit y 0 x
+
+

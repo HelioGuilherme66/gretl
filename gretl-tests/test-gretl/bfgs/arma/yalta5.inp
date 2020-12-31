@@ -1,0 +1,14 @@
+open yalta5.csv
+setobs 5 1 --time-series
+genr y = Data
+addobs 5
+
+# exact ML
+arma 1 0 0 ; 1 1 0 ; y 
+scalar l1 = $lnl
+printf "%.9E\n", l1
+fcast 37 41 f
+
+
+
+

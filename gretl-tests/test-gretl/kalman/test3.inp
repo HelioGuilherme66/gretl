@@ -1,0 +1,16 @@
+scalar s1 = 1
+scalar s2 = 1
+matrix y = mnormal(50,1)
+
+kalman
+  obsy y
+  obsymat 1
+  statemat 1
+  statevar s2
+  obsvar s1
+end kalman --diffuse
+
+matrix E V S MSE G
+
+kfilter(&E, &V, &S, &MSE, &G)
+print E V S

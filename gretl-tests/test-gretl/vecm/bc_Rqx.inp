@@ -1,0 +1,45 @@
+set echo off
+set messages off
+
+open brand_cassola.gdt
+
+m_p = m_p*100
+y = y*100
+infl = infl/4
+rs = rs/4
+rl = rl/4
+
+set seed 54321
+x = normal()
+
+# VECM with restricted exogenous noise
+vecm 2 3 m_p infl rl rs y ; ; x -q
+
+# Apply beta restriction using R, q method
+
+matrix vR = zeros(15, 18)
+vR[1,1] = 1
+vR[2,2] = 1
+vR[3,4] = 1
+vR[4,6] = 1 # noise
+vR[5,7] = 1
+vR[6,8] = 1
+vR[7,10] = 1
+vR[8,11] = 1
+vR[9,12] = 1 # noise
+vR[10,13] = 1
+vR[11,14] = 1
+vR[12,15] = 1
+vR[13,16] = 1
+vR[14,17] = 1
+vR[15,18] = 1 # noise
+
+matrix vq = {1,0,0,0,0,1,0,0,0,0,0,1,-1,0,0}'
+
+restrict --full
+ R = vR
+ q = vq
+end restrict
+
+
+

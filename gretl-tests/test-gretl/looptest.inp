@@ -1,0 +1,18 @@
+# tests for certain operations in loops that could
+# possibly get messed up by "compilation"
+
+open data4-1.gdt -q
+set seed 1234
+
+loop i=1..5 -q
+  sqft[i+3] = i
+endloop
+print sqft -o
+
+loop i=1..5 -q
+  series x = normal()
+  if i == 3
+    open data4-10
+  endif
+endloop
+print x -o

@@ -1,0 +1,274 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run penngrow.inp
+ /home/cottrell/stats/test-gretl/panel/penngrow.inp
+? open penngrow.txt
+parsing /home/cottrell/stats/test-gretl/panel/penngrow.txt...
+using delimiter ' '
+   longest line: 27 characters
+   first field: 'country'
+   number of columns = 4
+   number of variables: 4
+   number of non-blank lines: 565
+scanning for variable names...
+   line: country year Y X
+scanning for row labels and data...
+treating these as undated data
+
+Listing 5 variables:
+  0) const      1) country    2) year       3) Y          4) X        
+
+? setobs 6 1:1 --stacked-time-series
+Full data range: 1:1 - 94:6 (n = 564)
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 5)
+# print -o country year X Y Y1
+# Fixed effects
+? panel Y 0 Y1 X
+
+Model 1: Fixed-effects, using 470 observations
+Included 94 cross-sectional units
+Time-series length = 5
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       2.12389      0.178932     11.87     8.50e-28  ***
+  Y1          0.720369     0.0236765    30.43     3.36e-103 ***
+  X           0.165589     0.0193324     8.565    2.85e-16  ***
+
+Mean dependent var   7.707792   S.D. dependent var   1.029517
+Sum squared resid    5.305621   S.E. of regression   0.119106
+LSDV R-squared       0.989327   Within R-squared     0.746505
+LSDV F(95, 374)      364.9146   P-value(F)           0.000000
+Log-likelihood       386.8309   Akaike criterion    -581.6618
+Schwarz criterion   -182.9994   Hannan-Quinn        -424.8177
+rho                 -0.124669   Durbin-Watson        1.774214
+
+Joint test on named regressors -
+  Test statistic: F(2, 374) = 550.686
+  with p-value = P(F(2, 374) > 550.686) = 3.48688e-112
+
+Test for differing group intercepts -
+  Null hypothesis: The groups have a common intercept
+  Test statistic: F(93, 374) = 2.84141
+  with p-value = P(F(93, 374) > 2.84141) = 1.21646e-12
+
+# Random effects
+? panel Y 0 Y1 X -u
+
+Model 2: Random-effects (GLS), using 470 observations
+Included 94 cross-sectional units
+Time-series length = 5
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const       0.527612     0.0755693     6.982    1.01e-11  ***
+  Y1          0.932259     0.0104997    88.79     1.40e-294 ***
+  X           0.138248     0.0122326    11.30     2.40e-26  ***
+
+Mean dependent var   7.707792   S.D. dependent var   1.029517
+Sum squared resid    9.118095   S.E. of regression   0.139582
+Log-likelihood       259.5798   Akaike criterion    -513.1595
+Schwarz criterion   -500.7013   Hannan-Quinn        -508.2582
+
+'Between' variance = 0.00203491
+'Within' variance = 0.0141862
+theta used for quasi-demeaning = 0.23689
+corr(y,yhat)^2 = 0.981711
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(2) = 16940.8
+  with p-value = 0
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 6.69753
+  with p-value = 0.00965464
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(2) = 100.019
+  with p-value = 1.91063e-22
+
+# Pooled OLS
+? ols Y 0 Y1 X
+
+Model 3: Pooled OLS, using 470 observations
+Included 94 cross-sectional units
+Time-series length = 5
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.410820     0.0649324      6.327   5.87e-10 ***
+  Y1          0.948710     0.00907104   104.6     0.0000   ***
+  X           0.124376     0.0107938     11.52    3.28e-27 ***
+
+Mean dependent var   7.707792   S.D. dependent var   1.029517
+Sum squared resid    9.054326   S.E. of regression   0.139242
+R-squared            0.981786   Adjusted R-squared   0.981708
+F(2, 467)            12585.98   P-value(F)           0.000000
+Log-likelihood       261.2290   Akaike criterion    -516.4581
+Schwarz criterion   -503.9999   Hannan-Quinn        -511.5567
+rho                  0.169946   Durbin-Watson        1.315528
+
+# Country means / Between
+? panel Y 0 Y1 X -b
+
+Model 4: Between-groups, using 94 observations
+Dependent variable: Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.179436     0.0807468     2.222    0.0287   **
+  Y1          0.981702     0.0113863    86.22     4.79e-89 ***
+  X           0.0918577    0.0140214     6.551    3.34e-09 ***
+
+Mean dependent var   7.707792   S.D. dependent var   1.011935
+Sum squared resid    0.443365   S.E. of regression   0.069801
+R-squared            0.995344   Adjusted R-squared   0.995242
+F(2, 91)             9727.722   P-value(F)           7.8e-107
+Log-likelihood       118.3826   Akaike criterion    -230.7653
+Schwarz criterion   -223.1354   Hannan-Quinn        -227.6833
+
+# Anderson-Hsiao, using Y(-2) as instr
+? diff Y X Y1
+Listing 9 variables:
+  0) const      1) country    2) year       3) Y          4) X        
+  5) Y1         6) d_Y        7) d_X        8) d_Y1     
+
+? ols d_Y1 0 Y(-2) d_X
+
+Model 5: Pooled OLS, using 376 observations
+Included 94 cross-sectional units
+Time-series length = 4
+Dependent variable: d_Y1
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.0731143    0.0615724    -1.187    0.2358 
+  Y_2         0.0259373    0.00808004    3.210    0.0014  ***
+  d_X        -0.0332222    0.0205675    -1.615    0.1071 
+
+Mean dependent var   0.121918   S.D. dependent var   0.154025
+Sum squared resid    8.581076   S.E. of regression   0.151676
+R-squared            0.035444   Adjusted R-squared   0.030272
+F(2, 373)            6.853240   P-value(F)           0.001194
+Log-likelihood       177.1247   Akaike criterion    -348.2494
+Schwarz criterion   -336.4607   Hannan-Quinn        -343.5697
+rho                  0.241427   Durbin-Watson        1.160070
+
+? genr DY1 = $yhat
+Generated series DY1 (ID 10)
+? ols d_Y DY1 d_X
+
+Model 6: Pooled OLS, using 376 observations
+Included 94 cross-sectional units
+Time-series length = 4
+Dependent variable: d_Y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  DY1         0.686966     0.0628986    10.92     2.74e-24 ***
+  d_X         0.148424     0.0206235     7.197    3.40e-12 ***
+
+Mean dependent var   0.087719   S.D. dependent var   0.160392
+Sum squared resid    8.716755   S.E. of regression   0.152666
+R-squared            0.304900   Adjusted R-squared   0.303041
+F(2, 374)            82.02591   P-value(F)           2.90e-30
+Log-likelihood       174.1754   Akaike criterion    -344.3509
+Schwarz criterion   -336.4917   Hannan-Quinn        -341.2310
+rho                  0.201915   Durbin-Watson        1.243369
+
+? genr yh = $coeff(DY1) * d_Y1 + $coeff(d_X) * d_X
+Generated series yh (ID 11)
+? genr uh = d_Y - yh
+Generated series uh (ID 12)
+? genr s = sqrt(sum(uh*uh)/374)
+Generated scalar s = 0.156527
+? genr se_1 = $stderr(DY1) * s/$sigma
+Generated scalar se_1 = 0.0644896
+? genr se_2 = $stderr(d_X) * s/$sigma
+Generated scalar se_2 = 0.0211451
+# Anderson-Hsiao, via 2SLS, using Y(-2) as instrument
+? tsls d_Y d_Y(-1) d_X ; 0 d_X Y(-2)
+
+Model 7: TSLS, using 376 observations
+Dependent variable: d_Y
+Instrumented: d_Y_1 
+Instruments: const d_X Y_2 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  d_Y_1       0.686966     0.0644896    10.65    1.70e-26 ***
+  d_X         0.148424     0.0211451     7.019   2.23e-12 ***
+
+Mean dependent var   0.087719   S.D. dependent var   0.160392
+Sum squared resid    9.163314   S.E. of regression   0.156527
+R-squared            0.155362   Adjusted R-squared   0.153103
+Chi-square(2)        156.0570   p-value              1.30e-34
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 24.1321
+  with p-value = 8.99472e-07
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 3.84802e-05
+  with p-value = P(Chi-square(1) > 3.84802e-05) = 0.995051
+
+Weak instrument test - 
+  First-stage F-statistic (2, 373) = 128.038
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    19.93    11.59     8.75     7.25
+
+  Maximal size is probably less than 10%
+
+# Anderson-Hsiao, using d_Y(-2) as instrument
+? tsls d_Y d_Y(-1) d_X ; 0 d_X d_Y(-2)
+
+Model 8: TSLS, using 282 observations
+Dependent variable: d_Y
+Instrumented: d_Y_1 
+Instruments: const d_X d_Y_2 
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  d_Y_1       0.584359     0.0717879    8.140   3.95e-16 ***
+  d_X         0.134747     0.0218480    6.167   6.94e-10 ***
+
+Mean dependent var   0.068309   S.D. dependent var   0.163112
+Sum squared resid    6.482801   S.E. of regression   0.152161
+R-squared            0.176389   Adjusted R-squared   0.173447
+Chi-square(2)        94.37862   p-value              3.21e-21
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 9.33175
+  with p-value = 0.00225217
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 0.329652
+  with p-value = P(Chi-square(1) > 0.329652) = 0.565864
+
+Weak instrument test - 
+  First-stage F-statistic (2, 279) = 99.5385
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    19.93    11.59     8.75     7.25
+
+  Maximal size is probably less than 10%
+
+Done

@@ -1,0 +1,21 @@
+nulldata 20000
+series x = normal()
+
+series example = 0
+set stopwatch
+loop i=1..$nobs -q
+    example[i] = x[i]
+endloop
+printf "assignment in series mode: %g secs\n", $stopwatch
+
+matrix example2 = zeros($nobs,1)
+set stopwatch
+loop i=1..$nobs -q
+    example2[i] = x[i]
+endloop
+printf "assignment in matrix mode: %g secs\n", $stopwatch
+
+if $nobs < 100
+  print example
+  print example2
+endif

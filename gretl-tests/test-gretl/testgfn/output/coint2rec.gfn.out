@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run coint2rec.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/coint2rec.gfn.inp
+? include ./coint2rec.gfn
+ /home/cottrell/stats/test-gretl/testgfn/coint2rec.gfn
+coint2rec 0.4, 2014-07-04 (Andreas Noack Jensen and Sven Schreiber)
+? open australia
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+? list endo = ius2 iau2 e2
+Generated list endo
+? coint2receig(2, 2, endo, 3, 15, null, null)
+? coint2recbeta(2, 2, endo, 3, 1, null, null)
+? lags lpus
+Listing 16 variables:
+  0) const     1) PAU       2) PUS       3) E         4) IAU     
+  5) IUS       6) ius2      7) iau2      8) e2        9) lpus    
+ 10) le       11) lpau     12) lpus_1   13) lpus_2   14) lpus_3  
+ 15) lpus_4  
+
+? diff lpus
+Listing 17 variables:
+  0) const     1) PAU       2) PUS       3) E         4) IAU     
+  5) IUS       6) ius2      7) iau2      8) e2        9) lpus    
+ 10) le       11) lpau     12) lpus_1   13) lpus_2   14) lpus_3  
+ 15) lpus_4   16) d_lpus  
+
+? lags d_lpus
+Listing 21 variables:
+  0) const       1) PAU         2) PUS         3) E           4) IAU       
+  5) IUS         6) ius2        7) iau2        8) e2          9) lpus      
+ 10) le         11) lpau       12) lpus_1     13) lpus_2     14) lpus_3    
+ 15) lpus_4     16) d_lpus     17) d_lpus_1   18) d_lpus_2   19) d_lpus_3  
+ 20) d_lpus_4  
+
+? list rexo = lpus_1
+Generated list rexo
+? list exo = d_lpus d_lpus_1
+Generated list exo
+? coint2recbeta(2, 2, endo, 2, 15, exo, rexo)
+In regard to function nyblom (package coint2rec):
+Warning: "catch" should not be used on calls to user-defined functions
+? eval quantile(nyblom(3, 2, ones(rows({rexo}), 1)~{rexo}, 500), 0.95)
+      3.2411 
+
+Done

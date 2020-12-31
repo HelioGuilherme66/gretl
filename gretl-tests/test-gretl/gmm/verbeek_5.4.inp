@@ -1,0 +1,34 @@
+open pricing.gdt
+set force_hc on
+
+scalar delta=0.5
+scalar gamma=0.5
+
+series dcg = delta*cons^(-gamma)
+list elist = null
+series e0 = dcg*(1+rf)-1
+elist = e0
+loop j=1..10
+  series e$j = dcg*(rf-r$j)
+  elist += e$j
+endloop
+
+matrix V0=I(11)
+
+gmm
+    dcg = delta*cons^(-gamma)
+    e0 = dcg*(1+rf)-1
+    e1 = dcg*(rf-r1)
+    e2 = dcg*(rf-r2)
+    e3 = dcg*(rf-r3)
+    e4 = dcg*(rf-r4)
+    e5 = dcg*(rf-r5)
+    e6 = dcg*(rf-r6)
+    e7 = dcg*(rf-r7)
+    e8 = dcg*(rf-r8)
+    e9 = dcg*(rf-r9)
+    e10 = dcg*(rf-r10)
+    orthog elist ; const
+    weights V0
+    params delta gamma
+end gmm

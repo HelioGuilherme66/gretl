@@ -1,0 +1,7 @@
+nulldata 4
+string s1 = "foo"
+string s2 = "bar"
+string s3 = "baz"
+delete s2
+s1
+s3

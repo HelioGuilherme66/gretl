@@ -1,0 +1,10 @@
+function void use_optstr (series y, list xlist, int verbose)
+   string optstr = verbose ? "" : "--simple-print"
+   ols y xlist @optstr 
+end function
+
+open data4-1
+list X = const sqft
+use_optstr(price, X, 1)
+use_optstr(price, X, 0)
+

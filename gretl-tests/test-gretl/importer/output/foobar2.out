@@ -1,0 +1,23 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run foobar2.inp
+ /home/cottrell/stats/test-gretl/importer/foobar2.inp
+? open foobar2.xls
+Excel 97 +
+rows=5, total cols=3, data cols=3
+found label strings in first imported column
+Listing 3 variables:
+  0) const    1) x1       2) x2     
+
+? print -o
+
+               x1           x2
+
+ foo            1            5
+ bar            2            6
+ baz            3            7
+quuz            4            8
+
+Done

@@ -1,0 +1,13 @@
+open data9-7
+smpl ; -2
+var 4 QNC PRICE INCOME
+fcast 1988:1 1990:4 --no-stats
+matrix F = $fcast
+matrix E = $fcerr
+fcast 1988:1 1990:4 --dynamic
+matrix FD = $fcast
+matrix ED = $fcerr
+print F E FD ED
+
+
+

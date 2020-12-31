@@ -1,0 +1,57 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run aggregate.inp
+ /home/cottrell/stats/test-gretl/builtins/aggregate.inp
+
+Read datafile /opt/esl/share/gretl/data/misc/credscore.gdt
+periodicity: 1, maxobs: 100
+observations range: 1 to 100
+
+Listing 8 variables:
+  0) const       1) MDR         2) Acc         3) Age         4) Income    
+  5) Avgexp      6) OwnRent     7) Selfempl  
+
+mean(x) for y=0: 3.25556
+mean(x) for y=1: 3.41137
+m (2 x 2)
+
+           y         f(x) 
+      0.0000       3.2556 
+      1.0000       3.4114 
+
+m (2 x 3)
+
+       byvar        count         f(x) 
+      0.0000       27.000       3.2556 
+      1.0000       73.000       3.4114 
+
+sd(x) for y=0: 1.43719
+sd(x) for y=1: 1.70185
+m (2 x 2)
+
+           y         f(x) 
+      0.0000       1.4372 
+      1.0000       1.7018 
+
+m (2 x 3)
+
+       byvar        count         f(x) 
+      0.0000       27.000       1.4372 
+      1.0000       73.000       1.7018 
+
+my_aggregator(x) for y=0: 1583.57
+my_aggregator(x) for y=1: 5686.01
+m (2 x 2)
+
+           y         f(x) 
+      0.0000       1583.6 
+      1.0000       5686.0 
+
+m (2 x 3)
+
+       byvar        count         f(x) 
+      0.0000       27.000       1583.6 
+      1.0000       73.000       5686.0 
+

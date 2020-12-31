@@ -1,0 +1,115 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run greene.inp
+ /home/cottrell/stats/test-gretl/vecm/greene.inp
+? open greene11_3.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene11_3.gdt
+periodicity: 1, maxobs: 36
+observations range: 1950 to 1985
+
+Listing 3 variables:
+  0) const    1) Y        2) C      
+
+? y = log(Y)
+Generated series y (ID 3)
+? c = log(C)
+Generated series c (ID 4)
+? vecm 1 1 c y
+
+VECM system, lag order 1
+Maximum likelihood estimates, observations 1951-1985 (T = 35)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+c       1.0000 
+       (0.0000) 
+y     -0.99432 
+    (0.0094055) 
+
+alpha (adjustment vectors)
+
+c      0.16256 
+y      0.60487 
+
+Log-likelihood = 209.78168
+Determinant of covariance matrix = 2.132728e-08
+AIC = -11.6447
+BIC = -11.3780
+HQC = -11.5526
+
+Equation 1: d_c
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0420186    0.0139458    3.013     0.0049  ***
+  EC1         0.162556     0.241553     0.6730    0.5057 
+
+Mean dependent var   0.032820   S.D. dependent var   0.016241
+Sum squared resid    0.008846   S.E. of regression   0.016373
+R-squared            0.013538   Adjusted R-squared  -0.016355
+rho                  0.205433   Durbin-Watson        1.564338
+
+Equation 2: d_y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0671792    0.0139956     4.800    3.32e-05 ***
+  EC1         0.604868     0.242415      2.495    0.0178   **
+
+Mean dependent var   0.032952   S.D. dependent var   0.017649
+Sum squared resid    0.008910   S.E. of regression   0.016431
+R-squared            0.158719   Adjusted R-squared   0.133226
+rho                  0.200000   Durbin-Watson        1.564920
+
+Cross-equation covariance matrix:
+
+              c            y
+c    0.00025276   0.00020740 
+y    0.00020740   0.00025456 
+
+determinant = 2.13273e-08
+
+? restrict
+? b[1,1] = 1
+? b[1,2] = -1
+? end restrict -v
+Restriction set
+ 1: b[1] = 1
+ 2: b[2] = -1
+
+R (2 x 2)
+
+  1   0 
+  0   1 
+
+q (2 x 1)
+
+   1 
+  -1 
+
+Rank of Jacobian = 3, number of free parameters = 2
+Model is fully identified
+Based on Jacobian, df = 0
+Unrestricted loglikelihood (lu) = 209.78168
+Restricted loglikelihood (lr) = 209.65259
+2 * (lu - lr) = 0.258177
+P(Chi-square(1) > 0.258177) = 0.611375
+
+Cointegrating vectors
+
+c       1.0000 
+y      -1.0000 
+
+alpha (adjustment vectors) (standard errors in parentheses)
+
+c      0.16591 
+      (0.22202) 
+y      0.56345 
+      (0.22266) 
+
+Done

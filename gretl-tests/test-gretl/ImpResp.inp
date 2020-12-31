@@ -1,0 +1,5 @@
+open data_ita
+var 2 l_Y l_C l_P --impulse-responses --variance-decomp
+matrix S = $sigma
+scalar sl_Y = sqrt(S[1,1])
+

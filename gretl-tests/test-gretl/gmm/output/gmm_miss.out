@@ -1,0 +1,117 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:02
+? run gmm_miss.inp
+ /home/cottrell/stats/test-gretl/gmm/gmm_miss.inp
+? nulldata 20
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+? set seed 334455
+Pseudo-random number generator seeded with 334455
+? genr y = normal()
+Generated series y (ID 2)
+? genr x = normal()
+Generated series x (ID 3)
+? list Z = const x(-1) x(-2)
+Generated list Z
+? tsls y 0 x ; Z --robust
+
+Model 1: TSLS, using observations 3-20 (n = 18)
+Dependent variable: y
+Instrumented: x 
+Instruments: const x_1 x_2 
+Heteroskedasticity-robust standard errors, variant HC1
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const       0.576139      0.184033    3.131    0.0017  ***
+  x           0.115212      0.508050    0.2268   0.8206 
+
+Mean dependent var   0.595612   S.D. dependent var   0.777839
+Sum squared resid    9.795561   S.E. of regression   0.782447
+R-squared            0.070673   Adjusted R-squared   0.012590
+Chi-square(1)        0.051426   p-value              0.820600
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 0.0998641
+  with p-value = 0.751993
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 2.94996
+  with p-value = P(Chi-square(1) > 2.94996) = 0.0858799
+
+Weak instrument test - 
+  First-stage F-statistic (2, 15) = 2.65668
+  A value < 10 may indicate weak instruments
+
+? scalar b0 = 0
+Generated scalar b0 = 0
+? scalar b1 = 0
+Generated scalar b1 = 0
+? series e = 0
+Generated series e (ID 6)
+? matrix mZ = { Z }
+Generated matrix mZ
+? matrix V = inv(mZ'mZ)
+Generated matrix V
+? smpl 3 ;
+Full data range: 1 - 20 (n = 20)
+Current sample: 3 - 20 (n = 18)
+
+? gmm e = y - b0 - b1*x
+? orthog e ; Z
+? weights V
+? params b0 b1
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 14
+Evaluations of gradient: 5
+
+Model 2: 1-step GMM, using observations 3-20 (n = 18)
+e = y - b0 - b1*x
+
+             estimate   std. error     z      p-value
+  ---------------------------------------------------
+  b0         0.576139    0.173508    3.321    0.0009  ***
+  b1         0.115212    0.478994    0.2405   0.8099 
+
+  GMM criterion: Q = 0.00495481 (TQ = 0.0891867)
+
+? smpl --full
+Full data range: 1 - 20 (n = 20)
+
+? scalar b0 = 0
+Replaced scalar b0 = 0
+? scalar b1 = 0
+Replaced scalar b1 = 0
+? series e = 0
+Replaced series e (ID 6)
+? matrix mZ = { Z }
+Replaced matrix mZ
+? matrix V = inv(mZ'mZ)
+Replaced matrix V
+? gmm e = y - b0 - b1*x
+? orthog e ; Z
+? weights V
+? params b0 b1
+? end gmm
+Tolerance = 1.81899e-12
+
+Function evaluations: 14
+Evaluations of gradient: 5
+
+Model 3: 1-step GMM, using observations 3-20 (n = 18)
+e = y - b0 - b1*x
+
+             estimate   std. error     z      p-value
+  ---------------------------------------------------
+  b0         0.576139    0.173508    3.321    0.0009  ***
+  b1         0.115212    0.478994    0.2405   0.8099 
+
+  GMM criterion: Q = 0.00495481 (TQ = 0.0891867)
+
+Done

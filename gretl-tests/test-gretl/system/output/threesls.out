@@ -1,0 +1,196 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run threesls.inp
+ /home/cottrell/stats/test-gretl/system/threesls.inp
+? open fakedata.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/system/fakedata.gdt
+periodicity: 1, maxobs: 500
+observations range: 1 to 500
+
+Listing 22 variables:
+  0) const          1) MEN_ID         2) VAGUESURV      3) WLOG         
+  4) WCAR           5) WCOMP          6) lnDEPTOTR      7) lnREVTOTR    
+  8) lnREVTOTUCR    9) lnPLOGCOMP    10) lnPCARBCOMP   11) DSTALOG_1    
+ 12) DSTALOG_2     13) NBTOT         14) NBENF         15) NBADULT      
+ 16) NBFEM         17) NBFEMACTIVE   18) CHILD         19) AUTOMOBILE   
+ 20) MRLOG         21) MRCAR        
+
+# list socdemo = CHILD LOCATAIRE AUTOMOBILE
+? list socdemo = CHILD AUTOMOBILE
+Generated list socdemo
+? list X = lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+Generated list X
+? list Z = lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR socdemo
+Generated list Z
+? system name=AIDS
+? equation WLOG const X MRLOG ; const Z MRLOG
+? equation WCAR const X MRCAR ; const Z MRCAR
+? end system
+? estimate AIDS method=3sls
+
+Equation system, AIDS
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1-500
+Dependent variable: WLOG
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRLOG 
+
+                coefficient    std. error      z      p-value 
+  ------------------------------------------------------------
+  const          0.551911      0.0737925     7.479    7.48e-14 ***
+  lnPLOGCOMP    -0.451434      0.158506     -2.848    0.0044   ***
+  lnPCARBCOMP   -0.0730518     0.0987909    -0.7395   0.4596  
+  lnDEPTOTR     -0.0555580     0.00979093   -5.674    1.39e-08 ***
+  CHILD         -0.00463447    0.00702926   -0.6593   0.5097  
+  AUTOMOBILE     0.0279463     0.00974719    2.867    0.0041   ***
+  MRLOG         -0.000350494   0.00263642   -0.1329   0.8942  
+
+Mean dependent var   0.067363   S.D. dependent var   0.067352
+Sum squared resid    1.750598   S.E. of regression   0.059171
+R-squared            0.231407   Adjusted R-squared   0.222052
+
+Equation 2: 3SLS, using observations 1-500
+Dependent variable: WCAR
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRCAR 
+
+                coefficient   std. error      z      p-value 
+  -----------------------------------------------------------
+  const          0.0387282    0.0554592     0.6983   0.4850  
+  lnPLOGCOMP    -0.0691766    0.118399     -0.5843   0.5590  
+  lnPCARBCOMP   -0.0136676    0.0739230    -0.1849   0.8533  
+  lnDEPTOTR     -0.00290462   0.00736700   -0.3943   0.6934  
+  CHILD         -0.00158873   0.00527366   -0.3013   0.7632  
+  AUTOMOBILE     0.0496770    0.00731006    6.796    1.08e-11 ***
+  MRCAR          0.00152565   0.00207344    0.7358   0.4618  
+
+Mean dependent var   0.047715   S.D. dependent var   0.048173
+Sum squared resid    0.980177   S.E. of regression   0.044276
+R-squared            0.153612   Adjusted R-squared   0.143311
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0035012      (0.007)
+   1.7292e-05    0.0019604
+
+log determinant = -11.8893
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.0217838 [0.8827]
+
+? matrix B = $sysB
+Generated matrix B
+? matrix G = $sysGamma
+Generated matrix G
+? print B G
+B (2 x 9)
+
+     0.55191     -0.45143    -0.073052   -0.0046345     0.027946  -0.00035049       0.0000       0.0000    -0.055558 
+    0.038728    -0.069177    -0.013668   -0.0015887     0.049677       0.0000       0.0000    0.0015256   -0.0029046 
+
+G (2 x 2)
+
+  1   0 
+  0   1 
+
+? matrix V = $vcv
+Generated matrix V
+? V
+V (14 x 14)
+
+   0.0054453  -0.00068192   0.00033495  -0.00070656   0.00028793   0.00045427  -1.7825e-05   2.6960e-05  -3.7450e-06   1.9162e-06  -3.5019e-06   1.4401e-06   2.2489e-06   2.2295e-08 
+ -0.00068192     0.025124   -0.0098895   0.00013748  -6.3260e-05  -0.00017024  -2.5155e-05  -3.2665e-06   0.00012343  -4.8466e-05   6.6090e-07  -2.8260e-07  -8.3379e-07  -6.2089e-09 
+  0.00033495   -0.0098895    0.0097596  -0.00020440   0.00012690   0.00019301   1.1799e-05   1.6106e-06  -4.8544e-05   4.8005e-05  -1.0009e-06   6.1203e-07   9.4994e-07   7.5580e-09 
+ -0.00070656   0.00013748  -0.00020440   9.5862e-05  -4.0960e-05  -6.7312e-05   2.1875e-06  -3.4978e-06   7.2500e-07  -1.0412e-06   4.7496e-07  -2.0446e-07  -3.3307e-07  -3.0399e-09 
+  0.00028793  -6.3260e-05   0.00012690  -4.0960e-05   4.9410e-05   2.3885e-05   2.5112e-07   1.4208e-06  -3.0677e-07   6.2436e-07  -2.0209e-07   2.4342e-07   1.1794e-07   1.3764e-09 
+  0.00045427  -0.00017024   0.00019301  -6.7312e-05   2.3885e-05   9.5008e-05  -1.8613e-06   2.2509e-06  -8.7970e-07   9.7959e-07  -3.3373e-07   1.1989e-07   4.6953e-07   2.1133e-09 
+ -1.7825e-05  -2.5155e-05   1.1799e-05   2.1875e-06   2.5112e-07  -1.8613e-06   6.9507e-06  -1.1621e-07   2.4172e-08  -3.4164e-08   1.5775e-08  -6.8447e-09  -1.1050e-08   3.8171e-10 
+  2.6960e-05  -3.2665e-06   1.6106e-06  -3.4978e-06   1.4208e-06   2.2509e-06  -1.1621e-07    0.0030757  -0.00042772   0.00022557  -0.00039965   0.00016399   0.00025688   6.1979e-06 
+ -3.7450e-06   0.00012343  -4.8544e-05   7.2500e-07  -3.0677e-07  -8.7970e-07   2.4172e-08  -0.00042772     0.014018   -0.0055167   8.2742e-05  -3.5427e-05  -0.00010004  -5.3160e-07 
+  1.9162e-06  -4.8466e-05   4.8005e-05  -1.0412e-06   6.2436e-07   9.7959e-07  -3.4164e-08   0.00022557   -0.0055167    0.0054646  -0.00011945   7.1445e-05   0.00011204   5.6729e-06 
+ -3.5019e-06   6.6090e-07  -1.0009e-06   4.7496e-07  -2.0209e-07  -3.3373e-07   1.5775e-08  -0.00039965   8.2742e-05  -0.00011945   5.4273e-05  -2.3304e-05  -3.8074e-05  -8.8475e-07 
+  1.4401e-06  -2.8260e-07   6.1203e-07  -2.0446e-07   2.4342e-07   1.1989e-07  -6.8447e-09   0.00016399  -3.5427e-05   7.1445e-05  -2.3304e-05   2.7811e-05   1.3637e-05  -9.5553e-08 
+  2.2489e-06  -8.3379e-07   9.4994e-07  -3.3307e-07   1.1794e-07   4.6953e-07  -1.1050e-08   0.00025688  -0.00010004   0.00011204  -3.8074e-05   1.3637e-05   5.3437e-05   7.3689e-07 
+  2.2295e-08  -6.2089e-09   7.5580e-09  -3.0399e-09   1.3764e-09   2.1133e-09   3.8171e-10   6.1979e-06  -5.3160e-07   5.6729e-06  -8.8475e-07  -9.5553e-08   7.3689e-07   4.2991e-06 
+
+? matrix R = zeros(1,14)
+Generated matrix R
+? R[3] = 1
+Modified matrix R
+? R[9] = -1
+Modified matrix R
+? matrix QI = invpd(qform(R, V))
+Generated matrix QI = {41.8849}
+? matrix F = qform(R*$coeff,QI)
+Generated matrix F = {0.000628968}
+? print F
+F (1 x 1)
+
+  0.00062897 
+
+? restrict AIDS
+? b[1,3] - b[2,2] = 0
+? end restrict
+Restriction:
+ b[1,3] - b[2,2] = 0
+? estimate AIDS method=3sls
+
+Equation system, AIDS
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1-500
+Dependent variable: WLOG
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRLOG 
+
+                coefficient    std. error      z      p-value 
+  ------------------------------------------------------------
+  const          0.551966      0.0737615     7.483    7.26e-14 ***
+  lnPLOGCOMP    -0.453059      0.144656     -3.132    0.0017   ***
+  lnPCARBCOMP   -0.0714598     0.0756990    -0.9440   0.3452  
+  lnDEPTOTR     -0.0555913     0.00970071   -5.731    1.00e-08 ***
+  CHILD         -0.00461382    0.00698102   -0.6609   0.5087  
+  AUTOMOBILE     0.0279777     0.00966627    2.894    0.0038   ***
+  MRLOG         -0.000348588   0.00263538   -0.1323   0.8948  
+
+Mean dependent var   0.067363   S.D. dependent var   0.067352
+Sum squared resid    1.750702   S.E. of regression   0.059173
+R-squared            0.231385   Adjusted R-squared   0.222031
+
+Equation 2: 3SLS, using observations 1-500
+Dependent variable: WCAR
+Instruments: const lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR CHILD AUTOMOBILE 
+  MRCAR 
+
+                coefficient   std. error      z      p-value 
+  -----------------------------------------------------------
+  const          0.0387979    0.0553887     0.7005   0.4836  
+  lnPLOGCOMP    -0.0714598    0.0756990    -0.9440   0.3452  
+  lnPCARBCOMP   -0.0127644    0.0645562    -0.1977   0.8433  
+  lnDEPTOTR     -0.00291821   0.00734692   -0.3972   0.6912  
+  CHILD         -0.00158288   0.00526841   -0.3004   0.7638  
+  AUTOMOBILE     0.0496933    0.00728067    6.825    8.77e-12 ***
+  MRCAR          0.00152574   0.00207340    0.7359   0.4618  
+
+Mean dependent var   0.047715   S.D. dependent var   0.048173
+Sum squared resid    0.980151   S.E. of regression   0.044275
+R-squared            0.153634   Adjusted R-squared   0.143333
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+    0.0035014      (0.007)
+   1.7269e-05    0.0019603
+
+log determinant = -11.8893
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 0.0217239 [0.8828]
+
+F test for the specified restrictions:
+  F(1,986) = 0.000628968 [0.9800]
+
+Done

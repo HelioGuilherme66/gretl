@@ -1,0 +1,12 @@
+cluster
+
+                     output newout newer
+BFGS gradient evals:     24     24    26
+BFGS function evals:     92    122    92
+
+tp old: real 1.05, 1.06
+tp new: real 1.05, 1.04
+
+dell old: real 0.74, 0.73, 0.71
+dell new: real 0.71, 0.72, 0.74
+newer: 0.72, 0.71, 0.71

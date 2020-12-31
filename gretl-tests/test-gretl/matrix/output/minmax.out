@@ -1,0 +1,145 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run minmax.inp
+ /home/cottrell/stats/test-gretl/matrix/minmax.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix X = { dataset }
+Generated matrix X
+? X
+X (14 x 4) [t1 = 1, t2 = 14]
+
+       price         sqft       bedrms        baths 
+       199.9         1065            3         1.75 
+         228         1254            3            2 
+         235         1300            3            2 
+         285         1577            4          2.5 
+         239         1600            3            2 
+         293         1750            4            2 
+         285         1800            4         2.75 
+         365         1870            4            2 
+         295         1935            4          2.5 
+         290         1948            4            2 
+         385         2254            4            3 
+         505         2600            3          2.5 
+         425         2800            4            3 
+         415         3000            4            3 
+
+? matrix m1 = minr(X)
+Generated matrix m1
+? m1
+m1 (14 x 1)
+
+  1.75 
+     2 
+     2 
+   2.5 
+     2 
+     2 
+  2.75 
+     2 
+   2.5 
+     2 
+     3 
+   2.5 
+     3 
+     3 
+
+? matrix m2 = maxr(X)
+Generated matrix m2
+? m2
+m2 (14 x 1)
+
+  1065 
+  1254 
+  1300 
+  1577 
+  1600 
+  1750 
+  1800 
+  1870 
+  1935 
+  1948 
+  2254 
+  2600 
+  2800 
+  3000 
+
+? matrix m3 = minc(X)
+Generated matrix m3
+? m3
+m3 (1 x 4)
+
+  199.9    1065       3    1.75 
+
+? matrix m4 = maxc(X)
+Generated matrix m4
+? m4
+m4 (1 x 4)
+
+   505   3000      4      3 
+
+? matrix m1 = iminr(X)
+Replaced matrix m1
+? m1
+m1 (14 x 1)
+
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+  4 
+
+? matrix m2 = imaxr(X)
+Replaced matrix m2
+? m2
+m2 (14 x 1)
+
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+  2 
+
+? matrix m3 = iminc(X)
+Replaced matrix m3
+? m3
+m3 (1 x 4)
+
+  1   1   1   1 
+
+? matrix m4 = imaxc(X)
+Replaced matrix m4
+? m4
+m4 (1 x 4)
+
+  12   14    4   11 
+
+Done

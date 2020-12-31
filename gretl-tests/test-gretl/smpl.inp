@@ -1,0 +1,8 @@
+open data9-7
+QNC[1975:1] = NA
+QNC[1990:4] = NA
+print QNC
+scalar t1 = firstobs(QNC)
+scalar t2 = lastobs(QNC)
+smpl t1 t2
+print QNC

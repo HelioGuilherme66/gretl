@@ -1,0 +1,11 @@
+open ects_nls.gdt
+ols y 0 x1 x2 --quiet
+genr alpha = $coeff(0)
+genr beta = $coeff(x1)
+
+nls y = alpha + beta*x1 + (1/beta)*x2
+ deriv alpha = 1
+ deriv beta = x1 - x2/(beta*beta)
+end nls
+
+

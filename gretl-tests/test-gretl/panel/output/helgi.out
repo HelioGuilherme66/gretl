@@ -1,0 +1,87 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-29 11:03
+? run helgi.inp
+ /home/cottrell/stats/test-gretl/panel/helgi.inp
+? open helgi.gdt -q
+Read datafile /home/cottrell/stats/test-gretl/panel/helgi.gdt
+# y[1:02] = NA
+# x[2:06] = NA
+? panel y 0 x --random --nerlove
+
+Model 1: Random-effects (GLS), using 30 observations
+Using Nerlove's transformation
+Included 3 cross-sectional units
+Time-series length = 10
+Dependent variable: y
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -1.32121     1.22130      -1.082    0.2886  
+  x            1.09730     0.0501420    21.88     3.78e-19 ***
+
+Mean dependent var   15.09667   S.D. dependent var   7.252441
+Sum squared resid    122.5106   S.E. of regression   2.055359
+Log-likelihood      -63.67315   Akaike criterion     131.3463
+Schwarz criterion    134.1487   Hannan-Quinn         132.2428
+
+'Between' variance = 2.19134
+'Within' variance = 2.63943
+theta used for quasi-demeaning = 0.672128
+corr(y,yhat)^2 = 0.920891
+
+Joint test on named regressors -
+  Asymptotic test statistic: Chi-square(1) = 478.907
+  with p-value = 3.69468e-106
+
+Breusch-Pagan test -
+  Null hypothesis: Variance of the unit-specific error = 0
+  Asymptotic test statistic: Chi-square(1) = 8.47203
+  with p-value = 0.00360648
+
+Hausman test -
+  Null hypothesis: GLS estimates are consistent
+  Asymptotic test statistic: Chi-square(1) = 1.72551
+  with p-value = 0.188985
+
+? panel y 0 x --fixed --quiet
+? s2eps = $ess / $T
+Generated scalar s2eps = 2.63943
+? matrix a = pshrink($ahat)
+Generated matrix a
+? a = a .- meanc(a)
+Replaced matrix a
+? s2v = a'a / 2
+Generated scalar s2v = 2.19134
+? wi2 = 10*s2v + s2eps
+Generated scalar wi2 = 24.5529
+? theta = 1 - sqrt(s2eps)/sqrt(wi2)
+Generated scalar theta = 0.672128
+? y_ = y - theta*pmean(y)
+Generated series y_ (ID 5)
+? c_ = const - theta
+Generated series c_ (ID 6)
+? x_ = x - theta*pmean(x)
+Generated series x_ (ID 7)
+? ols y_ c_ x_
+
+Model 3: Pooled OLS, using 30 observations
+Included 3 cross-sectional units
+Time-series length = 10
+Dependent variable: y_
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  c_          -1.32121     1.22130      -1.082    0.2886  
+  x_           1.09730     0.0501420    21.88     3.78e-19 ***
+
+Mean dependent var   4.949772   S.D. dependent var   7.235674
+Sum squared resid    83.86596   S.E. of regression   1.730668
+R-squared            0.944763   Adjusted R-squared   0.942790
+F(1, 28)             478.9070   P-value(F)           3.78e-19
+Log-likelihood      -57.98849   Akaike criterion     119.9770
+Schwarz criterion    122.7794   Hannan-Quinn         120.8735
+rho                  0.148626   Durbin-Watson        1.568230
+
+Done

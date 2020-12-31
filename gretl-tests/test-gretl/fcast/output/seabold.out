@@ -1,0 +1,114 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run seabold.inp
+ /home/cottrell/stats/test-gretl/fcast/seabold.inp
+? open skipper_arima_test.gdt -q
+Read datafile /home/cottrell/stats/test-gretl/fcast/skipper_arima_test.gdt
+? setobs 1 1 --time-series
+Full data range: 1 - 1000 (n = 1000)
+
+? scalar sdx = sd(x)
+Generated scalar sdx = 1.70454
+? scalar p = 2
+Generated scalar p = 2
+? scalar q = 2
+Generated scalar q = 2
+? arma p q ; x --nc
+
+Function evaluations: 63
+Evaluations of gradient: 16
+
+Model 1: ARMA, using observations 1-1000
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  phi_1       0.862249     0.0376718     22.89    6.05e-116 ***
+  phi_2      -0.345500     0.0329681    -10.48    1.07e-25  ***
+  theta_1     0.0791834    0.0308056      2.570   0.0102    **
+  theta_2    -0.815949     0.0311170    -26.22    1.49e-151 ***
+
+Mean dependent var  -0.001885   S.D. dependent var   1.704539
+Mean of innovations -0.004405   S.D. of innovations  1.054555
+Log-likelihood      -1473.732   Akaike criterion     2957.464
+Schwarz criterion    2982.002   Hannan-Quinn         2966.790
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.2478    -1.1564     1.7013    -0.1190
+    Root  2           1.2478     1.1564     1.7013     0.1190
+  MA
+    Root  1          -1.0596     0.0000     1.0596     0.5000
+    Root  2           1.1566     0.0000     1.1566     0.0000
+  -----------------------------------------------------------
+
+? matrix g_b = $coeff
+Generated matrix g_b
+? dataset addobs 10
+Dataset extended by 10 observations
+Full data range: 1 - 1010 (n = 1010)
+
+? fcast --out-of-sample --quiet
+? matrix g_serr = $fcerr
+Generated matrix g_serr
+? foreign language=R --send-data
+?   x <- gretldata[,"x"]
+?   p <- 2
+?   q <- 2
+?   mod <- arima(x, order=c(p,0,q), include.mean=FALSE)
+?   mod
+?   coeff <- as.matrix(mod$coef)
+?   gretl.export(coeff)
+?   ma_rep <- ARMAtoMA(mod$coef[1:p],mod$coef[(p+1):(p+q)], lag.max=9)
+?   ma_rep <- c(1, ma_rep)
+?   serr <- as.matrix(sqrt(mod$sigma2 * cumsum(ma_rep^2)))
+?   gretl.export(serr)
+? end foreign
+
+Call:
+arima(x = x, order = c(p, 0, q), include.mean = FALSE)
+
+Coefficients:
+         ar1      ar2     ma1      ma2
+      0.8623  -0.3455  0.0792  -0.8159
+s.e.  0.0376   0.0330  0.0308   0.0311
+
+sigma^2 estimated as 1.112:  log likelihood = -1473.73,  aic = 2957.46
+wrote /home/cottrell/.gretl/coeff.mat 
+wrote /home/cottrell/.gretl/serr.mat 
+? matrix R_b = mread("/home/cottrell/.gretl/coeff.mat")
+Generated matrix R_b
+? matrix R_serr = mread("/home/cottrell/.gretl/serr.mat")
+Generated matrix R_serr
+? matrix b = g_b ~ R_b
+Generated matrix b
+? matrix serr = g_serr ~ R_serr
+Generated matrix serr
+? colnames(b, "gretl R")
+? colnames(serr, "gretl R")
+
+        gretl            R
+    0.8622494    0.8622501
+   -0.3454999   -0.3454996
+    0.0791834    0.0791814
+   -0.8159488   -0.8159470
+
+
+        gretl            R
+    1.0545554    1.0545555
+    1.4483526    1.4483517
+    1.4945640    1.4945627
+    1.6342050    1.6342030
+    1.6930604    1.6930582
+    1.6999771    1.6999750
+    1.7001043    1.7001022
+    1.7015805    1.7015784
+    1.7024345    1.7024324
+    1.7025767    1.7025746
+
+Done

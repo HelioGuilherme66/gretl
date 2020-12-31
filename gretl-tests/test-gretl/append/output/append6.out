@@ -1,0 +1,30 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:40
+? run append6.inp
+ /home/cottrell/stats/test-gretl/append/append6.inp
+? open xltest.xls -q
+Excel 97 +
+rows=6, total cols=2, data cols=2
+check for label strings in first imported column: not found
+Read datafile /home/cottrell/stats/test-gretl/append/xltest.xls
+? append xltest.xls --sheet=2
+Excel 97 +
+rows=6, total cols=1, data cols=1
+check for label strings in first imported column: not found
+Data appended OK
+Listing 4 variables:
+  0) const    1) x        2) y        3) z      
+
+? print -o
+
+             x            y            z
+
+1            1            6           11
+2            2            7           12
+3            3            8           13
+4            4            9           14
+5            5           10           15
+
+Done

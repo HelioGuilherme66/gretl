@@ -1,0 +1,4 @@
+printf("'%10s''%10s'\n", " ", "foo")
+string s
+sprintf(s, "\"quote %d", 1)
+printf("s = '%s'\n", s)

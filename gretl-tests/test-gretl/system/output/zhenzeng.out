@@ -1,0 +1,176 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:10
+? run zhenzeng.inp
+ /home/cottrell/stats/test-gretl/system/zhenzeng.inp
+? open fin_dev_v1.csv -q
+Read datafile /home/cottrell/stats/test-gretl/system/fin_dev_v1.csv
+? setobs 26 1.1 --stacked-time-series
+Full data range: 1:01 - 113:26 (n = 2938)
+
+# to keep track of panel structure
+? genr unit
+Generated series unit (ID 13)
+? genr time
+Generated series time (ID 14)
+? list sysvars = pf gdpr ko pcr gdpc efw xto fdi
+Generated list sysvars
+? smpl sysvars --no-missing
+Full data set: 2938 observations
+Current sample: 410 observations
+? pansys <- system
+? equation pf 0 gdpr ko pcr
+? equation pcr 0 gdpc efw xto pf fdi
+? endog pf pcr
+? end system
+? estimate pansys method=ols
+
+Equation system, pansys
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1-410
+Dependent variable: pf
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       -0.731510    0.142194     -5.144    4.19e-07 ***
+  gdpr         0.198691    0.0789389     2.517    0.0122   **
+  ko          -0.310875    0.0974894    -3.189    0.0015   ***
+  pcr          1.51802     0.0681469    22.28     2.14e-72 ***
+
+Mean dependent var  -1.579502   S.D. dependent var   1.827147
+Sum squared resid    598.2698   S.E. of regression   1.213907
+R-squared            0.561846   Adjusted R-squared   0.558609
+
+Equation 2: OLS, using observations 1-410
+Dependent variable: pcr
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const      -13.0149       0.909746     -14.31      7.55e-38 ***
+  gdpc         0.507499     0.0437905     11.59      5.21e-27 ***
+  efw          1.83001      0.220412       8.303     1.55e-15 ***
+  xto          0.00457038   0.0513981      0.08892   0.9292  
+  pf           0.141300     0.0207682      6.804     3.69e-11 ***
+  fdi         -0.0512795    0.0239595     -2.140     0.0329   **
+
+Mean dependent var  -0.618773   S.D. dependent var   0.950119
+Sum squared resid    96.25376   S.E. of regression   0.488111
+R-squared            0.739302   Adjusted R-squared   0.736075
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.4592     (-0.572)
+     -0.33471      0.23477
+
+log determinant = -1.46734
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 134.082 [0.0000]
+
+? estimate pansys method=tsls
+
+Equation system, pansys
+Estimator: Two-Stage Least Squares
+
+Equation 1: TSLS, using observations 1-410
+Dependent variable: pf
+Instruments: const gdpr ko gdpc efw xto fdi 
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const       -0.527717    0.149648     -3.526   0.0004    ***
+  gdpr         0.289294    0.0825705     3.504   0.0005    ***
+  ko          -0.484703    0.103547     -4.681   2.86e-06  ***
+  pcr          1.88147     0.0859216    21.90    2.74e-106 ***
+
+Mean dependent var  -1.579502   S.D. dependent var   1.827147
+Sum squared resid    640.1856   S.E. of regression   1.255712
+R-squared            0.560894   Adjusted R-squared   0.557649
+
+Equation 2: TSLS, using observations 1-410
+Dependent variable: pcr
+Instruments: const gdpr ko gdpc efw xto fdi 
+
+             coefficient    std. error      z       p-value 
+  ----------------------------------------------------------
+  const      -16.9196       2.30305      -7.347     2.03e-13 ***
+  gdpc         0.850205     0.187340      4.538     5.67e-06 ***
+  efw          1.90986      0.254087      7.517     5.62e-14 ***
+  xto          0.00325280   0.0584366     0.05566   0.9556  
+  pf          -0.0844464    0.121287     -0.6963    0.4863  
+  fdi         -0.0139609    0.0335965    -0.4155    0.6777  
+
+Mean dependent var  -0.618773   S.D. dependent var   0.950119
+Sum squared resid    124.4038   S.E. of regression   0.554915
+R-squared            0.664188   Adjusted R-squared   0.660032
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.5614     (-0.291)
+     -0.20049      0.30342
+
+log determinant = -0.835681
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 34.7848 [0.0000]
+
+? estimate pansys method=3sls
+
+Equation system, pansys
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1-410
+Dependent variable: pf
+Instruments: const gdpr ko gdpc efw xto fdi 
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  const       -0.418596    0.145573     -2.876   0.0040    ***
+  gdpr         0.208900    0.0788478     2.649   0.0081    ***
+  ko          -0.480341    0.103033     -4.662   3.13e-06  ***
+  pcr          1.87243     0.0854619    21.91    2.11e-106 ***
+
+Mean dependent var  -1.579502   S.D. dependent var   1.827147
+Sum squared resid    639.6485   S.E. of regression   1.249047
+R-squared            0.560852   Adjusted R-squared   0.557607
+
+Equation 2: 3SLS, using observations 1-410
+Dependent variable: pcr
+Instruments: const gdpr ko gdpc efw xto fdi 
+
+             coefficient    std. error      z      p-value 
+  ---------------------------------------------------------
+  const      -16.0158       2.27901      -7.028    2.10e-12 ***
+  gdpc         0.902657     0.185607      4.863    1.15e-06 ***
+  efw          1.58138      0.242686      6.516    7.21e-11 ***
+  xto         -0.00566627   0.0555459    -0.1020   0.9187  
+  pf          -0.0970708    0.120352     -0.8066   0.4199  
+  fdi          0.0145667    0.0324325     0.4491   0.6533  
+
+Mean dependent var  -0.618773   S.D. dependent var   0.950119
+Sum squared resid    128.3453   S.E. of regression   0.559497
+R-squared            0.654183   Adjusted R-squared   0.649903
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.5601     (-0.294)
+     -0.20522      0.31304
+
+log determinant = -0.806852
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(1) = 35.3559 [0.0000]
+
+Hansen-Sargan over-identification test:
+  Chi-square(4) = 38.9482 [0.0000]
+
+? function matrix rsys (const matrix b)
+? restrict
+? rfunc = rsys
+? end restrict
+
+Test statistic: chi^2(1) = 0.342221, with p-value = 0.55855
+
+Done

@@ -1,0 +1,56 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-01-11 09:40
+? run append3.inp
+ /home/cottrell/stats/test-gretl/append/append3.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? append 41_app.txt
+parsing /home/cottrell/stats/test-gretl/append/41_app.txt...
+using delimiter ' '
+   longest line: 24 characters
+   first field: 'price'
+   number of columns = 4
+   number of variables: 4
+   number of non-blank lines: 5
+scanning for variable names...
+   line: price sqft bedrms baths
+scanning for row labels and data...
+treating these as undated data
+
+Data appended OK
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? print -o
+
+          price         sqft       bedrms        baths
+
+ 1        199.9         1065            3         1.75
+ 2        228.0         1254            3         2.00
+ 3        235.0         1300            3         2.00
+ 4        285.0         1577            4         2.50
+ 5        239.0         1600            3         2.00
+ 6        293.0         1750            4         2.00
+ 7        285.0         1800            4         2.75
+ 8        365.0         1870            4         2.00
+ 9        295.0         1935            4         2.50
+10        290.0         1948            4         2.00
+11        385.0         2254            4         3.00
+12        505.0         2600            3         2.50
+13        425.0         2800            4         3.00
+14        415.0         3000            4         3.00
+15          1.0            1            1         1.00
+16          2.0            2            2         2.00
+17          3.0            3            3         3.00
+18          4.0            4            4         4.00
+
+Done

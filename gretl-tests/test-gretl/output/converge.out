@@ -1,0 +1,94 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run converge.inp
+ /home/cottrell/gretl/pwt56/converge.inp
+? open pwt56_60_89.gdt
+
+Read datafile /home/cottrell/gretl/pwt56/pwt56_60_89.gdt
+periodicity: 30, maxobs: 3600
+observations range: 1:01 to 120:30
+
+Listing 22 variables:
+  0) const     1) CCODE     2) POP       3) RGDPCH    4) RGDPL   
+  5) C         6) I         7) G         8) RGDPTT    9) Y       
+ 10) CGDP     11) CC       12) CI       13) CG       14) P       
+ 15) PC       16) PI       17) PG       18) XR       19) RGDPW   
+ 20) OPEN     21) YEAR    
+
+# for 1989 (last obs), lag 29 gives 1960, the first obs
+? genr gdp60 = RGDPL(-29)
+Generated series gdp60 (ID 22)
+# find total growth of real GDP over 30 years
+? genr gdpgro = (RGDPL - gdp60)/gdp60
+Generated series gdpgro (ID 23)
+# restrict the sample to a 1989 cross-section
+? smpl (YEAR=1989) --restrict
+Full data set: 3600 observations
+Current sample: 120 observations
+# Convergence?  Have countries with a lower base grown faster?
+? ols gdpgro const gdp60
+
+Model 1: OLS, using observations 1-120
+Dependent variable: gdpgro
+
+             coefficient   std. error    t-ratio   p-value 
+  ---------------------------------------------------------
+  const      1.03800       0.160999      6.447     2.60e-09 ***
+  gdp60      1.56336e-05   5.08485e-05   0.3075    0.7590  
+
+Mean dependent var   1.073812   S.D. dependent var   1.212993
+Sum squared resid    174.9506   S.E. of regression   1.217634
+R-squared            0.000800   Adjusted R-squared  -0.007667
+F(1, 118)            0.094528   P-value(F)           0.759040
+Log-likelihood      -192.8933   Akaike criterion     389.7867
+Schwarz criterion    395.3617   Hannan-Quinn         392.0507
+
+# result: No! Try inverse relationship
+? genr gdp60inv = 1/gdp60
+Generated series gdp60inv (ID 24)
+? ols gdpgro const gdp60inv
+
+Model 2: OLS, using observations 1-120
+Dependent variable: gdpgro
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const         1.22956      0.181602    6.771    5.28e-10 ***
+  gdp60inv   -176.625      163.297      -1.082    0.2816  
+
+Mean dependent var   1.073812   S.D. dependent var   1.212993
+Sum squared resid    173.3719   S.E. of regression   1.212128
+R-squared            0.009817   Adjusted R-squared   0.001426
+F(1, 118)            1.169895   P-value(F)           0.281628
+Log-likelihood      -192.3495   Akaike criterion     388.6989
+Schwarz criterion    394.2739   Hannan-Quinn         390.9629
+
+# No again.  Try "dummying out" Africa?
+? genr afdum = (CCODE = 1)
+Generated series afdum (ID 25)
+? genr afslope = afdum * gdp60
+Generated series afslope (ID 26)
+? ols gdpgro const afdum gdp60 afslope
+
+Model 3: OLS, using observations 1-120
+Dependent variable: gdpgro
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       1.68910       0.214393       7.879    1.97e-12 ***
+  afdum      -1.25910       0.415601      -3.030    0.0030   ***
+  gdp60      -9.99756e-05   5.49962e-05   -1.818    0.0717   *
+  afslope     0.000224705   0.000345116    0.6511   0.5163  
+
+Mean dependent var   1.073812   S.D. dependent var   1.212993
+Sum squared resid    151.1181   S.E. of regression   1.141377
+R-squared            0.136915   Adjusted R-squared   0.114594
+F(3, 116)            6.133887   P-value(F)           0.000657
+Log-likelihood      -184.1068   Akaike criterion     376.2137
+Schwarz criterion    387.3636   Hannan-Quinn         380.7417
+
+Excluding the constant, p-value was highest for variable 26 (afslope)
+
+Done

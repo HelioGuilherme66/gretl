@@ -1,0 +1,3 @@
+valgrind --tool=memcheck --leak-check=full --show-reachable=yes --log-fd=9 \
+ --workaround-gcc296-bugs=yes /opt/esl/bin/gretlcli "$@" 9>valgrind.log
+

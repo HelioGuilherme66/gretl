@@ -1,0 +1,5 @@
+open cigar.csv
+setobs state year --panel-vars
+dpanel 1 ; lnc lnp lnpn lny
+genr time
+dpanel 1 ; lnc lnp lnpn lny time

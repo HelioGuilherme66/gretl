@@ -1,0 +1,24 @@
+# form the union of two bundles
+
+bundle b1
+b1["mat1"] = I(3)
+b1["str"] = "foo"
+
+bundle b2
+b2["mat2"] = 2*I(3)
+b2["str"] = "baz"
+
+bundle b3 = b1 + b2
+matrix b3m1 = b3["mat1"]
+b3m1
+matrix b3m2 = b3["mat2"]
+b3m2
+string b3s = b3["str"]
+b3s
+
+delete b1
+delete b2
+delete b3
+
+
+

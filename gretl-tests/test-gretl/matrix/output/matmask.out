@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run matmask.inp
+ /home/cottrell/stats/test-gretl/matrix/matmask.inp
+? open data4-1 -q
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+? price[3] = NA
+Modified series price (ID 1)
+? sqft[8] = NA
+Modified series sqft (ID 2)
+? ols 1 0 2 --quiet
+? series yh1 = $yhat
+Generated series yh1 (ID 5)
+? list L = price sqft
+Generated list L
+? series chk = ok(L)
+Generated series chk (ID 6)
+? set matrix_mask chk
+? matrix y = {price}
+Generated matrix y
+? matrix x = {sqft}
+Generated matrix x
+? x = 1 ~ x
+Replaced matrix x
+? series yh2 = x * mols(y, x)
+Generated series yh2 (ID 7)
+? print yh1 yh2 -o
+
+            yh1          yh2
+
+ 1     193.9911     193.9911
+ 2     220.5313     220.5313
+ 3                          
+ 4     265.8885     265.8885
+ 5     269.1182     269.1182
+ 6     290.1819     290.1819
+ 7     297.2032     297.2032
+ 8                          
+ 9     316.1605     316.1605
+10     317.9860     317.9860
+11     360.9559     360.9559
+12     409.5429     409.5429
+13     437.6278     437.6278
+14     465.7127     465.7127
+
+Done

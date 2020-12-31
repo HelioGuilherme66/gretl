@@ -1,0 +1,8 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run prodfunc.inp
+ /home/cottrell/gretl/pwt56/prodfunc.inp
+? open pwt56_1985.gdt
+Error attempting to open file

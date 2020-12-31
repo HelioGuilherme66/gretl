@@ -1,0 +1,63 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run jac_nls.inp
+ /home/cottrell/stats/test-gretl/jac_nls.inp
+? open jac_nls.gdt
+
+Read datafile /home/cottrell/stats/test-gretl/jac_nls.gdt
+periodicity: 1, maxobs: 51
+observations range: 2 to 52
+
+Listing 74 variables:
+  0) const        1) PCI1969      2) PCI1970      3) PCI1971    
+  4) PCI1972      5) PCI1973      6) PCI1974      7) PCI1975    
+  8) PCI1976      9) PCI1977     10) PCI1978     11) PCI1979    
+ 12) PCI1980     13) PCI1981     14) PCI1982     15) PCI1983    
+ 16) PCI1984     17) PCI1985     18) PCI1986     19) PCI1987    
+ 20) PCI1988     21) PCI1989     22) PCI1990     23) PCI1991    
+ 24) PCI1992     25) PCI1993     26) PCI1994     27) PCI1995    
+ 28) PCI1996     29) PCI1997     30) PCI1998     31) PCI1999    
+ 32) PCI2000     33) PCI2001     34) PCI2002     35) PCI2003    
+ 36) g7080       37) g8090       38) g902000     39) l_PCI196   
+ 40) l_PCI1970   41) l_PCI1971   42) l_PCI1972   43) l_PCI1973  
+ 44) l_PCI1974   45) l_PCI1975   46) l_PCI1976   47) l_PCI1977  
+ 48) l_PCI1978   49) l_PCI1979   50) l_PCI1980   51) l_PCI1981  
+ 52) l_PCI1982   53) l_PCI1983   54) l_PCI1984   55) l_PCI1985  
+ 56) l_PCI1986   57) l_PCI1987   58) l_PCI1988   59) l_PCI1989  
+ 60) l_PCI1990   61) l_PCI1991   62) l_PCI1992   63) l_PCI1993  
+ 64) l_PCI1994   65) l_PCI1995   66) l_PCI1996   67) l_PCI1997  
+ 68) l_PCI1998   69) l_PCI1999   70) l_PCI2000   71) l_PCI2001  
+ 72) l_PCI2002   73) l_PCI2003  
+
+? genr alpha = 1
+Generated scalar alpha = 1
+? genr beta = .01
+Generated scalar beta = 0.01
+? nls g7080 = alpha - l_PCI1970*(1-exp(-10*beta))*(1/10)
+? deriv alpha = 1
+? deriv beta = -l_PCI1970*exp(-10*beta)
+? end nls
+Using analytical derivatives
+Tolerance = 1.81899e-12
+Convergence achieved after 6 iterations
+
+Model 1: NLS, using observations 2-52 (n = 51)
+g7080 = alpha - l_PCI1970*(1-exp(-10*beta))*(1/10)
+
+             estimate    std. error   t-ratio   p-value 
+  ------------------------------------------------------
+  alpha      0.233182    0.0403785     5.775    5.19e-07 ***
+  beta       0.0176524   0.00583718    3.024    0.0040   ***
+
+Mean dependent var   0.099658   S.D. dependent var   0.006380
+Sum squared resid    0.001664   S.E. of regression   0.005827
+R-squared            0.182508   Adjusted R-squared   0.165825
+Log-likelihood       191.0643   Akaike criterion    -378.1286
+Schwarz criterion   -374.2650   Hannan-Quinn        -376.6522
+
+GNR: R-squared = 0, max |t| = 1.41968e-10
+Convergence seems to be reasonably complete
+
+Done

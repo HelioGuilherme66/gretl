@@ -1,0 +1,12 @@
+open diaz.txt
+series TY = 1000 - Y
+TY = (TY < 0)? 0 : TY
+tobit TY const X -v
+ll1 = $lnl
+y_lo = TY>0 ? TY : NA
+y_hi = TY>0 ? TY : 0
+intreg y_lo y_hi const X -v
+ll2 = $lnl
+printf "ll1 - ll2 = %g\n", ll1 - ll2
+
+

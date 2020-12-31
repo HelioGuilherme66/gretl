@@ -1,0 +1,56 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:58
+? run hst23.inp
+ /home/cottrell/stats/test-gretl/arma/hst23.inp
+# NAM series B - Pankratz series 23, Housing Starts
+# apparently over the sample 65:1,74:12  (skip final 12 months).
+#         NAM ML1   NAM ML2     TSP
+# theta    .270      .269     .271454
+# (s.e.)  (.087)    (.085)      (0)
+# THETA    .967     1.000    1.000000
+# (s.e.)  (.601)   (153.6)      (0)
+# LogL   -360.755  -360.751  -360.750
+? open hst23
+
+Read datafile /home/cottrell/stats/test-gretl/arma/hst23.gdt
+periodicity: 12, maxobs: 132
+observations range: 1965:01 to 1975:12
+
+Listing 2 variables:
+  0) const    1) hst23  
+
+? smpl ; 1974:12
+Full data range: 1965:01 - 1975:12 (n = 132)
+Current sample: 1965:01 - 1974:12 (n = 120)
+
+? arima 0 1 1 ; 0 1 1 ; hst23 --nc
+
+Function evaluations: 26
+Evaluations of gradient: 11
+
+Model 1: ARIMA, using observations 1966:02-1974:12 (T = 107)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)(1-Ls) hst23
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  theta_1     -0.271454    0.0832345    -3.261   0.0011  ***
+  Theta_1     -0.999998    0.372080     -2.688   0.0072  ***
+
+Mean dependent var  -0.001290   S.D. dependent var   9.009504
+Mean of innovations -0.028396   S.D. of innovations  6.193975
+Log-likelihood      -360.7502   Akaike criterion     727.5003
+Schwarz criterion    735.5188   Hannan-Quinn         730.7509
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           3.6839     0.0000     3.6839     0.0000
+  MA (seasonal)
+    Root  1           1.0000     0.0000     1.0000     0.0000
+  -----------------------------------------------------------
+
+Done

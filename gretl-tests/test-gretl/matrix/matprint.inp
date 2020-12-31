@@ -1,0 +1,13 @@
+function matfun (matrix *B, matrix *C)
+  matrix A = mnormal(2,2)
+  matrix B = mnormal(2,2)
+  matrix C = mnormal(2,2)
+  return matrix A
+end function
+
+set seed 123
+
+matrix B
+matrix C
+matrix A = matfun(&B, &C)
+print A B C

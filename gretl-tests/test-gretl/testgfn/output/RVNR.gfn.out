@@ -1,0 +1,74 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run RVNR.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/RVNR.gfn.inp
+? include ./RVNR.gfn
+ /home/cottrell/stats/test-gretl/testgfn/RVNR.gfn
+RVNR 1.0.1, 2015-05-16 (Guillermo Verduzco Bustos)
+? open AWM.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/AWM.gdt
+periodicity: 4, maxobs: 116
+observations range: 1970:1 to 1998:4
+
+Listing 131 variables:
+  0) const             1) CAN               2) COMPR           
+  3) D1                4) D743              5) D841            
+  6) D872              7) D894              8) EEN             
+  9) EEN_DIS          10) EER              11) FDD             
+ 12) GCD              13) GCN              14) GCN_DIS         
+ 15) GCN_YEN          16) GCR              17) GCR_YER         
+ 18) GDN              19) GDN_DIS          20) GDN_DIS_YEN     
+ 21) GDN_YEN          22) GEN              23) GEN_YEN         
+ 24) GIN              25) GIN_OTHER        26) GIN_OTHER_YEN   
+ 27) GIN_YEN          28) GIX              29) GLN             
+ 30) GLN_DIS          31) GLN_DIS_YEN      32) GLN_YEN         
+ 33) GLN_YEN_TARGET   34) GON              35) GPN             
+ 36) GPN_YEN          37) GRN              38) GRN_YEN         
+ 39) GSN              40) GSN_YEN          41) GYN             
+ 42) GYN_YEN          43) HICP             44) I77Q4I78Q1      
+ 45) I81Q1            46) I82Q1            47) I84Q2           
+ 48) I92Q4            49) I98Q1            50) INFQ            
+ 51) INFT             52) INN              53) INN_YEN         
+ 54) ITD              55) ITN              56) ITR             
+ 57) KSR              58) LFN              59) LNN             
+ 60) LNT              61) LPROD            62) LSL             
+ 63) LSR              64) LTN              65) M3N             
+ 66) M3R              67) MTD              68) MTN             
+ 69) MTR              70) NFA              71) NFN             
+ 72) NFN_YEN          73) OGN              74) OGN_YEN         
+ 75) PCD              76) PCN              77) PCR             
+ 78) PYN              79) PYN_DIS          80) PYN_DIS_YEN     
+ 81) PYR              82) SCD              83) SCN             
+ 84) SCR              85) SSN              86) SSN_YEN         
+ 87) STN              88) STRQ             89) TBN             
+ 90) TBR              91) TDN              92) TDN_YEN         
+ 93) TDN_YEN_DIS      94) TFT              95) TIME            
+ 96) TIN              97) TIN_YEN          98) TRN             
+ 99) TRN_FIRMS       100) TRN_FIRMS_YEN   101) TRN_OTHER       
+102) TRN_OTHER_YEN   103) TRN_YEN         104) TRN_YEN_DIS     
+105) ULC             106) ULT             107) UNN             
+108) URT             109) URX             110) WIN             
+111) WLN             112) WRN             113) XTD             
+114) XTN             115) XTR             116) YED             
+117) YEN             118) YEN_DIS         119) YER             
+120) YER_DIS         121) YET             122) YFD             
+123) YFN             124) YGA             125) YIN             
+126) YIN_DIS         127) YWD             128) YWDX            
+129) YWR             130) YWRX            
+
+# YER = real GDP
+? bundle Test = RVNR(YER,1)
+The Von Neumann Ratio is 0.00336
+The Critical Value is 1.54
+Test result: THE VARIABLE IS AUTOCORRELATED
+? print Test
+bundle Test, created by RVNR:
+ Test result: = THE VARIABLE IS AUTOCORRELATED
+ The Von Neumann Ratio is = 0.00335986
+ The Critical Value is = 1.54
+
+# "1" is the significance level. You can choose from 0.5, 1, 5 or 10 percent
+Done

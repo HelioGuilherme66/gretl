@@ -1,0 +1,407 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run klein.inp
+ /opt/esl/share/gretl/scripts/misc/klein.inp
+# Replication of "Model 1" from L. Klein, "Economic
+# Fluctuations in the United States, 1921-1941",
+# New York: John Wiley and Sons, 1950.
+? open klein.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/klein.gdt
+periodicity: 1, maxobs: 23
+observations range: 1919 to 1941
+
+Listing 10 variables:
+  0) const    1) C        2) P        3) Wp       4) I      
+  5) K        6) X        7) Wg       8) G        9) T      
+
+? series W = Wp + Wg
+Generated series W (ID 10)
+? series A = t + (1918 - 1931)
+Generated series A (ID 11)
+? series K1 = K(-1)
+Generated series K1 (ID 12)
+# set the model up as a system
+? "Klein Model 1" <- system
+? equation C 0 P P(-1) W
+? equation I 0 P P(-1) K1
+? equation Wp 0 X X(-1) A
+? identity P = X - T - Wp
+? identity W = Wp + Wg
+? identity X = C + I + G
+? identity K = K1 + I
+? endog C I Wp P W X K
+? end system
+# and estimate it in various ways
+? estimate "Klein Model 1" method=ols
+
+Equation system, Klein Model 1
+Estimator: Ordinary Least Squares
+
+Equation 1: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const      16.2366       1.30270      12.46     5.62e-10 ***
+  P           0.192934     0.0912102     2.115    0.0495   **
+  P_1         0.0898849    0.0906479     0.9916   0.3353  
+  W           0.796219     0.0399439    19.93     3.16e-13 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    17.87945   S.E. of regression   1.025540
+R-squared            0.981008   Adjusted R-squared   0.977657
+
+Equation 2: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: I
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       10.1258      5.46555       1.853    0.0814  *
+  P            0.479636    0.0971146     4.939    0.0001  ***
+  P_1          0.333039    0.100859      3.302    0.0042  ***
+  K1          -0.111795    0.0267276    -4.183    0.0006  ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    17.32270   S.E. of regression   1.009447
+R-squared            0.931348   Adjusted R-squared   0.919233
+
+Equation 3: OLS, using observations 1921-1941 (T = 21)
+Dependent variable: Wp
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       1.49704      1.27003       1.179    0.2547  
+  X           0.439477     0.0324076    13.56     1.52e-10 ***
+  X_1         0.146090     0.0374231     3.904    0.0011   ***
+  A           0.130245     0.0319103     4.082    0.0008   ***
+
+Mean dependent var   36.36190   S.D. dependent var   6.304401
+Sum squared resid    10.00475   S.E. of regression   0.767147
+R-squared            0.987414   Adjusted R-squared   0.985193
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.85140      (0.059)     (-0.598)
+     0.049497      0.82489      (0.193)
+     -0.38082      0.12117      0.47642
+
+log determinant = -1.62591
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 8.36586 [0.0390]
+
+? estimate "Klein Model 1" method=tsls
+
+Equation system, Klein Model 1
+Estimator: Two-Stage Least Squares
+
+Equation 1: TSLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      16.5548       1.46798      11.28     1.70e-29 ***
+  P           0.0173022    0.131205      0.1319   0.8951  
+  P_1         0.216234     0.119222      1.814    0.0697   *
+  W           0.810183     0.0447351    18.11     2.62e-73 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    21.92525   S.E. of regression   1.135659
+R-squared            0.976805   Adjusted R-squared   0.972712
+
+Equation 2: TSLS, using observations 1921-1941 (T = 21)
+Dependent variable: I
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       20.2782      8.38325       2.419    0.0156   **
+  P            0.150222    0.192534      0.7802   0.4353  
+  P_1          0.615944    0.180926      3.404    0.0007   ***
+  K1          -0.157788    0.0401521    -3.930    8.50e-05 ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    29.04686   S.E. of regression   1.307149
+R-squared            0.885417   Adjusted R-squared   0.865196
+
+Equation 3: TSLS, using observations 1921-1941 (T = 21)
+Dependent variable: Wp
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       1.50030      1.27569       1.176   0.2396  
+  X           0.438859     0.0396027    11.08    1.54e-28 ***
+  X_1         0.146674     0.0431639     3.398   0.0007   ***
+  A           0.130396     0.0323884     4.026   5.67e-05 ***
+
+Mean dependent var   36.36190   S.D. dependent var   6.304401
+Sum squared resid    10.00496   S.E. of regression   0.767155
+R-squared            0.987414   Adjusted R-squared   0.985193
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.0441      (0.364)     (-0.546)
+      0.43785       1.3832      (0.237)
+     -0.38523      0.19261      0.47643
+
+log determinant = -1.24579
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 10.2351 [0.0167]
+
+? estimate "Klein Model 1" method=3sls
+
+Equation system, Klein Model 1
+Estimator: Three-Stage Least Squares
+
+Equation 1: 3SLS, using observations 1921-1941 (T = 21)
+Dependent variable: C
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       16.4408      1.30455      12.60    2.04e-36 ***
+  P            0.124890    0.108129      1.155   0.2481  
+  P_1          0.163144    0.100438      1.624   0.1043  
+  W            0.790081    0.0379379    20.83    2.54e-96 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    18.72696   S.E. of regression   0.944330
+R-squared            0.980168   Adjusted R-squared   0.976669
+
+Equation 2: 3SLS, using observations 1921-1941 (T = 21)
+Dependent variable: I
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const      28.1778       6.79377       4.148     3.36e-05 ***
+  P          -0.0130792    0.161896     -0.08079   0.9356  
+  P_1         0.755724     0.152933      4.942     7.75e-07 ***
+  K1         -0.194848     0.0325307    -5.990     2.10e-09 ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    43.95398   S.E. of regression   1.446737
+R-squared            0.826208   Adjusted R-squared   0.795538
+
+Equation 3: 3SLS, using observations 1921-1941 (T = 21)
+Dependent variable: Wp
+Instruments: const P_1 K1 X_1 A T Wg G 
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       1.79722      1.11585       1.611   0.1073  
+  X           0.400492     0.0318134    12.59    2.43e-36 ***
+  X_1         0.181291     0.0341588     5.307   1.11e-07 ***
+  A           0.149674     0.0279352     5.358   8.42e-08 ***
+
+Mean dependent var   36.36190   S.D. dependent var   6.304401
+Sum squared resid    10.92056   S.E. of regression   0.721129
+R-squared            0.986316   Adjusted R-squared   0.983901
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+      0.89176      (0.301)     (-0.578)
+      0.41132       2.0930      (0.386)
+     -0.39361      0.40305      0.52003
+
+log determinant = -1.26232
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 12.0536 [0.0072]
+
+Hansen-Sargan over-identification test:
+  Chi-square(12) = 24.291 [0.0186]
+
+? estimate "Klein Model 1" method=fiml --verbose
+Equation system Klein Model 1
+Identity: P = X - T - Wp 
+Identity: W = Wp + Wg 
+Identity: X = C + I + G 
+Identity: K = K1 + I 
+Endogenous variables: C I Wp P W X K
+Predetermined variables: P(-1) K(-1) X(-1)
+Exogenous variables: const A T Wg G
+*** initial ll = -86.294793
+*** iteration   1: step = 4, ll = -85.176844
+*** iteration   2: step = 1, ll = -83.644408
+*** iteration   3: step = 4, ll = -83.520215
+*** iteration   4: step = 2, ll = -83.474262
+*** iteration   5: step = 2, ll = -83.440118
+*** iteration   6: step = 2, ll = -83.432977
+*** iteration   7: step = 2, ll = -83.421341
+*** iteration   8: step = 1, ll = -83.338393
+*** iteration   9: step = 4, ll = -83.3302
+*** iteration  10: step = 2, ll = -83.329016
+*** iteration  11: step = 2, ll = -83.328713
+*** iteration  12: step = 1, ll = -83.324671
+*** iteration  13: step = 4, ll = -83.324158
+*** iteration  14: step = 2, ll = -83.324111
+*** iteration  15: step = 1, ll = -83.323885
+*** iteration  16: step = 4, ll = -83.323835
+*** iteration  17: step = 2, ll = -83.323829
+*** iteration  18: step = 2, ll = -83.323829
+*** iteration  19: step = 1, ll = -83.323813
+*** iteration  20: step = 4, ll = -83.323811
+*** iteration  21: step = 2, ll = -83.323811
+*** iteration  22: step = 1, ll = -83.32381
+*** iteration  23: step = 4, ll = -83.32381
+*** iteration  24: step = 2, ll = -83.32381
+*** iteration  25: step = 2, ll = -83.32381
+*** iteration  26: step = 1, ll = -83.32381
+*** iteration  27: step = 4, ll = -83.32381
+*** iteration  28: step = 2, ll = -83.32381
+*** iteration  29: step = 1, ll = -83.32381
+*** iteration  30: step = 4, ll = -83.32381
+*** iteration  31: step = 2, ll = -83.32381
+*** iteration  32: step = 1, ll = -83.32381
+*** iteration  33: step = 4, ll = -83.32381
+*** iteration  34: step = 2, ll = -83.32381
+*** iteration  35: step = 2, ll = -83.32381
+
+Tolerance 1e-12, criterion 6.96332e-13
+
+Gradients at last iteration:
+
+  -5.101899e-07    3.062724e-07   -2.573460e-07   -1.081339e-08 
+  -1.684905e-05    3.851949e-07   -2.355845e-07    7.082913e-08 
+  -6.370527e-07   -1.882097e-07    2.059195e-07    3.896952e-08 
+
+
+Equation system, Klein Model 1
+Estimator: Full Information Maximum Likelihood
+
+Convergence achieved after 35 iterations
+Log-likelihood = -83.3238
+
+Equation 1: FIML, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const       18.3433      2.48502       7.382    1.56e-13  ***
+  P           -0.232387    0.311955     -0.7449   0.4563   
+  P_1          0.385672    0.217357      1.774    0.0760    *
+  W            0.801844    0.0358931    22.34     1.52e-110 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    44.18694   S.E. of regression   1.450565
+R-squared            0.980168   Adjusted R-squared   0.976669
+
+Equation 2: FIML, using observations 1921-1941 (T = 21)
+Dependent variable: I
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const       27.2638      7.93770       3.435   0.0006   ***
+  P           -0.801003    0.491420     -1.630   0.1031  
+  P_1          1.05185     0.352459      2.984   0.0028   ***
+  K1          -0.148099    0.0298547    -4.961   7.03e-07 ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    268.2010   S.E. of regression   3.573720
+R-squared            0.826208   Adjusted R-squared   0.795538
+
+Equation 3: FIML, using observations 1921-1941 (T = 21)
+Dependent variable: Wp
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       5.79428      1.80442      3.211   0.0013   ***
+  X           0.234118     0.0488180    4.796   1.62e-06 ***
+  X_1         0.284677     0.0452086    6.297   3.04e-10 ***
+  A           0.234835     0.0345002    6.807   9.98e-12 ***
+
+Mean dependent var   36.36190   S.D. dependent var   6.304401
+Sum squared resid    37.82341   S.E. of regression   1.342056
+R-squared            0.986316   Adjusted R-squared   0.983901
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       2.1041      (0.748)      (0.247)
+       3.8790       12.771      (0.804)
+      0.48169       3.8575       1.8011
+
+log determinant = 0.366633
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 12.0536 [0.0072]
+
+? estimate "Klein Model 1" method=liml
+Equation system Klein Model 1
+Identity: P = X - T - Wp 
+Identity: W = Wp + Wg 
+Identity: X = C + I + G 
+Identity: K = K1 + I 
+Endogenous variables: C I Wp P W X K
+Predetermined variables: P(-1) K(-1) X(-1)
+Exogenous variables: const A T Wg G
+
+Equation system, Klein Model 1
+Estimator: Limited Information Maximum Likelihood
+
+Equation 1: LIML, using observations 1921-1941 (T = 21)
+Dependent variable: C
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       17.1477      2.04537       8.384    5.13e-17 ***
+  P           -0.222513    0.224230     -0.9923   0.3210  
+  P_1          0.396027    0.192943      2.053    0.0401   **
+  W            0.822559    0.0615494    13.36     9.79e-41 ***
+
+Mean dependent var   53.99524   S.D. dependent var   6.860866
+Sum squared resid    40.88419   S.E. of regression   1.550791
+Log-likelihood      -132.4186   Smallest eigenvalue  1.498746
+
+LR over-identification test: Chi-square(4) = 8.4972 [0.0750]
+
+Equation 2: LIML, using observations 1921-1941 (T = 21)
+Dependent variable: I
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      22.5908       9.49815       2.378    0.0174  **
+  P           0.0751848    0.224712      0.3346   0.7379 
+  P_1         0.680386     0.209145      3.253    0.0011  ***
+  K1         -0.168264     0.0453445    -3.711    0.0002  ***
+
+Mean dependent var   1.266667   S.D. dependent var   3.551948
+Sum squared resid    34.99649   S.E. of regression   1.434788
+Log-likelihood      -121.0536   Smallest eigenvalue  1.085953
+
+LR over-identification test: Chi-square(4) = 1.73161 [0.7850]
+
+Equation 3: LIML, using observations 1921-1941 (T = 21)
+Dependent variable: Wp
+
+             coefficient   std. error     z     p-value 
+  ------------------------------------------------------
+  const       1.52619      1.32084      1.155   0.2479  
+  X           0.433941     0.0755074    5.747   9.08e-09 ***
+  X_1         0.151321     0.0745268    2.030   0.0423   **
+  A           0.131593     0.0359955    3.656   0.0003   ***
+
+Mean dependent var   36.36190   S.D. dependent var   6.304401
+Sum squared resid    10.02192   S.E. of regression   0.767805
+Log-likelihood      -136.8911   Smallest eigenvalue  2.468583
+
+LR over-identification test: Chi-square(4) = 18.9765 [0.0008]
+
+Cross-equation VCV for residuals
+(correlations above the diagonal)
+
+       1.9469      (0.555)     (-0.384)
+       1.0006       1.6665      (0.256)
+     -0.36970      0.22834      0.47723
+
+log determinant = -0.557984
+Breusch-Pagan test for diagonal covariance matrix:
+  Chi-square(3) = 10.946 [0.0120]
+
+Done

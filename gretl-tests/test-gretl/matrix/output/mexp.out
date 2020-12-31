@@ -1,0 +1,25 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run mexp.inp
+ /home/cottrell/stats/test-gretl/matrix/mexp.inp
+? matrix B = {21, 17, 6; -5, -1, -6; 4, 4, 16}
+Generated matrix B
+? B
+B (3 x 3)
+
+  21   17    6 
+  -5   -1   -6 
+   4    4   16 
+
+? X = mexp(B)
+Generated matrix X
+? X
+X (3 x 3)
+
+  2.8880e+07   2.8880e+07   4.4430e+06 
+ -1.9994e+07  -1.9994e+07  -4.4430e+06 
+  3.5544e+07   3.5544e+07   8.8861e+06 
+
+Done

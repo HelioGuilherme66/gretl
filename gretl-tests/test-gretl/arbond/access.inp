@@ -1,0 +1,8 @@
+open fakedata2.gdt
+genr Dx = diff(x)
+arbond 1 0 ; y Dx
+eval $["sargan"]
+eval $["wald"]
+eval $["AR1"]
+eval $["AR2"]
+varlist --access

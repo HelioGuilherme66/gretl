@@ -1,0 +1,28 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 12:49
+? run year4.inp
+ /home/cottrell/stats/test-gretl/importer/year4.inp
+? open year4.xls
+Excel 97 +
+rows=6, total cols=2, data cols=2
+check for label strings in first imported column: not found
+   first row label "1960", last label "1976"
+trying to parse row labels as dates...
+   1960: probably a year... and just a year
+   but the dates are not complete and consistent
+Listing 3 variables:
+  0) const    1) year     2) y      
+
+? print -o
+
+          year            y
+
+1         1960            1
+2         1964            2
+3         1968            4
+4         1972            7
+5         1976            9
+
+Done

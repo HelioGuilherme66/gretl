@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run vecmI2.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/vecmI2.gfn.inp
+? include ./vecmI2.gfn
+ /home/cottrell/stats/test-gretl/testgfn/vecmI2.gfn
+vecmI2 0.1, 2012-02-11 (Andreas Noack Jensen)
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? genr time
+Generated series time (ID 5)
+? list yvars = LRM LRY IBO IDE
+Generated list yvars
+? tmp = vecmI2(1, 2, 3, yvars, time)
+? cointI2(3, yvars, time)
+mResult (4 x 5)
+
+      147.74       113.62       89.235       68.086       57.677 
+      0.0000       80.574       51.763       34.488       28.072 
+      0.0000       0.0000       32.644       21.874       14.351 
+      0.0000       0.0000       0.0000       10.205       3.3619 
+
+? print tmp
+bundle tmp, created by vecmI2:
+ beta (matrix: 5 x 1)
+ ll = 640.498
+ alpha (matrix: 4 x 1)
+ tau (matrix: 5 x 3)
+
+Done

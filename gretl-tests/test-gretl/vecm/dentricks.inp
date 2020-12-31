@@ -1,0 +1,28 @@
+open denmark
+
+# unrestricted rank-1 VECM
+vecm 2 2 LRM LRY IBO IDE --rc --seas --quiet
+
+# restriction on first column of beta
+restrict 
+  b[1,1] = 1
+  b[1,1] + b[1,2] = 0
+  b[1,3] + b[1,4] = 0
+end restrict 
+
+# normalize on first row of beta
+restrict 
+  b[1,1] = 1
+  b[2,1] = 1
+end restrict 
+
+quit
+
+# compare unrestricted
+set vecm_norm first
+vecm 2 2 LRM LRY IBO IDE --rc --seas --quiet
+
+# experiment
+restrict 
+  b[1] = 1
+end restrict

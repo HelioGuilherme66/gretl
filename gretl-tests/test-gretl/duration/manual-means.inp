@@ -1,0 +1,8 @@
+open recid.gdt -q
+list X = const workprg priors tserved felon alcohol \
+ drugs black married educ age
+duration durat X ; cens
+series yhat = $yhat
+matrix b = $coeff[1:$ncoeff-1]
+series means = exp(lincomb(X,b)) * gamma(1+$sigma)
+print yhat means -o

@@ -1,0 +1,16 @@
+matrix C = { NA, 0; NA, NA  }
+print C
+# matrix c
+
+loop i = 1..2 -q
+    loop j = 1..2 -q
+        c = C[i,j]
+        if ok(C[i,j])
+            printf "C(%d,%d) is OK (%g)\n", i, j, c
+	else
+	    printf "C(%d,%d) is not OK (%g)\n", i, j, c
+        endif
+    endloop
+endloop
+
+eval C[1,1]

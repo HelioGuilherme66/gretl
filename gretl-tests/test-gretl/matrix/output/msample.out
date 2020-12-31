@@ -1,0 +1,52 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run msample.inp
+ /home/cottrell/stats/test-gretl/matrix/msample.inp
+? open data4-1
+
+Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+periodicity: 1, maxobs: 14
+observations range: 1 to 14
+
+Listing 5 variables:
+  0) const     1) price     2) sqft      3) bedrms    4) baths   
+
+? matrix x = {sqft}
+Generated matrix x
+? series s1 = x
+Generated series s1 (ID 5)
+? smpl 3 12
+Full data range: 1 - 14 (n = 14)
+Current sample: 3 - 12 (n = 10)
+
+? series s2 = x
+Generated series s2 (ID 6)
+? matrix m = ones(10,1)
+Generated matrix m
+? series s3 = m
+Generated series s3 (ID 7)
+? smpl full
+Full data range: 1 - 14 (n = 14)
+
+? print sqft s1 s2 s3 -o
+
+           sqft           s1           s2           s3
+
+ 1         1065         1065                          
+ 2         1254         1254                          
+ 3         1300         1300         1300            1
+ 4         1577         1577         1577            1
+ 5         1600         1600         1600            1
+ 6         1750         1750         1750            1
+ 7         1800         1800         1800            1
+ 8         1870         1870         1870            1
+ 9         1935         1935         1935            1
+10         1948         1948         1948            1
+11         2254         2254         2254            1
+12         2600         2600         2600            1
+13         2800         2800                          
+14         3000         3000                          
+
+Done

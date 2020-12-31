@@ -1,0 +1,179 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:01
+? run ylag.inp
+ /home/cottrell/stats/test-gretl/fcast/ylag.inp
+? open data9-7
+
+Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+periodicity: 4, maxobs: 64
+observations range: 1975:1 to 1990:4
+
+Listing 12 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL    
+
+? ols QNC 0 QNC(-1) PRICE INCOME
+
+Model 1: OLS, using observations 1975:2-1990:4 (T = 63)
+Dependent variable: QNC
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -681.981      783.139      -0.8708   0.3874 
+  QNC_1         0.397426     0.120443    3.300    0.0016  ***
+  PRICE       -15.5276       5.89215    -2.635    0.0107  **
+  INCOME      348.493      135.824       2.566    0.0129  **
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
+Sum squared resid     3978345   S.E. of regression   259.6721
+R-squared            0.402450   Adjusted R-squared   0.372066
+F(3, 59)             13.24549   P-value(F)           1.02e-06
+Log-likelihood      -437.5702   Akaike criterion     883.1405
+Schwarz criterion    891.7130   Hannan-Quinn         886.5121
+rho                  0.011548   Durbin's h           0.312392
+
+? list
+Listing 13 variables:
+  0) const     1) QNC       2) PRICE     3) INCOME    4) PRIME   
+  5) UNEMP     6) STOCK     7) POP       8) WINTER    9) SPRING  
+ 10) SUMMER   11) FALL     12) QNC_1   
+
+? labels
+Listing labels for variables:
+ QNC: number of new cars sold (in thous.)
+ PRICE: average real price index of a new car
+ INCOME: per cap. disposable personal income (000s of 1982 dollars)
+ PRIME: prime interest rate (percent)
+ UNEMP: unemployment rate (percent)
+ STOCK: number of cars on road (thousands)
+ POP: Population in millions
+ WINTER: 1 for winter quarter, 0 otherwise
+ QNC_1: = QNC(t - 1)
+
+? genr yh = $yhat
+Generated series yh (ID 13)
+# add an extra 8 observations to dataset
+? dataset addobs 8
+Dataset extended by 8 observations
+Full data range: 1975:1 - 1992:4 (n = 72)
+
+# extend the series for PRICE, INCOME
+? genr lastP = PRICE[1990:4]
+Generated scalar lastP = 121.4
+? genr lastY = INCOME[1990:4]
+Generated scalar lastY = 11.703
+? smpl 1991:1 1992:4
+Full data range: 1975:1 - 1992:4 (n = 72)
+Current sample: 1991:1 - 1992:4 (n = 8)
+
+? genr PRICE = lastP
+Replaced series PRICE (ID 2)
+? genr INCOME = lastY
+Replaced series INCOME (ID 3)
+# reset to full sample
+? smpl full
+Full data range: 1975:1 - 1992:4 (n = 72)
+
+? genr QNC_1[1991:1] = QNC[1990:4]
+Modified series QNC_1 (ID 12)
+? fcast fdyn
+Generated series fdyn (ID 14)
+? fcast fstat --static
+Generated series fstat (ID 15)
+? print QNC yh fdyn fstat --byobs
+
+                QNC           yh         fdyn        fstat
+
+1975:1         1923                                       
+1975:2         2165     2303.356     2303.356     2303.356
+1975:3         2198     2397.949     2397.949     2397.949
+1975:4         2328     2442.773     2442.773     2442.773
+1976:1         2381     2495.193     2495.193     2495.193
+1976:2         2788     2525.789     2525.789     2525.789
+1976:3         2416     2693.528     2693.528     2693.528
+1976:4         2513     2507.660     2507.660     2507.660
+1977:1         2617     2580.394     2580.394     2580.394
+1977:2         3195     2622.675     2622.675     2622.675
+1977:3         2668     2883.716     2883.716     2883.716
+1977:4         2688     2673.157     2673.157     2673.157
+1978:1         2540     2653.915     2653.915     2653.915
+1978:2         3337     2666.947     2666.947     2666.947
+1978:3         2713     2971.653     2971.653     2971.653
+1978:4         2710     2730.877     2730.877     2730.877
+1979:1         2739     2716.182     2716.182     2716.182
+1979:2         2942     2687.622     2687.622     2687.622
+1979:3         2571     2748.272     2748.272     2748.272
+1979:4         2396     2567.147     2567.147     2567.147
+1980:1         2511     2493.725     2493.725     2493.725
+1980:2         2139     2429.645     2429.645     2429.645
+1980:3         2130     2272.389     2272.389     2272.389
+1980:4         2189     2266.652     2266.652     2266.652
+1981:1         2373     2299.253     2299.253     2299.253
+1981:2         2207     2339.079     2339.079     2339.079
+1981:3         2192     2245.025     2245.025     2245.025
+1981:4         1754     2229.208     2229.208     2229.208
+1982:1         1944     1988.600     1988.600     1988.600
+1982:2         2094     2108.529     2108.529     2108.529
+1982:3         1910     2129.835     2129.835     2129.835
+1982:4         2032     2044.670     2044.670     2044.670
+1983:1         2045     2111.022     2111.022     2111.022
+1983:2         2505     2125.184     2125.184     2125.184
+1983:3         2237     2342.593     2342.593     2342.593
+1983:4         2394     2258.034     2258.034     2258.034
+1984:1         2584     2389.017     2389.017     2389.017
+1984:2         2895     2487.462     2487.462     2487.462
+1984:3         2448     2619.867     2619.867     2619.867
+1984:4         2463     2438.128     2438.128     2438.128
+1985:1         2644     2480.488     2480.488     2480.488
+1985:2         2988     2577.319     2577.319     2577.319
+1985:3         2968     2665.686     2665.686     2665.686
+1985:4         2442     2657.164     2657.164     2657.164
+1986:1         2600     2479.447     2479.447     2479.447
+1986:2         3046     2626.572     2626.572     2626.572
+1986:3         3124     2723.155     2723.155     2723.155
+1986:4         2689     2728.361     2728.361     2728.361
+1987:1         2341     2542.865     2542.865     2542.865
+1987:2         2767     2276.571     2276.571     2276.571
+1987:3         2785     2555.549     2555.549     2555.549
+1987:4         2382     2616.971     2616.971     2616.971
+1988:1         2636     2492.103     2492.103     2492.103
+1988:2         2864     2606.733     2606.733     2606.733
+1988:3         2556     2749.647     2749.647     2749.647
+1988:4         2486     2632.176     2632.176     2632.176
+1989:1         2337     2586.742     2586.742     2586.742
+1989:2         2757     2518.240     2518.240     2518.240
+1989:3         2631     2711.644     2711.644     2711.644
+1989:4         2053     2643.319     2643.319     2643.319
+1990:1         2310     2406.377     2406.377     2406.377
+1990:2         2532     2522.331     2522.331     2522.331
+1990:3         2358     2612.302     2612.302     2612.302
+1990:4         2100     2448.515     2448.515     2448.515
+1991:1                               2345.979     2345.979
+1991:2                               2443.737             
+1991:3                               2482.589             
+1991:4                               2498.030             
+1992:1                               2504.166             
+1992:2                               2506.605             
+1992:3                               2507.574             
+1992:4                               2507.960             
+
+? fcasterr 1991:1 1992:4
+
+ For 95% confidence intervals, t(59, 0.025) = 2.001
+
+                  QNC    prediction    std. error        95% interval
+
+  1991:1                    2345.98      259.672      1826.38 -   2865.58
+  1991:2                    2443.74      279.428      1884.60 -   3002.87
+  1991:3                    2482.59      282.422      1917.46 -   3047.71
+  1991:4                    2498.03      282.892      1931.96 -   3064.10
+  1992:1                    2504.17      282.966      1937.95 -   3070.38
+  1992:2                    2506.61      282.978      1940.37 -   3072.84
+  1992:3                    2507.57      282.980      1941.33 -   3073.82
+  1992:4                    2507.96      282.980      1941.72 -   3074.20
+
+Warning: "fcasterr": obsolete command; please use "fcast"
+Done

@@ -1,0 +1,46 @@
+gretl version 1.9.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2012-01-25 10:51
+? run matmult.inp
+ /home/cottrell/stats/test-gretl/speed/matmult.inp
+? set echo off
+blas_nmk_min = 0
+# netlib blas, built with -O2
+Case 1 ------------------------------------
+n =  512, time =   0.68 (speed =    19738)
+n = 1024, time =   1.63 (speed =    16468)
+n = 2048, time =   2.80 (speed =    19174)
+Case 2 ------------------------------------
+n =  512, time =   0.68 (speed =    19738)
+n = 1024, time =   2.82 (speed =    19038)
+n = 2048, time =  11.49 (speed =    18690)
+Case 3 ------------------------------------
+n =  512, time =   0.69 (speed =    19452)
+n = 1024, time =   5.70 (speed =    18838)
+n = 2048, time =  46.12 (speed =    18625)
+Done
+
+gretl version 1.9.7cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2012-01-25 10:54
+? run matmult.inp
+ /home/cottrell/stats/test-gretl/speed/matmult.inp
+? set echo off
+blas_nmk_min = -1
+Case 1 ------------------------------------
+n =  512, time =   0.12 (speed =   111848)
+n = 1024, time =   0.29 (speed =    92564)
+n = 2048, time =   0.59 (speed =    90995)
+Case 2 ------------------------------------
+n =  512, time =   0.13 (speed =   103244)
+n = 1024, time =   0.57 (speed =    94188)
+n = 2048, time =   2.42 (speed =    88739)
+Case 3 ------------------------------------
+n =  512, time =   0.13 (speed =   103244)
+n = 1024, time =   1.20 (speed =    89478)
+n = 2048, time =   9.56 (speed =    89853)
+Done
+
+

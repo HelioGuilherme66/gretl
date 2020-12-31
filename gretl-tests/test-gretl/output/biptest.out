@@ -1,0 +1,371 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run biptest.inp
+ /home/cottrell/stats/test-gretl/biptest.inp
+? open ~/stats/stata/school.gdt
+
+Read datafile /home/cottrell/stats/stata/school.gdt
+periodicity: 1, maxobs: 95
+observations range: 1 to 95
+
+Listing 12 variables:
+  0) const      1) obs1       2) pub12      3) pub34      4) pub5     
+  5) private    6) years      7) school     8) loginc     9) logptax  
+ 10) vote      11) logeduc  
+
+? biprobit private vote 0 logptax loginc years
+Gradient within tolerance (1e-05)
+
+Model 1: Bivariate probit, using observations 1-95
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+ private:
+  const      -4.18469      4.83782      -0.8650   0.3870 
+  logptax    -0.106696     0.666978     -0.1600   0.8729 
+  loginc      0.376204     0.530648      0.7090   0.4784 
+  years      -0.0118884    0.0256778    -0.4630   0.6434 
+
+ vote:
+  const      -0.536057     4.06851      -0.1318   0.8952 
+  logptax    -1.28871      0.575227     -2.240    0.0251  **
+  loginc      0.998286     0.440356      2.267    0.0234  **
+  years      -0.0168561    0.0147834    -1.140    0.2542 
+
+Log-likelihood      -89.25403   Akaike criterion     196.5081
+Schwarz criterion    219.4929   Hannan-Quinn         205.7957
+
+rho = -0.269619
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 1.38444
+  with p-value = 0.239347
+
+? matrix yh = $yhat
+Generated matrix yh
+? yh
+yh (95 x 4) [t1 = 1, t2 = 95]
+
+    0.024523     0.059269      0.46210      0.45410 
+    0.042559     0.060951      0.55644      0.34005 
+    0.049731     0.062595      0.57509      0.31258 
+    0.032368     0.038028      0.62981      0.29979 
+    0.036356     0.073540      0.47818      0.41193 
+    0.090919     0.053685      0.68021      0.17519 
+    0.049731     0.062595      0.57509      0.31258 
+    0.033366     0.072124      0.46767      0.42684 
+    0.054750     0.058396      0.60717      0.27969 
+    0.015208     0.058718      0.37255      0.55353 
+    0.051655     0.062957      0.57955      0.30584 
+    0.028739     0.032029      0.65129      0.28794 
+    0.055618     0.051729      0.63857      0.25408 
+    0.051655     0.062957      0.57955      0.30584 
+     0.16912     0.023159      0.76690     0.040815 
+   0.0090891     0.032889      0.41817      0.53985 
+    0.065477     0.059488      0.62668      0.24835 
+    0.039276     0.060018      0.54664      0.35407 
+    0.067786     0.059642      0.63028      0.24230 
+    0.092331     0.041950      0.72584      0.13988 
+    0.075134     0.053854      0.66424      0.20677 
+    0.065477     0.059488      0.62668      0.24835 
+    0.013022     0.036967      0.46092      0.48909 
+    0.075371     0.069016      0.60814      0.24747 
+    0.047196     0.045446      0.64619      0.26116 
+    0.085439     0.053824      0.67535      0.18538 
+    0.048025     0.050793      0.62213      0.27906 
+    0.023426     0.058551      0.45648      0.46154 
+    0.051722     0.051297      0.63054      0.26644 
+    0.072571     0.059885      0.63714      0.23040 
+    0.076490     0.046897      0.69430      0.18231 
+    0.030448     0.053463      0.53113      0.38496 
+  0.00067833     0.032193     0.084330      0.88280 
+    0.093742     0.053584      0.68246      0.17022 
+    0.053632     0.063298      0.58391      0.29916 
+    0.051842     0.072926      0.54182      0.33342 
+    0.070150     0.059775      0.63376      0.23631 
+    0.038399     0.084086      0.45171      0.42581 
+    0.039276     0.060018      0.54664      0.35407 
+    0.072571     0.059885      0.63714      0.23040 
+    0.053632     0.063298      0.58391      0.29916 
+    0.096466     0.074698      0.61420      0.21464 
+    0.051655     0.062957      0.57955      0.30584 
+    0.051655     0.062957      0.57955      0.30584 
+    0.067117     0.046836      0.68274      0.20331 
+    0.053632     0.063298      0.58391      0.29916 
+    0.020035     0.041993      0.51437      0.42360 
+    0.018434     0.069614      0.36576      0.54620 
+    0.049849     0.051054      0.62638      0.27271 
+    0.046042     0.061811      0.56593      0.32622 
+    0.054576     0.046207      0.66207      0.23715 
+   0.0025243     0.023788      0.25945      0.71424 
+    0.067947     0.068488      0.59736      0.26621 
+    0.016797     0.053293      0.41635      0.51356 
+    0.047860     0.062213      0.57056      0.31937 
+    0.092655     0.018618      0.82580     0.062924 
+   0.0067734     0.045256      0.28851      0.65946 
+    0.079758     0.034615      0.75086      0.13477 
+    0.074070     0.046909      0.69158      0.18744 
+    0.090919     0.053685      0.68021      0.17519 
+    0.053632     0.063298      0.58391      0.29916 
+     0.11283     0.058152      0.67538      0.15364 
+    0.014566     0.043705      0.43977      0.50196 
+    0.062364     0.020475      0.81436      0.10280 
+    0.011407     0.035374      0.44545      0.50777 
+   0.0058237     0.064797      0.19779      0.73159 
+    0.015302     0.044366      0.44572      0.49462 
+    0.025657     0.054433      0.49368      0.42623 
+    0.051655     0.062957      0.57955      0.30584 
+    0.053632     0.063298      0.58391      0.29916 
+    0.065477     0.059488      0.62668      0.24835 
+   0.0068415     0.039908      0.31774      0.63551 
+    0.026738     0.068307      0.44071      0.46424 
+    0.026841     0.060672      0.47323      0.43925 
+    0.022368     0.057824      0.45083      0.46898 
+    0.084394     0.042323      0.72012      0.15317 
+     0.12325     0.034477      0.75491     0.087360 
+    0.046106     0.041438      0.66425      0.24820 
+    0.048025     0.050793      0.62213      0.27906 
+    0.067786     0.059642      0.63028      0.24230 
+    0.037916     0.074227      0.48328      0.40457 
+     0.11701     0.035059      0.75420     0.093729 
+    0.033392     0.063960      0.50027      0.40238 
+    0.099547     0.074655      0.61685      0.20895 
+    0.031429     0.030529      0.67704      0.26100 
+    0.033392     0.063960      0.50027      0.40238 
+    0.033690     0.038323      0.63463      0.29336 
+    0.051722     0.051297      0.63054      0.26644 
+    0.051655     0.062957      0.57955      0.30584 
+    0.074070     0.046909      0.69158      0.18744 
+    0.051842     0.072926      0.54182      0.33342 
+    0.051655     0.062957      0.57955      0.30584 
+    0.047860     0.062213      0.57056      0.31937 
+   0.0084777     0.021352      0.51548      0.45469 
+    0.056552     0.082657      0.52229      0.33850 
+
+? biprobit private vote 0 logptax loginc years ; 0 logptax years
+Gradient within tolerance (1e-05)
+
+Model 2: Bivariate probit, using observations 1-95
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+ private:
+  const      -5.10852      4.83203      -1.057    0.2904 
+  logptax    -0.194247     0.667703     -0.2909   0.7711 
+  loginc      0.528952     0.533941      0.9907   0.3219 
+  years      -0.0107319    0.0255361    -0.4203   0.6743 
+
+ vote:
+  const       4.77327      3.23568       1.475    0.1402 
+  logptax    -0.613831     0.458502     -1.339    0.1806 
+  years      -0.0230864    0.0143602    -1.608    0.1079 
+
+Log-likelihood      -92.21528   Akaike criterion     200.4306
+Schwarz criterion    220.8616   Hannan-Quinn         208.6862
+
+rho = -0.27301
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 1.37223
+  with p-value = 0.241429
+
+? biprobit private vote 0 logptax loginc years ; 0 logptax years \
+  --robust
+Gradient within tolerance (1e-05)
+
+Model 3: Bivariate probit, using observations 1-95
+QML standard errors
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+ private:
+  const      -5.10852      6.42073      -0.7956   0.4262 
+  logptax    -0.194247     0.724408     -0.2681   0.7886 
+  loginc      0.528952     0.506910      1.043    0.2967 
+  years      -0.0107319    0.0229551    -0.4675   0.6401 
+
+ vote:
+  const       4.77327      3.51010       1.360    0.1739 
+  logptax    -0.613831     0.495712     -1.238    0.2156 
+  years      -0.0230864    0.0164592    -1.403    0.1607 
+
+Log-likelihood      -92.21528   Akaike criterion     200.4306
+Schwarz criterion    220.8616   Hannan-Quinn         208.6862
+
+rho = -0.27301
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 1.37223
+  with p-value = 0.241429
+
+? loginc[32] = NA
+Modified series loginc (ID 8)
+? vote[24] = NA
+Modified series vote (ID 10)
+? biprobit private vote 0 logptax loginc years ; 0 logptax years \
+  --verbose
+
+Iteration 1: loglikelihood = -33.4706189717 (steplength = 1)
+Parameters:      -2.6216   -0.044562     0.20649  -0.0034219
+Gradients:       -79.334     -550.63     -791.69     -676.66 (norm 9.98e+00)
+
+Iteration 2: loglikelihood = -31.2457457218 (steplength = 1)
+Parameters:      -4.0564   -0.085051     0.34939  -0.0065071
+Gradients:       -12.766     -88.355     -126.68     -119.38 (norm 5.11e+00)
+
+Iteration 3: loglikelihood = -31.2108272181 (steplength = 1)
+Parameters:      -4.4451    -0.10530     0.39991  -0.0083303
+Gradients:       -1.2430     -8.5569     -12.180     -14.895 (norm 1.69e+00)
+
+Iteration 4: loglikelihood = -31.2107805164 (steplength = 1)
+Parameters:      -4.4583    -0.10610     0.40179  -0.0084756
+Gradients:     -0.028108    -0.19121    -0.26978    -0.55046 (norm 2.54e-01)
+
+Iteration 5: loglikelihood = -31.2107805161 (steplength = 1)
+Parameters:      -4.4583    -0.10610     0.40180  -0.0084761
+Gradients:   -4.4999e-05 -0.00030192 -0.00043058  -0.0013016 (norm 1.02e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -31.2107805161 (steplength = 1)
+Parameters:      -4.4583    -0.10610     0.40180  -0.0084761
+Gradients:   -2.7285e-10 -1.8209e-09 -2.6271e-09 -8.9096e-09 (norm 2.52e-05)
+
+Gradient within tolerance (1e-07)
+
+Probit, using observations 1-95 (n = 93)
+Missing or incomplete observations dropped: 2
+Dependent variable: private
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const      -4.45828      4.94649      -0.9013   0.3674 
+  logptax    -0.106102     0.663127     -0.1600   0.8729 
+  loginc      0.401796     0.544800      0.7375   0.4608 
+  years      -0.00847610   0.0232397    -0.3647   0.7153 
+
+Mean dependent var   0.107527   S.D. dependent var   0.311461
+McFadden R-squared   0.016740   Adjusted R-squared  -0.109276
+Log-likelihood      -31.21078   Akaike criterion     70.42156
+Schwarz criterion    80.55196   Hannan-Quinn         74.51193
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 1.33315
+  with p-value = 0.513463
+
+Iteration 1: loglikelihood = -60.1747915219 (steplength = 1)
+Parameters:       4.2375    -0.55833   -0.019397
+Gradients:       -49.321     -343.52     -482.81 (norm 1.17e+01)
+
+Iteration 2: loglikelihood = -59.6335526376 (steplength = 1)
+Parameters:       5.3258    -0.69022   -0.024560
+Gradients:        7.1904      49.503      43.932 (norm 4.95e+00)
+
+Iteration 3: loglikelihood = -59.6333205926 (steplength = 1)
+Parameters:       5.3700    -0.69607   -0.024734
+Gradients:       0.11458     0.77471     0.44464 (norm 6.23e-01)
+
+Iteration 4: loglikelihood = -59.6333205925 (steplength = 1)
+Parameters:       5.3701    -0.69607   -0.024734
+Gradients:    6.4387e-05  0.00042715  0.00041618 (norm 1.48e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -59.6333205925 (steplength = 1)
+Parameters:       5.3701    -0.69607   -0.024734
+Gradients:    2.3840e-11  1.5465e-10  1.7370e-10 (norm 8.94e-06)
+
+Gradient within tolerance (1e-07)
+
+Probit, using observations 1-95 (n = 93)
+Missing or incomplete observations dropped: 2
+Dependent variable: vote
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const       5.37007      3.23795       1.658   0.0972  *
+  logptax    -0.696072     0.458723     -1.517   0.1292 
+  years      -0.0247336    0.0143927    -1.718   0.0857  *
+
+Mean dependent var   0.623656   S.D. dependent var   0.487094
+McFadden R-squared   0.031752   Adjusted R-squared  -0.016958
+Log-likelihood      -59.63332   Akaike criterion     125.2666
+Schwarz criterion    132.8644   Hannan-Quinn         128.3344
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 10.2391
+  with p-value = 0.00597856
+
+Iteration 1: loglikelihood = -90.1329667251 (steplength = 1)
+Parameters:      -5.2011    -0.15513     0.51088   -0.010654      5.5970    -0.72788
+               -0.025218    -0.27080
+Gradients:    4.4662e-10  2.9441e-09  4.3614e-09 -4.8302e-09 -8.1274e-11 -5.4030e-10
+             -3.9312e-10     -5.0933 (norm 4.15e-01)
+
+Iteration 2: loglikelihood = -90.1268745108 (steplength = 1)
+Parameters:      -5.0990    -0.16403     0.50925   -0.012057      5.5777    -0.72545
+               -0.025187    -0.28828
+Gradients:       0.39321      2.7217      3.9247      1.2627   -0.052972    -0.35173
+                -0.77305    -0.24216 (norm 7.99e-01)
+
+Iteration 3: loglikelihood = -90.1268732835 (steplength = 1)
+Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
+               -0.025182    -0.28859
+Gradients:    -0.0023435   -0.016282   -0.022945   -0.035828  -0.0046080   -0.031870
+               -0.020833  -0.0047358 (norm 9.84e-02)
+
+Iteration 4: loglikelihood = -90.1268732835 (steplength = 1)
+Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
+               -0.025182    -0.28859
+Gradients:    8.4411e-07  5.9058e-06  8.4980e-06 -5.9318e-06  6.5282e-07  4.5627e-06
+              5.0566e-06 -2.2940e-07 (norm 1.45e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -90.1268732835 (steplength = 1)
+Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
+               -0.025182    -0.28859
+Gradients:   -6.4115e-14 -4.4764e-13 -6.1950e-13 -1.3709e-12 -6.5947e-14 -4.7073e-13
+             -4.8272e-13 -3.0781e-14 (norm 4.28e-07)
+
+Gradient within tolerance (1e-05)
+
+Model 4: Bivariate probit, using observations 1-95 (n = 93)
+Missing or incomplete observations dropped: 2
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+ private:
+  const      -5.09969      4.89462      -1.042    0.2975 
+  logptax    -0.164221     0.663930     -0.2473   0.8046 
+  loginc      0.509460     0.532980      0.9559   0.3391 
+  years      -0.0120746    0.0260395    -0.4637   0.6429 
+
+ vote:
+  const       5.57719      3.29826       1.691    0.0908  *
+  logptax    -0.725395     0.467143     -1.553    0.1205 
+  years      -0.0251818    0.0144657    -1.741    0.0817  *
+
+Log-likelihood      -90.12687   Akaike criterion     196.2537
+Schwarz criterion    216.5145   Hannan-Quinn         204.4345
+
+rho = -0.280835
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 1.43446
+  with p-value = 0.231039
+
+Done

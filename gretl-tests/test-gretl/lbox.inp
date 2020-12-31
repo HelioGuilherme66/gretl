@@ -1,0 +1,4 @@
+open data9-7
+scalar order = 4
+scalar LB = ljungbox(diff(PRIME), order)
+printf "Q'(%d) = %g [%.3f]\n", order, LB, pvalue(X, order, LB)

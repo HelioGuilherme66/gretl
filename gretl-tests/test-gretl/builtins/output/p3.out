@@ -1,0 +1,43 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 09:59
+? run p3.inp
+ /home/cottrell/stats/test-gretl/builtins/p3.inp
+
+Read datafile /home/cottrell/stats/test-gretl/builtins/pizza4.gdt
+periodicity: 1, maxobs: 40
+observations range: 1 to 40
+
+Listing 8 variables:
+  0) const      1) pizza      2) female     3) hs         4) college  
+  5) grad       6) income     7) age      
+
+m (4 x 5)
+
+      female      college        count        pizza       income 
+      0.0000       0.0000       12.000       260.67       47.883 
+      0.0000       1.0000       7.0000       335.14       72.057 
+      1.0000       0.0000       13.000       96.231       38.500 
+      1.0000       1.0000       8.0000       117.12       81.575 
+
+m (6 x 5)
+
+      female         ages        count        pizza       income 
+      0.0000       0.0000       2.0000       361.50       18.200 
+      0.0000       1.0000       12.000       331.75       60.883 
+      0.0000       2.0000       5.0000       154.00       62.400 
+      1.0000       0.0000       1.0000       0.0000       15.600 
+      1.0000       1.0000       16.000       111.56       37.619 
+      1.0000       2.0000       4.0000       100.75       133.90 
+
+m (6 x 5)
+
+     college         ages        count        pizza       income 
+      0.0000       0.0000       3.0000       241.00       17.333 
+      0.0000       1.0000       15.000       192.40       37.007 
+      0.0000       2.0000       7.0000       110.00       66.857 
+      1.0000       0.0000       0.0000          nan          nan 
+      1.0000       1.0000       13.000       221.54       59.800 
+      1.0000       2.0000       2.0000       201.50       189.80 
+

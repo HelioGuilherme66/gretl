@@ -1,0 +1,37 @@
+
+Ox version 4.1a (Linux) (C) J.A. Doornik, 1994-2007
+DPD package version 1.24, object created on 13-04-2008
+
+***** Arellano & Bond (1991), Table 4 (c)
+        (but using different instruments!!)
+
+DPD( 1) Modelling n by 1-step (using abdata.in7)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+On(-1)               0.781004     0.1230     6.35   0.000
+On(-2)              -0.197746    0.06071    -3.26   0.001
+Ow                  -0.677948     0.1515    -4.47   0.000
+Ow(-1)               0.680501     0.1894     3.59   0.000
+Ok                   0.267969    0.09919     2.70   0.007
+Oys                  0.625079     0.1133     5.52   0.000
+Oys(-1)             -0.674051     0.1683    -4.00   0.000
+Constant            0.0245284    0.01073     2.29   0.023
+
+sigma              0.09840311  sigma^2           0.009683173
+RSS              5.8389531761  TSS              16.818448096
+no. of observations       611  no. of parameters           8
+Using robust standard errors
+
+Transformation used:      orthogonal deviations
+Transformed instruments:  ys  ys(-1)
+Level instruments:        Dummies  Gmm("n",2,99)  Gmm("w",2,3)  Gmm("k",2,3)
+
+constant:                 yes  time dummies:               0
+number of individuals     140 (derived from year)
+longest time series         6 [1979 - 1984]
+shortest time series        4 (unbalanced panel)
+
+Wald (joint):    Chi^2(7) =     317.8 [0.000] **
+Wald (dummy):    Chi^2(1) =     5.225 [0.022] *
+Sargan test:    Chi^2(46) =     94.22 [0.000] **

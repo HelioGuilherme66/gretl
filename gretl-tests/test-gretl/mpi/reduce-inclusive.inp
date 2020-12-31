@@ -1,0 +1,24 @@
+set echo off
+set messages off
+mpi
+  # reduce a matrix
+  matrix m
+  if $mpirank == 0
+    m = I(4)
+  endif
+  mpibcast(&m)
+  if $mpirank > 0
+    m *= $mpirank + 1
+  endif
+  mpireduce(&m, vcat)
+  if $mpirank == 0
+    print "master here, reduce via vcat"
+    print m
+  endif
+  # reduce a scalar
+  scalar foo = $mpirank
+  mpireduce(&foo, min)
+  if $mpirank == 0
+    printf "reduced scalar foo = %g\n", foo
+  endif  
+end mpi --np=4

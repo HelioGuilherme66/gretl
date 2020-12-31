@@ -1,0 +1,9 @@
+open test_few.gdt
+panel lnwreal 0 eta eta2 
+panel lnwreal 0 eta eta2 --random
+print codlav year lnwreal diff(lnwreal) --byobs
+arbond 1 0 ; lnwreal
+/*
+diff eta eta2
+arbond 1 0 ; lnwreal d_eta d_eta2
+*/

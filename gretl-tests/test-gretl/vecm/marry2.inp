@@ -1,0 +1,43 @@
+open marry2.xls -q
+set messages off
+
+setobs 1 1947 --time-series
+genr time
+genr I76 = (t == 30)
+lags 1; I76
+genr Sh76 = (t >= 30)
+lags 2; Sh76
+genr Tr76 = time * Sh76
+lags 2; Tr76
+
+# Replicate the VAR estimated by Ox
+genr time 
+var 1 Men Women ; time Sh76 I76 Tr76(-2)
+
+# VECM with restricted broken trend
+vecm 1 2 Men Women; Sh76 I76 ; Tr76_2 --crt
+quit
+coint2 1 Men Women; Sh76 I76; Tr76_2 --crt --verbose
+
+foreign language=Ox
+#include <oxstd.h>
+#import <pcfiml>
+main()
+{
+    decl model = new PcFiml();
+        model.Load("marry2.xls");
+        model.Deterministic(FALSE);
+        model.Append(zeros(1976 - 1947, 1) | ones(2010 - 1976 + 1, 1), "Sh76");
+        model.Append(model.GetVar("Sh76") .* model.GetVar("Trend"), "Tr76");
+        model.Append(diff0(model.GetVar("Sh76"), 1), "I76");
+
+	// Model with restricted broken trend
+        model.Select(Y_VAR, {"Men", 0, 1, "Women", 0, 1});
+        model.Select(X_VAR, {"Trend", 0, 0, "Tr76", 2, 2});
+        model.Select(U_VAR, {"Constant", 0, 0, "Sh76", 0, 0, "I76", 0, 0});
+        model.SetSelSample(-1, 1, -1, 1);
+        model.Estimate();
+        model.Cointegration();
+        delete model;
+}
+end foreign

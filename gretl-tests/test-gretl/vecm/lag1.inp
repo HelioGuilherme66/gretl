@@ -1,0 +1,3 @@
+open denmark
+coint2 1 1 2 --rc --verbose
+vecm 1 2 1 2 --rc

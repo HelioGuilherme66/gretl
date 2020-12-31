@@ -1,0 +1,10 @@
+open abdata.gdt
+list X = w w(-1) k k(-1)
+list Z = w k
+
+# Blundell & Bond (1998), Table 4: 1976-86 GMM-DIF
+dpanel 1 ; n X const ; GMM(Z,2,99) --time --two-step --dpd
+
+# Blundell & Bond (1998), Table 4: 1976-86 GMM-SYS
+dpanel 1 ; n X const ; GMM(Z,2,99) GMMlevel(Z,1,1) \
+  --time --two-step --dpd --system

@@ -1,0 +1,18 @@
+bundle b1
+b1["mat"] = I(3)
+b1["x"] = 32
+bundle b2
+b2["str"] = "hello"
+b2["num"] = 64
+b1["inside"] = b2
+delete b2
+print b1
+b2 = b1["inside"]
+print b2
+string s = b2["str"]
+s
+
+
+
+
+

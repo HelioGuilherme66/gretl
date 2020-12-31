@@ -1,0 +1,308 @@
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='MBD00115C7B'
+pps_compare_func: ret=104
+pps_compare_func: a='DocumentSummaryInformation', b='MBD00115C7B'
+pps_compare_func: ret=104
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='MBD0011789A', b='MBD00115C7B'
+pps_compare_func: ret=-2
+pps_compare_func: a='ObjInfo', b='CompObj'
+pps_compare_func: ret=-2
+pps_compare_func: a='Equation Native', b='ObjInfo'
+pps_compare_func: ret=-98
+pps_compare_func: a='Ole', b='Equation Native'
+pps_compare_func: ret=100
+pps_compare_func: a='Ole', b='ObjInfo'
+pps_compare_func: ret=2
+pps_compare_func: a='Ole', b='CompObj'
+pps_compare_func: ret=-12
+pps_compare_func: a='Workbook', b='MBD0011789A'
+pps_compare_func: ret=-10
+pps_compare_func: a='CompObj', b='Workbook'
+pps_compare_func: ret=118
+pps_compare_func: a='CompObj', b='MBD0011789A'
+pps_compare_func: ret=108
+pps_compare_func: a='CompObj', b='MBD00115C7B'
+pps_compare_func: ret=108
+pps_compare_func: a='CompObj', b='SummaryInformation'
+pps_compare_func: ret=4
+pps_compare_func: a='CompObj', b='DocumentSummaryInformation'
+pps_compare_func: ret=4
+pps_compare_func: a='ObjInfo', b='CompObj'
+pps_compare_func: ret=-2
+pps_compare_func: a='Equation Native', b='ObjInfo'
+pps_compare_func: ret=-98
+pps_compare_func: a='Ole', b='Equation Native'
+pps_compare_func: ret=100
+pps_compare_func: a='Ole', b='ObjInfo'
+pps_compare_func: ret=2
+pps_compare_func: a='Ole', b='CompObj'
+pps_compare_func: ret=-12
+pps_compare_func: a='SummaryInformation', b='MBD00115C7B'
+pps_compare_func: ret=104
+pps_compare_func: a='DocumentSummaryInformation', b='MBD00115C7B'
+pps_compare_func: ret=104
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='MBD0011789A', b='MBD00115C7B'
+pps_compare_func: ret=-2
+pps_compare_func: a='ObjInfo', b='CompObj'
+pps_compare_func: ret=-2
+pps_compare_func: a='Equation Native', b='ObjInfo'
+pps_compare_func: ret=-98
+pps_compare_func: a='Ole', b='Equation Native'
+pps_compare_func: ret=100
+pps_compare_func: a='Ole', b='ObjInfo'
+pps_compare_func: ret=2
+pps_compare_func: a='Ole', b='CompObj'
+pps_compare_func: ret=-12
+pps_compare_func: a='Workbook', b='MBD0011789A'
+pps_compare_func: ret=-10
+pps_compare_func: a='CompObj', b='Workbook'
+pps_compare_func: ret=118
+pps_compare_func: a='CompObj', b='MBD0011789A'
+pps_compare_func: ret=108
+pps_compare_func: a='CompObj', b='MBD00115C7B'
+pps_compare_func: ret=108
+pps_compare_func: a='CompObj', b='SummaryInformation'
+pps_compare_func: ret=4
+pps_compare_func: a='CompObj', b='DocumentSummaryInformation'
+pps_compare_func: ret=4
+pps_compare_func: a='ObjInfo', b='CompObj'
+pps_compare_func: ret=-2
+pps_compare_func: a='Equation Native', b='ObjInfo'
+pps_compare_func: ret=-98
+pps_compare_func: a='Ole', b='Equation Native'
+pps_compare_func: ret=100
+pps_compare_func: a='Ole', b='ObjInfo'
+pps_compare_func: ret=2
+pps_compare_func: a='Ole', b='CompObj'
+pps_compare_func: ret=-12
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='Book'
+pps_compare_func: ret=-21
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='SummaryInformation', b='Book'
+pps_compare_func: ret=93
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Book'
+pps_compare_func: ret=93
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='Book'
+pps_compare_func: ret=-21
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='SummaryInformation', b='Book'
+pps_compare_func: ret=93
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Book'
+pps_compare_func: ret=93
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='Workbook', b='SummaryInformation'
+pps_compare_func: ret=-114
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15
+pps_compare_func: a='SummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='Workbook'
+pps_compare_func: ret=114
+pps_compare_func: a='DocumentSummaryInformation', b='SummaryInformation'
+pps_compare_func: ret=15

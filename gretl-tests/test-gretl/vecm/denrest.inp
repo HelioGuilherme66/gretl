@@ -1,0 +1,19 @@
+open denmark
+
+vecm 2 1 LRM LRY IBO IDE --rc --seasonals
+
+restrict
+  b1 + b2 = 0
+end restrict -v
+
+restrict
+  b1 + b2 = 0
+  b3 + b4 = 0
+end restrict -v
+
+restrict
+  a[3] = 0
+  a[4] = 0
+end restrict -v
+
+

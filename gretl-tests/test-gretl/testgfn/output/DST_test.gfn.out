@@ -1,0 +1,200 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run DST_test.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/DST_test.gfn.inp
+? include ./DST_test.gfn
+ /home/cottrell/stats/test-gretl/testgfn/DST_test.gfn
+DST_test 1.05, 2011-10-01 (Marcin Błażejowski)
+? open http://www.uni.torun.pl/~tkufel/DST/natural_gas.gdt
+
+Read datafile /home/cottrell/.gretl/natural_gas.gdt
+periodicity: 52, maxobs: 747
+observations range: 1994/01/07 to 2008/04/25
+
+Listing 7 variables:
+  0) const    1) Total    2) time     3) s1       4) c1     
+  5) s2       6) c2     
+
+? list DET = time s1 c1 s2 c2
+Generated list DET
+# If we want to replicate results of Dickey's Natural Gas exmaple we just
+# have to run DST_test package with following parameters. We then can see t-statistic
+# -25.14 (which is slightly higher than Dickey's -26.25), value of this statistic
+# corrected to N(0,1) and its p-value.
+? DST_test(Total, 2, 1, DET, 52, 1)
+
+OLS, using observations 1994-01-07:2008-04-25 (T = 747)
+Dependent variable: x
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  time          4.52775     0.0825206    54.87    2.29e-263 ***
+  s1         -850.698      50.2433      -16.93    1.28e-54  ***
+  c1          216.337      50.5150        4.283   2.09e-05  ***
+  s2         -118.483      50.4199       -2.350   0.0190    **
+  c2          130.569      50.3209        2.595   0.0097    ***
+
+SSR = 7.02826e+08, R-squared = 0.817053
+
+
+Function evaluations: 28
+Evaluations of gradient: 5
+
+Model 1: ARMA, using observations 1995-01-06:2008-04-25 (T = 695)
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  phi_1        1.38450     0.0348122     39.77   0.0000   ***
+  phi_2       -0.394723    0.0348447    -11.33   9.53e-30 ***
+
+Mean dependent var  -201.0767   S.D. dependent var   375.1152
+Mean of innovations -2.483937   S.D. of innovations  46.65086
+Log-likelihood      -3659.116   Akaike criterion     7324.231
+Schwarz criterion    7337.863   Hannan-Quinn         7329.502
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0174     0.0000     1.0174     0.0000
+    Root  2           2.4902     0.0000     2.4902     0.0000
+  -----------------------------------------------------------
+
+
+OLS, using observations 1995-01-20:2008-04-25 (T = 693)
+Dependent variable: sd_x
+
+                   coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------------
+  const             1.01882      1.46385        0.6960   0.4867  
+  x_52             -0.954109     0.0379505    -25.14     1.78e-99 ***
+  sd_det_clean_1   -0.0117458    0.0252381     -0.4654   0.6418  
+  sd_det_clean_2    0.0130868    0.0252479      0.5183   0.6044  
+
+SSR = 784787, R-squared = 0.478679
+
+#################################################################
+H0: series is nonstationary at given periodicity t-52 (is SI(1))
+
+DST statistic (corrected):		-24.581250
+p-value of DST:				0.000000000000
+# If we just want to know p-value, we can run the procedure like this:
+p-val: 0.000000
+##########################################################################################
+# In the above examples we filtered the series by AR(2) filter. If we don't know which exactly
+# AR(p) filter to use, however we know that p should be i.e. 1<= p <= 10, then we can run
+# the procedure as below. All possible ARIMA(p,0,0) models will be estimated and for further
+# analysis specification with the lowest BIC criterion will we selected (this order will be
+# printed in summary).
+? DST_test(Total, 10, 0, DET, 52, 1)
+
+OLS, using observations 1994-01-07:2008-04-25 (T = 747)
+Dependent variable: x
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  time          4.52775     0.0825206    54.87    2.29e-263 ***
+  s1         -850.698      50.2433      -16.93    1.28e-54  ***
+  c1          216.337      50.5150        4.283   2.09e-05  ***
+  s2         -118.483      50.4199       -2.350   0.0190    **
+  c2          130.569      50.3209        2.595   0.0097    ***
+
+SSR = 7.02826e+08, R-squared = 0.817053
+
+
+Function evaluations: 28
+Evaluations of gradient: 5
+
+Model 11: ARMA, using observations 1995-01-06:2008-04-25 (T = 695)
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  phi_1        1.38450     0.0348122     39.77   0.0000   ***
+  phi_2       -0.394723    0.0348447    -11.33   9.53e-30 ***
+
+Mean dependent var  -201.0767   S.D. dependent var   375.1152
+Mean of innovations -2.483937   S.D. of innovations  46.65086
+Log-likelihood      -3659.116   Akaike criterion     7324.231
+Schwarz criterion    7337.863   Hannan-Quinn         7329.502
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0174     0.0000     1.0174     0.0000
+    Root  2           2.4902     0.0000     2.4902     0.0000
+  -----------------------------------------------------------
+
+
+OLS, using observations 1995-01-20:2008-04-25 (T = 693)
+Dependent variable: sd_x
+
+                   coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------------
+  const             1.01882      1.46385        0.6960   0.4867  
+  x_52             -0.954109     0.0379505    -25.14     1.78e-99 ***
+  sd_det_clean_1   -0.0117458    0.0252381     -0.4654   0.6418  
+  sd_det_clean_2    0.0130868    0.0252479      0.5183   0.6044  
+
+SSR = 784787, R-squared = 0.478679
+
+#################################################################
+H0: series is nonstationary at given periodicity t-52 (is SI(1))
+
+Final AR(p) order selected by BIC:	2
+DST statistic (corrected):		-24.581250
+p-value of DST:				0.000000000000
+# List of deterministic elements is not mandatory, so we can run the procedure with "null":
+? DST_test(Total, 10, 0, null, 52, 1)
+
+Function evaluations: 32
+Evaluations of gradient: 5
+
+Model 11: ARMA, using observations 1995-01-06:2008-04-25 (T = 695)
+Estimated using Kalman filter (exact ML)
+Dependent variable: x
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  phi_1        1.38428     0.0347604     39.82   0.0000   ***
+  phi_2       -0.397501    0.0347893    -11.43   3.10e-30 ***
+
+Mean dependent var   34.65468   S.D. dependent var   375.3172
+Mean of innovations  0.369729   S.D. of innovations  46.61383
+Log-likelihood      -3658.439   Akaike criterion     7322.878
+Schwarz criterion    7336.510   Hannan-Quinn         7328.149
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.0228     0.0000     1.0228     0.0000
+    Root  2           2.4597     0.0000     2.4597     0.0000
+  -----------------------------------------------------------
+
+
+OLS, using observations 1995-01-20:2008-04-25 (T = 693)
+Dependent variable: sd_x
+
+                   coefficient   std. error    t-ratio    p-value 
+  ----------------------------------------------------------------
+  const             8.13676      1.81790        4.476     8.90e-06 ***
+  x_52             -0.296072     0.0274155    -10.80      3.18e-25 ***
+  sd_det_clean_1   -0.00258445   0.0322933     -0.08003   0.9362  
+  sd_det_clean_2    0.00311615   0.0323012      0.09647   0.9232  
+
+SSR = 1.28809e+06, R-squared = 0.144773
+
+#################################################################
+H0: series is nonstationary at given periodicity t-52 (is SI(1))
+
+Final AR(p) order selected by BIC:	2
+DST statistic (corrected):		-10.730093
+p-value of DST:				0.000000000000
+Done

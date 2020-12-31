@@ -1,0 +1,42 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 15:33
+? run egarch.inp
+ /home/cottrell/stats/test-gretl/ufunc/egarch.inp
+? include gig.gfn
+ /opt/esl/share/gretl/functions/gig/gig.gfn
+gig 2.16, 2014-12-12 (Riccardo "Jack" Lucchetti and Stefano Balietti)
+? open b-g.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/misc/b-g.gdt
+? emod = gig_setup(Y,7,const)
+? set stopwatch
+? gig_estimate(&emod)
+
+Model: EGARCH(1,1) [Nelson] (Normal)
+Dependent variable: Y
+Sample: 1-1974 (T = 1974), VCV method: Robust
+
+    Conditional mean equation
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  const      -0.0116023    0.00872933   -1.329   0.1838 
+
+    Conditional variance equation
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  omega      -0.392162     0.0972717    -4.032   5.54e-05  ***
+  alpha       0.332798     0.0697540     4.771   1.83e-06  ***
+  gamma      -0.0384534    0.0255596    -1.504   0.1325   
+  beta        0.912491     0.0327406    27.87    6.11e-171 ***
+
+	Llik:  -1102.25886	 AIC:   2214.51772
+	BIC:    2242.45681	 HQC:   2224.78316
+
+Elapsed: 1.62925 seconds
+? series h = emod.h
+Generated series h (ID 2)
+Sample var = 0.22113, estimated = 0.223039
+Done

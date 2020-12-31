@@ -1,0 +1,8 @@
+open djclose.gdt
+ldiff djclose
+garch 1 1 ; ld_djclose 0
+dataset addobs 32
+fcasterr 2529 2560
+smpl ; 87-10-19
+garch 1 1 ; ld_djclose 0
+fcasterr 87-10-20 87-12-31

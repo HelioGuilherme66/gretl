@@ -1,0 +1,52 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ols_loop.inp
+ /home/cottrell/stats/test-gretl/ols_loop.inp
+? nulldata 50
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+? set seed 547
+Pseudo-random number generator seeded with 547
+? genr x = 100 * uniform()
+Generated series x (ID 2)
+# open a "progressive" loop, to be repeated 100 times
+? loop 5 --progressive --quiet
+> genr u = 10 * normal()
+>    # construct the dependent variable
+> genr y = 10*x + u
+>    # run OLS regression
+> ols y const x
+>    # grab the coefficient estimates and R-squared
+> genr a = $coeff(const)
+> genr b = $coeff(x)
+> genr r2 = $rsq
+>    # arrange for printing of stats on these
+> print a b r2
+>    # and save the coefficients to file
+> store coeffs.gdt a b
+> endloop
+
+OLS estimates using the 50 observations 1-50
+Statistics for 5 repetitions
+Dependent variable: y
+
+                     mean of      std. dev. of     mean of     std. dev. of
+                    estimated      estimated      estimated      estimated
+      Variable     coefficients   coefficients   std. errors    std. errors
+
+          const      -2.14583        1.45663        3.07178       0.147834
+              x       10.0266      0.0351376      0.0485485     0.00233648
+
+Statistics for 5 repetitions
+
+                  mean       std. dev
+       a      -2.14583        1.45663
+       b       10.0266      0.0351376
+      r2      0.998873    0.000109918
+
+store: using filename coeffs.gdt
+wrote coeffs.gdt
+# now one could open coeffs.gdt and examine the distribution
+Done

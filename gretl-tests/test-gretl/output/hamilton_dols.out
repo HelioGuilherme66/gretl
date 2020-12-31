@@ -1,0 +1,56 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run hamilton_dols.inp
+ /home/cottrell/stats/test-gretl/hamilton_dols.inp
+Read datafile /opt/esl/share/gretl/data/misc/hamilton.gdt
+
+VECM system, lag order 12
+Maximum likelihood estimates, observations 1974:02-1989:10 (T = 189)
+Cointegration rank = 1
+Case 3: Unrestricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+p        1.0000 
+        (0.0000) 
+s     -0.036957 
+      (0.031033) 
+pf     -0.55680 
+      (0.016363) 
+
+alpha (adjustment vectors)
+
+p     -0.021174 
+s      -0.18954 
+pf     0.078252 
+
+Log-likelihood = -477.53156
+Determinant of covariance matrix = 0.031417596
+AIC = 6.2278
+BIC = 8.1317
+HQC = 6.9992
+Cross-equation covariance matrix:
+
+               p            s           pf
+p       0.042731    -0.038613     0.018314 
+s      -0.038613       4.6240     0.057806 
+pf      0.018314     0.057806      0.16927 
+
+determinant = 0.0314176
+
+
+-------------- DOLS ESTIMATION --------------
+
+             coefficient   std. error     z       p-value 
+  --------------------------------------------------------
+  s           0.0693975    0.0314143     2.209   0.0272    **
+  pf          0.549517     0.0166475    33.01    6.04e-239 ***
+
+beta_dols (3 x 1)
+
+      1.0000 
+   -0.069398 
+    -0.54952 
+

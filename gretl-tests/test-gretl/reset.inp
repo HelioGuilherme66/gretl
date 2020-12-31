@@ -1,0 +1,4 @@
+# test for Ramsey's RESET
+open data4-1
+ols price const sqft bedrms
+reset

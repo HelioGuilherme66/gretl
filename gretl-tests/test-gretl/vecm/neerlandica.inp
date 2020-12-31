@@ -1,0 +1,36 @@
+open hendry.gdt
+
+set seed 8976543
+
+# for compatibility, don't use the standard Phillips
+# normalization.
+set vecm_norm diag
+
+smpl 1964:3 1989:2
+vecm 2 2 mp y Dp R ; Dout Doil --crt 
+
+# initial alpha restriction
+restrict
+  a[3] = 0
+  a[4] = 0
+end restrict -v
+
+# beta restriction
+restrict
+  b[1,1] = 1
+  b[1,1] + b[1,2] = 0
+  b[1,5] = 0
+  b[2,2] = 1
+end restrict -v
+
+# beta restriction plus new alpha restr.
+restrict
+  b[1,1] = 1
+  b[1,1] + b[1,2] = 0
+  b[1,5] = 0
+  b[2,2] = 1
+  a[1,2] = 0
+  a[1,3] = 0
+  a[1,4] = 0
+end restrict -v
+

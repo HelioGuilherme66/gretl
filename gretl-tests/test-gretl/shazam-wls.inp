@@ -1,0 +1,15 @@
+open GREENE.txt
+# Scale Income (cf. http://shazam.econ.ubc.ca/intro/glshet1.htm )
+Income = Income / 1000
+# Generate the square of income
+genr Income2 = Income^2
+# Model estimation as reported in Table 14.2 of Greene (1993)
+ols Exp 0 Income Income2 --simple-print
+# Weighted least squares estimation (Greene, Table 14.4, p.398)
+#   Assumption A : Variance is proportional to Income
+genr w = 1/Income
+wls w Exp 0 Income Income2 
+#   Assumption B : Variance is proportional to Income^2
+genr w = 1/Income^2
+wls w Exp 0 Income Income2 
+quit

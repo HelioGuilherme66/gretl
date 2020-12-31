@@ -1,0 +1,48 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run collin.inp
+ /home/cottrell/stats/test-gretl/probit/collin.inp
+? open greene19_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene19_1.gdt
+periodicity: 1, maxobs: 32
+observations range: 1 to 32
+
+Listing 5 variables:
+  0) const    1) GPA      2) TUCE     3) PSI      4) GRADE  
+
+? series x = GPA + TUCE
+Generated series x (ID 5)
+? logit GRADE 0 GPA TUCE PSI x
+
+Model 1: Logit, using observations 1-32
+Dependent variable: GRADE
+Standard errors based on Hessian
+Omitted due to exact collinearity: x
+
+             coefficient   std. error      z        slope  
+  ---------------------------------------------------------
+  const      -13.0213       4.93132     -2.641             
+  GPA          2.82611      1.26294      2.238    0.533859 
+  TUCE         0.0951577    0.141554     0.6722   0.0179755
+  PSI          2.37869      1.06456      2.234    0.456498 
+
+Mean dependent var   0.343750   S.D. dependent var   0.482559
+McFadden R-squared   0.374038   Adjusted R-squared   0.179786
+Log-likelihood      -12.88963   Akaike criterion     33.77927
+Schwarz criterion    39.64221   Hannan-Quinn         35.72267
+
+Number of cases 'correctly predicted' = 26 (81.2%)
+f(beta'x) at mean of independent vars = 0.189
+Likelihood ratio test: Chi-square(3) = 15.4042 [0.0015]
+
+           Predicted
+             0    1
+  Actual 0  18    3
+         1   3    8
+
+Excluding the constant, p-value was highest for variable 2 (TUCE)
+
+Done

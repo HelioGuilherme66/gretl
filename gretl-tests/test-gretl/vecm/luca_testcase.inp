@@ -1,0 +1,31 @@
+open luca_testcase.gdt
+
+set seed 32456799
+
+vecm 2 2 l31 l35 w31 w35 s31 s35 p31 p35 --seas
+
+restrict
+ b[1,1] = 1
+ b[1,2] = 0
+ b[1,4] = 0
+ b[1,6] = 0
+ b[1,8] = 0
+ b[2,1] = 0
+ b[2,2] = 1
+ b[2,3] = 0
+ b[2,5] = 0
+ b[2,7] = 0
+end restrict -v -l 
+
+restrict
+ b[1,1] = 1
+ b[1,2] = 0
+ b[1,4] = 0
+ b[1,6] = 0
+ b[1,8] = 0
+ b[2,1] = 0
+ b[2,2] = 1
+ b[2,3] = 0
+ b[2,5] = 0
+ b[2,7] = 0
+end restrict -v

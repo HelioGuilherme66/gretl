@@ -1,0 +1,31 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run colmult.inp
+ /home/cottrell/stats/test-gretl/matrix/colmult.inp
+? matrix A = { 1, 2, 3; 4, 5, 6}
+Generated matrix A
+? A
+A (2 x 3)
+
+  1   2   3 
+  4   5   6 
+
+? matrix B = {2,3}'
+Generated matrix B
+? B
+B (2 x 1)
+
+  2 
+  3 
+
+? matrix C = B .* A
+Generated matrix C
+? C
+C (2 x 3)
+
+   2    4    6 
+  12   15   18 
+
+Done

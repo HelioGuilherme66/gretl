@@ -1,0 +1,160 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-04 22:30
+? run cars100.inp
+ /home/allin/stats/test-gretl/bfgs/arma/cars100.inp
+? open cars100.gdt
+
+Read datafile /home/allin/stats/test-gretl/bfgs/arma/cars100.gdt
+periodicity: 1, maxobs: 41
+observations range: 1970 to 2010
+
+Listing 4 variables:
+  0) const       1) Cars100     2) DIFF1_Ca    3) DIFF2_Ca  
+
+? set bhhh_toler .0002
+? arima 1 2 1 ; Cars100 --nc --verbose
+
+ARMA initialization: using linear AR model
+
+Iteration 1: loglikelihood = -8.87810930727
+Parameters:    -0.093999  0.00010000
+Gradients:      0.092188    -0.73267 (norm 6.61e-02)
+
+Iteration 2: loglikelihood = -8.85900738238 (steplength = 0.2)
+Parameters:    -0.075561    -0.14643
+Gradients:        2.8331     0.85526 (norm 4.12e-01)
+
+MA root 0 = 0.0634446
+MA estimate(s) out of bounds
+Iteration 3: loglikelihood = -8.73382755675 (steplength = 0.04)
+Parameters:     0.014114    -0.29938
+Gradients:        3.5812      1.3692 (norm 4.80e-01)
+
+MA root 0 = 0.0493443
+MA estimate(s) out of bounds
+MA root 0 = 0.769662
+MA estimate(s) out of bounds
+Iteration 4: loglikelihood = -8.63648918347 (steplength = 0.04)
+Parameters:      0.12361    -0.46748
+Gradients:        4.6452      3.0881 (norm 1.00e+00)
+
+Iteration 5: loglikelihood = -8.42436667587 (steplength = 1)
+Parameters:      0.20721    -0.51314
+Gradients:        3.3369      2.2296 (norm 9.58e-01)
+
+Iteration 6: loglikelihood = -8.19332806476 (steplength = 1)
+Parameters:      0.41392    -0.62180
+Gradients:     -0.082867    -0.35152 (norm 3.56e-01)
+
+Iteration 7: loglikelihood = -8.19256951515 (steplength = 0.008)
+Parameters:      0.41325    -0.62462
+Gradients:      0.055896    -0.18104 (norm 2.61e-01)
+
+Iteration 8: loglikelihood = -8.18910970828 (steplength = 0.2)
+Parameters:      0.44335    -0.64967
+Gradients:     -0.052153   -0.089603 (norm 2.02e-01)
+
+Iteration 9: loglikelihood = -8.18901781021 (steplength = 1)
+Parameters:      0.44623    -0.65364
+Gradients:     0.0073732    0.011165 (norm 7.28e-02)
+
+Iteration 10: loglikelihood = -8.18901661985 (steplength = 1)
+Parameters:      0.44604    -0.65330
+Gradients:   -6.1995e-05 -0.00012541 (norm 7.40e-03)
+
+Iteration 11: loglikelihood = -8.18901661962 (steplength = 1)
+Parameters:      0.44605    -0.65331
+Gradients:    7.1054e-07 -3.5527e-07 (norm 5.24e-04)
+
+
+--- FINAL VALUES: 
+loglikelihood = -8.18901661962 (steplength = 0.04)
+Parameters:      0.44605    -0.65331
+Gradients:    7.1054e-07 -3.5527e-07 (norm 5.24e-04)
+
+
+Function evaluations: 23
+Evaluations of gradient: 11
+
+Model 1: ARIMA, using observations 1972-2002 (T = 31)
+Estimated using Kalman filter (exact ML)
+Dependent variable: (1-L)^2 Cars100
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  phi_1        0.446049     0.408011     1.093   0.2743 
+  theta_1     -0.653307     0.336996    -1.939   0.0525  *
+
+Mean dependent var   0.050097   S.D. dependent var   0.324981
+Mean of innovations  0.077768   S.D. of innovations  0.314674
+Log-likelihood      -8.189017   Akaike criterion     22.37803
+Schwarz criterion    26.67999   Hannan-Quinn         23.78037
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           2.2419     0.0000     2.2419     0.0000
+  MA
+    Root  1           1.5307     0.0000     1.5307     0.0000
+  -----------------------------------------------------------
+
+? arima 0 2 1 ; Cars100 --conditional --nc --verbose
+
+ARMA initialization: small MA values
+
+Iteration 1: loglikelihood = -9.01146460920 (steplength = 0.5)
+Parameters:    -0.045918
+Gradients:      -0.18407 (norm 9.19e-02)
+
+Iteration 2: loglikelihood = -8.89143631132 (steplength = 1)
+Parameters:     -0.11781
+Gradients:      -0.14379 (norm 1.30e-01)
+
+Iteration 3: loglikelihood = -8.75872232967 (steplength = 1)
+Parameters:     -0.19227
+Gradients:     -0.074461 (norm 1.20e-01)
+
+Iteration 4: loglikelihood = -8.69218552512 (steplength = 1)
+Parameters:     -0.20858
+Gradients:     -0.016303 (norm 5.83e-02)
+
+Iteration 5: loglikelihood = -8.68784308057 (steplength = 1)
+Parameters:     -0.21449
+Gradients:    -0.0059169 (norm 3.56e-02)
+
+Iteration 6: loglikelihood = -8.68723274306 (steplength = 1)
+Parameters:     -0.21682
+Gradients:    -0.0023236 (norm 2.24e-02)
+
+
+--- FINAL VALUES: 
+loglikelihood = -8.68723274306 (steplength = 1)
+Parameters:     -0.21682
+Gradients:    -0.0023236 (norm 2.24e-02)
+
+Function evaluations: 12
+Evaluations of gradient: 6
+
+Model 2: ARIMA, using observations 1972-2002 (T = 31)
+Estimated using BHHH method (conditional ML)
+Dependent variable: (1-L)^2 Cars100
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  theta_1     -0.216817     0.201849    -1.074   0.2828 
+
+Mean dependent var   0.050097   S.D. dependent var   0.324981
+Mean of innovations  0.064499   S.D. of innovations  0.320232
+Log-likelihood      -8.687233   Akaike criterion     21.37447
+Schwarz criterion    24.24244   Hannan-Quinn         22.30935
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  MA
+    Root  1           4.6122     0.0000     4.6122     0.0000
+  -----------------------------------------------------------
+
+Done

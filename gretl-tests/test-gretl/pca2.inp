@@ -1,0 +1,19 @@
+open data4-10
+# do PCA using raw variables
+pca 2 3 4
+pca 2 3 4 -c
+# standardize the variables
+genr sC = (CATHOL-mean(CATHOL)) / sd(CATHOL)
+genr sP = (PUPIL-mean(PUPIL)) / sd(PUPIL)
+genr sW = (WHITE-mean(WHITE)) / sd(WHITE)
+# show correlation and covariance matrices of standardized vars
+matrix M = { sC, sP, sW }
+matrix V = mcorr(M)
+V
+matrix V = mcov(M)
+V
+# do PCA using standardized vars
+pca sC sP sW
+pca sC sP sW -c
+
+

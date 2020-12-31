@@ -1,0 +1,67 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run biprobit.inp
+ /opt/esl/share/gretl/scripts/misc/biprobit.inp
+# A simplified version of the bivariate probit model estimated
+# by William Greene in his working paper "Marginal Effects in the
+# Bivariate Probit Model" (EC-96-11, June 1996)
+#
+# The dependent variable in the first equation is equal to 1 if the
+# respondent has had any major derogatory credit reports, otherwise
+# 0; and in the second equation the dependent variable is 1 if the
+# respondent's application for a credit card was accepted, otherwise
+# 0.
+#
+# The estimates show a strong negative correlation of the disturbance
+# across the two equations, which makes sense: unobserved factors
+# making a derogatory report more likely also make a successful
+# credit-card application less likely.
+? open greene25_1.gdt
+
+Read datafile /opt/esl/share/gretl/data/greene/greene25_1.gdt
+periodicity: 1, maxobs: 1319
+observations range: 1 to 1319
+
+Listing 10 variables:
+  0) const       1) cardhldr    2) majordrg    3) anydrg      4) age       
+  5) income      6) exp_inc     7) avgexp      8) ownrent     9) selfempl  
+
+# regressors for first equation
+? list x1 = const age avgexp
+Generated list x1
+# regressors for second equation
+? list x2 = const age income ownrent selfempl
+Generated list x2
+? biprobit anydrg cardhldr x1 ; x2
+Gradient within tolerance (1e-05)
+
+Model 1: Bivariate probit, using observations 1-1319
+Standard errors based on Hessian
+
+             coefficient    std. error      z      p-value 
+  ---------------------------------------------------------
+ anydrg:
+  const      -1.27448       0.136070      -9.366   7.51e-21 ***
+  age         0.0108521     0.00381405     2.845   0.0044   ***
+  avgexp      0.000344085   0.000131483    2.617   0.0089   ***
+
+ cardhldr:
+  const       0.695534      0.140359       4.955   7.22e-07 ***
+  age        -0.00924682    0.00414828    -2.229   0.0258   **
+  income      0.0767592     0.0233697      3.285   0.0010   ***
+  ownrent     0.348705      0.0796141      4.380   1.19e-05 ***
+  selfempl   -0.260395      0.129342      -2.013   0.0441   **
+
+Log-likelihood      -1220.874   Akaike criterion     2459.748
+Schwarz criterion    2506.410   Hannan-Quinn         2477.243
+
+rho = -0.714603
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 204.066
+  with p-value = 2.70739e-46
+
+Done

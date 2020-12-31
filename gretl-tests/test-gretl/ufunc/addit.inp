@@ -1,0 +1,37 @@
+function void addlist (series y, list list0, list addlist)
+    ols y list0 --quiet
+    aic_min = $aic
+    printf "Baseline        AIC = %g\n", aic_min
+    loop while (nelem(addlist) > 0) --quiet
+       string bestx = null
+       # check each remaining additional regressor
+       loop foreach i addlist --quiet
+          ols y list0 addlist.$i --quiet
+          aic = $aic
+          if (aic < aic_min)
+	     aic_min = aic
+	     string bestx = "$i"
+          endif
+       endloop 
+       if strlen(bestx)
+          printf "Adding %-8s AIC = %g\n", bestx, aic
+          list list0 += addlist.@bestx
+          list addlist -= addlist.@bestx
+       else
+          break
+       endif
+    endloop 
+    printf "\nMinimized AIC = %g, with this model:\n", aic_min 
+    ols y list0
+end function
+
+open data4-10
+list list0 = 0
+list list1 = 2 3 4 5 6 7 8 9
+# list list1 = 9 8 7 6 5 4 3 2
+addlist(ENROLL, list0, list1)
+
+quit
+
+# but compare...
+ols ENROLL 0 CATHOL WHITE INCOME COLLEGE

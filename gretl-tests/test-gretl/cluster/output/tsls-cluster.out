@@ -1,0 +1,149 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:06
+? run tsls-cluster.inp
+ /home/cottrell/stats/test-gretl/cluster/tsls-cluster.inp
+? function matrix stata_reorder (matrix se)
+? nulldata 256
+periodicity: 1, maxobs: 256
+observations range: 1 to 256
+? set seed 897561321
+Pseudo-random number generator seeded with 897561321
+? series y = normal()
+Generated series y (ID 2)
+? series cx = uniform()
+Generated series cx (ID 3)
+? cx = (cx > 0.75)? 3 : (cx > 0.5)? 2 : (cx > 0.25)? 1 : 0
+Replaced series cx (ID 3)
+? nendo = 2
+Generated scalar nendo = 2
+? nexo = 2
+Generated scalar nexo = 2
+? ninst = 3
+Generated scalar ninst = 3
+? list lY = null
+Generated list lY
+? loop i=1..nendo -q
+> series Y$i = normal()
+> lY += Y$i
+> endloop
+? list lX = const
+Generated list lX
+? loop i=1..nexo -q
+> series X$i = normal()
+> lX += X$i
+> endloop
+? list lZ = null
+Generated list lZ
+? loop i=1..ninst -q
+> series Z$i = normal()
+> lZ += Z$i
+> endloop
+? tsls y lY lX ; lX lZ --cluster=cx
+
+Model 1: TSLS, using observations 1-256
+Dependent variable: y
+Instrumented: Y1 Y2 
+Instruments: const X1 X2 Z1 Z2 Z3 
+Standard errors clustered by 4 values of cx
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  const       0.152373     0.148425      1.027    0.3046 
+  Y1         -0.399867     0.857374     -0.4664   0.6409 
+  Y2         -0.353522     0.598527     -0.5907   0.5548 
+  X1         -0.0416443    0.0716913    -0.5809   0.5613 
+  X2          0.0631541    0.0657942     0.9599   0.3371 
+
+Mean dependent var   0.124191   S.D. dependent var   0.937321
+Sum squared resid    347.6911   S.E. of regression   1.176955
+R-squared            0.011073   Adjusted R-squared  -0.004687
+
+Hausman test -
+  Null hypothesis: OLS estimates are consistent
+  Asymptotic test statistic: Chi-square(2) = 0.92275
+  with p-value = 0.630416
+
+Sargan over-identification test -
+  Null hypothesis: all instruments are valid
+  Test statistic: LM = 0.643585
+  with p-value = P(Chi-square(1) > 0.643585) = 0.422416
+
+Weak instrument test - 
+  Cragg-Donald minimum eigenvalue = 0.466734
+  Critical values for TSLS bias relative to OLS:
+
+     bias       5%      10%      20%      30%
+    value     0.00     0.00     0.00     0.00
+
+  Relative bias is probably less than 5%
+
+  Critical values for desired TSLS maximal size, when running
+  tests at a nominal 5% significance level:
+
+     size      10%      15%      20%      25%
+    value    13.43     8.18     6.40     5.45
+
+  Maximal size may exceed 25%
+
+? matrix se = $stderr
+Generated matrix se
+? foreign language=stata --send-data
+?   ivreg y x1 x2 (y1 y2 = z1 z2 z3), cluster(cx)
+?   matrix vcv = e(V)
+?   gretl_export vcv "vcv.mat"
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(10 vars, 256 obs)
+
+. ivreg y x1 x2 (y1 y2 = z1 z2 z3), cluster(cx)
+
+Instrumental variables (2SLS) regression               Number of obs =     256
+                                                       F(  2,     3) =       .
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =       .
+                                                       Root MSE      =   1.177
+
+                                     (Std. Err. adjusted for 4 clusters in cx)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+          y1 |  -.3998673   .8573744    -0.47   0.673    -3.128415    2.328681
+          y2 |  -.3535222   .5985272    -0.59   0.596    -2.258303    1.551258
+          x1 |  -.0416443   .0716913    -0.58   0.602    -.2697981    .1865094
+          x2 |   .0631541   .0657942     0.96   0.408    -.1462325    .2725408
+       _cons |   .1523734   .1484248     1.03   0.380    -.3199807    .6247274
+------------------------------------------------------------------------------
+Instrumented:  y1 y2
+Instruments:   x1 x2 z1 z2 z3
+------------------------------------------------------------------------------
+
+. matrix vcv = e(V)
+
+. gretl_export vcv "vcv.mat"
+
+. 
+end of do-file
+
+? matrix stata_vcv = mread("/home/cottrell/.gretl/vcv.mat")
+Generated matrix stata_vcv
+? stata_se = stata_reorder(sqrt(diag(stata_vcv)))
+Generated matrix stata_se
+? matrix check = se - stata_se
+Generated matrix check
+? print check
+check (5 x 1)
+
+  7.7152e-09 
+  5.1412e-08 
+  1.4276e-08 
+ -3.2855e-10 
+  1.7202e-09 
+
+Done

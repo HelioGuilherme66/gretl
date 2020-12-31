@@ -1,0 +1,71 @@
+
+Ox version 4.04 (Linux) (C) J.A. Doornik, 1994-2006
+DPD package version 1.24, object created on 12-11-2006
+
+***** Arellano & Bond (1991), Table 4 (c)
+        (but using different instruments!!)
+
+DPD( 1) Modelling n by 1 and 2 step (using abdata.in7)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dn(-1)               0.802481     0.1095     7.33   0.000
+Dn(-2)              -0.124673    0.05139    -2.43   0.016
+Dw                  -0.604034     0.1558    -3.88   0.000
+Dw(-1)               0.636892     0.1952     3.26   0.001
+Dk                   0.189096     0.1278     1.48   0.140
+Dys                  0.747422     0.1814     4.12   0.000
+Dys(-1)             -0.776644     0.2534    -3.06   0.002
+Constant            0.0103567    0.01145    0.904   0.366
+T1980              0.00267786    0.01821    0.147   0.883
+T1981              -0.0481666    0.02012    -2.39   0.017
+T1982              -0.0464616    0.02283    -2.04   0.042
+T1983              -0.0204595    0.02815   -0.727   0.468
+T1984             -0.00761499    0.02323   -0.328   0.743
+
+sigma               0.1328737  sigma^2            0.01765541
+sigma levels       0.09395588
+RSS              10.557937717  TSS              12.599978399
+no. of observations       611  no. of parameters          13
+Using robust standard errors
+
+Wald (joint):    Chi^2(7) =     205.7 [0.000] **
+Wald (dummy):    Chi^2(6) =     12.79 [0.046] *
+Wald (time):     Chi^2(6) =     12.79 [0.046] *
+Sargan test:    Chi^2(46) =     96.65 [0.000] **
+
+                  ----   2-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Dn(-1)               0.807430     0.1282     6.30   0.000
+Dn(-2)              -0.113494    0.06290    -1.80   0.072
+Dw                  -0.568624     0.1731    -3.29   0.001
+Dw(-1)               0.640706     0.1909     3.36   0.001
+Dk                   0.183399     0.1727     1.06   0.289
+Dys                  0.859991     0.1847     4.66   0.000
+Dys(-1)             -0.863255     0.3014    -2.86   0.004
+Constant            0.0162528    0.01107     1.47   0.143
+T1980              0.00952686    0.01814    0.525   0.600
+T1981              -0.0557186    0.02091    -2.67   0.008
+T1982              -0.0558584    0.02355    -2.37   0.018
+T1983              -0.0304112    0.02459    -1.24   0.217
+T1984              -0.0238494    0.02403   -0.992   0.321
+
+sigma               0.1333639  sigma^2            0.01778593
+sigma levels       0.09430252
+RSS              10.635985534  TSS              12.599978399
+no. of observations       611  no. of parameters          13
+Using finite sample corrected standard errors
+
+Transformation used:      first differences
+Transformed instruments:  ys  ys(-1)
+Level instruments:        Dummies  Gmm("n",2,99)  Gmm("w",2,3)  Gmm("k",2,3)
+
+constant:                 yes  time dummies:               5
+number of individuals     140 (derived from year)
+longest time series         6 [1979 - 1984]
+shortest time series        4 (unbalanced panel)
+
+Wald (joint):    Chi^2(7) =     170.7 [0.000] **
+Wald (dummy):    Chi^2(6) =     18.37 [0.005] **
+Wald (time):     Chi^2(6) =     18.37 [0.005] **
+Sargan test:    Chi^2(46) =     58.71 [0.099]

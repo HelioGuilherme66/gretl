@@ -1,0 +1,85 @@
+open brand_cassola.gdt
+set echo off
+set messages off
+
+# perform a few transformations
+m_p = m_p*100
+y = y*100
+infl = infl/4
+rs = rs/4
+rl = rl/4
+
+# replicate table 4, page 824
+vecm 2 3 m_p infl rl rs y -q
+ll0 = $lnl
+
+restrict --full
+  b[1,1] = 1
+  b[1,2] = 0
+  b[1,4] = 0
+  b[2,1] = 0
+  b[2,2] = 1
+  b[2,4] = 0
+  b[2,5] = 0
+  b[3,1] = 0
+  b[3,2] = 0
+  b[3,3] = 1
+  b[3,4] = -1
+  b[3,5] = 0
+end restrict
+genr ll1 = $rlnl
+
+restrict -l
+  b[1,5] = -1
+end restrict
+ll_uie = $rlnl
+
+restrict -l
+  b[2,3] = -1
+end restrict
+ll_hfh = $rlnl
+
+# replicate table 5, page 824
+
+printf "Testing zero restrictions in cointegration space:\n"
+printf "  LR-test, rank = 3: chi^2(3) = %6.4f [%6.4f]\n", 2*(ll0-ll1), \
+	pvalue(X, 3, 2*(ll0-ll1))
+
+printf "Unit income elasticity: LR-test, rank = 3:\n"
+printf "  chi^2(4) = %g [%6.4f]\n", 2*(ll0-ll_uie), \
+	pvalue(X, 4, 2*(ll0-ll_uie))
+
+printf "Homogeneity in the Fisher hypothesis:\n"
+printf "  LR-test, rank = 3: chi^2(4) = %6.3f [%6.4f]\n", 2*(ll0-ll_hfh), \
+	pvalue(X, 4, 2*(ll0-ll_hfh))
+
+# replicate 1st column of table 6, page 825
+
+restrict -l
+  a1 = 0
+end restrict
+ts_m = 2*(ll0 - $rlnl)
+
+restrict -l
+  a2 = 0
+end restrict
+ts_p = 2*(ll0 - $rlnl)
+
+restrict -l
+  a3 = 0
+end restrict
+ts_l = 2*(ll0 - $rlnl)
+
+restrict -l
+  a4 = 0
+end restrict
+ts_s = 2*(ll0 - $rlnl)
+
+restrict -l
+  a5 = 0
+end restrict
+ts_y = 2*(ll0 - $rlnl)
+
+loop foreach i m p l s y --quiet
+  printf "Delta $i\t%6.3f [%6.4f]\n", ts_$i, pvalue(X, 6, ts_$i)
+endloop

@@ -1,0 +1,44 @@
+Hi Jack,
+
+I've now had time to run a fairly large battery of tests on the
+quadratic step-length code for BFGS. I pulled as many BFGS-using
+scripts as I could find (a total of 102) out of my regression-testing
+collection.
+
+The good news is that the new code is mostly stable. In almost all
+cases it produces results that differ from the old code only in
+respect of the expected noise (e.g. coefficients differing at the 5th
+or 6th decimal place). I found just two exceptions: among the GMM
+scripts I'm getting a failure on CKLS.inp, and among the gig tests
+there's a failure on test3.inp. (In GMM there's also a failure on
+hall.inp if your new GMM weights normalization is not invoked, but I'm
+treating that as part of the "package" so I'm not counting hall as a
+failure. In gig test3 the symptom is "stopped after 500 iterations" on
+stderr, and the gig results do not agree with the built-in garch
+results, as they do with the old code.)
+
+The not so good news is that it seems to me the new code is mostly
+slower than the old. I'm attaching a gnumeric workbook with my
+results. They're grouped by the subdirectory in which the test scripts
+are located. The numbers I'm looking at are (a) counts of gradient and
+function evaluations and, probably more relevant, (b) the time taken
+to run each batch of scripts.
+
+The timing tests do not all go one way, but in the examples I have to
+hand the cases where the new code is faster are mostly pretty
+marginal, while in some of the cases where the old code is faster the
+difference is quite substantial. The best case I've found for the new
+code is my set of Kalman scripts: (new time) / (old time) = 0.967. The
+worst case is GMM: (new time) / (old time) = 1.288. Gig is also
+noticeably slower with the new code (ratio 1.112).
+
+The attached results are from my home PC (Fedora 20 64-bit, gretl
+linked against openblas) but I also ran the tests on my Thinkpad (now
+also 64-bit, and also openblas) and they were very similar although
+somewhat slower.
+
+
+
+
+
+

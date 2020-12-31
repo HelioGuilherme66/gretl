@@ -1,0 +1,421 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps7-5.inp
+ /opt/esl/share/gretl/scripts/ps7-5.inp
+# PS7.5, for the application in Section 7.4
+? open data7-2
+
+Read datafile /opt/esl/share/gretl/data/data7-2.gdt
+periodicity: 1, maxobs: 49
+observations range: 1 to 49
+
+Listing 10 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) GENDER      6) RACE        7) CLERICAL    8) MAINT       9) CRAFTS    
+
+? square EDUC EXPER AGE
+Listing 13 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) GENDER      6) RACE        7) CLERICAL    8) MAINT       9) CRAFTS    
+ 10) sq_EDUC    11) sq_EXPER   12) sq_AGE    
+
+# The above generates squares.  The following generate interactions
+? genr ED_GEN=EDUC*GENDER
+Generated series ED_GEN (ID 13)
+? genr ED_RACE=EDUC*RACE
+Generated series ED_RACE (ID 14)
+? genr ED_CLER=EDUC*CLERICAL
+Generated series ED_CLER (ID 15)
+? genr ED_MAINT=EDUC*MAINT
+Generated series ED_MAINT (ID 16)
+? genr ED_CRAFT=EDUC*CRAFTS
+Generated series ED_CRAFT (ID 17)
+? genr AGE_GEN=AGE*GENDER
+Generated series AGE_GEN (ID 18)
+? genr AGE_RACE=AGE*RACE
+Generated series AGE_RACE (ID 19)
+? genr AGE_CLER=AGE*CLERICAL
+Generated series AGE_CLER (ID 20)
+? genr AGE_MAIN=AGE*MAINT
+Generated series AGE_MAIN (ID 21)
+? genr AGE_CRFT=AGE*CRAFTS
+Generated series AGE_CRFT (ID 22)
+? genr EXP_GEN=EXPER*GENDER
+Generated series EXP_GEN (ID 23)
+? genr EXP_RACE=EXPER*RACE
+Generated series EXP_RACE (ID 24)
+? genr EXP_CLER=EXPER*CLERICAL
+Generated series EXP_CLER (ID 25)
+? genr EXP_MAIN=EXPER*MAINT
+Generated series EXP_MAIN (ID 26)
+? genr EXP_CRFT=EXPER*CRAFTS
+Generated series EXP_CRFT (ID 27)
+? genr LWAGE = ln(WAGE)
+Generated series LWAGE (ID 28)
+? list
+Listing 29 variables:
+  0) const       1) WAGE        2) EDUC        3) EXPER       4) AGE       
+  5) GENDER      6) RACE        7) CLERICAL    8) MAINT       9) CRAFTS    
+ 10) sq_EDUC    11) sq_EXPER   12) sq_AGE     13) ED_GEN     14) ED_RACE   
+ 15) ED_CLER    16) ED_MAINT   17) ED_CRAFT   18) AGE_GEN    19) AGE_RACE  
+ 20) AGE_CLER   21) AGE_MAIN   22) AGE_CRFT   23) EXP_GEN    24) EXP_RACE  
+ 25) EXP_CLER   26) EXP_MAIN   27) EXP_CRFT   28) LWAGE     
+
+#  The following is the basic model
+? ols LWAGE const EDUC EXPER AGE
+
+Model 1: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      6.83596       0.203431     33.60      1.62e-33 ***
+  EDUC       0.0645527     0.0167498     3.854     0.0004   ***
+  EXPER      0.0226995     0.00687276    3.303     0.0019   ***
+  AGE        0.000391786   0.00403304    0.09714   0.9230  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    3.156615   S.E. of regression   0.264853
+R-squared            0.327625   Adjusted R-squared   0.282800
+F(3, 45)             7.308992   P-value(F)           0.000429
+Log-likelihood      -2.341143   Akaike criterion     12.68229
+Schwarz criterion    20.24957   Hannan-Quinn         15.55330
+
+Excluding the constant, p-value was highest for variable 4 (AGE)
+
+? genr DFR = $df
+Generated scalar DFR = 45
+? genr ut = $uhat
+Generated series ut (ID 29)
+# Auxiliary regression
+? ols ut const EDUC EXPER AGE GENDER RACE CLERICAL MAINT CRAFTS \
+  sq_EDUC sq_EXPER sq_AGE ED_GEN ED_RACE ED_CLER ED_MAINT ED_CRAFT \
+  AGE_GEN AGE_RACE AGE_CLER AGE_MAIN AGE_CRFT EXP_GEN EXP_RACE \
+  EXP_CLER EXP_MAIN EXP_CRFT
+
+Model 2: OLS, using observations 1-49
+Dependent variable: ut
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const      -0.880132      1.00287       -0.8776    0.3896 
+  EDUC        0.262654      0.139892       1.878     0.0738  *
+  EXPER       0.0259382     0.0354388      0.7319    0.4719 
+  AGE         0.0118379     0.0289855      0.4084    0.6869 
+  GENDER      0.409130      0.449925       0.9093    0.3730 
+  RACE       -0.363925      0.447553      -0.8131    0.4248 
+  CLERICAL    0.367741      0.737429       0.4987    0.6230 
+  MAINT      -0.240810      0.915393      -0.2631    0.7949 
+  CRAFTS      0.108605      0.771793       0.1407    0.8894 
+  sq_EDUC    -0.0221883     0.0108850     -2.038     0.0537  *
+  sq_EXPER   -0.000805344   0.00114279    -0.7047    0.4884 
+  sq_AGE     -0.000237950   0.000314818   -0.7558    0.4578 
+  ED_GEN      0.0699538     0.0470960      1.485     0.1516 
+  ED_RACE     0.0368201     0.0559614      0.6580    0.5174 
+  ED_CLER    -0.0761139     0.0506137     -1.504     0.1468 
+  ED_MAINT   -0.209449      0.130458      -1.605     0.1226 
+  ED_CRAFT   -0.124518      0.0682013     -1.826     0.0815  *
+  AGE_GEN    -0.0150743     0.00983621    -1.533     0.1396 
+  AGE_RACE    0.0104257     0.00998954     1.044     0.3080 
+  AGE_CLER   -0.00409258    0.00961435    -0.4257    0.6745 
+  AGE_MAIN    0.0255003     0.0121315      2.102     0.0472  **
+  AGE_CRFT    0.0114474     0.0118198      0.9685    0.3433 
+  EXP_GEN    -0.00475233    0.0177631     -0.2675    0.7915 
+  EXP_RACE   -0.0228590     0.0246371     -0.9278    0.3636 
+  EXP_CLER   -0.00771405    0.0205717     -0.3750    0.7113 
+  EXP_MAIN   -0.00184645    0.0272268     -0.06782   0.9465 
+  EXP_CRFT    0.0183677     0.0188367      0.9751    0.3401 
+
+Mean dependent var   0.000000   S.D. dependent var   0.256443
+Sum squared resid    0.574714   S.E. of regression   0.161627
+R-squared            0.817934   Adjusted R-squared   0.602764
+F(26, 22)            3.801345   P-value(F)           0.001124
+Log-likelihood       39.39175   Akaike criterion    -24.78350
+Schwarz criterion    26.29565   Hannan-Quinn        -5.404140
+
+Excluding the constant, p-value was highest for variable 26 (EXP_MAIN)
+
+# Coefficients etc. for above are same as those in kitchen sink model
+? genr DFU = $df
+Generated scalar DFU = 22
+# compute the number of restrictions, LM statistic, and pvalue
+? genr NR = DFR - DFU
+Generated scalar NR = 23
+? genr LM = $nrsq
+Generated scalar LM = 40.0787
+? pvalue X NR LM
+Chi-square(23): area to the right of 40.0787 = 0.0150597
+(to the left: 0.98494)
+#  The following is Model 1 in Table 7.5
+? ols LWAGE const EDUC EXPER AGE GENDER RACE sq_EDUC sq_EXPER sq_AGE \
+  ED_GEN ED_CLER ED_MAINT ED_CRAFT AGE_GEN AGE_RACE AGE_MAIN \
+  AGE_CRFT EXP_RACE EXP_CRFT
+
+Model 3: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error     t-ratio    p-value 
+  ------------------------------------------------------------
+  const       6.25809       0.526822      11.88       7.19e-13 ***
+  EDUC        0.292364      0.0873446      3.347      0.0022   ***
+  EXPER       0.0451384     0.0215476      2.095      0.0447   **
+  AGE         0.00465174    0.0212664      0.2187     0.8283  
+  GENDER      0.186279      0.277777       0.6706     0.5076  
+  RACE        0.000890229   0.235044       0.003788   0.9970  
+  sq_EDUC    -0.0179239     0.00623551    -2.874      0.0074   ***
+  sq_EXPER   -0.000849885   0.000774005   -1.098      0.2809  
+  sq_AGE     -0.000153993   0.000243452   -0.6325     0.5318  
+  ED_GEN      0.0665016     0.0303496      2.191      0.0363   **
+  ED_CLER    -0.0611022     0.0104576     -5.843      2.17e-06 ***
+  ED_MAINT   -0.227905      0.0646835     -3.523      0.0014   ***
+  ED_CRAFT   -0.116883      0.0303072     -3.857      0.0006   ***
+  AGE_GEN    -0.0108096     0.00724576    -1.492      0.1462  
+  AGE_RACE    0.00720691    0.00639474     1.127      0.2687  
+  AGE_MAIN    0.0206570     0.00808895     2.554      0.0160   **
+  AGE_CRFT    0.0105933     0.00544667     1.945      0.0612   *
+  EXP_RACE   -0.0252511     0.0134251     -1.881      0.0697   *
+  EXP_CRFT    0.0240218     0.0116724      2.058      0.0484   **
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.614734   S.E. of regression   0.143147
+R-squared            0.869059   Adjusted R-squared   0.790494
+F(18, 30)            11.06167   P-value(F)           9.83e-09
+Log-likelihood       37.74246   Akaike criterion    -37.48492
+Schwarz criterion   -1.540333   Hannan-Quinn        -23.84759
+
+Excluding the constant, p-value was highest for variable 6 (RACE)
+
+# omit variables with insiginficant coefficients, a few at a time
+? omit RACE AGE
+Test on Model 3:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    AGE, RACE
+  Test statistic: F(2, 30) = 0.0240473, p-value 0.976258
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 4: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       6.35354       0.270240      23.51     9.30e-22 ***
+  EDUC        0.291541      0.0740727      3.936    0.0004   ***
+  EXPER       0.0458550     0.0206336      2.222    0.0335   **
+  GENDER      0.189805      0.262533       0.7230   0.4749  
+  sq_EDUC    -0.0178817     0.00547374    -3.267    0.0026   ***
+  sq_EXPER   -0.000860112   0.000748035   -1.150    0.2587  
+  sq_AGE     -0.000103100   4.85525e-05   -2.123    0.0415   **
+  ED_GEN      0.0670068     0.0292457      2.291    0.0287   **
+  ED_CLER    -0.0609252     0.0100767     -6.046    9.50e-07 ***
+  ED_MAINT   -0.227267      0.0571798     -3.975    0.0004   ***
+  ED_CRAFT   -0.116986      0.0254814     -4.591    6.50e-05 ***
+  AGE_GEN    -0.0109604     0.00676218    -1.621    0.1149  
+  AGE_RACE    0.00743680    0.00345609     2.152    0.0391   **
+  AGE_MAIN    0.0206678     0.00715772     2.887    0.0069   ***
+  AGE_CRFT    0.0104063     0.00497445     2.092    0.0445   **
+  EXP_RACE   -0.0260343     0.0124965     -2.083    0.0453   **
+  EXP_CRFT    0.0248632     0.0103190      2.409    0.0219   **
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.615720   S.E. of regression   0.138713
+R-squared            0.868849   Adjusted R-squared   0.803273
+F(16, 32)            13.24956   P-value(F)           7.48e-10
+Log-likelihood       37.70321   Akaike criterion    -41.40643
+Schwarz criterion   -9.245482   Hannan-Quinn        -29.20461
+
+Excluding the constant, p-value was highest for variable 5 (GENDER)
+
+? omit GENDER
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for GENDER
+  Test statistic: F(1, 32) = 0.522695, p-value 0.474946
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       6.46797       0.217451      29.74     2.08e-25 ***
+  EDUC        0.265210      0.0640326      4.142    0.0002   ***
+  EXPER       0.0483388     0.0201979      2.393    0.0225   **
+  sq_EDUC    -0.0162928     0.00497683    -3.274    0.0025   ***
+  sq_EXPER   -0.000946530   0.000733063   -1.291    0.2056  
+  sq_AGE     -0.000119233   4.28081e-05   -2.785    0.0088   ***
+  ED_GEN      0.0722386     0.0281305      2.568    0.0149   **
+  ED_CLER    -0.0618742     0.00991831    -6.238    4.79e-07 ***
+  ED_MAINT   -0.214773      0.0541100     -3.969    0.0004   ***
+  ED_CRAFT   -0.111534      0.0241632     -4.616    5.70e-05 ***
+  AGE_GEN    -0.00745516    0.00467960    -1.593    0.1207  
+  AGE_RACE    0.00755979    0.00342685     2.206    0.0345   **
+  AGE_MAIN    0.0192323     0.00682690     2.817    0.0081   ***
+  AGE_CRFT    0.00980393    0.00486858     2.014    0.0523   *
+  EXP_RACE   -0.0258042     0.0124018     -2.081    0.0453   **
+  EXP_CRFT    0.0235321     0.0100798      2.335    0.0258   **
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.625777   S.E. of regression   0.137706
+R-squared            0.866706   Adjusted R-squared   0.806118
+F(15, 33)            14.30492   P-value(F)           2.45e-10
+Log-likelihood       37.30626   Akaike criterion    -42.61252
+Schwarz criterion   -12.34339   Hannan-Quinn        -31.12845
+
+Excluding the constant, p-value was highest for variable 11 (sq_EXPER)
+
+? omit sq_EXPER AGE_GEN
+Test on Model 5:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    sq_EXPER, AGE_GEN
+  Test statistic: F(2, 33) = 1.76468, p-value 0.187018
+  Omitting variables improved 2 of 3 information criteria.
+
+Model 6: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       6.67546       0.187798      35.55     4.66e-29 ***
+  EDUC        0.229853      0.0623926      3.684    0.0008   ***
+  EXPER       0.0221451     0.00824094     2.687    0.0110   **
+  sq_EDUC    -0.0122318     0.00450947    -2.712    0.0103   **
+  sq_AGE     -0.000101416   4.06919e-05   -2.492    0.0176   **
+  ED_GEN      0.0289326     0.0100392      2.882    0.0067   ***
+  ED_CLER    -0.0661573     0.00959337    -6.896    5.20e-08 ***
+  ED_MAINT   -0.164400      0.0464540     -3.539    0.0012   ***
+  ED_CRAFT   -0.0971949     0.0205684     -4.725    3.67e-05 ***
+  AGE_RACE    0.00397542    0.00283559     1.402    0.1697  
+  AGE_MAIN    0.0105408     0.00471249     2.237    0.0318   **
+  AGE_CRFT    0.00651045    0.00395982     1.644    0.1091  
+  EXP_RACE   -0.0130818     0.0104460     -1.252    0.2188  
+  EXP_CRFT    0.0159519     0.00941596     1.694    0.0991   *
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.692704   S.E. of regression   0.140682
+R-squared            0.852451   Adjusted R-squared   0.797646
+F(13, 35)            15.55451   P-value(F)           7.50e-11
+Log-likelihood       34.81684   Akaike criterion    -41.63367
+Schwarz criterion   -15.14819   Hannan-Quinn        -31.58512
+
+Excluding the constant, p-value was highest for variable 24 (EXP_RACE)
+
+? omit EXP_RACE AGE_RACE
+Test on Model 6:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    AGE_RACE, EXP_RACE
+  Test statistic: F(2, 35) = 0.983013, p-value 0.384275
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 7: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       6.68735       0.179065      37.35     5.61e-31 ***
+  EDUC        0.236118      0.0605299      3.901    0.0004   ***
+  EXPER       0.0135265     0.00492864     2.744    0.0093   ***
+  sq_EDUC    -0.0124626     0.00441845    -2.821    0.0077   ***
+  sq_AGE     -6.32152e-05   3.02097e-05   -2.093    0.0433   **
+  ED_GEN      0.0310888     0.00989629     3.141    0.0033   ***
+  ED_CLER    -0.0635395     0.00933266    -6.808    5.11e-08 ***
+  ED_MAINT   -0.144979      0.0438091     -3.309    0.0021   ***
+  ED_CRAFT   -0.107818      0.0190925     -5.647    1.89e-06 ***
+  AGE_MAIN    0.00825706    0.00438991     1.881    0.0679   *
+  AGE_CRFT    0.00788337    0.00382821     2.059    0.0466   **
+  EXP_CRFT    0.0144980     0.00899203     1.612    0.1154  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.731615   S.E. of regression   0.140618
+R-squared            0.844162   Adjusted R-squared   0.797832
+F(11, 37)            18.22060   P-value(F)           1.01e-11
+Log-likelihood       33.47788   Akaike criterion    -42.95577
+Schwarz criterion   -20.25392   Hannan-Quinn        -34.34272
+
+Excluding the constant, p-value was highest for variable 27 (EXP_CRFT)
+
+#  Final model labeled Model 2 in Table 7.5
+? omit EXP_CRFT
+Test on Model 7:
+
+  Null hypothesis: the regression parameter is zero for EXP_CRFT
+  Test statistic: F(1, 37) = 2.59955, p-value 0.115393
+  Omitting variables improved 1 of 3 information criteria.
+
+Model 8: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       6.69328       0.182756      36.62     3.00e-31 ***
+  EDUC        0.220781      0.0610229      3.618    0.0009   ***
+  EXPER       0.0179392     0.00418428     4.287    0.0001   ***
+  sq_EDUC    -0.0110907     0.00442606    -2.506    0.0166   **
+  sq_AGE     -6.71333e-05   3.07390e-05   -2.184    0.0352   **
+  ED_GEN      0.0295996     0.0100583      2.943    0.0055   ***
+  ED_CLER    -0.0616891     0.00945474    -6.525    1.09e-07 ***
+  ED_MAINT   -0.138958      0.0445589     -3.119    0.0035   ***
+  ED_CRAFT   -0.107257      0.0194870     -5.504    2.73e-06 ***
+  AGE_MAIN    0.00758314    0.00446099     1.700    0.0973   *
+  AGE_CRFT    0.0115214     0.00315698     3.649    0.0008   ***
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.783017   S.E. of regression   0.143547
+R-squared            0.833214   Adjusted R-squared   0.789322
+F(10, 38)            18.98362   P-value(F)           7.39e-12
+Log-likelihood       31.81434   Akaike criterion    -41.62868
+Schwarz criterion   -20.81865   Hannan-Quinn        -33.73338
+
+# Model 3 in Table 7.4 -- kitchen sink specification
+? ols LWAGE const EDUC EXPER AGE GENDER RACE CLERICAL MAINT CRAFTS \
+  sq_EDUC sq_EXPER sq_AGE ED_GEN ED_RACE ED_CLER ED_MAINT ED_CRAFT \
+  AGE_GEN AGE_RACE AGE_CLER AGE_MAIN AGE_CRFT EXP_GEN EXP_RACE \
+  EXP_CLER EXP_MAIN EXP_CRFT
+
+Model 9: OLS, using observations 1-49
+Dependent variable: LWAGE
+
+             coefficient    std. error    t-ratio    p-value 
+  -----------------------------------------------------------
+  const       5.95582       1.00287        5.939     5.62e-06 ***
+  EDUC        0.327207      0.139892       2.339     0.0288   **
+  EXPER       0.0486377     0.0354388      1.372     0.1838  
+  AGE         0.0122297     0.0289855      0.4219    0.6772  
+  GENDER      0.409130      0.449925       0.9093    0.3730  
+  RACE       -0.363925      0.447553      -0.8131    0.4248  
+  CLERICAL    0.367741      0.737429       0.4987    0.6230  
+  MAINT      -0.240810      0.915393      -0.2631    0.7949  
+  CRAFTS      0.108605      0.771793       0.1407    0.8894  
+  sq_EDUC    -0.0221883     0.0108850     -2.038     0.0537   *
+  sq_EXPER   -0.000805344   0.00114279    -0.7047    0.4884  
+  sq_AGE     -0.000237950   0.000314818   -0.7558    0.4578  
+  ED_GEN      0.0699538     0.0470960      1.485     0.1516  
+  ED_RACE     0.0368201     0.0559614      0.6580    0.5174  
+  ED_CLER    -0.0761139     0.0506137     -1.504     0.1468  
+  ED_MAINT   -0.209449      0.130458      -1.605     0.1226  
+  ED_CRAFT   -0.124518      0.0682013     -1.826     0.0815   *
+  AGE_GEN    -0.0150743     0.00983621    -1.533     0.1396  
+  AGE_RACE    0.0104257     0.00998954     1.044     0.3080  
+  AGE_CLER   -0.00409258    0.00961435    -0.4257    0.6745  
+  AGE_MAIN    0.0255003     0.0121315      2.102     0.0472   **
+  AGE_CRFT    0.0114474     0.0118198      0.9685    0.3433  
+  EXP_GEN    -0.00475233    0.0177631     -0.2675    0.7915  
+  EXP_RACE   -0.0228590     0.0246371     -0.9278    0.3636  
+  EXP_CLER   -0.00771405    0.0205717     -0.3750    0.7113  
+  EXP_MAIN   -0.00184645    0.0272268     -0.06782   0.9465  
+  EXP_CRFT    0.0183677     0.0188367      0.9751    0.3401  
+
+Mean dependent var   7.454952   S.D. dependent var   0.312741
+Sum squared resid    0.574714   S.E. of regression   0.161627
+R-squared            0.877583   Adjusted R-squared   0.732909
+F(26, 22)            6.065914   P-value(F)           0.000030
+Log-likelihood       39.39175   Akaike criterion    -24.78350
+Schwarz criterion    26.29565   Hannan-Quinn        -5.404140
+
+Excluding the constant, p-value was highest for variable 26 (EXP_MAIN)
+
+Done

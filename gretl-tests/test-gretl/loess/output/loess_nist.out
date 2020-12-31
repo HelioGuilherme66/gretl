@@ -1,0 +1,40 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2015-03-11 14:21
+? run loess_nist.inp
+ /home/cottrell/stats/test-gretl/loess/loess_nist.inp
+? open loess_nist.txt -q
+Read datafile /home/cottrell/stats/test-gretl/loess/loess_nist.txt
+? series yh0 = loess(y, x, 1, 0.33, 0)
+Generated series yh0 (ID 3)
+? series yh1 = loess(y, x, 1, 0.33, 1)
+Generated series yh1 (ID 4)
+? print x y yh0 yh1 -o
+
+              x            y          yh0          yh1
+
+ 1      0.55782      18.6365      20.5930      20.6051
+ 2      2.02173     103.4965     107.1603     105.7176
+ 3      2.57733     150.3539     139.7674     137.3994
+ 4      3.41403     190.5103     174.2630     171.5933
+ 5      4.30141     208.7012     207.2334     206.5844
+ 6      4.74484     213.7114     216.6616     216.5283
+ 7      5.10738     228.4935     220.5445     220.3797
+ 8      6.54117     233.5539     229.8607     229.9000
+ 9      6.72162     234.5505     229.8347     229.8876
+10      7.26006     223.8922     229.4301     229.4969
+11      8.13359     227.6834     226.6045     226.6477
+12      9.12244     223.9198     220.3904     220.4567
+13     11.92967     168.0200     172.3480     172.4999
+14     12.37977     164.9575     163.8417     164.0973
+15     13.27286     152.6111     161.8490     162.1341
+16     14.27675     160.7874     160.3351     160.5195
+17     15.37310     168.5557     160.1920     160.2799
+18     15.64766     152.4266     161.0556     161.2117
+19     18.56054     221.7070     227.3400     226.2567
+20     18.58664     222.6904     227.8985     226.8013
+21     18.75728     243.1883     231.5586     230.3697
+
+? gnuplot y yh0 yh1 x --output=display --with-lines=yh0,yh1
+Done

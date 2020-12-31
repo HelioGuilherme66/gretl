@@ -1,0 +1,29 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bunarg.inp
+ /home/cottrell/stats/test-gretl/bundles/bunarg.inp
+? function void bunarg (bundle b)
+? matrix m = I(3)
+Generated matrix m
+? bundle b1
+? b1["M"] = m
+? m *= 5
+Replaced matrix m
+? bundle b2
+? b2["N"] = m
+? bunarg(b1 + b2)
+tmp (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+tmp (3 x 3)
+
+  5   0   0 
+  0   5   0 
+  0   0   5 
+
+Done

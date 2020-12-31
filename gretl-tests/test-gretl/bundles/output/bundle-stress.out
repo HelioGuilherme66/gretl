@@ -1,0 +1,53 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-01 14:45
+? run bundle-stress.inp
+ /home/cottrell/stats/test-gretl/bundles/bundle-stress.inp
+/* Test 1: add a named matrix to a bundle in pointer mode;
+   then delete the external matrix; then retrieve the
+   bundled matrix. What should happen is that when the external
+   matrix is deleted it is dropped from the stack of user-vars
+   but the underlying matrix is preserved, since gretl detects
+   that it is also present in a bundle.
+*/
+? bundle b
+? matrix m = I(3)
+Generated matrix m
+? b["m"] = &m
+? delete m
+Deleted m
+? eval isnull("m")
+1
+? matrix m2 = b["m"]
+Generated matrix m2
+? print m2
+m2 (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+? clear
+/* Test 2: add a named matrix to a bundle in pointer mode;
+   then delete the bundled matrix; then try printing the
+   external matrix. What should happen is that when the bundled
+   matrix is deleted it is dropped from the bundle contents
+   but the underlying matrix is preserved, since gretl detects
+   that it is also "owned" by a user-var.
+*/
+? bundle b
+? matrix m = I(3)
+Generated matrix m
+? b["m"] = &m
+? delete b["m"]
+? eval inbundle(b, "m")
+0
+? print m
+m (3 x 3)
+
+  1   0   0 
+  0   1   0 
+  0   0   1 
+
+Done

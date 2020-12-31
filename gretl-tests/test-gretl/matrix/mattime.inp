@@ -1,0 +1,30 @@
+function a(matrix X)
+  r = rows(X)
+  return scalar r
+end function
+
+function b(matrix *X)
+  r = rows(X)
+  return scalar r
+end function
+
+set echo off
+set messages off
+X = zeros(2000,2000)
+r = 0
+
+set stopwatch
+loop 100
+  r = a(X)
+endloop
+fa = $stopwatch
+
+set stopwatch
+loop 100
+  r = b(&X)
+endloop
+fb = $stopwatch
+
+printf "Elapsed time:\n\
+\twithout pointers (copy) = %g seconds,\n\
+\twith pointers (no copy) = %g seconds.\n", fa, fb 

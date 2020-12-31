@@ -1,0 +1,42 @@
+open denmark
+
+# unrestricted rank-1 VECM
+vecm 2 1 LRM LRY IBO IDE --rc --seas --quiet
+
+# identified beta restriction, manual init
+matrix BA = {1, -1, 6, -6, -6, -0.2, 0.1, 0.02, 0.03}
+set initvals BA 
+restrict 
+  b1 = 1
+  b1 + b2 = 0
+  b3 + b4 = 0
+end restrict
+
+# identified beta restriction, auto
+set initvals auto 
+restrict 
+  b1 = 1
+  b1 + b2 = 0
+  b3 + b4 = 0
+end restrict
+
+# plus alpha, manual
+matrix BA = {1, -1, 6, -6, -6, -0.2, 0.1, 0, 0}
+set initvals BA 
+restrict 
+  b1 = 1
+  b1 + b2 = 0
+  b3 + b4 = 0
+  a3 = 0
+  a4 = 0
+end restrict
+
+# plus alpha, auto
+set initvals auto
+restrict 
+  b1 = 1
+  b1 + b2 = 0
+  b3 + b4 = 0
+  a3 = 0
+  a4 = 0
+end restrict

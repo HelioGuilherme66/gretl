@@ -1,0 +1,4 @@
+open people.csv
+# join spaces.csv z --data="12. Some name"
+join spaces.csv z --data="Some_name"
+print pid z -o

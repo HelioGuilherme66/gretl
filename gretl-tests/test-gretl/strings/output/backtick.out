@@ -1,0 +1,20 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run backtick.inp
+ /home/cottrell/stats/test-gretl/strings/backtick.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? string fnum = $(ls | wc -l)
+Generated string fnum
+? scalar n
+? sscanf(fnum, "%d", &n)
+There are 58 files in this directory
+? string bessel = $(echo "j(3,10)" | bc -l)
+Generated string bessel
+? scalar j
+? sscanf(bessel, "%lf", &j)
+Bessel function, order 3, of 10 = 0.0583793793051868
+Done

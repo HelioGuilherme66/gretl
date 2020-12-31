@@ -1,0 +1,149 @@
+set echo off
+set messages off
+
+function series GDV(series x, scalar m, scalar s)
+     series den = exp(pi*(m-x)/(s*sqrt(3)))
+     return 1/(1+den)
+end function
+
+function void mprint(matrix b, scalar m, scalar s, matrix V, 
+                     string vnam, scalar SSR, scalar R2)
+  matrix cf = b | {m;s}
+  scalar k = rows(b)
+  matrix se = sqrt(diag(V[1:k+2, 1:k+2]))
+  vnam = vnam ~ ",mu,sigma"
+  cfse = cf ~ se
+  modprint cfse vnam
+  printf "SSR = %g, R-squared = %g\n\n", SSR, R2
+end function
+
+open gretl_plant.gdt -q
+
+# CHOICE here: do we want fixed effects or not?
+scalar FE = 1
+# scalar FE = 0
+
+scalar SSRmin = 1e10
+scalar SSRmax = 0
+scalar optmu
+scalar optsig
+scalar badmu
+scalar badsig
+scalar nvals = 0
+
+# apply scaling (though not for HHI)
+Price /=100
+Domestic_Sales /= 10000
+Export_Sales /= 10000
+Total_import /= 10000
+
+# range and step for mu
+scalar m_min = 0.28
+scalar m_max = 0.501
+scalar m_step = 0.01
+
+# range and step for sigma
+scalar s_min = 0.01
+scalar s_max = 0.201
+scalar s_step = 0.01
+
+# regular regressors: include Cost?
+list X = const Cost Domestic_Sales Export_Sales Soda PCFT Total_import
+string vnam = varname(X)
+# logistic term
+series Log
+# dependent variable
+series y
+
+/**** GRID SEARCH ****/
+
+loop for (mu=m_min; mu<m_max; mu+=m_step) --quiet
+  loop for (sig=s_min; sig<s_max; sig+=s_step) --quiet
+    Log = GDV(HHI, mu, sig)
+    y = Price - Log
+    if FE
+      panel y X --quiet
+    else
+      ols y X --quiet
+    endif
+    SSR = $ess
+    if SSR < SSRmin
+      optmu = mu
+      optsig = sig
+      SSRmin = SSR
+    endif
+    if SSR > SSRmax
+      badmu = mu
+      badsig = sig
+      SSRmax = SSR
+    endif    
+    nvals++
+  endloop
+endloop
+
+printf "*** Estimated via GRID SEARCH\n\n"
+printf "mu in [%g,%g), sigma in [%g,%g)\n", m_min, m_max, 
+  s_min, s_max
+printf "number of points evaluated: %d\n", nvals
+printf "min(SSR): %g for mu = %.3f, sigma = %.3f\n",
+  SSRmin, optmu, optsig
+printf "max(SSR): %g for mu = %.3f, sigma = %.3f\n",
+  SSRmax, badmu, badsig
+
+Log = GDV(HHI, optmu, optsig)
+y = Price - Log
+if FE
+  panel y X
+else
+  ols y X
+endif
+
+/**** NLS ****/
+
+# initialize NLS from grid search results
+scalar m = optmu
+scalar s = optsig
+matrix b = $coeff
+scalar k = nelem(X)
+
+printf "*** Estimated via NLS"
+
+if FE
+  printf " (fixed effects)\n"
+  series u = $unit
+  list D = dummify(u)
+  matrix g = zeros(nelem(D),1)
+  nls Price = lincomb(X,b) + lincomb(D,g) + Log
+     series Log = GDV(HHI, m, s)
+     params b m s g 
+  end nls -q 
+
+  Vg = $vcv[k+3:,k+3:]
+  scalar df = rows(g)
+  scalar WT = qform(g', invpd(Vg))
+else
+  printf " (pooled)\n"
+  nls Price = lincomb(X,b) + Log
+     series Log = GDV(HHI, m, s)
+     params b m s
+  end nls -q
+endif
+
+# print out NLS results with nice formatting
+mprint(b, m, s, $vcv, vnam, $ess, $rsq)
+
+if FE
+    printf "Test for differing group intercepts -\n"
+    printf "  Null hypothesis: The groups have a common intercept\n"
+    printf "  Test statistic: chi2(%d) = %7.3f\n", df, WT
+    printf "  with p-value = P(chi2(%d) > %7.3f) = %g\n\n", \
+      df, WT, pvalue(x,df,WT)
+endif
+
+if m < m_min || m > m_max
+  printf "NLS: mu (%g) is not in [%g,%g)\n", m, m_min, m_max
+endif
+if s < s_min || s > s_max
+  printf "NLS: sigma (%g) is not in [%g,%g)\n", s, s_min, s_max
+endif
+

@@ -1,0 +1,14 @@
+open greene22_2
+genr rat = Z8 - 1
+discrete rat
+
+# probit rat 0 Z1 Z2
+probit rat Z1 Z2
+series zhat = $yhat
+list X = Z1 Z2
+X -= const
+series zchk = {X}*$coeff[1:nelem(X)]
+ols zchk 0 zhat --simple
+
+
+        

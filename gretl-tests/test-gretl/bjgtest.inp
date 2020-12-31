@@ -1,0 +1,19 @@
+open bjg.gdt
+genr idx = t - 1
+genr lg = log(g)
+smpl ; 57:12
+arima 0 1 1 ; 0 1 1 ; lg --nc
+smpl --full
+genr yh = $yhat
+fcast fc
+print lg yh fc -o
+fcasterr 50:1 60:12
+genr dlg = sdiff(diff(lg))
+smpl ; 57:12
+arma 0 1 ; 0 1 ; dlg --nc
+genr yh = $yhat
+genr et = $uhat
+genr plus = yh + et
+print dlg yh et plus -o
+
+

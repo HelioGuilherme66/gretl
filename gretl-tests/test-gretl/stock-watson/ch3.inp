@@ -1,0 +1,36 @@
+# Stock and Watson, ch 3
+#
+# Results for Table 3.1
+#
+open cps_ch3.gdt
+
+genr male = asex=1
+genr m_earn = zeromiss(male * ahe98)
+genr f_earn = zeromiss((1-male) * ahe98)
+
+set echo off
+
+print "1992"
+smpl --restrict year=1992
+printf "males:   mean = %.2f, sd = %.2f\n", mean(m_earn), sd(m_earn)
+printf "females: mean = %.2f, sd = %.2f\n", mean(f_earn), sd(f_earn)
+meantest m_earn f_earn -o
+
+print "1994"
+smpl --restrict --replace year=1994
+printf "males:   mean = %.2f, sd = %.2f\n", mean(m_earn), sd(m_earn)
+printf "females: mean = %.2f, sd = %.2f\n", mean(f_earn), sd(f_earn)
+meantest m_earn f_earn -o
+
+print "1996"
+smpl --restrict --replace year=1996
+printf "males:   mean = %.2f, sd = %.2f\n", mean(m_earn), sd(m_earn)
+printf "females: mean = %.2f, sd = %.2f\n", mean(f_earn), sd(f_earn)
+meantest m_earn f_earn -o
+
+print "1998"
+smpl --restrict --replace year=1998
+printf "males:   mean = %.2f, sd = %.2f\n", mean(m_earn), sd(m_earn)
+printf "females: mean = %.2f, sd = %.2f\n", mean(f_earn), sd(f_earn)
+meantest m_earn f_earn -o
+

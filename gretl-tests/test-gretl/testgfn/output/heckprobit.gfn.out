@@ -1,0 +1,464 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run heckprobit.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/heckprobit.gfn.inp
+? include ./heckprobit.gfn
+ /home/cottrell/stats/test-gretl/testgfn/heckprobit.gfn
+heckprobit 0.1, 2015-05-12 (Claudia Pigini)
+
+Read datafile /opt/esl/share/gretl/data/misc/mroz87.gdt
+periodicity: 1, maxobs: 753
+observations range: 1 to 753
+
+Listing 20 variables:
+  0) const     1) LFP       2) WHRS      3) KL6       4) K618    
+  5) WA        6) WE        7) WW        8) RPWG      9) HHRS    
+ 10) HA       11) HE       12) HW       13) FAMINC   14) MTR     
+ 15) WMED     16) WFED     17) UN       18) CIT      19) AX      
+
+Probit model with sample selection
+Standard errors based on Hessian
+Main equation
+Dependent variable depvar 
+
+             coefficient    std. error       z      p-value
+  ---------------------------------------------------------
+  const      -1.78976       1.16273       -1.539    0.1237 
+  AX         -0.00368836    0.0298969     -0.1234   0.9018 
+  AX2         0.000211024   0.000885762    0.2382   0.8117 
+  WE          0.154833      0.0678984      2.280    0.0226  **
+  HE         -0.0523241     0.0313004     -1.672    0.0946  *
+  AGEDIF     -0.00766000    0.0205404     -0.3729   0.7092 
+  CIT        -0.427041      0.162246      -2.632    0.0085  ***
+
+Selection equation
+Dependent variable LFP 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -4.11762      1.44870       -2.842   0.0045   ***
+  WA          0.183306     0.0680479      2.694   0.0071   ***
+  WA2        -0.00239671   0.000797474   -3.005   0.0027   ***
+  KIDS       -0.453624     0.129729      -3.497   0.0005   ***
+  WE          0.106599     0.0215019      4.958   7.13e-07 ***
+
+Correlation coefficient
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  rho         -0.340462     0.498923    -0.6824   0.4950 
+
+Censored observations 325 (0.431607%)
+
+Log-likelihood        -669.7805  Akaike criterion    1365.5610
+Schwarz criterion     1425.6739  Hannan-Quinn        1388.7195
+Using analytical derivatives
+Iteration 1: loglikelihood = -669.980575460
+Parameters:      -1.8524  -0.0039531  0.00022643     0.16123   -0.054314  -0.0078751
+                -0.44338     -4.3289     0.19216  -0.0024934    -0.43876     0.10704
+                -0.38744
+Gradients:        7.2343      93.314      1669.0      88.208      89.497      19.358
+                  4.8258      1.6369      68.145      3193.7    -0.24016      18.823
+                  6.2475 (norm 2.29e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 2: loglikelihood = -669.976414996 (steplength = 8.192e-10)
+Parameters:      -1.8524  -0.0039531  0.00022780     0.16123   -0.054314  -0.0078751
+                -0.44338     -4.3289     0.19216  -0.0024907    -0.43876     0.10704
+                -0.38744
+Gradients:        6.9672      88.918      1573.3      84.771      86.188      18.735
+                  4.6702    -0.66513     -36.686     -1723.6     -1.6332     -9.1244
+                  6.0169 (norm 2.01e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 3: loglikelihood = -669.931341437 (steplength = 2.048e-08)
+Parameters:      -1.8524  -0.0039508  0.00026892     0.16123   -0.054312  -0.0078746
+                -0.44338     -4.3289     0.19216  -0.0024915    -0.43876     0.10704
+                -0.38744
+Gradients:        5.1127      47.696      534.83      60.623      63.299      14.680
+                  3.5884    -0.39368     -24.808     -1188.2     -1.4037     -6.1161
+                  4.6528 (norm 1.69e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 4: loglikelihood = -669.876893378 (steplength = 1.28e-05)
+Parameters:      -1.8524  -0.0036116  0.00022542     0.16185   -0.053649  -0.0077126
+                -0.44334     -4.3289     0.19217  -0.0024922    -0.43877     0.10705
+                -0.38739
+Gradients:        3.0276      33.844      538.95      31.939      34.625      8.1740
+                  2.3164    -0.54687     -28.063     -1188.4     -1.6302     -8.5915
+                  3.2382 (norm 1.46e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 5: loglikelihood = -669.876233661 (steplength = 6.4e-05)
+Parameters:      -1.8523  -0.0034790  0.00022038     0.16172   -0.053558  -0.0076334
+                -0.44329     -4.3289     0.19186  -0.0024840    -0.43886     0.10681
+                -0.38729
+Gradients:        3.0202      33.661      538.84      31.930      34.511      7.9839
+                  2.3065    0.013353     -16.247     -1188.9    -0.81913    -0.87750
+                  3.2146 (norm 1.29e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 6: loglikelihood = -669.869839015 (steplength = 0.0016)
+Parameters:      -1.8513  0.00051459  0.00011261     0.15668   -0.051311  -0.0052800
+                -0.44155     -4.3286     0.19256  -0.0024947    -0.44121     0.10615
+                -0.38407
+Gradients:        3.0129      28.656      533.04      35.207      35.106      1.4386
+                  2.2684    -0.18545     -20.467     -1176.0    -0.92236     -1.2200
+                  2.9532 (norm 1.34e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 7: loglikelihood = -669.866575737 (steplength = 0.0016)
+Parameters:      -1.8496   0.0018226  7.5217e-05     0.15221   -0.047280  -0.0082031
+                -0.43891     -4.3281     0.19237  -0.0024937    -0.44470     0.10680
+                -0.37939
+Gradients:        3.0640      27.971      527.92      36.670      31.523      9.1319
+                  1.9641    -0.15597     -19.356     -1155.5    -0.66397     -2.1100
+                  2.7761 (norm 1.32e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 8: loglikelihood = -669.858228329 (steplength = 0.0016)
+Parameters:      -1.8480  0.00011830  0.00012502     0.15138   -0.046239  -0.0073154
+                -0.43674     -4.3277     0.19218  -0.0024923    -0.44765     0.10739
+                -0.37533
+Gradients:        3.0690      29.902      527.66      36.962      30.535      7.4081
+                  1.8370    -0.12605     -18.203     -1129.2    -0.42571     -2.9618
+                  2.7031 (norm 1.30e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 9: loglikelihood = -669.840710856 (steplength = 0.0016)
+Parameters:      -1.8443 -0.00043251  0.00013647     0.15202   -0.047429  -0.0076885
+                -0.43219     -4.3267     0.19323  -0.0025076    -0.45375     0.10635
+                -0.36627
+Gradients:        2.9380      29.778      525.83      36.352      30.709      7.9400
+                  1.6220    -0.15489     -18.100     -1065.1    -0.11578    -0.78983
+                  2.4490 (norm 1.27e+00)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+Iteration 10: loglikelihood = -669.838613913 (steplength = 0.0016)
+Parameters:      -1.8394   0.0013367  7.8785e-05     0.15335   -0.050758  -0.0080497
+                -0.42678     -4.3254     0.19139  -0.0024871    -0.46085     0.10986
+                -0.35440
+Gradients:        2.7637      26.792      524.56      35.527      32.905      7.8212
+                  1.4251    0.017714     -12.515     -969.82     0.58441     -5.9465
+                  2.1545 (norm 1.23e+00)
+
+Iteration 11: loglikelihood = -669.830125582 (steplength = 0.04)
+Parameters:      -1.8281  0.00012148  0.00010780     0.15264   -0.051300  -0.0081742
+                -0.42939     -4.3201     0.19001  -0.0024655    -0.44433     0.10990
+                -0.32967
+Gradients:        2.3950      25.670      499.49      33.985      31.383      7.4637
+                  1.4047     0.10006     -8.0326     -738.28    -0.33949     -4.6898
+                  1.5324 (norm 1.14e+00)
+
+Iteration 12: loglikelihood = -669.825836101 (steplength = 0.04)
+Parameters:      -1.8268 -0.00014173  0.00011461     0.15279   -0.051161  -0.0082067
+                -0.43623     -4.3151     0.19003  -0.0024669    -0.44687     0.10978
+                -0.32741
+Gradients:        2.2484      24.440      475.44      32.320      29.842      7.1060
+                  1.6198     0.10861     -6.9945     -671.76    -0.18478     -4.2942
+                  1.4133 (norm 1.10e+00)
+
+Iteration 13: loglikelihood = -669.785896296 (steplength = 0.2)
+Parameters:      -1.8292  -0.0028128  0.00018747     0.15605   -0.052350  -0.0076281
+                -0.42604     -4.2395     0.18829  -0.0024517    -0.45071     0.10749
+                -0.33402
+Gradients:       0.42837      4.3205      84.933      5.8849      5.4192      1.2993
+                 0.11359     0.11437     0.88171     -34.283    -0.11851    -0.15571
+                 0.26055 (norm 4.78e-01)
+
+Iteration 14: loglikelihood = -669.781293436 (steplength = 1)
+Parameters:      -1.8163  -0.0036587  0.00021030     0.15628   -0.052440  -0.0075480
+                -0.42836     -4.1692     0.18573  -0.0024247    -0.45405     0.10670
+                -0.34132
+Gradients:     -0.074330    -0.89239     -16.653     -1.1523     -1.0837    -0.26942
+               -0.048315   -0.012964     -1.3170     -50.133   -0.014221    -0.28783
+               -0.064129 (norm 2.60e-01)
+
+Iteration 15: loglikelihood = -669.780683041 (steplength = 1)
+Parameters:      -1.8035  -0.0037233  0.00021201     0.15565   -0.052393  -0.0075934
+                -0.42794     -4.1360     0.18423  -0.0024076    -0.45408     0.10658
+                -0.34788
+Gradients:     -0.076845    -0.87841     -16.673     -1.1406     -1.0653    -0.25859
+               -0.037795   -0.023280     -1.0820     -38.021  -0.0013436    -0.22335
+               -0.059808 (norm 2.53e-01)
+
+Iteration 16: loglikelihood = -669.780522724 (steplength = 1)
+Parameters:      -1.7918  -0.0036935  0.00021117     0.15496   -0.052334  -0.0076495
+                -0.42721     -4.1171     0.18330  -0.0023967    -0.45370     0.10658
+                -0.35366
+Gradients:     -0.014207    -0.16603     -3.1524    -0.21100    -0.19741   -0.046720
+              -0.0058148  -0.0091412    -0.33037     -13.063 -0.00048830   -0.076090
+               -0.011509 (norm 1.28e-01)
+
+Iteration 17: loglikelihood = -669.780519213 (steplength = 1)
+Parameters:      -1.7901  -0.0036864  0.00021097     0.15485   -0.052325  -0.0076583
+                -0.42706     -4.1172     0.18329  -0.0023965    -0.45363     0.10660
+                -0.35446
+Gradients:    -0.0011612   -0.015795    -0.27845   -0.018302   -0.017902  -0.0043772
+             -0.00051720  -0.0023444   -0.089771     -4.0283 -0.00071857   -0.023387
+              -0.0012713 (norm 5.90e-02)
+
+Iteration 18: loglikelihood = -669.780519082 (steplength = 1)
+Parameters:      -1.7898  -0.0036876  0.00021100     0.15483   -0.052324  -0.0076599
+                -0.42704     -4.1176     0.18330  -0.0023967    -0.45362     0.10660
+                -0.35460
+Gradients:    0.00023038   0.0020649    0.044256   0.0030933   0.0026970  0.00059004
+              7.5114e-05 -0.00025638   -0.011415    -0.57640 -0.00019161  -0.0034112
+              9.8621e-05 (norm 2.17e-02)
+
+Iteration 19: loglikelihood = -669.780519081 (steplength = 1)
+Parameters:      -1.7898  -0.0036882  0.00021102     0.15483   -0.052324  -0.0076600
+                -0.42704     -4.1176     0.18331  -0.0023967    -0.45362     0.10660
+                -0.35461
+Gradients:    4.6772e-05  0.00046063   0.0092939  0.00064702  0.00058232  0.00013214
+              1.6346e-05 -2.0544e-05  -0.0010798   -0.058578 -2.5374e-05 -0.00035456
+              2.6427e-05 (norm 7.38e-03)
+
+Iteration 19: loglikelihood = -669.780519081 (steplength = 1)
+Parameters:      -1.7898  -0.0036883  0.00021102     0.15483   -0.052324  -0.0076600
+                -0.42704     -4.1176     0.18331  -0.0023967    -0.45362     0.10660
+                -0.35461
+Gradients:    4.6772e-05  0.00046063   0.0092939  0.00064702  0.00058232  0.00013214
+              1.6346e-05 -2.0544e-05  -0.0010798   -0.058578 -2.5374e-05 -0.00035456
+              2.6427e-05 (norm 7.38e-03)
+
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+In regard to function heckprobit_loglik (package heckprobit):
+Warning: log: Numerical result out of range
+
+--- FINAL VALUES: 
+loglikelihood = -669.780519081 (steplength = 1.6384e-10)
+Parameters:      -1.7898  -0.0036883  0.00021102     0.15483   -0.052324  -0.0076600
+                -0.42704     -4.1176     0.18331  -0.0023967    -0.45362     0.10660
+                -0.35461
+Gradients:    4.6772e-05  0.00046063   0.0092939  0.00064702  0.00058232  0.00013214
+              1.6346e-05 -2.0544e-05  -0.0010798   -0.058578 -2.5374e-05 -0.00035456
+              2.6427e-05 (norm 7.38e-03)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 97
+Evaluations of gradient: 19
+
+Model 1: ML, using observations 1-753
+ll = heckprobit_loglik(y,X,s,Z,theta)
+QML standard errors
+
+                estimate     std. error       z      p-value 
+  -----------------------------------------------------------
+  theta[1]    -1.78976       1.24292       -1.440    0.1499  
+  theta[2]    -0.00368835    0.0296895     -0.1242   0.9011  
+  theta[3]     0.000211024   0.000886355    0.2381   0.8118  
+  theta[4]     0.154833      0.0743007      2.084    0.0372   **
+  theta[5]    -0.0523241     0.0321363     -1.628    0.1035  
+  theta[6]    -0.00765999    0.0204267     -0.3750   0.7077  
+  theta[7]    -0.427041      0.158582      -2.693    0.0071   ***
+  theta[8]    -4.11762       1.52832       -2.694    0.0071   ***
+  theta[9]     0.183306      0.0717476      2.555    0.0106   **
+  theta[10]   -0.00239671    0.000836730   -2.864    0.0042   ***
+  theta[11]   -0.453624      0.129678      -3.498    0.0005   ***
+  theta[12]    0.106599      0.0209580      5.086    3.65e-07 ***
+  theta[13]   -0.354614      0.632415      -0.5607   0.5750  
+
+Log-likelihood      -669.7805   Akaike criterion     1365.561
+Schwarz criterion    1425.674   Hannan-Quinn         1388.719
+
+Probit model with sample selection
+Robust standard errors
+Main equation
+Dependent variable depvar 
+
+             coefficient    std. error       z      p-value
+  ---------------------------------------------------------
+  const      -1.78976       1.24292       -1.440    0.1499 
+  AX         -0.00368835    0.0296895     -0.1242   0.9011 
+  AX2         0.000211024   0.000886355    0.2381   0.8118 
+  WE          0.154833      0.0743007      2.084    0.0372  **
+  HE         -0.0523241     0.0321363     -1.628    0.1035 
+  AGEDIF     -0.00765999    0.0204267     -0.3750   0.7077 
+  CIT        -0.427041      0.158582      -2.693    0.0071  ***
+
+Selection equation
+Dependent variable LFP 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -4.11762      1.52832       -2.694   0.0071   ***
+  WA          0.183306     0.0717476      2.555   0.0106   **
+  WA2        -0.00239671   0.000836730   -2.864   0.0042   ***
+  KIDS       -0.453624     0.129678      -3.498   0.0005   ***
+  WE          0.106599     0.0209580      5.086   3.65e-07 ***
+
+Correlation coefficient
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  rho         -0.340461     0.559109    -0.6089   0.5426 
+
+Censored observations 325 (0.431607%)
+
+Log-likelihood        -669.7805  Akaike criterion    1365.5610
+Schwarz criterion     1425.6739  Hannan-Quinn        1388.7195
+Probit model with sample selection
+Standard errors based on Hessian
+Main equation
+Dependent variable depvar 
+
+             coefficient    std. error       z      p-value
+  ---------------------------------------------------------
+  const      -1.78976       1.16273       -1.539    0.1237 
+  AX         -0.00368836    0.0298969     -0.1234   0.9018 
+  AX2         0.000211024   0.000885762    0.2382   0.8117 
+  WE          0.154833      0.0678984      2.280    0.0226  **
+  HE         -0.0523241     0.0313004     -1.672    0.0946  *
+  AGEDIF     -0.00766000    0.0205404     -0.3729   0.7092 
+  CIT        -0.427041      0.162246      -2.632    0.0085  ***
+
+Selection equation
+Dependent variable LFP 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -4.11762      1.44870       -2.842   0.0045   ***
+  WA          0.183306     0.0680479      2.694   0.0071   ***
+  WA2        -0.00239671   0.000797474   -3.005   0.0027   ***
+  KIDS       -0.453624     0.129729      -3.497   0.0005   ***
+  WE          0.106599     0.0215019      4.958   7.13e-07 ***
+
+Correlation coefficient
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  rho         -0.340462     0.498923    -0.6824   0.4950 
+
+Censored observations 325 (0.431607%)
+
+Log-likelihood        -669.7805  Akaike criterion    1365.5610
+Schwarz criterion     1425.6739  Hannan-Quinn        1388.7195
+Using analytical derivatives
+Iteration 1: loglikelihood = -669.780519081
+Parameters:      -1.7898  -0.0036884  0.00021102     0.15483   -0.052324  -0.0076600
+                -0.42704     -4.1176     0.18331  -0.0023967    -0.45362     0.10660
+                -0.35461
+Gradients:   -9.6733e-07 -1.6864e-05 -0.00040031 -1.4439e-05 -1.1143e-05 -1.8576e-06
+              8.9394e-08 -1.9553e-06 -9.0804e-05  -0.0035833 -8.0931e-07 -2.5828e-05
+              1.2097e-06 (norm 1.79e-03)
+
+
+--- FINAL VALUES: 
+loglikelihood = -669.780519081 (steplength = 5.24288e-14)
+Parameters:      -1.7898  -0.0036884  0.00021102     0.15483   -0.052324  -0.0076600
+                -0.42704     -4.1176     0.18331  -0.0023967    -0.45362     0.10660
+                -0.35461
+Gradients:   -9.6733e-07 -1.6864e-05 -0.00040031 -1.4439e-05 -1.1143e-05 -1.8576e-06
+              8.9394e-08 -1.9553e-06 -9.0804e-05  -0.0035833 -8.0931e-07 -2.5828e-05
+              1.2097e-06 (norm 1.79e-03)
+
+Tolerance = 1.81899e-12
+
+Function evaluations: 20
+Evaluations of gradient: 1
+
+Model 1: ML, using observations 1-753
+ll = heckprobit_loglik(y,X,s,Z,theta)
+QML standard errors
+
+                estimate     std. error       z      p-value 
+  -----------------------------------------------------------
+  theta[1]    -1.78976       1.24292       -1.440    0.1499  
+  theta[2]    -0.00368836    0.0296895     -0.1242   0.9011  
+  theta[3]     0.000211024   0.000886355    0.2381   0.8118  
+  theta[4]     0.154833      0.0743007      2.084    0.0372   **
+  theta[5]    -0.0523241     0.0321363     -1.628    0.1035  
+  theta[6]    -0.00766000    0.0204267     -0.3750   0.7077  
+  theta[7]    -0.427041      0.158582      -2.693    0.0071   ***
+  theta[8]    -4.11762       1.52832       -2.694    0.0071   ***
+  theta[9]     0.183306      0.0717476      2.555    0.0106   **
+  theta[10]   -0.00239671    0.000836730   -2.864    0.0042   ***
+  theta[11]   -0.453624      0.129678      -3.498    0.0005   ***
+  theta[12]    0.106599      0.0209580      5.086    3.65e-07 ***
+  theta[13]   -0.354614      0.632414      -0.5607   0.5750  
+
+Log-likelihood      -669.7805   Akaike criterion     1365.561
+Schwarz criterion    1425.674   Hannan-Quinn         1388.719
+
+Probit model with sample selection
+Robust standard errors
+Main equation
+Dependent variable depvar 
+
+             coefficient    std. error       z      p-value
+  ---------------------------------------------------------
+  const      -1.78976       1.24292       -1.440    0.1499 
+  AX         -0.00368836    0.0296895     -0.1242   0.9011 
+  AX2         0.000211024   0.000886355    0.2381   0.8118 
+  WE          0.154833      0.0743007      2.084    0.0372  **
+  HE         -0.0523241     0.0321363     -1.628    0.1035 
+  AGEDIF     -0.00766000    0.0204267     -0.3750   0.7077 
+  CIT        -0.427041      0.158582      -2.693    0.0071  ***
+
+Selection equation
+Dependent variable LFP 
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -4.11762      1.52832       -2.694   0.0071   ***
+  WA          0.183306     0.0717476      2.555   0.0106   **
+  WA2        -0.00239671   0.000836730   -2.864   0.0042   ***
+  KIDS       -0.453624     0.129678      -3.498   0.0005   ***
+  WE          0.106599     0.0209580      5.086   3.65e-07 ***
+
+Correlation coefficient
+
+             coefficient   std. error      z      p-value
+  -------------------------------------------------------
+  rho         -0.340462     0.559109    -0.6089   0.5426 
+
+Censored observations 325 (0.431607%)
+
+Log-likelihood        -669.7805  Akaike criterion    1365.5610
+Schwarz criterion     1425.6739  Hannan-Quinn        1388.7195

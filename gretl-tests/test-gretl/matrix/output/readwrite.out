@@ -1,0 +1,39 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run readwrite.inp
+ /home/cottrell/stats/test-gretl/matrix/readwrite.inp
+# write and read w string literals
+? matrix m1 = mnormal(5,3)
+Generated matrix m1
+? mwrite(m1, "test.mat")
+? m2 = mread("test.mat")
+Generated matrix m2
+? m3 = m1 - m2
+Generated matrix m3
+
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+
+# write and read w string variable
+? string mname = "test2.mat"
+Generated string mname
+? matrix m1 = mnormal(5,3)
+Replaced matrix m1
+? mwrite(m1, mname)
+? m2 = mread(mname)
+Replaced matrix m2
+? m3 = m1 - m2
+Replaced matrix m3
+
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+                   0                   0                   0
+
+Done

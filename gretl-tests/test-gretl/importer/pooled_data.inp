@@ -1,0 +1,2 @@
+open pooled_data.xls --coloffset=1
+print -o

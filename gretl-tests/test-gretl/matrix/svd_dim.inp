@@ -1,0 +1,15 @@
+set seed 1234567
+A = mnormal(4,2)
+matrix U
+matrix V
+
+l = svd(A, &U, &V)
+print l
+print U
+print V
+
+a = (U.*l) * V
+print A
+print a
+
+

@@ -1,0 +1,37 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run getQuandl.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/getQuandl.gfn.inp
+? include ./getQuandl.gfn
+ /home/cottrell/stats/test-gretl/testgfn/getQuandl.gfn
+getQuandl 0.62, 2014-10-08 (Yi-Nung Yang)
+? nulldata 50
+periodicity: 1, maxobs: 50
+observations range: 1 to 50
+? setobs 1 1964
+Full data range: 1964 - 2013 (n = 50)
+
+# 台灣、美國、中國名目 GDP per capital in US dollars
+? xlist = getQuandl("TWN_NGDPDPC", null, null, 0, 1, null, 0, null, "")
+URL=http://www.quandl.com/api/v1/datasets/ODA/TWN_NGDPDPC.csv?collapse=yearly&trim_start=1964-01-01&trim_end=2013-12-31&sort_order=asc&auth_token=
+NO Error 0! ---->.
+Generated list xlist
+? xlist = getQuandl("USA_NGDPDPC", null, null, 0, 1, null, 0, null, "")
+URL=http://www.quandl.com/api/v1/datasets/ODA/USA_NGDPDPC.csv?collapse=yearly&trim_start=1964-01-01&trim_end=2013-12-31&sort_order=asc&auth_token=
+NO Error 0! ---->.
+Replaced list xlist
+? xlist = getQuandl("CHN_NGDPDPC", null, null, 0, 1, null, 0, null, "")
+URL=http://www.quandl.com/api/v1/datasets/ODA/CHN_NGDPDPC.csv?collapse=yearly&trim_start=1964-01-01&trim_end=2013-12-31&sort_order=asc&auth_token=
+NO Error 0! ---->.
+Replaced list xlist
+? xlist = getQuandl("JPN_NGDPDPC", null, null, 0, 1, null, 0, null, "")
+URL=http://www.quandl.com/api/v1/datasets/ODA/JPN_NGDPDPC.csv?collapse=yearly&trim_start=1964-01-01&trim_end=2013-12-31&sort_order=asc&auth_token=
+NO Error 0! ---->.
+Replaced list xlist
+? xlist = getQuandl("KOR_NGDPDPC", null, null, 0, 1, null, 0, null, "")
+URL=http://www.quandl.com/api/v1/datasets/ODA/KOR_NGDPDPC.csv?collapse=yearly&trim_start=1964-01-01&trim_end=2013-12-31&sort_order=asc&auth_token=
+NO Error 0! ---->.
+Replaced list xlist
+Done

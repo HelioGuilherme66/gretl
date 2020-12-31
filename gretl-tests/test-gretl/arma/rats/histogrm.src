@@ -1,0 +1,52 @@
+*
+* Syntax:
+*
+* @Histogram( options ) series start end
+*
+* Computes and displays a density historgram for the series.
+*
+* Options:
+*   DISTRIB=[NONE]/NORMAL. For DISTRIB=NORMAL, shows an overlay of the normal
+*    density.
+*
+* Revision Schedule
+*  03/03 Written by Estima.
+*
+procedure Histogram series start end
+type series series
+type integer start end
+*
+option choice distrib 1 none normal
+*
+local integer startl endl
+local series fx dx nx
+local string s
+*
+inquire(series=series) startl>>start endl>>end
+*
+stats(noprint) series startl endl
+*
+clear fx dx nx
+density(maxgrid=25,type=histogram) series startl endl fx dx
+spgraph
+display(store=s) 'Mean' %mean '\\Std Error' sqrt(%variance) '\\Skewness' %skewness '\\Exc Kurtosis' %kurtosis
+if distrib==2 {
+   set nx = 1.0/sqrt(%variance)*%density((fx-%mean)/sqrt(%variance))
+   scatter(style=bargraph,overlay=line,ovsamescale) 2
+   # fx dx
+   # fx nx
+}
+else {
+   scatter(style=bargraph) 1
+   # fx dx
+}
+*
+*  Works only with RATS 5.04 or later. Delete this line if you have an earlier version
+*
+grtext(position=upright) s
+spgraph(done)
+end
+
+
+
+

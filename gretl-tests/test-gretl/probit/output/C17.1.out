@@ -1,0 +1,131 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:13
+? run C17.1.inp
+ /home/cottrell/stats/test-gretl/probit/C17.1.inp
+? open pntsprd.gdt --quiet
+Read datafile /opt/esl/share/gretl/data/wooldridge/pntsprd.gdt
+? set messages off
+# The OLS model
+? ols favwin 0 spread
+
+Model 1: OLS, using observations 1-553
+Dependent variable: favwin
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.576949     0.0282345    20.43     1.67e-69 ***
+  spread      0.0193655    0.00233865    8.281    9.32e-16 ***
+
+Mean dependent var   0.763110   S.D. dependent var   0.425559
+Sum squared resid    88.90382   S.E. of regression   0.401684
+R-squared            0.110672   Adjusted R-squared   0.109058
+F(1, 551)            68.56913   P-value(F)           9.32e-16
+Log-likelihood      -279.2855   Akaike criterion     562.5710
+Schwarz criterion    571.2018   Hannan-Quinn         565.9430
+
+# test of const = 0.5, regular standard error
+? tstat = ($coeff[1] - 0.5) / $stderr[1]
+? pv = 2 * pvalue(t, $df, abs(tstat))
+Using regular standard error --
+ H0: b0 = 0.5: t(551) = 2.72536 [0.00662735]
+
+# and with robust standard error
+? ols favwin 0 spread --robust --quiet
+? tstat = ($coeff[1] - 0.5) / $stderr[1]
+? pv = 2 * pvalue(t, $df, abs(tstat))
+Using robust standard error --
+ H0: b0 = 0.5: t(551) = 2.43073 [0.0153865]
+
+# probability when spread = 10
+? OLSProb = $coeff[1] + $coeff[2] * 10
+OLS: Prob(favwin=1|spread=10) = 0.770604
+# probit model
+? probit favwin 0 spread --p-values
+
+Model 3: Probit, using observations 1-553
+Dependent variable: favwin
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const      -0.0105926    0.103747     -0.1021   0.9187  
+  spread      0.0924630    0.0121811     7.591    3.18e-14 ***
+
+Mean dependent var   0.763110   S.D. dependent var   0.425559
+McFadden R-squared   0.129439   Adjusted R-squared   0.122833
+Log-likelihood      -263.5622   Akaike criterion     531.1244
+Schwarz criterion    539.7551   Hannan-Quinn         534.4963
+
+Number of cases 'correctly predicted' = 422 (76.3%)
+f(beta'x) at mean of independent vars = 0.271
+Likelihood ratio test: Chi-square(1) = 78.3754 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0    0   131
+         1    0   422
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.619795
+  with p-value = 0.733522
+
+# compute probability using the cnorm() function
+? ProbitProb = cnorm($coeff[1] + $coeff[2] * 10)
+Probit: Prob(favwin=1|spread=10) = 0.819651
+# record restricted log-likelihood
+? llr = $lnl
+? list addvars = favhome fav25 und25
+# estimate the unrestricted model
+? probit favwin 0 spread addvars --p-values
+
+Model 4: Probit, using observations 1-553
+Dependent variable: favwin
+Standard errors based on Hessian
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+  const      -0.0551801    0.128763     -0.4285    0.6683  
+  spread      0.0878845    0.0129491     6.787     1.15e-11 ***
+  favhome     0.148575     0.137057      1.084     0.2783  
+  fav25       0.00306796   0.158690      0.01933   0.9846  
+  und25      -0.219808     0.250584     -0.8772    0.3804  
+
+Mean dependent var   0.763110   S.D. dependent var   0.425559
+McFadden R-squared   0.132479   Adjusted R-squared   0.115964
+Log-likelihood      -262.6418   Akaike criterion     535.2835
+Schwarz criterion    556.8603   Hannan-Quinn         543.7134
+
+Number of cases 'correctly predicted' = 420 (75.9%)
+f(beta'x) at mean of independent vars = 0.271
+Likelihood ratio test: Chi-square(4) = 80.2162 [0.0000]
+
+           Predicted
+              0     1
+  Actual 0    4   127
+         1    6   416
+
+Excluding the constant, p-value was highest for variable 6 (fav25)
+
+Test for normality of residual -
+  Null hypothesis: error is normally distributed
+  Test statistic: Chi-square(2) = 0.605849
+  with p-value = 0.738655
+
+# calculate Likelihood Ratio
+? llu = $lnl
+? LR = 2*(llu - llr)
+? df = nelem(addvars)
+? pv = pvalue(X, df, LR)
+LR joint test: chi-square(3) = 1.84084 [0.606088]
+
+# extra: compare result of Wald test
+? omit addvars --wald
+Test on Model 4:
+
+  Null hypothesis: the regression parameters are zero for the variables
+    favhome, fav25, und25
+  Test statistic: F(3, 548) = 0.614673, p-value 0.605709
+

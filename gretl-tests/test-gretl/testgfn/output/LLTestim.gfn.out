@@ -1,0 +1,228 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:38
+? run LLTestim.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/LLTestim.gfn.inp
+? include ./LLTestim.gfn
+ /home/cottrell/stats/test-gretl/testgfn/LLTestim.gfn
+LLTestim 1.2, 2009-08-22 (Ignacio Diaz-Emparanza)
+? open australia.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/australia.gdt
+periodicity: 4, maxobs: 77
+observations range: 1972:1 to 1991:1
+
+Listing 12 variables:
+  0) const    1) PAU      2) PUS      3) E        4) IAU    
+  5) IUS      6) ius2     7) iau2     8) e2       9) lpus   
+ 10) le      11) lpau   
+
+? matrix q
+? list compon = LLTestim(IAU, &q)
+fixed (1 x 3)
+
+  1   1   1 
+
+Function evaluations: 8
+Evaluations of gradient: 2
+In regard to function LLTestim (package LLTestim):
+Warning: norm of gradient = 2.29502
+2
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+In regard to function LLT (package LLTestim):
+Warning: exp: Numerical result out of range
+Function evaluations: 51
+Evaluations of gradient: 36
+In regard to function LLTestim (package LLTestim):
+Warning: exp: Numerical result out of range
+
+Local Linear Trend Model estimation:
+-----------------------------------------
+    q1 =  0.00000,	 Var(eps) = 0.000000E+00
+    sigma* = 		 Var(eta) = 6.466154E-01
+    q2 =  0.00083,	 Var(xi)  = 5.367486E-04
+------------------------------------------
+ 
+Generated list compon
+? print q
+q (3 x 1)
+
+      0.0000 
+      1.0000 
+  0.00083009 
+
+? print compon --byobs
+
+           LLTtrend     LLTslope
+
+1972:1         5.52    0.1348099
+1972:2         5.50    0.1349384
+1972:3         5.20    0.1354279
+1972:4         5.40    0.1358638
+1973:1         5.40    0.1364125
+1973:2         6.42    0.1362278
+1973:3         8.25    0.1346371
+1973:4         8.24    0.1331664
+1974:1         8.25    0.1317980
+1974:2         9.92    0.1291527
+1974:3         9.94    0.1265980
+1974:4         9.15    0.1248042
+1975:1         9.00    0.1232385
+1975:2         9.03    0.1217502
+1975:3         9.44    0.1200227
+1975:4         9.39    0.1184362
+1976:1         9.43    0.1169149
+1976:2         9.41    0.1155072
+1976:3         9.41    0.1141954
+1976:4        10.21    0.1123144
+1977:1        10.21    0.1105265
+1977:2        10.21    0.1088304
+1977:3        10.03    0.1073741
+1977:4         9.50    0.1064468
+1978:1         9.09    0.1059482
+1978:2         9.09    0.1055376
+1978:3         9.00    0.1052893
+1978:4         8.80    0.1052944
+1979:1         9.28    0.1049885
+1979:2        10.00    0.1041720
+1979:3        10.01    0.1034338
+1979:4        10.02    0.1027731
+1980:1        11.20    0.1012182
+1980:2        11.78      0.09927
+1980:3        11.79      0.09739
+1980:4        12.72      0.09482
+1981:1        13.10      0.09201
+1981:2        13.15      0.08924
+1981:3        14.85      0.08513
+1981:4        14.95      0.08101
+1982:1        16.30      0.07584
+1982:2        16.40      0.07064
+1982:3        13.80      0.06767
+1982:4        12.60      0.06574
+1983:1        14.75      0.06209
+1983:2        14.35      0.05882
+1983:3        13.50      0.05630
+1983:4        13.00      0.05424
+1984:1        13.30      0.05198
+1984:2        12.90      0.05010
+1984:3        12.60      0.04851
+1984:4        13.15      0.04650
+1985:1        13.65      0.04411
+1985:2        13.35      0.04201
+1985:3        13.90      0.03949
+1985:4        15.20      0.03592
+1986:1        12.90      0.03429
+1986:2        12.80      0.03277
+1986:3        14.40      0.02995
+1986:4        13.85      0.02761
+1987:1        13.85      0.02530
+1987:2        13.10      0.02363
+1987:3        11.95      0.02293
+1987:4        12.15      0.02209
+1988:1        11.50      0.02180
+1988:2        11.95      0.02116
+1988:3        12.60      0.02000
+1988:4        13.50      0.01810
+1989:1        14.30      0.01556
+1989:2        14.20      0.01311
+1989:3        14.55      0.01039
+1989:4        13.45     0.008580
+1990:1        13.85     0.006450
+1990:2        13.80     0.004367
+1990:3        13.15     0.002827
+1990:4        12.00     0.002245
+1991:1        11.30     0.002245
+
+Done

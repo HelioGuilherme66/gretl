@@ -1,0 +1,49 @@
+function get_abbrev (int c)
+  if c==96
+     string s = "BRN"
+  elif c==116
+     string s = "KHM"
+  elif c==360
+     string s = "IDN"
+  elif c==418
+     string s = "LAO"
+  elif c==458
+     string s = "MYS"
+  elif c==608
+     string s = "PHL"
+  elif c==702
+     string s = "SGP"
+  elif c==764
+     string s = "THA"
+  elif c==704
+     string s = "VNM"
+  endif
+  return string s
+end function
+
+open asean_panel.gdt
+matrix Cmat = {96,116,360,418,458,608,702,764,704}
+matrix X = zeros(55,9)
+
+y = misszero(rgdpl)
+loop j=1..9
+   smpl cid = Cmat[j] --restrict --replace
+   X[,j] = y
+endloop
+
+nulldata 55 --preserve
+setobs 1 1950 --time
+
+string sername, desc
+
+loop j=1..9
+   abb = get_abbrev(Cmat[j])
+   sprintf(sername, "rgdpl_%s", abb)
+   series @sername = X[,j]
+   series @sername = zeromiss(@sername)
+   sprintf(desc, "Real GDP per capita (Laspeyres) for %s", abb)
+   setinfo @sername -d "@desc"
+endloop
+
+print -o
+# store ./asean_rgdpl.gdt rg*

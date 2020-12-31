@@ -1,0 +1,79 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps10-2.inp
+ /opt/esl/share/gretl/scripts/ps10-2.inp
+# PS10.2, using DATA10-2, for Koyck lag model in Example 10.2
+? open data10-2
+
+Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+periodicity: 24, maxobs: 744
+observations range: 1:01 to 31:24
+
+Listing 4 variables:
+  0) const       1) day_hour    2) load        3) temp      
+
+? ols load 0 temp
+
+Model 1: OLS, using observations 1:01-31:24 (T = 744)
+Dependent variable: load
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       3132.37      142.485      21.98     7.10e-83 ***
+  temp         -11.1331      3.19689    -3.482    0.0005   ***
+
+Mean dependent var   2640.058   S.D. dependent var   489.3606
+Sum squared resid    1.75e+08   S.E. of regression   485.7367
+R-squared            0.016082   Adjusted R-squared   0.014756
+F(1, 742)            12.12768   P-value(F)           0.000526
+Log-likelihood      -5656.825   Akaike criterion     11317.65
+Schwarz criterion    11326.87   Hannan-Quinn         11321.21
+rho                  0.918926   Durbin-Watson        0.161993
+
+# generate lagged load
+? genr load1 = load(-1)
+Generated series load1 (ID 4)
+# suppress the first observation and set range to 1.02-31.24
+? smpl 1.02 31.24
+Full data range: 1:01 - 31:24 (n = 744)
+Current sample: 1:02 - 31:24 (n = 743)
+
+# estimate transformed model
+? ols load 0 load1 temp
+
+Model 2: OLS, using observations 1:02-31:24 (T = 743)
+Dependent variable: load
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  const      405.174       70.4926       5.748    1.32e-08  ***
+  load1        0.915869     0.0143796   63.69     1.48e-302 ***
+  temp        -4.14000      1.26091     -3.283    0.0011    ***
+
+Mean dependent var   2640.847   S.D. dependent var   489.2167
+Sum squared resid    26954627   S.E. of regression   190.8538
+R-squared            0.848216   Adjusted R-squared   0.847805
+F(2, 740)            2067.670   P-value(F)           1.1e-303
+Log-likelihood      -4954.638   Akaike criterion     9915.277
+Schwarz criterion    9929.109   Hannan-Quinn         9920.609
+rho                  0.783199   Durbin-Watson        0.434240
+
+# retrieve coefficients
+? genr b0 = $coeff(temp)
+Generated scalar b0 = -4.14
+? genr lambda = $coeff(load1)
+Generated scalar lambda = 0.915869
+# compute long-run multiplier
+? genr lrmult = b0/(1-lambda)
+Generated scalar lrmult = -49.209
+# print values
+? print b0 lambda lrmult
+
+             b0 = -4.1399972
+
+         lambda =  0.91586905
+
+         lrmult = -49.208970
+Done

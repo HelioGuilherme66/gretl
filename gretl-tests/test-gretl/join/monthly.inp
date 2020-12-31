@@ -1,0 +1,4 @@
+nulldata 18
+setobs 12 1989:01
+join monthly.csv x
+print -o

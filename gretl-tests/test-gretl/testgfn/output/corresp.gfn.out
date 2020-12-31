@@ -1,0 +1,151 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:37
+? run corresp.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/corresp.gfn.inp
+? include ./corresp.gfn
+ /home/cottrell/stats/test-gretl/testgfn/corresp.gfn
+corresp 0.11, 2015-02-06 (Riccardo "Jack" Lucchetti)
+? open http://ricardo.ecn.wfu.edu/pub/gretldata/smoking.gdt
+
+Read datafile /home/cottrell/.gretl/smoking.gdt
+periodicity: 1, maxobs: 193
+observations range: 1 to 193
+
+Listing 3 variables:
+  0) const      1) RANK       2) SMOKING  
+
+? xtab RANK SMOKING
+
+Cross-tabulation of RANK (rows) against SMOKING (columns)
+
+       [   1][   2][   3][   4]  TOT.
+  
+[   1]     4     2     3     2     11
+[   2]     4     3     7     4     18
+[   3]    25    10    12     4     51
+[   4]    18    24    33    13     88
+[   5]    10     6     7     2     25
+
+TOTAL     61    45    62    25    193
+
+Pearson chi-square test = 16.4416 (12 df, p-value = 0.171835)
+Warning: Less than of 80% of cells had expected values of 5 or greater.
+? xtab RANK SMOKING --row
+
+Cross-tabulation of RANK (rows) against SMOKING (columns)
+
+       [   1][   2][   3][   4]  TOT.
+  
+[   1]  36.4% 18.2% 27.3% 18.2%    11
+[   2]  22.2% 16.7% 38.9% 22.2%    18
+[   3]  49.0% 19.6% 23.5%  7.8%    51
+[   4]  20.5% 27.3% 37.5% 14.8%    88
+[   5]  40.0% 24.0% 28.0%  8.0%    25
+
+TOTAL   31.6% 23.3% 32.1% 13.0%   193
+
+Pearson chi-square test = 16.4416 (12 df, p-value = 0.171835)
+Warning: Less than of 80% of cells had expected values of 5 or greater.
+# --- canonical example from Greenacre
+? bundle uno = ca_series(RANK, SMOKING)
+? ca_printout(&uno)
+---------------------------------------------------------
+Rows
+---------------------------------------------------------
+                         Mass    Inertia     Perc.
+DESCRIPTIVE STATS:      (x100)     (x100)  Inertia
+
+             RANK_1      5.70     0.2673 (  3.14%)
+             RANK_2      9.33     1.1881 ( 13.95%)
+             RANK_3     26.42     3.8314 ( 44.97%)
+             RANK_4     45.60     2.6269 ( 30.84%)
+             RANK_5     12.95     0.6053 (  7.11%)
+
+Cos^2 Index:           Axis 1  Axis 2  Axis 3
+             RANK_1      9.22   80.03   10.74
+             RANK_2     52.64   46.47    0.89
+             RANK_3     99.90    0.08    0.02
+             RANK_4     94.19    5.79    0.02
+             RANK_5     86.53   13.33    0.14
+
+---------------------------------------------------------
+Columns
+---------------------------------------------------------
+                         Mass    Inertia     Perc.
+DESCRIPTIVE STATS:      (x100)     (x100)  Inertia
+
+          SMOKING_1     31.61     4.9186 ( 57.74%)
+          SMOKING_2     23.32     0.7059 (  8.29%)
+          SMOKING_3     32.12     1.2610 ( 14.80%)
+          SMOKING_4     12.95     1.6335 ( 19.17%)
+
+Cos^2 Index:           Axis 1  Axis 2  Axis 3
+          SMOKING_1     99.40    0.60    0.00
+          SMOKING_2     32.67   65.73    1.60
+          SMOKING_3     98.18    0.14    1.68
+          SMOKING_4     68.44   31.02    0.54
+
+---------------------------------------------------------
+Inertia
+---------------------------------------------------------
+Total inertia =   0.08518986
+axis  1:     0.0748 ( 87.76%, cum.  87.76%)
+axis  2:     0.0100 ( 11.76%, cum.  99.51%)
+axis  3:     0.0004 (  0.49%, cum. 100.00%)
+? ca_plot(&uno, -1, -2)
+? ca_plot(&uno, 3, -2)
+# --- now the same using only matrices and string arrays
+? matrix X = mxtab(RANK, SMOKING)
+Generated matrix X
+? bundle due = ca_matrix(X)
+? due["rlabels"] = strsplit("sen_mgr jnr_mgr sen_emp jun_emp sec")
+? due["clabels"] = strsplit("none light medium heavy")
+? ca_printout(&due)
+---------------------------------------------------------
+Rows
+---------------------------------------------------------
+                         Mass    Inertia     Perc.
+DESCRIPTIVE STATS:      (x100)     (x100)  Inertia
+
+             sen_mgr     5.70     0.2673 (  3.14%)
+             jnr_mgr     9.33     1.1881 ( 13.95%)
+             sen_emp    26.42     3.8314 ( 44.97%)
+             jun_emp    45.60     2.6269 ( 30.84%)
+                 sec    12.95     0.6053 (  7.11%)
+
+Cos^2 Index:           Axis 1  Axis 2  Axis 3
+             sen_mgr     9.22   80.03   10.74
+             jnr_mgr    52.64   46.47    0.89
+             sen_emp    99.90    0.08    0.02
+             jun_emp    94.19    5.79    0.02
+                 sec    86.53   13.33    0.14
+
+---------------------------------------------------------
+Columns
+---------------------------------------------------------
+                         Mass    Inertia     Perc.
+DESCRIPTIVE STATS:      (x100)     (x100)  Inertia
+
+                none    31.61     4.9186 ( 57.74%)
+               light    23.32     0.7059 (  8.29%)
+              medium    32.12     1.2610 ( 14.80%)
+               heavy    12.95     1.6335 ( 19.17%)
+
+Cos^2 Index:           Axis 1  Axis 2  Axis 3
+                none    99.40    0.60    0.00
+               light    32.67   65.73    1.60
+              medium    98.18    0.14    1.68
+               heavy    68.44   31.02    0.54
+
+---------------------------------------------------------
+Inertia
+---------------------------------------------------------
+Total inertia =   0.08518986
+axis  1:     0.0748 ( 87.76%, cum.  87.76%)
+axis  2:     0.0100 ( 11.76%, cum.  99.51%)
+axis  3:     0.0004 (  0.49%, cum. 100.00%)
+? ca_plot(&due, 1, -2)
+? ca_plot(&due, 3, -2)
+Done

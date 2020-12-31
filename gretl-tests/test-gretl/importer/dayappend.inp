@@ -1,0 +1,10 @@
+nulldata 21
+setobs 5 2015-11-02
+append dayfoo.txt
+print -o
+
+# now try the other way
+open dayfoo.txt
+append daybaz.txt
+print -o
+

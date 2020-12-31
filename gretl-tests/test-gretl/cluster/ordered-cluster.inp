@@ -1,0 +1,14 @@
+open greene22_2
+
+probit Z8 0 Z1 Z2 --robust
+probit Z8 0 Z1 Z2 --robust --cluster=Z4
+
+
+foreign language=stata --send-data
+  oprobit z8 z1 z2, vce(robust)
+  oprobit z8 z1 z2, vce(cluster z4)
+end foreign
+
+
+
+

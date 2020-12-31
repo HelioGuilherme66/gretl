@@ -1,0 +1,18 @@
+nulldata 200
+
+# generate x and y with ties
+set seed 321321375
+genr x = int(100 * uniform())
+genr y = int(100 * uniform())
+corr x y
+corr x y --spearman
+corr x y --kendall
+
+# generate x and y (probably) without ties
+set seed 321321375
+genr x = 10 + normal()
+genr y = 10 + normal()
+corr x y
+corr x y --spearman
+corr x y --kendall
+

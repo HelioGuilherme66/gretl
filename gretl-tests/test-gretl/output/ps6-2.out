@@ -1,0 +1,120 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps6-2.inp
+ /opt/esl/share/gretl/scripts/ps6-2.inp
+# PS6.2 for Example 6.2
+? open data6-1
+
+Read datafile /opt/esl/share/gretl/data/data6-1.gdt
+periodicity: 1, maxobs: 20
+observations range: 1 to 20
+
+Listing 4 variables:
+  0) const       1) UNITCOST    2) OUTPUT      3) INPCOST   
+
+? square OUTPUT INPCOST
+Listing 6 variables:
+  0) const         1) UNITCOST      2) OUTPUT        3) INPCOST     
+  4) sq_OUTPUT     5) sq_INPCOST  
+
+# estimate models
+? ols UNITCOST 0 OUTPUT sq_OUTPUT INPCOST sq_INPCOST
+
+Model 1: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+               coefficient    std. error    t-ratio   p-value 
+  ------------------------------------------------------------
+  const        10.3907        1.33070        7.808    1.16e-06 ***
+  OUTPUT       -0.173953      0.0191452     -9.086    1.74e-07 ***
+  sq_OUTPUT     0.000891366   0.000122458    7.279    2.70e-06 ***
+  INPCOST       0.0221617     0.0166131      1.334    0.2021  
+  sq_INPCOST   -8.56983e-06   7.11345e-05   -0.1205   0.9057  
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.206217   S.E. of regression   0.117251
+R-squared            0.981884   Adjusted R-squared   0.977053
+F(4, 15)             203.2449   P-value(F)           7.21e-13
+Log-likelihood       17.36679   Akaike criterion    -24.73359
+Schwarz criterion   -19.75493   Hannan-Quinn        -23.76170
+
+Excluding the constant, p-value was highest for variable 5 (sq_INPCOST)
+
+? omit sq_INPCOST
+Test on Model 1:
+
+  Null hypothesis: the regression parameter is zero for sq_INPCOST
+  Test statistic: F(1, 15) = 0.0145139, p-value 0.905707
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 2: OLS, using observations 1-20
+Dependent variable: UNITCOST
+
+              coefficient    std. error    t-ratio   p-value 
+  -----------------------------------------------------------
+  const       10.5223        0.736531      14.29     1.58e-10 ***
+  OUTPUT      -0.174473      0.0180692     -9.656    4.46e-08 ***
+  sq_OUTPUT    0.000894804   0.000115360    7.757    8.26e-07 ***
+  INPCOST      0.0201678     0.00139534    14.45     1.33e-10 ***
+
+Mean dependent var   4.882000   S.D. dependent var   0.774016
+Sum squared resid    0.206417   S.E. of regression   0.113583
+R-squared            0.981866   Adjusted R-squared   0.978466
+F(3, 16)             288.7748   P-value(F)           3.87e-14
+Log-likelihood       17.35712   Akaike criterion    -26.71424
+Schwarz criterion   -22.73132   Hannan-Quinn        -25.93674
+
+# retrieve regression coefficients
+? genr b1 = $coeff(0)
+Generated scalar b1 = 10.5223
+? genr b2 = $coeff(OUTPUT)
+Generated scalar b2 = -0.174473
+? genr b3 = $coeff(sq_OUTPUT)
+Generated scalar b3 = 0.000894804
+? genr b4 = $coeff(INPCOST)
+Generated scalar b4 = 0.0201678
+# generate estimated averages to graph the average cost function
+? genr time
+Generated series time (ID 6)
+? genr x = 40 + (time*5)
+Generated series x (ID 7)
+? genr INPCOST1 = 80
+Generated scalar INPCOST1 = 80
+? genr INPCOST2 = 115
+Generated scalar INPCOST2 = 115
+? genr INPCOST3 = 150
+Generated scalar INPCOST3 = 150
+? genr yhat1 = b1+(b2*x) + (b3*x*x) + (b4*INPCOST1)
+Generated series yhat1 (ID 8)
+? genr yhat2 = b1+(b2*x) + (b3*x*x) + (b4*INPCOST2)
+Generated series yhat2 (ID 9)
+? genr yhat3 = b1+(b2*x) + (b3*x*x) + (b4*INPCOST3)
+Generated series yhat3 (ID 10)
+? print -o x yhat1 yhat2 yhat3
+
+              x        yhat1        yhat2        yhat3
+
+ 1           45     6.096434     6.802308     7.508181
+ 2           50     5.649102     6.354976     7.060849
+ 3           55     5.246511     5.952384     6.658258
+ 4           60     4.888660     5.594533     6.300407
+ 5           65     4.575549     5.281422     5.987296
+ 6           70     4.307178     5.013051     5.718925
+ 7           75     4.083547     4.789421     5.495294
+ 8           80     3.904657     4.610531     5.316404
+ 9           85     3.770507     4.476380     5.182254
+10           90     3.681097     4.386971     5.092844
+11           95     3.636427     4.342301     5.048174
+12          100     3.636498     4.342371     5.048245
+13          105     3.681309     4.387182     5.093055
+14          110     3.770860     4.476733     5.182606
+15          115     3.905151     4.611024     5.316898
+16          120     4.084182     4.790055     5.495929
+17          125     4.307954     5.013827     5.719700
+18          130     4.576465     5.282339     5.988212
+19          135     4.889717     5.595591     6.301464
+20          140     5.247710     5.953583     6.659456
+
+Done

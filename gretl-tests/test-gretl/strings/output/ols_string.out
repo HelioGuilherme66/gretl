@@ -1,0 +1,33 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run ols_string.inp
+ /home/cottrell/stats/test-gretl/strings/ols_string.inp
+
+Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+periodicity: 1, maxobs: 51
+observations range: 1 to 51
+
+Listing 10 variables:
+  0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
+  5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+
+
+Model 1: OLS, using observations 1-51
+Dependent variable: ENROLL
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       0.0855655    0.0579350     1.477    0.1462 
+  CATHOL      0.206523     0.0515958     4.003    0.0002  ***
+  PUPIL      -0.00169675   0.00302524   -0.5609   0.5775 
+
+Mean dependent var   0.095569   S.D. dependent var   0.052215
+Sum squared resid    0.092189   S.E. of regression   0.043825
+R-squared            0.323733   Adjusted R-squared   0.295555
+F(2, 48)             11.48893   P-value(F)           0.000084
+Log-likelihood       88.68548   Akaike criterion    -171.3710
+Schwarz criterion   -165.5755   Hannan-Quinn        -169.1563
+
+

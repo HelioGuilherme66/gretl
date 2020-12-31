@@ -1,0 +1,58 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps10-7.inp
+ /opt/esl/share/gretl/scripts/ps10-7.inp
+# PS10-7, for Example 10.6 for the Dickey-Fuller test
+? open data10-3
+
+Read datafile /opt/esl/share/gretl/data/data10-3.gdt
+periodicity: 12, maxobs: 157
+observations range: 1973:01 to 1986:01
+
+Listing 3 variables:
+  0) const       1) period      2) exchrate  
+
+? genr time
+Generated series time (ID 3)
+# generate change in exchange rate
+? genr dxchrate = diff(exchrate)
+Generated series dxchrate (ID 4)
+# lag exchange rate
+? genr exchrat1 = exchrate(-1)
+Generated series exchrat1 (ID 5)
+# generate change in dxchrate
+? genr dxchrat2 = dxchrate(-1)
+Generated series dxchrat2 (ID 6)
+? list
+Listing 7 variables:
+  0) const       1) period      2) exchrate    3) time        4) dxchrate  
+  5) exchrat1    6) dxchrat2  
+
+# suppress two observations
+? smpl 1973.03 ;
+Full data range: 1973:01 - 1986:01 (n = 157)
+Current sample: 1973:03 - 1986:01 (n = 155)
+
+# estimate unrestricted model
+? ols dxchrate const exchrat1 dxchrat2
+
+Model 1: OLS, using observations 1973:03-1986:01 (T = 155)
+Dependent variable: dxchrate
+
+             coefficient   std. error   t-ratio   p-value 
+  --------------------------------------------------------
+  const       0.0740440    0.0378349     1.957    0.0522   *
+  exchrat1   -0.0318358    0.0155905    -2.042    0.0429   **
+  dxchrat2    0.300195     0.0750202     4.002    9.80e-05 ***
+
+Mean dependent var  -0.003658   S.D. dependent var   0.073916
+Sum squared resid    0.744827   S.E. of regression   0.070001
+R-squared            0.114778   Adjusted R-squared   0.103130
+F(2, 152)            9.854155   P-value(F)           0.000095
+Log-likelihood       193.7618   Akaike criterion    -381.5235
+Schwarz criterion   -372.3932   Hannan-Quinn        -377.8150
+rho                 -0.020287   Durbin-Watson        2.020816
+
+Done

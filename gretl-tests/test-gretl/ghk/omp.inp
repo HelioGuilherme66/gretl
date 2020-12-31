@@ -1,0 +1,21 @@
+set echo off
+set messages off
+set seed 32491
+
+scalar m = 3
+scalar n = 100
+scalar r = 64
+printf "nmr = %d\n", n*m*r
+
+matrix A = muniform(n,m) - 0.75
+matrix B = muniform(n,m) + 0.75
+matrix V = I(m)
+V[1,2] = .2
+V[2,1] = .2
+matrix C = cholesky(V)
+matrix U = halton(m,r)
+matrix dP
+set stopwatch
+matrix P = ghk(C, A, B, U, &dP)
+printf "elapsed: %g\n", $stopwatch
+print P dP

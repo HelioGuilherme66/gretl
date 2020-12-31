@@ -1,0 +1,104 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:06
+? run biprobit-cluster.inp
+ /home/cottrell/stats/test-gretl/cluster/biprobit-cluster.inp
+? open school.dta -q
+Read datafile /home/cottrell/stats/test-gretl/cluster/school.dta
+? biprobit private vote 0 logptax loginc years --cluster=pub12
+Gradient within tolerance (1e-05)
+
+Model 1: Bivariate probit, using observations 1-95
+Standard errors clustered by 2 values of pub12
+
+             coefficient   std. error      z       p-value 
+  ---------------------------------------------------------
+ private:
+  const      -4.18469      1.22019       -3.430    0.0006   ***
+  logptax    -0.106696     0.0627831     -1.699    0.0892   *
+  loginc      0.376204     0.0865775      4.345    1.39e-05 ***
+  years      -0.0118884    0.0191260     -0.6216   0.5342  
+
+ vote:
+  const      -0.536057     1.00074       -0.5357   0.5922  
+  logptax    -1.28871      0.130448      -9.879    5.13e-23 ***
+  loginc      0.998286     0.00503244   198.4      0.0000   ***
+  years      -0.0168561    0.00163841   -10.29     7.97e-25 ***
+
+Log-likelihood      -89.25403   Akaike criterion     196.5081
+Schwarz criterion    219.4929   Hannan-Quinn         205.7957
+
+rho = -0.269619
+
+Test of independence -
+  Null hypothesis: rho = 0
+  Test statistic: Chi-square(1) = 1.38444
+  with p-value = 0.239347
+
+? foreign language=stata --send-data
+?   biprobit private vote logptax loginc years, vce(cluster pub12)
+? end foreign
+
+. quietly adopath + "/home/cottrell/.gretl/"
+
+. * load data from gretl
+. insheet using "stata.csv"
+(11 vars, 95 obs)
+
+. biprobit private vote logptax loginc years, vce(cluster pub12)
+
+Fitting comparison equation 1:
+
+Iteration 0:   log pseudolikelihood = -31.967097  
+Iteration 1:   log pseudolikelihood = -31.452424  
+Iteration 2:   log pseudolikelihood = -31.448958  
+Iteration 3:   log pseudolikelihood = -31.448958  
+
+Fitting comparison equation 2:
+
+Iteration 0:   log pseudolikelihood = -63.036914  
+Iteration 1:   log pseudolikelihood = -58.534843  
+Iteration 2:   log pseudolikelihood = -58.497292  
+Iteration 3:   log pseudolikelihood = -58.497288  
+
+Comparison:    log pseudolikelihood = -89.946246
+
+Fitting full model:
+
+Iteration 0:   log pseudolikelihood = -89.946246  
+Iteration 1:   log pseudolikelihood = -89.258897  
+Iteration 2:   log pseudolikelihood = -89.254028  
+Iteration 3:   log pseudolikelihood = -89.254028  
+
+Bivariate probit regression                       Number of obs   =         95
+                                                  Wald chi2(0)    =          .
+Log pseudolikelihood = -89.254028                 Prob > chi2     =          .
+
+                                  (Std. Err. adjusted for 2 clusters in pub12)
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+private      |
+     logptax |  -.1066962   .0627831    -1.70   0.089    -.2297488    .0163564
+      loginc |   .3762037   .0865775     4.35   0.000      .206515    .5458924
+       years |  -.0118884    .019126    -0.62   0.534    -.0493747    .0255979
+       _cons |  -4.184694   1.220188    -3.43   0.001    -6.576218    -1.79317
+-------------+----------------------------------------------------------------
+vote         |
+     logptax |  -1.288707   .1304478    -9.88   0.000     -1.54438   -1.033034
+      loginc |    .998286   .0050324   198.37   0.000     .9884226    1.008149
+       years |  -.0168561   .0016384   -10.29   0.000    -.0200673   -.0136449
+       _cons |  -.5360573   1.000745    -0.54   0.592    -2.497481    1.425367
+-------------+----------------------------------------------------------------
+     /athrho |  -.2764525   .4975442    -0.56   0.578    -1.251621    .6987163
+-------------+----------------------------------------------------------------
+         rho |  -.2696186   .4613757                     -.8487377    .6035523
+------------------------------------------------------------------------------
+Wald test of rho=0:                 chi2(1) =  .308729    Prob > chi2 = 0.5785
+
+. 
+end of do-file
+
+Done

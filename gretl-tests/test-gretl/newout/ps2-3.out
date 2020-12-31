@@ -1,0 +1,89 @@
+gretl version 2017a-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2017-04-13 23:21
+? run ps2-3.inp
+ /opt/esl/share/gretl/scripts/ps2-3.inp
+# PS2.3 -- on covariance and corr. coeff. - Section 2.5
+? open data2-2
+
+Read datafile /opt/esl/share/gretl/data/data2-2.gdt
+periodicity: 1, maxobs: 427
+observations range: 1 to 427
+
+Listing 3 variables:
+  0) const     1) colgpa    2) hsgpa   
+
+? genr x = colgpa
+Generated series x (ID 3)
+? genr y = hsgpa
+Generated series y (ID 4)
+? genr n = $nobs
+Generated scalar n = 427
+# mean of colgpa
+? genr xbar = mean(x)
+Generated scalar xbar = 2.7855
+# s.d. of colgpa
+? genr sx = sd(x)
+Generated scalar sx = 0.54082
+# mean of hsgpa
+? genr ybar = mean(y)
+Generated scalar ybar = 3.55785
+# s.d. of hsgpa
+? genr sy = sd(y)
+Generated scalar sy = 0.419577
+# cross product of deviation from mean
+? genr sxy = (x-xbar)*(y-ybar)
+Generated series sxy (ID 5)
+# compute covariance
+? genr covxy = sum(sxy)/(n-1)
+Generated scalar covxy = 0.0922778
+# compute correlation coefficient
+? genr corxy = covxy/(sx*sy)
+Generated scalar corxy = 0.406662
+# reset sample range
+? smpl 1 1
+Full data range: 1 - 427 (n = 427)
+Current sample: 1 - 1 (n = 1)
+
+# print values
+? print xbar sx ybar sy covxy corxy
+
+           xbar =  2.7855035
+
+             sx =  0.54081960
+
+           ybar =  3.5578454
+
+             sy =  0.41957674
+
+          covxy =  0.092277848
+
+          corxy =  0.40666204
+# reset sample range
+? smpl 1 427
+Full data range: 1 - 427 (n = 427)
+
+# same with the corr command
+? corr x y
+
+corr(x, y) = 0.40666204
+Under the null hypothesis of no correlation:
+ t(425) = 9.17661, with two-tailed p-value 0.0000
+
+# summary statistics
+? summary x y
+
+                     Mean         Median        Minimum        Maximum
+x                  2.7855         2.7900        0.85000         3.9700
+y                  3.5578         3.5900         2.2900         4.5000
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+x                 0.54082        0.19416       -0.20436      -0.037888
+y                 0.41958        0.11793       -0.40265       -0.20704
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+x                  1.9000         3.6960        0.78000              0
+y                  2.7540         4.2000        0.58000              0
+
+Done

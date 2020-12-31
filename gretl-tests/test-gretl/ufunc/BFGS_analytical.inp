@@ -1,0 +1,58 @@
+set echo off
+set messages off
+
+function scalar nd(matrix *x, matrix iS, matrix m)
+    tmp = (x-m)'
+    return exp(-0.5*qform(tmp, iS)) 
+end function
+
+function matrix mnd(matrix *x, matrix iS, matrix m)
+    tmp = (x-m)'
+    matrix ret = exp(-0.5*qform(tmp, iS)) 
+    return ret
+end function
+
+function void ns(matrix *d, const matrix *x, matrix iS, matrix m)
+    tmp = (x-m)
+    d = -iS * tmp
+    scalar f = exp(-0.5*d'tmp)
+    d = f * d'
+end function
+
+/* ---------------------- main ------------------------------- */
+
+set seed 9712345
+
+n = 5
+m = seq(1,n)' ./ n
+K = n * muniform(n,n)
+iS = invpd(K'K)
+
+matrix d = {}
+
+x = zeros(n,1)
+set bfgs_maxiter 2000
+set bfgs_toler 1e-14
+#set max_verbose on
+set stopwatch
+
+a = BFGSmax(x, nd(&x, iS, m))
+xn = x
+tn = $stopwatch
+
+x = zeros(n,1)
+a = BFGSmax(x, nd(&x, iS, m), ns(&d, &x, iS, m))
+xa = x
+ta = $stopwatch
+
+matrix ret = m ~ xn ~ xa ~ ((xn ~ xa) .- m)
+colnames(ret, "true numerical analytical err.(n) err.(a)")
+print ret 
+
+printf "Elapsed time: numerical = %g, analytical = %g\n", tn, ta
+
+z = zeros(n,1)
+printf "\nfdjac\n"
+eval fdjac(z, mnd(&z, iS, m))
+
+

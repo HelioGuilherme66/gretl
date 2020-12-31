@@ -1,0 +1,37 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:04
+? run triangle.inp
+ /home/cottrell/stats/test-gretl/matrix/triangle.inp
+? set seed 67564322
+Pseudo-random number generator seeded with 67564322
+? matrix M = mnormal(4,4)
+Generated matrix M
+? matrix U = upper(M)
+Generated matrix U
+? matrix L = lower(M)
+Generated matrix L
+? print M U L
+M (4 x 4)
+
+      1.4887      0.97813     -0.47498    -0.066048 
+      1.2901    -0.021952      0.31006      0.79674 
+     -1.7784    -0.044182      -1.0222     -0.34940 
+     -1.4035     -0.46871    -0.062859      0.76303 
+
+U (4 x 4)
+
+      1.4887      0.97813     -0.47498    -0.066048 
+      0.0000    -0.021952      0.31006      0.79674 
+      0.0000       0.0000      -1.0222     -0.34940 
+      0.0000       0.0000       0.0000      0.76303 
+
+L (4 x 4)
+
+      1.4887       0.0000       0.0000       0.0000 
+      1.2901    -0.021952       0.0000       0.0000 
+     -1.7784    -0.044182      -1.0222       0.0000 
+     -1.4035     -0.46871    -0.062859      0.76303 
+
+Done

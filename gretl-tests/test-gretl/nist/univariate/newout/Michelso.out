@@ -1,0 +1,60 @@
+gretl version 1.7.4
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2008/06/09 11:15
+? run Michelso.inp
+ /home/cottrell/stats/test-gretl/nist/univariate/Michelso.inp
+? open Michelso.dat
+
+Reading header file /home/cottrell/stats/test-gretl/nist/univariate/Michelso.hdr
+periodicity: 1, maxobs: 100,
+observations range: 1-100
+
+Reading cross-sectional datafile
+ /home/cottrell/stats/test-gretl/nist/univariate/Michelso.dat
+
+Listing 2 variables:
+  0) const    1) Y      
+
+? summary
+
+              Summary Statistics, using the observations 1 - 100
+                for the variable 'Y' (100 valid observations)
+
+  Mean                   299.85      
+  Median                 299.85      
+  Minimum                299.62      
+  Maximum                300.07      
+  Standard deviation       0.079011  
+  C.V.                     0.00026350
+  Skewness                -0.018260  
+  Ex. kurtosis             0.26353   
+
+
+? genr Y1 = Y(-1)
+Generated series Y1 (ID 2)
+? genr r1 = corr(Y,Y1)
+Generated scalar r1 (ID 3) = 0.535338
+? genr ybar = mean(Y)
+Generated scalar ybar (ID 4) = 299.852
+? genr ysd = sd(Y)
+Generated scalar ysd (ID 5) = 0.0790105
+? genr devY = Y - ybar
+Generated series devY (ID 6)
+? genr devY1 = Y1 - ybar
+Generated series devY1 (ID 7)
+? genr SSY = sum(devY * devY)
+Generated scalar SSY (ID 8) = 0.618024
+? smpl 2
+Full data range: 1 - 100 (n = 100)
+Current sample:  2 - 100 (n = 99)
+
+? genr SSYY1 = sum(devY * devY1)
+Generated scalar SSYY1 (ID 9) = 0.330766
+? genr rnist = SSYY1 / SSY
+Generated scalar rnist (ID 10) = 0.5352
+ybar  = 299.8524
+ysd   = 0.0790105478191
+r1    = 0.535338409102
+rnist = 0.535199668621
+Done

@@ -1,0 +1,118 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run unemp.inp
+ /home/cottrell/stats/test-gretl/duration/unemp.inp
+? open ema1996.dta -q
+Read datafile /home/cottrell/stats/test-gretl/duration/ema1996.dta
+? summary spell censor1 ui reprate disrate logwage
+
+                     Mean         Median        Minimum        Maximum
+spell              6.2480         5.0000         1.0000         28.000
+censor1           0.32097         0.0000         0.0000         1.0000
+ui                0.55280         1.0000         0.0000         1.0000
+reprate           0.45447        0.50000       0.066000         2.0590
+disrate           0.10944        0.10000      0.0020000         1.0200
+logwage            5.6930         5.6768         2.7081         7.6004
+
+                Std. Dev.           C.V.       Skewness   Ex. kurtosis
+spell              5.6113        0.89809         1.5194         2.1219
+censor1           0.46692         1.4547        0.76698        -1.4117
+ui                0.49728        0.89957       -0.21237        -1.9549
+reprate           0.11379        0.25038        0.83250         23.380
+disrate          0.073527        0.67187         1.4707         10.054
+logwage           0.53566       0.094091       0.087176        0.60112
+
+                 5% perc.      95% perc.       IQ range   Missing obs.
+spell              1.0000         18.000         7.0000              0
+censor1            0.0000         1.0000         1.0000              0
+ui                 0.0000         1.0000         1.0000              0
+reprate           0.23000        0.60000        0.12200              0
+disrate          0.014000        0.24500       0.098000              0
+logwage            4.8675         6.5667        0.75377              0
+
+? rrui = reprate * ui
+Generated series rrui (ID 44)
+? drui = disrate * ui
+Generated series drui (ID 45)
+? list X = reprate disrate ui rrui drui logwage
+Generated list X
+? cens = 1 - censor1
+Generated series cens (ID 46)
+? duration spell 0 X ; cens --exp
+
+Convergence achieved after 6 iterations
+
+Model 1: Duration (exponential), using observations 1-3343
+Dependent variable: spell
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        5.72469     0.703025      8.143    3.86e-16 ***
+  reprate     -0.966729    0.516187     -1.873    0.0611   *
+  disrate      1.75916     0.680021      2.587    0.0097   ***
+  ui           1.58866     0.238167      6.670    2.55e-11 ***
+  rrui        -1.00370     0.582260     -1.724    0.0847   *
+  drui        -0.277393    1.00760      -0.2753   0.7831  
+  logwage     -0.550894    0.0920424    -5.985    2.16e-09 ***
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        354.5185   p-value              1.65e-73
+Log-likelihood      -2835.232   Akaike criterion     5684.463
+Schwarz criterion    5727.266   Hannan-Quinn         5699.775
+
+? duration spell 0 X ; cens
+
+Convergence achieved after 9 iterations
+
+Model 2: Duration (Weibull), using observations 1-3343
+Dependent variable: spell
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        5.56145     0.660004      8.426    3.57e-17 ***
+  reprate     -0.940529    0.483402     -1.946    0.0517   *
+  disrate      1.62979     0.640117      2.546    0.0109   **
+  ui           1.52373     0.224635      6.783    1.18e-11 ***
+  rrui        -0.952131    0.547132     -1.740    0.0818   *
+  drui        -0.240130    0.946783     -0.2536   0.7998  
+  logwage     -0.527010    0.0865595    -6.088    1.14e-09 ***
+  sigma        0.939117    0.0218308                      
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        361.2979   p-value              5.79e-75
+Log-likelihood      -2831.705   Akaike criterion     5679.411
+Schwarz criterion    5728.328   Hannan-Quinn         5696.909
+
+1/sigma = 1.06483 (0.0247531)
+
+? duration spell 0 X ; cens --robust
+
+Convergence achieved after 9 iterations
+
+Model 3: Duration (Weibull), using observations 1-3343
+Dependent variable: spell
+QML standard errors
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const        5.56145     0.697123      7.978    1.49e-15 ***
+  reprate     -0.940529    0.546944     -1.720    0.0855   *
+  disrate      1.62979     0.709925      2.296    0.0217   **
+  ui           1.52373     0.242026      6.296    3.06e-10 ***
+  rrui        -0.952131    0.583502     -1.632    0.1027  
+  drui        -0.240130    0.979334     -0.2452   0.8063  
+  logwage     -0.527010    0.0910215    -5.790    7.04e-09 ***
+  sigma        0.939117    0.0172239                      
+
+Mean dependent var   6.247981   S.D. dependent var   5.611271
+Chi-square(6)        361.2979   p-value              5.79e-75
+Log-likelihood      -2831.705   Akaike criterion     5679.411
+Schwarz criterion    5728.328   Hannan-Quinn         5696.909
+
+1/sigma = 1.06483 (0.0195296)
+
+Done

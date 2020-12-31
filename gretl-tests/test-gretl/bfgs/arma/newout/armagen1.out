@@ -1,0 +1,52 @@
+gretl version 1.9.15cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-01-07 08:10
+? run armagen1.inp
+ /home/allin/stats/test-gretl/bfgs/arma/armagen1.inp
+? nulldata 624
+periodicity: 1, maxobs: 624
+observations range: 1 to 624
+? setobs 12 1950:01
+Full data range: 1950:01 - 2001:12 (n = 624)
+
+? set seed 371654
+Pseudo-random number generator seeded with 371654
+? genr eps = normal()
+Generated series eps (ID 2)
+? genr u = eps + .4 * eps(-1)
+Generated series u (ID 3)
+? series y = 0
+Generated series y (ID 4)
+? genr y = 0.7 * y(-1) + u
+Replaced series y (ID 4)
+? arma 1 1 ; y
+
+Function evaluations: 32
+Evaluations of gradient: 12
+
+Model 1: ARMA, using observations 1950:01-2001:12 (T = 624)
+Estimated using Kalman filter (exact ML)
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error      z      p-value 
+  --------------------------------------------------------
+  const       -0.130975    0.190047     -0.6892   0.4907  
+  phi_1        0.694776    0.0330772    21.00     5.94e-98 ***
+  theta_1      0.466052    0.0424313    10.98     4.58e-28 ***
+
+Mean dependent var  -0.130045   S.D. dependent var   1.893620
+Mean of innovations -0.000442   S.D. of innovations  0.994534
+Log-likelihood      -882.7302   Akaike criterion     1773.460
+Schwarz criterion    1791.205   Hannan-Quinn         1780.356
+
+                        Real  Imaginary    Modulus  Frequency
+  -----------------------------------------------------------
+  AR
+    Root  1           1.4393     0.0000     1.4393     0.0000
+  MA
+    Root  1          -2.1457     0.0000     2.1457     0.5000
+  -----------------------------------------------------------
+
+Done

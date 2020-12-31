@@ -1,0 +1,6 @@
+x,s1,y
+1,bigstringvalue,2
+2,another,4
+3,,6
+4,yet_another,8
+5,smaller,10

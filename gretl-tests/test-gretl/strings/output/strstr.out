@@ -1,0 +1,23 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run strstr.inp
+ /home/cottrell/stats/test-gretl/strings/strstr.inp
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? string foo = "Help it's a string"
+Generated string foo
+? string boo = strstr(foo, "a")
+Generated string boo
+a string
+? boo
+a string
+? string s1 = "egg"
+Generated string s1
+? string s1 += "nogg"
+Replaced string s1
+? s1
+eggnogg
+Done

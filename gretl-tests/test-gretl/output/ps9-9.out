@@ -1,0 +1,733 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 14:09
+? run ps9-9.inp
+ /opt/esl/share/gretl/scripts/ps9-9.inp
+# PS9.9, for Application Section 9.7
+? open data9-3
+
+Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+periodicity: 4, maxobs: 87
+observations range: 1972:2 to 1993:4
+
+Listing 10 variables:
+  0) const     1) period    2) reskwh    3) nocust    4) price   
+  5) cpi       6) incm      7) cdd       8) hdd       9) pop     
+
+? genr d74 = period > 1974
+Generated series d74 (ID 10)
+# create dummy variables for four periods
+? genr d79 = period > 1979
+Generated series d79 (ID 11)
+? genr d83 = period > 1983.2
+Generated series d83 (ID 12)
+# generate log variables
+? genr kwh = reskwh/nocust
+Generated series kwh (ID 13)
+? genr lkwh = ln(kwh)
+Generated series lkwh (ID 14)
+? genr lprice = ln(100*price/cpi)
+Generated series lprice (ID 15)
+? genr ly = ln(100*incm/(cpi*pop))
+Generated series ly (ID 16)
+# check correlations for possible sign of multicollinearity
+? corr ly lprice cdd hdd
+
+Correlation Coefficients, using the observations 1972:2 - 1993:4
+5% critical value (two-tailed) = 0.2108 for n = 87
+
+            ly        lprice           cdd           hdd
+        1.0000       -0.2507       -0.0797        0.0500  ly
+                      1.0000        0.1275       -0.0838  lprice
+                                    1.0000       -0.7750  cdd
+                                                  1.0000  hdd
+
+# estimate basic model by ols
+? ols lkwh const ly lprice cdd hdd
+
+Model 1: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       0.398232      0.212735       1.872    0.0648   *
+  ly         -0.0362678     0.151679      -0.2391   0.8116  
+  lprice     -0.0942575     0.0279110     -3.377    0.0011   ***
+  cdd         0.000267569   3.43790e-05    7.783    1.88e-11 ***
+  hdd         0.000360717   2.98311e-05   12.09     6.48e-20 ***
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.186697   S.E. of regression   0.047716
+R-squared            0.667278   Adjusted R-squared   0.651047
+F(4, 82)             41.11293   P-value(F)           7.21e-19
+Log-likelihood       143.8239   Akaike criterion    -277.6478
+Schwarz criterion   -265.3183   Hannan-Quinn        -272.6831
+rho                  0.380426   Durbin-Watson        1.218797
+
+Excluding the constant, p-value was highest for variable 16 (ly)
+
+# save residuals
+? genr ut = $uhat
+Generated series ut (ID 17)
+# generate forecast after correcting for log model bias
+? genr f1 = exp(lkwh-ut+($ess/($df*2)))
+Generated series f1 (ID 18)
+# forecast error
+? genr abserr1 = abs(kwh - f1)
+Generated series abserr1 (ID 19)
+# generate lagged values for four periods
+? lags ut
+Listing 24 variables:
+  0) const      1) period     2) reskwh     3) nocust     4) price    
+  5) cpi        6) incm       7) cdd        8) hdd        9) pop      
+ 10) d74       11) d79       12) d83       13) kwh       14) lkwh     
+ 15) lprice    16) ly        17) ut        18) f1        19) abserr1  
+ 20) ut_1      21) ut_2      22) ut_3      23) ut_4     
+
+# suppress first four observations
+? smpl 1973.2 1993.4
+Full data range: 1972:2 - 1993:4 (n = 87)
+Current sample: 1973:2 - 1993:4 (n = 83)
+
+# estimate auxiliary regression
+? ols ut const ut_1 ut_2 ut_3 ut_4 ly lprice cdd hdd
+
+Model 2: OLS, using observations 1973:2-1993:4 (T = 83)
+Dependent variable: ut
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -0.0451672     0.128532      -0.3514   0.7263  
+  ut_1        0.395265      0.0972923      4.063    0.0001   ***
+  ut_2       -0.195902      0.0956524     -2.048    0.0441   **
+  ut_3        0.0419946     0.112461       0.3734   0.7099  
+  ut_4        0.624851      0.0940169      6.646    4.46e-09 ***
+  ly          0.0800108     0.0910120      0.8791   0.3822  
+  lprice     -0.0185271     0.0180771     -1.025    0.3088  
+  cdd         2.56801e-06   2.12203e-05    0.1210   0.9040  
+  hdd        -4.56597e-05   2.02077e-05   -2.260    0.0268   **
+
+Mean dependent var   0.000342   S.D. dependent var   0.046492
+Sum squared resid    0.059154   S.E. of regression   0.028273
+R-squared            0.666259   Adjusted R-squared   0.630179
+F(8, 74)             18.46613   P-value(F)           7.06e-15
+Log-likelihood       182.9559   Akaike criterion    -347.9119
+Schwarz criterion   -326.1423   Hannan-Quinn        -339.1661
+rho                  0.005585   Durbin's h           0.109903
+
+Excluding the constant, p-value was highest for variable 7 (cdd)
+
+# compute nRsquared statistic
+? genr LM = $nrsq
+Generated scalar LM = 55.2995
+# compute pvalue
+? pvalue X 4 LM
+Chi-square(4): area to the right of 55.2995 = 2.81178e-11
+(to the left: 1)
+# reset sample range back to beginning
+? smpl 1972.2 1993.4
+Full data range: 1972:2 - 1993:4 (n = 87)
+
+? help ar
+
+ar
+
+Arguments:  lags ; depvar indepvars 
+Option:     --vcv (print covariance matrix)
+Example:    ar 1 3 4 ; y 0 x1 x2 x3
+
+Computes parameter estimates using the generalized Cochrane-Orcutt iterative
+procedure; see Section 9.5 of Ramanathan (2002). Iteration is terminated
+when successive error sums of squares do not differ by more than 0.005
+percent or after 20 iterations.
+
+"lags" is a list of lags in the residuals, terminated by a semicolon. In the
+above example, the error term is specified as
+
+  u(t) = rho(1)*u(t-1) + rho(3)*u(t-3) + rho(4)*u(t-4)
+
+Menu path:    /Model/Time series/Autoregressive estimation
+
+# estimate AR(4) model by generalized CORC
+? ar 1 2 3 4 ; lkwh const ly lprice cdd hdd
+Generalized Cochrane-Orcutt estimation
+
+                 ITER             ESS           % CHANGE
+
+                  1             0.056915 
+                  2             0.051299         9.867
+                  3             0.050641         1.282
+                  4             0.050606         0.070
+                  5             0.050604         0.003
+
+Model 3: AR, using observations 1973:2-1993:4 (T = 83)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const       0.273212      0.156753       1.743    0.0852   *
+  ly          0.101775      0.114762       0.8868   0.3779  
+  lprice     -0.0980081     0.0282022     -3.475    0.0008   ***
+  cdd         0.000275587   2.51009e-05   10.98     1.45e-17 ***
+  hdd         0.000228766   2.42277e-05    9.442    1.33e-14 ***
+
+  u_1         0.116099      0.0677572      1.713    0.0906   *
+  u_2        -0.0931420     0.0683745     -1.362    0.1770  
+  u_3         0.0885847     0.0677590      1.307    0.1949  
+  u_4         0.789471      0.0671642     11.75     5.01e-19 ***
+
+Sum of AR coefficients = 0.901013
+
+Statistics based on the rho-differenced data:
+
+Mean dependent var   0.030238   S.D. dependent var   0.046363
+Sum squared resid    0.050604   S.E. of regression   0.025471
+R-squared            0.902200   Adjusted R-squared   0.897185
+F(4, 78)             48.42116   P-value(F)           2.10e-20
+rho                  0.244872   Durbin-Watson        1.375507
+
+Excluding the constant, p-value was highest for variable 16 (ly)
+
+# again obtain forecasts and errors
+? genr f2 = exp(lkwh-$uhat+($ess/($df*2)))
+Generated series f2 (ID 24)
+? genr abserr2 = abs(kwh - f2)
+Generated series abserr2 (ID 25)
+# generate interaction terms to test for structural change
+? genr lyd74=ly*d74
+Generated series lyd74 (ID 26)
+? genr lyd79=ly*d79
+Generated series lyd79 (ID 27)
+? genr lyd83=ly*d83
+Generated series lyd83 (ID 28)
+? genr lprd74=lprice*d74
+Generated series lprd74 (ID 29)
+? genr lprd79=lprice*d79
+Generated series lprd79 (ID 30)
+? genr lprd83=lprice*d83
+Generated series lprd83 (ID 31)
+? genr d74cdd=d74*cdd
+Generated series d74cdd (ID 32)
+? genr d79cdd=d79*cdd
+Generated series d79cdd (ID 33)
+? genr d83cdd=d83*cdd
+Generated series d83cdd (ID 34)
+? genr d74hdd=d74*hdd
+Generated series d74hdd (ID 35)
+? genr d79hdd=d79*hdd
+Generated series d79hdd (ID 36)
+? genr d83hdd=d83*hdd
+Generated series d83hdd (ID 37)
+? genr lprcdd=lprice*cdd
+Generated series lprcdd (ID 38)
+? genr lprhdd=lprice*hdd
+Generated series lprhdd (ID 39)
+? list
+Listing 40 variables:
+  0) const      1) period     2) reskwh     3) nocust     4) price    
+  5) cpi        6) incm       7) cdd        8) hdd        9) pop      
+ 10) d74       11) d79       12) d83       13) kwh       14) lkwh     
+ 15) lprice    16) ly        17) ut        18) f1        19) abserr1  
+ 20) ut_1      21) ut_2      22) ut_3      23) ut_4      24) f2       
+ 25) abserr2   26) lyd74     27) lyd79     28) lyd83     29) lprd74   
+ 30) lprd79    31) lprd83    32) d74cdd    33) d79cdd    34) d83cdd   
+ 35) d74hdd    36) d79hdd    37) d83hdd    38) lprcdd    39) lprhdd   
+
+# estimate full model by ols and note that there is no autocorrelation
+? ols lkwh const d74 d79 d83 ly lyd74 lyd79 lyd83 lprice lprd74 \
+  lprd79 lprd83 cdd d74cdd d79cdd d83cdd lprcdd hdd d74hdd d79hdd \
+  d83hdd lprhdd
+
+Model 4: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio    p-value
+  ----------------------------------------------------------
+  const      -0.796868      5.71498       -0.1394    0.8895 
+  d74        -1.00443       5.73095       -0.1753    0.8614 
+  d79         1.91692       0.706665       2.713     0.0085  ***
+  d83         0.0246244     0.592544       0.04156   0.9670 
+  ly         -2.63600       6.67264       -0.3950    0.6941 
+  lyd74       3.58606       6.68098        0.5368    0.5933 
+  lyd79      -0.732100      0.518463      -1.412     0.1627 
+  lyd83      -0.309173      0.444267      -0.6959    0.4890 
+  lprice      2.24085       1.82873        1.225     0.2249 
+  lprd74     -1.88461       1.83164       -1.029     0.3073 
+  lprd79     -0.447340      0.136597      -3.275     0.0017  ***
+  lprd83      0.133727      0.0644026      2.076     0.0418  **
+  cdd         0.00141828    0.000466572    3.040     0.0034  ***
+  d74cdd     -0.000232482   0.000363070   -0.6403    0.5242 
+  d79cdd     -3.89726e-05   9.70723e-05   -0.4015    0.6894 
+  d83cdd      7.02127e-05   6.48831e-05    1.082     0.2832 
+  lprcdd     -0.000406630   0.000167769   -2.424     0.0182  **
+  hdd         0.000949624   0.000417602    2.274     0.0263  **
+  d74hdd     -0.000283081   0.000316951   -0.8931    0.3751 
+  d79hdd     -4.22177e-05   8.60887e-05   -0.4904    0.6255 
+  d83hdd     -3.22857e-05   6.65809e-05   -0.4849    0.6294 
+  lprhdd     -0.000109580   0.000155868   -0.7030    0.4845 
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.081511   S.E. of regression   0.035412
+R-squared            0.854735   Adjusted R-squared   0.807804
+F(21, 65)            18.21232   P-value(F)           1.15e-19
+Log-likelihood       179.8745   Akaike criterion    -315.7491
+Schwarz criterion   -261.4991   Hannan-Quinn        -293.9043
+rho                  0.024584   Durbin-Watson        1.930695
+
+Excluding the constant, p-value was highest for variable 12 (d83)
+
+# omit variable with highest pvalue, one at a time
+? omit d83
+Test on Model 4:
+
+  Null hypothesis: the regression parameter is zero for d83
+  Test statistic: F(1, 65) = 0.00172699, p-value 0.966979
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 5: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -0.797372      5.67159       -0.1406   0.8886 
+  d74        -1.00456       5.68745       -0.1766   0.8603 
+  d79         1.93770       0.495620       3.910    0.0002  ***
+  ly         -2.63597       6.62198       -0.3981   0.6919 
+  lyd74       3.58595       6.63026        0.5408   0.5904 
+  lyd79      -0.747026      0.371062      -2.013    0.0482  **
+  lyd83      -0.291247      0.105444      -2.762    0.0074  ***
+  lprice      2.24111       1.81484        1.235    0.2213 
+  lprd74     -1.88452       1.81774       -1.037    0.3036 
+  lprd79     -0.448686      0.131694      -3.407    0.0011  ***
+  lprd83      0.135067      0.0553301      2.441    0.0173  **
+  cdd         0.00141917    0.000462536    3.068    0.0031  ***
+  d74cdd     -0.000232352   0.000360301   -0.6449   0.5212 
+  d79cdd     -3.86554e-05   9.60373e-05   -0.4025   0.6886 
+  d83cdd      7.00787e-05   6.43110e-05    1.090    0.2798 
+  lprcdd     -0.000407127   0.000166073   -2.451    0.0169  **
+  hdd         0.000950592   0.000413786    2.297    0.0248  **
+  d74hdd     -0.000282943   0.000314527   -0.8996   0.3716 
+  d79hdd     -4.16362e-05   8.42994e-05   -0.4939   0.6230 
+  d83hdd     -3.27450e-05   6.51587e-05   -0.5025   0.6170 
+  lprhdd     -0.000110117   0.000154152   -0.7143   0.4775 
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.081513   S.E. of regression   0.035143
+R-squared            0.854731   Adjusted R-squared   0.810711
+F(20, 66)            19.41653   P-value(F)           2.55e-20
+Log-likelihood       179.8734   Akaike criterion    -317.7468
+Schwarz criterion   -265.9627   Hannan-Quinn        -296.8949
+rho                  0.024509   Durbin-Watson        1.930735
+
+Excluding the constant, p-value was highest for variable 10 (d74)
+
+? omit d74
+Test on Model 5:
+
+  Null hypothesis: the regression parameter is zero for d74
+  Test statistic: F(1, 66) = 0.0311974, p-value 0.860342
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 6: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1.79556       0.475257      -3.778    0.0003  ***
+  d79         1.93152       0.490796       3.935    0.0002  ***
+  ly         -1.52962       2.13292       -0.7171   0.4758 
+  lyd74       2.47596       2.09831        1.180    0.2422 
+  lyd79      -0.743351      0.367790      -2.021    0.0473  **
+  lyd83      -0.291207      0.104679      -2.782    0.0070  ***
+  lprice      2.03586       1.38391        1.471    0.1459 
+  lprd74     -1.68007       1.39137       -1.207    0.2315 
+  lprd79     -0.447993      0.130680      -3.428    0.0010  ***
+  lprd83      0.135040      0.0549284      2.458    0.0165  **
+  cdd         0.00137704    0.000393407    3.500    0.0008  ***
+  d74cdd     -0.000191147   0.000272584   -0.7012   0.4856 
+  d79cdd     -3.85205e-05   9.53374e-05   -0.4040   0.6875 
+  d83cdd      7.00995e-05   6.38442e-05    1.098    0.2761 
+  lprcdd     -0.000406785   0.000164856   -2.468    0.0162  **
+  hdd         0.000908829   0.000337110    2.696    0.0089  ***
+  d74hdd     -0.000241712   0.000209267   -1.155    0.2522 
+  d79hdd     -4.13989e-05   8.36771e-05   -0.4947   0.6224 
+  d83hdd     -3.27397e-05   6.46859e-05   -0.5061   0.6144 
+  lprhdd     -0.000109989   0.000153032   -0.7187   0.4748 
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.081552   S.E. of regression   0.034888
+R-squared            0.854663   Adjusted R-squared   0.813448
+F(19, 67)            20.73666   P-value(F)           5.58e-21
+Log-likelihood       179.8528   Akaike criterion    -319.7057
+Schwarz criterion   -270.3875   Hannan-Quinn        -299.8468
+rho                  0.023547   Durbin-Watson        1.932694
+
+Excluding the constant, p-value was highest for variable 33 (d79cdd)
+
+? omit d79cdd
+Test on Model 6:
+
+  Null hypothesis: the regression parameter is zero for d79cdd
+  Test statistic: F(1, 67) = 0.163251, p-value 0.687467
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 7: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1.79022       0.472142      -3.792    0.0003  ***
+  d79         1.91007       0.484906       3.939    0.0002  ***
+  ly         -1.55630       2.11874       -0.7345   0.4651 
+  lyd74       2.49588       2.08479        1.197    0.2354 
+  lyd79      -0.748531      0.365298      -2.049    0.0443  **
+  lyd83      -0.285940      0.103223      -2.770    0.0072  ***
+  lprice      2.05114       1.37486        1.492    0.1404 
+  lprd74     -1.68923       1.38260       -1.222    0.2260 
+  lprd79     -0.443316      0.129363      -3.427    0.0010  ***
+  lprd83      0.135409      0.0545819      2.481    0.0156  **
+  cdd         0.00141969    0.000376642    3.769    0.0003  ***
+  d74cdd     -0.000207797   0.000267788   -0.7760   0.4405 
+  d83cdd      5.68769e-05   5.44806e-05    1.044    0.3002 
+  lprcdd     -0.000429799   0.000153749   -2.795    0.0067  ***
+  hdd         0.000939431   0.000326465    2.878    0.0053  ***
+  d74hdd     -0.000252769   0.000206190   -1.226    0.2245 
+  d79hdd     -1.39989e-05   4.87183e-05   -0.2873   0.7747 
+  d83hdd     -4.37997e-05   5.82469e-05   -0.7520   0.4547 
+  lprhdd     -0.000126340   0.000146673   -0.8614   0.3921 
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.081751   S.E. of regression   0.034673
+R-squared            0.854309   Adjusted R-squared   0.815743
+F(18, 68)            22.15221   P-value(F)           1.26e-21
+Log-likelihood       179.7470   Akaike criterion    -321.4939
+Schwarz criterion   -274.6417   Hannan-Quinn        -302.6280
+rho                  0.028632   Durbin-Watson        1.922426
+
+Excluding the constant, p-value was highest for variable 36 (d79hdd)
+
+? omit d79hdd
+Test on Model 7:
+
+  Null hypothesis: the regression parameter is zero for d79hdd
+  Test statistic: F(1, 68) = 0.0825664, p-value 0.774723
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 8: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value
+  ---------------------------------------------------------
+  const      -1.77464       0.465890      -3.809    0.0003  ***
+  d79         1.89446       0.478637       3.958    0.0002  ***
+  ly         -1.57578       2.10353       -0.7491   0.4563 
+  lyd74       2.50737       2.07050        1.211    0.2300 
+  lyd79      -0.750382      0.362805      -2.068    0.0424  **
+  lyd83      -0.278762      0.0994865     -2.802    0.0066  ***
+  lprice      2.05590       1.36559        1.506    0.1368 
+  lprd74     -1.69600       1.37317       -1.235    0.2210 
+  lprd79     -0.437435      0.126882      -3.448    0.0010  ***
+  lprd83      0.133255      0.0537042      2.481    0.0155  **
+  cdd         0.00141657    0.000373974    3.788    0.0003  ***
+  d74cdd     -0.000207748   0.000266002   -0.7810   0.4375 
+  d83cdd      5.46268e-05   5.35553e-05    1.020    0.3113 
+  lprcdd     -0.000427728   0.000152556   -2.804    0.0066  ***
+  hdd         0.000954059   0.000320320    2.978    0.0040  ***
+  d74hdd     -0.000255718   0.000204561   -1.250    0.2155 
+  d83hdd     -5.31911e-05   4.78914e-05   -1.111    0.2706 
+  lprhdd     -0.000134073   0.000143221   -0.9361   0.3525 
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.081850   S.E. of regression   0.034442
+R-squared            0.854132   Adjusted R-squared   0.818193
+F(17, 69)            23.76643   P-value(F)           2.62e-22
+Log-likelihood       179.6942   Akaike criterion    -323.3884
+Schwarz criterion   -279.0020   Hannan-Quinn        -305.5154
+rho                  0.029886   Durbin-Watson        1.920155
+
+Excluding the constant, p-value was highest for variable 16 (ly)
+
+? omit ly
+Test on Model 8:
+
+  Null hypothesis: the regression parameter is zero for ly
+  Test statistic: F(1, 69) = 0.561171, p-value 0.456335
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 9: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -1.85050       0.453325      -4.082    0.0001   ***
+  d79         1.96714       0.467226       4.210    7.46e-05 ***
+  lyd74       0.974048      0.311110       3.131    0.0025   ***
+  lyd79      -0.794799      0.356804      -2.228    0.0291   **
+  lyd83      -0.277705      0.0991642     -2.800    0.0066   ***
+  lprice      1.04940       0.243363       4.312    5.20e-05 ***
+  lprd74     -0.679216      0.207391      -3.275    0.0016   ***
+  lprd79     -0.445535      0.126023      -3.535    0.0007   ***
+  lprd83      0.133062      0.0535349      2.486    0.0153   **
+  cdd         0.00125343    0.000303064    4.136    9.69e-05 ***
+  d74cdd     -3.80006e-05   0.000138885   -0.2736   0.7852  
+  d83cdd      5.36184e-05   5.33703e-05    1.005    0.3185  
+  lprcdd     -0.000430311   0.000152038   -2.830    0.0061   ***
+  hdd         0.000834256   0.000276669    3.015    0.0036   ***
+  d74hdd     -0.000125041   0.000106506   -1.174    0.2444  
+  d83hdd     -5.47832e-05   4.76940e-05   -1.149    0.2546  
+  lprhdd     -0.000138380   0.000142656   -0.9700   0.3354  
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.082515   S.E. of regression   0.034334
+R-squared            0.852945   Adjusted R-squared   0.819333
+F(16, 70)            25.37584   P-value(F)           6.67e-23
+Log-likelihood       179.3418   Akaike criterion    -324.6837
+Schwarz criterion   -282.7632   Hannan-Quinn        -307.8036
+rho                  0.029752   Durbin-Watson        1.917647
+
+Excluding the constant, p-value was highest for variable 32 (d74cdd)
+
+? omit d74cdd
+Test on Model 9:
+
+  Null hypothesis: the regression parameter is zero for d74cdd
+  Test statistic: F(1, 70) = 0.0748636, p-value 0.785188
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 10: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -1.84577       0.450035      -4.101    0.0001   ***
+  d79         1.94985       0.459903       4.240    6.63e-05 ***
+  lyd74       0.957932      0.303486       3.156    0.0023   ***
+  lyd79      -0.782095      0.351458      -2.225    0.0292   **
+  lyd83      -0.278354      0.0984877     -2.826    0.0061   ***
+  lprice      1.05288       0.241441       4.361    4.30e-05 ***
+  lprd74     -0.676321      0.205767      -3.287    0.0016   ***
+  lprd79     -0.444965      0.125182      -3.555    0.0007   ***
+  lprd83      0.134118      0.0530466      2.528    0.0137   **
+  cdd         0.00125807    0.000300611    4.185    8.05e-05 ***
+  d83cdd      5.07736e-05   5.20057e-05    0.9763   0.3322  
+  lprcdd     -0.000448087   0.000136559   -3.281    0.0016   ***
+  hdd         0.000835800   0.000274804    3.041    0.0033   ***
+  d74hdd     -0.000101507   6.24027e-05   -1.627    0.1082  
+  d83hdd     -5.65385e-05   4.69516e-05   -1.204    0.2325  
+  lprhdd     -0.000148933   0.000136445   -1.092    0.2787  
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.082604   S.E. of regression   0.034109
+R-squared            0.852788   Adjusted R-squared   0.821687
+F(15, 71)            27.41986   P-value(F)           1.29e-23
+Log-likelihood       179.2953   Akaike criterion    -326.5907
+Schwarz criterion   -287.1361   Hannan-Quinn        -310.7035
+rho                  0.028672   Durbin-Watson        1.917797
+
+Excluding the constant, p-value was highest for variable 34 (d83cdd)
+
+? omit d83cdd
+Test on Model 10:
+
+  Null hypothesis: the regression parameter is zero for d83cdd
+  Test statistic: F(1, 71) = 0.953181, p-value 0.332226
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 11: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -1.88817       0.447789      -4.217    7.11e-05 ***
+  d79         2.03475       0.451460       4.507    2.49e-05 ***
+  lyd74       0.979739      0.302565       3.238    0.0018   ***
+  lyd79      -0.835451      0.347070      -2.407    0.0186   **
+  lyd83      -0.265676      0.0975961     -2.722    0.0081   ***
+  lprice      1.07102       0.240647       4.451    3.06e-05 ***
+  lprd74     -0.693515      0.204946      -3.384    0.0012   ***
+  lprd79     -0.454306      0.124775      -3.641    0.0005   ***
+  lprd83      0.138145      0.0528688      2.613    0.0109   **
+  cdd         0.00125121    0.000300431    4.165    8.54e-05 ***
+  lprcdd     -0.000431566   0.000135462   -3.186    0.0021   ***
+  hdd         0.000821428   0.000274320    2.994    0.0038   ***
+  d74hdd     -9.96793e-05   6.23543e-05   -1.599    0.1143  
+  d83hdd     -9.24709e-05   2.91437e-05   -3.173    0.0022   ***
+  lprhdd     -0.000132878   0.000135407   -0.9813   0.3297  
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.083713   S.E. of regression   0.034098
+R-squared            0.850812   Adjusted R-squared   0.821803
+F(14, 72)            29.32940   P-value(F)           3.68e-24
+Log-likelihood       178.7152   Akaike criterion    -327.4305
+Schwarz criterion   -290.4418   Hannan-Quinn        -312.5363
+rho                  0.026560   Durbin-Watson        1.925635
+
+Excluding the constant, p-value was highest for variable 39 (lprhdd)
+
+? omit lprhdd
+Test on Model 11:
+
+  Null hypothesis: the regression parameter is zero for lprhdd
+  Test statistic: F(1, 72) = 0.962999, p-value 0.329718
+  Omitting variables improved 3 of 3 information criteria.
+
+Model 12: OLS, using observations 1972:2-1993:4 (T = 87)
+Dependent variable: lkwh
+
+             coefficient    std. error    t-ratio   p-value 
+  ----------------------------------------------------------
+  const      -1.68291       0.395837      -4.252    6.20e-05 ***
+  d79         1.94952       0.442915       4.402    3.61e-05 ***
+  lyd74       0.980804      0.302486       3.242    0.0018   ***
+  lyd79      -0.820708      0.346657      -2.367    0.0206   **
+  lyd83      -0.260820      0.0974459     -2.677    0.0092   ***
+  lprice      0.965910      0.215440       4.483    2.67e-05 ***
+  lprd74     -0.684829      0.204703      -3.345    0.0013   ***
+  lprd79     -0.422223      0.120386      -3.507    0.0008   ***
+  lprd83      0.134598      0.0527317      2.553    0.0128   **
+  cdd         0.00103462    0.000203771    5.077    2.83e-06 ***
+  lprcdd     -0.000331666   8.93451e-05   -3.712    0.0004   ***
+  hdd         0.000558341   5.80977e-05    9.610    1.35e-14 ***
+  d74hdd     -0.000121743   5.81451e-05   -2.094    0.0398   **
+  d83hdd     -9.33589e-05   2.91222e-05   -3.206    0.0020   ***
+
+Mean dependent var   0.327332   S.D. dependent var   0.080775
+Sum squared resid    0.084832   S.E. of regression   0.034089
+R-squared            0.848816   Adjusted R-squared   0.821893
+F(13, 73)            31.52741   P-value(F)           1.02e-24
+Log-likelihood       178.1373   Akaike criterion    -328.2745
+Schwarz criterion   -293.7518   Hannan-Quinn        -314.3733
+rho                  0.021273   Durbin-Watson        1.935373
+
+# generate final model forecasts and errors*
+? genr f3 = exp(lkwh-$uhat+($ess/($df*2)))
+Generated series f3 (ID 40)
+? genr abserr3 = abs(kwh - f3)
+Generated series abserr3 (ID 41)
+# exclude four initial observations and compute percent errors, mean
+# absolute percent error, and mean squared error
+? smpl 1973.2 1993.4
+Full data range: 1972:2 - 1993:4 (n = 87)
+Current sample: 1973:2 - 1993:4 (n = 83)
+
+? genr pcterr1 = 100*abserr1/kwh
+Generated series pcterr1 (ID 42)
+? genr pcterr2 = 100*abserr2/kwh
+Generated series pcterr2 (ID 43)
+? genr pcterr3 = 100*abserr3/kwh
+Generated series pcterr3 (ID 44)
+? genr mape1=mean(pcterr1)
+Generated scalar mape1 = 3.56887
+? genr mape2=mean(pcterr2)
+Generated scalar mape2 = 2.04249
+? genr mape3=mean(pcterr3)
+Generated scalar mape3 = 2.67096
+? genr mse1=mean(pcterr1*pcterr1)
+Generated scalar mse1 = 21.153
+? genr mse2=mean(pcterr2*pcterr2)
+Generated scalar mse2 = 6.1197
+? genr mse3=mean(pcterr3*pcterr3)
+Generated scalar mse3 = 10.1228
+? print -o pcterr1 pcterr2 pcterr3
+
+            pcterr1      pcterr2      pcterr3
+
+1973:2      2.89014     3.282897     4.078943
+1973:3      0.94824     2.931399     1.557975
+1973:4      2.44746     1.431363     2.490994
+1974:1      3.44094     6.079942     0.493622
+1974:2      5.70383     3.479126     3.483326
+1974:3      2.48417     1.756891     1.247042
+1974:4      4.86474     3.085688     7.386186
+1975:1      1.44261     4.072415     0.065482
+1975:2      7.73044     0.642618     5.095779
+1975:3      2.07509     0.531365     1.111512
+1975:4      4.28416     1.027556     3.089062
+1976:1      3.03147     2.463603     2.068468
+1976:2      1.75902     5.036620     1.768945
+1976:3      2.37449     2.334819     0.924701
+1976:4      9.40630     2.887347     5.547552
+1977:1      8.51578     4.578815     3.335601
+1977:2      2.50620     3.487754     6.229199
+1977:3      0.48599     1.987668     3.828154
+1977:4      8.22603     0.600036     3.784259
+1978:1     11.47683     3.043208     3.831191
+1978:2      2.34012     0.599235     5.189814
+1978:3      3.38556     2.566152     2.485483
+1978:4      7.43022     1.876880     2.265156
+1979:1      5.82625     1.471621     3.023819
+1979:2      1.94229     0.691794     2.864486
+1979:3      1.67682     0.950920     4.261157
+1979:4      9.43547     2.392631     4.568380
+1980:1      9.79046     0.870740     5.193796
+1980:2      0.52264     0.385922     2.288451
+1980:3      0.46906     1.176594     3.520293
+1980:4      6.97567     0.984869     6.390473
+1981:1      6.01910     2.139829     3.110089
+1981:2      1.74292     4.190825     2.151888
+1981:3      5.71129     6.306241     4.086841
+1981:4      3.99583     1.165304     2.903992
+1982:1      1.57458     1.109682     2.127507
+1982:2      3.38624     0.019683     3.433819
+1982:3      3.48901     1.330776     0.581434
+1982:4      0.83218     2.329828     0.208712
+1983:1      0.07421     1.976822     3.383853
+1983:2      0.69036     1.713307     0.961116
+1983:3      4.38739     2.718150     0.450672
+1983:4      0.33277     1.019011     1.904544
+1984:1      1.39843     2.387214     0.261398
+1984:2      2.54418     3.578563     1.505451
+1984:3      6.99468     4.315932     4.006279
+1984:4      2.41757     3.889608     3.913798
+1985:1      3.58935     1.536088     1.874203
+1985:2      6.13791     2.171543     5.041557
+1985:3      0.92154     4.346823     1.561532
+1985:4      0.08288     2.197539     1.543364
+1986:1      0.11621     0.257352     2.150738
+1986:2      5.78134     1.682727     3.965316
+1986:3      0.64347     1.212031     1.923105
+1986:4      2.63058     0.797700     4.419944
+1987:1      4.26649     0.322343     1.283718
+1987:2      5.71555     1.122901     3.627737
+1987:3      0.11694     0.631827     1.108370
+1987:4      1.04979     1.386555     2.920814
+1988:1      3.63288     0.732426     0.003166
+1988:2      6.17073     1.319600     3.491114
+1988:3      1.60066     1.544607     1.949284
+1988:4      0.61126     1.896089     1.920476
+1989:1      6.62030     0.323954     1.553108
+1989:2      7.25988     3.266933     3.897730
+1989:3      0.60893     0.558230     0.107481
+1989:4      0.05439     1.108029     2.608148
+1990:1      3.51609     2.714555     1.910453
+1990:2      6.69893     1.004940     3.020628
+1990:3      2.21430     2.107102     0.363897
+1990:4      0.29454     0.676506     1.746493
+1991:1      4.88061     0.477768     0.037947
+1991:2     13.51235     4.941891     9.041943
+1991:3      1.80141     2.066711     1.432917
+1991:4      1.33592     1.730908     2.922825
+1992:1      3.01377     1.158389     1.502925
+1992:2      3.42109     3.183959     1.608655
+1992:3      3.55243     4.259815     0.684854
+1992:4      0.15788     1.600042     1.864087
+1993:1      2.77813     2.486431     2.070733
+1993:2      5.46832     2.784691     2.553618
+1993:3      3.35053     0.979836     1.798957
+1993:4      1.12969     0.038972     3.716795
+
+? print mape1 mape2 mape3 mse1 mse2 mse3
+
+          mape1 =  3.5688708
+
+          mape2 =  2.0424949
+
+          mape3 =  2.6709558
+
+           mse1 =  21.152977
+
+           mse2 =  6.1197020
+
+           mse3 =  10.122802
+Done

@@ -1,0 +1,17 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-04-07 12:08
+? run regsub.inp
+ /home/cottrell/stats/test-gretl/strings/regsub.inp
+? string test = "-100.35, A-Z, 1998-02-13"
+Generated string test
+? string mod1 = strsub(test, "-", "")
+Generated string mod1
+? print mod1
+100.35, AZ, 19980213
+? string mod2 = regsub(test, "([0-9]+)-([0-9]+)-([0-9]+)", "\1\2\3")
+Generated string mod2
+? print mod2
+-100.35, A-Z, 19980213
+Done

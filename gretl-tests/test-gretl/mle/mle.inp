@@ -1,0 +1,12 @@
+nulldata 20
+set seed 4567311
+series X = normal() > 0
+scalar EX = mean(X)
+series lt = X*log(EX) + (1-X)*log(1-EX)
+print X lt -o
+scalar ll = sum(lt)
+scalar p = 0.5
+set nls_toler 1e-9
+mle lt = X*log(p) + (1-X)*log(1-p)
+deriv p = X/p - (1-X)/(1-p)
+end mle --vcv --verbose

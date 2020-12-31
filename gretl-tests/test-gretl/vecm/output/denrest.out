@@ -1,0 +1,324 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run denrest.inp
+ /home/cottrell/stats/test-gretl/vecm/denrest.inp
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? vecm 2 1 LRM LRY IBO IDE --rc --seasonals
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000 
+           (0.0000) 
+LRY        -1.0329 
+          (0.14054) 
+IBO         5.2069 
+          (0.55682) 
+IDE        -4.2159 
+           (1.1031) 
+const      -6.0599 
+          (0.87213) 
+
+alpha (adjustment vectors)
+
+LRM       -0.21295 
+LRY        0.11502 
+IBO       0.023177 
+IDE       0.029411 
+
+Log-likelihood = 669.11539
+Determinant of covariance matrix = 1.2715236e-16
+AIC = -23.5893
+BIC = -21.9535
+HQC = -22.9602
+
+Equation 1: d_LRM
+
+             coefficient   std. error   t-ratio    p-value 
+  ---------------------------------------------------------
+  d_LRM_1     0.262771     0.160534      1.637     0.1088  
+  d_LRY_1    -0.144254     0.144528     -0.9981    0.3237  
+  d_IBO_1    -0.0401148    0.414434     -0.09679   0.9233  
+  d_IDE_1    -0.670698     0.548151     -1.224     0.2276  
+  S1         -0.0576527    0.0103852    -5.551     1.53e-06 ***
+  S2         -0.0163050    0.00928088   -1.757     0.0859   *
+  S3         -0.0408586    0.00886655   -4.608     3.48e-05 ***
+  EC1        -0.212955     0.0650808    -3.272     0.0021   ***
+
+Mean dependent var   0.007757   S.D. dependent var   0.033086
+Sum squared resid    0.020456   S.E. of regression   0.021562
+R-squared            0.659708   Adjusted R-squared   0.597836
+rho                 -0.043855   Durbin-Watson        2.075695
+
+Equation 2: d_LRY
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_LRM_1     0.602668     0.168100      3.585    0.0008  ***
+  d_LRY_1    -0.142828     0.151340     -0.9438   0.3504 
+  d_IBO_1    -0.290609     0.433968     -0.6697   0.5066 
+  d_IDE_1    -0.182561     0.573987     -0.3181   0.7519 
+  S1         -0.0268262    0.0108747    -2.467    0.0176  **
+  S2          0.00784216   0.00971833    0.8069   0.4240 
+  S3         -0.0130827    0.00928446   -1.409    0.1658 
+  EC1         0.115022     0.0681483     1.688    0.0985  *
+
+Mean dependent var   0.003340   S.D. dependent var   0.025239
+Sum squared resid    0.022429   S.E. of regression   0.022578
+R-squared            0.334755   Adjusted R-squared   0.213801
+rho                  0.009422   Durbin-Watson        1.964505
+
+Equation 3: d_IBO
+
+             coefficient    std. error   t-ratio    p-value
+  ---------------------------------------------------------
+  d_LRM_1     0.0573489     0.0635355     0.9026    0.3716 
+  d_LRY_1     0.144224      0.0572009     2.521     0.0154  **
+  d_IBO_1     0.310660      0.164023      1.894     0.0648  *
+  d_IDE_1     0.203769      0.216945      0.9393    0.3527 
+  S1         -0.000400021   0.00411024   -0.09732   0.9229 
+  S2          0.00762196    0.00367316    2.075     0.0439  **
+  S3          0.00462651    0.00350917    1.318     0.1942 
+  EC1         0.0231772     0.0257575     0.8998    0.3731 
+
+Mean dependent var  -0.001114   S.D. dependent var   0.009802
+Sum squared resid    0.003204   S.E. of regression   0.008534
+R-squared            0.367037   Adjusted R-squared   0.251953
+rho                  0.174104   Durbin-Watson        1.615919
+
+Equation 4: d_IDE
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  d_LRM_1     0.0613395    0.0428204     1.432    0.1591 
+  d_LRY_1     0.0177406    0.0385511     0.4602   0.6476 
+  d_IBO_1     0.264939     0.110545      2.397    0.0209  **
+  d_IDE_1     0.212009     0.146212      1.450    0.1541 
+  S1         -0.00482995   0.00277013   -1.744    0.0882  *
+  S2         -0.00117799   0.00247556   -0.4758   0.6365 
+  S3         -0.00288469   0.00236504   -1.220    0.2291 
+  EC1         0.0294111    0.0173595     1.694    0.0973  *
+
+Mean dependent var  -0.000384   S.D. dependent var   0.006897
+Sum squared resid    0.001455   S.E. of regression   0.005751
+R-squared            0.413390   Adjusted R-squared   0.306733
+rho                  0.015545   Durbin-Watson        1.959732
+
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00038595   0.00022597  -6.5007e-05  -2.9101e-05 
+LRY    0.00022597   0.00042320  -1.2151e-05  -2.7357e-05 
+IBO   -6.5007e-05  -1.2151e-05   6.0456e-05   1.0517e-05 
+IDE   -2.9101e-05  -2.7357e-05   1.0517e-05   2.7460e-05 
+
+determinant = 1.27152e-16
+
+? restrict
+? b1 + b2 = 0
+? end restrict -v
+Restriction:
+ b[1] + b[2] = 0
+
+R (1 x 5)
+
+  1   1   0   0   0 
+
+q (1 x 1)
+
+  0 
+
+
+Test of restrictions on cointegrating relations
+
+Restriction matrix, H (5 x 4)
+
+    -0.70711       0.0000       0.0000       0.0000 
+     0.70711       0.0000       0.0000       0.0000 
+      0.0000       1.0000       0.0000       0.0000 
+      0.0000       0.0000       1.0000       0.0000 
+      0.0000       0.0000       0.0000       1.0000 
+
+H'*S11*H (4 x 4)
+
+      15.381     -0.60633     -0.34597      -3.7560 
+    -0.60633     0.024681     0.013941      0.14844 
+    -0.34597     0.013941    0.0079498     0.084622 
+     -3.7560      0.14844     0.084622      0.91741 
+
+S01*H (4 x 4)
+
+   -0.017771   0.00060109   0.00038206    0.0043316 
+  0.00016175   1.8259e-05  -1.5028e-05  -4.7733e-05 
+   0.0062553  -0.00026187  -0.00015419   -0.0015359 
+   0.0016111  -5.5107e-05  -4.9006e-05  -0.00038699 
+
+M (4 x 1)
+
+      30.474 
+     -114.22 
+      92.452 
+      134.99 
+
+eigenvalue 1 = 0.432704
+
+Unrestricted loglikelihood (lu) = 669.11539
+Restricted loglikelihood (lr) = 669.0938
+2 * (lu - lr) = 0.0431709
+P(Chi-square(1) > 0.0431709) = 0.835404
+
+beta (cointegrating vectors)
+LRM             1.0000 
+LRY            -1.0000 
+IBO             5.3004 
+IDE            -4.2904 
+const          -6.2645 
+
+alpha (adjustment vectors)
+LRM           -0.21199 
+LRY            0.10751 
+IBO           0.022638 
+IDE           0.029690 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.21199      0.21199      -1.1236      0.90954       1.3280 
+LRY            0.10751     -0.10751      0.56985     -0.46127     -0.67349 
+IBO           0.022638    -0.022638      0.11999    -0.097126     -0.14181 
+IDE           0.029690    -0.029690      0.15737     -0.12738     -0.18599 
+
+? restrict
+? b1 + b2 = 0
+? b3 + b4 = 0
+? end restrict -v
+Restriction set
+ 1: b[1] + b[2] = 0
+ 2: b[3] + b[4] = 0
+
+R (2 x 5)
+
+  1   1   0   0   0 
+  0   0   1   1   0 
+
+q (2 x 1)
+
+  0 
+  0 
+
+
+Test of restrictions on cointegrating relations
+
+Restriction matrix, H (5 x 3)
+
+   0.5    0.5      0 
+  -0.5   -0.5      0 
+   0.5   -0.5      0 
+  -0.5    0.5      0 
+     0      0      1 
+
+H'*S11*H (3 x 3)
+
+      7.8758       7.6893       2.6878 
+      7.6893       7.5076       2.6240 
+      2.6878       2.6240      0.91741 
+
+S01*H (4 x 3)
+
+    0.012675     0.012456    0.0043316 
+ -9.7728e-05  -0.00013102  -4.7733e-05 
+  -0.0044770   -0.0043694   -0.0015359 
+  -0.0011423   -0.0011362  -0.00038699 
+
+M (3 x 1)
+
+     -130.33 
+      92.462 
+      117.64 
+
+eigenvalue 1 = 0.423144
+
+Unrestricted loglikelihood (lu) = 669.11539
+Restricted loglikelihood (lr) = 668.65099
+2 * (lu - lr) = 0.928791
+P(Chi-square(2) > 0.928791) = 0.628515
+
+beta (cointegrating vectors)
+LRM             1.0000 
+LRY            -1.0000 
+IBO             5.8838 
+IDE            -5.8838 
+const          -6.2137 
+
+alpha (adjustment vectors)
+LRM           -0.17730 
+LRY           0.094522 
+IBO           0.022819 
+IDE           0.032339 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.17730      0.17730      -1.0432       1.0432       1.1017 
+LRY           0.094522    -0.094522      0.55615     -0.55615     -0.58733 
+IBO           0.022819    -0.022819      0.13426     -0.13426     -0.14179 
+IDE           0.032339    -0.032339      0.19028     -0.19028     -0.20094 
+
+? restrict
+? a[3] = 0
+? a[4] = 0
+? end restrict -v
+Restriction set
+ 1: a[3] = 0
+ 2: a[4] = 0
+
+R(alpha) (2 x 4)
+
+  0   0   1   0 
+  0   0   0   1 
+
+q(alpha) (2 x 1)
+
+  0 
+  0 
+
+eigenvalue 1 = 0.4041
+
+Unrestricted loglikelihood (lu) = 669.11539
+Restricted loglikelihood (lr) = 667.79023
+2 * (lu - lr) = 2.65032
+P(Chi-square(2) > 2.65032) = 0.265761
+
+beta (cointegrating vectors)
+LRM            -24.752 
+LRY             26.694 
+IBO            -115.98 
+IDE             76.045 
+const           143.76 
+
+alpha (adjustment vectors)
+LRM          0.0077539 
+LRY         -0.0062562 
+IBO             0.0000 
+IDE             0.0000 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.19192      0.20698     -0.89926      0.58965       1.1147 
+LRY            0.15485     -0.16700      0.72557     -0.47576     -0.89938 
+IBO             0.0000       0.0000       0.0000       0.0000       0.0000 
+IDE             0.0000       0.0000       0.0000       0.0000       0.0000 
+
+Done

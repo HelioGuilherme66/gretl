@@ -1,0 +1,85 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run kp1.inp
+ /home/cottrell/stats/test-gretl/duration/kp1.inp
+# Kalbfleisch and Prentice, 2e, example on pp. 72-73
+? open kpdata1.txt
+parsing /home/cottrell/stats/test-gretl/duration/kpdata1.txt...
+using delimiter ' '
+   longest line: 45 characters
+   first field: 'treat'
+   number of columns = 8
+   number of variables: 8
+   number of non-blank lines: 138
+scanning for variable names...
+   line: treat type durat censor status mfd age prior
+scanning for row labels and data...
+treating these as undated data
+
+Listing 9 variables:
+  0) const     1) treat     2) type      3) durat     4) censor  
+  5) status    6) mfd       7) age       8) prior   
+
+? d1 = type==1
+Generated series d1 (ID 9)
+? d2 = type==2
+Generated series d2 (ID 10)
+? d3 = type==3
+Generated series d3 (ID 11)
+? cens = 1 - censor
+Generated series cens (ID 12)
+# Full model
+? list X = status mfd age prior d1 d2 d3 treat
+Generated list X
+? duration durat 0 X ; cens
+
+Convergence achieved after 6 iterations
+
+Model 1: Duration (Weibull), using observations 1-137
+Dependent variable: durat
+Standard errors based on Hessian
+
+             coefficient    std. error      z       p-value 
+  ----------------------------------------------------------
+  const       3.09286       0.683640      4.524     6.07e-06 ***
+  status      0.0300683     0.00482787    6.228     4.72e-10 ***
+  mfd        -0.000468814   0.00836144   -0.05607   0.9553  
+  age         0.00609918    0.00855337    0.7131    0.4758  
+  prior      -0.00438976    0.0212279    -0.2068    0.8362  
+  d1          0.397681      0.254749      1.561     0.1185  
+  d2         -0.428504      0.243308     -1.761     0.0782   *
+  d3         -0.735044      0.274060     -2.682     0.0073   ***
+  treat      -0.228523      0.186844     -1.223     0.2213  
+  sigma       0.928115      0.0615447                       
+
+Mean dependent var   121.6277   S.D. dependent var   157.8167
+Chi-square(8)        65.07977   p-value              4.65e-11
+Log-likelihood      -196.1386   Akaike criterion     412.2772
+Schwarz criterion    441.4771   Hannan-Quinn         424.1433
+
+1/sigma = 1.07745 (0.0714475)
+
+  3.0929
+  0.0301
+ -0.0005
+  0.0061
+ -0.0044
+  0.3977
+ -0.4285
+ -0.7350
+ -0.2285
+  0.9281
+
+# Reduced model, Weibull
+? list Xmin = status d1 d2 d3
+Generated list Xmin
+? duration durat 0 Xmin ; cens --quiet
+Weibull, status and cell dummies: ll = -197.10
+# Reduced model, log-nomal
+? list Xmin = status d1 d2 d3
+Replaced list Xmin
+? duration durat 0 Xmin ; cens --lognormal --quiet
+Log-normal, status and cell dummies: ll = -196.75
+Done

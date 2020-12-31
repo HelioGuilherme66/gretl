@@ -1,0 +1,2 @@
+open stocks.xls
+print -o 1 2 15

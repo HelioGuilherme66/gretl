@@ -1,0 +1,16 @@
+# Replication of the results on Danish macro data in 
+# S. Johansen, "Likelihood-Based Inference in
+# Cointegrated Vector Auto-Regressive Models" (Oxford,
+# 1995), section 2.4.1
+
+open denmark.gdt
+
+# estimate the model at full rank
+vecm 2 4 LRM LRY IBO IDE --seasonals
+
+# correlations and standard deviations of residuals
+scalar T = $T
+matrix E = $uhat
+matrix mc = mcorr(E)
+matrix msd = 100 * sdc(E)
+print mc msd

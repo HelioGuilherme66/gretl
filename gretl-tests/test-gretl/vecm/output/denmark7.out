@@ -1,0 +1,290 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-03-18 16:48
+? run denmark7.inp
+ /home/cottrell/stats/test-gretl/vecm/denmark7.inp
+# Replicate Johansen's analysis of Danish data in chapter 7
+# of his 1995 book
+? open denmark
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+# initial cointegration analysis
+? coint2 2 LRM LRY IBO IDE --rc --seas
+
+Johansen test:
+Number of equations = 4
+Lag order = 2
+Estimation period: 1974:3 - 1987:3 (T = 53)
+Case 2: Restricted constant
+
+Log-likelihood = 829.051 (including constant term: 678.644)
+
+Rank Eigenvalue Trace test  p-value  Lmax test  p-value
+   0    0.43317     49.144 [0.1284]     30.087 [0.0286]
+   1    0.17758     19.057 [0.7812]     10.362 [0.8017]
+   2    0.11279     8.6950 [0.7645]     6.3427 [0.7483]
+   3   0.043411     2.3522 [0.7088]     2.3522 [0.7076]
+
+Corrected for sample size (df = 41)
+Rank Trace test p-value
+   0     49.144 [0.2018]
+   1     19.057 [0.8197]
+   2     8.6950 [0.7816]
+   3     2.3522 [0.7095]
+
+eigenvalue     0.43317      0.17758      0.11279     0.043411 
+
+beta (cointegrating vectors)
+LRM             21.974      -14.656       7.9465      -1.0245 
+LRY            -22.698       20.051      -25.641       1.9298 
+IBO             114.42      -3.5611       4.2775      -24.997 
+IDE            -92.640      -100.26      -44.877       14.648 
+const          -133.16       62.593       62.749       2.3187 
+
+alpha (adjustment vectors)
+LRM         -0.0096912   0.00032853    0.0044058   -0.0019804 
+LRY          0.0052344   -0.0013476    0.0062843   -0.0010821 
+IBO          0.0010548   0.00072298   0.00043797    0.0015361 
+IDE          0.0013384    0.0020626  -0.00035380   4.6536e-05 
+
+renormalized beta
+LRM             1.0000     -0.73094       1.8578    -0.069940 
+LRY            -1.0329       1.0000      -5.9943      0.13174 
+IBO             5.2069     -0.17761       1.0000      -1.7065 
+IDE            -4.2159      -5.0004      -10.491       1.0000 
+const          -6.0599       3.1217       14.670      0.15829 
+
+renormalized alpha
+LRM           -0.21295    0.0065874     0.018846    -0.029009 
+LRY            0.11502    -0.027020     0.026881    -0.015852 
+IBO           0.023177     0.014496    0.0018734     0.022501 
+IDE           0.029411     0.041357   -0.0015134   0.00068168 
+
+long-run matrix (alpha * beta')
+                   LRM          LRY          IBO          IDE        const
+LRM           -0.18073      0.10977      -1.0417      0.63812       1.5829 
+LRY            0.18582     -0.30905      0.65764     -0.64768     -0.38955 
+IBO           0.014488    -0.017710     0.081582     -0.16735    -0.064154 
+IDE         -0.0036773     0.020138      0.14312     -0.31424    -0.071218 
+
+# unrestricted rank-1 VECM
+? vecm 2 1 LRM LRY IBO IDE --rc --seas --quiet
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000 
+           (0.0000) 
+LRY        -1.0329 
+          (0.14054) 
+IBO         5.2069 
+          (0.55682) 
+IDE        -4.2159 
+           (1.1031) 
+const      -6.0599 
+          (0.87213) 
+
+alpha (adjustment vectors)
+
+LRM       -0.21295 
+LRY        0.11502 
+IBO       0.023177 
+IDE       0.029411 
+
+Log-likelihood = 669.11539
+Determinant of covariance matrix = 1.2715236e-16
+AIC = -23.5893
+BIC = -21.9535
+HQC = -22.9602
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00038595   0.00022597  -6.5007e-05  -2.9101e-05 
+LRY    0.00022597   0.00042320  -1.2151e-05  -2.7357e-05 
+IBO   -6.5007e-05  -1.2151e-05   6.0456e-05   1.0517e-05 
+IDE   -2.9101e-05  -2.7357e-05   1.0517e-05   2.7460e-05 
+
+determinant = 1.27152e-16
+
+# initial beta restriction
+? restrict
+? b1 + b2 = 0
+? end restrict --full --quiet
+Restriction:
+ b[1] + b[2] = 0
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+Restrictions on beta:
+  b1 + b2 = 0
+
+Unrestricted loglikelihood (lu) = 669.11539
+Restricted loglikelihood (lr) = 669.0938
+2 * (lu - lr) = 0.0431709
+P(Chi-square(1) > 0.0431709) = 0.835404
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000 
+          (0.22289) 
+LRY        -1.0000 
+          (0.22289) 
+IBO         5.3004 
+          (0.93988) 
+IDE        -4.2904 
+           (1.1523) 
+const      -6.2645 
+           (1.3912) 
+
+alpha (adjustment vectors)
+
+LRM       -0.21199 
+LRY        0.10751 
+IBO       0.022638 
+IDE       0.029690 
+
+Determinant of covariance matrix = 1.2725598e-16
+AIC = -23.5884
+BIC = -21.9527
+HQC = -22.9594
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00038309   0.00022433  -6.4894e-05  -2.8517e-05 
+LRY    0.00022433   0.00042570  -1.1872e-05  -2.7225e-05 
+IBO   -6.4894e-05  -1.1872e-05   6.0464e-05   1.0482e-05 
+IDE   -2.8517e-05  -2.7225e-05   1.0482e-05   2.7353e-05 
+
+determinant = 1.27256e-16
+
+? scalar LR = $test
+Generated scalar LR = 0.0431709
+? scalar pv = $pvalue
+Generated scalar pv = 0.835404
+? scalar ll = $rlnl
+Generated scalar ll = 669.094
+# test a second beta restriction within the first
+? restrict
+? b3 + b4 = 0
+? end restrict --full --quiet
+Restriction:
+ b[3] + b[4] = 0
+
+VECM system, lag order 2
+Maximum likelihood estimates, observations 1974:3-1987:3 (T = 53)
+Cointegration rank = 1
+Case 2: Restricted constant
+
+Restrictions on beta:
+  b1 + b2 = 0
+  b3 + b4 = 0
+
+Unrestricted loglikelihood (lu) = 669.11539
+Restricted loglikelihood (lr) = 668.65099
+2 * (lu - lr) = 0.928791
+P(Chi-square(2) > 0.928791) = 0.628515
+
+Relative to prior restriction:
+Unrestricted loglikelihood (lu) = 669.0938
+Restricted loglikelihood (lr) = 668.65099
+2 * (lu - lr) = 0.88562
+P(Chi-square(1) > 0.88562) = 0.346667
+
+beta (cointegrating vectors, standard errors in parentheses)
+
+LRM         1.0000 
+          (0.21789) 
+LRY        -1.0000 
+          (0.21789) 
+IBO         5.8838 
+           (1.0646) 
+IDE        -5.8838 
+           (1.0646) 
+const      -6.2137 
+           (1.3266) 
+
+alpha (adjustment vectors)
+
+LRM       -0.17730 
+LRY       0.094522 
+IBO       0.022819 
+IDE       0.032339 
+
+Determinant of covariance matrix = 1.2940027e-16
+AIC = -23.5717
+BIC = -21.9360
+HQC = -22.9427
+Cross-equation covariance matrix:
+
+              LRM          LRY          IBO          IDE
+LRM    0.00039217   0.00022200  -6.3942e-05  -2.6075e-05 
+LRY    0.00022200   0.00042567  -1.2648e-05  -2.8879e-05 
+IBO   -6.3942e-05  -1.2648e-05   6.0115e-05   9.8704e-06 
+IDE   -2.6075e-05  -2.8879e-05   9.8704e-06   2.6334e-05 
+
+determinant = 1.294e-16
+
+? scalar LR = $test
+Replaced scalar LR = 0.88562
+? scalar pv = $pvalue
+Replaced scalar pv = 0.346667
+? scalar ll = $rlnl
+Replaced scalar ll = 668.651
+# weak exogeneity restriction, tested within the beta
+# restrictions
+? restrict
+? a3 = 0
+? a4 = 0
+? end restrict --quiet
+Restriction set
+ 1: a[3] = 0
+ 2: a[4] = 0
+Rank of Jacobian = 4, number of free parameters = 5
+Model is not fully identified
+Based on Jacobian, df = 4
+Allowing for prior restriction, df = 2
+Switching algorithm: 4 iterations
+ -(T/2)log|Omega| = 966.55863, lldiff = 3.91775e-07
+Strong convergence
+
+Unrestricted loglikelihood (lu) = 668.65099
+Restricted loglikelihood (lr) = 665.74366
+2 * (lu - lr) = 5.81466
+P(Chi-square(2) > 5.81466) = 0.0546214
+
+Cointegrating vectors
+
+LRM        -150.23 
+LRY         150.23 
+IBO        -872.93 
+IDE         872.93 
+const       932.55 
+
+alpha (adjustment vectors)
+
+LRM     0.00091165 
+LRY    -0.00088841 
+IBO         0.0000 
+IDE         0.0000 
+
+? scalar LR = $test
+Replaced scalar LR = 5.81466
+? scalar pv = $pvalue
+Replaced scalar pv = 0.0546214
+? scalar ll = $rlnl
+Replaced scalar ll = 665.744
+Done

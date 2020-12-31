@@ -1,0 +1,78 @@
+gretl version 1.10.0cvs
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2014-09-21 13:37
+? run ch13.inp
+ /opt/esl/share/gretl/scripts/stock_watson/ch13.inp
+# Stock and Watson, chapter 13
+? open oj.gdt
+
+Read datafile /opt/esl/share/gretl/data/stock_watson/oj.gdt
+periodicity: 12, maxobs: 642
+observations range: 1948:01 to 2001:06
+
+Listing 4 variables:
+  0) const    1) PPIOJ    2) PWFSA    3) FDD    
+
+# Generate real price of OJ
+? genr realojp = PPIOJ/PWFSA
+Generated series realojp (ID 4)
+# Generate monthly percentage change in real price
+? genr DelP = 100 * ldiff(realojp)
+Generated series DelP (ID 5)
+# Set the sample period used by Stock and Watson
+? smpl 1950:01 2000:12
+Full data range: 1948:01 - 2001:06 (n = 642)
+Current sample: 1950:01 - 2000:12 (n = 612)
+
+# Newey-West HAC estimation
+? set hac_lag nw1
+# Simple model: equation 13.1
+? ols DelP 0 FDD --robust
+
+Model 1: OLS, using observations 1950:01-2000:12 (T = 612)
+Dependent variable: DelP
+HAC standard errors, bandwidth 6 (Bartlett kernel)
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const       -0.402256     0.216846    -1.855    0.0641  *
+  FDD          0.466218     0.133269     3.498    0.0005  ***
+
+Mean dependent var  -0.115822   S.D. dependent var   5.065299
+Sum squared resid    14207.89   S.E. of regression   4.826139
+R-squared            0.093687   Adjusted R-squared   0.092201
+F(1, 610)            12.23826   P-value(F)           0.000502
+Log-likelihood      -1830.705   Akaike criterion     3665.411
+Schwarz criterion    3674.244   Hannan-Quinn         3668.846
+rho                  0.106701   Durbin-Watson        1.778019
+
+# Distributed lag model, 13.2
+? ols DelP 0 FDD FDD(-1 to -6) --robust
+
+Model 2: OLS, using observations 1950:01-2000:12 (T = 612)
+Dependent variable: DelP
+HAC standard errors, bandwidth 6 (Bartlett kernel)
+
+             coefficient   std. error   t-ratio   p-value
+  -------------------------------------------------------
+  const      -0.650518     0.233628     -2.784    0.0055  ***
+  FDD         0.469312     0.135029      3.476    0.0005  ***
+  FDD_1       0.143051     0.0830890     1.722    0.0856  *
+  FDD_2       0.0564233    0.0559638     1.008    0.3138 
+  FDD_3       0.0722596    0.0466509     1.549    0.1219 
+  FDD_4       0.0343243    0.0293440     1.170    0.2426 
+  FDD_5       0.0468223    0.0307733     1.522    0.1287 
+  FDD_6       0.0481116    0.0443603     1.085    0.2785 
+
+Mean dependent var  -0.115822   S.D. dependent var   5.065299
+Sum squared resid    13980.81   S.E. of regression   4.811136
+R-squared            0.108173   Adjusted R-squared   0.097837
+F(7, 604)            3.627005   P-value(F)           0.000767
+Log-likelihood      -1825.775   Akaike criterion     3667.550
+Schwarz criterion    3702.884   Hannan-Quinn         3681.293
+rho                  0.098782   Durbin-Watson        1.793319
+
+Excluding the constant, p-value was highest for variable 7 (FDD_2)
+
+Done

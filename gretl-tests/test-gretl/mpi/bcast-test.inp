@@ -1,0 +1,22 @@
+set echo off
+set messages off
+mpi
+  # broadcast a scalar
+  scalar x
+  if $mpirank == 0
+    x = $pi
+  endif
+  mpibcast(&x)
+  if $mpirank > 0
+    printf "rank %d: x = %g\n", $mpirank, x
+  endif
+  # broadcast a matrix
+  matrix m
+  if $mpirank == 0
+    m = I(3)
+  endif
+  mpibcast(&m)
+  if $mpirank > 0
+    printf "rank %d: m = \n%#10.5g\n", $mpirank, m
+  endif  
+end mpi --np=3

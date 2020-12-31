@@ -1,0 +1,30 @@
+"The new GMM weighting scheme is, so to speak, orthogonal to the bfgs
+experiment."
+
+I can see that's the case in principle, but the reason I treated the
+two changes as a package in my testing is that they don't seem to be
+orthogonal in practice (although of course 14 GMM scripts -- with a
+smaller number of distinct datasets -- is a small sample). As I
+mentioned, I got one GMM failure with the quadratic step-length but
+without the new weights normalization. OK, not much evidence there,
+but the converse is more striking: if I employ your weights
+normalization without the new step-length code then 5 out of my 14
+scripts fail. In each case the message is "stopped after 500
+iterations" (500 being the max for BFGS set in gmm.c). I tried raising
+that to 5000 but still got no convergence.
+
+I also get something that seems a bit funny on an additional
+script. This is one where we start with weights V = I(11), do one-step
+estimation, then proceed to do two-step estimation of the same
+specification without reinitializing V. With the new normalization, V
+is adjusted by the first gmm call, then adjusted again by the second
+(the adjustment is not idempotent), and the two-step results are not
+invariant, as follows:
+
+V not reset:  Q = 0.0179, J test = 7.477
+V reset to I: Q = 0.0135, J test = 5.625
+
+(Without the reset, on one-step I'm seeing "gmm_normalize: scale =
+0.000257715", then on two-step, "gmm_normalize: scale = 0.00366162".)
+
+

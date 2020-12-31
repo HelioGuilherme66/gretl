@@ -1,0 +1,53 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run mwu.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/mwu.gfn.inp
+? include ./mwu.gfn
+ /home/cottrell/stats/test-gretl/testgfn/mwu.gfn
+mwu 0.93, 2013-08-24 (Yi-Nung Yang)
+? nulldata 10
+periodicity: 1, maxobs: 10
+observations range: 1 to 10
+? x1=normal()
+Generated series x1 (ID 2)
+? y1=normal()+1
+Generated series y1 (ID 3)
+? mwu(x1,y1)
+==============================================================
+      Mann-Whitney U statistic for  x1 and y1:     
+         sample 1: x1
+            n1=10,   w1=81.00,   U1=74.00
+         sample 2: y1
+            n2=10,   w2=129.00,   U2=26.00
+ --------------------------------------------------------------
+	 N1= 10 (=max(n1,n2)) 	  U = 74.00 = (=max(U1,U2))     
+==============================================================
+Critical values of M-W U test:      
+--------------------------------------------------------------
+	size1 size2	Percentile	
+	n1	n2	0.2	0.1	0.05	0.02	0.01	
+--------------------------------------------------------------
+	10	1	10	 	 	 	 	
+	10	2	17	19	20	 	 	
+	10	3	24	26	27	29	30	
+	10	4	30	33	35	37	38	
+	10	5	37	39	42	44	46	
+	10	6	43	46	49	52	54	
+	10	7	49	53	56	59	61	
+	10	8	56	60	63	67	69	
+	10	9	62	66	70	74	77	
+	10	10	68	73	77	81	84	
+   --------------------------------------------------------
+      Normal distribution approximation for n1>=10
+   --------------------------------------------------------
+      z1 = (74.00 - 50.0) / 13.23 = 1.81423
+      z2 = (26.00 - 50.0) / 13.23 = -1.81423
+
+      One-tailed p-value:
+          P(Z < 1.81423) = 0.96518
+          P(Z < -1.81423) = 0.03482
+      Two-tailed p-value  = 0.06964
+==============================================================
+Done

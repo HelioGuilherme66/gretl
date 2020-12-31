@@ -1,0 +1,2 @@
+open foobar.xls --coloffset=1
+print -o

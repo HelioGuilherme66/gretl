@@ -1,0 +1,10 @@
+open data7-12 -q
+list L = wbase length width height weight cyl liters
+pca L --save=2 --covar
+print PC* -o
+ols price 0 PC1 PC2
+ols price 0 weight height
+
+
+
+

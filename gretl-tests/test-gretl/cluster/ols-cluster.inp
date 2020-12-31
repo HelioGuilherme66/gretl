@@ -1,0 +1,19 @@
+function matrix stata_reorder (matrix se)
+  scalar n = rows(se)
+  return se[n] | se[1:n-1]
+end function
+
+open data4-1
+ols 1 0 2 3 --cluster=bedrms
+matrix se = $stderr
+
+foreign language=stata --send-data
+  reg price sqft bedrms, vce(cluster bedrms)
+  matrix vcv = e(V)
+  gretl_export vcv "vcv.mat"
+end foreign
+
+matrix stata_vcv = mread("@dotdir/vcv.mat")
+stata_se = stata_reorder(sqrt(diag(stata_vcv)))
+matrix check = se - stata_se
+print check

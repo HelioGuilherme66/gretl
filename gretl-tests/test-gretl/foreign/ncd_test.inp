@@ -1,0 +1,58 @@
+set echo off
+set messages off
+
+scalar maxx = 6
+scalar n = 30
+
+matrix x = seq(1,n)' ./(maxx/n)
+matrix p = seq(1,n)' ./(n+1)
+df1 = 6
+df2 = 22
+ncp = 4.5
+
+matrix A = {}
+matrix A ~= cdf(nct, df1, ncp, x)
+matrix A ~= cdf(ncx, df1, ncp, x)
+matrix A ~= cdf(ncf, df1, df2, ncp, x)
+
+matrix A ~= pdf(nct, df1, ncp, x)
+matrix A ~= pdf(ncx, df1, ncp, x)
+matrix A ~= pdf(ncf, df1, df2, ncp, x)
+
+matrix A ~= invcdf(nct, df1, ncp, p)
+matrix A ~= invcdf(ncx, df1, ncp, p)
+matrix A ~= invcdf(ncf, df1, df2, ncp, p)
+
+printf "%9.5f \n", A
+
+matrix ncparm = {df1, df2, ncp, n, maxx}
+mwrite(ncparm, "ncparm.mat", 1)
+
+foreign language=R
+    ncparm <- gretl.loadmat("ncparm.mat");
+    df1 <- ncparm[1]
+    df2 <- ncparm[2]
+    ncp <- ncparm[3]
+    n   <- ncparm[4]
+    maxx <- ncparm[5]
+    
+    x <- as.matrix(seq(1, n)/ (maxx/n));
+    p <- as.matrix(seq(1, n)/ (n+1));
+
+    a <- pt(x, df1, ncp);
+    a <- cbind(a, pchisq(x, df1, ncp));	
+    a <- cbind(a, pf(x, df1, df2, ncp));	
+
+    a <- cbind(a, dt(x, df1, ncp));
+    a <- cbind(a, dchisq(x, df1, ncp));	
+    a <- cbind(a, df(x, df1, df2, ncp));	
+
+    a <- cbind(a, qt(p, df1, ncp));	
+    a <- cbind(a, qchisq(p, df1, ncp));	
+    a <- cbind(a, qf(p, df1, df2, ncp));	
+
+    gretl.export(a, "AR");
+end foreign
+
+matrix AR = mread("AR.mat", 1)
+printf "\n%#10.3g\n", A - AR

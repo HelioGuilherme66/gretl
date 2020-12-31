@@ -1,0 +1,25 @@
+open kpsw_ciy.gdt
+varselector = 3      # construct confidence bands for which variable?
+confcoverage = 0.90  # the coverage of the confidence interval 
+dodelta = 1
+doboot = 1
+numofW = 50 # bootstrap replications
+
+list uexo = null # or set to null
+list rexo = null # or set to null
+lagorder = 9
+cirank = 2
+determcase = 3	# only 2,3,4 admissible
+# later also care about seasonals
+
+set vecm_norm diag
+list endo = consum invest inc
+include permaconfbackend.inp
+
+set stopwatch
+list results = pconfbackend(endo,rexo,uexo,cirank,lagorder,determcase,  \
+  varselector,confcoverage,dodelta,doboot,numofW)
+printf "elapsed time: %f\n", $stopwatch
+
+## specify filename here:
+store kpswciy_3_90_test.csv --csv

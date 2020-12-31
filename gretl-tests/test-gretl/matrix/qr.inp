@@ -1,0 +1,6 @@
+open data4-1
+matrix X = { const, sqft }
+matrix R
+matrix Q = qrdecomp(X, &R)
+Q
+R

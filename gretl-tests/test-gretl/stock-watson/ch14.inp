@@ -1,0 +1,23 @@
+# Stock and Watson, ch 14
+# illustrative VAR and GARCH
+# 
+open sw_ch14.gdt
+set force_hc on
+set hc_version 1
+genr infl = 400 * log(PUNEW/PUNEW(-1))
+diff infl 
+lags d_infl LHUR
+smpl 1962:1 1999:4
+# run "automatic" VAR
+# Equations 14.5 and 14.6
+var 4 d_infl LHUR const -r
+# for comparison, try one equation manually
+ols LHUR const d_infl(-1 to -4) LHUR(-1 to -4) -r
+# Test for Granger causality of unemployment by inflation
+omit d_infl(-1 to -4) --quiet
+# GARCH model
+garch 1 1 ; d_infl const d_infl(-1 to -4) LHUR(-1 to -4) -r --vcv
+
+
+
+

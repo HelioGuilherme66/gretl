@@ -1,0 +1,128 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-04 10:11
+? run weibull_sim.inp
+ /home/cottrell/stats/test-gretl/duration/weibull_sim.inp
+? nulldata 8000
+periodicity: 1, maxobs: 8000
+observations range: 1 to 8000
+? set seed 3275641
+Pseudo-random number generator seeded with 3275641
+? series x = (obs < 4001)? 1 : 0
+Generated series x (ID 2)
+? scalar b0 = 2
+Generated scalar b0 = 2
+? scalar b1 = 1.1
+Generated scalar b1 = 1.1
+? series xb = b0 + b1*x
+Generated series xb (ID 3)
+? scalar scale = 2
+Generated scalar scale = 2
+? series y = randgen(W, 1/scale, exp(xb))
+Generated series y (ID 4)
+# correct expected values?
+? scalar E1 = exp(b0 + b1) * gammafun(1 + scale)
+Generated scalar E1 = 44.3959
+? scalar E2 = exp(b0) * gammafun(1 + scale)
+Generated scalar E2 = 14.7781
+# expected values according to R's survreg
+? scalar E1a = exp(b0 + b1) * gammafun(2)
+Generated scalar E1a = 22.198
+? scalar E2a = exp(b0) * gammafun(2)
+Generated scalar E2a = 7.38906
+? duration y 0 x
+
+Convergence achieved after 9 iterations
+
+Model 1: Duration (Weibull), using observations 1-8000
+Dependent variable: y
+Standard errors based on Hessian
+
+             coefficient   std. error     z      p-value 
+  -------------------------------------------------------
+  const        2.01145     0.0323462    62.18   0.0000    ***
+  x            1.09860     0.0445501    24.66   2.89e-134 ***
+  sigma        1.99234     0.0173478                     
+
+Mean dependent var   29.78482   S.D. dependent var   75.32388
+Chi-square(1)        575.3355   p-value              3.9e-127
+Log-likelihood      -18120.75   Akaike criterion     36247.51
+Schwarz criterion    36268.47   Hannan-Quinn         36254.68
+
+1/sigma = 0.501922 (0.00437035)
+
+? series ey = $yhat
+Generated series ey (ID 5)
+? smpl 1 5
+Full data range: 1 - 8000 (n = 8000)
+Current sample: 1 - 5 (n = 5)
+
+? print y ey -o
+
+             y           ey
+
+1      21.2323     44.52872
+2     392.8115     44.52872
+3       2.5255     44.52872
+4      10.4367     44.52872
+5      10.6504     44.52872
+
+? smpl 4001 4005
+Full data range: 1 - 8000 (n = 8000)
+Current sample: 4001 - 4005 (n = 5)
+
+? print y ey -o
+
+                y           ey
+
+4001      0.76660     14.84312
+4002      0.62306     14.84312
+4003      3.37548     14.84312
+4004      0.16725     14.84312
+4005     18.09185     14.84312
+
+# find sample means
+? smpl 1 4000
+Full data range: 1 - 8000 (n = 8000)
+Current sample: 1 - 4000 (n = 4000)
+
+? M1 = mean(y)
+Generated scalar M1 = 44.7389
+? smpl 4001 8000
+Full data range: 1 - 8000 (n = 8000)
+Current sample: 4001 - 8000 (n = 4000)
+
+? M2 = mean(y)
+Generated scalar M2 = 14.8307
+? smpl --full
+Full data range: 1 - 8000 (n = 8000)
+
+? foreign language=R --send-data
+?   library(survival)
+?   y <- gretldata[,"y"]
+?   x <- gretldata[,"x"]
+?   sr <- survreg(Surv(y) ~ x, dist='weibull')
+?   summary(sr)
+?   predict(sr, type='response')[1:5]
+?   predict(sr, type='response')[4001:4005]
+? end foreign
+
+Call:
+survreg(formula = Surv(y) ~ x, dist = "weibull")
+            Value Std. Error    z         p
+(Intercept) 2.011    0.03235 62.2  0.00e+00
+x           1.099    0.04455 24.7 2.89e-134
+Log(scale)  0.689    0.00871 79.2  0.00e+00
+
+Scale= 1.99 
+
+Weibull distribution
+Loglik(model)= -29429.4   Loglik(intercept only)= -29717.1
+	Chisq= 575.34 on 1 degrees of freedom, p= 0 
+Number of Newton-Raphson Iterations: 6 
+n= 8000 
+
+[1] 22.42201 22.42201 22.42201 22.42201 22.42201
+[1] 7.474113 7.474113 7.474113 7.474113 7.474113
+Done

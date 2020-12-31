@@ -1,0 +1,26 @@
+# one-way ANOVA
+open dt_anova1.txt -q
+list xt = dummify(treat)
+ols resp 0 xt --anova
+anova resp treat 
+printf "saved result: F = %g [%g]\n", $test, $pvalue
+
+# test degenerate case
+resp = treat
+anova resp treat 
+
+# two-way ANOVA
+open dt_anova2.txt -q
+list xt = dummify(treat)
+list xb = dummify(block)
+ols resp 0 xt xb --anova
+omit xt --test-only
+anova resp treat block
+printf "saved result: F = %g [%g]\n", $test, $pvalue
+
+# quiet option
+anova resp treat block --quiet
+printf "saved result: F = %g [%g]\n", $test, $pvalue
+
+
+

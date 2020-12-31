@@ -1,0 +1,45 @@
+gretl version 2016b-git
+Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
+This is free software with ABSOLUTELY NO WARRANTY
+Current session: 2016-02-02 13:39
+? run robust_RESET.gfn.inp
+ /home/cottrell/stats/test-gretl/testgfn/robust_RESET.gfn.inp
+? include ./robust_RESET.gfn
+ /home/cottrell/stats/test-gretl/testgfn/robust_RESET.gfn
+robust_RESET 0.1, 2015-10-31 (Oleh Komashko)
+? open denmark.gdt
+
+Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+periodicity: 4, maxobs: 55
+observations range: 1974:1 to 1987:3
+
+Listing 5 variables:
+  0) const    1) LRM      2) LRY      3) IBO      4) IDE    
+
+? list X = diff(LRY)
+Generated list X
+? resetrb(diff(LRM),X)
+
+Auxiliary regression for robust RESET specification test
+OLS, using observations 1974:2-1987:3 (T = 54)
+Dependent variable: 
+
+             coefficient   std. error     z      p-value
+  ------------------------------------------------------
+  d_LRY        0.373740      0.241321   1.549    0.1214 
+  yhat^2      13.9295       10.0613     1.384    0.1662 
+  yhat^3      80.1138      206.620      0.3877   0.6982 
+
+Test statistic: F = 8.64559, 
+with p-value = P(F(2,51) > 8.64559) = 0.00058444
+# Wooldridge, ch. 9, C1, (ii) with
+# known answer
+# uncomment to run
+# dir = $dotdir~"/data/wooldridge/ceosal1.gdt"
+# open @dir
+# logs salary sales
+# rosneg = ros < 0
+# list Z = 0 l_sales roe rosneg
+# ols l_salary Z
+# resetrb(l_salary,Z)
+Done

@@ -1,0 +1,20 @@
+open arma.gdt
+
+phi = 0
+theta = 0
+sigma = 1
+
+/* Kalman filter setup */
+matrix H = {1; theta}
+matrix F = {phi, 0; 1, 0}
+matrix Q = {sigma^2, 0; 0, 0}
+
+bundle kb = ksetup({y}, &H, &F, &Q)
+
+mle logl = ERR ? NA : kb.llt
+    H[2] = theta
+    F[1,1] = phi
+    Q[1,1] = sigma^2
+    ERR = kfilter(kb)
+    params phi theta sigma
+end mle -h

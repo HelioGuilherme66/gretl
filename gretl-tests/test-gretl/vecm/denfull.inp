@@ -1,0 +1,3 @@
+open denmark
+
+vecm 2 4 LRM LRY IBO IDE --crt

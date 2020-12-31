@@ -1,0 +1,36 @@
+
+Ox version 4.1a (Linux) (C) J.A. Doornik, 1994-2007
+DPD package version 1.24, object created on 13-04-2008
+
+
+---- Database information ----
+Sample:    1 - 40 (40 observations)
+Frequency: 1
+Variables: 3
+
+Variable        #obs  #miss    type          min         mean          max      std.dev
+id                40      0  double            1          4.5            8       2.2913
+year              40      0  double         1990         1992         1994       1.4142
+y                 31      9  double      -2.8815     -0.01719       2.9637        1.346
+
+DPD( 1) Modelling y by 1-step (using jack4.csv)
+
+                  ----   1-step estimation using DPD ----
+                  Coefficient  Std.Error  t-value  t-prob
+Oy(-1)               0.461767     0.2344     1.97   0.072
+
+sigma               0.6677664  sigma^2              0.445912
+RSS              5.3509440312  TSS              7.0364632025
+no. of observations        13  no. of parameters           1
+Using robust standard errors
+
+Transformation used:      orthogonal deviations
+Level instruments:        Gmm("y",2,99)
+
+constant:                  no  time dummies:               0
+number of individuals       7
+longest time series         3 [1992 - 1994]
+shortest time series        1 (unbalanced panel)
+
+Wald (joint):    Chi^2(1) =     3.879 [0.049] *
+Sargan test:     Chi^2(5) =     1.628 [0.898]

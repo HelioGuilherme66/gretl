@@ -1,0 +1,19 @@
+open fakedata.gdt
+
+list socdemo = CHILD AUTOMOBILE
+list X = lnPLOGCOMP lnPCARBCOMP lnDEPTOTR socdemo
+list Z = lnPLOGCOMP lnPCARBCOMP lnREVTOTUCR socdemo 
+
+system name=AIDS
+  equation WLOG const X MRLOG ; const Z MRLOG 
+  equation WCAR const X MRCAR ; const Z MRCAR
+end system
+
+estimate AIDS method=3sls
+matrix YH = $yhat
+
+fcast --quiet
+matrix FC = $fcast
+
+matrix check = maxc(abs(YH - FC))
+print check
