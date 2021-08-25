@@ -2,7 +2,6 @@ name: Build
 on:
   push:
     branches:
-      - master
       - gretl-test
   pull_request:
     types: [opened, synchronize, reopened]
