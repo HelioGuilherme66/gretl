@@ -7902,10 +7902,21 @@ void plot_from_selection (int code)
     gretlopt opt = OPT_G;
     int pan_between = 0;
     int multiplot = 0;
-    char *liststr;
+    int *list = NULL;
+    char *liststr = NULL;
+    int n_selected = 0;
     int cancel = 0;
 
-    liststr = main_window_selection_as_string();
+    list = main_window_selection_as_list();
+
+    if (list != NULL) {
+	int err = 0;
+
+	n_selected = list[0];
+	liststr = gretl_list_to_string(list, dataset, &err);
+	free(list);
+    }
+
     if (liststr == NULL || *liststr == '\0') {
         return;
     }
@@ -7930,9 +7941,22 @@ void plot_from_selection (int code)
                 pan_between = 1;
             }
             dialog_opts_free(opts);
+        } else if (n_selected == 2) {
+            dialog_opts *opts;
+            const char *strs[] = {N_("suppress fitted line")};
+            gretlopt vals[] = {OPT_F};
+            gretlopt popt = OPT_NONE;
+
+            opts = dialog_opts_new(1, OPT_TYPE_CHECK,
+                                   &popt, vals, strs);
+            cancel = maybe_reorder_list(liststr, opts);
+	    if (popt & OPT_F) {
+		opt |= OPT_F;
+	    }
+            dialog_opts_free(opts);
         } else {
             cancel = maybe_reorder_list(liststr, NULL);
-        }
+	}
     } else if (code == GR_PLOT) {
         int k = mdata_selection_count();
 
@@ -7968,6 +7992,10 @@ void plot_from_selection (int code)
             /* FIXME pan_between and CLI? */
             lib_command_sprintf("gnuplot%s%s", liststr,
                                 (code == GR_PLOT)? " --time-series --with-lines" : "");
+	    if (opt & OPT_F) {
+		lib_command_strcat(" --fit=none");
+	    }
+
         }
 
         err = parse_lib_command();
@@ -7978,6 +8006,9 @@ void plot_from_selection (int code)
             } else if (pan_between) {
                 err = panel_means_XY_scatter(libcmd.list, dataset, opt);
             } else {
+		if (opt & OPT_F) {
+		    set_optval_string(GNUPLOT, OPT_F, "none");
+		}
                 err = gnuplot(libcmd.list, NULL, dataset, opt);
             }
             gui_graph_handler(err);

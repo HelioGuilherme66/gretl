@@ -6563,3 +6563,84 @@ int panel_padding_rows (const DATASET *dset)
 
     return nmiss;
 }
+
+/* Given auxiliary time-series info attached to the panel
+   dataset @pdset, transcribe it to the time-series dataset
+   @tsset.
+*/
+
+int time_series_from_panel (DATASET *tset, const DATASET *pset)
+{
+    int err = 0;
+
+    if (pset->panel_pd == 0) {
+	/* the panel time dimension is not set */
+	tset->structure = SPECIAL_TIME_SERIES;
+	tset->pd = 1;
+	return 0;
+    }
+
+    tset->structure = TIME_SERIES;
+    tset->pd = pset->panel_pd;
+    tset->sd0 = pset->panel_sd0;
+
+    if (tset->pd == 1) {
+	sprintf(tset->stobs, "%d", (int) tset->sd0);
+    } else if (tset->pd == 4 || tset->pd == 12) {
+	double dyr = floor(tset->sd0);
+	double dp = tset->sd0 - dyr;
+	int yr, p;
+
+	yr = (int) dyr;
+	dp *= (tset->pd == 4)? 10 : 100;
+	p = nearbyint(dp);
+	if (yr > 0 && yr < 9999 && p > 0 && p < tset->pd && p < 12) {
+	    if (tset->pd == 4) {
+		sprintf(tset->stobs, "%d:%d", yr, p);
+	    } else {
+		sprintf(tset->stobs, "%d:%02d", yr, p);
+	    }
+	} else {
+	    err = 1;
+	}
+    } else if (probably_calendar_data(tset)) {
+	calendar_date_string(tset->stobs, 0, tset);
+    }
+
+    return err;
+}
+
+int obs_index_from_aqm (const char *s, int pd, int t0, int n)
+{
+    const char *digits = "0123456789";
+    int ok_len = (pd == 1)? 4 : (pd == 4)? 6 : 7;
+    int len = strlen(s);
+    int t = 0;
+
+    if (len != ok_len || strspn(s, digits) != 4) {
+	return -1;
+    }
+
+    if (pd == 1) {
+	t = atoi(s);
+    } else if (s[4] != ':' || strspn(s + 5, digits) != len - 5) {
+	t = -1;
+    } else {
+	int sub = atoi(s + 5);
+
+	if (sub > pd) {
+	    t = -1;
+	} else {
+	    t = pd * atoi(s) + sub;
+	}
+    }
+
+    if (t >= 0) {
+	t -= t0;
+	if (t < 0 || t >= n) {
+	    t = -1;
+	}
+    }
+
+    return t;
+}
