@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-5b.inp
- /opt/esl/share/gretl/scripts/ps10-5b.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-5b.inp
 # PS10.5b, for the AR(24) estimation in Application Section 10.6
 ? open data10-2
 
-Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-2.gdt
 periodicity: 24, maxobs: 744
 observations range: 1:01 to 31:24
 
@@ -76,11 +76,14 @@ Sum of AR coefficients = -0.748879
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   4630.657   S.D. dependent var   305.0294
 Sum squared resid     2251479   S.E. of regression   56.07605
 R-squared            0.986966   Adjusted R-squared   0.986930
 F(2, 716)            10264.41   P-value(F)           0.000000
 rho                  0.072886   Durbin-Watson        1.766764
+
+Statistics based on the original data:
+
+Mean dependent var   2648.118   S.D. dependent var   490.4958
 
 # eliminate all insignificant AR terms with p-value > 0.5
 ? ar 1 2 5 6 7 8 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 \
@@ -127,11 +130,14 @@ Sum of AR coefficients = -0.939248
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   5134.742   S.D. dependent var   334.2351
 Sum squared resid     2256111   S.E. of regression   56.13371
 R-squared            0.986940   Adjusted R-squared   0.986903
 F(2, 716)            12369.73   P-value(F)           0.000000
 rho                  0.086134   Durbin-Watson        1.742922
+
+Statistics based on the original data:
+
+Mean dependent var   2648.118   S.D. dependent var   490.4958
 
 # eliminate insignificant AR terms one at a time
 ? ar 1 2 5 6 7 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 temp
@@ -176,11 +182,14 @@ Sum of AR coefficients = -0.952116
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   5168.814   S.D. dependent var   336.2258
 Sum squared resid     2260646   S.E. of regression   56.19009
 R-squared            0.986913   Adjusted R-squared   0.986877
 F(2, 716)            12495.96   P-value(F)           0.000000
 rho                  0.083408   Durbin-Watson        1.747835
+
+Statistics based on the original data:
+
+Mean dependent var   2648.118   S.D. dependent var   490.4958
 
 ? ar 1 2 5 7 9 12 13 14 15 17 18 19 21 22 23 24 ; load 0 load1 temp
 Generalized Cochrane-Orcutt estimation
@@ -223,11 +232,14 @@ Sum of AR coefficients = -0.953390
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   5172.185   S.D. dependent var   336.5509
 Sum squared resid     2265819   S.E. of regression   56.25435
 R-squared            0.986884   Adjusted R-squared   0.986847
 F(2, 716)            12491.43   P-value(F)           0.000000
 rho                  0.086392   Durbin-Watson        1.741627
+
+Statistics based on the original data:
+
+Mean dependent var   2648.118   S.D. dependent var   490.4958
 
 ? ar 1 2 5 7 9 12 13 14 15 17 19 21 22 23 24 ; load 0 load1 temp
 Generalized Cochrane-Orcutt estimation
@@ -269,11 +281,14 @@ Sum of AR coefficients = -0.944176
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   5147.789   S.D. dependent var   335.1697
 Sum squared resid     2270285   S.E. of regression   56.30976
 R-squared            0.986858   Adjusted R-squared   0.986821
 F(2, 716)            12361.10   P-value(F)           0.000000
 rho                  0.086721   Durbin-Watson        1.740244
+
+Statistics based on the original data:
+
+Mean dependent var   2648.118   S.D. dependent var   490.4958
 
 # generate forecasts after incorporating the error structure
 ? fcast 2.02 31.24 yf

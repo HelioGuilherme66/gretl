@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run wooldridge_f.inp
- /home/cottrell/stats/test-gretl/wooldridge_f.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/wooldridge_f.inp
 ? open gpa3.gdt
 
-Read datafile /opt/esl/share/gretl/data/wooldridge/gpa3.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/gpa3.gdt
 periodicity: 1, maxobs: 732
 observations range: 1 to 732
 
@@ -74,22 +74,22 @@ Schwarz criterion    508.7020   Hannan-Quinn         496.9429
 
 Model 3: OLS, using observations 1-366
 Dependent variable: cumgpa
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error    t-ratio   p-value 
   ---------------------------------------------------------
-  const       1.47006      0.220680       6.662    1.02e-10 ***
-  sat         0.00114073   0.000191532    5.956    6.17e-09 ***
-  hsperc     -0.00856636   0.00141793    -6.041    3.82e-09 ***
-  tothrs      0.00250400   0.000740643    3.381    0.0008   ***
-  female      0.303433     0.0591378      5.131    4.73e-07 ***
-  black      -0.128284     0.119241      -1.076    0.2827  
-  white      -0.0587217    0.111392      -0.5272   0.5984  
+  const       1.47006      0.218560       6.726    6.89e-11 ***
+  sat         0.00114073   0.000189691    6.014    4.47e-09 ***
+  hsperc     -0.00856636   0.00140430    -6.100    2.74e-09 ***
+  tothrs      0.00250400   0.000733526    3.414    0.0007   ***
+  female      0.303433     0.0585696      5.181    3.69e-07 ***
+  black      -0.128284     0.118095      -1.086    0.2781  
+  white      -0.0587217    0.110322      -0.5323   0.5949  
 
 Mean dependent var   2.334153   S.D. dependent var   0.601126
 Sum squared resid    79.06233   S.E. of regression   0.469286
 R-squared            0.400560   Adjusted R-squared   0.390542
-F(6, 359)            39.29757   P-value(F)           1.15e-36
+F(6, 359)            40.06381   P-value(F)           2.95e-37
 Log-likelihood      -238.9029   Akaike criterion     491.8058
 Schwarz criterion    519.1242   Hannan-Quinn         502.6614
 
@@ -98,45 +98,45 @@ Excluding the constant, p-value was highest for variable 16 (white)
 Covariance matrix of regression coefficients:
 
          const           sat        hsperc        tothrs        female
-     0.0486998  -3.36795e-05  -1.70091e-04  -3.61948e-05   -0.00209126  const
-                 3.66844e-08   7.44480e-08   5.85413e-09  -1.78599e-07  sat
-                               2.01052e-06   1.35992e-07   1.50427e-05  hsperc
-                                             5.48552e-07  -3.61241e-07  tothrs
-                                                            0.00349728  female
+     0.0477683  -3.30354e-05  -1.66838e-04  -3.55026e-05   -0.00205126  const
+                 3.59828e-08   7.30241e-08   5.74216e-09  -1.75183e-07  sat
+                               1.97207e-06   1.33391e-07   1.47550e-05  hsperc
+                                             5.38060e-07  -3.54332e-07  tothrs
+                                                             0.0034304  female
 
          black         white
-    -0.0153392    -0.0091832  const
-   5.23409e-06  -3.07795e-06  sat
-   1.95846e-05   2.63511e-05  hsperc
-  -1.80311e-05  -1.04504e-05  tothrs
-    0.00103957   9.55989e-04  female
-     0.0142185     0.0106284  black
-                   0.0124082  white
+    -0.0150459   -0.00900756  const
+   5.13398e-06  -3.01908e-06  sat
+   1.92100e-05   2.58471e-05  hsperc
+  -1.76863e-05  -1.02505e-05  tothrs
+    0.00101968   9.37705e-04  female
+     0.0139465     0.0104252  black
+                   0.0121709  white
 
 ? omit black white
 Test on Model 3:
 
   Null hypothesis: the regression parameters are zero for the variables
     black, white
-  Test statistic: Robust F(2, 359) = 0.733495, p-value 0.480946
+  Test statistic: Robust F(2, 359) = 0.747797, p-value 0.474144
   Omitting variables improved 3 of 3 information criteria.
 
 Model 4: OLS, using observations 1-366
 Dependent variable: cumgpa
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error    t-ratio   p-value 
   ---------------------------------------------------------
-  const       1.32854      0.176041       7.547    3.67e-13 ***
-  sat         0.00121443   0.000155867    7.791    7.12e-14 ***
-  hsperc     -0.00844127   0.00141002    -5.987    5.17e-09 ***
-  tothrs      0.00246378   0.000732674    3.363    0.0009   ***
-  female      0.310098     0.0584636      5.304    1.98e-07 ***
+  const       1.32854      0.174834       7.599    2.60e-13 ***
+  sat         0.00121443   0.000154799    7.845    4.94e-14 ***
+  hsperc     -0.00844127   0.00140036    -6.028    4.10e-09 ***
+  tothrs      0.00246378   0.000727652    3.386    0.0008   ***
+  female      0.310098     0.0580629      5.341    1.64e-07 ***
 
 Mean dependent var   2.334153   S.D. dependent var   0.601126
 Sum squared resid    79.36167   S.E. of regression   0.468869
 R-squared            0.398291   Adjusted R-squared   0.391623
-F(4, 361)            55.76358   P-value(F)           1.35e-36
+F(4, 361)            56.53592   P-value(F)           5.25e-37
 Log-likelihood      -239.5944   Akaike criterion     489.1889
 Schwarz criterion    508.7020   Hannan-Quinn         496.9429
 

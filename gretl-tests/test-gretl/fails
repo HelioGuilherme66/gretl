@@ -1,3 +1,8 @@
-prodfunc.inp failed
 converge.inp failed
+stack.inp failed
+delta_method.inp failed
+obscomp.inp failed
+ivreg.inp failed
+fcstats.inp failed
 summarywt.inp failed
+pcatest.inp failed

@@ -1,16 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps11-1.inp
- /opt/esl/share/gretl/scripts/ps11-1.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps11-1.inp
 ? include criteria.gfn
- /opt/esl/share/gretl/functions/criteria.gfn
-criteria 1.2, 2016-10-29 (Allin Cottrell)
+ /usr/local/share/gretl/functions/criteria.gfn
 # PS11.1 for fitting time trends in calwage
 ? open data10-5.gdt
 
-Read datafile /opt/esl/share/gretl/data/data10-5.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-5.gdt
 periodicity: 1, maxobs: 35
 observations range: 1960 to 1994
 
@@ -142,11 +141,14 @@ rho = 0.907199
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    0.710685   S.E. of regression   0.162239
 R-squared            0.997141   Adjusted R-squared   0.997035
 F(1, 27)             145.7522   P-value(F)           2.16e-12
 rho                  0.621407   Durbin-Watson        0.740241
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain one-step-ahead predicted values
 ? fcast 1990 1994 yhata --static
@@ -185,9 +187,10 @@ Generated scalar essa = 0.338211
 ? criteria(essa, 5, 2)
 Using ess = 0.338211, 5 observations, 2 coefficients
 
-AIC = 4.72177
-BIC = 3.94065
-HQC = 2.62531
+AIC  = 4.72177
+BIC  = 3.94065
+HQC  = 2.62531
+AICc = 10.7218
 
 # reset sample range to beginning
 ? smpl 1960 1989
@@ -215,11 +218,14 @@ rho = 0.973666
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    0.637082   S.E. of regression   0.156535
 R-squared            0.997438   Adjusted R-squared   0.997241
 F(2, 26)             22.49789   P-value(F)           2.13e-06
 rho                  0.538652   Durbin-Watson        0.878974
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain predicted value
 ? fcast 1990 1994 yhatb --static
@@ -257,9 +263,10 @@ Generated scalar essb = 0.0387828
 ? criteria(essb, 5, 2)
 Using ess = 0.0387828, 5 observations, 2 coefficients
 
-AIC = -6.10669
-BIC = -6.88782
-HQC = -8.20315
+AIC  = -6.10669
+BIC  = -6.88782
+HQC  = -8.20315
+AICc = -0.106693
 
 ? smpl 1960 1989
 Full data range: 1960 - 1994 (n = 35)
@@ -287,11 +294,14 @@ rho = 0.829966
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    0.394341   S.E. of regression   0.125593
 R-squared            0.998413   Adjusted R-squared   0.998223
 F(3, 25)             211.3059   P-value(F)           6.99e-18
 rho                  0.355078   Durbin-Watson        1.258251
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain predicted value
 ? fcast 1990 1994 yhatc --static
@@ -329,9 +339,10 @@ Generated scalar essc = 1.15574
 ? criteria(essc, 5, 2)
 Using ess = 1.15574, 5 observations, 2 coefficients
 
-AIC = 10.8659
-BIC = 10.0848
-HQC = 8.76944
+AIC  = 10.8659
+BIC  = 10.0848
+HQC  = 8.76944
+AICc = 16.8659
 
 ? smpl 1960 1989
 Full data range: 1960 - 1994 (n = 35)
@@ -370,11 +381,14 @@ rho = 0.977987
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    1.197337   S.E. of regression   0.210584
 R-squared            0.996045   Adjusted R-squared   0.995899
 F(1, 27)             9.718952   P-value(F)           0.004299
 rho                  0.695770   Durbin-Watson        0.554649
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain predicted value
 ? fcast 1990 1994 yhatd --static
@@ -412,9 +426,10 @@ Generated scalar essd = 0.0641252
 ? criteria(essd, 5, 2)
 Using ess = 0.0641252, 5 observations, 2 coefficients
 
-AIC = -3.59239
-BIC = -4.37351
-HQC = -5.68885
+AIC  = -3.59239
+BIC  = -4.37351
+HQC  = -5.68885
+AICc = 2.40761
 
 ? smpl 1960 1989
 Full data range: 1960 - 1994 (n = 35)
@@ -448,11 +463,14 @@ rho = 0.98329
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    1.314026   S.E. of regression   0.220607
 R-squared            0.996014   Adjusted R-squared   0.995867
 F(1, 27)             3.895797   P-value(F)           0.058721
 rho                  0.739570   Durbin-Watson        0.508379
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain predicted value
 ? fcast 1990 1994 yhate --static
@@ -490,9 +508,10 @@ Generated scalar esse = 0.0678803
 ? criteria(esse, 5, 2)
 Using ess = 0.0678803, 5 observations, 2 coefficients
 
-AIC = -3.30785
-BIC = -4.08897
-HQC = -5.40431
+AIC  = -3.30785
+BIC  = -4.08897
+HQC  = -5.40431
+AICc = 2.69215
 
 ? smpl 1960 1989
 Full data range: 1960 - 1994 (n = 35)
@@ -526,11 +545,14 @@ rho = 0.903203
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   1.693535   S.D. dependent var   0.497121
 Sum squared resid    0.015849   S.E. of regression   0.024228
 R-squared            0.997710   Adjusted R-squared   0.997625
 F(1, 27)             118.2808   P-value(F)           2.28e-11
 rho                  0.772544   Durbin-Watson        0.480749
+
+Statistics based on the original data:
+
+Mean dependent var   1.693535   S.D. dependent var   0.497121
 
 # obtain predicted value
 ? fcast 1990 1994 yhatf --static
@@ -576,9 +598,10 @@ Generated scalar essf = 2.00825
 ? criteria(essf, 5, 2)
 Using ess = 2.00825, 5 observations, 2 coefficients
 
-AIC = 13.6285
-BIC = 12.8474
-HQC = 11.5321
+AIC  = 13.6285
+BIC  = 12.8474
+HQC  = 11.5321
+AICc = 19.6285
 
 ? smpl 1960 1989
 Full data range: 1960 - 1994 (n = 35)
@@ -619,11 +642,14 @@ rho = 0.715599
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   1.693535   S.D. dependent var   0.497121
 Sum squared resid    0.024927   S.E. of regression   0.030385
 R-squared            0.996456   Adjusted R-squared   0.996324
 F(1, 27)             604.8627   P-value(F)           5.08e-20
 rho                  0.552857   Durbin-Watson        0.711863
+
+Statistics based on the original data:
+
+Mean dependent var   1.693535   S.D. dependent var   0.497121
 
 # obtain predicted value
 ? fcast 1990 1994 yhatg --static
@@ -670,9 +696,10 @@ Generated scalar essg = 0.421075
 ? criteria(essg, 5, 2)
 Using ess = 0.421075, 5 observations, 2 coefficients
 
-AIC = 5.81747
-BIC = 5.03635
-HQC = 3.72101
+AIC  = 5.81747
+BIC  = 5.03635
+HQC  = 3.72101
+AICc = 11.8175
 
 ? print -o calwage yhata yhatb yhatc yhatd yhate yhatf yhatg
 

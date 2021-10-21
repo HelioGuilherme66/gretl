@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-3.inp
- /opt/esl/share/gretl/scripts/ps10-3.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-3.inp
 # PS10.3, for the Breusch-Godfrey LM test for Example 10.4
 ? open data10-2
 
-Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-2.gdt
 periodicity: 24, maxobs: 744
 observations range: 1:01 to 31:24
 
@@ -39,7 +39,7 @@ R-squared            0.848216   Adjusted R-squared   0.847805
 F(2, 740)            2067.670   P-value(F)           1.1e-303
 Log-likelihood      -4954.638   Akaike criterion     9915.277
 Schwarz criterion    9929.109   Hannan-Quinn         9920.609
-rho                  0.783199   Durbin-Watson        0.434240
+rho                  0.783199   Durbin's h           23.20529
 
 # save residuals
 ? genr ut=$uhat
@@ -86,7 +86,7 @@ R-squared            0.791451   Adjusted R-squared   0.789159
 F(8, 728)            345.3474   P-value(F)           6.3e-242
 Log-likelihood      -4339.132   Akaike criterion     8696.265
 Schwarz criterion    8737.688   Hannan-Quinn         8712.239
-rho                 -0.001699   Durbin-Watson        2.001791
+rho                 -0.001699   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 9 (ut4)
 

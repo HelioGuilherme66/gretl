@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run dataswitch.inp
- /home/cottrell/stats/test-gretl/dataswitch.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/dataswitch.inp
 ? open data4-1
 
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 periodicity: 1, maxobs: 14
 observations range: 1 to 14
 
@@ -18,16 +18,17 @@ periodicity: 1, maxobs: 100
 observations range: 1 to 100
 ? open data4-10
 
-Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-10.gdt
 periodicity: 1, maxobs: 51
 observations range: 1 to 51
 
-Listing 10 variables:
+Listing 11 variables:
   0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
   5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+ 10) REGION   
 
 ? append add4-10.txt
-parsing /home/cottrell/stats/test-gretl/add4-10.txt...
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/add4-10.txt...
 using delimiter ' '
    longest line: 24 characters
    first field: 'obs'
@@ -43,10 +44,10 @@ trying to parse row labels as dates...
 treating these as undated data
 
 Data appended OK
-Listing 11 variables:
+Listing 12 variables:
   0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
   5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
- 10) XENROLL  
+ 10) REGION    11) XENROLL  
 
 ? corr ENROLL XENROLL
 
@@ -55,7 +56,7 @@ corr(ENROLL, XENROLL) = 1.00000000
 
 ? open data9-7
 
-Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-7.gdt
 periodicity: 4, maxobs: 64
 observations range: 1975:1 to 1990:4
 
@@ -65,7 +66,7 @@ Listing 12 variables:
  10) SUMMER   11) FALL    
 
 ? append add9-7.txt
-parsing /home/cottrell/stats/test-gretl/add9-7.txt...
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/add9-7.txt...
 using delimiter ' '
    longest line: 23 characters
    first field: 'obs'

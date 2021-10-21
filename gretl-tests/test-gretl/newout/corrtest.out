@@ -1,9 +1,9 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run corrtest.inp
- /home/cottrell/stats/test-gretl/corrtest.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/corrtest.inp
 ? nulldata 200
 periodicity: 1, maxobs: 200
 observations range: 1 to 200
@@ -52,7 +52,7 @@ Under the null hypothesis of no correlation:
 For the variables 'x' and 'y'
 Spearman's rank correlation coefficient (rho) = -0.04457361
 Under the null hypothesis of no correlation:
- z-score = -0.628788, with two-tailed p-value 0.5295
+ t(198) = -0.62783, with two-tailed p-value 0.5308
 
 ? corr x y --kendall
 

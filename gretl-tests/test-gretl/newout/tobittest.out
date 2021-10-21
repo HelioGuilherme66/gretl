@@ -1,11 +1,11 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run tobittest.inp
- /home/cottrell/stats/test-gretl/tobittest.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/tobittest.inp
 ? open tobit_data.txt
-parsing /home/cottrell/stats/test-gretl/tobit_data.txt...
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/tobit_data.txt...
 using delimiter '	'
    longest line: 96 characters
    first field: 'y'
@@ -21,31 +21,15 @@ Listing 5 variables:
   0) const    1) y        2) x1       3) x2       4) x3     
 
 ? tobit y 0 x1 x2 x3 --vcv --verbose
-Iteration 1: loglikelihood = -552.888852163 (steplength = 1)
-Parameters:      0.13001     0.83873     0.27205     0.23832    -0.29497
-Gradients:       -145.12     -21.093     -36.978     -37.978      227.79 (norm 4.96e+00)
 
-Iteration 2: loglikelihood = -549.035138793 (steplength = 1)
-Parameters:     0.019410     0.93203     0.30468     0.28226    -0.21950
-Gradients:       -44.129     -6.4429     -11.258     -11.525      48.755 (norm 2.20e+00)
-
-Iteration 3: loglikelihood = -548.954455312 (steplength = 1)
-Parameters:   -0.0018853     0.95012     0.31106     0.29097    -0.20792
-Gradients:       -6.4298    -0.93082     -1.6363     -1.6673      5.4930 (norm 7.79e-01)
-
-Iteration 4: loglikelihood = -548.954403593 (steplength = 1)
-Parameters:   -0.0024580     0.95061     0.31123     0.29121    -0.20763
-Gradients:      -0.16442   -0.023388   -0.041634   -0.042183     0.12973 (norm 1.22e-01)
-
-Iteration 5: loglikelihood = -548.954403593 (steplength = 1)
-Parameters:   -0.0024584     0.95061     0.31123     0.29121    -0.20763
-Gradients:   -0.00010909 -1.5215e-05 -2.7470e-05 -2.7670e-05  8.5739e-05 (norm 3.13e-03)
-
-
---- FINAL VALUES: 
-loglikelihood = -548.954403593 (steplength = 1)
-Parameters:   -0.0024584     0.95061     0.31123     0.29121    -0.20763
-Gradients:   -4.8084e-11 -6.5853e-12 -1.2053e-11 -1.2063e-11  3.8046e-11 (norm 2.08e-06)
+--- Iteration
+   1: loglikelihood -552.888852163 (step 1, norm 4.96e+00)
+   2: loglikelihood -549.035138793 (step 1, norm 2.20e+00)
+   3: loglikelihood -548.954455312 (step 1, norm 7.79e-01)
+   4: loglikelihood -548.954403593 (step 1, norm 1.22e-01)
+   5: loglikelihood -548.954403593 (step 1, norm 3.13e-03)
+--- FINAL VALUES:
+loglikelihood -548.954403593 (step 1, norm 2.07e-06)
 
 Gradient within tolerance (1e-07)
 Convergence achieved after 5 iterations

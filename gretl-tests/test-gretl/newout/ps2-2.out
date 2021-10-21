@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps2-2.inp
- /opt/esl/share/gretl/scripts/ps2-2.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps2-2.inp
 # PS2.2 -- on means, s.d., c.v., Section 2.2
 ? open data2-2
 
-Read datafile /opt/esl/share/gretl/data/data2-2.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data2-2.gdt
 periodicity: 1, maxobs: 427
 observations range: 1 to 427
 
@@ -42,6 +42,7 @@ Variants:   summary [ varlist ]
 Options:    --simple (basic statistics only)
             --weight=wvar (weighting variable)
             --by=byvar (see below)
+Examples:   frontier.inp
 
 In its first form, this command prints summary statistics for the variables
 in varlist, or for all the variables in the data set if varlist is omitted.
@@ -60,6 +61,9 @@ byvar is a (binary) dummy variable, statistics are given for the cases byvar
 If the alternative form is given, using a named matrix, then summary
 statistics are printed for each column of the matrix. The --by option is not
 available in this case.
+
+The table of statistics produced by summary can be retrieved in matrix form
+via the "$result" accessor.
 
 Menu path:    /View/Summary statistics
 Other access: Main window pop-up menu

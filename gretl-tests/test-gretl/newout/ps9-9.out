@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps9-9.inp
- /opt/esl/share/gretl/scripts/ps9-9.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps9-9.inp
 # PS9.9, for Application Section 9.7
 ? open data9-3
 
-Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-3.gdt
 periodicity: 4, maxobs: 87
 observations range: 1972:2 to 1993:4
 
@@ -134,7 +134,8 @@ Full data range: 1972:2 - 1993:4 (n = 87)
 ar
 
 Arguments:  lags ; depvar indepvars 
-Option:     --vcv (print covariance matrix)
+Options:    --vcv (print covariance matrix)
+            --quiet (don't print parameter estimates)
 Example:    ar 1 3 4 ; y 0 x1 x2 x3
 
 Computes parameter estimates using the generalized Cochrane-Orcutt iterative
@@ -147,7 +148,7 @@ above example, the error term is specified as
 
   u(t) = rho(1)*u(t-1) + rho(3)*u(t-3) + rho(4)*u(t-4)
 
-Menu path:    /Model/Time series/Autoregressive estimation
+Menu path:    /Model/Univariate time series/AR Errors (GLS)
 
 # estimate AR(4) model by generalized CORC
 ? ar 1 2 3 4 ; lkwh const ly lprice cdd hdd
@@ -181,11 +182,14 @@ Sum of AR coefficients = 0.901013
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.030238   S.D. dependent var   0.046363
 Sum squared resid    0.050604   S.E. of regression   0.025471
 R-squared            0.902200   Adjusted R-squared   0.897185
 F(4, 78)             48.42116   P-value(F)           2.10e-20
 rho                  0.244872   Durbin-Watson        1.375507
+
+Statistics based on the original data:
+
+Mean dependent var   0.325611   S.D. dependent var   0.078816
 
 Excluding the constant, p-value was highest for variable 16 (ly)
 

@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run listarg.inp
- /home/cottrell/stats/test-gretl/listarg.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/listarg.inp
 ? function void listarg (list L[null])
 # case 1
 ? open data4-1 -q
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 ? list L = price sqft
 Generated list L
 ? listarg(L)
@@ -21,7 +21,7 @@ Listing 5 variables:
 
 # case 2
 ? open data4-1 -q
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 ? listarg(price)
 price 
 price x z 
@@ -31,9 +31,9 @@ Listing 5 variables:
 
 # case 3
 ? open data4-1 -q
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 ? listarg(null)
-null
+empty
 x z 
 ? varlist
 Listing 5 variables:
@@ -41,9 +41,9 @@ Listing 5 variables:
 
 # case 4
 ? open data4-1 -q
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 ? listarg()
-null
+empty
 x z 
 ? varlist
 Listing 5 variables:

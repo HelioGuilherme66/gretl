@@ -1,9 +1,9 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run swilk.inp
- /home/cottrell/stats/test-gretl/swilk.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/swilk.inp
 ? set seed 564532853
 Pseudo-random number generator seeded with 564532853
 ? nulldata 75
@@ -43,20 +43,7 @@ Generated string opt4
 > endif
 > endloop
 > endloop
-Warning: "(i=1)? opt1 : (i=2)? opt2 : (i=3)? opt3 : opt4"
- obsolete use of "=" as Boolean test: please use "=="
-
-B = 1000, alpha = 0.05, n = 75
-Shapiro-Wilk:
- Rejections for normal        45 (4.5%)
- Non-rejections for uniform   43 (4.3%)
-Doornik-Hansen:
- Rejections for normal        42 (4.2%)
- Non-rejections for uniform  223 (22.3%)
-Jarque-Bera:
- Rejections for normal        32 (3.2%)
- Non-rejections for uniform  919 (91.9%)
-Lilliefors:
- Rejections for normal        43 (4.3%)
- Non-rejections for uniform  564 (56.4%)
-Done
+If you meant to test for equality, please use '=='
+>> string opt = (i=1)? opt1 : (i=2)? opt2 : (i=3)? opt3 : opt4
+>> loop i=1..4 --quiet
+Terminated on error

@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run scallags.inp
- /home/cottrell/stats/test-gretl/scallags.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/scallags.inp
 ? open denmark
 
-Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+Read datafile /usr/local/share/gretl/data/misc/denmark.gdt
 periodicity: 4, maxobs: 55
 observations range: 1974:1 to 1987:3
 
@@ -39,6 +39,7 @@ Dependent variable: LRM
 
 Mean dependent var   11.75666   S.D. dependent var   0.152858
 Mean of innovations  0.000023   S.D. of innovations  0.032804
+R-squared            0.953076   Adjusted R-squared   0.952174
 Log-likelihood       107.9065   Akaike criterion    -207.8130
 Schwarz criterion   -199.8571   Hannan-Quinn        -204.7447
 
@@ -79,6 +80,7 @@ F-tests of zero restrictions:
 
 All lags of LRM              F(1, 51) =   319.38 [0.0000]
 All lags of LRY              F(1, 51) =   2.2717 [0.1379]
+All vars, lag 1              F(2, 51) =   541.23 [0.0000]
 
 Equation 2: LRY
 
@@ -98,5 +100,6 @@ F-tests of zero restrictions:
 
 All lags of LRM              F(1, 51) =   7.6044 [0.0081]
 All lags of LRY              F(1, 51) =   66.424 [0.0000]
+All vars, lag 1              F(2, 51) =   221.99 [0.0000]
 
 Done

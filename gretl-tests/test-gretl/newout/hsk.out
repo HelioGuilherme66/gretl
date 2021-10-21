@@ -1,15 +1,14 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run hsk.inp
- /home/cottrell/stats/test-gretl/hsk.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/hsk.inp
 ? include criteria.gfn
- /opt/esl/share/gretl/functions/criteria.gfn
-criteria 1.2, 2016-10-29 (Allin Cottrell)
+ /usr/local/share/gretl/functions/criteria.gfn
 ? open data4-5.gdt
 
-Read datafile /opt/esl/share/gretl/data/data4-5.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-5.gdt
 periodicity: 1, maxobs: 50
 observations range: 1 to 50
 
@@ -359,8 +358,9 @@ Current sample: 1 - 1 (n = 1)
 ? criteria(ess, 50, 6)
 Using ess = 270.775, 50 observations, 6 coefficients
 
-AIC = 238.357
-BIC = 249.829
-HQC = 242.726
+AIC  = 238.357
+BIC  = 249.829
+HQC  = 242.726
+AICc = 240.311
 
 Done

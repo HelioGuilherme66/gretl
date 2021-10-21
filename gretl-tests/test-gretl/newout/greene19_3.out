@@ -1,15 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run greene19_3.inp
- /opt/esl/share/gretl/scripts/greene19_3.inp
+ /usr/local/share/gretl/scripts/greene/greene19_3.inp
 # Replicate the Poisson analysis of McCullagh and Nelder's
 # ship damage data, from chapter 19 of Greene's Econometric Analysis,
 # 4th edition
 ? open mccullagh.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/mccullagh.gdt
+Read datafile /usr/local/share/gretl/data/misc/mccullagh.gdt
 periodicity: 1, maxobs: 40
 observations range: 1 to 40
 
@@ -24,6 +24,7 @@ Convergence achieved after 6 iterations
 Model 1: Poisson, using observations 1-40 (n = 34)
 Missing or incomplete observations dropped: 6
 Dependent variable: Acc
+Standard errors based on Hessian
 
              coefficient   std. error      z        p-value 
   ----------------------------------------------------------
@@ -42,6 +43,7 @@ Dependent variable: Acc
 Mean dependent var   10.47059   S.D. dependent var   15.73499
 Sum squared resid    221.8344   S.E. of regression   2.978821
 McFadden R-squared   0.439672   Adjusted R-squared   0.365961
+Chi-square(8)        107.4379   p-value              1.28e-19
 Log-likelihood      -68.41456   Akaike criterion     154.8291
 Schwarz criterion    168.5664   Hannan-Quinn         159.5139
 
@@ -53,6 +55,7 @@ Convergence achieved after 5 iterations
 Model 2: Poisson, using observations 1-40 (n = 34)
 Missing or incomplete observations dropped: 6
 Dependent variable: Acc
+Standard errors based on Hessian
 
              coefficient   std. error      z      p-value 
   --------------------------------------------------------
@@ -67,6 +70,7 @@ Dependent variable: Acc
 Mean dependent var   10.47059   S.D. dependent var   15.73499
 Sum squared resid    466.6081   S.E. of regression   4.011226
 McFadden R-squared   0.343137   Adjusted R-squared   0.302186
+Chi-square(4)        75.13673   p-value              1.86e-15
 Log-likelihood      -80.20123   Akaike criterion     170.4025
 Schwarz criterion    178.0343   Hannan-Quinn         173.0051
 
@@ -78,6 +82,7 @@ Convergence achieved after 6 iterations
 Model 3: Poisson, using observations 1-40 (n = 34)
 Missing or incomplete observations dropped: 6
 Dependent variable: Acc
+Standard errors based on Hessian
 
              coefficient   std. error      z        p-value 
   ----------------------------------------------------------
@@ -93,6 +98,7 @@ Dependent variable: Acc
 Mean dependent var   10.47059   S.D. dependent var   15.73499
 Sum squared resid    1417.969   S.E. of regression   7.116302
 McFadden R-squared   0.311082   Adjusted R-squared   0.261941
+Chi-square(5)        86.75645   p-value              3.22e-17
 Log-likelihood      -84.11515   Akaike criterion     180.2303
 Schwarz criterion    189.3885   Hannan-Quinn         183.3535
 

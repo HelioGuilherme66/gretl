@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-1.inp
- /opt/esl/share/gretl/scripts/ps10-1.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-1.inp
 # PS10.1 for Example 10.1
 ? open data10-1
 
-Read datafile /opt/esl/share/gretl/data/data10-1.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-1.gdt
 periodicity: 4, maxobs: 110
 observations range: 1964:1 to 1991:2
 
@@ -23,6 +23,7 @@ Option:     --bylag (order terms by lag)
 Examples:   lags x y
             lags 12 ; x y
             lags 4 ; x1 x2 x3 --bylag
+            See also sw_ch12.inp, sw_ch14.inp
 
 Creates new series which are lagged values of each of the series in varlist.
 By default the number of lags created equals the periodicity of the data.
@@ -132,7 +133,7 @@ R-squared            0.808082   Adjusted R-squared   0.777199
 F(14, 87)            26.16565   P-value(F)           2.80e-25
 Log-likelihood      -142.2489   Akaike criterion     314.4978
 Schwarz criterion    353.8724   Hannan-Quinn         330.4419
-rho                  0.000259   Durbin-Watson        1.997075
+rho                  0.000259   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 11 (D_3)
 
@@ -184,11 +185,14 @@ Sum of AR coefficients = 0.924287
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.571055   S.D. dependent var   0.934807
 Sum squared resid    75.98046   S.E. of regression   0.913756
 R-squared            0.896999   Adjusted R-squared   0.885681
 F(10, 91)            1.470730   P-value(F)           0.163253
 rho                  0.009474   Durbin-Watson        1.968556
+
+Statistics based on the original data:
+
+Mean dependent var   7.446863   S.D. dependent var   2.701719
 
 Excluding the constant, p-value was highest for variable 9 (D_1)
 
@@ -220,11 +224,14 @@ Sum of AR coefficients = 0.924002
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.573004   S.D. dependent var   0.935992
 Sum squared resid    76.32636   S.E. of regression   0.887057
 R-squared            0.896498   Adjusted R-squared   0.892230
 F(4, 97)             3.862738   P-value(F)           0.005904
 rho                  0.011019   Durbin-Watson        1.966423
+
+Statistics based on the original data:
+
+Mean dependent var   7.446863   S.D. dependent var   2.701719
 
 Excluding the constant, p-value was highest for variable 12 (D_4)
 
@@ -254,11 +261,14 @@ Sum of AR coefficients = 0.925811
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.560171   S.D. dependent var   0.937427
 Sum squared resid    76.76691   S.E. of regression   0.885063
 R-squared            0.895883   Adjusted R-squared   0.892696
 F(3, 98)             5.101597   P-value(F)           0.002533
 rho                  0.009864   Durbin-Watson        1.968598
+
+Statistics based on the original data:
+
+Mean dependent var   7.446863   S.D. dependent var   2.701719
 
 Excluding the constant, p-value was highest for variable 4 (D)
 
@@ -286,10 +296,13 @@ Sum of AR coefficients = 0.923215
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.579460   S.D. dependent var   0.937036
 Sum squared resid    77.51145   S.E. of regression   0.884841
 R-squared            0.894865   Adjusted R-squared   0.892741
 F(2, 99)             7.133439   P-value(F)           0.001276
 rho                  0.007210   Durbin-Watson        1.973475
+
+Statistics based on the original data:
+
+Mean dependent var   7.446863   S.D. dependent var   2.701719
 
 Done

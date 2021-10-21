@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run longley_vif.inp
- /home/cottrell/stats/test-gretl/longley_vif.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/longley_vif.inp
 # Classic test for ill-conditioned data
 ? open longley.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/longley.gdt
+Read datafile /usr/local/share/gretl/data/misc/longley.gdt
 periodicity: 1, maxobs: 16
 observations range: 1947 to 1962
 
@@ -31,8 +31,6 @@ Dependent variable: employ
   armfrc       -1.03323            0.214274    -4.822    0.0009  ***
   pop          -0.0511041          0.226073    -0.2261   0.8262 
   year       1829.15             455.478        4.016    0.0030  ***
-
-Warning: data matrix close to singularity!
 
 Mean dependent var   65317.00   S.D. dependent var   3511.968
 Sum squared resid    836424.1   S.E. of regression   304.8541
@@ -77,23 +75,6 @@ Values > 10.0 may indicate a collinearity problem
 
 VIF(j) = 1/(1 - R(j)^2), where R(j) is the multiple correlation coefficient
 between variable j and the other independent variables
-
-Belsley-Kuh-Welsch collinearity diagnostics:
-
-                         --- variance proportions ---
-    lambda      cond     const    prdefl       gnp     unemp    armfrc       pop      year
-     6.861     1.000     0.000     0.000     0.000     0.000     0.000     0.000     0.000
-     0.082     9.142     0.000     0.000     0.000     0.014     0.092     0.000     0.000
-     0.046    12.256     0.000     0.000     0.000     0.001     0.064     0.000     0.000
-     0.011    25.337     0.000     0.000     0.001     0.065     0.427     0.000     0.000
-     0.000   230.424     0.000     0.457     0.016     0.006     0.115     0.010     0.000
-     0.000  1048.080     0.000     0.505     0.328     0.225     0.000     0.831     0.000
-     0.000 43275.043     1.000     0.038     0.655     0.689     0.302     0.160     1.000
-
-  lambda = eigenvalues of X'X, largest to smallest
-  cond   = condition index
-  note: variance proportions columns sum to 1.0
-
 ? ols 2 0 3 4 5 6 7 -q
 V2 = 135.532
 ? ols 3 0 2 4 5 6 7 -q

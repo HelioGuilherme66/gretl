@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-7.inp
- /opt/esl/share/gretl/scripts/ps10-7.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-7.inp
 # PS10-7, for Example 10.6 for the Dickey-Fuller test
 ? open data10-3
 
-Read datafile /opt/esl/share/gretl/data/data10-3.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-3.gdt
 periodicity: 12, maxobs: 157
 observations range: 1973:01 to 1986:01
 
@@ -53,6 +53,6 @@ R-squared            0.114778   Adjusted R-squared   0.103130
 F(2, 152)            9.854155   P-value(F)           0.000095
 Log-likelihood       193.7618   Akaike criterion    -381.5235
 Schwarz criterion   -372.3932   Hannan-Quinn        -377.8150
-rho                 -0.020287   Durbin-Watson        2.020816
+rho                 -0.020287   Durbin's h          -0.706906
 
 Done

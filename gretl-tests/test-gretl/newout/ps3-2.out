@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps3-2.inp
- /opt/esl/share/gretl/scripts/ps3-2.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps3-2.inp
 # PS3.2, for Section 3.6 on changing units
 ? open data3-1
 
-Read datafile /opt/esl/share/gretl/data/data3-1.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data3-1.gdt
 periodicity: 1, maxobs: 14
 observations range: 1 to 14
 

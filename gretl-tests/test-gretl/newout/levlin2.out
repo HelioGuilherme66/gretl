@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run levlin2.inp
- /home/cottrell/stats/test-gretl/levlin2.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/levlin2.inp
 ? open sheston91.gdt
 
-Read datafile /home/cottrell/stats/test-gretl/sheston91.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/sheston91.gdt
 periodicity: 26, maxobs: 3250
 observations range: 1:01 to 125:26
 
@@ -20,15 +20,19 @@ Current sample: 1:01 - 10:26 (n = 260)
 
 ? levinlin 2 rgdppc
 
+S_N = 1.04745, mu* = -0.554, s* = 0.919
+
 Levin-Lin-Chu pooled ADF test for rgdppc
 test with constant including 2 lags of (1-L)rgdppc
 Bartlett truncation at 9 lags
 N,T = (10,26), using 230 observations
 
 coefficient    t-ratio      z-score
-    0.00174      0.084      2.81554 [0.9976]
+-0.00036381     -0.016       2.9953 [0.9986]
 
 ? levinlin {2,2,2,3,3,3,4,4,4,4} rgdppc
+
+S_N = 1.11453, mu* = -0.554, s* = 0.919
 
 Levin-Lin-Chu pooled ADF test for rgdppc
 test with constant including 3.10 lags of (1-L)rgdppc (average)
@@ -36,6 +40,6 @@ Bartlett truncation at 8 lags
 N,T = (10,26), using 219 observations
 
 coefficient    t-ratio      z-score
-   0.014218      0.635      3.60264 [0.9998]
+   0.035787      1.465      4.69865 [1.0000]
 
 Done

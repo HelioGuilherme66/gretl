@@ -1,16 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps6-8.inp
- /opt/esl/share/gretl/scripts/ps6-8.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps6-8.inp
 ? include criteria.gfn
- /opt/esl/share/gretl/functions/criteria.gfn
-criteria 1.2, 2016-10-29 (Allin Cottrell)
+ /usr/local/share/gretl/functions/criteria.gfn
 #  PS6.8 for Example 6.6
 ? open data6-4
 
-Read datafile /opt/esl/share/gretl/data/data6-4.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data6-4.gdt
 periodicity: 1, maxobs: 49
 observations range: 1 to 49
 
@@ -86,7 +85,7 @@ Generated scalar ess = 1.27746e+07
 # learn about the "criteria" function
 ? help criteria
 Function: criteria
-Package: criteria 1.2 (2016-10-29)
+Package: criteria 1.4 (2019-01-14)
 Author: Allin Cottrell
 Email:  cottrell@wfu.edu
 
@@ -99,9 +98,9 @@ Return value: matrix
 
 Help text:
 Computes the Akaike Information Criterion (AIC), Schwarz's Bayesian
-Information Criterion (BIC) and the Hannan-Quinn criterion (HQC), 
-given ess (error sum of squares), the number of observations (n), 
-and the number of coefficients (k).
+Information Criterion (BIC), the Hannan-Quinn criterion (HQC) and the
+corrected AIC (AICc), given ess (error sum of squares), the number of
+observations (n) and the number of coefficients (k).
 
 The AIC is computed as in Akaike's original (1974) formulation, 
 namely AIC = -2L + 2k, where L denotes the maximized log-likelihood. 
@@ -110,18 +109,25 @@ The BIC is computed as BIC = -2L + k log n.
 
 The HQC is computed as HQC = -2L + 2k log log n.
 
-A row vector containing the three criteria is available for
-assignment on return.
+The AICc is AIC with a correction for small sample size, to remedy
+the tendency for AIC to overfit. It is computed as follows:
+AICc = AIC + (2*k(k+1)) / (n-k-1).
+
+A row vector containing the four criteria is available for assignment
+on return.
 
 Sample script:
 
+set verbose off
 include criteria.gfn
+
 # Demonstrate that the criteria() function produces the
 # same results as gretl does for a given model.
 open data4-10
 ols 1 0 2 3 4
 matrix cr = criteria($ess, $T, $ncoeff)
-# printing cr is somewhat redundant, but this is just an
+
+# printing cr is somewhat redundant, but this is just for
 # illustration
 print cr
 
@@ -129,9 +135,10 @@ print cr
 ? criteria(ess, 49, 3)
 Using ess = 1.27746e+07, 49 observations, 3 coefficients
 
-AIC = 756.142
-BIC = 761.818
-HQC = 758.296
+AIC  = 756.142
+BIC  = 761.818
+HQC  = 758.296
+AICc = 756.676
 
 # compute correlation between observed WAGES and adjusted predictions
 ? corr WAGE what

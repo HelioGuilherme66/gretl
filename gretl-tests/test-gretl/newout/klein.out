@@ -1,15 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run klein.inp
- /opt/esl/share/gretl/scripts/misc/klein.inp
+ /usr/local/share/gretl/scripts/misc/klein.inp
 # Replication of "Model 1" from L. Klein, "Economic
 # Fluctuations in the United States, 1921-1941",
 # New York: John Wiley and Sons, 1950.
 ? open klein.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/klein.gdt
+Read datafile /usr/local/share/gretl/data/misc/klein.gdt
 periodicity: 1, maxobs: 23
 observations range: 1919 to 1941
 
@@ -17,6 +17,7 @@ Listing 10 variables:
   0) const    1) C        2) P        3) Wp       4) I      
   5) K        6) X        7) Wg       8) G        9) T      
 
+Warning: 'I' shadows a function of the same name
 ? series W = Wp + Wg
 Generated series W (ID 10)
 ? series A = t + (1918 - 1931)
@@ -39,7 +40,6 @@ Generated series K1 (ID 12)
 
 Equation system, Klein Model 1
 Estimator: Ordinary Least Squares
-
 Equation 1: OLS, using observations 1921-1941 (T = 21)
 Dependent variable: C
 
@@ -97,7 +97,6 @@ Breusch-Pagan test for diagonal covariance matrix:
 
 Equation system, Klein Model 1
 Estimator: Two-Stage Least Squares
-
 Equation 1: TSLS, using observations 1921-1941 (T = 21)
 Dependent variable: C
 Instruments: const P_1 K1 X_1 A T Wg G 
@@ -158,7 +157,6 @@ Breusch-Pagan test for diagonal covariance matrix:
 
 Equation system, Klein Model 1
 Estimator: Three-Stage Least Squares
-
 Equation 1: 3SLS, using observations 1921-1941 (T = 21)
 Dependent variable: C
 Instruments: const P_1 K1 X_1 A T Wg G 
@@ -264,18 +262,17 @@ Exogenous variables: const A T Wg G
 *** iteration  34: step = 2, ll = -83.32381
 *** iteration  35: step = 2, ll = -83.32381
 
-Tolerance 1e-12, criterion 6.25278e-13
+Tolerance 1e-12, criterion 6.11067e-13
 
 Gradients at last iteration:
 
   -5.101901e-07    3.062725e-07   -2.573461e-07   -1.081339e-08 
-  -1.684905e-05    3.851949e-07   -2.355846e-07    7.082914e-08 
-  -6.370527e-07   -1.882097e-07    2.059195e-07    3.896952e-08 
+  -1.684905e-05    3.851949e-07   -2.355845e-07    7.082914e-08 
+  -6.370528e-07   -1.882097e-07    2.059195e-07    3.896952e-08 
 
 
 Equation system, Klein Model 1
 Estimator: Full Information Maximum Likelihood
-
 Convergence achieved after 35 iterations
 Log-likelihood = -83.3238
 
@@ -344,7 +341,6 @@ Exogenous variables: const A T Wg G
 
 Equation system, Klein Model 1
 Estimator: Limited Information Maximum Likelihood
-
 Equation 1: LIML, using observations 1921-1941 (T = 21)
 Dependent variable: C
 

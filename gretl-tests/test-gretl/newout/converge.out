@@ -1,8 +1,30 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run converge.inp
- /home/cottrell/gretl/pwt56/converge.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/converge.inp
 ? open pwt56_60_89.gdt
-Error attempting to open file
+
+Read datafile /home/cottrell/gretl/pwt56/pwt56_60_89.gdt
+periodicity: 30, maxobs: 3600
+observations range: 1:01 to 120:30
+
+Listing 22 variables:
+  0) const     1) CCODE     2) POP       3) RGDPCH    4) RGDPL   
+  5) C         6) I         7) G         8) RGDPTT    9) Y       
+ 10) CGDP     11) CC       12) CI       13) CG       14) P       
+ 15) PC       16) PI       17) PG       18) XR       19) RGDPW   
+ 20) OPEN     21) YEAR    
+
+Warning: 'I' shadows a function of the same name
+# for 1989 (last obs), lag 29 gives 1960, the first obs
+? genr gdp60 = RGDPL(-29)
+Generated series gdp60 (ID 22)
+# find total growth of real GDP over 30 years
+? genr gdpgro = (RGDPL - gdp60)/gdp60
+Generated series gdpgro (ID 23)
+# restrict the sample to a 1989 cross-section
+? smpl (YEAR=1989) --restrict
+If you meant to test for equality, please use '=='
+Terminated on error

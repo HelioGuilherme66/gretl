@@ -1,16 +1,16 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run leverage.inp
- /opt/esl/share/gretl/scripts/misc/leverage.inp
+ /usr/local/share/gretl/scripts/misc/leverage.inp
 # Illustration of the analysis of influential observations
 # and "leverage".  The example comes from Davidson and
 # MacKinnon's "Estimation and Inference in Econometrics"
 # (Oxford, 1993), Chapter 1.
 ? open leverage.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/leverage.gdt
+Read datafile /usr/local/share/gretl/data/misc/leverage.gdt
 periodicity: 1, maxobs: 10
 observations range: 1 to 10
 

@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-8.inp
- /opt/esl/share/gretl/scripts/ps10-8.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-8.inp
 # PS10.8, for the Application section 10.9
 ? open data10-4
 
-Read datafile /opt/esl/share/gretl/data/data10-4.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-4.gdt
 periodicity: 1, maxobs: 48
 observations range: 1940 to 1987
 
@@ -175,7 +175,7 @@ R-squared            0.137522   Adjusted R-squared  -0.293718
 F(15, 30)            0.318899   P-value(F)           0.988720
 Log-likelihood       58.89225   Akaike criterion    -85.78451
 Schwarz criterion   -56.52624   Hannan-Quinn        -74.82418
-rho                 -0.156093   Durbin-Watson        2.276009
+rho                 -0.156093   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 29 (lsdem)
 
@@ -262,11 +262,14 @@ rho = -0.393914
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.207310   S.E. of regression   0.081777
 R-squared            0.960627   Adjusted R-squared   0.942846
 F(14, 31)            98.34309   P-value(F)           1.16e-21
 rho                 -0.196615   Durbin-Watson        2.342656
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 28 (lhdem)
 
@@ -300,11 +303,14 @@ rho = -0.393909
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.207310   S.E. of regression   0.080489
 R-squared            0.960627   Adjusted R-squared   0.944632
 F(13, 32)            109.3235   P-value(F)           1.08e-22
 rho                 -0.196609   Durbin-Watson        2.342646
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 25 (lelect)
 
@@ -336,11 +342,14 @@ rho = -0.393675
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.207328   S.E. of regression   0.079263
 R-squared            0.960624   Adjusted R-squared   0.946305
 F(12, 33)            122.0830   P-value(F)           9.53e-24
 rho                 -0.196439   Durbin-Watson        2.342357
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 35 (lsalt)
 
@@ -371,11 +380,14 @@ rho = -0.392911
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.207466   S.E. of regression   0.078115
 R-squared            0.960597   Adjusted R-squared   0.947850
 F(11, 34)            136.9747   P-value(F)           8.13e-25
 rho                 -0.198597   Durbin-Watson        2.346481
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 26 (lreagan)
 
@@ -405,11 +417,14 @@ rho = -0.371458
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.208407   S.E. of regression   0.077165
 R-squared            0.960419   Adjusted R-squared   0.949110
 F(10, 35)            149.7147   P-value(F)           1.15e-25
 rho                 -0.188690   Durbin-Watson        2.343579
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 34 (lgorb)
 
@@ -438,11 +453,14 @@ rho = -0.373667
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.209884   S.E. of regression   0.076355
 R-squared            0.960138   Adjusted R-squared   0.950173
 F(9, 36)             170.4109   P-value(F)           9.13e-27
 rho                 -0.189288   Durbin-Watson        2.322035
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 24 (lpres)
 
@@ -470,11 +488,14 @@ rho = -0.336217
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.211973   S.E. of regression   0.075690
 R-squared            0.959745   Adjusted R-squared   0.951041
 F(8, 37)             184.7465   P-value(F)           1.99e-27
 rho                 -0.176947   Durbin-Watson        2.297017
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 27 (lopp)
 
@@ -501,11 +522,14 @@ rho = -0.30093
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.218136   S.E. of regression   0.075766
 R-squared            0.958581   Adjusted R-squared   0.950951
 F(7, 38)             199.9106   P-value(F)           5.82e-28
 rho                 -0.145530   Durbin-Watson        2.258061
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 # re-try the above using the --auto option
 ? ar1 milit const govt longdef lpres lelect lreagan lopp lhdem lsdem \
@@ -581,11 +605,14 @@ rho = -0.393914
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.207310   S.E. of regression   0.081777
 R-squared            0.960627   Adjusted R-squared   0.942846
 F(14, 31)            98.34309   P-value(F)           1.16e-21
 rho                 -0.196615   Durbin-Watson        2.342656
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Excluding the constant, p-value was highest for variable 28 (lhdem)
 
@@ -624,10 +651,13 @@ rho = -0.30093
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   0.033385   S.D. dependent var   0.342062
 Sum squared resid    0.218136   S.E. of regression   0.075766
 R-squared            0.958581   Adjusted R-squared   0.950951
 F(7, 38)             199.9106   P-value(F)           5.82e-28
 rho                 -0.145530   Durbin-Watson        2.258061
+
+Statistics based on the original data:
+
+Mean dependent var   0.033385   S.D. dependent var   0.342062
 
 Done

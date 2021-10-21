@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run biptest.inp
- /home/cottrell/stats/test-gretl/biptest.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/biptest.inp
 ? open ~/stats/stata/school.gdt
 
-Read datafile /home/cottrell/stats/stata/school.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/stata/school.gdt
 periodicity: 1, maxobs: 95
 observations range: 1 to 95
 
@@ -35,12 +35,12 @@ Standard errors based on Hessian
   loginc      0.998286     0.440356      2.267    0.0234  **
   years      -0.0168561    0.0147834    -1.140    0.2542 
 
+  rho        -0.269619     0.223675     -1.205    0.2280 
+
 Log-likelihood      -89.25403   Akaike criterion     196.5081
 Schwarz criterion    219.4929   Hannan-Quinn         205.7957
 
-rho = -0.269619
-
-Test of independence -
+Likelihood ratio test of independence -
   Null hypothesis: rho = 0
   Test statistic: Chi-square(1) = 1.38444
   with p-value = 0.239347
@@ -165,12 +165,12 @@ Standard errors based on Hessian
   logptax    -0.613831     0.458502     -1.339    0.1806 
   years      -0.0230864    0.0143602    -1.608    0.1079 
 
+  rho        -0.273010     0.227053     -1.202    0.2292 
+
 Log-likelihood      -92.21528   Akaike criterion     200.4306
 Schwarz criterion    220.8616   Hannan-Quinn         208.6862
 
-rho = -0.27301
-
-Test of independence -
+Likelihood ratio test of independence -
   Null hypothesis: rho = 0
   Test statistic: Chi-square(1) = 1.37223
   with p-value = 0.241429
@@ -195,15 +195,15 @@ QML standard errors
   logptax    -0.613831     0.495712     -1.238    0.2156 
   years      -0.0230864    0.0164592    -1.403    0.1607 
 
+  rho        -0.273010     0.215076     -1.269    0.2043 
+
 Log-likelihood      -92.21528   Akaike criterion     200.4306
 Schwarz criterion    220.8616   Hannan-Quinn         208.6862
 
-rho = -0.27301
-
 Test of independence -
-  Null hypothesis: rho = 0
-  Test statistic: Chi-square(1) = 1.37223
-  with p-value = 0.241429
+  Null hypothesis: atanh(rho) = 0
+  Asymptotic test statistic: Chi-square(1) = 1.4528
+  with p-value = 0.22808
 
 ? loginc[32] = NA
 Modified series loginc (ID 8)
@@ -212,31 +212,14 @@ Modified series vote (ID 10)
 ? biprobit private vote 0 logptax loginc years ; 0 logptax years \
   --verbose
 
-Iteration 1: loglikelihood = -33.4706189717 (steplength = 1)
-Parameters:      -2.6216   -0.044562     0.20649  -0.0034219
-Gradients:       -79.334     -550.63     -791.69     -676.66 (norm 9.98e+00)
-
-Iteration 2: loglikelihood = -31.2457457218 (steplength = 1)
-Parameters:      -4.0564   -0.085051     0.34939  -0.0065071
-Gradients:       -12.766     -88.355     -126.68     -119.38 (norm 5.11e+00)
-
-Iteration 3: loglikelihood = -31.2108272181 (steplength = 1)
-Parameters:      -4.4451    -0.10530     0.39991  -0.0083303
-Gradients:       -1.2430     -8.5569     -12.180     -14.895 (norm 1.69e+00)
-
-Iteration 4: loglikelihood = -31.2107805164 (steplength = 1)
-Parameters:      -4.4583    -0.10610     0.40179  -0.0084756
-Gradients:     -0.028108    -0.19121    -0.26978    -0.55046 (norm 2.54e-01)
-
-Iteration 5: loglikelihood = -31.2107805161 (steplength = 1)
-Parameters:      -4.4583    -0.10610     0.40180  -0.0084761
-Gradients:   -4.4999e-05 -0.00030192 -0.00043058  -0.0013016 (norm 1.02e-02)
-
-
---- FINAL VALUES: 
-loglikelihood = -31.2107805161 (steplength = 1)
-Parameters:      -4.4583    -0.10610     0.40180  -0.0084761
-Gradients:   -2.7282e-10 -1.8207e-09 -2.6268e-09 -8.9093e-09 (norm 2.52e-05)
+--- Iteration
+   1: loglikelihood -33.4706189717 (step 1, norm 9.98e+00)
+   2: loglikelihood -31.2457457218 (step 1, norm 5.11e+00)
+   3: loglikelihood -31.2108272181 (step 1, norm 1.69e+00)
+   4: loglikelihood -31.2107805164 (step 1, norm 2.54e-01)
+   5: loglikelihood -31.2107805161 (step 1, norm 1.02e-02)
+--- FINAL VALUES:
+loglikelihood -31.2107805161 (step 1, norm 2.52e-05)
 
 Gradient within tolerance (1e-07)
 
@@ -262,27 +245,13 @@ Test for normality of residual -
   Test statistic: Chi-square(2) = 1.33315
   with p-value = 0.513463
 
-Iteration 1: loglikelihood = -60.1747915219 (steplength = 1)
-Parameters:       4.2375    -0.55833   -0.019397
-Gradients:       -49.321     -343.52     -482.81 (norm 1.17e+01)
-
-Iteration 2: loglikelihood = -59.6335526376 (steplength = 1)
-Parameters:       5.3258    -0.69022   -0.024560
-Gradients:        7.1904      49.503      43.932 (norm 4.95e+00)
-
-Iteration 3: loglikelihood = -59.6333205926 (steplength = 1)
-Parameters:       5.3700    -0.69607   -0.024734
-Gradients:       0.11458     0.77471     0.44464 (norm 6.23e-01)
-
-Iteration 4: loglikelihood = -59.6333205925 (steplength = 1)
-Parameters:       5.3701    -0.69607   -0.024734
-Gradients:    6.4387e-05  0.00042715  0.00041618 (norm 1.48e-02)
-
-
---- FINAL VALUES: 
-loglikelihood = -59.6333205925 (steplength = 1)
-Parameters:       5.3701    -0.69607   -0.024734
-Gradients:    2.3836e-11  1.5463e-10  1.7369e-10 (norm 8.94e-06)
+--- Iteration
+   1: loglikelihood -60.1747915219 (step 1, norm 1.17e+01)
+   2: loglikelihood -59.6335526376 (step 1, norm 4.95e+00)
+   3: loglikelihood -59.6333205926 (step 1, norm 6.23e-01)
+   4: loglikelihood -59.6333205925 (step 1, norm 1.48e-02)
+--- FINAL VALUES:
+loglikelihood -59.6333205925 (step 1, norm 8.94e-06)
 
 Gradient within tolerance (1e-07)
 
@@ -307,37 +276,13 @@ Test for normality of residual -
   Test statistic: Chi-square(2) = 10.2391
   with p-value = 0.00597856
 
-Iteration 1: loglikelihood = -90.1329667251 (steplength = 1)
-Parameters:      -5.2011    -0.15513     0.51088   -0.010654      5.5970    -0.72788
-               -0.025218    -0.27080
-Gradients:    4.4664e-10  2.9442e-09  4.3616e-09 -4.8300e-09 -8.1274e-11 -5.4031e-10
-             -3.9314e-10     -5.0933 (norm 4.15e-01)
-
-Iteration 2: loglikelihood = -90.1268745108 (steplength = 1)
-Parameters:      -5.0990    -0.16403     0.50925   -0.012057      5.5777    -0.72545
-               -0.025187    -0.28828
-Gradients:       0.39321      2.7217      3.9247      1.2627   -0.052972    -0.35173
-                -0.77305    -0.24216 (norm 7.99e-01)
-
-Iteration 3: loglikelihood = -90.1268732835 (steplength = 1)
-Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
-               -0.025182    -0.28859
-Gradients:    -0.0023435   -0.016282   -0.022945   -0.035828  -0.0046080   -0.031870
-               -0.020833  -0.0047358 (norm 9.84e-02)
-
-Iteration 4: loglikelihood = -90.1268732835 (steplength = 1)
-Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
-               -0.025182    -0.28859
-Gradients:    8.4411e-07  5.9058e-06  8.4980e-06 -5.9318e-06  6.5282e-07  4.5627e-06
-              5.0566e-06 -2.2940e-07 (norm 1.45e-03)
-
-
---- FINAL VALUES: 
-loglikelihood = -90.1268732835 (steplength = 1)
-Parameters:      -5.0997    -0.16422     0.50946   -0.012075      5.5772    -0.72539
-               -0.025182    -0.28859
-Gradients:   -1.0092e-13 -6.8523e-13 -9.7344e-13 -1.6167e-12 -3.4417e-14 -2.4780e-13
-             -1.9762e-13 -3.3695e-14 (norm 4.37e-07)
+--- Iteration
+   1: loglikelihood -90.1329667251 (step 1, norm 4.15e-01)
+   2: loglikelihood -90.1268745108 (step 1, norm 7.99e-01)
+   3: loglikelihood -90.1268732835 (step 1, norm 9.84e-02)
+   4: loglikelihood -90.1268732835 (step 1, norm 1.45e-03)
+--- FINAL VALUES:
+loglikelihood -90.1268732835 (step 1, norm 2.89e-07)
 
 Gradient within tolerance (1e-05)
 
@@ -358,12 +303,12 @@ Standard errors based on Hessian
   logptax    -0.725395     0.467143     -1.553    0.1205 
   years      -0.0251818    0.0144657    -1.741    0.0817  *
 
+  rho        -0.280835     0.228455     -1.229    0.2190 
+
 Log-likelihood      -90.12687   Akaike criterion     196.2537
 Schwarz criterion    216.5145   Hannan-Quinn         204.4345
 
-rho = -0.280835
-
-Test of independence -
+Likelihood ratio test of independence -
   Null hypothesis: rho = 0
   Test statistic: Chi-square(1) = 1.43446
   with p-value = 0.231039

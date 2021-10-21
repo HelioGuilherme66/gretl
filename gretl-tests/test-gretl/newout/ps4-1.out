@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps4-1.inp
- /opt/esl/share/gretl/scripts/ps4-1.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps4-1.inp
 # PS4.1 for reproducing Table 4.2
 ? open data4-1
 
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 periodicity: 1, maxobs: 14
 observations range: 1 to 14
 
@@ -187,20 +187,21 @@ Examples:   pvalue z zscore
             pvalue B bprob 10 6
             pvalue P lambda x
             pvalue W shape scale x
+            See also mrw.inp, restrict.inp
 
 Computes the area to the right of xval in the specified distribution (z for
 Gaussian, t for Student's t, X for chi-square, F for F, G for gamma, B for
-binomial, P for Poisson, or W for Weibull).
+binomial, P for Poisson, exp for Exponential, W for Weibull).
 
 Depending on the distribution, the following information must be given,
 before the xval: for the t and chi-square distributions, the degrees of
 freedom; for F, the numerator and denominator degrees of freedom; for gamma,
 the shape and scale parameters; for the binomial distribution, the "success"
 probability and the number of trials; for the Poisson distribution, the
-parameter lambda (which is both the mean and the variance); and for the
-Weibull distribution, shape and scale parameters. As shown in the examples
-above, the numerical parameters may be given in numeric form or as the names
-of variables.
+parameter lambda (which is both the mean and the variance); for the
+Exponential, a scale parameter; and for the Weibull, shape and scale
+parameters. As shown in the examples above, the numerical parameters may be
+given in numeric form or as the names of variables.
 
 The parameters for the gamma distribution are sometimes given as mean and
 variance rather than shape and scale. The mean is the product of the shape

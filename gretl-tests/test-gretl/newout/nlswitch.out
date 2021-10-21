@@ -1,10 +1,10 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run nlswitch.inp
- /home/cottrell/stats/test-gretl/nlswitch.inp
-Read datafile /home/cottrell/stats/test-gretl/gretl_plant.gdt
+ /home2/helio/github/gretl/gretl-tests/test-gretl/nlswitch.inp
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/gretl_plant.gdt
 *** Estimated via GRID SEARCH
 
 mu in [0.28,0.501), sigma in [0.01,0.201)
@@ -33,7 +33,7 @@ LSDV R-squared       0.803620   Within R-squared     0.477197
 LSDV F(14, 309)      90.32003   P-value(F)           3.6e-100
 Log-likelihood      -48.89154   Akaike criterion     127.7831
 Schwarz criterion    184.4942   Hannan-Quinn         150.4191
-rho                  0.589188   Durbin-Watson        0.803143
+rho                  0.588836   Durbin-Watson        0.803143
 
 Joint test on named regressors -
   Test statistic: F(6, 309) = 47.0074
@@ -55,14 +55,14 @@ Test for differing group intercepts -
   Soda              0.0958468    0.0296032      3.238    0.0012   ***
   PCFT             -3.60507      1.52625       -2.362    0.0182   **
   Total_import      0.323866     0.141768       2.284    0.0223   **
-  mu                0.176986     0.0234749      7.539    4.72e-14 ***
-  sigma             0.0280415    0.0286810      0.9777   0.3282  
+  mu                0.176985     0.0234750      7.539    4.72e-14 ***
+  sigma             0.0280416    0.0286812      0.9777   0.3282  
 
 SSR = 25.4212, R-squared = 0.806201
 
 Test for differing group intercepts -
   Null hypothesis: The groups have a common intercept
   Test statistic: chi2(8) = 286.143
-  with p-value = P(chi2(8) > 286.143) = 3.65093e-57
+  with p-value = P(chi2(8) > 286.143) = 3.65095e-57
 
-NLS: mu (0.176986) is not in [0.28,0.501)
+NLS: mu (0.176985) is not in [0.28,0.501)

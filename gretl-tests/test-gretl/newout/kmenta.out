@@ -1,9 +1,9 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run kmenta.inp
- /opt/esl/share/gretl/scripts/misc/kmenta.inp
+ /usr/local/share/gretl/scripts/misc/kmenta.inp
 # Replication of illustrative system of equations from
 # J. Kmenta, "Elements of Econometrics", 2e, (University
 # of Michigan Press, 1986).
@@ -13,7 +13,7 @@ Current session: 2017-04-13 23:21
 # Girschik and Haavelmo (Econometrica, 1947)
 ? open kmenta.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/kmenta.gdt
+Read datafile /usr/local/share/gretl/data/misc/kmenta.gdt
 periodicity: 1, maxobs: 20
 observations range: 1922 to 1941
 
@@ -30,7 +30,6 @@ Listing 6 variables:
 
 Equation system, Kmenta
 Estimator: Ordinary Least Squares
-
 Equation 1: OLS, using observations 1922-1941 (T = 20)
 Dependent variable: Q
 
@@ -72,7 +71,6 @@ Breusch-Pagan test for diagonal covariance matrix:
 
 Equation system, Kmenta
 Estimator: Two-Stage Least Squares
-
 Equation 1: TSLS, using observations 1922-1941 (T = 20)
 Dependent variable: Q
 Instruments: const D F A 
@@ -119,7 +117,6 @@ Exogenous variables: const D F A
 
 Equation system, Kmenta
 Estimator: Limited Information Maximum Likelihood
-
 Equation 1: LIML, using observations 1922-1941 (T = 20)
 Dependent variable: Q
 
@@ -165,7 +162,6 @@ Breusch-Pagan test for diagonal covariance matrix:
 
 Equation system, Kmenta
 Estimator: Three-Stage Least Squares
-
 Equation 1: 3SLS, using observations 1922-1941 (T = 20)
 Dependent variable: Q
 Instruments: const D F A 
@@ -212,7 +208,6 @@ Hansen-Sargan over-identification test:
 
 Equation system, Kmenta
 Estimator: iterated Three-Stage Least Squares
-
 Convergence achieved after 9 iterations
 
 Equation 1: 3SLS, using observations 1922-1941 (T = 20)
@@ -282,16 +277,15 @@ Exogenous variables: const D F A
 *** iteration  18: step = 2, ll = -67.768095
 *** iteration  19: step = 2, ll = -67.768095
 
-Tolerance 1e-12, criterion 6.96332e-13
+Tolerance 1e-12, criterion 2.27374e-13
 
 Gradients at last iteration:
 
-   4.722609e-06   -6.528421e-08    1.852726e-08    3.301673e-06 
-  -4.818512e-08    1.024714e-08    5.025021e-08 
+   4.722608e-06   -6.528420e-08    1.852725e-08    3.301673e-06 
+  -4.818511e-08    1.024713e-08    5.025020e-08 
 
 Equation system, Kmenta
 Estimator: Full Information Maximum Likelihood
-
 Convergence achieved after 19 iterations
 Log-likelihood = -67.7681
 

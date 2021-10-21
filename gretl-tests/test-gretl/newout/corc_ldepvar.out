@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run corc_ldepvar.inp
- /home/cottrell/stats/test-gretl/corc_ldepvar.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/corc_ldepvar.inp
 ? open data9-7
 
-Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-7.gdt
 periodicity: 4, maxobs: 64
 observations range: 1975:1 to 1990:4
 
@@ -46,11 +46,14 @@ rho = -0.144552
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2502.935   S.D. dependent var   327.5686
 Sum squared resid     4379458   S.E. of regression   272.4483
 R-squared            0.330908   Adjusted R-squared   0.308227
 F(2, 59)             22.69169   P-value(F)           4.90e-08
-rho                 -0.029007   Durbin-Watson        2.033123
+rho                 -0.029007   Durbin's h                 NA
+
+Statistics based on the original data:
+
+Mean dependent var   2502.935   S.D. dependent var   327.5686
 
 Covariance matrix of regression coefficients:
 

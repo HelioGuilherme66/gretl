@@ -1,9 +1,9 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run fcstats.inp
- /home/cottrell/stats/test-gretl/fcstats.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/fcstats.inp
 ? function matrix theil (series y, series f)
 # Cook: values from
 # Steven Cook's exposition "Understanding the construction and
@@ -24,61 +24,17 @@ Current session: 2017-04-13 23:21
 # U2      1.0000     0.4750     1.0000     0.2839
 #
 ? open cook.txt -q
-Read datafile /home/cottrell/stats/test-gretl/cook.txt
-? smpl 2 ;
-Full data range: 1 - 8 (n = 8)
-Current sample: 2 - 8 (n = 7)
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/cook.txt...
+using delimiter '	'
+   longest line: 21 characters
+   first field: 'y'
+   number of columns = 6
+   ...but row 2 has 7 fields: aborting
 
-? Fs = fcstats(y, F1) ~ fcstats(y, F2)
-Generated matrix Fs
-? Fs
-Fs (9 x 2)
-
-      0.0000      -1.4286 
-      2.9761       1.6036 
-      2.5714       1.4286 
-    -0.92921      -6.4417 
-      11.889       6.4417 
-      1.0000      0.47500 
-      0.0000      0.79365 
-     0.49318   0.00062863 
-     0.50682      0.20572 
-
-? D = theil(y, F1) ~ theil(y, F2)
-Generated matrix D
-
-   0.0000  -1.4286
-   8.8571   2.5714
-   2.5714   1.4286
-  -0.9292  -6.4417
-  11.8885   6.4417
-   0.0652   0.0341
-   1.0000   0.4750
-
-? Fs = fcstats(x, F3) ~ fcstats(x, F4)
-Replaced matrix Fs
-? Fs
-Fs (9 x 2)
-
-      0.0000      -1.4286 
-      12.036       2.7255 
-      10.571       1.4286 
-    -0.12364     -0.61312 
-      4.3907      0.61312 
-      1.0000      0.28390 
-      0.0000      0.27473 
-     0.26004     0.057083 
-     0.73996      0.66819 
-
-? D = theil(x, F3) ~ theil(x, F4)
-Replaced matrix D
-
-   0.0000  -1.4286
- 144.8571   7.4286
-  10.5714   1.4286
-  -0.1236  -0.6131
-   4.3907   0.6131
-   0.0249   0.0056
-   1.0000   0.2839
-
-Done
+Please note:
+- The first row of the CSV file should contain the names of the variables.
+- The first column may optionally contain date strings or other 'markers':
+  in that case its row 1 entry should be blank, or should say 'obs' or 'date'.
+- The remainder of the file must be a rectangular array of data.
+Data error
+Terminated on error

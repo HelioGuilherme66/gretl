@@ -1,14 +1,14 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-5a.inp
- /opt/esl/share/gretl/scripts/ps10-5a.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-5a.inp
 # PS10.5a, for the Breusch-Godfrey test for AR(24) in
 # Application Section 10.6
 ? open data10-2
 
-Read datafile /opt/esl/share/gretl/data/data10-2.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-2.gdt
 periodicity: 24, maxobs: 744
 observations range: 1:01 to 31:24
 
@@ -40,7 +40,7 @@ R-squared            0.848216   Adjusted R-squared   0.847805
 F(2, 740)            2067.670   P-value(F)           1.1e-303
 Log-likelihood      -4954.638   Akaike criterion     9915.277
 Schwarz criterion    9929.109   Hannan-Quinn         9920.609
-rho                  0.783199   Durbin-Watson        0.434240
+rho                  0.783199   Durbin's h           23.20529
 
 # Save residuals for Breusch-Godfrey test for AR(24)
 ? genr ut = $uhat
@@ -104,7 +104,7 @@ R-squared            0.914611   Adjusted R-squared   0.911402
 F(26, 692)           285.0789   P-value(F)           0.000000
 Log-likelihood      -3915.325   Akaike criterion     7884.650
 Schwarz criterion    8008.252   Hannan-Quinn         7932.370
-rho                  0.091337   Durbin-Watson        1.816746
+rho                  0.091337   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 25 (ut_20)
 

@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run oprob.inp
- /home/cottrell/stats/test-gretl/oprob.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/oprob.inp
 ? open MFontaine.gdt
 
-Read datafile /home/cottrell/stats/test-gretl/MFontaine.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/MFontaine.gdt
 periodicity: 1, maxobs: 571
 observations range: 1 to 571
 
@@ -51,7 +51,7 @@ Likelihood ratio test: Chi-square(4) = 80.3753 [0.0000]
 Test for normality of residual -
   Null hypothesis: error is normally distributed
   Test statistic: Chi-square(2) = 2.84212
-  with p-value = 0.241458
+  with asymptotic p-value = 0.241458
 
 ? logit Rtg 0 2 3 4 5
 
@@ -128,7 +128,7 @@ Likelihood ratio test: Chi-square(4) = 80.3753 [0.0000]
 Test for normality of residual -
   Null hypothesis: error is normally distributed
   Test statistic: Chi-square(2) = 2.84212
-  with p-value = 0.241458
+  with asymptotic p-value = 0.241458
 
 ? logit Rtg 0 2 3 4 5
 

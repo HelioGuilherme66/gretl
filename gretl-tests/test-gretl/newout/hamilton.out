@@ -1,16 +1,16 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run hamilton.inp
- /opt/esl/share/gretl/scripts/misc/hamilton.inp
+ /usr/local/share/gretl/scripts/misc/hamilton.inp
 # Replicate James Hamilton's analysis of the relationship
 # between the US and Italian price levels and the Dollar
 # to Lira exchange rate ("Time Series Analysis", Princeton
 # 1994, ch. 20)
 ? open hamilton.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/hamilton.gdt
+Read datafile /usr/local/share/gretl/data/misc/hamilton.gdt
 periodicity: 12, maxobs: 202
 observations range: 1973:01 to 1989:10
 
@@ -32,7 +32,7 @@ Full data range: 1973:01 - 1989:10 (n = 202)
 Current sample: 1974:02 - 1989:10 (n = 189)
 
 # Determine cointegration rank
-? coint2 12 p s pf
+? johansen 12 p s pf
 
 Johansen test:
 Number of equations = 3

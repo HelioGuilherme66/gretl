@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run denmark2.inp
- /home/cottrell/stats/test-gretl/denmark2.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/denmark2.inp
 ? open denmark.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/denmark.gdt
+Read datafile /usr/local/share/gretl/data/misc/denmark.gdt
 periodicity: 4, maxobs: 55
 observations range: 1974:1 to 1987:3
 

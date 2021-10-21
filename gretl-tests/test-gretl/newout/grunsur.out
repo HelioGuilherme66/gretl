@@ -1,11 +1,11 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run grunsur.inp
- /home/cottrell/stats/test-gretl/grunsur.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/grunsur.inp
 ? open grun.txt
-parsing /home/cottrell/stats/test-gretl/grun.txt...
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/grun.txt...
 using delimiter ' '
    longest line: 60 characters
    first field: 'ige'
@@ -29,7 +29,6 @@ Listing 7 variables:
 
 Equation system, Grunfeld
 Estimator: Ordinary Least Squares
-
 Equation 1: OLS, using observations 1-20
 Dependent variable: ige
 
@@ -70,7 +69,6 @@ Breusch-Pagan test for diagonal covariance matrix:
 
 Equation system, Grunfeld
 Estimator: Seemingly Unrelated Regressions
-
 Equation 1: SUR, using observations 1-20
 Dependent variable: ige
 
@@ -114,7 +112,6 @@ Hansen-Sargan over-identification test:
 
 Equation system, Grunfeld
 Estimator: iterated Seemingly Unrelated Regressions
-
 Convergence achieved after 9 iterations
 Log-likelihood = -158.303
 
@@ -168,7 +165,6 @@ Restriction set
 
 Equation system, Grunfeld
 Estimator: iterated Seemingly Unrelated Regressions
-
 Convergence achieved after 6 iterations
 Log-likelihood = -160.645
 

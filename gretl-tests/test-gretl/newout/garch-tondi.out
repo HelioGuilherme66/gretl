@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run garch-tondi.inp
- /home/cottrell/stats/test-gretl/garch-tondi.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/garch-tondi.inp
 ? open garch-tondi.gdt
 
-Read datafile /home/cottrell/stats/test-gretl/garch-tondi.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/garch-tondi.gdt
 periodicity: 1, maxobs: 380
 observations range: 1 to 380
 
@@ -27,104 +27,32 @@ Automatic initialization of parameters
   alpha[1] = 0.2
    beta[0] = 0.7
 
-Iteration 1: loglikelihood = -532.984731415
-Parameters:      -25.434     0.31246      3.1912     0.10000     0.20000     0.70000
-Gradients:       0.19544      32.785     0.13609      96.517      21.153      41.610 (norm 3.13e+00)
-
-Iteration 2: loglikelihood = -532.367077094 (steplength = 6.4e-05)
-Parameters:      -25.434     0.31456      3.1912     0.10618     0.20135     0.70266
-Gradients:      -0.77841      18.878    0.041297      58.779    -0.42948      13.406 (norm 2.63e+00)
-
-Iteration 3: loglikelihood = -531.318918348 (steplength = 0.0016)
-Parameters:      -25.437     0.32360      3.1911     0.14404     0.16292     0.67709
-Gradients:       -2.9581     -35.334   -0.083029      70.403      33.916      39.792 (norm 4.65e+00)
-
-Iteration 4: loglikelihood = -530.983270137 (steplength = 0.00032)
-Parameters:      -25.440     0.31059      3.1910     0.16992     0.14376     0.66366
-Gradients:        3.0712      47.005     0.20287      59.049      41.874      38.086 (norm 4.74e+00)
-
-Iteration 5: loglikelihood = -530.594419128 (steplength = 0.008)
-Parameters:      -25.443     0.30962      3.1907     0.19436     0.17894     0.60480
-Gradients:        4.9276      55.086   0.0024300      52.395      29.223      35.075 (norm 5.46e+00)
-
-Iteration 6: loglikelihood = -530.588330878 (steplength = 0.0016)
-Parameters:      -25.440     0.30942      3.1901     0.19480     0.17926     0.60400
-Gradients:        3.5447      55.279    -0.11458      52.303      29.151      35.061 (norm 4.90e+00)
-
-Iteration 7: loglikelihood = -530.570843772 (steplength = 0.2)
-Parameters:      -25.429     0.31112      3.0538     0.20655     0.18561     0.58811
-Gradients:        3.5885      41.914      4.9701      44.869      25.526      30.468 (norm 5.02e+00)
-
-Iteration 8: loglikelihood = -529.781243695 (steplength = 0.2)
-Parameters:      -25.432     0.31836      3.1080     0.23509     0.19398     0.55847
-Gradients:       0.23303     -3.4004      2.6680      26.405      13.995      18.244 (norm 2.39e+00)
-
-Iteration 9: loglikelihood = -529.433151551 (steplength = 1)
-Parameters:      -25.438     0.31907      3.1823     0.26185     0.19395     0.53981
-Gradients:      -0.47043     -6.2757    -0.12884      10.964      5.4797      7.1082 (norm 1.92e+00)
-
-Iteration 10: loglikelihood = -529.356683719 (steplength = 1)
-Parameters:      -25.439     0.31865      3.1881     0.28302     0.19677     0.52041
-Gradients:      -0.27575     -3.6675    -0.32672      4.0505      1.8766      2.4098 (norm 1.41e+00)
-
-Iteration 11: loglikelihood = -529.336314150 (steplength = 1)
-Parameters:      -25.438     0.31812      3.1818     0.29872     0.19969     0.50443
-Gradients:     -0.042165    -0.74768   -0.082707     0.74870     0.23530     0.39804 (norm 5.84e-01)
-
-Iteration 12: loglikelihood = -529.335329601 (steplength = 1)
-Parameters:      -25.438     0.31798      3.1798     0.30273     0.20024     0.50045
-Gradients:     0.0024239  -0.0088626  -0.0027535    0.035651   -0.068098   -0.013944 (norm 1.32e-01)
-
-Iteration 13: loglikelihood = -529.335312609 (steplength = 1)
-Parameters:      -25.438     0.31797      3.1797     0.30321     0.20018     0.50004
-Gradients:     0.0022223    0.030907   0.0014044   -0.030644   -0.066564   -0.042610 (norm 1.38e-01)
-
-Iteration 14: loglikelihood = -529.335308673 (steplength = 1)
-Parameters:      -25.438     0.31797      3.1797     0.30335     0.20008     0.49996
-Gradients:    0.00068745    0.017543  0.00080797   -0.028354   -0.035996   -0.028510 (norm 9.63e-02)
-
-Iteration 15: loglikelihood = -529.335308059 (steplength = 0.00032)
-Parameters:      -25.438     0.31798      3.1797     0.30334     0.20007     0.49995
-Gradients:    -0.0011494   -0.015654  0.00079382  -0.0044167   -0.017212  -0.0051599 (norm 8.57e-02)
-
-Iteration 16: loglikelihood = -529.335307980 (steplength = 0.00032)
-Parameters:      -25.438     0.31797      3.1797     0.30333     0.20007     0.49994
-Gradients:     0.0011935    0.021454  0.00093611   0.0028572   -0.010492   0.0020246 (norm 8.58e-02)
-
-Iteration 17: loglikelihood = -529.335307829 (steplength = 0.008)
-Parameters:      -25.438     0.31798      3.1797     0.30338     0.19997     0.49998
-Gradients:     0.0010885    0.013097   0.0015328   -0.010879   0.0031182  -0.0063767 (norm 8.55e-02)
-
-Iteration 18: loglikelihood = -529.335307786 (steplength = 0.04)
-Parameters:      -25.438     0.31798      3.1798     0.30334     0.19996     0.50003
-Gradients:    -0.0035584    0.012845 -0.00075746  -0.0091544   0.0029844  -0.0073615 (norm 1.32e-01)
-
-Iteration 19: loglikelihood = -529.335307774 (steplength = 0.0016)
-Parameters:      -25.438     0.31798      3.1798     0.30334     0.19996     0.50003
-Gradients:    -0.0019261    0.012676 -0.00074405  -0.0089908   0.0029588  -0.0074427 (norm 1.02e-01)
-
-Iteration 20: loglikelihood = -529.335307686 (steplength = 0.2)
-Parameters:      -25.438     0.31798      3.1798     0.30332     0.19996     0.50004
-Gradients:    -0.0017042   0.0096216  0.00025755  -0.0063566   0.0023341  -0.0061889 (norm 9.37e-02)
-
-Iteration 21: loglikelihood = -529.335307573 (steplength = 0.04)
-Parameters:      -25.438     0.31798      3.1798     0.30333     0.19998     0.50001
-Gradients:    -0.0010397   0.0053192 -0.00039011  -0.0037623   0.0012358  -0.0031139 (norm 7.34e-02)
-
-Iteration 22: loglikelihood = -529.335307529 (steplength = 1)
-Parameters:      -25.438     0.31798      3.1798     0.30333     0.20000     0.50000
-Gradients:    8.6517e-06 -2.3831e-05  1.0012e-05  2.0301e-05 -3.9726e-06  9.8662e-06 (norm 6.73e-03)
-
-Iteration 22: loglikelihood = -529.335307529 (steplength = 1)
-Parameters:      -25.438     0.31798      3.1798     0.30333     0.20000     0.50000
-Gradients:    8.6517e-06 -2.3831e-05  1.0012e-05  2.0301e-05 -3.9726e-06  9.8662e-06 (norm 6.73e-03)
-
-
---- FINAL VALUES: 
-loglikelihood = -529.335307529 (steplength = 6.4e-05)
-Parameters:      -25.438     0.31798      3.1798     0.30333     0.20000     0.50000
-Gradients:    8.6517e-06 -2.3831e-05  1.0012e-05  2.0301e-05 -3.9726e-06  9.8662e-06 (norm 6.73e-03)
-
+--- Iteration
+   1: loglikelihood -532.984731415 (norm 3.13e+00)
+   2: loglikelihood -532.367077094 (step 6.4e-05, norm 2.63e+00)
+   3: loglikelihood -531.318918348 (step 0.0016, norm 4.65e+00)
+   4: loglikelihood -530.983270137 (step 0.00032, norm 4.74e+00)
+   5: loglikelihood -530.594419128 (step 0.008, norm 5.46e+00)
+   6: loglikelihood -530.588330878 (step 0.0016, norm 4.90e+00)
+   7: loglikelihood -530.570843772 (step 0.2, norm 5.02e+00)
+   8: loglikelihood -529.781243695 (step 0.2, norm 2.39e+00)
+   9: loglikelihood -529.433151551 (step 1, norm 1.92e+00)
+  10: loglikelihood -529.356683719 (step 1, norm 1.41e+00)
+  11: loglikelihood -529.336314150 (step 1, norm 5.84e-01)
+  12: loglikelihood -529.335329601 (step 1, norm 1.32e-01)
+  13: loglikelihood -529.335312609 (step 1, norm 1.38e-01)
+  14: loglikelihood -529.335308673 (step 1, norm 9.63e-02)
+  15: loglikelihood -529.335308059 (step 0.00032, norm 8.57e-02)
+  16: loglikelihood -529.335307980 (step 0.00032, norm 8.58e-02)
+  17: loglikelihood -529.335307829 (step 0.008, norm 8.55e-02)
+  18: loglikelihood -529.335307786 (step 0.04, norm 1.32e-01)
+  19: loglikelihood -529.335307774 (step 0.0016, norm 1.02e-01)
+  20: loglikelihood -529.335307686 (step 0.2, norm 9.37e-02)
+  21: loglikelihood -529.335307573 (step 0.04, norm 7.34e-02)
+  22: loglikelihood -529.335307529 (step 1, norm 6.73e-03)
+  22: loglikelihood -529.335307529 (step 1, norm 6.73e-03)
+--- FINAL VALUES:
+loglikelihood -529.335307529 (step 6.4e-05, norm 6.73e-03)
 theta[0]:       -800.000 (1.60558)
 theta[1]:        10.0000 (0.419831)
 theta[2]:        100.000 (5.22908)

@@ -1,9 +1,9 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run stata-wls.inp
- /home/cottrell/stats/test-gretl/stata-wls.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/stata-wls.inp
 ? open hetdata.dta
 Stata file version 7
 endianness: little
@@ -33,6 +33,7 @@ Listing 7 variables:
   0) const       1) exp         2) age         3) income      4) ownrent   
   5) selfemp     6) incomesq  
 
+Warning: 'exp' shadows a function of the same name
 ? ols exp 0 age income ownrent incomesq
 
 Model 1: OLS, using observations 1-72

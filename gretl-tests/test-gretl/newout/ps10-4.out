@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps10-4.inp
- /opt/esl/share/gretl/scripts/ps10-4.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps10-4.inp
 # PS10.4, for Application Section 10.5
 ? open data6-3
 
-Read datafile /opt/esl/share/gretl/data/data6-3.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data6-3.gdt
 periodicity: 1, maxobs: 42
 observations range: 1948 to 1989
 
@@ -65,11 +65,14 @@ rho = 0.889164
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2901.390   S.D. dependent var   764.0013
 Sum squared resid    55023.15   S.E. of regression   37.56128
 R-squared            0.997694   Adjusted R-squared   0.997635
 F(1, 39)             483.1513   P-value(F)           1.41e-23
 rho                  0.282250   Durbin-Watson        1.427351
+
+Statistics based on the original data:
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
 
 # Model A - Static model with AR(1) error & mixed HILU-CORC
 # estimation.  Note that CORC misses the global minimum here also.
@@ -128,11 +131,14 @@ rho = 0.9999
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2901.390   S.D. dependent var   764.0013
 Sum squared resid    54367.12   S.E. of regression   37.33669
 R-squared            0.997951   Adjusted R-squared   0.997899
 F(1, 39)             124.5504   P-value(F)           1.04e-13
 rho                  0.325452   Durbin-Watson        1.336346
+
+Statistics based on the original data:
+
+Mean dependent var   2901.390   S.D. dependent var   764.0013
 
 # Retrieve sigma tilde square for Likelihood Ratio test
 ? genr sgmasqr = $ess/$T
@@ -161,7 +167,7 @@ R-squared            0.998043   Adjusted R-squared   0.997885
 F(3, 37)             6291.164   P-value(F)           3.86e-50
 Log-likelihood      -202.0023   Akaike criterion     412.0045
 Schwarz criterion    418.8588   Hannan-Quinn         414.5005
-rho                  0.166491   Durbin-Watson        1.595453
+rho                  0.166491   Durbin's h           1.362874
 
 # Save uhat for LM test for AR(1) and generate uhat(t-1)
 ? genr ut = $uhat
@@ -208,7 +214,7 @@ R-squared            0.049260   Adjusted R-squared  -0.059396
 F(4, 35)             0.453358   P-value(F)           0.769258
 Log-likelihood      -196.5573   Akaike criterion     403.1146
 Schwarz criterion    411.5590   Hannan-Quinn         406.1679
-rho                  0.034576   Durbin-Watson        1.844301
+rho                  0.034576   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 3 (DI)
 
@@ -240,7 +246,7 @@ R-squared            0.998031   Adjusted R-squared   0.997928
 F(2, 38)             9631.956   P-value(F)           3.89e-52
 Log-likelihood      -202.1290   Akaike criterion     410.2580
 Schwarz criterion    415.3987   Hannan-Quinn         412.1299
-rho                  0.208728   Durbin-Watson        1.535694
+rho                  0.208728   Durbin's h           1.338406
 
 # Save uhat for LM test for AR(1) and generate uhat(t-1)
 ? genr utt = $uhat
@@ -274,7 +280,7 @@ R-squared            0.052117   Adjusted R-squared  -0.026873
 F(3, 36)             0.659792   P-value(F)           0.582174
 Log-likelihood      -196.6218   Akaike criterion     401.2436
 Schwarz criterion    407.9991   Hannan-Quinn         403.6861
-rho                  0.021460   Durbin-Watson        1.842388
+rho                  0.021460   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 4 (C1)
 

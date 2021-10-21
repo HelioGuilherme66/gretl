@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps11-2.inp
- /opt/esl/share/gretl/scripts/ps11-2.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps11-2.inp
 # PS11.2 for evaluating Model B - Table 11.2
 ? open data10-5.gdt
 
-Read datafile /opt/esl/share/gretl/data/data10-5.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data10-5.gdt
 periodicity: 1, maxobs: 35
 observations range: 1960 to 1994
 
@@ -44,11 +44,14 @@ rho = 0.973666
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   6.118276   S.D. dependent var   2.979310
 Sum squared resid    0.637082   S.E. of regression   0.156535
 R-squared            0.997438   Adjusted R-squared   0.997241
 F(2, 26)             22.49789   P-value(F)           2.13e-06
 rho                  0.538652   Durbin-Watson        0.878974
+
+Statistics based on the original data:
+
+Mean dependent var   6.118276   S.D. dependent var   2.979310
 
 # obtain one-step ahead forecasts
 ? fcast 1960 1994 yhatb --static

@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run dt_anova.inp
- /home/cottrell/stats/test-gretl/dt_anova.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/dt_anova.inp
 # one-way ANOVA
 ? open dt_anova1.txt -q
-Read datafile /home/cottrell/stats/test-gretl/dt_anova1.txt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/dt_anova1.txt
 ? list xt = dummify(treat)
 Generated list xt
 ? ols resp 0 xt --anova
@@ -84,7 +84,7 @@ Analysis of Variance, response = resp, treatment = treat:
 
 # two-way ANOVA
 ? open dt_anova2.txt -q
-Read datafile /home/cottrell/stats/test-gretl/dt_anova2.txt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/dt_anova2.txt
 ? list xt = dummify(treat)
 Generated list xt
 ? list xb = dummify(block)

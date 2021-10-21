@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run stack.inp
- /home/cottrell/stats/test-gretl/stack.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/stack.inp
 ? open data4-1
 
-Read datafile /opt/esl/share/gretl/data/data4-1.gdt
+Read datafile /opt/esl/share/gretl/
 periodicity: 1, maxobs: 14
 observations range: 1 to 14
 
@@ -20,115 +20,5 @@ Generated series bomp (ID 6)
 ? genr bump = bedrms
 Generated series bump (ID 7)
 ? genr foo = stack(price..bedrms)
-Generated series foo (ID 8)
-? genr bimp = stack(bimp, bomp, bump)
-Replaced series bimp (ID 5)
-? ls
-Listing 9 variables:
-  0) const     1) price     2) sqft      3) bedrms    4) baths   
-  5) bimp      6) bomp      7) bump      8) foo     
-
-? labels
-Listing labels for variables:
- price: sale price in thousands of dollars (Range 199.9 - 505)
- sqft: square feet of living area (Range 1065 - 3000)
- bedrms: number of bedrooms (Range 3 - 4)
- baths: number of bathrooms (Range 1.75 - 3)
- bimp: stack(bimp, bomp, bump)
- bomp: sqft
- bump: bedrms
- foo: stack(price..bedrms)
-
-? print -o
-
-          price         sqft       bedrms        baths         bimp
-
- 1        199.9         1065            3         1.75        199.9
- 2        228.0         1254            3         2.00        228.0
- 3        235.0         1300            3         2.00        235.0
- 4        285.0         1577            4         2.50        285.0
- 5        239.0         1600            3         2.00        239.0
- 6        293.0         1750            4         2.00        293.0
- 7        285.0         1800            4         2.75        285.0
- 8        365.0         1870            4         2.00        365.0
- 9        295.0         1935            4         2.50        295.0
-10        290.0         1948            4         2.00        290.0
-11        385.0         2254            4         3.00        385.0
-12        505.0         2600            3         2.50        505.0
-13        425.0         2800            4         3.00        425.0
-14        415.0         3000            4         3.00        415.0
-15                                                           1065.0
-16                                                           1254.0
-17                                                           1300.0
-18                                                           1577.0
-19                                                           1600.0
-20                                                           1750.0
-21                                                           1800.0
-22                                                           1870.0
-23                                                           1935.0
-24                                                           1948.0
-25                                                           2254.0
-26                                                           2600.0
-27                                                           2800.0
-28                                                           3000.0
-29                                                              3.0
-30                                                              3.0
-31                                                              3.0
-32                                                              4.0
-33                                                              3.0
-34                                                              4.0
-35                                                              4.0
-36                                                              4.0
-37                                                              4.0
-38                                                              4.0
-39                                                              4.0
-40                                                              3.0
-41                                                              4.0
-42                                                              4.0
-
-           bomp         bump          foo
-
- 1         1065            3        199.9
- 2         1254            3        228.0
- 3         1300            3        235.0
- 4         1577            4        285.0
- 5         1600            3        239.0
- 6         1750            4        293.0
- 7         1800            4        285.0
- 8         1870            4        365.0
- 9         1935            4        295.0
-10         1948            4        290.0
-11         2254            4        385.0
-12         2600            3        505.0
-13         2800            4        425.0
-14         3000            4        415.0
-15                                 1065.0
-16                                 1254.0
-17                                 1300.0
-18                                 1577.0
-19                                 1600.0
-20                                 1750.0
-21                                 1800.0
-22                                 1870.0
-23                                 1935.0
-24                                 1948.0
-25                                 2254.0
-26                                 2600.0
-27                                 2800.0
-28                                 3000.0
-29                                    3.0
-30                                    3.0
-31                                    3.0
-32                                    4.0
-33                                    3.0
-34                                    4.0
-35                                    4.0
-36                                    4.0
-37                                    4.0
-38                                    4.0
-39                                    4.0
-40                                    3.0
-41                                    4.0
-42                                    4.0
-
-Done
+Command has insufficient arguments
+Terminated on error

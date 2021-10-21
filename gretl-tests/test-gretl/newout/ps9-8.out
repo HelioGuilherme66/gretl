@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps9-8.inp
- /opt/esl/share/gretl/scripts/ps9-8.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps9-8.inp
 # PS9.8, ARCH estimation: Example 9.10 and Table 9.4
 ? open data9-2
 
-Read datafile /opt/esl/share/gretl/data/data9-2.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-2.gdt
 periodicity: 1, maxobs: 36
 observations range: 1960 to 1995
 
@@ -74,7 +74,7 @@ R-squared            0.125993   Adjusted R-squared   0.028882
 F(3, 27)             1.297405   P-value(F)           0.295544
 Log-likelihood      -92.50381   Akaike criterion     193.0076
 Schwarz criterion    198.7436   Hannan-Quinn         194.8774
-rho                 -0.012083   Durbin-Watson        2.014178
+rho                 -0.012083   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 11 (usq2)
 
@@ -101,7 +101,7 @@ R-squared            0.118630   Adjusted R-squared   0.090198
 F(1, 31)             4.172505   P-value(F)           0.049668
 Log-likelihood      -97.69916   Akaike criterion     199.3983
 Schwarz criterion    202.3913   Hannan-Quinn         200.4054
-rho                 -0.010731   Durbin-Watson        2.016559
+rho                 -0.010731   Durbin's h          -0.259831
 
 ? genr LM2=$nrsq
 Generated scalar LM2 = 3.91478

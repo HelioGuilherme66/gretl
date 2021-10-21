@@ -1,15 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run sw.inp
- /home/cottrell/stats/test-gretl/sw.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/sw.inp
 # Reproduce some of the time-series material in Stock and Watson,
 # Introduction to Econometrics, chapter 12
 # Note that S and W seem to use "robust" standard errors throughout
 # Read from RATS database
 ? open ~/stats/hamilton/macrodat.rat
-/home/cottrell/stats/hamilton/macrodat.rat
+/home2/helio/github/gretl/gretl-tests/test-gretl/hamilton/macrodat.rat
 ? setobs 4 1959:1
 data frequency = 4
 ? smpl 1959:1 1999:4
@@ -72,7 +72,7 @@ R-squared            0.207344   Adjusted R-squared   0.185775
 F(4, 147)            9.613087   P-value(F)           6.21e-07
 Log-likelihood      -277.6949   Akaike criterion     565.3899
 Schwarz criterion    580.5093   Hannan-Quinn         571.5319
-rho                  0.001392   Durbin-Watson        1.989650
+rho                  0.001392   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 10 (d_infl_4)
 
@@ -120,7 +120,7 @@ R-squared            0.241012   Adjusted R-squared   0.215019
 F(5, 146)            9.272269   P-value(F)           1.10e-07
 Log-likelihood      -274.3963   Akaike criterion     560.7925
 Schwarz criterion    578.9358   Hannan-Quinn         568.1629
-rho                  0.014105   Durbin-Watson        1.965664
+rho                  0.014105   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 10 (d_infl_4)
 
@@ -148,7 +148,7 @@ R-squared            0.380168   Adjusted R-squared   0.345492
 F(8, 143)            10.96344   P-value(F)           5.47e-12
 Log-likelihood      -259.0034   Akaike criterion     536.0069
 Schwarz criterion    563.2218   Hannan-Quinn         547.0625
-rho                 -0.002972   Durbin-Watson        2.005690
+rho                 -0.002972   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 14 (LHUR_4)
 
@@ -175,7 +175,7 @@ R-squared            0.242472   Adjusted R-squared   0.216530
 F(5, 146)            9.346445   P-value(F)           9.61e-08
 Log-likelihood      -274.2499   Akaike criterion     560.4997
 Schwarz criterion    578.6430   Hannan-Quinn         567.8702
-rho                  0.002808   Durbin-Watson        1.990310
+rho                  0.002808   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 10 (d_infl_4)
 

@@ -1,13 +1,13 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run delta_method.inp
- /home/cottrell/stats/test-gretl/delta_method.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/delta_method.inp
 ? function matrix MPC(matrix *param, matrix *Y)
 # William Greene, Econometric Analysis, 5e, Chapter 9
 
-Read datafile /opt/esl/share/gretl/data/greene/greene5_1.gdt
+Read datafile /usr/local/share/gretl/data/greene/greene5_1.gdt
 periodicity: 4, maxobs: 204
 observations range: 1950:1 to 2000:4
 
@@ -43,14 +43,6 @@ rho                  0.854982   Durbin-Watson        0.295995
 GNR: R-squared = 8.88178e-16, max |t| = 4.54166e-07
 Convergence seems to be reasonably complete
 
-In regard to function MPC:
-Warning: "silly=1"
- obsolete use of "=" as Boolean test: please use "=="
-
-Warning: "silly=1"
- obsolete use of "=" as Boolean test: please use "=="
-
-
-mpc = 1.08264, std.err = 0.00864513
-
-Test for MPC = 1: 9.55918 (p-value = 5.93486e-22)
+If you meant to test for equality, please use '=='
+error evaluating 'if'
+> if silly=1

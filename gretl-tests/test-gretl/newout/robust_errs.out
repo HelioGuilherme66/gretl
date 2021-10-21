@@ -1,19 +1,20 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run robust_errs.inp
- /home/cottrell/stats/test-gretl/robust_errs.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/robust_errs.inp
 # test omit/add F-tests for case of robust standard errors
 ? open data4-10
 
-Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-10.gdt
 periodicity: 1, maxobs: 51
 observations range: 1 to 51
 
-Listing 10 variables:
+Listing 11 variables:
   0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
   5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+ 10) REGION   
 
 ? ols 1 0 2 3 4
 
@@ -117,19 +118,19 @@ Schwarz criterion   -153.4896   Hannan-Quinn        -154.6832
 
 Model 5: OLS, using observations 1-51
 Dependent variable: ENROLL
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error   t-ratio   p-value 
   --------------------------------------------------------
-  const       0.241105     0.0550520     4.380    6.61e-05 ***
-  CATHOL      0.223530     0.0393065     5.687    7.99e-07 ***
-  PUPIL      -0.00338200   0.00223820   -1.511    0.1375  
-  WHITE      -0.152643     0.0242896    -6.284    9.98e-08 ***
+  const       0.241105     0.0528490     4.562    3.63e-05 ***
+  CATHOL      0.223530     0.0377336     5.924    3.51e-07 ***
+  PUPIL      -0.00338200   0.00214864   -1.574    0.1222  
+  WHITE      -0.152643     0.0233176    -6.546    3.99e-08 ***
 
 Mean dependent var   0.095569   S.D. dependent var   0.052215
 Sum squared resid    0.070959   S.E. of regression   0.038856
 R-squared            0.479466   Adjusted R-squared   0.446241
-F(3, 47)             30.15469   P-value(F)           5.07e-11
+F(3, 47)             32.72105   P-value(F)           1.43e-11
 Log-likelihood       95.35969   Akaike criterion    -182.7194
 Schwarz criterion   -174.9921   Hannan-Quinn        -179.7665
 
@@ -139,23 +140,23 @@ Excluding the constant, p-value was highest for variable 3 (PUPIL)
 
 Variables: PUPIL WHITE 
    Sum of coefficients = -0.156025
-   Standard error = 0.025016
-   t(47) = -6.23702 with p-value = 1.17726e-07
+   Standard error = 0.024015
+   t(47) = -6.49701 with p-value = 4.74406e-08
 ? omit 2 3 4
 Test on Model 5:
 
   Null hypothesis: the regression parameters are zero for the variables
     CATHOL, PUPIL, WHITE
-  Test statistic: Robust F(3, 47) = 30.1547, p-value 5.07404e-11
+  Test statistic: Robust F(3, 47) = 32.7211, p-value 1.428e-11
   Omitting variables improved 0 of 3 information criteria.
 
 Model 6: OLS, using observations 1-51
 Dependent variable: ENROLL
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error   t-ratio   p-value 
   --------------------------------------------------------
-  const       0.0955686    0.00731157    13.07    9.45e-18 ***
+  const       0.0955686    0.00723953    13.20    6.43e-18 ***
 
 Mean dependent var   0.095569   S.D. dependent var   0.052215
 Sum squared resid    0.136321   S.E. of regression   0.052215
@@ -254,11 +255,11 @@ Excluding the constant, p-value was highest for variable 3 (PUPIL)
 
 Model 11: OLS, using observations 1-51
 Dependent variable: ENROLL
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error   t-ratio   p-value 
   --------------------------------------------------------
-  const       0.0955686    0.00731157    13.07    9.45e-18 ***
+  const       0.0955686    0.00723953    13.20    6.43e-18 ***
 
 Mean dependent var   0.095569   S.D. dependent var   0.052215
 Sum squared resid    0.136321   S.E. of regression   0.052215
@@ -271,24 +272,24 @@ Test on Model 11:
 
   Null hypothesis: the regression parameters are zero for the variables
     CATHOL, PUPIL, WHITE
-  Test statistic: Robust F(3, 47) = 30.1547, p-value 5.07404e-11
+  Test statistic: Robust F(3, 47) = 32.7211, p-value 1.428e-11
   Adding variables improved 3 of 3 information criteria.
 
 Model 12: OLS, using observations 1-51
 Dependent variable: ENROLL
-Heteroskedasticity-robust standard errors, variant HC1
+Heteroskedasticity-robust standard errors, variant HC0
 
              coefficient   std. error   t-ratio   p-value 
   --------------------------------------------------------
-  const       0.241105     0.0550520     4.380    6.61e-05 ***
-  CATHOL      0.223530     0.0393065     5.687    7.99e-07 ***
-  PUPIL      -0.00338200   0.00223820   -1.511    0.1375  
-  WHITE      -0.152643     0.0242896    -6.284    9.98e-08 ***
+  const       0.241105     0.0528490     4.562    3.63e-05 ***
+  CATHOL      0.223530     0.0377336     5.924    3.51e-07 ***
+  PUPIL      -0.00338200   0.00214864   -1.574    0.1222  
+  WHITE      -0.152643     0.0233176    -6.546    3.99e-08 ***
 
 Mean dependent var   0.095569   S.D. dependent var   0.052215
 Sum squared resid    0.070959   S.E. of regression   0.038856
 R-squared            0.479466   Adjusted R-squared   0.446241
-F(3, 47)             30.15469   P-value(F)           5.07e-11
+F(3, 47)             32.72105   P-value(F)           1.43e-11
 Log-likelihood       95.35969   Akaike criterion    -182.7194
 Schwarz criterion   -174.9921   Hannan-Quinn        -179.7665
 

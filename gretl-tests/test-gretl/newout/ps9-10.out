@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps9-10.inp
- /opt/esl/share/gretl/scripts/ps9-10.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps9-10.inp
 ? open data9-3
 
-Read datafile /opt/esl/share/gretl/data/data9-3.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-3.gdt
 periodicity: 4, maxobs: 87
 observations range: 1972:2 to 1993:4
 
@@ -203,11 +203,14 @@ rho = 0.0558746
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   1040.296   S.D. dependent var   229.8250
 Sum squared resid    147345.6   S.E. of regression   42.91643
 R-squared            0.967183   Adjusted R-squared   0.965132
 F(5, 80)             426.1535   P-value(F)           4.15e-56
 rho                  0.017288   Durbin-Watson        1.947593
+
+Statistics based on the original data:
+
+Mean dependent var   1040.296   S.D. dependent var   229.8250
 
 # estimate by hilu
 ? ar1 2 0 3 4 6 7 8 --hilu
@@ -271,11 +274,14 @@ rho = 0.055875
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   1040.296   S.D. dependent var   229.8250
 Sum squared resid    147345.6   S.E. of regression   42.91643
 R-squared            0.967183   Adjusted R-squared   0.965132
 F(5, 80)             426.1532   P-value(F)           4.15e-56
 rho                  0.017287   Durbin-Watson        1.947594
+
+Statistics based on the original data:
+
+Mean dependent var   1040.296   S.D. dependent var   229.8250
 
 # general order ar
 ? ar 1 3 4 ; 2 0 3 4 6 7 8
@@ -309,11 +315,14 @@ Sum of AR coefficients = 0.835376
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   202.6773   S.D. dependent var   63.20804
 Sum squared resid    63872.51   S.E. of regression   28.80127
 R-squared            0.984624   Adjusted R-squared   0.983626
 F(5, 77)             63.58874   P-value(F)           6.33e-26
 rho                  0.171613   Durbin-Watson        1.574013
+
+Statistics based on the original data:
+
+Mean dependent var   1052.027   S.D. dependent var   224.7944
 
 Excluding the constant, p-value was highest for variable 6 (incm)
 

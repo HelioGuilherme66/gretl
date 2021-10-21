@@ -1,18 +1,19 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run reset2.inp
- /home/cottrell/stats/test-gretl/reset2.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/reset2.inp
 ? open data4-10
 
-Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-10.gdt
 periodicity: 1, maxobs: 51
 observations range: 1 to 51
 
-Listing 10 variables:
+Listing 11 variables:
   0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
   5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+ 10) REGION   
 
 ? ols 1 0 2
 
@@ -78,7 +79,7 @@ Test statistic: F = 0.781952,
 with p-value = P(F(1,48) > 0.781952) = 0.381
 
 ? series yh2 = $yhat^2
-Generated series yh2 (ID 10)
+Generated series yh2 (ID 11)
 ? ols 1 0 2 yh2
 
 Model 2: OLS, using observations 1-51

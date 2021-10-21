@@ -1,152 +1,51 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run rosenbrock.inp
- /home/cottrell/stats/test-gretl/rosenbrock.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/rosenbrock.inp
 ? function scalar Rosenbrock(matrix *param)
 ? matrix theta = { 0, 0 }
 Generated matrix theta
 ? set max_verbose 1
 ? M = BFGSmax(theta, Rosenbrock(&theta))
-Iteration 1: Criterion = -1.00000000000
-Parameters:       0.0000      0.0000
-Gradients:        2.0000      0.0000 (norm 0.00e+00)
 
-Iteration 2: Criterion = -0.850496000432 (steplength = 0.04)
-Parameters:     0.080000      0.0000
-Gradients:        1.6352      1.2800 (norm 2.56e-01)
-
-Iteration 3: Criterion = -0.567794629463 (steplength = 0.008)
-Parameters:      0.27985    0.056140
-Gradients:       -1.0422      4.4354 (norm 5.20e-01)
-
-Iteration 4: Criterion = -0.324205953917 (steplength = 1)
-Parameters:      0.45049     0.18803
-Gradients:       -1.5885      2.9829 (norm 7.99e-01)
-
-Iteration 5: Criterion = -0.298802950946 (steplength = 0.2)
-Parameters:      0.45393     0.20358
-Gradients:       0.64220     0.49559 (norm 4.43e-01)
-
-Iteration 6: Criterion = -0.216882539285 (steplength = 1)
-Parameters:      0.61496     0.35198
-Gradients:       -5.6741      5.2395 (norm 1.63e+00)
-
-Iteration 7: Criterion = -0.159855835399 (steplength = 0.0016)
-Parameters:      0.60589     0.36037
-Gradients:      -0.84297      1.3461 (norm 7.06e-01)
-
-Iteration 8: Criterion = -0.114862035539 (steplength = 0.2)
-Parameters:      0.67089     0.44200
-Gradients:       -1.5132      1.6183 (norm 9.30e-01)
-
-Iteration 9: Criterion = -0.0852300300300 (steplength = 1)
-Parameters:      0.78249     0.59281
-Gradients:       -5.6597      3.8945 (norm 1.84e+00)
-
-Iteration 10: Criterion = -0.0477589551506 (steplength = 1)
-Parameters:      0.78148     0.61043
-Gradients:       0.34962    0.055930 (norm 3.92e-01)
-
-Iteration 11: Criterion = -0.0270798932893 (steplength = 1)
-Parameters:      0.83866     0.70011
-Gradients:      -0.76318     0.64739 (norm 7.39e-01)
-
-Iteration 12: Criterion = -0.0264300241081 (steplength = 0.0016)
-Parameters:      0.83743     0.70114
-Gradients:       0.27339    0.030892 (norm 3.54e-01)
-
-Iteration 13: Criterion = -0.0116218875152 (steplength = 1)
-Parameters:      0.92505     0.84797
-Gradients:       -2.7173      1.5498 (norm 1.38e+00)
-
-Iteration 14: Criterion = -0.00644699266347 (steplength = 1)
-Parameters:      0.92082     0.84658
-Gradients:      -0.33330     0.26696 (norm 5.16e-01)
-
-Iteration 15: Criterion = -0.00207182844720 (steplength = 1)
-Parameters:      0.95602     0.91280
-Gradients:      -0.36054     0.23457 (norm 5.29e-01)
-
-Iteration 16: Criterion = -0.000576995843020 (steplength = 1)
-Parameters:      0.98786     0.97379
-Gradients:      -0.79473     0.41454 (norm 7.71e-01)
-
-Iteration 17: Criterion = -0.000301152147530 (steplength = 0.0016)
-Parameters:      0.98659     0.97446
-Gradients:       0.46140    -0.22024 (norm 5.79e-01)
-
-Iteration 18: Criterion = -6.02954421626e-05 (steplength = 1)
-Parameters:      0.99225     0.98451
-Gradients:    -0.0056067    0.010633 (norm 8.95e-02)
-
-Iteration 19: Criterion = -1.49219472349e-05 (steplength = 1)
-Parameters:      0.99685     0.99349
-Gradients:     -0.082972    0.044775 (norm 2.52e-01)
-
-Iteration 20: Criterion = -1.20665377766e-06 (steplength = 1)
-Parameters:      0.99953     0.99896
-Gradients:     -0.038695    0.019830 (norm 1.71e-01)
-
-Iteration 21: Criterion = -3.86371321244e-09 (steplength = 1)
-Parameters:      0.99998     0.99995
-Gradients:    -0.0023085   0.0011746 (norm 4.17e-02)
-
-Iteration 22: Criterion = -1.72983997734e-09 (steplength = 0.0016)
-Parameters:      0.99998     0.99996
-Gradients:     0.0014054 -0.00067865 (norm 3.23e-02)
-
-Iteration 23: Criterion = -1.85566273286e-10 (steplength = 1)
-Parameters:      0.99999     0.99997
-Gradients:    5.4991e-06  1.0862e-05 (norm 2.86e-03)
-
-Iteration 24: Criterion = -5.50330943191e-11 (steplength = 1)
-Parameters:      0.99999     0.99999
-Gradients:   -7.1859e-05  4.3030e-05 (norm 7.58e-03)
-
-Iteration 25: Criterion = -3.10942706586e-13 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -2.1386e-05  1.0827e-05 (norm 4.01e-03)
-
-Iteration 26: Criterion = -3.36983151847e-15 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -2.2888e-06  1.1314e-06 (norm 1.31e-03)
-
-Iteration 27: Criterion = -1.29710411161e-15 (steplength = 0.0016)
-Parameters:       1.0000      1.0000
-Gradients:    1.3723e-06 -6.9550e-07 (norm 1.02e-03)
-
-Iteration 28: Criterion = -4.17307510197e-17 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -2.5583e-09 -5.1756e-09 (norm 6.22e-05)
-
-Iteration 29: Criterion = -1.43709889232e-17 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -2.0315e-08  6.3802e-09 (norm 1.16e-04)
-
-Iteration 30: Criterion = -3.14589012582e-21 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -2.2165e-09  1.0964e-09 (norm 4.07e-05)
-
-Iteration 31: Criterion = -6.30804104395e-24 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:   -9.9990e-11  5.0149e-11 (norm 8.66e-06)
-
-Iteration 32: Criterion = -2.33473092820e-24 (steplength = 0.0016)
-Parameters:       1.0000      1.0000
-Gradients:    6.0468e-11 -2.9909e-11 (norm 6.72e-06)
-
-Iteration 32: Criterion = -2.23508453314e-26 (steplength = 1)
-Parameters:       1.0000      1.0000
-Gradients:    6.0468e-11 -2.9909e-11 (norm 6.72e-06)
-
-
---- FINAL VALUES: 
-Criterion = -2.23583518360e-26 (steplength = 5.12e-07)
-Parameters:       1.0000      1.0000
-Gradients:    6.0468e-11 -2.9909e-11 (norm 6.72e-06)
-
+--- Iteration
+   1: Criterion -1.00000000000 (norm 0.00e+00)
+   2: Criterion -0.850496000432 (step 0.04, norm 2.56e-01)
+   3: Criterion -0.567794629463 (step 0.008, norm 5.20e-01)
+   4: Criterion -0.324205953917 (step 1, norm 7.99e-01)
+   5: Criterion -0.298802950946 (step 0.2, norm 4.43e-01)
+   6: Criterion -0.216882539285 (step 1, norm 1.63e+00)
+   7: Criterion -0.159855835399 (step 0.0016, norm 7.06e-01)
+   8: Criterion -0.114862035539 (step 0.2, norm 9.30e-01)
+   9: Criterion -0.0852300300300 (step 1, norm 1.84e+00)
+  10: Criterion -0.0477589551506 (step 1, norm 3.92e-01)
+  11: Criterion -0.0270798932893 (step 1, norm 7.39e-01)
+  12: Criterion -0.0264300241081 (step 0.0016, norm 3.54e-01)
+  13: Criterion -0.0116218875152 (step 1, norm 1.38e+00)
+  14: Criterion -0.00644699266347 (step 1, norm 5.16e-01)
+  15: Criterion -0.00207182844720 (step 1, norm 5.29e-01)
+  16: Criterion -0.000576995843020 (step 1, norm 7.71e-01)
+  17: Criterion -0.000301152147530 (step 0.0016, norm 5.79e-01)
+  18: Criterion -6.02954421626e-05 (step 1, norm 8.95e-02)
+  19: Criterion -1.49219472349e-05 (step 1, norm 2.52e-01)
+  20: Criterion -1.20665377766e-06 (step 1, norm 1.71e-01)
+  21: Criterion -3.86371321244e-09 (step 1, norm 4.17e-02)
+  22: Criterion -1.72983997734e-09 (step 0.0016, norm 3.23e-02)
+  23: Criterion -1.85566273286e-10 (step 1, norm 2.86e-03)
+  24: Criterion -5.50330943191e-11 (step 1, norm 7.58e-03)
+  25: Criterion -3.10942706586e-13 (step 1, norm 4.01e-03)
+  26: Criterion -3.36983151847e-15 (step 1, norm 1.31e-03)
+  27: Criterion -1.29710411161e-15 (step 0.0016, norm 1.02e-03)
+  28: Criterion -4.17307510197e-17 (step 1, norm 6.22e-05)
+  29: Criterion -1.43709889232e-17 (step 1, norm 1.16e-04)
+  30: Criterion -3.14589012582e-21 (step 1, norm 4.07e-05)
+  31: Criterion -6.30804104395e-24 (step 1, norm 8.66e-06)
+  32: Criterion -2.33473092820e-24 (step 0.0016, norm 6.72e-06)
+  32: Criterion -2.23508453314e-26 (step 1, norm 6.72e-06)
+--- FINAL VALUES:
+Criterion -2.23583518360e-26 (step 5.12e-07, norm 6.72e-06)
 Function evaluations: 73
 Evaluations of gradient: 32
 Generated scalar M = -2.23584e-26

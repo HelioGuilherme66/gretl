@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run pcabig.inp
- /home/cottrell/stats/test-gretl/pcabig.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/pcabig.inp
 ? open data7-12
 
-Read datafile /opt/esl/share/gretl/data/data7-12.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data7-12.gdt
 periodicity: 1, maxobs: 82
 observations range: 1 to 82
 
@@ -36,28 +36,28 @@ Component  Eigenvalue  Proportion   Cumulative
 Eigenvectors (component loadings)
 
                PC1      PC2      PC3      PC4      PC5      PC6      PC7
-hatch       -0.159   -0.535   -0.342   -0.155    0.129    0.368    0.602
-wbase        0.297    0.360   -0.208    0.188    0.327   -0.446    0.445
-length       0.398    0.124    0.087    0.123    0.169    0.055    0.241
-width        0.314   -0.192   -0.414   -0.481    0.466   -0.118   -0.477
-height       0.072    0.547    0.151   -0.697   -0.101    0.351    0.205
-weight       0.410   -0.090    0.031    0.118    0.098    0.220    0.158
-cyl          0.345   -0.288    0.169   -0.223   -0.396   -0.276    0.134
-liters       0.349   -0.305    0.215   -0.165   -0.324   -0.236    0.037
-gasmpg      -0.359    0.098   -0.381   -0.256   -0.238   -0.518    0.217
-trans        0.294    0.196   -0.646    0.227   -0.540    0.279   -0.148
+hatch       -0.159   -0.535    0.342    0.155    0.129   -0.368   -0.602
+wbase        0.297    0.360    0.208   -0.188    0.327    0.446   -0.445
+length       0.398    0.124   -0.087   -0.123    0.169   -0.055   -0.241
+width        0.314   -0.192    0.414    0.481    0.466    0.118    0.477
+height       0.072    0.547   -0.151    0.697   -0.101   -0.351   -0.205
+weight       0.410   -0.090   -0.031   -0.118    0.098   -0.220   -0.158
+cyl          0.345   -0.288   -0.169    0.223   -0.396    0.276   -0.134
+liters       0.349   -0.305   -0.215    0.165   -0.324    0.236   -0.037
+gasmpg      -0.359    0.098    0.381    0.256   -0.238    0.518   -0.217
+trans        0.294    0.196    0.646   -0.227   -0.540   -0.279    0.148
 
                PC8      PC9     PC10
-hatch        0.050    0.090   -0.153
-wbase        0.392   -0.005   -0.214
-length      -0.762    0.364    0.023
-width       -0.027    0.041    0.009
-height       0.078   -0.041   -0.054
-weight       0.023   -0.636    0.567
-cyl          0.290    0.474    0.400
-liters      -0.161   -0.411   -0.596
-gasmpg      -0.381   -0.233    0.284
-trans        0.028    0.061   -0.100
+hatch        0.050   -0.090    0.153
+wbase        0.392    0.005    0.214
+length      -0.762   -0.364   -0.023
+width       -0.027   -0.041   -0.009
+height       0.078    0.041    0.054
+weight       0.023    0.636   -0.567
+cyl          0.290   -0.474   -0.400
+liters      -0.161    0.411    0.596
+gasmpg      -0.381    0.233   -0.284
+trans        0.028   -0.061    0.100
 
 Generated principal component series
 ? ols 1 0 6 7 -q

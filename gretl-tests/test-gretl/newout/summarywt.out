@@ -1,11 +1,11 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run summarywt.inp
- /home/cottrell/stats/test-gretl/summarywt.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/summarywt.inp
 ? open summarywt.csv --quiet
-Read datafile /home/cottrell/stats/test-gretl/summarywt.csv
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/summarywt.csv
 ? list X = nord SEX PARENT ANASC VOTOEDU ANNOEDU
 Generated list X
 ? summary X --weights=pesofit
@@ -39,5 +39,6 @@ ANNOEDU            1956.3         2010.0         34.496            600
 ? foreign language=stata --send-data
 ?     summa nord sex parent anasc votoedu annoedu [aw=pesofit]
 ? end foreign
-Failed to execute child process "stata" (No such file or directory)
+Failed to execute child process “stata” (No such file or directory)
 
+Terminated on error

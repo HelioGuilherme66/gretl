@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run pwe_fcast.inp
- /home/cottrell/stats/test-gretl/pwe_fcast.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/pwe_fcast.inp
 ? open data9-7
 
-Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-7.gdt
 periodicity: 4, maxobs: 64
 observations range: 1975:1 to 1990:4
 
@@ -38,11 +38,14 @@ rho = 0.422202
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2488.594   S.D. dependent var   332.9220
 Sum squared resid     4103860   S.E. of regression   259.3769
 R-squared            0.412566   Adjusted R-squared   0.393305
 F(2, 61)             4.306698   P-value(F)           0.017800
 rho                 -0.028256   Durbin-Watson        1.984232
+
+Statistics based on the original data:
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
 
 # get the fitted values according to gretl
 ? fcast fit1

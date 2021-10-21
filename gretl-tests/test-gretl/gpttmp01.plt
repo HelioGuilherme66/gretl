@@ -1,9 +1,12 @@
-set linetype 1 lc rgb "#ff0000"
-set linetype 2 lc rgb "#0000ff"
-set linetype 3 lc rgb "#00cc00"
-set linetype 4 lc rgb "#bf25b2"
-set linetype 5 lc rgb "#8faab3"
-set linetype 6 lc rgb "#ffa500"
+# gpstyle altpoints
+set linetype 1 pt 6  lc rgb "#E11616"
+set linetype 2 pt 7  lc rgb "#0000FF"
+set linetype 3 pt 11 lc rgb "#1B9E77"
+set linetype 4 pt 13 lc rgb "#BF25B2"
+set linetype 5 pt 4  lc rgb "#8FAAB3"
+set linetype 6 pt 3  lc rgb "#FFA500"
+set linetype 7 pt 5  lc rgb "#E51E10"
+set linetype 8 pt 8  lc rgb "#000000"
 # X = 'k' (3)
 # Y = 'q_A' (5)
 set xlabel 'k'
@@ -12,10 +15,11 @@ set datafile missing "?"
 # plot includes automatic fit: OLS
 set title "q_A versus k (with least squares fit)"
 set ylabel 'q_A'
+set key left top
 set xrange [2.02825:3.36175]
 plot \
- '-' using 1:($2) title "" w points, \
-0.4442003 + 0.09018084869*x title "Y = 0.444 + 0.0902X" w lines
+ '-' using 1:2 title "" w points, \
+0.4442003 + 0.090180849*x title "Y = 0.444 + 0.0902X" w lines
 2.06 0.623 # 1909
 2.1 0.6266531027 # 1910
 2.17 0.6336924584 # 1911

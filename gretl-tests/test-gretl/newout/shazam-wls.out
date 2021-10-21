@@ -1,11 +1,11 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run shazam-wls.inp
- /home/cottrell/stats/test-gretl/shazam-wls.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/shazam-wls.inp
 ? open GREENE.txt
-parsing /home/cottrell/stats/test-gretl/GREENE.txt...
+parsing /home2/helio/github/gretl/gretl-tests/test-gretl/GREENE.txt...
 using delimiter ' '
    longest line: 21 characters
    first field: 'obs'
@@ -50,7 +50,7 @@ SSR = 150986, R-squared = 0.655344
 Generated series w (ID 4)
 ? wls w Exp 0 Income Income2
 
-Model 2: WLS, using observations 1-51 (n = 50)
+Model 1: WLS, using observations 1-51 (n = 50)
 Missing or incomplete observations dropped: 1
 Dependent variable: Exp
 Variable used as weight: w
@@ -79,7 +79,7 @@ Sum squared resid    151217.8   S.E. of regression   56.72213
 Replaced series w (ID 4)
 ? wls w Exp 0 Income Income2
 
-Model 3: WLS, using observations 1-51 (n = 50)
+Model 2: WLS, using observations 1-51 (n = 50)
 Missing or incomplete observations dropped: 1
 Dependent variable: Exp
 Variable used as weight: w

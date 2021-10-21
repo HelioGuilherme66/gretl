@@ -1,14 +1,14 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run sw_ch14.inp
- /opt/esl/share/gretl/scripts/misc/sw_ch14.inp
+ /usr/local/share/gretl/scripts/misc/sw_ch14.inp
 # Reproduce the illustrative VAR and GARCH in Stock and Watson,
 # "Introduction to Econometrics", chapter 14
 ? open sw_ch14.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/sw_ch14.gdt
+Read datafile /usr/local/share/gretl/data/misc/sw_ch14.gdt
 periodicity: 4, maxobs: 164
 observations range: 1959:1 to 1999:4
 
@@ -135,7 +135,7 @@ R-squared            0.976274   Adjusted R-squared   0.974946
 F(8, 143)            508.2069   P-value(F)           5.7e-101
 Log-likelihood       4.839081   Akaike criterion     8.321838
 Schwarz criterion    35.53676   Hannan-Quinn         19.37749
-rho                 -0.012444   Durbin-Watson        2.022784
+rho                 -0.012444   Durbin's h                 NA
 
 Excluding the constant, p-value was highest for variable 6 (d_infl_2)
 

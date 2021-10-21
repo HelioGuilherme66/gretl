@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run llc.inp
- /home/cottrell/stats/test-gretl/llc.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/llc.inp
 ? open greene14_1.gdt
 
-Read datafile /opt/esl/share/gretl/data/greene/greene14_1.gdt
+Read datafile /usr/local/share/gretl/data/greene/greene14_1.gdt
 periodicity: 15, maxobs: 90
 observations range: 1:01 to 6:15
 
@@ -18,15 +18,19 @@ Listing 7 variables:
 Generated series y (ID 7)
 ? levinlin 0 y
 
+S_N = 1.23545, mu* = -0.554, s* = 0.919
+
 Levin-Lin-Chu pooled ADF test for y
 test with constant including 0 lags of (1-L)y
 Bartlett truncation at 7 lags
 N,T = (6,15), using 84 observations
 
 coefficient    t-ratio      z-score
-   0.037229      0.941      3.15079 [0.9992]
+ -0.0087634     -0.740    -0.210494 [0.4166]
 
 ? levinlin 0 y --nc
+
+S_N = 5.46684, mu* = 0.004, s* = 1.049
 
 Levin-Lin-Chu pooled ADF test for y
 test without constant including 0 lags of (1-L)y
@@ -34,9 +38,11 @@ Bartlett truncation at 7 lags
 N,T = (6,15), using 84 observations
 
 coefficient    t-ratio      z-score
-  -0.016275     -3.215     -3.06788 [0.0011]
+    0.00944     15.363      14.6449 [1.0000]
 
 ? levinlin 2 y
+
+S_N = 1.72062, mu* = -0.554, s* = 0.919
 
 Levin-Lin-Chu pooled ADF test for y
 test with constant including 2 lags of (1-L)y
@@ -44,9 +50,11 @@ Bartlett truncation at 7 lags
 N,T = (6,15), using 72 observations
 
 coefficient    t-ratio      z-score
-   -0.12094     -2.218      2.13343 [0.9836]
+  -0.031018     -2.775     -2.28138 [0.0113]
 
 ? levinlin 0 y --ct
+
+S_N = 0.853818, mu* = -0.703, s* = 1.003
 
 Levin-Lin-Chu pooled ADF test for y
 with constant and trend including 0 lags of (1-L)y
@@ -54,9 +62,11 @@ Bartlett truncation at 7 lags
 N,T = (6,15), using 84 observations
 
 coefficient    t-ratio      z-score
-  -0.087402     -1.823     0.191099 [0.5758]
+   -0.17912     -2.582     0.700205 [0.7581]
 
 ? levinlin 2 y --ct
+
+S_N = 1.31028, mu* = -0.703, s* = 1.003
 
 Levin-Lin-Chu pooled ADF test for y
 with constant and trend including 2 lags of (1-L)y
@@ -64,10 +74,10 @@ Bartlett truncation at 7 lags
 N,T = (6,15), using 72 observations
 
 coefficient    t-ratio      z-score
-   -0.36462     -5.567     -2.04313 [0.0205]
+    -0.4132     -4.344       1.0895 [0.8620]
 
 ? scalar test = $test
-Generated scalar test = -2.04313
+Generated scalar test = 1.0895
 ? scalar pv = $pvalue
-Generated scalar pv = 0.0205197
+Generated scalar pv = 0.862033
 Done

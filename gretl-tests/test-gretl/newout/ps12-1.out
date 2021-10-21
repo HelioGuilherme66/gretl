@@ -1,16 +1,15 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ps12-1.inp
- /opt/esl/share/gretl/scripts/ps12-1.inp
+ /usr/local/share/gretl/scripts/ramanathan/ps12-1.inp
 ? include criteria.gfn
- /opt/esl/share/gretl/functions/criteria.gfn
-criteria 1.2, 2016-10-29 (Allin Cottrell)
+ /usr/local/share/gretl/functions/criteria.gfn
 # PS12.1, to illustrate Example 12.1
 ? open data4-5
 
-Read datafile /opt/esl/share/gretl/data/data4-5.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-5.gdt
 periodicity: 1, maxobs: 50
 observations range: 1 to 50
 
@@ -59,9 +58,10 @@ Generated scalar ess = 212.485
 ? criteria(ess, 50, 6)
 Using ess = 212.485, 50 observations, 6 coefficients
 
-AIC = 226.236
-BIC = 237.708
-HQC = 230.605
+AIC  = 226.236
+BIC  = 237.708
+HQC  = 230.605
+AICc = 228.190
 
 # estimate linear model
 ? ols wlfp 0 yf educ ue urb wh

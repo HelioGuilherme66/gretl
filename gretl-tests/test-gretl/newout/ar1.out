@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ar1.inp
- /home/cottrell/stats/test-gretl/ar1.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/ar1.inp
 ? open data9-7
 
-Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-7.gdt
 periodicity: 4, maxobs: 64
 observations range: 1975:1 to 1990:4
 
@@ -37,11 +37,14 @@ rho = 0.423008
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2497.571   S.D. dependent var   327.6938
 Sum squared resid     3860092   S.E. of regression   253.6432
 R-squared            0.420390   Adjusted R-squared   0.401070
 F(2, 60)             5.702023   P-value(F)           0.005406
 rho                 -0.051064   Durbin-Watson        2.075037
+
+Statistics based on the original data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
 
 ? ar1 1 0 2 3 --hilu
 
@@ -101,11 +104,14 @@ rho = 0.423008
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2497.571   S.D. dependent var   327.6938
 Sum squared resid     3860092   S.E. of regression   253.6432
 R-squared            0.420390   Adjusted R-squared   0.401070
 F(2, 60)             5.702022   P-value(F)           0.005406
 rho                 -0.051064   Durbin-Watson        2.075037
+
+Statistics based on the original data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
 
 ? ar1 1 0 2 3 --hilu --no-corc
 
@@ -157,11 +163,14 @@ rho = 0.42
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2497.571   S.D. dependent var   327.6938
 Sum squared resid     3860135   S.E. of regression   253.6446
 R-squared            0.420348   Adjusted R-squared   0.401026
 F(2, 60)             5.748634   P-value(F)           0.005198
 rho                 -0.047917   Durbin-Watson        2.068586
+
+Statistics based on the original data:
+
+Mean dependent var   2497.571   S.D. dependent var   327.6938
 
 ? ar1 1 0 2 3 --pwe
 
@@ -186,10 +195,13 @@ rho = 0.422202
 
 Statistics based on the rho-differenced data:
 
-Mean dependent var   2488.594   S.D. dependent var   332.9220
 Sum squared resid     4103860   S.E. of regression   259.3769
 R-squared            0.412566   Adjusted R-squared   0.393305
 F(2, 61)             4.306698   P-value(F)           0.017800
 rho                 -0.028256   Durbin-Watson        1.984232
+
+Statistics based on the original data:
+
+Mean dependent var   2488.594   S.D. dependent var   332.9220
 
 Done

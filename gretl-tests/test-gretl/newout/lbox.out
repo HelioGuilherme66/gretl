@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run lbox.inp
- /home/cottrell/stats/test-gretl/lbox.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/lbox.inp
 ? open data9-7
 
-Read datafile /opt/esl/share/gretl/data/data9-7.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data9-7.gdt
 periodicity: 4, maxobs: 64
 observations range: 1975:1 to 1990:4
 

@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run gappy_arima.inp
- /home/cottrell/stats/test-gretl/gappy_arima.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/gappy_arima.inp
 ? open chomage.gdt
 
-Read datafile /opt/esl/share/gretl/data/misc/chomage.gdt
+Read datafile /usr/local/share/gretl/data/misc/chomage.gdt
 periodicity: 4, maxobs: 66
 observations range: 1980:1 to 1996:2
 
@@ -19,20 +19,21 @@ Function evaluations: 33
 Evaluations of gradient: 12
 
 Model 1: ARIMA, using observations 1980:2-1996:2 (T = 65)
-Estimated using Kalman filter (exact ML)
+Estimated using AS 197 (exact ML)
 Dependent variable: (1-L) y
 Standard errors based on Hessian
 
              coefficient   std. error      z      p-value 
   --------------------------------------------------------
-  const       0.0686058    0.0505530     1.357    0.1747  
-  phi_1       0.678322     0.0995432     6.814    9.47e-12 ***
-  phi_4       0.773950     0.0619051    12.50     7.26e-36 ***
-  phi_5      -0.738433     0.0990038    -7.459    8.74e-14 ***
-  theta_1     0.151626     0.205566      0.7376   0.4608  
+  const       0.0686058    0.0505454     1.357    0.1747  
+  phi_1       0.678322     0.0995386     6.815    9.45e-12 ***
+  phi_4       0.773950     0.0619050    12.50     7.26e-36 ***
+  phi_5      -0.738433     0.0989997    -7.459    8.72e-14 ***
+  theta_1     0.151626     0.205547      0.7377   0.4607  
 
 Mean dependent var   0.063554   S.D. dependent var   0.220540
-Mean of innovations -0.000368   S.D. of innovations  0.101429
+Mean of innovations  0.001083   S.D. of innovations  0.101429
+R-squared            0.996070   Adjusted R-squared   0.995877
 Log-likelihood       53.36079   Akaike criterion    -94.72159
 Schwarz criterion   -81.67526   Hannan-Quinn        -89.57398
 

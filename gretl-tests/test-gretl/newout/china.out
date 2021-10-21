@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run china.inp
- /home/cottrell/stats/test-gretl/china.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/china.inp
 ? open china.gdt
 
-Read datafile /home/cottrell/stats/test-gretl/china.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/china.gdt
 periodicity: 1, maxobs: 12
 observations range: 1 to 12
 
@@ -22,7 +22,7 @@ Current sample: 6 - 12 (n = 7)
 
 Model 1: Logistic, using observations 6-12 (n = 7)
 Dependent variable: indpc
-yhat = 100 / (1 + exp(-X*b))
+yhat =~ E(100 / (1 + exp(-X*b)))
 
              coefficient   std. error   t-ratio   p-value 
   --------------------------------------------------------
@@ -40,7 +40,8 @@ Schwarz criterion   -7.983177   Hannan-Quinn        -9.212078
 Statistics based on the original data:
 
 Mean dependent var   32.62472   S.D. dependent var   12.77105
-Sum squared resid    24.83861   S.E. of regression   2.228839
+Sum squared resid    31.16350   S.E. of regression   2.496537
+Log-likelihood      -15.08973   Akaike criterion     34.17947
 
 Covariance matrix of regression coefficients:
 

@@ -1,12 +1,12 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run ivreg.inp
- /home/cottrell/stats/test-gretl/ivreg.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/ivreg.inp
 ? open ~/stats/test-gretl/griliches.gdt
 
-Read datafile /home/cottrell/stats/test-gretl/griliches.gdt
+Read datafile /home2/helio/github/gretl/gretl-tests/test-gretl/griliches.gdt
 periodicity: 1, maxobs: 758
 observations range: 1 to 758
 
@@ -19,145 +19,6 @@ Listing 21 variables:
 
 ? loop i=66..71 -q
 > genr dum$i = (YEAR=$i)
-> end loop
-Warning: "end loop": obsolete construction; please use "endloop"
-? list X = S EXPR TENURE
-Generated list X
-Warning: "(YEAR=71)"
- obsolete use of "=" as Boolean test: please use "=="
-
-? list X2 = RNS SMSA dum*
-Generated list X2
-? list Z = MED KWW AGE MRT
-Generated list Z
-? tsls LW const IQ X X2 ; const X X2 Z
-
-Model 1: TSLS, using observations 1-758
-Dependent variable: LW
-Instrumented: IQ 
-Instruments: const S EXPR TENURE RNS SMSA dum66 dum67 dum68 dum69 
-  dum70 dum71 MED KWW AGE MRT 
-
-             coefficient    std. error   t-ratio    p-value 
-  ----------------------------------------------------------
-  const       4.72544       0.282660     16.72      1.63e-53 ***
-  IQ          0.000174656   0.00393740    0.04436   0.9646  
-  S           0.0691759     0.0130490     5.301     1.52e-07 ***
-  EXPR        0.0298660     0.00669696    4.460     9.48e-06 ***
-  TENURE      0.0432738     0.00769338    5.625     2.63e-08 ***
-  RNS        -0.103590      0.0297371    -3.484     0.0005   ***
-  SMSA        0.135115      0.0268889     5.025     6.31e-07 ***
-  dum66      -0.325894      0.0410718    -7.935     7.74e-15 ***
-  dum67      -0.378492      0.0533090    -7.100     2.92e-12 ***
-  dum68      -0.246426      0.0502123    -4.908     1.13e-06 ***
-  dum69      -0.114998      0.0473621    -2.428     0.0154   **
-  dum70      -0.0872606     0.0521748    -1.672     0.0949   *
-  dum71      -0.0974335     0.0443144    -2.199     0.0282   **
-
-Mean dependent var   5.686739   S.D. dependent var   0.428949
-Sum squared resid    80.01823   S.E. of regression   0.327730
-R-squared            0.425512   Adjusted R-squared   0.416259
-F(12, 745)           45.91281   P-value(F)           2.42e-81
-
-Hausman test -
-  Null hypothesis: OLS estimates are consistent
-  Asymptotic test statistic: Chi-square(1) = 0.457935
-  with p-value = 0.498591
-
-Sargan over-identification test -
-  Null hypothesis: all instruments are valid
-  Test statistic: LM = 87.6552
-  with p-value = P(Chi-square(3) > 87.6552) = 6.98405e-19
-
-Weak instrument test - 
-  First-stage F-statistic (4, 742) = 13.7859
-  Critical values for TSLS bias relative to OLS:
-
-     bias       5%      10%      20%      30%
-    value    16.85    10.27     6.71     5.34
-
-  Relative bias may exceed 5%
-
-  Critical values for desired TSLS maximal size, when running
-  tests at a nominal 5% significance level:
-
-     size      10%      15%      20%      25%
-    value    24.58    13.96    10.26     8.31
-
-  Maximal size may exceed 15%
-
-? tsls LW const IQ X X2 ; const X X2 Z --liml
-
-Model 2: LIML, using observations 1-758
-Dependent variable: LW
-Instrumented: IQ 
-Instruments: const S EXPR TENURE RNS SMSA dum66 dum67 dum68 dum69 
-  dum70 dum71 MED KWW AGE MRT 
-
-             coefficient   std. error      z      p-value
-  -------------------------------------------------------
-  const      19.0665       18.1809       1.049    0.2943 
-  IQ         -0.217451      0.275578    -0.7891   0.4301 
-  S           0.688497      0.785968     0.8760   0.3810 
-  EXPR       -0.0536224     0.117288    -0.4572   0.6475 
-  TENURE      0.138533      0.134005     1.034    0.3012 
-  RNS        -0.729352      0.820802    -0.8886   0.3742 
-  SMSA        0.325131      0.317799     1.023    0.3063 
-  dum66      -0.584882      0.456566    -1.281    0.2002 
-  dum67      -0.499272      0.441954    -1.130    0.2586 
-  dum68      -0.600804      0.593023    -1.013    0.3110 
-  dum69      -0.0905631     0.369981    -0.2448   0.8066 
-  dum70       0.546574      0.895098     0.6106   0.5414 
-  dum71       0.138395      0.455064     0.3041   0.7610 
-
-Mean dependent var   5.686739   S.D. dependent var   0.428949
-Sum squared resid    4933.881   S.E. of regression   2.551289
-Chi-square(12)       560.5677   p-value              2.8e-112
-Log-likelihood      -6670.771   Akaike criterion     13367.54
-Schwarz criterion    13427.74   Hannan-Quinn         13390.73
-
-Smallest eigenvalue = 1.0734
-LR over-identification test: Chi-square(3) = 53.6888 [0.0000]
-
-Weak instrument test - 
-  First-stage F-statistic (4, 742) = 13.7859
-  Critical values for desired LIML maximal size, when running
-  tests at a nominal 5% significance level:
-
-     size      10%      15%      20%      25%
-    value     5.44     3.87     3.30     2.98
-
-  Maximal size is probably less than 10%
-
-? tsls LW const IQ X X2 ; const X X2 Z --gmm
-
-Function evaluations: 147
-Evaluations of gradient: 17
-
-Model 3: 1-step GMM, using observations 1-758
-Dependent variable: LW
-Instrumented: IQ 
-Instruments: const S EXPR TENURE RNS SMSA dum66 dum67 dum68 dum69 
-  dum70 dum71 MED KWW AGE MRT 
-
-             coefficient   std. error      z      p-value 
-  --------------------------------------------------------
-  const       5.06688      0.368645     13.74     5.49e-43 ***
-  IQ         -0.00782186   0.00874473   -0.8945   0.3711  
-  S           0.0847698    0.0461484     1.837    0.0662   *
-  EXPR        0.0270731    0.0114089     2.373    0.0176   **
-  TENURE      0.0330794    0.00968112    3.417    0.0006   ***
-  RNS        -0.0384051    0.0441212    -0.8704   0.3841  
-  SMSA        0.151619     0.0386273     3.925    8.67e-05 ***
-  dum66       0.0435627    0.216920      0.2008   0.8408  
-  dum67       0.108335     0.272789      0.3971   0.6913  
-  dum68      -0.0376095    0.194659     -0.1932   0.8468  
-  dum69       0.250769     0.223975      1.120    0.2629  
-  dum70       0.358147     0.254440      1.408    0.1593  
-  dum71       0.254444     0.176253      1.444    0.1488  
-
-Mean dependent var   5.686739   S.D. dependent var   0.428949
-
-  GMM criterion: Q = 0.00421204 (TQ = 3.19273)
-
-Done
+? end loop
+'end loop': did you mean 'endloop'
+Terminated on error

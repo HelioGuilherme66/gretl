@@ -1,18 +1,19 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run listdel.inp
- /home/cottrell/stats/test-gretl/listdel.inp
+ /home2/helio/github/gretl/gretl-tests/test-gretl/listdel.inp
 ? open data4-10
 
-Read datafile /opt/esl/share/gretl/data/data4-10.gdt
+Read datafile /usr/local/share/gretl/data/ramanathan/data4-10.gdt
 periodicity: 1, maxobs: 51
 observations range: 1 to 51
 
-Listing 10 variables:
+Listing 11 variables:
   0) const      1) ENROLL     2) CATHOL     3) PUPIL      4) WHITE    
   5) ADMEXP     6) REV        7) MEMNEA     8) INCOME     9) COLLEGE  
+ 10) REGION   
 
 ? list xlist = 2 4 6 8
 Generated list xlist

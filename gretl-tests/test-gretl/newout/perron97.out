@@ -1,21 +1,11 @@
-gretl version 2017a-git
+gretl version 2021d-git
 Copyright Ramu Ramanathan, Allin Cottrell and Riccardo "Jack" Lucchetti
 This is free software with ABSOLUTELY NO WARRANTY
-Current session: 2017-04-13 23:21
+Current session: 2021-09-28 22:40
 ? run perron97.inp
- /opt/esl/share/gretl/scripts/misc/perron97.inp
-? function scalar perron_test (series y, int maxlag, scalar testsig, \
-  int verbose)
-# -------------------------------------------------------------------
-/*
- Replicate the analysis of Perron, "Further evidence on
- breaking trend functions in macroeconomic variables" (Journal
- of Econometrics, 1997, pp. 355-385), Table 3.
-*/
-# Open Nelson-Plosser data (supplied with gretl)
-? open np.gdt
+ /usr/local/share/gretl/scripts/misc/perron97.inp
 
-Read datafile /opt/esl/share/gretl/data/misc/np.gdt
+Read datafile /usr/local/share/gretl/data/misc/np.gdt
 periodicity: 1, maxobs: 111
 observations range: 1860 to 1970
 
@@ -24,22 +14,151 @@ Listing 15 variables:
   5) emply       6) unemp       7) gnpdefl     8) pcons       9) nwage     
  10) rwage      11) money      12) veloc      13) interest   14) pstock    
 
-# Select the variable to test (here, the natural log of real GNP)
-? series y = log(rgnp)
-Generated series y (ID 15)
-# Maximum lag to try for the first difference of y
-? scalar maxlag = 10
-Generated scalar maxlag = 10
-# Max significance level for retaining the last lag
-? scalar testsig = 0.10
-Generated scalar testsig = 0.1
-# Verbosity level (1 = not much)
-? scalar verbosity = 1
-Generated scalar verbosity = 1
-? perron_test(y, maxlag, testsig, verbosity)
+Trying break in 1921:
+	t_alpha = -3.02386 (k=1)
 
-*** min(t_alpha) = -5.49957 in 1928 (k=8) ***
+Trying break in 1922:
+	t_alpha = -3.15862 (k=6)
 
+Trying break in 1923:
+	t_alpha = -2.92701 (k=6)
+
+Trying break in 1924:
+	t_alpha = -3.64395 (k=1)
+
+Trying break in 1925:
+	t_alpha = -3.61497 (k=6)
+
+Trying break in 1926:
+	t_alpha = -3.87077 (k=6)
+
+Trying break in 1927:
+	t_alpha = -4.72502 (k=7)
+
+Trying break in 1928:
+	t_alpha = -5.49957 (k=8)
+
+Trying break in 1929:
+	t_alpha = -5.02616 (k=8)
+
+Trying break in 1930:
+	t_alpha = -3.30997 (k=6)
+
+Trying break in 1931:
+	t_alpha = -3.00359 (k=1)
+
+Trying break in 1932:
+	t_alpha =  -2.0132 (k=1)
+
+Trying break in 1933:
+	t_alpha = -1.98588 (k=1)
+
+Trying break in 1934:
+	t_alpha = -2.55603 (k=1)
+
+Trying break in 1935:
+	t_alpha = -2.61143 (k=1)
+
+Trying break in 1936:
+	t_alpha = -3.19934 (k=1)
+
+Trying break in 1937:
+	t_alpha = -3.84026 (k=1)
+
+Trying break in 1938:
+	t_alpha = -3.38879 (k=1)
+
+Trying break in 1939:
+	t_alpha = -3.64318 (k=1)
+
+Trying break in 1940:
+	t_alpha = -3.30717 (k=1)
+
+Trying break in 1941:
+	t_alpha = -3.09853 (k=1)
+
+Trying break in 1942:
+	t_alpha =  -2.8202 (k=1)
+
+Trying break in 1943:
+	t_alpha = -2.52763 (k=1)
+
+Trying break in 1944:
+	t_alpha = -2.45988 (k=1)
+
+Trying break in 1945:
+	t_alpha =  -2.6796 (k=1)
+
+Trying break in 1946:
+	t_alpha = -3.27824 (k=1)
+
+Trying break in 1947:
+	t_alpha = -3.12792 (k=1)
+
+Trying break in 1948:
+	t_alpha = -2.71034 (k=6)
+
+Trying break in 1949:
+	t_alpha = -2.93181 (k=6)
+
+Trying break in 1950:
+	t_alpha =  -2.9797 (k=1)
+
+Trying break in 1951:
+	t_alpha = -2.97506 (k=1)
+
+Trying break in 1952:
+	t_alpha =  -2.9958 (k=1)
+
+Trying break in 1953:
+	t_alpha = -2.99822 (k=1)
+
+Trying break in 1954:
+	t_alpha = -3.07343 (k=1)
+
+Trying break in 1955:
+	t_alpha = -2.94948 (k=1)
+
+Trying break in 1956:
+	t_alpha = -2.99861 (k=1)
+
+Trying break in 1957:
+	t_alpha = -3.05666 (k=1)
+
+Trying break in 1958:
+	t_alpha = -3.06645 (k=1)
+
+Trying break in 1959:
+	t_alpha = -3.04417 (k=1)
+
+Trying break in 1960:
+	t_alpha = -3.08563 (k=1)
+
+Trying break in 1961:
+	t_alpha = -3.05865 (k=1)
+
+Trying break in 1962:
+	t_alpha = -3.03497 (k=1)
+
+Trying break in 1963:
+	t_alpha = -3.02342 (k=1)
+
+Trying break in 1964:
+	t_alpha = -2.97258 (k=1)
+
+Trying break in 1965:
+	t_alpha = -2.91611 (k=1)
+
+Trying break in 1966:
+	t_alpha = -2.87046 (k=1)
+
+Trying break in 1967:
+	t_alpha = -2.90581 (k=1)
+
+
+*** minimized t_alpha = -5.49957 in 1928 (k=8) ***
+
+Regression with break at 1928
 OLS, using observations 1918-1970 (T = 53)
 Dependent variable: y
 
@@ -72,4 +191,3 @@ Log-likelihood for rgnp = -211.056
 Excluding the constant, p-value was highest for variable 26 (dyt_5)
 
 check: t_alpha = -5.49957
-Done
