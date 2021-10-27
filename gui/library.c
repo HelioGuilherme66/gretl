@@ -1967,8 +1967,8 @@ void gui_do_forecast (GtkAction *action, gpointer p)
     windata_t *vwin = (windata_t *) p;
     MODEL *pmod = vwin->data;
     char startobs[OBSLEN], endobs[OBSLEN];
+    FcastFlags flags = 0;
     int t2, t1 = 0;
-    int flags = 0;
     int premax, pre_n = 0;
     int t1min = 0;
     int recursive = 0, k = 1, *kptr;
@@ -9327,7 +9327,7 @@ int do_store (char *filename, int action, gpointer data)
 
 #ifdef OS_OSX
 
-# ifdef HAVE_CARBON
+# ifdef USE_CARBON
 
 # include <Carbon/Carbon.h>
 
@@ -10626,8 +10626,10 @@ int gui_exec_line (ExecState *s, DATASET *dset, GtkWidget *parent)
                                 OPT_NONE, prn);
             if (err) {
                 errmsg(err, prn);
-            } else {
-                register_data(NULLDATA_STARTED);
+            } else if (swallow && (s->flags & CONSOLE_EXEC)) {
+		register_data(NULLDATA_STARTED | FOCUS_CONSOLE);
+	    } else {
+		register_data(NULLDATA_STARTED);
             }
         }
         break;

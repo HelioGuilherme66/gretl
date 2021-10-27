@@ -2,7 +2,8 @@ name: Build
 on:
   push:
     branches:
-      - gretl-test
+      - master
+      - gretl-tests
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
