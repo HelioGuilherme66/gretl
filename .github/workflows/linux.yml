@@ -39,7 +39,7 @@ jobs:
         sudo dnf install -y gcc gmp-devel mpfr-devel fftw-devel lapack-devel \
         gnuplot libxml2-devel curl-devel readline-devel gtksourceview3-devel \
         json-glib-devel xorg-x11-server-Xvfb openmpi openmpi-devel blas64 \
-        libgsf-devel
+        libgsf-devel libsvm libsvm-devel
     - name: Build and check
       run: |
         MPICC=/usr/lib64/openmpi/bin/mpicc ./configure -q --enable-quiet-build \
