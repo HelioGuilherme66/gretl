@@ -38,14 +38,10 @@ jobs:
       run: |
         sudo dnf install -y gcc gmp-devel mpfr-devel fftw-devel lapack-devel \
         gnuplot libxml2-devel curl-devel readline-devel gtksourceview3-devel \
-        json-glib-devel xorg-x11-server-Xvfb openmpi openmpi-devel
+        json-glib-devel xorg-x11-server-Xvfb openmpi openmpi-devel blas64
     - name: Build and check
       run: |
-        MPICC=/usr/lib64/openmpi/bin/mpicc ./configure -q --enable-quiet-build\
-        --enable-build-editor --with-gsf --with-mpi \
-        --with-mpi-lib=/usr/lib64/openmpi \
-        --with-mpi-include=/usr/include/openmpi-x86_64 --with-odbc \
-        --with-libR --enable-quiet-build  --enable-build-addons
+        MPICC=/usr/lib64/openmpi/bin/mpicc ./configure -q --enable-quiet-build --enable-build-editor --with-gsf --with-mpi --with-mpi-lib=/usr/lib64/openmpi --with-mpi-include=/usr/include/openmpi-x86_64 --with-odbc --with-libR --enable-quiet-build  --enable-build-addons
         make && make check
     - name: Install and run
       run: |
