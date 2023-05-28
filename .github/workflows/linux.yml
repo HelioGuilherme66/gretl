@@ -1,0 +1,55 @@
+name: Linux
+on:
+  push:
+    branches-ignore:
+      - '**/sources/**'
+      - '**/windows/**'
+      - '**/macos/**'
+    paths-ignore:
+      - '.github/workflows/sources.yml'
+      - '.github/workflows/build.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/windows.yml'
+  pull_request:
+    paths-ignore:
+      - '.github/workflows/sources.yml'
+      - '.github/workflows/build.yml'
+      - '.github/workflows/macos.yml'
+      - '.github/workflows/windows.yml'
+
+jobs:
+  fedora:
+    name: Fedora
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.ref, '/debian/') }}
+    container:
+      image: fedora:latest
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v3.3.0
+      with:
+        submodules: false
+    - name: Configure container environment
+      run: |
+        sudo dnf update -y
+        sudo dnf install -y git psmisc p7zip tar bzip3
+        git config --global --add safe.directory ${GITHUB_WORKSPACE}
+    - name: Setup development environment
+      run: |
+        sudo dnf install -y gcc gmp-devel mpfr-devel fftw-devel lapack-devel \
+        gnuplot libxml2-devel curl-devel readline-devel gtksourceview3-devel \
+        json-glib-devel xorg-x11-server-Xvfb openmpi openmpi-devel
+    - name: Build and check
+      run: |
+        MPICC=/usr/lib64/openmpi/bin/mpicc ./configure -q --enable-quiet-build\
+        --enable-build-editor --with-gsf --with-mpi \
+        --with-mpi-lib=/usr/lib64/openmpi \
+        --with-mpi-include=/usr/include/openmpi-x86_64 --with-odbc \
+        --with-libR --enable-quiet-build  --enable-build-addons
+        make && make check
+    - name: Install and run
+      run: |
+        sudo make install && sudo ldconfig
+        xvfb-run --server-args="-screen 0, 1280x720x24" -a gretl &
+        sleep 10
+        killall xvfb-run
