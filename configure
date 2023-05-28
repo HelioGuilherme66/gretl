@@ -12616,7 +12616,7 @@ esac
 LIBTOOL_DEPS=$ltmain
 
 # Always use our own libtool.
-LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+LIBTOOL='$(SHELL) $(top_builddir)/libtool --tag=CC'
 
 
 
