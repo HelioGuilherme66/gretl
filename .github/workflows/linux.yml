@@ -36,9 +36,10 @@ jobs:
         git config --global --add safe.directory ${GITHUB_WORKSPACE}
     - name: Setup development environment
       run: |
-        sudo dnf install -y gcc gmp-devel mpfr-devel fftw-devel lapack-devel \
-        gnuplot libxml2-devel curl-devel readline-devel gtksourceview3-devel \
-        json-glib-devel xorg-x11-server-Xvfb openmpi openmpi-devel blas64 \
+        sudo dnf install -y gcc gcc-c++ gmp-devel mpfr-devel \
+        fftw-devel lapack-devel gnuplot libxml2-devel curl-devel \
+        readline-devel gtksourceview3-devel json-glib-devel \
+        xorg-x11-server-Xvfb openmpi openmpi-devel blas64 \
         libgsf-devel libsvm libsvm-devel
     - name: Build and check
       run: |
