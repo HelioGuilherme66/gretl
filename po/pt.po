@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: pt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-24 12:53+0200\n"
-"PO-Revision-Date: 2023-01-16 00:36+0000\n"
+"PO-Revision-Date: 2023-07-03 21:03+0100\n"
 "Last-Translator: Hélio Guilherme <helio_guilherme@hotmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
 "Language: pt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-SourceCharset: iso-8859-15\n"
 "X-Language: pt_PT\n"
 
@@ -29,7 +29,7 @@ msgstr "Procurar _acessórios (\"addons\")"
 
 #: lib/src/addons_utils.c:191 lib/src/addons_utils.c:204
 msgid "try"
-msgstr ""
+msgstr "tentar"
 
 #: lib/src/addons_utils.c:193 lib/src/addons_utils.c:206
 #, fuzzy
@@ -59,6 +59,8 @@ msgid ""
 "\n"
 "OLS demean/detrend: (T = %d)\n"
 msgstr ""
+"\n"
+"Mínimos Quadrados desmédizar/destendenciar: (T = %d)\n"
 
 #: lib/src/adf_kpss.c:595
 msgid "lagged differences"
@@ -245,7 +247,7 @@ msgstr "%s é uma constante"
 
 #: lib/src/adf_kpss.c:1700 lib/src/adf_kpss.c:1724 lib/src/adf_kpss.c:1743
 msgid "Im-Pesaran-Shin test: cannot be computed\n"
-msgstr ""
+msgstr "Teste Im-Pesaran-Shin test: não pode ser calculado\n"
 
 #: lib/src/adf_kpss.c:1763 lib/src/adf_kpss.c:1801
 msgid "Inverse chi-square"
@@ -379,19 +381,19 @@ msgstr "H0: todos os grupos são estacionários"
 
 #: lib/src/adf_kpss.c:2513
 msgid "Note: these are LOWER BOUNDS on the true p-values"
-msgstr ""
+msgstr "Nota: estes são LIMITES INFERIORES para os p-valores reais"
 
 #: lib/src/adf_kpss.c:2514
 msgid "Individual p-values > .10, and recorded as .10"
-msgstr ""
+msgstr "p-valores individuais > 0,10, e registados como 0,10"
 
 #: lib/src/adf_kpss.c:2517
 msgid "Note: these are UPPER BOUNDS on the true p-values"
-msgstr ""
+msgstr "Nota: estes são LIMITES SUPERIORES para os p-valores reais"
 
 #: lib/src/adf_kpss.c:2518
 msgid "Individual p-values < .01, and recorded as .01"
-msgstr ""
+msgstr "p-valores individuais < 0,01, e registados como 0,01"
 
 #: lib/src/adf_kpss.c:2523
 #, fuzzy
@@ -788,7 +790,7 @@ msgstr "Falha no cálculo da estatítica de teste\n"
 #: lib/src/compare.c:3044
 #, c-format
 msgid "Couldn't compute Chow test p-value (test = %g)\n"
-msgstr ""
+msgstr "Não se conseguiu calcular o p-valor do teste de Chow (teste = %g)\n"
 
 #: lib/src/compare.c:3055 lib/src/gretl_model.c:4170
 #, c-format
@@ -970,12 +972,12 @@ msgstr "Linhas diárias omissas: %d\n"
 #: lib/src/csvdata.c:613
 #, c-format
 msgid "Found a Saturday (%s): re-trying with pd = %d\n"
-msgstr ""
+msgstr "Encontrou-se um Sábado (%s): re-tentando com pd = %d\n"
 
 #: lib/src/csvdata.c:619
 #, c-format
 msgid "Found a Sunday (%s): re-trying with pd = %d\n"
-msgstr ""
+msgstr "Encontrou-se um Domingo (%s): re-tentando com pd = %d\n"
 
 #: lib/src/csvdata.c:626
 #, c-format
@@ -983,6 +985,8 @@ msgid ""
 "Daily dates error at t = %d:\n"
 "  calendar_obs_number() for '%s' = %d but t = %d\n"
 msgstr ""
+"Erro nas datas diárias em t = %d:\n"
+"  calendar_obs_number() para '%s' = %d mas t = %d\n"
 
 #: lib/src/csvdata.c:631
 #, fuzzy, c-format
@@ -992,12 +996,12 @@ msgstr "Estimativa(s) MA fora dos limites.\n"
 #: lib/src/csvdata.c:634
 #, c-format
 msgid "Error: date '%s' is repeated\n"
-msgstr ""
+msgstr "Erro: data '%s' está repetida\n"
 
 #: lib/src/csvdata.c:758
 #, c-format
 msgid "   \"%s\": quarterly date with spurious zero?\n"
-msgstr ""
+msgstr "   \"%s\": data trimestral com zero não confiável?\n"
 
 #: lib/src/csvdata.c:767
 #, fuzzy
@@ -1011,7 +1015,7 @@ msgstr "Expandir dados trimestrais para mensais"
 
 #: lib/src/csvdata.c:777
 msgid "BLS-type nonsense? Trying again"
-msgstr ""
+msgstr "Tipo-BLS sem sentido? Tentando novamente"
 
 #: lib/src/csvdata.c:910
 msgid "reversing the data!\n"
@@ -1065,7 +1069,7 @@ msgstr "trimestre %s?\n"
 #: lib/src/csvdata.c:1062 lib/src/csvdata.c:1076
 #, c-format
 msgid "quarter %d: not possible\n"
-msgstr ""
+msgstr "trimestre %d: não possível\n"
 
 #: lib/src/csvdata.c:1073
 #, c-format
@@ -1080,7 +1084,7 @@ msgstr "mês %s?\n"
 #: lib/src/csvdata.c:1083
 #, c-format
 msgid "month %d: not possible\n"
-msgstr ""
+msgstr "mês %d: não possível\n"
 
 #: lib/src/csvdata.c:1132 lib/src/csvdata.c:1162
 msgid "   but the dates are not complete and consistent\n"
@@ -1325,6 +1329,9 @@ msgid ""
 "extraneous lines in a %s dataset: this may not be right.\n"
 "\n"
 msgstr ""
+"ATENÇÃO: Verifique os seus dados! Gretl removeu o que aparenta ser\n"
+"linha estranhas no conjunto de dados %s: isto pode não estar correcto.\n"
+"\n"
 
 #: lib/src/csvdata.c:3735
 msgid ""
@@ -1455,7 +1462,7 @@ msgstr ""
 #: lib/src/dataio.c:1578
 #, c-format
 msgid "Can't replace %s with a series"
-msgstr ""
+msgstr "Não se pode substituir %s como sendo uma série"
 
 #: lib/src/dataio.c:1717
 msgid "append: don't know how to align the new series!"
@@ -1529,11 +1536,11 @@ msgstr "Não existem marcadores disponíveis para escrever"
 
 #: lib/src/dataio.c:2986
 msgid "Labels written OK\n"
-msgstr ""
+msgstr "Etiquetas escritas OK\n"
 
 #: lib/src/dataio.c:2997
 msgid "Labels loaded OK\n"
-msgstr ""
+msgstr "Etiquetas carregadas OK\n"
 
 #: lib/src/dataio.c:3046
 msgid "No markers are available for writing"
@@ -1541,11 +1548,11 @@ msgstr "Não existem marcadores disponíveis para escrever"
 
 #: lib/src/dataio.c:3058
 msgid "Markers written OK\n"
-msgstr ""
+msgstr "Marcadores escritos OK\n"
 
 #: lib/src/dataio.c:3064
 msgid "Markers loaded OK\n"
-msgstr ""
+msgstr "Marcadores carregados OK\n"
 
 #: lib/src/dataio.c:3137
 #, c-format
@@ -1599,11 +1606,15 @@ msgstr "Dados importados de %s, %s\n"
 #: lib/src/dataio.c:3988
 msgid "This dataset is on 7-day calendar, but weekends are blank."
 msgstr ""
+"Este conjunto de dados está num calendário de 7-dias, mas os fim-de-semana "
+"estão em branco."
 
 #: lib/src/dataio.c:3990
 #, c-format
 msgid "This dataset is on 6-day calendar, but %s are blank."
 msgstr ""
+"Este conjunto de dados está num calendário de 6-dias, mas os %s estão em "
+"branco."
 
 #: lib/src/dataio.c:3991
 #, fuzzy
@@ -1730,6 +1741,8 @@ msgstr ""
 #: lib/src/dataset.c:2965
 msgid "stack: this function cannot be used when the dataset is sub-sampled"
 msgstr ""
+"stack: esta função não pode ser usada quando o conjunto de dados está sub-"
+"amostrado"
 
 #: lib/src/dataset.c:3157 lib/src/dataset.c:3185 gui/library.c:6495
 msgid "The data set is currently sub-sampled.\n"
@@ -1757,6 +1770,9 @@ msgid ""
 "compacted\n"
 "other than via the 'first' or 'last' method."
 msgstr ""
+"O conjunto de dados contém %d séries de valores de texto. Essas séries não "
+"podem ser compactadas\n"
+"sem que seja usado o método 'primeiro' ou 'último'."
 
 #: lib/src/dataset.c:3510
 #, c-format
@@ -1811,11 +1827,11 @@ msgstr "Havia valores omissos nos dados"
 
 #: lib/src/dataset.c:4819
 msgid "The minimum value of the target series must be >= 1"
-msgstr ""
+msgstr "O valor mínimo da série alvo tem que ser >= 1"
 
 #: lib/src/dataset.c:4827
 msgid "The series values must be integers"
-msgstr ""
+msgstr "Os valores da série têm que ser inteiros"
 
 #: lib/src/dataset.c:4841
 #, fuzzy, c-format
@@ -1825,7 +1841,7 @@ msgstr "A linha de comando não é UTF-8 válido"
 #: lib/src/dataset.c:5168
 #, c-format
 msgid "Dataset is already complete for %d-day calendar"
-msgstr ""
+msgstr "O conjunto de dados já está completo para o calendário de %d-dias"
 
 #: lib/src/dataset.c:5894
 #, fuzzy
@@ -1839,7 +1855,7 @@ msgstr "o conjunto de dados é sub-amostrado"
 
 #: lib/src/dataset.c:5923
 msgid "map and dataset are out of sync!"
-msgstr ""
+msgstr "o mapa e conjunto de dados não estão sincronizados"
 
 #: lib/src/dbnread.c:35 lib/src/dbnread.c:41 gui/fncall.c:4762
 #, c-format
@@ -1912,7 +1928,7 @@ msgstr "Falhou a interpretação do conjunto de dados como sendo numérico\n"
 #: lib/src/dbread.c:1872
 #, c-format
 msgid "Connected to ODBC data source '%s'\n"
-msgstr ""
+msgstr "Ligado à fonte de dados ODBC '%s'\n"
 
 #: lib/src/dbread.c:1896 lib/src/subsample.c:2827
 msgid "Invalid null sample"
@@ -1936,7 +1952,7 @@ msgstr "É esperado um nome de variável válido"
 #: lib/src/dbread.c:2324 lib/src/dbread.c:2335
 #, c-format
 msgid "%s: can't mix numeric and string data"
-msgstr ""
+msgstr "%s: não se pode misturar dados numéricos com dados de texto"
 
 #: lib/src/dbread.c:2331
 #, fuzzy, c-format
@@ -1970,7 +1986,7 @@ msgstr "Série importada com sucesso"
 
 #: lib/src/dbread.c:2841
 msgid "This only works for gretl databases"
-msgstr ""
+msgstr "Isto apenas funciona para bases de dados Gretl"
 
 #: lib/src/dbread.c:2970
 #, fuzzy, c-format
@@ -3086,7 +3102,7 @@ msgstr "Observações _influentes"
 
 #: lib/src/genfuncs.c:2784 lib/src/genfuncs.c:2791
 msgid "Butterworth: infeasible lambda value"
-msgstr ""
+msgstr "Butterworth: valor lambda inviável"
 
 #: lib/src/genfuncs.c:3138
 msgid "centered periodic dummy"
@@ -3119,7 +3135,7 @@ msgstr "%s = 1 se o período é %d, 0 caso contrário"
 #: lib/src/genfuncs.c:3485
 #, c-format
 msgid "warning: requested %gMb of storage\n"
-msgstr ""
+msgstr "atenção: requisitado %gMb de armazenamento\n"
 
 #: lib/src/genfuncs.c:3518 lib/src/genfuncs.c:3549
 #, c-format
@@ -3137,7 +3153,7 @@ msgstr "unidade"
 
 #: lib/src/genfuncs.c:3578
 msgid "'genr unit' can be used only with panel data"
-msgstr ""
+msgstr "'genr unit' apenas pode ser usado com dados de painel"
 
 #: lib/src/genfuncs.c:3590
 msgid "cross-sectional unit index"
@@ -3203,6 +3219,8 @@ msgstr "Declaração inválida"
 #, c-format
 msgid "Weighted stats: data list has %d members but weight list has %d"
 msgstr ""
+"Estatísticas ponderadas: a lista de dados tem %d membros mas a lista de "
+"pesos tem %d"
 
 #: lib/src/genfuncs.c:4576
 #, c-format
@@ -3211,11 +3229,11 @@ msgstr "A lista tem %d membros, mas o comprimento do vetor b é %d"
 
 #: lib/src/genfuncs.c:4662
 msgid "theta must be a 2-vector"
-msgstr ""
+msgstr "téta tem que ser um 2-vector"
 
 #: lib/src/genfuncs.c:4665
 msgid "theta must be a 3-vector"
-msgstr ""
+msgstr "téta tem que ser um 3-vector"
 
 #: lib/src/genfuncs.c:4669
 #, fuzzy
@@ -3246,6 +3264,8 @@ msgstr "Não se encontraram séries válidas"
 msgid ""
 "The constructed series names would collide with those of existing objects"
 msgstr ""
+"Os nomes da séries construídos iriam colidir com os nomes de objetos "
+"existentes"
 
 #: lib/src/genfuncs.c:6663
 msgid "model-related"
@@ -3872,6 +3892,8 @@ msgid ""
 "\n"
 "Simulated annealing: initial function value = %.8g\n"
 msgstr ""
+"\n"
+"Arrefecimento simulado: valor inicial da função = %.8g\n"
 
 #: lib/src/gretl_bfgs.c:2982
 #, c-format
@@ -3879,10 +3901,12 @@ msgid ""
 "No improvement found in %d iterations\n"
 "\n"
 msgstr ""
+"Não foi encontrada melhoria após %d iterações\n"
+"\n"
 
 #: lib/src/gretl_bfgs.c:2986
 msgid "*** warning: surface seems to be flat\n"
-msgstr ""
+msgstr "*** atenção: a superfície aparenta ser lisa\n"
 
 #: lib/src/gretl_bfgs.c:3085
 #, c-format
@@ -3890,16 +3914,18 @@ msgid ""
 "\n"
 "Outer iteration %d: function value = %#g\n"
 msgstr ""
+"\n"
+"Iteração exterior %d: valor da função = %#g\n"
 
 #: lib/src/gretl_bfgs.c:3088
 #, c-format
 msgid "Outer iteration %d (reset)\n"
-msgstr ""
+msgstr "Iteração exterior %d (reiniciada)\n"
 
 #: lib/src/gretl_bfgs.c:3140
 #, c-format
 msgid " inner iter %3d: function value %#g\n"
-msgstr ""
+msgstr " iteração interior %3d: valor da funções %#g\n"
 
 #: lib/src/gretl_bfgs.c:3288
 #, c-format
@@ -3907,6 +3933,8 @@ msgid ""
 "Found optimum %#g after %d function calls, %d resets\n"
 "\n"
 msgstr ""
+"Encontrado o óptimo %#g após %d chamadas da função, %d reinicializações\n"
+"\n"
 
 #: lib/src/gretl_bundle.c:527 lib/src/gretl_bundle.c:675
 #: lib/src/gretl_bundle.c:729 lib/src/kalman.c:4223 lib/src/objstack.c:1538
@@ -3915,7 +3943,7 @@ msgstr "item inexistente"
 
 #: lib/src/gretl_bundle.c:1785 lib/src/gretl_bundle.c:2147
 msgid "bundle union: the right-hand operand cannot be a kalman bundle"
-msgstr ""
+msgstr "união de pacote: o operando à direita não pode ser um pacote kalman"
 
 #: lib/src/gretl_bundle.c:1943
 #, fuzzy, c-format
@@ -4203,12 +4231,12 @@ msgstr "MPI já está inicializado"
 #: lib/src/gretl_foreign.c:239
 #, c-format
 msgid "%s: unknown language\n"
-msgstr ""
+msgstr "%s: língua desconhecida\n"
 
 #: lib/src/gretl_foreign.c:265
 #, c-format
 msgid "%s exited with status %d\n"
-msgstr ""
+msgstr "%s terminou com estado %d\n"
 
 #: lib/src/gretl_foreign.c:300
 #, fuzzy
@@ -4217,7 +4245,7 @@ msgstr "saída gretl"
 
 #: lib/src/gretl_foreign.c:773
 msgid "line could not be converted to UTF-8\n"
-msgstr ""
+msgstr "a linha não pôde ser convertida para UTF-8\n"
 
 #: lib/src/gretl_foreign.c:1489 lib/src/system.c:912
 #, c-format
@@ -4226,11 +4254,11 @@ msgstr "'%s': não existe essa lista"
 
 #: lib/src/gretl_foreign.c:2615
 msgid "Can't determine R_HOME"
-msgstr ""
+msgstr "Não se determinou  R_HOME"
 
 #: lib/src/gretl_foreign.c:2915
 msgid "Only strings arrays are accepted as R-function arguments"
-msgstr ""
+msgstr "Apenas se aceita arranjos de texto como sendo argumentos de funções-R"
 
 #: lib/src/gretl_foreign.c:3008
 #, fuzzy, c-format
@@ -4255,17 +4283,17 @@ msgstr "%s: valor inválido '%s'"
 #: lib/src/gretl_foreign.c:3208
 #, c-format
 msgid "%s: not generic vector, can't make into bundle"
-msgstr ""
+msgstr "%s: não é vetor genérico, não pode ir no pacote"
 
 #: lib/src/gretl_foreign.c:3220
 #, c-format
 msgid "%s: R list has no tags, can't make into bundle"
-msgstr ""
+msgstr "%s: a lista R não tem etiquetas, não pode ir no pacote"
 
 #: lib/src/gretl_foreign.c:3311
 #, c-format
 msgid "%s: got 'matrix' result, but not numeric"
-msgstr ""
+msgstr "%s: obteve-se resultado 'matriz' , mas não numérica"
 
 #: lib/src/gretl_foreign.c:3451
 #, fuzzy, c-format
@@ -4275,7 +4303,7 @@ msgstr "O modelo já foi gravado"
 #: lib/src/gretl_foreign.c:3502
 #, c-format
 msgid "%s: no block is in progress"
-msgstr ""
+msgstr "%s: não há bloco em progresso"
 
 #: lib/src/gretl_foreign.c:3554 gui/fnsave.c:5411
 #, fuzzy, c-format
@@ -4308,7 +4336,7 @@ msgstr "%s: tipo de parâmetro inválido"
 
 #: lib/src/gretl_func.c:2544
 msgid "Old-style function definitions no longer supported"
-msgstr ""
+msgstr "Definições de funções com formato antigo, já não é suportado"
 
 #: lib/src/gretl_func.c:3023
 #, fuzzy, c-format
@@ -4332,7 +4360,7 @@ msgstr "A informação das variáveis não existe"
 
 #: lib/src/gretl_func.c:4260
 msgid "Output must have extension \".gfn\""
-msgstr ""
+msgstr "Saída deve ter extensão \".gfn\""
 
 #: lib/src/gretl_func.c:4278
 #, fuzzy, c-format
@@ -5969,7 +5997,7 @@ msgstr "Falta a chave interior"
 #: lib/src/interact.c:2071
 msgid "gretl session files can only be opened via the GUI program"
 msgstr ""
-"Os ficheiros de sessão gretl apenas podem ser abertos a partir do programa "
+"Os ficheiros de sessão Gretl apenas podem ser abertos a partir do programa "
 "com interface gráfico"
 
 #: lib/src/interact.c:2087
@@ -8897,8 +8925,8 @@ msgstr "FIML"
 #: lib/src/system.c:103
 msgid "Seemingly Unrelated Regressions"
 msgstr ""
-"Regressões Aparentemente Não Relacionadas (\"Seemingly Unrelated Regressions"
-"\")"
+"Regressões Aparentemente Não Relacionadas (\"Seemingly Unrelated "
+"Regressions\")"
 
 #: lib/src/system.c:104
 msgid "Three-Stage Least Squares"
@@ -9730,7 +9758,7 @@ msgstr "data de produção"
 msgid "translator_credits"
 msgstr ""
 "Hélio Guilherme <helio_guilherme@hotmail.com>. \n"
-"Tradução de 15 de Janeiro de 2023"
+"Tradução de 3 de Julho de 2023"
 
 #: gui/about.c:233
 msgid "Rationale"
